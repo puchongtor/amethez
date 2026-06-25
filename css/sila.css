@@ -1,0 +1,314 @@
+/* ==========================================
+   คุณศิลา — AI Companion Styles
+   ========================================== */
+
+/* ── Desktop 70/30 Layout ── */
+body.sila-desktop {
+  padding-right: 300px !important;
+}
+
+#sila-panel {
+  position: fixed;
+  top: 0; right: 0;
+  width: 300px;
+  height: 100vh;
+  background: #0f0a1e;
+  border-left: 1px solid rgba(201,168,76,.15);
+  display: flex;
+  flex-direction: column;
+  z-index: 200;
+  font-family: Sarabun, sans-serif;
+}
+
+@media (max-width: 767px) {
+  #sila-panel { display: none !important; }
+  body.sila-desktop { padding-right: 0 !important; }
+}
+
+/* ── Desktop Header ── */
+#sila-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 14px 12px;
+  background: linear-gradient(135deg, #1a0a3e, #0f0a1e);
+  border-bottom: 1px solid rgba(201,168,76,.12);
+  flex-shrink: 0;
+}
+
+#sila-ava {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7c3aed, #c9a84c);
+  border: 2px solid rgba(201,168,76,.4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+
+#sila-name { font-size: 13px; font-weight: 700; color: #e9d5a1; }
+#sila-status { font-size: 10px; color: #22c55e; }
+
+/* ── Desktop Messages ── */
+#sila-msgs {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,.1) transparent;
+}
+#sila-msgs::-webkit-scrollbar { width: 4px; }
+#sila-msgs::-webkit-scrollbar-track { background: transparent; }
+#sila-msgs::-webkit-scrollbar-thumb { background: rgba(255,255,255,.1); border-radius: 2px; }
+
+/* ── Desktop Input ── */
+#sila-input-row {
+  display: flex; gap: 8px; padding: 10px;
+  border-top: 1px solid rgba(255,255,255,.06);
+  flex-shrink: 0;
+}
+
+#sila-inp {
+  flex: 1;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: rgba(255,255,255,.85);
+  font-family: Sarabun, sans-serif;
+  outline: none;
+}
+#sila-inp::placeholder { color: rgba(255,255,255,.3); }
+#sila-inp:focus { border-color: rgba(124,58,237,.5); }
+
+#sila-send {
+  width: 34px; height: 34px;
+  background: #7c3aed;
+  border: none; border-radius: 50%;
+  color: white; font-size: 12px;
+  cursor: pointer; flex-shrink: 0;
+  transition: background .2s;
+}
+#sila-send:hover { background: #6d28d9; }
+
+/* ── Shared Chat Bubbles ── */
+.sila-bubble-sila {
+  background: rgba(124,58,237,.18);
+  border: 1px solid rgba(124,58,237,.2);
+  border-radius: 10px 10px 10px 2px;
+  padding: 9px 11px;
+  font-size: 12px;
+  color: rgba(255,255,255,.85);
+  line-height: 1.65;
+  max-width: 90%;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.sila-bubble-user {
+  background: rgba(255,255,255,.08);
+  border-radius: 10px 10px 2px 10px;
+  padding: 9px 11px;
+  font-size: 12px;
+  color: rgba(255,255,255,.65);
+  line-height: 1.65;
+  max-width: 82%;
+  align-self: flex-end;
+  word-break: break-word;
+}
+
+/* ── Typing Indicator ── */
+.sila-typing {
+  display: flex; gap: 4px;
+  padding: 10px 12px;
+  background: rgba(124,58,237,.12);
+  border-radius: 10px 10px 10px 2px;
+  align-self: flex-start;
+  width: fit-content;
+}
+.sila-typing span {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.4);
+  animation: silaBounceDot 1.2s infinite;
+}
+.sila-typing span:nth-child(2) { animation-delay: .2s; }
+.sila-typing span:nth-child(3) { animation-delay: .4s; }
+@keyframes silaBounceDot {
+  0%,60%,100% { transform: translateY(0); opacity: .4; }
+  30% { transform: translateY(-6px); opacity: 1; }
+}
+
+/* ── Affiliate Card ── */
+.sila-aff-card {
+  background: rgba(201,168,76,.07);
+  border: 1px solid rgba(201,168,76,.2);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 12px;
+  animation: silaFadeIn .3s ease;
+}
+.sila-aff-title { color: #e9d5a1; font-weight: 700; margin-bottom: 3px; font-size: 12px; }
+.sila-aff-desc { color: rgba(255,255,255,.5); font-size: 11px; line-height: 1.5; margin-bottom: 7px; }
+.sila-aff-footer { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+.sila-aff-price { color: #c9a84c; font-size: 11px; font-weight: 700; }
+.sila-aff-btn {
+  background: #c9a84c; color: #0f0a1e;
+  text-decoration: none; font-size: 10px; font-weight: 700;
+  padding: 4px 10px; border-radius: 5px;
+  transition: background .2s; white-space: nowrap;
+}
+.sila-aff-btn:hover { background: #b8973b; }
+
+@keyframes silaFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Mobile FAB ── */
+#sila-fab-wrap {
+  display: none;
+  position: fixed;
+  bottom: 20px; right: 16px;
+  z-index: 300;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+@media (max-width: 767px) {
+  #sila-fab-wrap { display: flex; }
+}
+
+#sila-fab {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7c3aed, #4c1d95);
+  box-shadow: 0 4px 20px rgba(124,58,237,.55);
+  border: none; cursor: pointer;
+  font-size: 26px;
+  animation: silaFloat 3s ease-in-out infinite;
+  transition: transform .2s, box-shadow .2s;
+}
+#sila-fab:active { transform: scale(.93); }
+@keyframes silaFloat {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* ── Mobile Tooltip ── */
+#sila-tooltip {
+  background: #1a0a3e;
+  border: 1px solid rgba(201,168,76,.35);
+  border-radius: 10px 10px 2px 10px;
+  padding: 9px 12px;
+  font-size: 11px;
+  color: rgba(255,255,255,.85);
+  max-width: 210px;
+  line-height: 1.55;
+  opacity: 0;
+  transition: opacity .4s;
+  font-family: Sarabun, sans-serif;
+  pointer-events: none;
+}
+
+/* ── Mobile Overlay ── */
+#sila-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.55);
+  z-index: 400;
+  opacity: 0;
+  transition: opacity .3s;
+  pointer-events: none;
+}
+#sila-overlay.sila-overlay-show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ── Mobile Bottom Sheet ── */
+#sila-sheet {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 72vh;
+  background: #0f0a1e;
+  border-radius: 20px 20px 0 0;
+  z-index: 500;
+  display: none;
+  flex-direction: column;
+  transform: translateY(100%);
+  transition: transform .32s cubic-bezier(.4,0,.2,1);
+  font-family: Sarabun, sans-serif;
+}
+#sila-sheet.sila-sheet-open { transform: translateY(0); }
+
+#sila-sheet-handle {
+  width: 40px; height: 4px;
+  background: rgba(255,255,255,.2);
+  border-radius: 2px;
+  margin: 10px auto 6px;
+  flex-shrink: 0;
+}
+
+#sila-sheet-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 14px 12px;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  flex-shrink: 0;
+}
+#sila-sheet-ava {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7c3aed, #c9a84c);
+  border: 2px solid rgba(201,168,76,.4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; flex-shrink: 0;
+}
+#sila-sheet-name { font-size: 13px; font-weight: 700; color: #e9d5a1; }
+#sila-sheet-status { font-size: 10px; color: #22c55e; }
+#sila-sheet-close {
+  margin-left: auto;
+  background: none; border: none;
+  color: rgba(255,255,255,.35);
+  font-size: 18px; cursor: pointer;
+  padding: 4px; line-height: 1;
+}
+
+#sila-sheet-msgs {
+  flex: 1; overflow-y: auto;
+  padding: 12px;
+  display: flex; flex-direction: column; gap: 8px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+#sila-sheet-msgs::-webkit-scrollbar { display: none; }
+
+#sila-sheet-input-row {
+  display: flex; gap: 8px; padding: 10px 10px 14px;
+  border-top: 1px solid rgba(255,255,255,.06);
+  flex-shrink: 0;
+}
+#sila-sheet-inp {
+  flex: 1;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
+  color: rgba(255,255,255,.85);
+  font-family: Sarabun, sans-serif;
+  outline: none;
+}
+#sila-sheet-inp::placeholder { color: rgba(255,255,255,.3); }
+#sila-sheet-inp:focus { border-color: rgba(124,58,237,.5); }
+#sila-sheet-send {
+  width: 40px; height: 40px;
+  background: #7c3aed;
+  border: none; border-radius: 50%;
+  color: white; font-size: 14px;
+  cursor: pointer; flex-shrink: 0;
+  transition: background .2s;
+}
+#sila-sheet-send:hover { background: #6d28d9; }
