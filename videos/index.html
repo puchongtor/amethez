@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="th">
 <head>
   <meta charset="UTF-8">
@@ -7,7 +7,7 @@
   <meta name="description" content="รวมวิดีโอความรู้เรื่องคริสตัล หินพลังงาน ฮวงจุ้ย และการบำบัดด้วยหิน พร้อมสรุปโดย AI และแนะนำสินค้าที่เกี่ยวข้อง">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/amethez/css/main.css">
   <style>
     /* ── Hero ── */
     .vh-hero {
@@ -246,16 +246,16 @@
 
 <header class="site-header">
   <div class="container nav-inner">
-    <a href="/" class="logo">
+    <a href="/amethez/" class="logo">
       <svg viewBox="0 0 36 36" fill="none"><polygon points="18,2 30,12 26,30 10,30 6,12" fill="#7c3aed" opacity="0.9"/><polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity="0.95"/><polygon points="18,8 30,12 18,28" fill="#a78bfa"/><polygon points="18,8 6,12 18,28" fill="#7c3aed"/></svg>
       <span>AMETHEZ <small class="logo-tagline">Stones · Stories · Soul</small></span>
     </a>
     <nav><ul class="nav-links">
-      <li><a href="/stones/">💎 คลังหิน</a></li>
-      <li><a href="/guides/">🌿 พลังบำบัด</a></li>
-      <li><a href="/videos/" style="color:#7c3aed;font-weight:700">🎬 วิดีโอ</a></li>
-      <li><a href="/digital/">📥 Digital</a></li>
-      <li><a href="/sale.html" style="color:#c9a84c;font-weight:700">🛒 ร้านค้า</a></li>
+      <li><a href="/amethez/stones/">💎 คลังหิน</a></li>
+      <li><a href="/amethez/guides/">🌿 พลังบำบัด</a></li>
+      <li><a href="/amethez/videos/" style="color:#7c3aed;font-weight:700">🎬 วิดีโอ</a></li>
+      <li><a href="/amethez/digital/">📥 Digital</a></li>
+      <li><a href="/amethez/sale.html" style="color:#c9a84c;font-weight:700">🛒 ร้านค้า</a></li>
     </ul></nav>
   </div>
 </header>
@@ -296,9 +296,9 @@
   <h2>สนใจอ่านบทความเชิงลึก?</h2>
   <p>คลังหินคริสตัลกว่า 300+ บทความ พร้อมคู่มือพลังบำบัดโดยผู้เชี่ยวชาญ</p>
   <div class="vh-cta-btns">
-    <a href="/stones/" class="btn btn-purple">💎 คลังหิน A–Z</a>
-    <a href="/guides/" class="btn" style="background:#f5f0ff;color:#7c3aed;border:1.5px solid #ede9fe">🌿 คู่มือพลังบำบัด</a>
-    <a href="/digital/" class="btn" style="background:#1a0936;color:#c9a84c">📥 คู่มือ PDF ฟรี</a>
+    <a href="/amethez/stones/" class="btn btn-purple">💎 คลังหิน A–Z</a>
+    <a href="/amethez/guides/" class="btn" style="background:#f5f0ff;color:#7c3aed;border:1.5px solid #ede9fe">🌿 คู่มือพลังบำบัด</a>
+    <a href="/amethez/digital/" class="btn" style="background:#1a0936;color:#c9a84c">📥 คู่มือ PDF ฟรี</a>
   </div>
 </section>
 
@@ -337,7 +337,7 @@ let allVideos = [...VIDEO_INDEX];
 let activeFilter = 'all';
 
 // Try loading from video-index.json
-fetch('/data/video-index.json')
+fetch('/amethez/data/video-index.json')
   .then(r => r.json())
   .then(data => {
     allVideos = data.videos || allVideos;
@@ -368,7 +368,7 @@ function renderGrid(videos) {
     const tagHtml = (v.tags || []).slice(0,3).map(t => `<span class="vh-card-tag">${t}</span>`).join('');
     return `
       <article class="vh-card">
-        <a href="/videos/${v.slug}.html" class="vh-card-thumb">
+        <a href="/amethez/videos/${v.slug}.html" class="vh-card-thumb">
           <img src="https://img.youtube.com/vi/${v.vid}/mqdefault.jpg" alt="${v.title}" loading="lazy">
           <div class="vh-play-btn"><div class="vh-play-icon">▶</div></div>
         </a>
@@ -378,13 +378,13 @@ function renderGrid(videos) {
           <p class="vh-card-summary">${v.summary}</p>
           <div class="vh-card-footer">
             <div class="vh-avatar-chip">${av.icon} ${av.name}</div>
-            <a href="/videos/${v.slug}.html" class="vh-read-btn">อ่านสรุป →</a>
+            <a href="/amethez/videos/${v.slug}.html" class="vh-read-btn">อ่านสรุป →</a>
           </div>
         </div>
       </article>`;
   }).join('');
 }
 </script>
-<script src="/js/main.js"></script>
+<script src="/amethez/js/main.js"></script>
 </body>
 </html>

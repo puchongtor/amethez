@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="th">
 <head>
   <meta charset="UTF-8">
@@ -76,8 +76,8 @@
 <canvas id="viz"></canvas>
 
 <div class="topnav">
-  <a href="/talk/">← คุยกับหินทั้งหมด</a>
-  <a href="/" class="brand">AMETHEZ</a>
+  <a href="/amethez/talk/">← คุยกับหินทั้งหมด</a>
+  <a href="/amethez/" class="brand">AMETHEZ</a>
 </div>
 
 <div id="content">
@@ -131,7 +131,7 @@ async function load() {
       return;
     } catch(e) { /* try next */ }
   }
-  document.getElementById('content').innerHTML = '<div class="loading">❌ โหลดข้อมูลไม่สำเร็จ <a href="/talk/" style="color:#c9a84c">กลับหน้ารวม</a></div>';
+  document.getElementById('content').innerHTML = '<div class="loading">❌ โหลดข้อมูลไม่สำเร็จ <a href="/amethez/talk/" style="color:#c9a84c">กลับหน้ารวม</a></div>';
 }
 
 function render() {
