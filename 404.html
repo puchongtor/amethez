@@ -42,13 +42,32 @@
   <div class="error-inner">
     <div class="crystal-404">💎</div>
     <div class="error-num">404</div>
-    <h1 class="error-title">หาหน้านี้ไม่เจอค่ะ</h1>
-    <p class="error-desc">หน้าที่คุณต้องการอาจถูกย้าย ลบ หรือ URL ไม่ถูกต้อง<br>ลองค้นหาหินที่ต้องการได้เลย</p>
+    <h1 class="error-title">ไม่พบหน้าที่คุณต้องการ</h1>
+    <p class="error-desc">อาจย้ายหรือถูกลบไปแล้ว แต่เรามีเนื้อหาดีๆ รอคุณอยู่<br>ลองค้นหาหิน หรือเลือกเนื้อหาแนะนำด้านล่างได้เลย</p>
 
     <!-- Search -->
     <div class="search-box">
       <input type="search" id="errSearch" placeholder="ค้นหาหิน เช่น อเมทิสต์, ความรัก..." onkeydown="if(event.key==='Enter')doSearch()">
       <button onclick="doSearch()" class="btn btn-primary">🔍</button>
+    </div>
+
+    <!-- Quick link cards -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:1.5rem;text-align:left">
+      <a href="/amethez/stones/" style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:.875rem;padding:1rem 1.1rem;text-decoration:none;transition:all .2s;display:block" onmouseover="this.style.background='rgba(124,58,237,.25)'" onmouseout="this.style.background='rgba(255,255,255,.07)'">
+        <div style="font-size:1.75rem;margin-bottom:.5rem">💎</div>
+        <div style="color:white;font-weight:700;font-size:.88rem;margin-bottom:.25rem">คลังหิน</div>
+        <div style="color:rgba(255,255,255,.45);font-size:.75rem">ค้นหาหิน 300+ ชนิด</div>
+      </a>
+      <a href="/amethez/guides/" style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:.875rem;padding:1rem 1.1rem;text-decoration:none;transition:all .2s;display:block" onmouseover="this.style.background='rgba(124,58,237,.25)'" onmouseout="this.style.background='rgba(255,255,255,.07)'">
+        <div style="font-size:1.75rem;margin-bottom:.5rem">🌿</div>
+        <div style="color:white;font-weight:700;font-size:.88rem;margin-bottom:.25rem">คู่มือ</div>
+        <div style="color:rgba(255,255,255,.45);font-size:.75rem">วิธีใช้หินให้ถูกต้อง</div>
+      </a>
+      <a href="/amethez/talk/" style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:.875rem;padding:1rem 1.1rem;text-decoration:none;transition:all .2s;display:block" onmouseover="this.style.background='rgba(124,58,237,.25)'" onmouseout="this.style.background='rgba(255,255,255,.07)'">
+        <div style="font-size:1.75rem;margin-bottom:.5rem">🔮</div>
+        <div style="color:white;font-weight:700;font-size:.88rem;margin-bottom:.25rem">คุยกับหิน</div>
+        <div style="color:rgba(255,255,255,.45);font-size:.75rem">บทตั้งจิตและสมาธิ</div>
+      </a>
     </div>
 
     <!-- Quick links -->
