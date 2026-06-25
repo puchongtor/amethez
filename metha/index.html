@@ -3,11 +3,169 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>อาจารย์เมธา — ดวงรายวัน หินตามดวง สายมู | Amethez</title>
-  <meta name="description" content="อาจารย์เมธา ดวงรายวัน หินเสริมดวง ฤกษ์มงคล และคำแนะนำสายมูจากผู้เชี่ยวชาญ อัปเดตทุกวัน">
+  <title>อาจารย์เมธา — ดวงรายวัน หินตามดวง ฤกษ์มงคล สายมู | Amethez</title>
+  <meta name="description" content="อาจารย์เมธา ดวงรายวัน 12 ราศี หินประจำวันเกิด ฤกษ์มงคล และคำแนะนำสายมูจากผู้เชี่ยวชาญ อัปเดตทุกวัน">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/amethez/css/main.css">
+  <style>
+    /* ── Hero ── */
+    .metha-hero {
+      background: linear-gradient(160deg, #0f0a1e 0%, #1a0a3e 50%, #0a0f1e 100%);
+      padding: 5rem 1.5rem 4rem;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .metha-hero::before {
+      content: '';
+      position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(ellipse, rgba(99,58,200,0.28) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .metha-hero-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+    .metha-badge {
+      display: inline-flex; align-items: center; gap: .7rem;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(167,139,250,.25);
+      border-radius: 3rem; padding: .5rem 1.3rem; margin-bottom: 2rem;
+      color: rgba(255,255,255,.8); font-size: .9rem;
+    }
+    .metha-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 6vw, 3.8rem);
+      color: white; margin-bottom: .75rem;
+    }
+    .metha-hero h1 span { color: #a78bfa; }
+    .metha-hero-sub { color: rgba(255,255,255,.75); font-size: 1.1rem; margin-bottom: 2rem; }
+    .date-box {
+      display: inline-block;
+      background: rgba(255,255,255,.07); border: 1px solid rgba(201,168,76,.25);
+      border-radius: 1rem; padding: 1rem 2rem;
+      color: #e6c97a; font-size: 1.1rem; font-weight: 500;
+    }
+    /* ── Horoscope Section ── */
+    .metha-section { padding: 4rem 1.5rem; }
+    .metha-section.alt { background: #f3effa; }
+    .metha-section.dark { background: #1a1228; color: white; }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem,4vw,2.3rem);
+      color: #1a1228; margin-bottom: .5rem; text-align: center;
+    }
+    .dark .section-title { color: white; }
+    .section-sub { text-align: center; color: #6b5e8a; margin-bottom: 2.5rem; font-size: 1rem; }
+    .dark .section-sub { color: rgba(255,255,255,.6); }
+    .container-narrow { max-width: 960px; margin: 0 auto; }
+
+    /* ── 12 Zodiac Grid ── */
+    .zodiac-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+    .zodiac-card {
+      background: white; border-radius: 1.25rem;
+      border: 1px solid #e9e0f8; padding: 1.5rem;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .zodiac-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(124,58,237,.09); }
+    .zodiac-top { display: flex; align-items: center; gap: .85rem; margin-bottom: .85rem; }
+    .zodiac-emoji { font-size: 2rem; }
+    .zodiac-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: #1a1228; }
+    .zodiac-en { font-size: .78rem; color: #9b89bb; }
+    .zodiac-lucky {
+      display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: .7rem;
+    }
+    .lucky-tag {
+      background: #f3effa; color: #7c3aed; font-size: .75rem;
+      padding: .2rem .65rem; border-radius: 2rem; border: 1px solid #e0d4f7;
+    }
+    .zodiac-advice { font-size: .88rem; color: #5a4e72; line-height: 1.7; margin-bottom: .5rem; }
+    .zodiac-stone-row { display: flex; align-items: center; gap: .5rem; font-size: .82rem; }
+    .zodiac-stone-row span { color: #9b89bb; }
+    .zodiac-stone-row strong { color: #7c3aed; }
+    .lucky-num { margin-top: .5rem; font-size: .82rem; color: #9b89bb; }
+    .lucky-num strong { color: #c9a84c; }
+
+    /* ── Day Stone Table ── */
+    .day-table-wrap { overflow-x: auto; border-radius: 1rem; margin-top: .5rem; }
+    .day-table {
+      width: 100%; border-collapse: collapse;
+      font-family: Sarabun, sans-serif;
+    }
+    .day-table th {
+      background: linear-gradient(135deg, #7c3aed, #5b21b6);
+      color: white; padding: .85rem 1rem; text-align: left; font-size: .88rem;
+    }
+    .day-table th:first-child { border-radius: .75rem 0 0 0; }
+    .day-table th:last-child { border-radius: 0 .75rem 0 0; }
+    .day-table td { padding: .85rem 1rem; font-size: .88rem; border-bottom: 1px solid #f0e8ff; vertical-align: top; }
+    .day-table tr:nth-child(even) td { background: #faf7ff; }
+    .day-table .day-name { font-weight: 700; font-size: .95rem; }
+    .day-table .stone-name { color: #7c3aed; font-weight: 600; }
+    .day-table .meaning { color: #5a4e72; font-size: .85rem; }
+    .sun-row { background: #fff7e6 !important; }
+    .sun-row .day-name { color: #b45309; }
+    .mon-row { background: #f0fdf4 !important; }
+    .mon-row .day-name { color: #166534; }
+    .tue-row { background: #fff1f2 !important; }
+    .tue-row .day-name { color: #be123c; }
+    .wed-row { background: #ecfdf5 !important; }
+    .wed-row .day-name { color: #065f46; }
+    .thu-row { background: #fffbeb !important; }
+    .thu-row .day-name { color: #92400e; }
+    .fri-row { background: #fdf4ff !important; }
+    .fri-row .day-name { color: #7e22ce; }
+    .sat-row { background: #f1f5f9 !important; }
+    .sat-row .day-name { color: #1e3a5f; }
+
+    /* ── Auspicious Dates ── */
+    .auspicious-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;
+    }
+    .auspi-card {
+      background: rgba(255,255,255,.07); border: 1px solid rgba(201,168,76,.2);
+      border-radius: 1rem; padding: 1.25rem; text-align: center;
+    }
+    .auspi-date { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: #c9a84c; margin-bottom: .3rem; }
+    .auspi-day { font-size: .82rem; color: rgba(255,255,255,.55); margin-bottom: .6rem; }
+    .auspi-type { font-size: .88rem; color: rgba(255,255,255,.8); margin-bottom: .5rem; font-weight: 600; }
+    .auspi-stone { font-size: .8rem; color: #a78bfa; }
+    .auspi-note { font-size: .8rem; color: rgba(255,255,255,.55); margin-top: .4rem; line-height: 1.5; }
+
+    /* ── 9 Planets ── */
+    .planets-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.25rem;
+    }
+    .planet-card {
+      background: white; border: 1px solid #e9e0f8; border-radius: 1.25rem;
+      padding: 1.5rem; transition: box-shadow .2s;
+    }
+    .planet-card:hover { box-shadow: 0 8px 24px rgba(124,58,237,.08); }
+    .planet-top { display: flex; align-items: center; gap: .85rem; margin-bottom: .85rem; }
+    .planet-emoji { font-size: 2rem; }
+    .planet-name-th { font-family: 'Playfair Display', serif; font-size: 1rem; color: #1a1228; }
+    .planet-name-en { font-size: .78rem; color: #9b89bb; }
+    .planet-stones { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .6rem; }
+    .planet-stone { background: #f3effa; color: #7c3aed; border: 1px solid #e0d4f7; border-radius: 2rem; font-size: .75rem; padding: .2rem .65rem; }
+    .planet-meaning { font-size: .85rem; color: #5a4e72; line-height: 1.7; }
+
+    /* ── CTA ── */
+    .metha-cta {
+      background: linear-gradient(135deg, #7c3aed, #5b21b6);
+      padding: 3.5rem 1.5rem; text-align: center;
+    }
+    .metha-cta h2 { font-family: 'Playfair Display', serif; font-size: 2rem; color: white; margin-bottom: .75rem; }
+    .metha-cta p { color: rgba(255,255,255,.8); margin-bottom: 2rem; font-size: 1rem; }
+    .btn-line-metha {
+      display: inline-flex; align-items: center; gap: .6rem;
+      background: #06C755; color: white;
+      padding: .9rem 2.25rem; border-radius: 3rem;
+      text-decoration: none; font-weight: 700; font-size: 1rem;
+      transition: opacity .2s; box-shadow: 0 4px 20px rgba(6,199,85,.35);
+    }
+    .btn-line-metha:hover { opacity: .9; }
+  </style>
 </head>
 <body>
 
@@ -22,118 +180,391 @@
       <li><a href="/amethez/categories/chakra.html">จักระ</a></li>
       <li><a href="/amethez/categories/zodiac.html">ราศี</a></li>
       <li><a href="/amethez/wuchong/">Master Wuchong</a></li>
-      <li><a href="/amethez/metha/" style="color:var(--purple)">อาจารย์เมธา</a></li>
+      <li><a href="/amethez/metha/" style="color:var(--gold)">อาจารย์เมธา</a></li>
       <li><a href="/amethez/sale.html" style="color:var(--gold)">🛒 ร้านค้า</a></li>
     </ul></nav>
   </div>
 </header>
 
-<section class="article-hero" style="background:linear-gradient(135deg,#0f0a1e,#1a0a3e,#0f0a1e)">
-  <div class="container" style="max-width:700px">
-    <div style="font-size:4rem;margin-bottom:1rem">🌙</div>
-    <h1>อาจารย์เมธา</h1>
-    <p style="color:rgba(255,255,255,0.85);font-size:1.15rem">ดวงรายวัน · หินตามดวง · ฤกษ์มงคล · คำแนะนำสายมู</p>
-    <div style="margin-top:1.5rem;background:rgba(255,255,255,0.08);border-radius:1rem;padding:1.25rem;border:1px solid rgba(255,255,255,0.15)">
-      <p style="color:var(--gold-light,#e6c97a);font-size:1rem;margin:0" id="todayDate"></p>
+<!-- ── HERO ── -->
+<section class="metha-hero">
+  <div class="metha-hero-inner">
+    <div class="metha-badge"><span>🌙</span><span>โหราศาสตร์ · หินตามดวง · ฤกษ์มงคล</span></div>
+    <h1>อาจารย์<span>เมธา</span></h1>
+    <p class="metha-hero-sub">ดวง · หินตามดวง · ฤกษ์มงคล · สายมู</p>
+    <div class="date-box" id="todayDate">วันนี้ กำลังโหลด...</div>
+  </div>
+</section>
+
+<!-- ── DAILY HOROSCOPE ── -->
+<section class="metha-section">
+  <div class="container-narrow">
+    <h2 class="section-title">ดวงรายวัน 12 ราศี</h2>
+    <p class="section-sub">อาจารย์เมธา อ่านดวงพร้อมหินเสริมดวงประจำวัน</p>
+    <div class="zodiac-grid">
+
+      <div class="zodiac-card">
+        <div class="zodiac-top">
+          <span class="zodiac-emoji">♈</span>
+          <div><div class="zodiac-name">เมษ</div><div class="zodiac-en">Aries · 21 มี.ค – 19 เม.ย</div></div>
+        </div>
+        <div class="zodiac-lucky"><span class="lucky-tag">⭐⭐⭐⭐</span><span class="lucky-tag">การงานดี</span></div>
+        <p class="zodiac-advice">วันนี้พลังงานสูง เหมาะริเริ่มโปรเจคใหม่หรือเจรจาธุรกิจ ระวังความใจร้อนที่อาจทำให้เสียโอกาส ใจเย็นๆ ฟังคนอื่นด้วย</p>
+        <div class="zodiac-stone-row"><span>หินแนะนำ:</span><strong>Carnelian — เพิ่มความมั่นใจและพลังงาน</strong></div>
+        <div class="lucky-num"><strong>เลขมงคล: 1, 9</strong> · สีมงคล: แดง</div>
+      </div>
+
+      <div class="zodiac-card">
+        <div class="zodiac-top">
+          <span class="zodiac-emoji">♉</span>
+          <div><div class="zodiac-name">พฤษภ</div><div class="zodiac-en">Taurus · 20 เม.ย – 20 พ.ค</div></div>
+        </div>
+        <div class="zodiac-lucky"><span class="lucky-tag">⭐⭐⭐</span><span class="lucky-tag">การเงินปานกลาง</span></div>
+        <p class="zodiac-advice">ช่วงนี้เหมาะกับการวางแผนระยะยาวมากกว่าลงทุนระยะสั้น ความสัมพันธ์ดี เพื่อนเก่าอาจกลับมาพร้อมข่าวดี</p>
+        <div class="zodiac-stone-row"><span>หินแนะนำ:</span><strong>Rose Quartz — เสริมความรักและความสัมพันธ์</strong></div>
+        <div class="lucky-num"><strong>เลขมงคล: 6, 4</strong> · สีมงคล: เขียว</div>
+      </div>
+
+      <div class="zodiac-card">
+        <div class="zodiac-top">
+          <span class="zodiac-emoji">♊</span>
+          <div><div class="zodiac-name">เมถุน</div><div class="zodiac-en">Gemini · 21 พ.ค – 20 มิ.ย</div></div>
+        </div>
+        <div class="zodiac-lucky"><span class="lucky-tag">⭐⭐⭐⭐⭐</span><span class="lucky-tag">โชคลาภพุ่ง</span></div>
+        <p class="zodiac-advice">ดาวส่งเสริมด้านการสื่อสารและความคิดสร้างสรรค์ เหมาะนำเสนองาน เขียน หรือพูดในที่สาธารณะ ลองไอเดียใหม่ๆ ได้เลย</p>
+        <div class="zodiac-stone-row"><span>หินแนะนำ:</span><strong>Citrine — เสริมความสดใสและโชคลาภ</strong></div>
+        <div class="lucky-num"><strong>เลขมงคล: 3, 5</strong> · สีมงคล: เหลือง</div>
+      </div>
+
+      <div class="zodiac-card">
+        <div class="zodiac-top">
+          <span class="zodiac-emoji">♋</span>
+          <div><div class="zodiac-name">กรกฎ</div><div class="zodiac-en">Cancer · 21 มิ.ย – 22 ก.ค</div></div>
+        </div>
+        <div class="zodiac-lucky"><span class="lucky-tag">⭐⭐⭐</span><span class="lucky-tag">ครอบครัวอบอุ่น</span></div>
+        <p class="zodiac-advice">จิตใจอ่อนไหวเล็กน้อย ดูแลตัวเองก่อนดูแลคนอื่น เรื่องบ้านและครอบครัวคือพลังงาน ใช้เวลากับคนที่รักจะช่วยได้มาก</p>
+        <div class="zodiac-stone-row"><span>หินแนะนำ:</span><strong>Moonstone — สงบอารมณ์ เสริมสัญชาตญาณ</strong></div>
+        <div class="lucky-num"><strong>เลขมงคล: 2, 7</strong> · สีมงคล: ขาว</div>
+      </div>
+
+      <div class="zodiac-card">
+        <div class="zodiac-top">
+          <span class="zodiac-emoji">♌</span>
+          <div><div class="zodiac-name">สิงห์</div><div class="zodiac-en">Leo · 23 ก.ค – 22 ส.ค</div></div>
+        </div>
+        <div class="zodiac-lucky"><span class="lucky-tag">⭐⭐⭐⭐</span><span class="lucky-tag">บารมีสูง</span></div>
+        <p class="zodiac-advice">วันนี้โดดเด่นมาก คนรอบข้างมองเห็นคุณค่าของคุณ โอกาสได้รับการยอมรับหรือเลื่อนตำแหน่ง ระวังอย่าใช้จ่ายเกินตัว</p>
+        <div class="zodiac-stone-row"><span>หินแนะนำ:</span><strong>Tiger's Eye — เสริมบารมีและความมั่นใจ</strong></div>
+        <div class="lucky-num"><strong>เลขมงคล: 1, 8</strong> · สีมงคล: ทอง</div>
+      </div>
+
+      <div class="zodiac-card">
+        <div class="zodiac-top">
+          <span class="zodiac-emoji">♍</span>
+          <div><div class="zodiac-name">กันย์</div><div class="zodiac-en">Virgo · 23 ส.ค – 22 ก.ย</div></div>
+        </div>
+        <div class="zodiac-lucky"><span class="lucky-tag">⭐⭐⭐</span><span class="lucky-tag">สุขภาพดี</span></div>
+        <p class="zodiac-advice">วันนี้เหมาะวางแผน จัดระเบียบ และทำงานที่ต้องการความละเอียด สุขภาพดี แต่ควรพักผ่อนให้เพียงพอ อย่าทำงานดึกมาก</p>
+        <div class="zodiac-stone-row"><span>หินแนะนำ:</span><strong>Fluorite — เสริมสมาธิและความคิดชัดเจน</strong></div>
+        <div class="lucky-num"><strong>เลขมงคล: 5, 2</strong> · สีมงคล: เขียวอ่อน</div>
+      </div>
+
+      <div class="zodiac-card">
+        <div class="zodiac-top">
+          <span class="zodiac-emoji">♎</span>
+          <div><div class="zodiac-name">ตุลย์</div><div class="zodiac-en">Libra · 23 ก.ย – 22 ต.ค</div></div>
+        </div>
+        <div class="zodiac-lucky"><span class="lucky-tag">⭐⭐⭐⭐</span><span class="lucky-tag">ความรักดี</span></div>
+        <p class="zodiac-advice">พลังงานความรักสูงวันนี้ คู่รักควรใช้เวลาด้วยกัน คนโสดมีโอกาสพบคนพิเศษ การงานต้องตัดสินใจ อย่าลังเลนานเกินไป</p>
+        <div class="zodiac-stone-row"><span>หินแนะนำ:</span><strong>Rose Quartz + Rhodonite — ความรักสมดุล</strong></div>
+        <div class="lucky-num"><strong>เลขมงคล: 6, 9</strong> · สีมงคล: ชมพู</div>
+      </div>
+
+      <div class="zodiac-card">
+        <div class="zodiac-top">
+          <span class="zodiac-emoji">♏</span>
+          <div><div class="zodiac-name">พิจิก</div><div class="zodiac-en">Scorpio · 23 ต.ค – 21 พ.ย</div></div>
+        </div>
+        <div class="zodiac-lucky"><span class="lucky-tag">⭐⭐⭐</span><span class="lucky-tag">ลึกลับน่าค้นหา</span></div>
+        <p class="zodiac-advice">สัญชาตญาณแหลมคมมากวันนี้ เชื่อความรู้สึกตัวเองในเรื่องสำคัญ หลีกเลี่ยงคนที่พลังงานลบ ระวังเรื่องความลับรั่วไหล</p>
+        <div class="zodiac-stone-row"><span>หินแนะนำ:</span><strong>Obsidian — ปกป้องและเปิดสัญชาตญาณ</strong></div>
+        <div class="lucky-num"><strong>เลขมงคล: 8, 0</strong> · สีมงคล: ดำ</div>
+      </div>
+
+      <div class="zodiac-card">
+        <div class="zodiac-top">
+          <span class="zodiac-emoji">♐</span>
+          <div><div class="zodiac-name">ธนู</div><div class="zodiac-en">Sagittarius · 22 พ.ย – 21 ธ.ค</div></div>
+        </div>
+        <div class="zodiac-lucky"><span class="lucky-tag">⭐⭐⭐⭐</span><span class="lucky-tag">การเดินทางดี</span></div>
+        <p class="zodiac-advice">วันแห่งอิสรภาพและการผจญภัย เหมาะออกเดินทาง เรียนรู้สิ่งใหม่ หรือขยายเครือข่าย โชคดีจากต่างถิ่นหรือชาวต่างชาติ</p>
+        <div class="zodiac-stone-row"><span>หินแนะนำ:</span><strong>Labradorite — เปิดโลกทัศน์และโชคการเดินทาง</strong></div>
+        <div class="lucky-num"><strong>เลขมงคล: 3, 7</strong> · สีมงคล: ฟ้า</div>
+      </div>
+
+      <div class="zodiac-card">
+        <div class="zodiac-top">
+          <span class="zodiac-emoji">♑</span>
+          <div><div class="zodiac-name">มังกร</div><div class="zodiac-en">Capricorn · 22 ธ.ค – 19 ม.ค</div></div>
+        </div>
+        <div class="zodiac-lucky"><span class="lucky-tag">⭐⭐⭐⭐</span><span class="lucky-tag">การงานมั่นคง</span></div>
+        <p class="zodiac-advice">ความขยันและความสม่ำเสมอให้ผลในวันนี้ ผู้บังคับบัญชาเห็นคุณค่า โอกาสก้าวหน้าในสายงาน การเงินมั่นคงขึ้น</p>
+        <div class="zodiac-stone-row"><span>หินแนะนำ:</span><strong>Garnet — ความมุ่งมั่นและความสำเร็จ</strong></div>
+        <div class="lucky-num"><strong>เลขมงคล: 4, 8</strong> · สีมงคล: น้ำตาล</div>
+      </div>
+
+      <div class="zodiac-card">
+        <div class="zodiac-top">
+          <span class="zodiac-emoji">♒</span>
+          <div><div class="zodiac-name">กุมภ์</div><div class="zodiac-en">Aquarius · 20 ม.ค – 18 ก.พ</div></div>
+        </div>
+        <div class="zodiac-lucky"><span class="lucky-tag">⭐⭐⭐</span><span class="lucky-tag">ความคิดสร้างสรรค์</span></div>
+        <p class="zodiac-advice">ไอเดียล้นสมอง วันดีสำหรับนักสร้างสรรค์ นักเขียน นักออกแบบ เพื่อนฝูงนำข่าวดีมา รักษาความสัมพันธ์กับคนใกล้ชิด</p>
+        <div class="zodiac-stone-row"><span>หินแนะนำ:</span><strong>Aquamarine — ความสร้างสรรค์และการสื่อสาร</strong></div>
+        <div class="lucky-num"><strong>เลขมงคล: 4, 11</strong> · สีมงคล: ฟ้าอ่อน</div>
+      </div>
+
+      <div class="zodiac-card">
+        <div class="zodiac-top">
+          <span class="zodiac-emoji">♓</span>
+          <div><div class="zodiac-name">มีน</div><div class="zodiac-en">Pisces · 19 ก.พ – 20 มี.ค</div></div>
+        </div>
+        <div class="zodiac-lucky"><span class="lucky-tag">⭐⭐⭐⭐</span><span class="lucky-tag">จิตใจอ่อนโยน</span></div>
+        <p class="zodiac-advice">วันนี้พลังงานด้านจิตวิญญาณและสัญชาตญาณสูงมาก เหมาะนั่งสมาธิ ฝัน หรือทำงานศิลปะ ระวังอย่าให้ตัวเองหมดพลังงานกับคนอื่น</p>
+        <div class="zodiac-stone-row"><span>หินแนะนำ:</span><strong>Amethyst — เสริมสัญชาตญาณและสงบใจ</strong></div>
+        <div class="lucky-num"><strong>เลขมงคล: 2, 7</strong> · สีมงคล: ม่วง</div>
+      </div>
+
     </div>
   </div>
 </section>
 
-<section class="section">
-  <div class="container">
-    <div class="section-header">
-      <h2>ดวงรายวัน 12 ราศี 🌟</h2>
-      <p>อัปเดตทุกวัน — เลือกราศีของคุณ</p>
+<!-- ── DAY STONE ── -->
+<section class="metha-section alt">
+  <div class="container-narrow">
+    <h2 class="section-title">หินตามวันเกิด</h2>
+    <p class="section-sub">โหราศาสตร์ไทยโบราณกำหนดหินมงคลตามวันเกิดของแต่ละคน</p>
+    <div class="day-table-wrap">
+      <table class="day-table">
+        <thead>
+          <tr>
+            <th>วัน</th>
+            <th>หินมงคล</th>
+            <th>หินคริสตัลทดแทน</th>
+            <th>พลังงานหลัก</th>
+            <th>วิธีใช้</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="sun-row">
+            <td class="day-name">☀️ อาทิตย์</td>
+            <td class="stone-name">ทับทิม (Ruby)</td>
+            <td class="stone-name">Red Carnelian</td>
+            <td>พลังงาน ความมั่นใจ บารมี</td>
+            <td class="meaning">สวมนิ้วนางมือขวา ชาร์จด้วยแสงอาทิตย์ยามเช้า</td>
+          </tr>
+          <tr class="mon-row">
+            <td class="day-name">🌙 จันทร์</td>
+            <td class="stone-name">ไข่มุก (Pearl)</td>
+            <td class="stone-name">Moonstone</td>
+            <td>ความอ่อนโยน ครอบครัว อารมณ์</td>
+            <td class="meaning">สวมนิ้วนางมือซ้าย ชาร์จด้วยแสงจันทร์</td>
+          </tr>
+          <tr class="tue-row">
+            <td class="day-name">🔴 อังคาร</td>
+            <td class="stone-name">เลือดหมู (Coral)</td>
+            <td class="stone-name">Bloodstone / Garnet</td>
+            <td>ความกล้าหาญ ปกป้อง ความมุ่งมั่น</td>
+            <td class="meaning">พกในกระเป๋า หรือสวมเป็นกำไล</td>
+          </tr>
+          <tr class="wed-row">
+            <td class="day-name">💚 พุธ</td>
+            <td class="stone-name">มรกต (Emerald)</td>
+            <td class="stone-name">Green Aventurine</td>
+            <td>ปัญญา การสื่อสาร ความคิดสร้างสรรค์</td>
+            <td class="meaning">สวมนิ้วก้อยหรือพกในกระเป๋าใส่เครื่องเขียน</td>
+          </tr>
+          <tr class="thu-row">
+            <td class="day-name">🟡 พฤหัสบดี</td>
+            <td class="stone-name">บุษราคัม (Yellow Sapphire)</td>
+            <td class="stone-name">Citrine</td>
+            <td>โชคลาภ ความสำเร็จ การศึกษา</td>
+            <td class="meaning">วางบนโต๊ะทำงานหรือโต๊ะเรียน ใส่ในกระเป๋าเงิน</td>
+          </tr>
+          <tr class="fri-row">
+            <td class="day-name">💜 ศุกร์</td>
+            <td class="stone-name">เพชร (Diamond)</td>
+            <td class="stone-name">Rose Quartz / Morganite</td>
+            <td>ความรัก ความงาม ความสัมพันธ์</td>
+            <td class="meaning">สวมนิ้วนาง พกใกล้หัวใจหรือในกระเป๋าเสื้อ</td>
+          </tr>
+          <tr class="sat-row">
+            <td class="day-name">🔵 เสาร์</td>
+            <td class="stone-name">นิล (Blue Sapphire)</td>
+            <td class="stone-name">Amethyst / Sodalite</td>
+            <td>สมาธิ ปัญญา ความอดทน วินัย</td>
+            <td class="meaning">สวมนิ้วกลาง ชาร์จด้วยแสงจันทร์ เหมาะทำสมาธิ</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-
-    <div class="grid-4">
-      <div class="card" style="text-align:center;cursor:pointer" onclick="this.querySelector('.fortune').style.display='block'">
-        <div style="font-size:2rem">♈</div>
-        <h3 style="font-size:1rem">ราศีเมษ</h3>
-        <p class="fortune" style="display:none;font-size:0.9rem;color:var(--text-muted)">วันนี้เหมาะสำหรับการริเริ่มสิ่งใหม่ พลังงานสูง ระวังการตัดสินใจเร็วเกินไป หินแนะนำ: Carnelian</p>
-      </div>
-      <div class="card" style="text-align:center;cursor:pointer" onclick="this.querySelector('.fortune').style.display='block'">
-        <div style="font-size:2rem">♉</div>
-        <h3 style="font-size:1rem">ราศีพฤษภ</h3>
-        <p class="fortune" style="display:none;font-size:0.9rem;color:var(--text-muted)">การเงินดีขึ้น ระวังการใช้จ่ายฟุ่มเฟือย ความรักมีข่าวดี หินแนะนำ: ซิทริน</p>
-      </div>
-      <div class="card" style="text-align:center;cursor:pointer" onclick="this.querySelector('.fortune').style.display='block'">
-        <div style="font-size:2rem">♊</div>
-        <h3 style="font-size:1rem">ราศีเมถุน</h3>
-        <p class="fortune" style="display:none;font-size:0.9rem;color:var(--text-muted)">การสื่อสารเด่น โอกาสใหม่จากคนรู้จัก ระวังข้อมูลผิดพลาด หินแนะนำ: Aquamarine</p>
-      </div>
-      <div class="card" style="text-align:center;cursor:pointer" onclick="this.querySelector('.fortune').style.display='block'">
-        <div style="font-size:2rem">♋</div>
-        <h3 style="font-size:1rem">ราศีกรกฎ</h3>
-        <p class="fortune" style="display:none;font-size:0.9rem;color:var(--text-muted)">ครอบครัวอบอุ่น บ้านนำโชค พักผ่อนดีกว่าเร่งรีบ หินแนะนำ: Moonstone</p>
-      </div>
-      <div class="card" style="text-align:center;cursor:pointer" onclick="this.querySelector('.fortune').style.display='block'">
-        <div style="font-size:2rem">♌</div>
-        <h3 style="font-size:1rem">ราศีสิงห์</h3>
-        <p class="fortune" style="display:none;font-size:0.9rem;color:var(--text-muted)">ดวงเด่น โดดเด่นในสังคม โอกาสแสดงความสามารถ หินแนะนำ: อเมทิสต์</p>
-      </div>
-      <div class="card" style="text-align:center;cursor:pointer" onclick="this.querySelector('.fortune').style.display='block'">
-        <div style="font-size:2rem">♍</div>
-        <h3 style="font-size:1rem">ราศีกันย์</h3>
-        <p class="fortune" style="display:none;font-size:0.9rem;color:var(--text-muted)">งานละเอียดออกมาดี สุขภาพต้องดูแล หลีกเลี่ยงความเครียด หินแนะนำ: Amazonite</p>
-      </div>
-      <div class="card" style="text-align:center;cursor:pointer" onclick="this.querySelector('.fortune').style.display='block'">
-        <div style="font-size:2rem">♎</div>
-        <h3 style="font-size:1rem">ราศีตุลย์</h3>
-        <p class="fortune" style="display:none;font-size:0.9rem;color:var(--text-muted)">ความสัมพันธ์ราบรื่น การเจรจาได้เปรียบ ระวังความลังเล หินแนะนำ: Rose Quartz</p>
-      </div>
-      <div class="card" style="text-align:center;cursor:pointer" onclick="this.querySelector('.fortune').style.display='block'">
-        <div style="font-size:2rem">♏</div>
-        <h3 style="font-size:1rem">ราศีพิจิก</h3>
-        <p class="fortune" style="display:none;font-size:0.9rem;color:var(--text-muted)">ลึกซึ้งและเข้มแข็ง การเปลี่ยนแปลงนำผลดี ระวังอารมณ์รุนแรง หินแนะนำ: โมลดาไวท์</p>
-      </div>
-      <div class="card" style="text-align:center;cursor:pointer" onclick="this.querySelector('.fortune').style.display='block'">
-        <div style="font-size:2rem">♐</div>
-        <h3 style="font-size:1rem">ราศีธนู</h3>
-        <p class="fortune" style="display:none;font-size:0.9rm;color:var(--text-muted)">โชคจากต่างถิ่น การเดินทางเป็นมงคล ความรู้ใหม่มาถึง หินแนะนำ: ซิทริน</p>
-      </div>
-      <div class="card" style="text-align:center;cursor:pointer" onclick="this.querySelector('.fortune').style.display='block'">
-        <div style="font-size:2rem">♑</div>
-        <h3 style="font-size:1rem">ราศีมังกร</h3>
-        <p class="fortune" style="display:none;font-size:0.9rem;color:var(--text-muted)">ความพยายามเห็นผล หัวหน้าให้ความสำคัญ ระวังสุขภาพ หินแนะนำ: Garnet</p>
-      </div>
-      <div class="card" style="text-align:center;cursor:pointer" onclick="this.querySelector('.fortune').style.display='block'">
-        <div style="font-size:2rem">♒</div>
-        <h3 style="font-size:1rem">ราศีกุมภ์</h3>
-        <p class="fortune" style="display:none;font-size:0.9rem;color:var(--text-muted)">ความคิดสร้างสรรค์พุ่ง เพื่อนช่วยเหลือ โปรเจกต์ใหม่น่าสนใจ หินแนะนำ: อเมทิสต์</p>
-      </div>
-      <div class="card" style="text-align:center;cursor:pointer" onclick="this.querySelector('.fortune').style.display='block'">
-        <div style="font-size:2rem">♓</div>
-        <h3 style="font-size:1rem">ราศีมีน</h3>
-        <p class="fortune" style="display:none;font-size:0.9rem;color:var(--text-muted)">สัญชาตญาณแม่นยำ ฝันมีความหมาย ระวังคนหลอกลวง หินแนะนำ: อเมทิสต์</p>
-      </div>
-    </div>
-
-    <p style="text-align:center;color:var(--text-muted);margin-top:2rem;font-size:0.85rem">คลิกที่ราศีของคุณเพื่อดูดวงวันนี้</p>
   </div>
 </section>
 
-<section class="section" style="background:#f0fdf4;padding:2.5rem 0;text-align:center">
-  <div class="container" style="max-width:500px">
-    <div style="font-size:3rem;margin-bottom:1rem">💬</div>
-    <h2>รับดวงรายวันผ่าน Line OA</h2>
-    <p style="color:var(--text-muted);margin-bottom:1.5rem">แอดเพื่อรับดวงทุกเช้า ฟรี! ไม่มีค่าใช้จ่าย</p>
-    <a href="https://line.me/R/ti/p/@amethez" target="_blank" class="btn btn-line">➕ Add @amethez</a>
+<!-- ── AUSPICIOUS DATES ── -->
+<section class="metha-section dark">
+  <div class="container-narrow">
+    <h2 class="section-title">ฤกษ์มงคลประจำเดือน</h2>
+    <p class="section-sub">วันฤกษ์ดีจาก อาจารย์เมธา มิถุนายน–กรกฎาคม 2569</p>
+    <div class="auspicious-grid">
+      <div class="auspi-card">
+        <div class="auspi-date">26 มิ.ย</div>
+        <div class="auspi-day">พฤหัสบดี</div>
+        <div class="auspi-type">⭐ ฤกษ์เริ่มกิจการ</div>
+        <div class="auspi-stone">💛 หินแนะนำ: Citrine</div>
+        <div class="auspi-note">เหมาะเปิดกิจการ เซ็นสัญญา ลงทุน หรือย้ายบ้าน ดาวพฤหัสโคจรเด่น</div>
+      </div>
+      <div class="auspi-card">
+        <div class="auspi-date">30 มิ.ย</div>
+        <div class="auspi-day">จันทร์</div>
+        <div class="auspi-type">🌙 ฤกษ์ความรัก</div>
+        <div class="auspi-stone">🌸 หินแนะนำ: Rose Quartz</div>
+        <div class="auspi-note">เหมาะหมั้น แต่งงาน สารภาพรัก หรือกลับมาคืนดี ดาวศุกร์โคจรเด่น</div>
+      </div>
+      <div class="auspi-card">
+        <div class="auspi-date">4 ก.ค</div>
+        <div class="auspi-day">เสาร์</div>
+        <div class="auspi-type">🛡️ ฤกษ์สะเดาะเคราะห์</div>
+        <div class="auspi-stone">🖤 หินแนะนำ: Black Tourmaline</div>
+        <div class="auspi-note">เหมาะทำพิธีสะเดาะเคราะห์ ขจัดสิ่งไม่ดี ทำความสะอาดบ้านใหม่</div>
+      </div>
+      <div class="auspi-card">
+        <div class="auspi-date">10 ก.ค</div>
+        <div class="auspi-day">ศุกร์</div>
+        <div class="auspi-type">💰 ฤกษ์การเงิน</div>
+        <div class="auspi-stone">✨ หินแนะนำ: Pyrite + Citrine</div>
+        <div class="auspi-note">เหมาะเปิดบัญชีใหม่ ลงทุน ซื้อทอง หรือขอขึ้นเงินเดือน</div>
+      </div>
+      <div class="auspi-card">
+        <div class="auspi-date">16 ก.ค</div>
+        <div class="auspi-day">พฤหัสบดี</div>
+        <div class="auspi-type">🎓 ฤกษ์การศึกษา</div>
+        <div class="auspi-stone">💜 หินแนะนำ: Lapis Lazuli</div>
+        <div class="auspi-note">เหมาะสมัครเรียน สอบ นำเสนอวิทยานิพนธ์ หรือเซ็นสัญญาการศึกษา</div>
+      </div>
+    </div>
   </div>
 </section>
 
-<footer class="site-footer">
-  <div class="container footer-bottom">
-    <p>© 2026 Amethez.com — ดวงเพื่อความบันเทิง ไม่ใช่การพยากรณ์ที่แม่นยำ 100%</p>
+<!-- ── 9 PLANETS ── -->
+<section class="metha-section">
+  <div class="container-narrow">
+    <h2 class="section-title">ดวงชะตากับหิน — เลือกหินตามดาวประจำตัว</h2>
+    <p class="section-sub">โหราศาสตร์ไทย 9 ดาว แต่ละดาวมีหินคริสตัลที่สอดคล้องกับพลังงาน</p>
+    <div class="planets-grid">
+      <div class="planet-card">
+        <div class="planet-top">
+          <span class="planet-emoji">☀️</span>
+          <div><div class="planet-name-th">พระอาทิตย์</div><div class="planet-name-en">Sun · อิทธิพล: บารมี ความเป็นผู้นำ</div></div>
+        </div>
+        <div class="planet-stones"><span class="planet-stone">ทับทิม</span><span class="planet-stone">Red Carnelian</span><span class="planet-stone">Sunstone</span></div>
+        <p class="planet-meaning">ผู้ที่ดาวอาทิตย์มีอิทธิพลเข้มแข็ง เหมาะใช้หินสีแดงและสีทองเพื่อเสริมบารมีและความเป็นผู้นำ</p>
+      </div>
+      <div class="planet-card">
+        <div class="planet-top">
+          <span class="planet-emoji">🌙</span>
+          <div><div class="planet-name-th">พระจันทร์</div><div class="planet-name-en">Moon · อิทธิพล: อารมณ์ ครอบครัว สัญชาตญาณ</div></div>
+        </div>
+        <div class="planet-stones"><span class="planet-stone">Moonstone</span><span class="planet-stone">Pearl</span><span class="planet-stone">Selenite</span></div>
+        <p class="planet-meaning">ดาวจันทร์เด่นทำให้อ่อนไหว เข้าใจผู้อื่น เหมาะใช้หินสีขาวและสีเงินเพื่อสงบอารมณ์และเสริมสัญชาตญาณ</p>
+      </div>
+      <div class="planet-card">
+        <div class="planet-top">
+          <span class="planet-emoji">🔴</span>
+          <div><div class="planet-name-th">พระอังคาร</div><div class="planet-name-en">Mars · อิทธิพล: ความกล้า พลังงาน การต่อสู้</div></div>
+        </div>
+        <div class="planet-stones"><span class="planet-stone">Bloodstone</span><span class="planet-stone">Garnet</span><span class="planet-stone">Red Jasper</span></div>
+        <p class="planet-meaning">ดาวอังคารเด่นทำให้กล้าหาญและมีพลังงานสูง เหมาะใช้หินสีแดงเลือดสัตว์เพื่อเพิ่มความมุ่งมั่น</p>
+      </div>
+      <div class="planet-card">
+        <div class="planet-top">
+          <span class="planet-emoji">💚</span>
+          <div><div class="planet-name-th">พระพุธ</div><div class="planet-name-en">Mercury · อิทธิพล: ปัญญา การสื่อสาร ธุรกิจ</div></div>
+        </div>
+        <div class="planet-stones"><span class="planet-stone">Emerald</span><span class="planet-stone">Green Aventurine</span><span class="planet-stone">Amazonite</span></div>
+        <p class="planet-meaning">ดาวพุธเด่นทำให้ฉลาดและพูดเก่ง เหมาะใช้หินสีเขียวเพื่อเสริมการสื่อสารและการค้าขาย</p>
+      </div>
+      <div class="planet-card">
+        <div class="planet-top">
+          <span class="planet-emoji">🟡</span>
+          <div><div class="planet-name-th">พระพฤหัสบดี</div><div class="planet-name-en">Jupiter · อิทธิพล: โชคลาภ ความเจริญ</div></div>
+        </div>
+        <div class="planet-stones"><span class="planet-stone">Yellow Sapphire</span><span class="planet-stone">Citrine</span><span class="planet-stone">Pyrite</span></div>
+        <p class="planet-meaning">ดาวพฤหัสเด่นนำโชคลาภและความเจริญ เหมาะใช้หินสีเหลืองทองเพื่อดึงดูดความอุดมสมบูรณ์</p>
+      </div>
+      <div class="planet-card">
+        <div class="planet-top">
+          <span class="planet-emoji">💜</span>
+          <div><div class="planet-name-th">พระศุกร์</div><div class="planet-name-en">Venus · อิทธิพล: ความรัก ความงาม ศิลปะ</div></div>
+        </div>
+        <div class="planet-stones"><span class="planet-stone">Diamond</span><span class="planet-stone">Rose Quartz</span><span class="planet-stone">Morganite</span></div>
+        <p class="planet-meaning">ดาวศุกร์เด่นทำให้มีเสน่ห์และรักสวยรักงาม เหมาะใช้หินสีชมพูและสีขาวเพื่อเสริมความรักและความงาม</p>
+      </div>
+      <div class="planet-card">
+        <div class="planet-top">
+          <span class="planet-emoji">🔵</span>
+          <div><div class="planet-name-th">พระเสาร์</div><div class="planet-name-en">Saturn · อิทธิพล: วินัย อดทน ความมั่นคง</div></div>
+        </div>
+        <div class="planet-stones"><span class="planet-stone">Blue Sapphire</span><span class="planet-stone">Amethyst</span><span class="planet-stone">Lapis Lazuli</span></div>
+        <p class="planet-meaning">ดาวเสาร์เด่นทำให้มีวินัยและความอดทนสูง เหมาะใช้หินสีน้ำเงินเพื่อเสริมสมาธิและความมั่นคง</p>
+      </div>
+      <div class="planet-card">
+        <div class="planet-top">
+          <span class="planet-emoji">🌑</span>
+          <div><div class="planet-name-th">ราหู</div><div class="planet-name-en">Rahu · อิทธิพล: การเปลี่ยนแปลง โชคลึกลับ</div></div>
+        </div>
+        <div class="planet-stones"><span class="planet-stone">Hessonite Garnet</span><span class="planet-stone">Obsidian</span><span class="planet-stone">Smoky Quartz</span></div>
+        <p class="planet-meaning">ราหูให้พลังลึกลับและการเปลี่ยนแปลงอย่างฉับพลัน เหมาะใช้หินสีเข้มเพื่อปกป้องและรับมือกับความเปลี่ยนแปลง</p>
+      </div>
+      <div class="planet-card">
+        <div class="planet-top">
+          <span class="planet-emoji">🌒</span>
+          <div><div class="planet-name-th">เกตุ</div><div class="planet-name-en">Ketu · อิทธิพล: จิตวิญญาณ ปัญญาภายใน</div></div>
+        </div>
+        <div class="planet-stones"><span class="planet-stone">Cat's Eye</span><span class="planet-stone">Labradorite</span><span class="planet-stone">Moldavite</span></div>
+        <p class="planet-meaning">เกตุให้ปัญญาทางจิตวิญญาณและการมองเห็นอย่างลึกซึ้ง เหมาะใช้หินที่มีประกายหรือแสงรุ้งเพื่อเปิดจิตใจ</p>
+      </div>
+    </div>
   </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="metha-cta">
+  <h2>ติดตามดวงรายวันจากอาจารย์เมธา</h2>
+  <p>อัปเดตทุกวัน ดวง 12 ราศี หินเสริมดวง และฤกษ์มงคล<br>ส่งตรงถึงมือคุณผ่าน Line OA @amethez</p>
+  <a href="https://line.me/ti/p/@amethez" class="btn-line-metha" target="_blank">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M19.365 9.89c.25 0 .5.24.5.49s-.25.5-.5.5H17.7v1.07h1.66c.25 0 .5.25.5.5s-.25.5-.5.5H17.2c-.28 0-.5-.22-.5-.5V9.39c0-.27.22-.5.5-.5h2.16zm-11.2.49c0-.27.22-.5.5-.5s.5.23.5.5v2.57c0 .28-.22.5-.5.5s-.5-.22-.5-.5V10.38zm-2.66 0c0-.27.22-.5.5-.5s.5.23.5.5v1.56l1.9-1.88c.1-.1.23-.18.37-.18.27 0 .5.22.5.5 0 .13-.05.26-.15.36L6.9 12.3l1.2 1.58c.08.1.12.22.12.34 0 .27-.22.5-.5.5-.15 0-.3-.07-.4-.2L5.9 12.9l-.4.38v1.15c0 .28-.22.5-.5.5s-.5-.22-.5-.5V10.38zm9.33 2.57c0 .28-.22.5-.5.5h-2.16c-.28 0-.5-.22-.5-.5V9.89c0-.27.22-.5.5-.5s.5.23.5.5v2.56h1.66c.28 0 .5.22.5.5zM12 2C6.48 2 2 6.05 2 11c0 3.03 1.56 5.7 3.98 7.38-.1.36-.18 1.03-.47 1.37-.36.43.23.6.82.31 1.42-.68 2.14-1.23 2.61-1.58.66.1 1.35.16 2.06.16 5.52 0 10-4.05 10-9 0-4.96-4.48-9-10-9z"/></svg>
+    เพิ่มเพื่อน @amethez บน Line
+  </a>
+</section>
+
+<footer style="background:#1a1228;color:rgba(255,255,255,0.6);text-align:center;padding:2.5rem 1.5rem;font-size:.9rem">
+  <p style="margin-bottom:.5rem"><a href="/amethez/" style="color:#a78bfa;text-decoration:none;font-weight:600">AMETHEZ</a> — Stones · Stories · Soul</p>
+  <p><a href="/amethez/stones/" style="color:rgba(255,255,255,.5);text-decoration:none;margin:0 .75rem">คลังหิน</a><a href="/amethez/sale.html" style="color:rgba(255,255,255,.5);text-decoration:none;margin:0 .75rem">ร้านค้า</a><a href="/amethez/about.html" style="color:rgba(255,255,255,.5);text-decoration:none;margin:0 .75rem">เกี่ยวกับเรา</a></p>
 </footer>
 
-<script src="/amethez/js/main.js"></script>
 <script>
-  const days = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
-  const months = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
-  const now = new Date();
-  document.getElementById('todayDate').textContent = `วัน${days[now.getDay()]}ที่ ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear() + 543}`;
+  // แสดงวันที่ปัจจุบัน
+  (function(){
+    const d = new Date();
+    const days = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
+    const months = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน',
+                    'กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+    const bYear = d.getFullYear() + 543;
+    document.getElementById('todayDate').textContent =
+      `วัน${days[d.getDay()]}ที่ ${d.getDate()} ${months[d.getMonth()]} พ.ศ. ${bYear}`;
+  })();
 </script>
+<script src="/amethez/js/chat.js"></script>
 </body>
 </html>

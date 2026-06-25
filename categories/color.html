@@ -3,15 +3,72 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>หินตามสี — เลือกหินจากสีที่ดึงดูดใจ | Amethez</title>
-  <meta name="description" content="เลือกหินคริสตัลตามสีที่ดึงดูดใจคุณ แต่ละสีมีพลังงานและความหมายต่างกัน หาหินที่ใช่สำหรับคุณได้ที่นี่">
+  <title>หินตามสี — พลังงานแห่งสีและคริสตัล | Amethez</title>
+  <meta name="description" content="เลือกหินตามสีที่ต้องการ แต่ละสีมีความถี่พลังงานต่างกัน ม่วง น้ำเงิน เขียว เหลือง ชมพู ขาว ดำ เรียนรู้ความหมายและหินที่เหมาะสม">
   <link rel="canonical" href="https://amethez.com/categories/color.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/amethez/css/main.css">
+  <style>
+    .color-section {
+      background: var(--bg-card);
+      border-radius: 1.25rem;
+      overflow: hidden;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 8px 1fr;
+    }
+    .color-stripe { background: var(--cc, var(--purple)); }
+    .color-content { padding: 2rem; }
+    .color-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+    .color-dot {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: var(--cc, var(--purple));
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px color-mix(in srgb, var(--cc, var(--purple)) 40%, transparent);
+    }
+    .color-header h2 { margin: 0; font-size: 1.4rem; }
+    .color-sub { font-size: .85rem; color: var(--text-muted); display: block; margin-top: .2rem; }
+    .color-meta { display: flex; flex-wrap: wrap; gap: .75rem; margin-bottom: 1rem; }
+    .color-badge {
+      font-size: .8rem; font-weight: 600;
+      padding: .2rem .75rem; border-radius: 2rem;
+      background: color-mix(in srgb, var(--cc, var(--purple)) 12%, white);
+      color: var(--cc, var(--purple));
+      border: 1px solid color-mix(in srgb, var(--cc, var(--purple)) 25%, transparent);
+    }
+    .stone-row { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+    .stone-link {
+      display: inline-block; font-size: .85rem; font-weight: 500;
+      padding: .3rem .9rem; border-radius: 2rem;
+      background: #faf8f4; border: 1px solid var(--border);
+      color: var(--text); transition: all .15s;
+    }
+    .stone-link:hover { background: var(--purple); color: white; border-color: var(--purple); }
+    .intro-box {
+      background: linear-gradient(135deg,#f5f0ff,#fdf8ee);
+      border-radius: 1.25rem; padding: 2rem;
+      border: 1px solid var(--border); margin-bottom: 2.5rem;
+    }
+    .cta-box {
+      background: linear-gradient(135deg,var(--purple),var(--purple-dark));
+      color: white; border-radius: 1.25rem; padding: 3rem 2rem;
+      text-align: center; margin-top: 3rem;
+    }
+    .cta-box h2 { color: white; }
+    .cta-box p { color: rgba(255,255,255,.85); margin: .75rem 0 1.5rem; }
+    .btn-gold {
+      display: inline-block; background: var(--gold); color: #1a1228;
+      font-weight: 600; padding: .85rem 2rem; border-radius: 2rem;
+      transition: transform .2s;
+    }
+    .btn-gold:hover { transform: translateY(-2px); color: #1a1228; }
+  </style>
 </head>
 <body>
-
 <header class="site-header">
   <div class="container nav-inner">
     <a href="/amethez/" class="logo">
@@ -29,80 +86,259 @@
   </div>
 </header>
 
-<section class="article-hero">
+<section class="hero">
   <div class="container">
-    <h1>หินตามสี 🎨</h1>
-    <p style="color:rgba(255,255,255,0.8);font-size:1.1rem">สีที่ดึงดูดใจคุณ คือพลังงานที่คุณต้องการในตอนนี้</p>
+    <div style="font-size:4rem;margin-bottom:1rem">🌈</div>
+    <h1>เลือกหินตามสี</h1>
+    <p style="font-size:1.15rem;color:rgba(255,255,255,.8);max-width:640px;margin:1rem auto 0">
+      สีของคริสตัลไม่ใช่แค่ความสวยงาม — แต่ละสีมีความถี่การสั่นสะเทือนเฉพาะตัว บอกถึงพลังงานและจุดประสงค์ในการใช้งาน
+    </p>
   </div>
 </section>
 
-<section class="section">
-  <div class="container">
-    <div class="grid-3">
-      <div class="card" style="border-top:4px solid #9b59b6">
-        <div style="font-size:2.5rem;margin-bottom:0.75rem">💜</div>
-        <h3>สีม่วง</h3>
-        <p style="color:var(--text-muted);font-size:0.9rem">จิตวิญญาณ · ปัญญา · สมาธิ · มงกุฎ</p>
-        <p><a href="/amethez/stones/amethyst.html">อเมทิสต์</a>, Lepidolite, Charoite, Sugilite</p>
+<main class="container section">
+
+  <div class="intro-box">
+    <h2 style="margin-bottom:.75rem">ทำไมสีของหินจึงสำคัญ?</h2>
+    <p>ใน Color Therapy หรือ Chromotherapy ซึ่งมีรากฐานมาจากอียิปต์โบราณ กรีกโบราณ และแพทย์แผนตะวันออก สีแต่ละสีปล่อยคลื่นแสงในความถี่ต่างกัน ซึ่งส่งผลต่อระบบประสาทและอารมณ์ความรู้สึก เมื่อนำหลักนี้มาใช้กับคริสตัล สีของหินจึงเป็นตัวบ่งบอกพลังงานหลักที่หินนั้นส่งมอบ</p>
+    <p style="margin-top:.75rem">คุณสามารถเลือกหินจากสีที่รู้สึกดึงดูด เพราะสัญชาตญาณมักบอกได้ว่าร่างกายและจิตใจต้องการพลังงานใดในขณะนั้น</p>
+  </div>
+
+  <!-- สีม่วง -->
+  <div class="color-section" style="--cc:#7c3aed">
+    <div class="color-stripe"></div>
+    <div class="color-content">
+      <div class="color-header">
+        <div class="color-dot"></div>
+        <div>
+          <h2>หินสีม่วง — จิตวิญญาณและปัญญา</h2>
+          <span class="color-sub">Purple &amp; Violet Crystals</span>
+        </div>
       </div>
-      <div class="card" style="border-top:4px solid #e91e63">
-        <div style="font-size:2.5rem;margin-bottom:0.75rem">🌸</div>
-        <h3>สีชมพู</h3>
-        <p style="color:var(--text-muted);font-size:0.9rem">ความรัก · หัวใจ · เยียวยา · ความอ่อนโยน</p>
-        <p>Rose Quartz, Rhodonite, Rhodochrosite, Pink Tourmaline</p>
+      <div class="color-meta">
+        <span class="color-badge">จักระ: Third Eye + Crown</span>
+        <span class="color-badge">พลังงาน: สัญชาตญาณ · ความสงบ · จิตวิญญาณ</span>
+        <span class="color-badge">เหมาะกับ: ผู้ทำสมาธิ · นักคิด · ผู้แสวงหาธรรม</span>
       </div>
-      <div class="card" style="border-top:4px solid #e74c3c">
-        <div style="font-size:2.5rem;margin-bottom:0.75rem">❤️</div>
-        <h3>สีแดง</h3>
-        <p style="color:var(--text-muted);font-size:0.9rem">พลังงาน · ความกล้า · ราก · ความมีชีวิต</p>
-        <p>Garnet, Red Jasper, Ruby, Carnelian</p>
-      </div>
-      <div class="card" style="border-top:4px solid #e67e22">
-        <div style="font-size:2.5rem;margin-bottom:0.75rem">🟠</div>
-        <h3>สีส้ม</h3>
-        <p style="color:var(--text-muted);font-size:0.9rem">ความสนุก · สร้างสรรค์ · Sacral · อารมณ์</p>
-        <p>Carnelian, Sunstone, Orange Calcite, Fire Opal</p>
-      </div>
-      <div class="card" style="border-top:4px solid #f1c40f">
-        <div style="font-size:2.5rem;margin-bottom:0.75rem">🌟</div>
-        <h3>สีเหลือง</h3>
-        <p style="color:var(--text-muted);font-size:0.9rem">โชคลาภ · ความสำเร็จ · Solar · ความมั่นใจ</p>
-        <p><a href="/amethez/stones/citrine.html">ซิทริน</a>, Tiger's Eye, Yellow Jasper, Pyrite</p>
-      </div>
-      <div class="card" style="border-top:4px solid #2ecc71">
-        <div style="font-size:2.5rem;margin-bottom:0.75rem">💚</div>
-        <h3>สีเขียว</h3>
-        <p style="color:var(--text-muted);font-size:0.9rem">หัวใจ · เยียวยา · ธรรมชาติ · เจริญงอกงาม</p>
-        <p><a href="/amethez/stones/moldavite.html">โมลดาไวท์</a>, Malachite, Green Aventurine, Jade</p>
-      </div>
-      <div class="card" style="border-top:4px solid #3498db">
-        <div style="font-size:2.5rem;margin-bottom:0.75rem">🔵</div>
-        <h3>สีฟ้า</h3>
-        <p style="color:var(--text-muted);font-size:0.9rem">การสื่อสาร · ความสงบ · ลำคอ · ความจริง</p>
-        <p>Aquamarine, Blue Lace Agate, Celestite, Blue Kyanite</p>
-      </div>
-      <div class="card" style="border-top:4px solid #2c3e50">
-        <div style="font-size:2.5rem;margin-bottom:0.75rem">🖤</div>
-        <h3>สีดำ</h3>
-        <p style="color:var(--text-muted);font-size:0.9rem">ป้องกัน · ราก · ดูดซับลบ · ความมั่นคง</p>
-        <p><a href="/amethez/stones/tektite.html">สะเก็ดดาวไทย</a>, Black Tourmaline, Obsidian, Shungite</p>
-      </div>
-      <div class="card" style="border-top:4px solid #ecf0f1;border:2px solid #bdc3c7">
-        <div style="font-size:2.5rem;margin-bottom:0.75rem">🔮</div>
-        <h3>สีใส / ขาว</h3>
-        <p style="color:var(--text-muted);font-size:0.9rem">ชำระล้าง · ขยายพลัง · มงกุฎ · ความบริสุทธิ์</p>
-        <p><a href="/amethez/stones/clear-quartz.html">Clear Quartz</a>, Selenite, Howlite, Moonstone</p>
+      <p>หินสีม่วงทำงานกับความถี่พลังงานสูงสุด เชื่อมโยงจิตวิญญาณกับจักรวาล เหมาะสำหรับการทำสมาธิ เพิ่มสัญชาตญาณ ลดความเครียดและความวิตกกังวล ช่วยให้นอนหลับดีขึ้น และเปิดการรับรู้ระดับสูง นอกจากนี้ยังช่วยสร้างขอบเขตพลังงานและปกป้องจากพลังงานลบ</p>
+      <div class="stone-row">
+        <a href="/amethez/stones/amethyst.html" class="stone-link">💜 Amethyst</a>
+        <a href="/amethez/stones/lepidolite.html" class="stone-link">💜 Lepidolite</a>
+        <a href="/amethez/stones/fluorite.html" class="stone-link">💜 Purple Fluorite</a>
+        <a href="/amethez/stones/charoite.html" class="stone-link">💜 Charoite</a>
+        <a href="/amethez/stones/sugilite.html" class="stone-link">💜 Sugilite</a>
       </div>
     </div>
   </div>
-</section>
+
+  <!-- สีน้ำเงิน -->
+  <div class="color-section" style="--cc:#2563eb">
+    <div class="color-stripe"></div>
+    <div class="color-content">
+      <div class="color-header">
+        <div class="color-dot"></div>
+        <div>
+          <h2>หินสีน้ำเงิน — การสื่อสารและความจริง</h2>
+          <span class="color-sub">Blue Crystals</span>
+        </div>
+      </div>
+      <div class="color-meta">
+        <span class="color-badge">จักระ: Throat + Third Eye</span>
+        <span class="color-badge">พลังงาน: การสื่อสาร · ความสงบ · ความจริง</span>
+        <span class="color-badge">เหมาะกับ: นักพูด · ครู · ผู้ที่ต้องการความสงบ</span>
+      </div>
+      <p>หินสีน้ำเงินเชื่อมโยงกับท้องฟ้าและมหาสมุทร นำพาความสงบ ชัดเจน และความสามารถในการสื่อสารอย่างมีประสิทธิภาพ ช่วยให้พูดความจริงได้ง่ายขึ้น ลดความวิตกกังวลก่อนการพูดในที่สาธารณะ และเสริมทักษะการฟัง หินสีน้ำเงินยังช่วยในการตัดสินใจด้วยสติและความชัดเจน</p>
+      <div class="stone-row">
+        <a href="/amethez/stones/aquamarine.html" class="stone-link">🔵 Aquamarine</a>
+        <a href="/amethez/stones/lapis-lazuli.html" class="stone-link">🔵 Lapis Lazuli</a>
+        <a href="/amethez/stones/sodalite.html" class="stone-link">🔵 Sodalite</a>
+        <a href="/amethez/stones/blue-lace-agate.html" class="stone-link">🔵 Blue Lace Agate</a>
+        <a href="/amethez/stones/angelite.html" class="stone-link">🔵 Angelite</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- สีเขียว -->
+  <div class="color-section" style="--cc:#16a34a">
+    <div class="color-stripe"></div>
+    <div class="color-content">
+      <div class="color-header">
+        <div class="color-dot"></div>
+        <div>
+          <h2>หินสีเขียว — ความรักและความอุดมสมบูรณ์</h2>
+          <span class="color-sub">Green Crystals</span>
+        </div>
+      </div>
+      <div class="color-meta">
+        <span class="color-badge">จักระ: Heart Chakra</span>
+        <span class="color-badge">พลังงาน: ความรัก · การเติบโต · ความอุดมสมบูรณ์</span>
+        <span class="color-badge">เหมาะกับ: ผู้หวังดึงดูดความรัก · ธุรกิจ · สุขภาพ</span>
+      </div>
+      <p>สีเขียวคือสีแห่งธรรมชาติ การเจริญเติบโต และหัวใจ หินสีเขียวดึงดูดความอุดมสมบูรณ์ในทุกด้านไม่ว่าจะเป็นความรัก การเงิน สุขภาพ และโอกาสใหม่ๆ Moldavite ซึ่งเป็นหินสีเขียวจากนอกโลกถือเป็นหินแห่งการเปลี่ยนแปลงที่ทรงพลังที่สุดในจักรวาลนี้ ในขณะที่ Green Aventurine ถูกขนานนามว่า "หินแห่งโชคลาภ"</p>
+      <div class="stone-row">
+        <a href="/amethez/stones/moldavite.html" class="stone-link">💚 Moldavite</a>
+        <a href="/amethez/stones/malachite.html" class="stone-link">💚 Malachite</a>
+        <a href="/amethez/stones/green-aventurine.html" class="stone-link">💚 Green Aventurine</a>
+        <a href="/amethez/stones/emerald.html" class="stone-link">💚 Emerald</a>
+        <a href="/amethez/stones/peridot.html" class="stone-link">💚 Peridot</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- สีเหลือง/ส้ม/ทอง -->
+  <div class="color-section" style="--cc:#d97706">
+    <div class="color-stripe"></div>
+    <div class="color-content">
+      <div class="color-header">
+        <div class="color-dot"></div>
+        <div>
+          <h2>หินสีเหลือง ส้ม และทอง — ความสำเร็จและพลังงานชีวิต</h2>
+          <span class="color-sub">Yellow, Orange &amp; Gold Crystals</span>
+        </div>
+      </div>
+      <div class="color-meta">
+        <span class="color-badge">จักระ: Solar Plexus + Sacral</span>
+        <span class="color-badge">พลังงาน: พลังงาน · ความสำเร็จ · ความสุข</span>
+        <span class="color-badge">เหมาะกับ: นักธุรกิจ · ผู้ต้องการแรงบันดาลใจ</span>
+      </div>
+      <p>หินในกลุ่มสีอบอุ่นนี้เชื่อมโยงกับพลังงานแสงอาทิตย์ ความมั่นใจ และความสำเร็จ Citrine ถูกเรียกว่า "หินแห่งพ่อค้า" ด้วยพลังดึงดูดความมั่งคั่ง Pyrite หรือทองคำโง่ช่วยเสริมพลังงานความสำเร็จในเรื่องอาชีพและการเงิน ส่วน Tiger's Eye ช่วยให้กล้าตัดสินใจและมองเห็นโอกาสในทุกสถานการณ์</p>
+      <div class="stone-row">
+        <a href="/amethez/stones/citrine.html" class="stone-link">💛 Citrine</a>
+        <a href="/amethez/stones/pyrite.html" class="stone-link">💛 Pyrite</a>
+        <a href="/amethez/stones/tigers-eye.html" class="stone-link">🟡 Tiger's Eye</a>
+        <a href="/amethez/stones/carnelian.html" class="stone-link">🟠 Carnelian</a>
+        <a href="/amethez/stones/amber.html" class="stone-link">🟡 Amber</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- สีชมพู/แดง -->
+  <div class="color-section" style="--cc:#db2777">
+    <div class="color-stripe"></div>
+    <div class="color-content">
+      <div class="color-header">
+        <div class="color-dot"></div>
+        <div>
+          <h2>หินสีชมพูและแดง — ความรักและพลังชีวิต</h2>
+          <span class="color-sub">Pink &amp; Red Crystals</span>
+        </div>
+      </div>
+      <div class="color-meta">
+        <span class="color-badge">จักระ: Heart + Root Chakra</span>
+        <span class="color-badge">พลังงาน: ความรัก · หลงใหล · ความกล้า</span>
+        <span class="color-badge">เหมาะกับ: ผู้หาความรัก · ต้องการพลังงาน</span>
+      </div>
+      <p>หินสีชมพูอย่าง Rose Quartz เป็นสัญลักษณ์แห่งความรักอันไม่มีเงื่อนไข ทั้งรักตัวเองและรักผู้อื่น ช่วยเยียวยาหัวใจที่บอบช้ำและดึงดูดความสัมพันธ์ที่ดีงาม ในขณะที่หินสีแดงอย่าง Garnet และ Ruby ให้พลังงานชีวิตที่เข้มข้น ความหลงใหล และความกล้าในการลงมือทำ</p>
+      <div class="stone-row">
+        <a href="/amethez/stones/rose-quartz.html" class="stone-link">🌸 Rose Quartz</a>
+        <a href="/amethez/stones/rhodonite.html" class="stone-link">🌸 Rhodonite</a>
+        <a href="/amethez/stones/garnet.html" class="stone-link">❤️ Garnet</a>
+        <a href="/amethez/stones/ruby.html" class="stone-link">❤️ Ruby</a>
+        <a href="/amethez/stones/red-jasper.html" class="stone-link">❤️ Red Jasper</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- สีขาว/ใส -->
+  <div class="color-section" style="--cc:#9ca3af">
+    <div class="color-stripe"></div>
+    <div class="color-content">
+      <div class="color-header">
+        <div class="color-dot"></div>
+        <div>
+          <h2>หินสีขาวและใส — ความบริสุทธิ์และพลังงานสูง</h2>
+          <span class="color-sub">White &amp; Clear Crystals</span>
+        </div>
+      </div>
+      <div class="color-meta">
+        <span class="color-badge">จักระ: Crown Chakra</span>
+        <span class="color-badge">พลังงาน: ความบริสุทธิ์ · ขยายพลัง · ชำระล้าง</span>
+        <span class="color-badge">เหมาะกับ: ทุกคน · เหมาะใช้คู่กับหินอื่น</span>
+      </div>
+      <p>Clear Quartz ถูกเรียกว่า "Master Healer" เพราะขยายพลังงานของหินทุกชนิดที่นำมาคู่กัน พร้อมทั้งชำระล้างพลังงานลบและโปรแกรมได้ตามเจตนาที่ต้องการ Selenite ช่วยชำระล้างออร่าและพื้นที่ Moonstone เชื่อมต่อกับพลังจันทร์และสัญชาตญาณ หินสีขาวและใสเหมาะสำหรับทุกคนไม่ว่าจะมีจุดประสงค์ใด</p>
+      <div class="stone-row">
+        <a href="/amethez/stones/clear-quartz.html" class="stone-link">🤍 Clear Quartz</a>
+        <a href="/amethez/stones/selenite.html" class="stone-link">🤍 Selenite</a>
+        <a href="/amethez/stones/moonstone.html" class="stone-link">🤍 Moonstone</a>
+        <a href="/amethez/stones/howlite.html" class="stone-link">🤍 Howlite</a>
+        <a href="/amethez/stones/apophyllite.html" class="stone-link">🤍 Apophyllite</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- สีดำ -->
+  <div class="color-section" style="--cc:#1f2937">
+    <div class="color-stripe"></div>
+    <div class="color-content">
+      <div class="color-header">
+        <div class="color-dot"></div>
+        <div>
+          <h2>หินสีดำ — การปกป้องและการยึดโยง</h2>
+          <span class="color-sub">Black Crystals</span>
+        </div>
+      </div>
+      <div class="color-meta">
+        <span class="color-badge">จักระ: Root Chakra</span>
+        <span class="color-badge">พลังงาน: ปกป้อง · ยึดโยง · ชำระพลังลบ</span>
+        <span class="color-badge">เหมาะกับ: HSP · ผู้ที่รู้สึกเหนื่อยล้าจากพลังงานรอบข้าง</span>
+      </div>
+      <p>หินสีดำเป็นผู้พิทักษ์พลังงาน ดูดซับและเปลี่ยนแปลงพลังงานลบให้กลายเป็นพลังงานกลาง Black Tourmaline สร้างโล่พลังงานรอบตัวผู้ถือ Obsidian ช่วยดึงความจริงออกมาและชำระล้างอดีตที่บาดเจ็บ Hematite ช่วยให้ยึดโยงกับโลกกายภาพ เหมาะมากสำหรับคนที่รู้สึกไวต่อพลังงานรอบข้าง (Highly Sensitive Person)</p>
+      <div class="stone-row">
+        <a href="/amethez/stones/black-tourmaline.html" class="stone-link">⚫ Black Tourmaline</a>
+        <a href="/amethez/stones/obsidian.html" class="stone-link">⚫ Obsidian</a>
+        <a href="/amethez/stones/hematite.html" class="stone-link">⚫ Hematite</a>
+        <a href="/amethez/stones/onyx.html" class="stone-link">⚫ Black Onyx</a>
+        <a href="/amethez/stones/shungite.html" class="stone-link">⚫ Shungite</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- สีน้ำตาล/โลก -->
+  <div class="color-section" style="--cc:#92400e">
+    <div class="color-stripe"></div>
+    <div class="color-content">
+      <div class="color-header">
+        <div class="color-dot"></div>
+        <div>
+          <h2>หินสีน้ำตาลและโลก — การยึดโยงและสมดุล</h2>
+          <span class="color-sub">Brown &amp; Earth-tone Crystals</span>
+        </div>
+      </div>
+      <div class="color-meta">
+        <span class="color-badge">จักระ: Root + Sacral Chakra</span>
+        <span class="color-badge">พลังงาน: ยึดโยง · สมดุล · ความอบอุ่น</span>
+        <span class="color-badge">เหมาะกับ: นักคิดมาก · ผู้ที่ต้องการความมั่นคง</span>
+      </div>
+      <p>หินในโทนสีดินช่วยให้รู้สึกมั่นคง ปลอดภัย และยึดโยงกับโลกกายภาพ เหมาะสำหรับผู้ที่มักหมกมุ่นกับความคิดมากเกินไปหรือรู้สึก "ลอยอยู่" Smoky Quartz ชำระล้างพลังงานลบขณะยึดโยงพลังงาน Jasper ในทุกสีโทนดินช่วยเสริมความอดทนและความเสถียร Petrified Wood เชื่อมต่อกับปัญญาโบราณของโลก</p>
+      <div class="stone-row">
+        <a href="/amethez/stones/smoky-quartz.html" class="stone-link">🟤 Smoky Quartz</a>
+        <a href="/amethez/stones/tigers-eye.html" class="stone-link">🟤 Tiger's Eye</a>
+        <a href="/amethez/stones/jasper.html" class="stone-link">🟤 Brown Jasper</a>
+        <a href="/amethez/stones/petrified-wood.html" class="stone-link">🟤 Petrified Wood</a>
+        <a href="/amethez/stones/bronzite.html" class="stone-link">🟤 Bronzite</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-box">
+    <h2>ค้นพบหินที่ใช่สำหรับคุณ</h2>
+    <p>ดูคลังหินทั้งหมดกว่า 300 ชนิด พร้อมข้อมูลเชิงลึกจาก Crystal Atlas</p>
+    <a href="/amethez/stones/" class="btn-gold">เข้าคลังหินทั้งหมด →</a>
+  </div>
+
+</main>
 
 <footer class="site-footer">
-  <div class="container footer-bottom">
-    <p>© 2026 Amethez.com — ข้อมูลเพื่อการศึกษา ไม่ใช่คำแนะนำทางการแพทย์</p>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="logo" style="margin-bottom:.75rem">AMETHEZ</div><p>ศูนย์กลางข้อมูลคริสตัลและพลอยที่ใหญ่ที่สุดในไทย</p></div>
+      <div class="footer-col"><h4>หมวดหมู่</h4><ul><li><a href="/amethez/categories/chakra.html">หินตามจักระ</a></li><li><a href="/amethez/categories/zodiac.html">หินตามราศี</a></li><li><a href="/amethez/stones/">คลังหินทั้งหมด</a></li></ul></div>
+      <div class="footer-col"><h4>ผู้เชี่ยวชาญ</h4><ul><li><a href="/amethez/wuchong/">Master Wuchong</a></li><li><a href="/amethez/metha/">อาจารย์เมธา</a></li><li><a href="/amethez/sale.html">ร้านค้า</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 Amethez.com — ข้อมูลเพื่อการศึกษา ไม่ใช่คำแนะนำทางการแพทย์</p></div>
   </div>
 </footer>
-
 <script src="/amethez/js/main.js"></script>
+<script src="/amethez/js/chat.js"></script>
 </body>
 </html>

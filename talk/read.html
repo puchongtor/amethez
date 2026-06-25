@@ -96,8 +96,8 @@
     </div>
     <div class="player-options">
       <label class="popt">🗣️ เสียงพูด <input type="range" id="vol" min="0" max="1" step="0.1" value="1"></label>
-      <label class="popt">🎶 คลื่นความถี่ <input type="range" id="ambient" min="0" max="0.3" step="0.02" value="0.12"></label>
-      <label class="popt">🐢 จังหวะ <input type="range" id="rate" min="0.6" max="1.2" step="0.05" value="0.82"></label>
+      <label class="popt">🎶 คลื่นความถี่ <input type="range" id="ambient" min="0" max="0.1" step="0.005" value="0.02"></label>
+      <label class="popt">🐢 จังหวะ <input type="range" id="rate" min="0.6" max="1.1" step="0.05" value="0.88"></label>
     </div>
   </div>
 </div>
@@ -200,18 +200,23 @@ function initAudio() {
   oscMain  = audioCtx.createOscillator(); oscMain.type = 'sine';  oscMain.frequency.value = hz;
   oscSub   = audioCtx.createOscillator(); oscSub.type  = 'sine';  oscSub.frequency.value = hz/2;
   oscFifth = audioCtx.createOscillator(); oscFifth.type= 'sine';  oscFifth.frequency.value = hz*1.5;
-  const subGain = audioCtx.createGain(); subGain.gain.value = 0.6;
-  const fifthGain = audioCtx.createGain(); fifthGain.gain.value = 0.25;
+  // ลด mix ของ sub/fifth ให้เสียงความถี่เป็นแค่ "ใต้" เสียงพูด
+  const subGain = audioCtx.createGain(); subGain.gain.value = 0.35;
+  const fifthGain = audioCtx.createGain(); fifthGain.gain.value = 0.1;
 
-  // LFO สร้างจังหวะ "หายใจ" ของเสียง (tremolo ช้าๆ)
-  lfo = audioCtx.createOscillator(); lfo.type = 'sine'; lfo.frequency.value = 0.12;
-  lfoGain = audioCtx.createGain(); lfoGain.gain.value = 0.4;
+  // LFO หายใจช้ามาก (~8 วินาที/รอบ) ไม่รบกวนเสียงพูด
+  lfo = audioCtx.createOscillator(); lfo.type = 'sine'; lfo.frequency.value = 0.08;
+  lfoGain = audioCtx.createGain(); lfoGain.gain.value = 0.15;
   lfo.connect(lfoGain);
+
+  // lowpass ต่ำลงมาก → เสียงความถี่ฝังเป็น "sub-bass" ใต้เสียงพูด
+  lowpass.frequency.value = 320;
+  lowpass.Q.value = 0.5;
 
   oscMain.connect(ambGain);
   oscSub.connect(subGain).connect(ambGain);
   oscFifth.connect(fifthGain).connect(ambGain);
-  lfoGain.connect(ambGain.gain);          // modulate amplitude
+  lfoGain.connect(ambGain.gain);
   ambGain.connect(lowpass).connect(analyser).connect(audioCtx.destination);
 
   oscMain.start(); oscSub.start(); oscFifth.start(); lfo.start();
@@ -336,7 +341,19 @@ function hexA(hex, a) {
 /* ═══════════════ VOICE ═══════════════ */
 function loadVoices() {
   voices = speechSynthesis.getVoices();
-  thVoice = voices.find(v => v.lang === 'th-TH' || v.lang.startsWith('th')) || null;
+  // เรียงลำดับความสำคัญ: Google Thai (ธรรมชาติที่สุด) → Microsoft Thai → อื่นๆ
+  const priority = [
+    v => v.lang === 'th-TH' && v.name.toLowerCase().includes('google'),
+    v => v.lang === 'th-TH' && v.name.toLowerCase().includes('microsoft'),
+    v => v.lang === 'th-TH' && v.name.toLowerCase().includes('natural'),
+    v => v.lang === 'th-TH',
+    v => v.lang.startsWith('th'),
+  ];
+  thVoice = null;
+  for (const test of priority) {
+    thVoice = voices.find(test);
+    if (thVoice) break;
+  }
   if (!thVoice && voices.length) document.getElementById('ttsWarn').style.display = 'block';
 }
 if ('speechSynthesis' in window) { loadVoices(); speechSynthesis.onvoiceschanged = loadVoices; }
@@ -358,9 +375,9 @@ function speakNext() {
   u.lang = 'th-TH'; u.voice = thVoice;
   u.rate = parseFloat(document.getElementById('rate').value);
   u.volume = parseFloat(document.getElementById('vol').value);
-  u.pitch = 1;
-  u.onend   = () => { qIndex++; if (playing) setTimeout(speakNext, 450); };
-  u.onerror = () => { qIndex++; if (playing) setTimeout(speakNext, 250); };
+  u.pitch = 1.02;   // เล็กน้อยกว่า 1 ทำให้เสียงดูธรรมชาติขึ้นในหลาย engine
+  u.onend   = () => { qIndex++; if (playing) setTimeout(speakNext, 900); };  // หยุดหายใจระหว่างประโยค
+  u.onerror = () => { qIndex++; if (playing) setTimeout(speakNext, 400); };
   speechSynthesis.speak(u);
   document.getElementById('status').textContent = `กำลังอ่าน… (${qIndex+1}/${queue.length})`;
 }
@@ -428,5 +445,6 @@ document.addEventListener('input', e => {
 window.addEventListener('beforeunload', () => { if ('speechSynthesis' in window) speechSynthesis.cancel(); });
 load();
 </script>
+<script src="/amethez/js/chat.js"></script>
 </body>
 </html>

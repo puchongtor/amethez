@@ -3,11 +3,182 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Master Wuchong — พลังงาน ความสำเร็จ การเงิน สุขภาพ | Amethez</title>
-  <meta name="description" content="Master Wuchong ผู้เชี่ยวชาญด้านพลังงานคริสตัล เรียนรู้วิธีใช้หินเพื่อความสำเร็จ การเงิน สุขภาพ และการพัฒนาชีวิต">
+  <title>Master Wuchong — พลังงานคริสตัล ความสำเร็จ การเงิน สุขภาพ | Amethez</title>
+  <meta name="description" content="Master Wuchong ผู้เชี่ยวชาญด้านพลังงานคริสตัลกว่า 20 ปี เรียนรู้วิธีใช้หินเพื่อความสำเร็จ การเงิน สุขภาพ และการพัฒนาชีวิตอย่างลึกซึ้ง">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/amethez/css/main.css">
+  <style>
+    /* ── Hero Dark ── */
+    .wu-hero {
+      background: linear-gradient(160deg, #0d0720 0%, #1a0a3e 50%, #0a1a20 100%);
+      padding: 5rem 1.5rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .wu-hero::before {
+      content: '';
+      position: absolute; top: -150px; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 700px;
+      background: radial-gradient(ellipse, rgba(124,58,237,0.25) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .wu-hero-inner { position: relative; z-index: 1; max-width: 750px; margin: 0 auto; }
+    .wu-avatar-badge {
+      display: inline-flex; align-items: center; gap: .75rem;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(201,168,76,.25);
+      border-radius: 3rem; padding: .55rem 1.4rem;
+      margin-bottom: 2rem; color: rgba(255,255,255,.8);
+      font-size: .9rem;
+    }
+    .wu-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 6vw, 3.8rem);
+      color: white; margin-bottom: .75rem; line-height: 1.15;
+    }
+    .wu-hero h1 span { color: var(--gold, #c9a84c); }
+    .wu-hero-sub {
+      color: rgba(255,255,255,.75); font-size: 1.1rem; margin-bottom: 2rem;
+    }
+    .wu-quote {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(201,168,76,.2);
+      border-left: 3px solid var(--gold, #c9a84c);
+      border-radius: .75rem; padding: 1.25rem 1.5rem;
+      color: rgba(255,255,255,.9); font-style: italic; font-size: 1.05rem;
+      max-width: 600px; margin: 0 auto;
+    }
+    /* ── Bio Section ── */
+    .wu-bio {
+      background: #faf8f4;
+      padding: 4rem 1.5rem;
+    }
+    .wu-bio-inner {
+      max-width: 960px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start;
+    }
+    @media(max-width:700px){ .wu-bio-inner { grid-template-columns: 1fr; } }
+    .wu-avatar-box {
+      background: linear-gradient(135deg, #1a1228, #2d1b69);
+      border-radius: 1.5rem;
+      padding: 2.5rem 1.5rem;
+      text-align: center; color: white;
+    }
+    .wu-avatar-box .avatar-emoji { font-size: 5rem; display: block; margin-bottom: 1rem; }
+    .wu-avatar-box h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: .5rem; }
+    .wu-avatar-box p { color: rgba(255,255,255,.7); font-size: .9rem; line-height: 1.7; }
+    .wu-badge-list { margin-top: 1.25rem; display: flex; flex-direction: column; gap: .5rem; }
+    .wu-badge-list span {
+      background: rgba(201,168,76,.15); border: 1px solid rgba(201,168,76,.3);
+      color: #c9a84c; border-radius: 2rem; padding: .3rem .9rem; font-size: .82rem;
+    }
+    .wu-bio-text h2 { font-family: 'Playfair Display', serif; font-size: 2rem; color: #1a1228; margin-bottom: 1.25rem; }
+    .wu-bio-text p { color: #4a4060; line-height: 1.9; margin-bottom: 1rem; font-size: 1rem; }
+    .wu-pillars {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1.5rem;
+    }
+    @media(max-width:500px){ .wu-pillars { grid-template-columns: 1fr; } }
+    .wu-pillar {
+      background: white; border: 1px solid #e9e0f8;
+      border-radius: 1rem; padding: 1rem 1.25rem;
+    }
+    .wu-pillar-icon { font-size: 1.5rem; margin-bottom: .4rem; }
+    .wu-pillar h4 { font-size: .95rem; color: #7c3aed; margin-bottom: .35rem; }
+    .wu-pillar p { font-size: .85rem; color: #6b5e8a; margin: 0; line-height: 1.6; }
+    /* ── Articles Section ── */
+    .wu-articles {
+      background: #f3effa;
+      padding: 4rem 1.5rem;
+    }
+    .section-header { text-align: center; margin-bottom: 2.5rem; }
+    .section-header h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.7rem,4vw,2.4rem); color: #1a1228; margin-bottom: .5rem; }
+    .section-header p { color: #6b5e8a; font-size: 1rem; }
+    .articles-grid {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.75rem;
+    }
+    .article-card {
+      background: white; border-radius: 1.25rem;
+      border: 1px solid #e9e0f8;
+      padding: 1.75rem;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .article-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(124,58,237,.1); }
+    .article-card .card-emoji { font-size: 2.25rem; margin-bottom: .75rem; display: block; }
+    .article-card h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #1a1228; margin-bottom: .75rem; line-height: 1.35; }
+    .article-card p { color: #5a4e72; font-size: .92rem; line-height: 1.75; margin-bottom: 1.25rem; }
+    .article-card .stone-pills { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1.25rem; }
+    .article-card .stone-pill {
+      background: #f3effa; color: #7c3aed; font-size: .78rem;
+      padding: .2rem .7rem; border-radius: 2rem; border: 1px solid #e0d4f7;
+    }
+    .article-card .read-more {
+      display: inline-flex; align-items: center; gap: .4rem;
+      color: #7c3aed; font-weight: 600; font-size: .9rem;
+      text-decoration: none; transition: gap .2s;
+    }
+    .article-card .read-more:hover { gap: .7rem; }
+    /* ── Course Section ── */
+    .wu-course {
+      background: linear-gradient(135deg, #1a1228 0%, #2d1b69 100%);
+      padding: 4rem 1.5rem;
+      color: white;
+    }
+    .wu-course-inner { max-width: 960px; margin: 0 auto; }
+    .wu-course h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.7rem,4vw,2.4rem); margin-bottom: .75rem; text-align: center; }
+    .wu-course-sub { text-align: center; color: rgba(255,255,255,.7); margin-bottom: 2.5rem; font-size: 1rem; }
+    .course-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
+    .course-card {
+      background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12);
+      border-radius: 1.25rem; padding: 1.75rem;
+    }
+    .course-card .price {
+      font-size: 1.6rem; font-family: 'Playfair Display', serif;
+      color: var(--gold, #c9a84c); margin-bottom: .25rem;
+    }
+    .course-card .price small { font-size: .9rem; color: rgba(255,255,255,.5); }
+    .course-card h3 { font-size: 1.05rem; margin-bottom: .75rem; }
+    .course-card ul { padding-left: 0; list-style: none; margin: 0; }
+    .course-card ul li { color: rgba(255,255,255,.75); font-size: .88rem; padding: .3rem 0; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .course-card ul li::before { content: "✦ "; color: var(--gold, #c9a84c); }
+    .course-cta { text-align: center; }
+    .btn-line-wu {
+      display: inline-flex; align-items: center; gap: .6rem;
+      background: #06C755; color: white;
+      padding: .85rem 2rem; border-radius: 3rem;
+      text-decoration: none; font-weight: 700; font-size: 1rem;
+      transition: opacity .2s; box-shadow: 0 4px 20px rgba(6,199,85,.35);
+    }
+    .btn-line-wu:hover { opacity: .9; }
+    /* ── Grid Generator ── */
+    .wu-grid-section { background: #faf8f4; padding: 4rem 1.5rem; }
+    .wu-grid-inner { max-width: 960px; margin: 0 auto; }
+    .wu-grid-intro { color: #4a4060; line-height: 1.85; margin-bottom: 2rem; font-size: 1rem; }
+    .grid-table-wrap { overflow-x: auto; border-radius: 1rem; }
+    .grid-table {
+      width: 100%; border-collapse: collapse;
+      font-family: Sarabun, sans-serif;
+    }
+    .grid-table th {
+      background: #7c3aed; color: white;
+      padding: .85rem 1rem; text-align: left; font-size: .9rem;
+    }
+    .grid-table th:first-child { border-radius: .75rem 0 0 0; }
+    .grid-table th:last-child { border-radius: 0 .75rem 0 0; }
+    .grid-table td {
+      padding: .85rem 1rem; font-size: .9rem;
+      border-bottom: 1px solid #f0e8ff; color: #1a1228;
+      vertical-align: top;
+    }
+    .grid-table tr:nth-child(even) td { background: #f9f6ff; }
+    .grid-table tr:last-child td:first-child { border-radius: 0 0 0 .75rem; }
+    .grid-table tr:last-child td:last-child { border-radius: 0 0 .75rem 0; }
+    .grid-table .goal-col { font-weight: 600; color: #7c3aed; }
+    .grid-table .center-col { color: #c9a84c; font-weight: 600; }
+  </style>
 </head>
 <body>
 
@@ -21,85 +192,302 @@
       <li><a href="/amethez/stones/">คลังหิน</a></li>
       <li><a href="/amethez/categories/chakra.html">จักระ</a></li>
       <li><a href="/amethez/categories/zodiac.html">ราศี</a></li>
-      <li><a href="/amethez/wuchong/" style="color:var(--purple)">Master Wuchong</a></li>
+      <li><a href="/amethez/wuchong/" style="color:var(--gold)">Master Wuchong</a></li>
       <li><a href="/amethez/metha/">อาจารย์เมธา</a></li>
       <li><a href="/amethez/sale.html" style="color:var(--gold)">🛒 ร้านค้า</a></li>
     </ul></nav>
   </div>
 </header>
 
-<section class="article-hero">
-  <div class="container" style="max-width:700px">
-    <div style="font-size:4rem;margin-bottom:1rem">🧘</div>
-    <h1>Master Wuchong</h1>
-    <p style="color:rgba(255,255,255,0.85);font-size:1.15rem">ผู้เชี่ยวชาญด้านพลังงานคริสตัล ความสำเร็จ การเงิน และสุขภาพ</p>
-    <p style="color:rgba(255,255,255,0.65);font-size:0.95rem;margin-top:0.75rem">"หินไม่ใช่เครื่องราง หินคือเครื่องมือช่วยให้คุณดึงพลังที่มีอยู่แล้วในตัวออกมา"</p>
+<!-- ── HERO ── -->
+<section class="wu-hero">
+  <div class="wu-hero-inner">
+    <div class="wu-avatar-badge">
+      <span>🧘</span>
+      <span>Crystal Energy Expert · ผู้เชี่ยวชาญพลังงานคริสตัล</span>
+    </div>
+    <h1>Master <span>Wuchong</span></h1>
+    <p class="wu-hero-sub">พลังงาน · ความสำเร็จ · การเงิน · สุขภาพ</p>
+    <blockquote class="wu-quote">
+      "หินไม่ใช่เครื่องราง หินคือเครื่องมือช่วยให้คุณดึงพลังที่มีอยู่แล้วในตัวออกมา<br>สิ่งที่หินทำได้คือการสะท้อน เตือน และเสริมพลังใจที่แน่วแน่ของคุณ"
+    </blockquote>
   </div>
 </section>
 
-<section class="section">
-  <div class="container">
+<!-- ── BIO ── -->
+<section class="wu-bio">
+  <div class="wu-bio-inner">
+    <div class="wu-avatar-box">
+      <span class="avatar-emoji">🧘</span>
+      <h3>Master Wuchong</h3>
+      <p>ผู้เชี่ยวชาญด้านพลังงานคริสตัลและการพัฒนาจิตใจ ศึกษาและปฏิบัติมากกว่า 20 ปี</p>
+      <div class="wu-badge-list">
+        <span>Crystal Healing Certified</span>
+        <span>Feng Shui Practitioner</span>
+        <span>Energy Grid Master</span>
+        <span>สอนมากกว่า 1,200 คน</span>
+      </div>
+    </div>
+    <div class="wu-bio-text">
+      <h2>เกี่ยวกับ Master Wuchong</h2>
+      <p>Master Wuchong เริ่มต้นศึกษาหินคริสตัลตั้งแต่อายุ 22 ปี จากความสงสัยเล็กๆ ที่ว่า "หินพวกนี้มีพลังงานจริงไหม?" คำตอบที่ได้กลายเป็นการเดินทางกว่าสองทศวรรษที่พาไปทั่วทั้งเส้นทางสายไหมในจีน เทือกเขาหิมาลัย และเหมืองพลอยในบราซิล</p>
+      <p>ปรัชญาหลักของ Master Wuchong คือการผสมผสานศาสตร์ตะวันออก — เต๋า, ฮวงจุ้ย, จักระ — เข้ากับหลักวิทยาศาสตร์พลังงานสมัยใหม่ เช่น ทฤษฎีคลื่นแม่เหล็กไฟฟ้าและการสั่นสะเทือนของแร่ธาตุ เพื่อให้ทุกคนสามารถเข้าใจและประยุกต์ใช้ได้จริงในชีวิตประจำวัน</p>
+      <p>ผู้ที่ศึกษากับ Master Wuchong ไม่ได้แค่ "ใส่หิน" แต่เข้าใจว่าทำไมต้องใส่ ใช้อย่างไรให้ถูกต้อง และผสมผสานกับวิถีชีวิตอย่างลงตัวโดยไม่งมงาย</p>
+      <div class="wu-pillars">
+        <div class="wu-pillar">
+          <div class="wu-pillar-icon">💰</div>
+          <h4>การเงินและความมั่งคั่ง</h4>
+          <p>Crystal Grid, Law of Attraction และหินเรียกพลังทรัพย์</p>
+        </div>
+        <div class="wu-pillar">
+          <div class="wu-pillar-icon">🏆</div>
+          <h4>ความสำเร็จและเป้าหมาย</h4>
+          <p>ตั้งเจตนา, โปรแกรมหิน และพิธีกรรมเสริมพลัง</p>
+        </div>
+        <div class="wu-pillar">
+          <div class="wu-pillar-icon">❤️‍🔥</div>
+          <h4>สุขภาพและพลังชีวิต</h4>
+          <p>Crystal Healing, Chakra Balancing และการดูแลพลังกาย</p>
+        </div>
+        <div class="wu-pillar">
+          <div class="wu-pillar-icon">🧘</div>
+          <h4>สมาธิและจิตใจ</h4>
+          <p>Meditation with Crystals และการพัฒนาจิตสำนึก</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ARTICLES ── -->
+<section class="wu-articles">
+  <div class="section-header">
+    <h2>บทความเด่นจาก Master Wuchong</h2>
+    <p>ความรู้ลึกซึ้งที่อ่านแล้วเอาไปใช้ได้จริง</p>
+  </div>
+  <div class="articles-grid">
+
+    <div class="article-card">
+      <span class="card-emoji">💰</span>
+      <h3>5 หินเรียกเงินที่นักธุรกิจใช้จริง</h3>
+      <p>ในโลกธุรกิจที่แข่งขันสูง นักธุรกิจชั้นนำจำนวนไม่น้อยหันมาพึ่งพาพลังงานของหินคริสตัลเป็นส่วนหนึ่งของกิจวัตร ไม่ใช่เพราะงมงาย แต่เพราะเข้าใจว่าหินช่วย "set tone" ของจิตใจและพลังงานโดยรอบได้อย่างมีนัยสำคัญ</p>
+      <div class="stone-pills">
+        <span class="stone-pill">ซิทริน</span>
+        <span class="stone-pill">Pyrite</span>
+        <span class="stone-pill">Green Aventurine</span>
+        <span class="stone-pill">โมลดาไวท์</span>
+        <span class="stone-pill">Tiger's Eye</span>
+      </div>
+      <p><strong>ซิทริน</strong> — รู้จักในชื่อ "หินพ่อค้า" ช่วยดึงดูดโชคลาภและความสำเร็จทางธุรกิจ วางไว้ที่โต๊ะทำงานหรือกล่องเงิน <strong>Pyrite</strong> — สะท้อนแสงทองสวยงาม พลังงานแห่งการสะสมทรัพย์ ใส่ในกระเป๋าเงิน <strong>Green Aventurine</strong> — หินโชค ช่วยในการตัดสินใจและดึงโอกาสใหม่ๆ เข้ามา</p>
+      <a href="#" class="read-more">อ่านต่อ →</a>
+    </div>
+
+    <div class="article-card">
+      <span class="card-emoji">🏆</span>
+      <h3>วิธีตั้ง Crystal Grid แห่งความสำเร็จ</h3>
+      <p>Crystal Grid คือการจัดวางหินหลายชนิดในรูปแบบเรขาคณิตศักดิ์สิทธิ์เพื่อขยายพลังงานและส่งเสริมเจตนาของคุณ เมื่อหินทำงานร่วมกันอย่างสอดคล้อง พลังงานจะทวีคูณมากกว่าการใช้หินชนิดเดียว</p>
+      <div class="stone-pills">
+        <span class="stone-pill">Clear Quartz</span>
+        <span class="stone-pill">ซิทริน</span>
+        <span class="stone-pill">Pyrite</span>
+        <span class="stone-pill">Tiger's Eye</span>
+      </div>
+      <p><strong>Pattern แนะนำ:</strong> Flower of Life หรือ Metatron's Cube <strong>ขั้นตอน:</strong> 1) วาง Center Stone (Clear Quartz) ตรงกลาง 2) วางหินเสริมตามทิศทั้ง 6 3) เชื่อมพลังด้วยแท่ง Crystal Wand 4) ตั้งเจตนาออกเสียงดังๆ ชัดเจน</p>
+      <a href="#" class="read-more">อ่านต่อ →</a>
+    </div>
+
+    <div class="article-card">
+      <span class="card-emoji">🌙</span>
+      <h3>พิธีชาร์จหินพระจันทร์เต็มดวง</h3>
+      <p>พระจันทร์เต็มดวงคือช่วงเวลาที่พลังงานจักรวาลแรงที่สุดในรอบเดือน เป็นโอกาสทองในการชาร์จ ทำความสะอาด และรีเซ็ตพลังงานของหินคริสตัลทุกชนิด Master Wuchong แนะนำให้ทำพิธีนี้ทุกเดือนโดยไม่ข้ามแม้ฝนตก</p>
+      <div class="stone-pills">
+        <span class="stone-pill">หินทุกชนิด</span>
+        <span class="stone-pill">Full Moon</span>
+        <span class="stone-pill">Moonstone</span>
+      </div>
+      <p><strong>ขั้นตอน:</strong> ล้างหินด้วยน้ำสะอาด (ระวังหินที่ละลายน้ำ เช่น Selenite) → วางบนจานหรือผ้าขาว → นำออกไปรับแสงจันทร์ตั้งแต่พระอาทิตย์ตกถึงตี 3 → ตอนเช้าเก็บก่อนแดดออก → ตั้งเจตนาใหม่พร้อมใช้งาน</p>
+      <a href="#" class="read-more">อ่านต่อ →</a>
+    </div>
+
+    <div class="article-card">
+      <span class="card-emoji">🧘</span>
+      <h3>สมาธิกับหิน — คู่มือสำหรับผู้เริ่มต้น</h3>
+      <p>การนั่งสมาธิร่วมกับหินคริสตัลช่วยให้จิตใจสงบลงเร็วขึ้น โฟกัสชัดขึ้น และรับรู้พลังงานได้ละเอียดขึ้น สำหรับผู้ที่เพิ่งเริ่มต้น ไม่ต้องกังวลว่าจะ "ทำถูก" หรือ "รู้สึกได้หรือเปล่า" แค่เริ่มทำก็พอ</p>
+      <div class="stone-pills">
+        <span class="stone-pill">อเมทิสต์</span>
+        <span class="stone-pill">Clear Quartz</span>
+        <span class="stone-pill">Black Tourmaline</span>
+        <span class="stone-pill">Selenite</span>
+      </div>
+      <p><strong>เริ่มต้นง่ายๆ:</strong> เลือกหิน 1-2 ชนิด → นั่งสบาย หลังตรง → ถือหินในมือ หลับตา → หายใจเข้าลึกๆ 3 ครั้ง → ปล่อยให้ความรู้สึกมาเอง → ทำ 10-15 นาที ทุกเช้าหรือก่อนนอน</p>
+      <a href="#" class="read-more">อ่านต่อ →</a>
+    </div>
+
+    <div class="article-card">
+      <span class="card-emoji">❤️‍🔥</span>
+      <h3>หินบำบัดสุขภาพ — พลังงานดูแลร่างกาย</h3>
+      <p>Crystal Healing ไม่ใช่การรักษาโรคทางการแพทย์ แต่เป็นการส่งเสริมพลังงานชีวิต (Life Force) ที่ช่วยให้ร่างกายและจิตใจอยู่ในสมดุล สนับสนุนการฟื้นฟูตามธรรมชาติ และเพิ่มประสิทธิภาพการพักผ่อน</p>
+      <div class="stone-pills">
+        <span class="stone-pill">Amethyst</span>
+        <span class="stone-pill">Clear Quartz</span>
+        <span class="stone-pill">Malachite</span>
+        <span class="stone-pill">Carnelian</span>
+        <span class="stone-pill">Lapis Lazuli</span>
+      </div>
+      <p><strong>Chakra Placement:</strong> วางหินตรงจักระที่ต้องการเสริม — Amethyst บนหน้าผาก (Third Eye), Rose Quartz บนหัวใจ, Citrine บน Solar Plexus ทำขณะนอนพักผ่อน 20-30 นาที</p>
+      <a href="#" class="read-more">อ่านต่อ →</a>
+    </div>
+
+    <div class="article-card">
+      <span class="card-emoji">🧲</span>
+      <h3>Law of Attraction + Crystal — ตั้งเจตนาอย่างไรให้ได้ผล</h3>
+      <p>Law of Attraction หรือกฎแห่งการดึงดูดทำงานผ่านความถี่ของความคิดและความรู้สึก หินคริสตัลทำหน้าที่เป็น "ตัวขยายสัญญาณ" ที่ช่วยให้เจตนาของคุณส่งพลังงานออกไปในจักรวาลได้อย่างชัดเจนและต่อเนื่องมากขึ้น</p>
+      <div class="stone-pills">
+        <span class="stone-pill">Clear Quartz</span>
+        <span class="stone-pill">Moldavite</span>
+        <span class="stone-pill">Labradorite</span>
+        <span class="stone-pill">Selenite</span>
+      </div>
+      <p><strong>3 ขั้นตอนหลัก:</strong> 1) <strong>Cleanse</strong> — ล้างพลังงานเก่าออก 2) <strong>Program</strong> — ตั้งเจตนาชัดเจน บวกเชิง ปัจจุบันกาล 3) <strong>Activate</strong> — ใช้งานสม่ำเสมอ พกติดตัวหรือวางที่มองเห็นบ่อยๆ</p>
+      <a href="#" class="read-more">อ่านต่อ →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── COURSE ── -->
+<section class="wu-course">
+  <div class="wu-course-inner">
+    <h2>คอร์สเรียนพลังงานคริสตัล</h2>
+    <p class="wu-course-sub">เรียนรู้อย่างถูกต้องและลึกซึ้ง จาก Master Wuchong โดยตรง</p>
+    <div class="course-cards">
+      <div class="course-card">
+        <div class="price">฿1,490 <small>/ คน</small></div>
+        <h3>🌱 Crystal Beginner — เริ่มต้นกับหิน</h3>
+        <ul>
+          <li>ทำความรู้จักหิน 30 ชนิดยอดนิยม</li>
+          <li>วิธีเลือกหินที่เหมาะกับตัวเอง</li>
+          <li>การทำความสะอาดและชาร์จหิน</li>
+          <li>การตั้งเจตนาเบื้องต้น</li>
+          <li>E-Book ประกอบ 80 หน้า</li>
+          <li>ระยะเวลา: 4 ชั่วโมง (Online)</li>
+        </ul>
+      </div>
+      <div class="course-card">
+        <div class="price">฿3,490 <small>/ คน</small></div>
+        <h3>⚡ Crystal Advanced — พลังงานชั้นสูง</h3>
+        <ul>
+          <li>Crystal Grid ทุก Pattern</li>
+          <li>Chakra Healing เต็มรูปแบบ</li>
+          <li>Law of Attraction + Programming</li>
+          <li>Meditation ขั้นสูง</li>
+          <li>Feng Shui กับหินคริสตัลในบ้าน</li>
+          <li>ระยะเวลา: 12 ชั่วโมง (Online 3 วัน)</li>
+        </ul>
+      </div>
+      <div class="course-card">
+        <div class="price">฿8,900 <small>/ กลุ่ม (ไม่เกิน 8 คน)</small></div>
+        <h3>🏛️ Crystal Master — Workshop สด</h3>
+        <ul>
+          <li>เรียน Workshop สดกับ Master Wuchong</li>
+          <li>ทดลองจัด Crystal Grid จริง</li>
+          <li>Crystal Healing Session ส่วนตัว</li>
+          <li>Certificate of Completion</li>
+          <li>สถานที่: กรุงเทพฯ (นัดหมายล่วงหน้า)</li>
+          <li>รวมหินชุด Starter Kit มูลค่า ฿1,200</li>
+        </ul>
+      </div>
+    </div>
+    <div class="course-cta">
+      <a href="https://line.me/ti/p/@amethez" class="btn-line-wu" target="_blank">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M19.365 9.89c.25 0 .5.24.5.49s-.25.5-.5.5H17.7v1.07h1.66c.25 0 .5.25.5.5s-.25.5-.5.5H17.2c-.28 0-.5-.22-.5-.5V9.39c0-.27.22-.5.5-.5h2.16zm-11.2.49c0-.27.22-.5.5-.5s.5.23.5.5v2.57c0 .28-.22.5-.5.5s-.5-.22-.5-.5V10.38zm-2.66 0c0-.27.22-.5.5-.5s.5.23.5.5v1.56l1.9-1.88c.1-.1.23-.18.37-.18.27 0 .5.22.5.5 0 .13-.05.26-.15.36L6.9 12.3l1.2 1.58c.08.1.12.22.12.34 0 .27-.22.5-.5.5-.15 0-.3-.07-.4-.2L5.9 12.9l-.4.38v1.15c0 .28-.22.5-.5.5s-.5-.22-.5-.5V10.38zm9.33 2.57c0 .28-.22.5-.5.5h-2.16c-.28 0-.5-.22-.5-.5V9.89c0-.27.22-.5.5-.5s.5.23.5.5v2.56h1.66c.28 0 .5.22.5.5zM12 2C6.48 2 2 6.05 2 11c0 3.03 1.56 5.7 3.98 7.38-.1.36-.18 1.03-.47 1.37-.36.43.23.6.82.31 1.42-.68 2.14-1.23 2.61-1.58.66.1 1.35.16 2.06.16 5.52 0 10-4.05 10-9 0-4.96-4.48-9-10-9z"/></svg>
+        สมัครเรียน / สอบถาม Line @amethez
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── CRYSTAL GRID GENERATOR ── -->
+<section class="wu-grid-section">
+  <div class="wu-grid-inner">
     <div class="section-header">
-      <h2>บทความพลังงาน</h2>
-      <p>ความรู้เชิงลึกเกี่ยวกับการใช้หินเพื่อพัฒนาทุกด้านของชีวิต</p>
+      <h2>Crystal Grid Reference — เลือกหินตามเป้าหมาย</h2>
+      <p>ตารางอ้างอิงการจัด Crystal Grid สำหรับเป้าหมายต่างๆ จาก Master Wuchong</p>
     </div>
-
-    <div class="grid-3">
-      <div class="card">
-        <div style="font-size:2.5rem;margin-bottom:0.75rem">💰</div>
-        <h3>หินเรียกเงิน — 5 ชนิดที่ได้ผลจริง</h3>
-        <p style="color:var(--text-muted);font-size:0.9rem">ซิทริน ไพไรต์ Green Aventurine และอีก 2 ชนิดที่นักธุรกิจใช้จริง พร้อมวิธีตั้งวงหิน</p>
-        <a href="#" class="btn btn-primary" style="margin-top:1rem">อ่านต่อ →</a>
-      </div>
-      <div class="card">
-        <div style="font-size:2.5rem;margin-bottom:0.75rem">🏆</div>
-        <h3>วงหินแห่งความสำเร็จ — ตั้งอย่างไรให้ได้ผล</h3>
-        <p style="color:var(--text-muted);font-size:0.9rem">วิธีจัดวงหินในที่ทำงานและบ้านเพื่อดึงดูดโอกาสและความสำเร็จ ตามหลัก Crystal Grid</p>
-        <a href="#" class="btn btn-primary" style="margin-top:1rem">อ่านต่อ →</a>
-      </div>
-      <div class="card">
-        <div style="font-size:2.5rem;margin-bottom:0.75rem">❤️‍🔥</div>
-        <h3>หินเสริมสุขภาพ — ดูแลร่างกายด้วยพลังงาน</h3>
-        <p style="color:var(--text-muted);font-size:0.9rem">หินสำหรับพลังงานสูง ระบบภูมิคุ้มกัน การนอนหลับ และการลดความเครียด</p>
-        <a href="#" class="btn btn-primary" style="margin-top:1rem">อ่านต่อ →</a>
-      </div>
-      <div class="card">
-        <div style="font-size:2.5rem;margin-bottom:0.75rem">🧲</div>
-        <h3>Law of Attraction + คริสตัล — วิธีตั้งเจตนา</h3>
-        <p style="color:var(--text-muted);font-size:0.9rem">การผสมผสานกฎแห่งการดึงดูดกับพลังงานหิน เพื่อผลลัพธ์ที่เร็วและแม่นยำขึ้น</p>
-        <a href="#" class="btn btn-primary" style="margin-top:1rem">อ่านต่อ →</a>
-      </div>
-      <div class="card">
-        <div style="font-size:2.5rem;margin-bottom:0.75rem">🌙</div>
-        <h3>พิธีชาร์จหินพระจันทร์เต็มดวง</h3>
-        <p style="color:var(--text-muted);font-size:0.9rem">ขั้นตอนทำพิธีชาร์จหินทุกชนิดด้วยพลังจันทร์ ทำที่บ้านได้ง่ายๆ ใน 5 ขั้นตอน</p>
-        <a href="#" class="btn btn-primary" style="margin-top:1rem">อ่านต่อ →</a>
-      </div>
-      <div class="card">
-        <div style="font-size:2.5rem;margin-bottom:0.75rem">🧘</div>
-        <h3>สมาธิกับหิน — คู่มือสำหรับผู้เริ่มต้น</h3>
-        <p style="color:var(--text-muted);font-size:0.9rem">วิธีนำหินเข้าสู่การทำสมาธิ ตั้งแต่การเลือกหิน ท่านั่ง ไปจนถึงเทคนิคการหายใจ</p>
-        <a href="#" class="btn btn-primary" style="margin-top:1rem">อ่านต่อ →</a>
-      </div>
+    <p class="wu-grid-intro">
+      Crystal Grid ที่ดีประกอบด้วยหิน 3 ส่วน: <strong>หินหลัก</strong> (ส่งพลังงานหลักตามเป้าหมาย) <strong>หินเสริม</strong> (ช่วยขยายและสนับสนุน) และ <strong>หินจุดศูนย์กลาง</strong> (amplifier ที่รวมพลังงานทั้งหมด) การวางควรเป็นรูปทรงสมมาตรและตั้งเจตนาก่อนเริ่มทุกครั้ง
+    </p>
+    <div class="grid-table-wrap">
+      <table class="grid-table">
+        <thead>
+          <tr>
+            <th>เป้าหมาย</th>
+            <th>หินหลัก</th>
+            <th>หินเสริม</th>
+            <th>หินจุดศูนย์กลาง</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="goal-col">💰 ดึงดูดความมั่งคั่ง</td>
+            <td>Citrine, Pyrite</td>
+            <td>Green Aventurine, Tiger's Eye</td>
+            <td class="center-col">Clear Quartz</td>
+          </tr>
+          <tr>
+            <td class="goal-col">🏆 ความสำเร็จและเป้าหมาย</td>
+            <td>Tiger's Eye, Carnelian</td>
+            <td>Citrine, Red Jasper</td>
+            <td class="center-col">Moldavite</td>
+          </tr>
+          <tr>
+            <td class="goal-col">❤️ ความรักและสัมพันธ์</td>
+            <td>Rose Quartz, Rhodonite</td>
+            <td>Moonstone, Morganite</td>
+            <td class="center-col">Rose Quartz</td>
+          </tr>
+          <tr>
+            <td class="goal-col">🛡️ ปกป้องและขจัดลบ</td>
+            <td>Black Tourmaline, Obsidian</td>
+            <td>Shungite, Hematite</td>
+            <td class="center-col">Selenite</td>
+          </tr>
+          <tr>
+            <td class="goal-col">🧘 สมาธิและจิตวิญญาณ</td>
+            <td>Amethyst, Lapis Lazuli</td>
+            <td>Selenite, Labradorite</td>
+            <td class="center-col">Apophyllite</td>
+          </tr>
+          <tr>
+            <td class="goal-col">💪 สุขภาพและพลังชีวิต</td>
+            <td>Malachite, Bloodstone</td>
+            <td>Carnelian, Clear Quartz</td>
+            <td class="center-col">Clear Quartz</td>
+          </tr>
+          <tr>
+            <td class="goal-col">✨ ความคิดสร้างสรรค์</td>
+            <td>Labradorite, Moonstone</td>
+            <td>Iolite, Aquamarine</td>
+            <td class="center-col">Quartz Phantom</td>
+          </tr>
+          <tr>
+            <td class="goal-col">📚 การเรียนรู้และปัญญา</td>
+            <td>Sodalite, Fluorite</td>
+            <td>Lapis Lazuli, Amazonite</td>
+            <td class="center-col">Clear Quartz</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </section>
 
-<section class="section" style="background:#f5f0ff;padding:3rem 0;text-align:center">
-  <div class="container" style="max-width:600px">
-    <div style="font-size:3rem;margin-bottom:1rem">📚</div>
-    <h2>คอร์สเรียน — พลังงานคริสตัลขั้นสูง</h2>
-    <p style="color:var(--text-muted);margin-bottom:2rem">เรียนรู้การทำงานกับหินอย่างเป็นระบบ ตั้งแต่ขั้นพื้นฐานจนถึงการสร้าง Crystal Grid และพิธีกรรมขั้นสูง</p>
-    <a href="https://line.me/R/ti/p/@amethez" target="_blank" class="btn btn-purple" style="background:var(--purple);color:white">สอบถามคอร์สเรียน</a>
-  </div>
-</section>
-
-<footer class="site-footer">
-  <div class="container footer-bottom">
-    <p>© 2026 Amethez.com — ข้อมูลเพื่อการศึกษา ไม่ใช่คำแนะนำทางการแพทย์</p>
-  </div>
+<!-- ── FOOTER ── -->
+<footer style="background:#1a1228;color:rgba(255,255,255,0.6);text-align:center;padding:2.5rem 1.5rem;font-size:.9rem">
+  <p style="margin-bottom:.5rem"><a href="/amethez/" style="color:#a78bfa;text-decoration:none;font-weight:600">AMETHEZ</a> — Stones · Stories · Soul</p>
+  <p><a href="/amethez/stones/" style="color:rgba(255,255,255,.5);text-decoration:none;margin:0 .75rem">คลังหิน</a><a href="/amethez/sale.html" style="color:rgba(255,255,255,.5);text-decoration:none;margin:0 .75rem">ร้านค้า</a><a href="/amethez/about.html" style="color:rgba(255,255,255,.5);text-decoration:none;margin:0 .75rem">เกี่ยวกับเรา</a></p>
 </footer>
 
-<script src="/amethez/js/main.js"></script>
+<script src="/amethez/js/chat.js"></script>
 </body>
 </html>

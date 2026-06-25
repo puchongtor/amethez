@@ -1,28 +1,90 @@
 ﻿<!DOCTYPE html>
-<!-- 🎨 GOOGLE FLOW IMAGE PROMPT (hero):
-STILL: "Twelve birthstones arranged in calendar grid layout, garnet amethyst aquamarine diamond emerald pearl ruby peridot sapphire opal topaz turquoise, elegant jewelry photography, white marble, 8K"
-VIDEO: "Twelve birthstones glowing one by one in monthly sequence, sparkling gemstones, elegant rotating display, cinematic 4K, luxury jewelry mood"
--->
 <html lang="th">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>อัญมณีประจำเดือนเกิด — Birthstone ทั้ง 12 เดือน ความหมาย | Amethez</title>
-  <meta name="description" content="อัญมณีประจำเดือนเกิด (Birthstone) ทั้ง 12 เดือนตามหลักสากล มกราคมถึงธันวาคม พร้อมความหมาย พลัง และหินทางเลือกราคาเข้าถึงได้ของแต่ละเดือน">
-  <meta name="keywords" content="อัญมณีประจำเดือนเกิด, birthstone, หินประจำเดือนเกิด, อัญมณีเดือนเกิด, หินมงคลเดือนเกิด, อัญมณี 12 เดือน">
+  <title>หินมงคลตามเดือนเกิด — โหราศาสตร์ไทยและเอเชีย | Amethez</title>
+  <meta name="description" content="หินมงคลตามเดือนเกิดแบบไทยและเอเชีย ผสมผสานโหราศาสตร์ไทย สีมงคลประจำวัน และความเชื่อดั้งเดิม เพื่อหินที่สอดคล้องกับพลังงานชีวิตของคุณอย่างแท้จริง">
   <link rel="canonical" href="https://amethez.com/categories/birth-month.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/amethez/css/main.css">
   <style>
-    .month-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1rem; margin:1.5rem 0; }
-    .month-card { background:white; border-radius:.875rem; padding:1.25rem; border:1.5px solid #f0e8ff; }
-    .month-card .mhead { display:flex; align-items:center; gap:.6rem; margin-bottom:.5rem; }
-    .month-card .mnum { width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,#7c3aed,#a78bfa); color:white; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.85rem; flex-shrink:0; }
-    .month-card h4 { font-size:1.05rem; font-weight:700; color:var(--text); }
-    .month-card .gem { color:var(--purple); font-weight:600; font-size:.92rem; margin-bottom:.35rem; }
-    .month-card p { font-size:.87rem; color:var(--text-muted); line-height:1.55; }
-    .month-card .alt { font-size:.8rem; color:var(--text-muted); margin-top:.4rem; font-style:italic; }
+    .month-list { margin-top: 2.5rem; display: grid; gap: 1.75rem; }
+    .month-row {
+      background: var(--bg-card);
+      border-radius: 1.25rem;
+      padding: 0;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 120px 1fr;
+    }
+    .month-aside {
+      background: linear-gradient(180deg, var(--mc,var(--purple)), var(--mc2,var(--purple-dark)));
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 1.5rem 1rem; text-align: center; color: white;
+    }
+    .month-aside .num { font-family:'Playfair Display',serif; font-size:2.5rem; font-weight:700; line-height:1; }
+    .month-aside .th { font-size:.9rem; margin-top:.25rem; font-weight:600; }
+    .month-aside .en { font-size:.75rem; opacity:.8; margin-top:.1rem; }
+    .month-main { padding: 1.75rem; }
+    .month-main h3 { margin-bottom: .25rem; font-size: 1.15rem; }
+    .month-sub { font-size: .82rem; color: var(--text-muted); margin-bottom: 1rem; }
+    .stone-pills { display: flex; flex-wrap: wrap; gap: .45rem; margin: .75rem 0; }
+    .stone-pill {
+      font-size: .82rem; font-weight: 500;
+      padding: .28rem .8rem; border-radius: 2rem;
+      background: #f5f0ff; color: var(--purple);
+      border: 1px solid #e0d4fa;
+      transition: all .15s;
+    }
+    .stone-pill:hover { background: var(--purple); color: white; border-color: var(--purple); }
+    .stone-pill.alt { background: #fdf8ee; color: #92400e; border-color: #fde68a; }
+    .stone-pill.alt:hover { background: #d97706; color: white; border-color: #d97706; }
+    .thai-insight {
+      font-size: .88rem; background: linear-gradient(135deg,#fffbeb,#fef3c7);
+      border-radius: .75rem; padding: .75rem 1rem;
+      border-left: 3px solid var(--gold);
+      color: #78350f; margin-top: .75rem;
+    }
+    .thai-insight strong { color: #92400e; }
+    .intro-box {
+      background: linear-gradient(135deg,#fdf8ee,#f5f0ff);
+      border-radius: 1.25rem; padding: 2rem;
+      border: 1px solid var(--border); margin-bottom: 2.5rem;
+    }
+    .color-day-box {
+      background: var(--bg-card); border-radius: 1.25rem;
+      padding: 2rem; border: 1px solid var(--border); margin-top: 3rem;
+    }
+    .day-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(130px,1fr)); gap: 1rem; margin-top: 1.25rem; }
+    .day-card {
+      border-radius: .75rem; padding: 1rem .75rem; text-align: center;
+      border: 1px solid var(--border);
+    }
+    .day-card .day-name { font-weight: 600; font-size: .9rem; margin-bottom: .25rem; }
+    .day-card .day-color { font-size: .8rem; color: var(--text-muted); margin-bottom: .5rem; }
+    .day-card .day-stone { font-size: .82rem; font-weight: 500; color: var(--purple); }
+    .cta-box {
+      background: linear-gradient(135deg,var(--purple),var(--purple-dark));
+      color: white; border-radius: 1.25rem; padding: 3rem 2rem;
+      text-align: center; margin-top: 3rem;
+    }
+    .cta-box h2 { color: white; }
+    .cta-box p { color: rgba(255,255,255,.85); margin: .75rem 0 1.5rem; }
+    .btn-gold {
+      display: inline-block; background: var(--gold); color: #1a1228;
+      font-weight: 600; padding: .85rem 2rem; border-radius: 2rem;
+      transition: transform .2s;
+    }
+    .btn-gold:hover { transform: translateY(-2px); color: #1a1228; }
+    @media (max-width: 600px) {
+      .month-row { grid-template-columns: 90px 1fr; }
+      .month-aside .num { font-size: 1.8rem; }
+    }
   </style>
 </head>
 <body>
@@ -34,120 +96,329 @@ VIDEO: "Twelve birthstones glowing one by one in monthly sequence, sparkling gem
     </a>
     <nav><ul class="nav-links">
       <li><a href="/amethez/stones/">คลังหิน</a></li>
+      <li><a href="/amethez/categories/chakra.html">จักระ</a></li>
       <li><a href="/amethez/categories/zodiac.html">ราศี</a></li>
-      <li><a href="/amethez/guides/">พลังบำบัด</a></li>
+      <li><a href="/amethez/wuchong/">Master Wuchong</a></li>
+      <li><a href="/amethez/metha/">อาจารย์เมธา</a></li>
       <li><a href="/amethez/sale.html" style="color:var(--gold)">🛒 ร้านค้า</a></li>
     </ul></nav>
   </div>
 </header>
 
-<section class="article-hero">
+<section class="hero">
   <div class="container">
-    <div style="font-size:.9rem;color:rgba(255,255,255,.6);margin-bottom:.5rem">
-      <a href="/amethez/" style="color:rgba(255,255,255,.6)">หน้าหลัก</a> › อัญมณีประจำเดือนเกิด
-    </div>
-    <div style="font-size:4rem;margin-bottom:.5rem">💎</div>
-    <h1>อัญมณีประจำเดือนเกิด</h1>
-    <p style="font-size:1.15rem;color:rgba(255,255,255,.85);margin:.75rem 0">Birthstone ทั้ง 12 เดือน ตามหลักสากล พร้อมความหมายและหินทางเลือก</p>
+    <div style="font-size:4rem;margin-bottom:1rem">🏮</div>
+    <h1>หินมงคลตามเดือนเกิด</h1>
+    <p style="font-size:1.15rem;color:rgba(255,255,255,.8);max-width:640px;margin:1rem auto 0">
+      ผสมผสานโหราศาสตร์ไทย ความเชื่อเอเชีย และ Birthstone สากล เพื่อหินที่สอดคล้องกับพลังงานชีวิตของคุณอย่างครบถ้วน
+    </p>
   </div>
 </section>
 
-<div class="article-body">
-  <h2>Birthstone คืออะไร?</h2>
-  <p>อัญมณีประจำเดือนเกิด (Birthstone) เป็นธรรมเนียมสากลที่กำหนดอัญมณีให้แต่ละเดือน มีรากฐานมาตั้งแต่สมัยพระคัมภีร์และได้รับการจัดมาตรฐานโดยสมาคมอัญมณีอเมริกาในปี 1912 เชื่อกันว่าการสวมใส่อัญมณีประจำเดือนเกิดของตนช่วยนำโชค สุขภาพ และการปกป้อง</p>
-  <p>อัญมณีหลักบางชนิดมีราคาสูง (เช่น เพชร ทับทิม มรกต) เราจึงแนะนำ "หินทางเลือก" ที่มีพลังงานใกล้เคียงและราคาเข้าถึงได้ในแต่ละเดือนด้วย</p>
+<main class="container section">
 
-  <div class="month-grid">
-    <div class="month-card">
-      <div class="mhead"><div class="mnum">1</div><h4>มกราคม</h4></div>
-      <div class="gem">การ์เน็ต (Garnet)</div>
-      <p>หินสีแดงแห่งพลัง ความหลงใหล และการปกป้อง เสริมพลังชีวิตและความมุ่งมั่น</p>
-      <div class="alt">ทางเลือก: Red Jasper, Ruby</div>
+  <div class="intro-box">
+    <h2 style="margin-bottom:.75rem">หินมงคลแบบไทย vs Birthstone สากล</h2>
+    <p>หน้านี้แตกต่างจากหน้า <a href="/amethez/categories/birthday-stone.html">Birthstone สากล</a> ตรงที่เน้นมุมมองของโหราศาสตร์ไทยและความเชื่อในภูมิภาคเอเชียตะวันออกเฉียงใต้ ซึ่งคำนึงถึงดาวนพเคราะห์ประจำวันเกิด สีมงคล และพลังงานเฉพาะตัวของแต่ละช่วงเวลา</p>
+    <p style="margin-top:.75rem">โหราศาสตร์ไทยใช้ระบบนพเคราะห์ (ดาว 9 ดวง) เชื่อมโยงกับวันเกิด สีมงคล และหินที่เสริมพลังดาวนั้นๆ การสวมหินที่ถูกต้องตามดาวประจำตัวจึงเชื่อว่าช่วยเสริมความโชคดีและบรรเทาอุปสรรคในชีวิต</p>
+  </div>
+
+  <h2>หินมงคลแนะนำตามเดือนเกิด</h2>
+
+  <div class="month-list">
+
+    <div class="month-row">
+      <div class="month-aside" style="--mc:#c2410c;--mc2:#9a3412">
+        <div class="num">01</div>
+        <div class="th">มกราคม</div>
+        <div class="en">January</div>
+      </div>
+      <div class="month-main">
+        <h3>หินมงคลประจำมกราคม</h3>
+        <div class="month-sub">ดาวเสาร์ครองช่วงปลาย · ดาวพฤหัสครองช่วงต้น · ธาตุดิน-ลม</div>
+        <p>เดือนมกราคมอยู่ใต้อิทธิพลของดาวเสาร์และดาวพฤหัสบดี ซึ่งเกี่ยวข้องกับความมุ่งมั่น วินัย และการขยายตัว หินที่เสริมพลังได้ดีคือหินในโทนสีเข้มและโทนน้ำเงินเข้ม Garnet ช่วยเสริมความมั่นคงและพลังชีวิต ส่วน Lapis Lazuli เสริมปัญญาและการมองภาพใหญ่ซึ่งเป็นคุณสมบัติของดาวพฤหัส</p>
+        <div class="stone-pills">
+          <a href="/amethez/stones/garnet.html" class="stone-pill">🔴 Garnet — ความมั่นคง</a>
+          <a href="/amethez/stones/lapis-lazuli.html" class="stone-pill">🔵 Lapis Lazuli — ปัญญา</a>
+          <a href="/amethez/stones/onyx.html" class="stone-pill alt">⚫ Black Onyx — วินัย</a>
+        </div>
+        <div class="thai-insight"><strong>💡 เคล็ดไทย:</strong> ผู้เกิดเดือนนี้มักมีนพเคราะห์เสาร์แรง การสวม Garnet สีแดงช่วยสมดุลพลังงานหนักของดาวเสาร์ ขณะที่ Lapis ช่วยเปิดโอกาสใหม่ผ่านปัญญา</div>
+      </div>
     </div>
-    <div class="month-card">
-      <div class="mhead"><div class="mnum">2</div><h4>กุมภาพันธ์</h4></div>
-      <div class="gem">อเมทิสต์ (Amethyst)</div>
-      <p>หินสีม่วงแห่งปัญญา สมาธิ และความสงบ ปกป้องจิตใจและเพิ่มสัญชาตญาณ</p>
-      <div class="alt">→ <a href="/amethez/stones/amethyst.html">อ่านบทความอเมทิสต์</a></div>
+
+    <div class="month-row">
+      <div class="month-aside" style="--mc:#7c3aed;--mc2:#5b21b6">
+        <div class="num">02</div>
+        <div class="th">กุมภาพันธ์</div>
+        <div class="en">February</div>
+      </div>
+      <div class="month-main">
+        <h3>หินมงคลประจำกุมภาพันธ์</h3>
+        <div class="month-sub">ดาวเสาร์ครอง · ดาวยูเรนัส (สายมู) · ธาตุลม</div>
+        <p>กุมภาพันธ์อยู่ภายใต้อิทธิพลของดาวเสาร์และพลังงานแห่งการเปลี่ยนแปลง คนเดือนนี้มักมีความคิดล้ำ ชอบอิสระ และมีพลังงานสร้างสรรค์สูง Amethyst เป็นหินที่สมบูรณ์แบบที่สุดสำหรับเดือนนี้ ช่วยสมดุลระหว่างความคิดสร้างสรรค์กับการลงมือจริง Labradorite ช่วยปกป้องพลังงานของผู้ที่อ่อนไหวต่อสิ่งแวดล้อม</p>
+        <div class="stone-pills">
+          <a href="/amethez/stones/amethyst.html" class="stone-pill">💜 Amethyst — สติ</a>
+          <a href="/amethez/stones/labradorite.html" class="stone-pill">🔮 Labradorite — ปกป้อง</a>
+          <a href="/amethez/stones/aquamarine.html" class="stone-pill alt">🔵 Aquamarine — อิสรภาพ</a>
+        </div>
+        <div class="thai-insight"><strong>💡 เคล็ดไทย:</strong> สีม่วงเป็นสีมงคลหลักของเดือนนี้ การพก Amethyst ติดตัวและวางในห้องนอนช่วยให้จิตใจสงบและฝันดีตลอดคืน</div>
+      </div>
     </div>
-    <div class="month-card">
-      <div class="mhead"><div class="mnum">3</div><h4>มีนาคม</h4></div>
-      <div class="gem">อความารีน (Aquamarine)</div>
-      <p>หินสีฟ้าทะเลแห่งความสงบและการสื่อสาร ช่วยคลายความกังวลและเสริมความกล้า</p>
-      <div class="alt">ทางเลือก: Blue Topaz, Bloodstone</div>
+
+    <div class="month-row">
+      <div class="month-aside" style="--mc:#0891b2;--mc2:#0e7490">
+        <div class="num">03</div>
+        <div class="th">มีนาคม</div>
+        <div class="en">March</div>
+      </div>
+      <div class="month-main">
+        <h3>หินมงคลประจำมีนาคม</h3>
+        <div class="month-sub">ดาวพฤหัส-ดาวเนปจูน (สายมู) · ธาตุน้ำ</div>
+        <p>มีนาคมเป็นเดือนสุดท้ายของฤดูหนาวและจุดเริ่มต้นของการเกิดใหม่ คนเดือนนี้มักมีสัญชาตญาณสูงและเชื่อมต่อกับพลังงานที่มองไม่เห็น Aquamarine ซึ่งเป็น Birthstone สากลของเดือนนี้ ยังสอดคล้องกับโหราศาสตร์ไทยที่ให้ความสำคัญกับหินสีฟ้าสำหรับผู้เกิดในช่วงน้ำ Moonstone ช่วยเสริมสัญชาตญาณและวงจรธรรมชาติ</p>
+        <div class="stone-pills">
+          <a href="/amethez/stones/aquamarine.html" class="stone-pill">🔵 Aquamarine — สงบ</a>
+          <a href="/amethez/stones/moonstone.html" class="stone-pill">🤍 Moonstone — สัญชาตญาณ</a>
+          <a href="/amethez/stones/blue-lace-agate.html" class="stone-pill alt">🔵 Blue Lace Agate — สื่อสาร</a>
+        </div>
+        <div class="thai-insight"><strong>💡 เคล็ดไทย:</strong> ผู้เกิดเดือนมีนาคมควรชาร์จหินในคืนพระจันทร์เต็มดวงเป็นพิเศษ เพราะพลังจันทร์เสริมพลังงานประจำตัวได้สูงมาก</div>
+      </div>
     </div>
-    <div class="month-card">
-      <div class="mhead"><div class="mnum">4</div><h4>เมษายน</h4></div>
-      <div class="gem">เพชร (Diamond)</div>
-      <p>อัญมณีแห่งความบริสุทธิ์ ความแข็งแกร่ง และความรักนิรันดร์</p>
-      <div class="alt">ทางเลือก: <a href="/amethez/stones/clear-quartz.html">คริสตัลใส</a>, White Topaz</div>
+
+    <div class="month-row">
+      <div class="month-aside" style="--mc:#dc2626;--mc2:#b91c1c">
+        <div class="num">04</div>
+        <div class="th">เมษายน</div>
+        <div class="en">April</div>
+      </div>
+      <div class="month-main">
+        <h3>หินมงคลประจำเมษายน</h3>
+        <div class="month-sub">ดาวอังคารครอง · ธาตุไฟ · พลังงานเริ่มต้น</div>
+        <p>เมษายนเป็นเดือนแรกของปีไทยและอยู่ใต้อิทธิพลดาวอังคารซึ่งให้พลังงานแห่งการลงมือทำและความกล้าหาญ คนเดือนนี้มีพลังงานสูง กล้าตัดสินใจ และชอบความท้าทาย Carnelian เสริมพลังงานของดาวอังคารอย่างสมบูรณ์แบบ ช่วยเพิ่มความมั่นใจและแรงขับเคลื่อน ส่วน Clear Quartz ช่วยให้พลังงานที่แรงนั้นไปในทิศทางที่ถูกต้อง</p>
+        <div class="stone-pills">
+          <a href="/amethez/stones/carnelian.html" class="stone-pill">🟠 Carnelian — พลังงาน</a>
+          <a href="/amethez/stones/clear-quartz.html" class="stone-pill">🤍 Clear Quartz — ทิศทาง</a>
+          <a href="/amethez/stones/red-jasper.html" class="stone-pill alt">🔴 Red Jasper — ความมั่นคง</a>
+        </div>
+        <div class="thai-insight"><strong>💡 เคล็ดไทย:</strong> เมษายนเป็นช่วงสงกรานต์ การอาบน้ำหินโดยแช่ Carnelian ในน้ำสะอาดค้างคืนแล้วนำมาอาบหรือล้างหน้าในวันสงกรานต์เป็นการชำระล้างและเริ่มต้นใหม่</div>
+      </div>
     </div>
-    <div class="month-card">
-      <div class="mhead"><div class="mnum">5</div><h4>พฤษภาคม</h4></div>
-      <div class="gem">มรกต (Emerald)</div>
-      <p>หินสีเขียวแห่งความรัก ความเจริญ และการเยียวยาหัวใจ</p>
-      <div class="alt">ทางเลือก: Green Aventurine, หยก</div>
+
+    <div class="month-row">
+      <div class="month-aside" style="--mc:#15803d;--mc2:#166534">
+        <div class="num">05</div>
+        <div class="th">พฤษภาคม</div>
+        <div class="en">May</div>
+      </div>
+      <div class="month-main">
+        <h3>หินมงคลประจำพฤษภาคม</h3>
+        <div class="month-sub">ดาวศุกร์ครอง · ธาตุดิน · ความงามและความรัก</div>
+        <p>พฤษภาคมอยู่ใต้อิทธิพลดาวศุกร์ซึ่งให้พลังงานแห่งความรัก ความงาม และความอุดมสมบูรณ์ คนเดือนนี้มักมีรสนิยมดี ชื่นชอบความสวยงาม และมีเสน่ห์ดึงดูด Emerald เสริมพลังงานดาวศุกร์ได้อย่างยอดเยี่ยม Rose Quartz เป็นหินแห่งความรักที่สมบูรณ์แบบสำหรับเดือนนี้ เปิดหัวใจทั้งรับและให้ความรักได้อย่างสมดุล</p>
+        <div class="stone-pills">
+          <a href="/amethez/stones/emerald.html" class="stone-pill">💚 Emerald — ความอุดม</a>
+          <a href="/amethez/stones/rose-quartz.html" class="stone-pill">🌸 Rose Quartz — ความรัก</a>
+          <a href="/amethez/stones/malachite.html" class="stone-pill alt">💚 Malachite — เปลี่ยนแปลง</a>
+        </div>
+        <div class="thai-insight"><strong>💡 เคล็ดไทย:</strong> ผู้เกิดเดือนพฤษภาคมที่ต้องการดึงดูดความรักควรวาง Rose Quartz คู่กับ Green Aventurine ในมุมตะวันตกเฉียงใต้ของห้องนอน ซึ่งเป็นทิศแห่งความรักในฮวงจุ้ย</div>
+      </div>
     </div>
-    <div class="month-card">
-      <div class="mhead"><div class="mnum">6</div><h4>มิถุนายน</h4></div>
-      <div class="gem">ไข่มุก / Moonstone</div>
-      <p>หินแห่งสัญชาตญาณ พลังหญิง และความสมดุลทางอารมณ์</p>
-      <div class="alt">ทางเลือก: Pearl, Rainbow Moonstone</div>
+
+    <div class="month-row">
+      <div class="month-aside" style="--mc:#d97706;--mc2:#b45309">
+        <div class="num">06</div>
+        <div class="th">มิถุนายน</div>
+        <div class="en">June</div>
+      </div>
+      <div class="month-main">
+        <h3>หินมงคลประจำมิถุนายน</h3>
+        <div class="month-sub">ดาวพุธครอง · ธาตุลม · การสื่อสารและปัญญา</div>
+        <p>มิถุนายนอยู่ภายใต้อิทธิพลดาวพุธ ดาวแห่งการสื่อสาร ปัญญา และการค้า คนเดือนนี้มักฉลาด สื่อสารเก่ง และปรับตัวได้ดี Moonstone เสริมความสัมพันธ์ระหว่างจิตสำนึกและจิตใต้สำนึก ช่วยให้การตัดสินใจมาจากทั้งสมองและหัวใจ Pearl ในฐานะ Birthstone ดั้งเดิมของเดือนนี้ช่วยเสริมปัญญาและความบริสุทธิ์ในการสื่อสาร</p>
+        <div class="stone-pills">
+          <a href="/amethez/stones/moonstone.html" class="stone-pill">🤍 Moonstone — สัญชาตญาณ</a>
+          <a href="/amethez/stones/citrine.html" class="stone-pill">💛 Citrine — ความสดใส</a>
+          <a href="/amethez/stones/tigers-eye.html" class="stone-pill alt">🟡 Tiger's Eye — โฟกัส</a>
+        </div>
+        <div class="thai-insight"><strong>💡 เคล็ดไทย:</strong> ดาวพุธเสริมด้านการเรียนและการค้า นักเรียนที่เกิดเดือนนี้ควรพก Citrine ไปสอบเพื่อเสริมความจำและความคิดที่ชัดเจน</div>
+      </div>
     </div>
-    <div class="month-card">
-      <div class="mhead"><div class="mnum">7</div><h4>กรกฎาคม</h4></div>
-      <div class="gem">ทับทิม (Ruby)</div>
-      <p>ราชาแห่งอัญมณี สีแดงแห่งความรัก พลัง และความสำเร็จ</p>
-      <div class="alt">ทางเลือก: Garnet, Red Jasper</div>
+
+    <div class="month-row">
+      <div class="month-aside" style="--mc:#b91c1c;--mc2:#991b1b">
+        <div class="num">07</div>
+        <div class="th">กรกฎาคม</div>
+        <div class="en">July</div>
+      </div>
+      <div class="month-main">
+        <h3>หินมงคลประจำกรกฎาคม</h3>
+        <div class="month-sub">ดาวจันทร์ครอง · ธาตุน้ำ · อารมณ์และครอบครัว</div>
+        <p>กรกฎาคมครองโดยดาวจันทร์ซึ่งเชื่อมโยงกับอารมณ์ ครอบครัว ความทรงจำ และวงจรชีวิต คนเดือนนี้มักมีความอ่อนไหวสูงและผูกพันกับครอบครัวอย่างลึกซึ้ง Ruby เสริมพลังชีวิตและความกล้าที่จำเป็นในการรับมือกับอารมณ์ที่ลึก ส่วน Carnelian ช่วยเสริมความมั่นใจและให้พลังงานในช่วงที่รู้สึกอ่อนแอ</p>
+        <div class="stone-pills">
+          <a href="/amethez/stones/carnelian.html" class="stone-pill">🟠 Carnelian — พลังชีวิต</a>
+          <a href="/amethez/stones/moonstone.html" class="stone-pill">🤍 Moonstone — จันทร์</a>
+          <a href="/amethez/stones/rose-quartz.html" class="stone-pill alt">🌸 Rose Quartz — ครอบครัว</a>
+        </div>
+        <div class="thai-insight"><strong>💡 เคล็ดไทย:</strong> ผู้เกิดเดือนนี้ควรระวังช่วงพระจันทร์เต็มดวง เพราะพลังดาวจันทร์แรงมากจนอาจทำให้อารมณ์แปรปรวน การสวม Moonstone ช่วยรับพลังจันทร์ได้อย่างสมดุล</div>
+      </div>
     </div>
-    <div class="month-card">
-      <div class="mhead"><div class="mnum">8</div><h4>สิงหาคม</h4></div>
-      <div class="gem">เพอริดอท (Peridot)</div>
-      <p>หินสีเขียวอมเหลืองแห่งความสุข ความมั่งคั่ง และการปกป้องจากพลังลบ</p>
-      <div class="alt">ทางเลือก: <a href="/amethez/stones/citrine.html">ซิทริน</a>, Green Aventurine</div>
+
+    <div class="month-row">
+      <div class="month-aside" style="--mc:#d97706;--mc2:#b45309">
+        <div class="num">08</div>
+        <div class="th">สิงหาคม</div>
+        <div class="en">August</div>
+      </div>
+      <div class="month-main">
+        <h3>หินมงคลประจำสิงหาคม</h3>
+        <div class="month-sub">ดาวอาทิตย์ครอง · ธาตุไฟ · ความเป็นผู้นำ</div>
+        <p>สิงหาคมครองโดยดาวอาทิตย์ ดาวที่ให้พลังงานแห่งความเป็นผู้นำ ความมั่นใจ และความสร้างสรรค์ คนเดือนนี้มักมีบุคลิกโดดเด่น มีเสน่ห์ และมีวิสัยทัศน์ Citrine เสริมพลังงานของดาวอาทิตย์โดยตรง ช่วยให้ศักยภาพความเป็นผู้นำแสดงออกได้เต็มที่ Pyrite เสริมความสำเร็จและดึงดูดความมั่งคั่งที่สมควรได้รับ</p>
+        <div class="stone-pills">
+          <a href="/amethez/stones/citrine.html" class="stone-pill">💛 Citrine — ดาวอาทิตย์</a>
+          <a href="/amethez/stones/pyrite.html" class="stone-pill">💛 Pyrite — ความสำเร็จ</a>
+          <a href="/amethez/stones/tigers-eye.html" class="stone-pill alt">🟡 Tiger's Eye — ผู้นำ</a>
+        </div>
+        <div class="thai-insight"><strong>💡 เคล็ดไทย:</strong> สีเหลืองทองเป็นสีมงคลประจำดาวอาทิตย์ ผู้เกิดเดือนนี้ควรสวมหินสีเหลืองหรือทองในวันอาทิตย์เพื่อรับพลังดาวเต็มๆ</div>
+      </div>
     </div>
-    <div class="month-card">
-      <div class="mhead"><div class="mnum">9</div><h4>กันยายน</h4></div>
-      <div class="gem">ไพลิน (Sapphire)</div>
-      <p>หินสีน้ำเงินแห่งปัญญา ความจริง และความซื่อสัตย์ เสริมสมาธิและการตัดสินใจ</p>
-      <div class="alt">ทางเลือก: Lapis Lazuli, Sodalite</div>
+
+    <div class="month-row">
+      <div class="month-aside" style="--mc:#1d4ed8;--mc2:#1e40af">
+        <div class="num">09</div>
+        <div class="th">กันยายน</div>
+        <div class="en">September</div>
+      </div>
+      <div class="month-main">
+        <h3>หินมงคลประจำกันยายน</h3>
+        <div class="month-sub">ดาวพุธครอง · ธาตุดิน · ความละเอียดรอบคอบ</div>
+        <p>กันยายนครองโดยดาวพุธในราศีกันย์ ให้พลังงานแห่งความละเอียด การวิเคราะห์ และการรับใช้ คนเดือนนี้มักมีความละเอียดรอบคอบ ชื่นชอบระเบียบ และมีทักษะในการช่วยเหลือผู้อื่น Sapphire เสริมปัญญาและการตัดสินใจที่มาจากข้อมูล Amazonite ช่วยปลดปล่อยความสมบูรณ์แบบที่มากเกินไปและเปิดรับความสุขในความไม่สมบูรณ์</p>
+        <div class="stone-pills">
+          <a href="/amethez/stones/lapis-lazuli.html" class="stone-pill">🔵 Lapis Lazuli — ปัญญา</a>
+          <a href="/amethez/stones/amazonite.html" class="stone-pill">💚 Amazonite — สมดุล</a>
+          <a href="/amethez/stones/clear-quartz.html" class="stone-pill alt">🤍 Clear Quartz — ชัดเจน</a>
+        </div>
+        <div class="thai-insight"><strong>💡 เคล็ดไทย:</strong> ผู้เกิดเดือนนี้ควรระวังความเครียดจากความสมบูรณ์แบบ การพก Amazonite หรือ Lepidolite ช่วยผ่อนคลายและยอมรับตัวเองได้มากขึ้น</div>
+      </div>
     </div>
-    <div class="month-card">
-      <div class="mhead"><div class="mnum">10</div><h4>ตุลาคม</h4></div>
-      <div class="gem">โอปอล / Tourmaline</div>
-      <p>หินแห่งความคิดสร้างสรรค์และแรงบันดาลใจ โอปอลสะท้อนสีรุ้งหลากหลาย</p>
-      <div class="alt">ทางเลือก: Pink Tourmaline, Rose Quartz</div>
+
+    <div class="month-row">
+      <div class="month-aside" style="--mc:#0f766e;--mc2:#0d5e58">
+        <div class="num">10</div>
+        <div class="th">ตุลาคม</div>
+        <div class="en">October</div>
+      </div>
+      <div class="month-main">
+        <h3>หินมงคลประจำตุลาคม</h3>
+        <div class="month-sub">ดาวศุกร์ครอง · ธาตุลม · สมดุลและความยุติธรรม</div>
+        <p>ตุลาคมครองโดยดาวศุกร์ในราศีตุลย์ ให้พลังงานแห่งสมดุล ความสวยงาม และความยุติธรรม คนเดือนนี้ชอบความกลมกลืน เก่งการประนีประนอม และมีรสนิยมด้านศิลปะ Opal ซึ่งเป็น Birthstone ของเดือนนี้สะท้อนสีสันของชีวิตและเสริมความคิดสร้างสรรค์ Rose Quartz ช่วยให้รักตัวเองก่อนที่จะมอบความรักให้ผู้อื่น</p>
+        <div class="stone-pills">
+          <a href="/amethez/stones/rose-quartz.html" class="stone-pill">🌸 Rose Quartz — รักตัวเอง</a>
+          <a href="/amethez/stones/lapis-lazuli.html" class="stone-pill">🔵 Lapis Lazuli — ยุติธรรม</a>
+          <a href="/amethez/stones/lepidolite.html" class="stone-pill alt">💜 Lepidolite — สมดุล</a>
+        </div>
+        <div class="thai-insight"><strong>💡 เคล็ดไทย:</strong> ผู้เกิดเดือนตุลาคมมักตัดสินใจลำบากเพราะเห็นทุกมุมมอง การพก Labradorite ช่วยให้เชื่อมั่นสัญชาตญาณและตัดสินใจได้ชัดเจนขึ้น</div>
+      </div>
     </div>
-    <div class="month-card">
-      <div class="mhead"><div class="mnum">11</div><h4>พฤศจิกายน</h4></div>
-      <div class="gem">โทแพซ / Citrine</div>
-      <p>หินสีเหลืองทองแห่งความสำเร็จ ความมั่งคั่ง และพลังงานบวก</p>
-      <div class="alt">→ <a href="/amethez/stones/citrine.html">อ่านบทความซิทริน</a></div>
+
+    <div class="month-row">
+      <div class="month-aside" style="--mc:#7c3aed;--mc2:#5b21b6">
+        <div class="num">11</div>
+        <div class="th">พฤศจิกายน</div>
+        <div class="en">November</div>
+      </div>
+      <div class="month-main">
+        <h3>หินมงคลประจำพฤศจิกายน</h3>
+        <div class="month-sub">ดาวพลูโต-ดาวอังคาร (สายมู) · ธาตุน้ำ · การเปลี่ยนแปลง</div>
+        <p>พฤศจิกายนเป็นเดือนแห่งการเปลี่ยนแปลงและความลึก คนเดือนนี้มักมีความเข้มแข็งภายใน เป็นนักวิเคราะห์ที่แหลมคม และมีพลังงานการเปลี่ยนแปลงที่แรง Citrine ช่วยนำพลังงานเข้มข้นนี้ไปในทิศทางบวก ดึงดูดความมั่งคั่งและความสำเร็จ Obsidian ช่วยชำระล้างสิ่งที่ไม่ต้องการออกไปและปกป้องพลังงานในช่วงการเปลี่ยนแปลง</p>
+        <div class="stone-pills">
+          <a href="/amethez/stones/citrine.html" class="stone-pill">💛 Citrine — ดึงดูดดี</a>
+          <a href="/amethez/stones/obsidian.html" class="stone-pill">⚫ Obsidian — ชำระล้าง</a>
+          <a href="/amethez/stones/moldavite.html" class="stone-pill alt">💚 Moldavite — เปลี่ยนแปลง</a>
+        </div>
+        <div class="thai-insight"><strong>💡 เคล็ดไทย:</strong> Moldavite เป็นหินที่ทรงพลังมากสำหรับคนเดือนพฤศจิกายน แต่ควรเริ่มต้นช้าๆ เพราะพลังงานสูงมาก อาจทำให้รู้สึกไม่สบายหากไม่พร้อม</div>
+      </div>
     </div>
-    <div class="month-card">
-      <div class="mhead"><div class="mnum">12</div><h4>ธันวาคม</h4></div>
-      <div class="gem">เทอร์ควอยซ์ / Tanzanite</div>
-      <p>หินสีฟ้าเทอร์ควอยซ์แห่งการปกป้อง โชคลาภ และการสื่อสาร</p>
-      <div class="alt">ทางเลือก: Blue Topaz, Lapis Lazuli</div>
+
+    <div class="month-row">
+      <div class="month-aside" style="--mc:#1e3a5f;--mc2:#152948">
+        <div class="num">12</div>
+        <div class="th">ธันวาคม</div>
+        <div class="en">December</div>
+      </div>
+      <div class="month-main">
+        <h3>หินมงคลประจำธันวาคม</h3>
+        <div class="month-sub">ดาวพฤหัสครอง · ธาตุไฟ · ปัญญาและอิสรภาพ</div>
+        <p>ธันวาคมครองโดยดาวพฤหัสบดี ดาวแห่งปัญญา การขยายตัว และโชคลาภ คนเดือนนี้มักเป็นนักปรัชญา รักอิสรภาพ มองโลกกว้าง และเป็นครูหรือที่ปรึกษาที่ดี Turquoise เป็นหินแห่งการปกป้องและปัญญาที่เหมาะกับพลังงานดาวพฤหัส Lapis Lazuli เสริมการแสวงหาความจริงและขยายความเข้าใจโลก</p>
+        <div class="stone-pills">
+          <a href="/amethez/stones/turquoise.html" class="stone-pill">🩵 Turquoise — ปกป้อง</a>
+          <a href="/amethez/stones/lapis-lazuli.html" class="stone-pill">🔵 Lapis Lazuli — ปัญญา</a>
+          <a href="/amethez/stones/sodalite.html" class="stone-pill alt">🔵 Sodalite — ความจริง</a>
+        </div>
+        <div class="thai-insight"><strong>💡 เคล็ดไทย:</strong> ดาวพฤหัสเสริมด้านการศึกษา การเดินทาง และโชคลาภ การพก Citrine คู่กับ Turquoise ในการเดินทางไกลเชื่อกันว่าช่วยทั้งโชคและความปลอดภัย</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- สีมงคลประจำวัน -->
+  <div class="color-day-box">
+    <h2 style="margin-bottom:.5rem">หินตามสีมงคลประจำวัน</h2>
+    <p style="color:var(--text-muted);font-size:.9rem">ในโหราศาสตร์ไทย แต่ละวันมีสีมงคลและหินที่สอดคล้อง การสวมหินตามวันเกิดหรือวันปัจจุบันช่วยเสริมพลังงานดาวนั้นๆ</p>
+    <div class="day-grid">
+      <div class="day-card" style="background:#fff9e6;border-color:#fde68a">
+        <div class="day-name">☀️ อาทิตย์</div>
+        <div class="day-color">สีเหลือง</div>
+        <div class="day-stone">Citrine · Amber · Pyrite</div>
+      </div>
+      <div class="day-card" style="background:#fff0f3;border-color:#fecdd3">
+        <div class="day-name">🌙 จันทร์</div>
+        <div class="day-color">สีขาว-ครีม</div>
+        <div class="day-stone">Moonstone · Pearl · Selenite</div>
+      </div>
+      <div class="day-card" style="background:#fff1f0;border-color:#fecaca">
+        <div class="day-name">🔴 อังคาร</div>
+        <div class="day-color">สีแดง-ชมพู</div>
+        <div class="day-stone">Carnelian · Garnet · Ruby</div>
+      </div>
+      <div class="day-card" style="background:#f0fdf4;border-color:#bbf7d0">
+        <div class="day-name">💚 พุธ</div>
+        <div class="day-color">สีเขียว</div>
+        <div class="day-stone">Emerald · Malachite · Aventurine</div>
+      </div>
+      <div class="day-card" style="background:#fffbeb;border-color:#fde68a">
+        <div class="day-name">🟠 พฤหัส</div>
+        <div class="day-color">สีส้ม-เหลือง</div>
+        <div class="day-stone">Tiger's Eye · Topaz · Amber</div>
+      </div>
+      <div class="day-card" style="background:#fdf4ff;border-color:#e9d5ff">
+        <div class="day-name">💙 ศุกร์</div>
+        <div class="day-color">สีฟ้า-ม่วง</div>
+        <div class="day-stone">Aquamarine · Amethyst · Sapphire</div>
+      </div>
+      <div class="day-card" style="background:#f8f8f8;border-color:#e5e7eb">
+        <div class="day-name">⚫ เสาร์</div>
+        <div class="day-color">สีดำ-ม่วงเข้ม</div>
+        <div class="day-stone">Obsidian · Black Tourmaline · Garnet</div>
+      </div>
     </div>
   </div>
 
-  <div class="related-articles">
-    <h3>บทความที่เกี่ยวข้อง</h3>
-    <div class="related-grid">
-      <a href="/amethez/categories/birthday-stone.html" class="related-card"><span class="related-emoji">📅</span><span>อัญมณีประจำวันเกิด</span></a>
-      <a href="/amethez/categories/zodiac.html" class="related-card"><span class="related-emoji">⭐</span><span>หินตามราศี</span></a>
-      <a href="/amethez/stones/encyclopedia.html" class="related-card"><span class="related-emoji">📖</span><span>สารานุกรมหิน</span></a>
-      <a href="/amethez/request.html" class="related-card"><span class="related-emoji">🔍</span><span>หาอัญมณีเดือนเกิด</span></a>
-    </div>
+  <div class="cta-box">
+    <h2>ดูดวงและหินมงคลประจำวันจากอาจารย์เมธา</h2>
+    <p>อาจารย์เมธาวิเคราะห์ดวงตามโหราศาสตร์ไทย พร้อมแนะนำหินมงคลที่เหมาะกับพลังงานของแต่ละวัน</p>
+    <a href="/amethez/metha/" class="btn-gold">ดูดวงกับอาจารย์เมธา →</a>
   </div>
-</div>
+
+</main>
 
 <footer class="site-footer">
-  <div class="container footer-bottom">
-    <p>© 2026 Amethez.com · <a href="/amethez/privacy.html" style="color:rgba(255,255,255,.5)">Privacy</a> · <a href="/amethez/terms.html" style="color:rgba(255,255,255,.5)">Terms</a></p>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="logo" style="margin-bottom:.75rem">AMETHEZ</div><p>ศูนย์กลางข้อมูลคริสตัลและพลอยที่ใหญ่ที่สุดในไทย</p></div>
+      <div class="footer-col"><h4>หมวดหมู่</h4><ul><li><a href="/amethez/categories/chakra.html">หินตามจักระ</a></li><li><a href="/amethez/categories/zodiac.html">หินตามราศี</a></li><li><a href="/amethez/stones/">คลังหินทั้งหมด</a></li></ul></div>
+      <div class="footer-col"><h4>ผู้เชี่ยวชาญ</h4><ul><li><a href="/amethez/wuchong/">Master Wuchong</a></li><li><a href="/amethez/metha/">อาจารย์เมธา</a></li><li><a href="/amethez/sale.html">ร้านค้า</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 Amethez.com — ข้อมูลเพื่อการศึกษา ไม่ใช่คำแนะนำทางการแพทย์</p></div>
   </div>
 </footer>
 <script src="/amethez/js/main.js"></script>
+<script src="/amethez/js/chat.js"></script>
 </body>
 </html>
