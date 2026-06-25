@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sale Manager — Amethez Admin</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#0f0a1e; --card:#1a1035; --card2:#22163f; --border:#2d1f4e;
+      --purple:#7c3aed; --purple-l:#a78bfa; --gold:#c9a84c;
+      --text:#e2d9f3; --muted:#8b7db8;
+      --green:#10b981; --red:#ef4444; --yellow:#f59e0b; --blue:#3b82f6;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:var(--bg);color:var(--text);font-family:'Sarabun',sans-serif;font-size:15px;min-height:100vh}
+
+    /* ── Top Bar ── */
+    .topbar{
+      background:var(--card);border-bottom:1px solid var(--border);
+      padding:.75rem 1.5rem;display:flex;align-items:center;gap:1rem;
+      position:sticky;top:0;z-index:200;
+    }
+    .topbar-logo{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.1rem}
+    .topbar-title{color:var(--muted);font-size:.9rem}
+    .topbar-right{margin-left:auto;display:flex;align-items:center;gap:.75rem}
+
+    /* ── Layout ── */
+    .layout{display:grid;grid-template-columns:340px 1fr;gap:0;min-height:calc(100vh - 52px)}
+    .sidebar{background:var(--card);border-right:1px solid var(--border);padding:1.25rem;overflow-y:auto;max-height:calc(100vh - 52px);position:sticky;top:52px}
+    .main{padding:1.75rem;overflow-y:auto}
+
+    /* ── Buttons ── */
+    .btn{padding:.55rem 1.1rem;border-radius:.5rem;border:none;cursor:pointer;font-family:'Sarabun',sans-serif;font-size:.88rem;font-weight:600;transition:all .15s;display:inline-flex;align-items:center;gap:.4rem}
+    .btn-purple{background:var(--purple);color:#fff}.btn-purple:hover{background:#6d28d9}
+    .btn-gold{background:var(--gold);color:#1a1228}.btn-gold:hover{background:#d4a845}
+    .btn-green{background:var(--green);color:#fff}.btn-green:hover{background:#059669}
+    .btn-red{background:var(--red);color:#fff}.btn-red:hover{background:#dc2626}
+    .btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border)}.btn-ghost:hover{color:var(--text);border-color:var(--muted)}
+    .btn-sm{padding:.3rem .7rem;font-size:.78rem}
+    .btn:disabled{opacity:.5;cursor:not-allowed}
+
+    /* ── Product List (Sidebar) ── */
+    .prod-list-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+    .prod-list-header h3{font-size:.95rem;color:var(--purple-l)}
+    .prod-item{
+      background:var(--card2);border:1px solid var(--border);border-radius:.6rem;
+      padding:.85rem 1rem;margin-bottom:.6rem;cursor:pointer;
+      transition:border-color .15s;display:flex;align-items:center;gap:.75rem;
+    }
+    .prod-item:hover{border-color:var(--purple)}
+    .prod-item.selected{border-color:var(--purple);background:rgba(124,58,237,.12)}
+    .prod-thumb{
+      width:44px;height:44px;border-radius:.4rem;background:#2d1f4e;
+      flex-shrink:0;display:flex;align-items:center;justify-content:center;
+      font-size:1.4rem;overflow:hidden;
+    }
+    .prod-thumb img{width:100%;height:100%;object-fit:cover}
+    .prod-info{flex:1;min-width:0}
+    .prod-info .name{font-size:.88rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .prod-info .meta{font-size:.75rem;color:var(--muted);margin-top:.15rem}
+    .prod-actions{display:flex;gap:.35rem;flex-shrink:0}
+    .drag-handle{color:var(--muted);cursor:grab;font-size:1rem;padding:.2rem;flex-shrink:0}
+    .drag-handle:active{cursor:grabbing}
+
+    /* ── Status dots ── */
+    .dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:.3rem}
+    .dot-green{background:var(--green)}
+    .dot-red{background:var(--red)}
+    .dot-yellow{background:var(--yellow)}
+
+    /* ── Form ── */
+    .form-section{margin-bottom:1.75rem}
+    .form-section-title{
+      font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;
+      color:var(--purple-l);font-weight:700;margin-bottom:1rem;
+      padding-bottom:.5rem;border-bottom:1px solid var(--border);
+    }
+    .form-row{display:grid;gap:.85rem;margin-bottom:.85rem}
+    .form-row.col2{grid-template-columns:1fr 1fr}
+    .form-row.col3{grid-template-columns:1fr 1fr 1fr}
+    label{display:block;font-size:.8rem;color:var(--muted);margin-bottom:.3rem;font-weight:600}
+    input[type=text],input[type=number],input[type=url],textarea,select{
+      width:100%;padding:.6rem .85rem;background:#0a0718;
+      border:1px solid var(--border);border-radius:.45rem;
+      color:var(--text);font-family:'Sarabun',sans-serif;font-size:.9rem;
+    }
+    input:focus,textarea:focus,select:focus{outline:none;border-color:var(--purple);box-shadow:0 0 0 2px rgba(124,58,237,.2)}
+    textarea{resize:vertical;min-height:80px}
+    select{cursor:pointer}
+
+    /* ── Toggle ── */
+    .toggle-row{display:flex;align-items:center;justify-content:space-between;padding:.6rem 0}
+    .toggle-label{font-size:.88rem;color:var(--text)}
+    .toggle{position:relative;width:40px;height:22px;flex-shrink:0}
+    .toggle input{opacity:0;width:0;height:0;position:absolute}
+    .toggle-slider{
+      position:absolute;inset:0;background:#2d1f4e;border-radius:22px;cursor:pointer;transition:.2s;
+    }
+    .toggle-slider::before{
+      content:'';position:absolute;width:16px;height:16px;left:3px;top:3px;
+      background:var(--muted);border-radius:50%;transition:.2s;
+    }
+    .toggle input:checked + .toggle-slider{background:var(--purple)}
+    .toggle input:checked + .toggle-slider::before{transform:translateX(18px);background:#fff}
+
+    /* ── Image Upload Zone ── */
+    .upload-zone{
+      border:2px dashed var(--border);border-radius:.6rem;
+      padding:1.5rem 1rem;text-align:center;background:#0a0718;
+      cursor:pointer;transition:border-color .2s;position:relative;
+      min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;
+    }
+    .upload-zone:hover,.upload-zone.over{border-color:var(--purple);background:rgba(124,58,237,.05)}
+    .upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+    .upload-zone .uz-icon{font-size:1.75rem}
+    .upload-zone p{font-size:.82rem;color:var(--muted);margin:0}
+    .img-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin-top:.75rem}
+    .img-thumb{
+      aspect-ratio:1;border-radius:.4rem;overflow:hidden;position:relative;
+      border:1px solid var(--border);background:#2d1f4e;
+      display:flex;align-items:center;justify-content:center;font-size:1.5rem;
+    }
+    .img-thumb img{width:100%;height:100%;object-fit:cover}
+    .img-thumb .rm{
+      position:absolute;top:3px;right:3px;background:rgba(0,0,0,.65);color:#fff;
+      border:none;border-radius:50%;width:18px;height:18px;font-size:10px;
+      cursor:pointer;display:flex;align-items:center;justify-content:center;
+    }
+
+    /* ── Layout Picker ── */
+    .layout-picker{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-top:.4rem}
+    .layout-opt{
+      border:2px solid var(--border);border-radius:.6rem;padding:.75rem .5rem;
+      text-align:center;cursor:pointer;transition:all .15s;background:#0a0718;
+    }
+    .layout-opt:hover{border-color:var(--purple-l)}
+    .layout-opt.active{border-color:var(--purple);background:rgba(124,58,237,.1)}
+    .layout-opt .lo-icon{font-size:1.5rem;display:block;margin-bottom:.3rem}
+    .layout-opt .lo-name{font-size:.78rem;font-weight:700;color:var(--text)}
+    .layout-opt .lo-desc{font-size:.7rem;color:var(--muted);margin-top:.15rem}
+
+    /* ── AI Suggest Button ── */
+    .ai-suggest{
+      background:linear-gradient(135deg,#4c1d95,#7c3aed);
+      border-radius:.6rem;padding:.75rem 1rem;margin-top:.75rem;
+      display:flex;align-items:center;gap:.75rem;cursor:pointer;border:none;width:100%;
+      color:#fff;font-family:'Sarabun',sans-serif;font-size:.88rem;text-align:left;
+      transition:opacity .2s;
+    }
+    .ai-suggest:hover{opacity:.9}
+    .ai-suggest .ai-icon{font-size:1.4rem;flex-shrink:0}
+
+    /* ── Preview Panel ── */
+    .preview-panel{
+      background:var(--card2);border:1px solid var(--border);border-radius:.75rem;
+      overflow:hidden;margin-bottom:1.5rem;
+    }
+    .preview-header{
+      background:var(--card);padding:.75rem 1rem;
+      display:flex;align-items:center;justify-content:space-between;
+      border-bottom:1px solid var(--border);
+    }
+    .preview-header span{font-size:.82rem;color:var(--muted)}
+    .preview-body{padding:1rem}
+
+    /* ── Hero Preview ── */
+    .prev-hero{
+      background:linear-gradient(135deg,#1a1228,#2d1b69);
+      border-radius:.6rem;overflow:hidden;
+      display:grid;grid-template-columns:1fr 1fr;min-height:180px;
+    }
+    .prev-hero-media{background:#0f0a1e;display:flex;align-items:center;justify-content:center;font-size:4rem}
+    .prev-hero-info{padding:1.25rem}
+    .prev-hero-info .pv-badge{display:inline-block;background:var(--purple);color:#fff;font-size:.65rem;padding:.15rem .5rem;border-radius:2rem;margin-bottom:.5rem}
+    .prev-hero-info h4{color:#fff;font-size:1rem;margin-bottom:.25rem}
+    .prev-hero-info .pv-tag{color:rgba(255,255,255,.6);font-size:.75rem}
+    .prev-hero-info .pv-price{color:var(--gold);font-size:1.4rem;font-weight:700;font-family:'Playfair Display',serif;margin:.5rem 0}
+    .prev-btn{background:var(--green);color:#fff;border-radius:.4rem;padding:.35rem .75rem;font-size:.75rem;display:inline-block}
+
+    /* ── Card Preview ── */
+    .prev-card-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem}
+    .prev-card{background:#1a1228;border:1px solid var(--border);border-radius:.6rem;overflow:hidden}
+    .prev-card-media{aspect-ratio:1;background:#0f0a1e;display:flex;align-items:center;justify-content:center;font-size:3rem;position:relative}
+    .prev-card-media .pv-badge{position:absolute;top:.4rem;left:.4rem;font-size:.6rem;padding:.1rem .45rem;border-radius:2rem;color:#fff}
+    .prev-card-body{padding:.6rem .75rem}
+    .prev-card-body h5{font-size:.8rem;color:var(--text)}
+    .prev-card-body .pv-price{font-size:1rem;color:var(--purple-l);font-weight:700;margin:.25rem 0}
+
+    /* ── Page Settings ── */
+    .settings-card{background:var(--card2);border:1px solid var(--border);border-radius:.75rem;padding:1.25rem;margin-bottom:1.5rem}
+
+    /* ── Toast ── */
+    #toast{
+      position:fixed;bottom:1.5rem;right:1.5rem;
+      background:var(--green);color:#fff;
+      padding:.65rem 1.25rem;border-radius:.5rem;font-size:.88rem;
+      display:none;z-index:999;box-shadow:0 4px 16px rgba(0,0,0,.4);
+    }
+    #toast.error{background:var(--red)}
+
+    /* ── Tab bar ── */
+    .tab-bar{display:flex;gap:.25rem;margin-bottom:1.5rem;background:var(--card2);border-radius:.6rem;padding:.3rem}
+    .tab-btn{
+      flex:1;padding:.5rem;border:none;background:transparent;color:var(--muted);
+      font-family:'Sarabun',sans-serif;font-size:.85rem;border-radius:.4rem;cursor:pointer;font-weight:600;
+    }
+    .tab-btn.active{background:var(--purple);color:#fff}
+
+    /* ── Badge color picker ── */
+    .color-swatches{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.4rem}
+    .swatch{width:26px;height:26px;border-radius:.3rem;cursor:pointer;border:2px solid transparent;flex-shrink:0}
+    .swatch.selected{border-color:#fff;box-shadow:0 0 0 2px var(--purple)}
+
+    /* ── Empty ── */
+    .empty-prod{text-align:center;padding:2rem;color:var(--muted);font-size:.88rem}
+
+    @media(max-width:900px){
+      .layout{grid-template-columns:1fr}
+      .sidebar{position:static;max-height:none}
+    }
+  </style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="topbar">
+  <div class="topbar-logo">⬡ AMETHEZ</div>
+  <div style="color:var(--border)">|</div>
+  <div class="topbar-title">🛒 Sale Page Manager</div>
+  <div class="topbar-right">
+    <a href="/sale.html" target="_blank" class="btn btn-ghost btn-sm">👁 ดูหน้าขาย</a>
+    <button class="btn btn-green btn-sm" onclick="saveAll()">💾 บันทึกทั้งหมด</button>
+    <a href="/admin/" class="btn btn-ghost btn-sm">← Admin</a>
+  </div>
+</div>
+
+<div class="layout">
+
+  <!-- ── Sidebar: Product List ── -->
+  <div class="sidebar">
+    <div class="prod-list-header">
+      <h3>สินค้า (<span id="prodCount">0</span>)</h3>
+      <button class="btn btn-purple btn-sm" onclick="newProduct()">+ เพิ่ม</button>
+    </div>
+
+    <div id="prodList">
+      <div class="empty-prod">ยังไม่มีสินค้า<br>กด <strong>+ เพิ่ม</strong> เพื่อเริ่ม</div>
+    </div>
+
+    <!-- Page Settings shortcut -->
+    <div style="margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--border)">
+      <button class="btn btn-ghost btn-sm" style="width:100%" onclick="editSettings()">⚙️ ตั้งค่าหน้าเพจ</button>
+    </div>
+  </div>
+
+  <!-- ── Main: Editor ── -->
+  <div class="main" id="mainPanel">
+    <!-- Default state -->
+    <div style="text-align:center;padding:4rem 2rem;color:var(--muted)">
+      <div style="font-size:4rem;margin-bottom:1rem">✨</div>
+      <h3 style="color:var(--text);margin-bottom:.5rem">เลือกสินค้าเพื่อแก้ไข</h3>
+      <p style="font-size:.9rem">หรือกด <strong>+ เพิ่ม</strong> ทางซ้ายเพื่อสร้างสินค้าใหม่</p>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ─────────────────────────────────────────────
+//  STATE
+// ─────────────────────────────────────────────
+let state = {
+  settings: {
+    page_title: 'ร้านค้า Amethez',
+    page_subtitle: 'คัดมาแล้ว คุณภาพดี ส่งตรงจากผู้เชี่ยวชาญ',
+    gemma_message: 'สวัสดีค่ะ! Gemma คัดเลือกสินค้าที่ดีที่สุดมาให้แล้ว 💜',
+    line_id: '@masterpuch',
+    show_timer: false,
+    timer_end: ''
+  },
+  products: []
+};
+let currentId = null;
+let uploadedImages = []; // base64 previews for current edit session
+
+const SWATCHES = ['#7c3aed','#c9a84c','#ef4444','#10b981','#3b82f6','#f59e0b','#ec4899','#1a1228'];
+
+// ─────────────────────────────────────────────
+//  INIT: Load from sale-products.json
+// ─────────────────────────────────────────────
+async function init() {
+  try {
+    const data = await fetch('/data/sale-products.json').then(r => r.json());
+    state.settings = data.settings;
+    state.products = data.products;
+  } catch {
+    // use defaults
+  }
+  renderSidebar();
+}
+
+// ─────────────────────────────────────────────
+//  SIDEBAR
+// ─────────────────────────────────────────────
+function renderSidebar() {
+  const list = document.getElementById('prodList');
+  document.getElementById('prodCount').textContent = state.products.length;
+  if (!state.products.length) {
+    list.innerHTML = `<div class="empty-prod">ยังไม่มีสินค้า<br>กด <strong>+ เพิ่ม</strong> เพื่อเริ่ม</div>`;
+    return;
+  }
+  list.innerHTML = state.products
+    .sort((a,b) => a.sort_order - b.sort_order)
+    .map(p => {
+      const thumb = p.images && p.images[0]
+        ? `<img src="${p.images[0]}" alt="">`
+        : '💎';
+      const statusDot = p.status === 'active'
+        ? '<span class="dot dot-green"></span>'
+        : '<span class="dot dot-yellow"></span>';
+      const sel = currentId === p.id ? ' selected' : '';
+      return `
+      <div class="prod-item${sel}" onclick="editProduct('${p.id}')">
+        <span class="drag-handle" title="ลากเพื่อเรียงลำดับ">⠿</span>
+        <div class="prod-thumb">${thumb}</div>
+        <div class="prod-info">
+          <div class="name">${p.name}</div>
+          <div class="meta">${statusDot}฿${p.price.toLocaleString()} · ${p.layout}</div>
+        </div>
+        <div class="prod-actions">
+          <button class="btn btn-red btn-sm" onclick="event.stopPropagation();deleteProduct('${p.id}')" title="ลบ">✕</button>
+        </div>
+      </div>`;
+    }).join('');
+}
+
+// ─────────────────────────────────────────────
+//  NEW PRODUCT
+// ─────────────────────────────────────────────
+function newProduct() {
+  const id = 'sp' + Date.now();
+  const p = {
+    id, name: 'สินค้าใหม่', tagline: '', description: '',
+    price: 0, price_original: null, unit: 'ชิ้น',
+    images: [], video_url: '', badge: '', badge_color: '#7c3aed',
+    in_stock: true, stock_count: null, line_id: '',
+    layout: 'card', sort_order: state.products.length + 1, status: 'active'
+  };
+  state.products.push(p);
+  renderSidebar();
+  editProduct(id);
+  toast('สร้างสินค้าใหม่แล้ว');
+}
+
+// ─────────────────────────────────────────────
+//  DELETE
+// ─────────────────────────────────────────────
+function deleteProduct(id) {
+  if (!confirm('ลบสินค้านี้?')) return;
+  state.products = state.products.filter(p => p.id !== id);
+  if (currentId === id) {
+    currentId = null;
+    showDefaultPanel();
+  }
+  renderSidebar();
+  toast('ลบแล้ว');
+}
+
+// ─────────────────────────────────────────────
+//  EDIT PRODUCT
+// ─────────────────────────────────────────────
+function editProduct(id) {
+  currentId = id;
+  const p = state.products.find(x => x.id === id);
+  uploadedImages = [...(p.images || [])];
+  renderSidebar();
+  renderEditor(p);
+}
+
+function renderEditor(p) {
+  const swatchesHtml = SWATCHES.map(c =>
+    `<div class="swatch${p.badge_color===c?' selected':''}" style="background:${c}" onclick="selectSwatch('${c}',this)"></div>`
+  ).join('');
+
+  document.getElementById('mainPanel').innerHTML = `
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('edit',this)">✏️ แก้ไข</button>
+    <button class="tab-btn" onclick="switchTab('preview',this)">👁 Preview</button>
+  </div>
+
+  <!-- ══ EDIT TAB ══ -->
+  <div id="tab-edit">
+
+    <!-- Basic Info -->
+    <div class="form-section">
+      <div class="form-section-title">ข้อมูลสินค้า</div>
+      <div class="form-row">
+        <div><label>ชื่อสินค้า *</label><input type="text" id="f-name" value="${esc(p.name)}" oninput="liveUpdate('name',this.value)" placeholder="เช่น โพรงอเมทิสต์บราซิล"></div>
+      </div>
+      <div class="form-row">
+        <div><label>Tagline (ประโยคสั้น)</label><input type="text" id="f-tagline" value="${esc(p.tagline)}" oninput="liveUpdate('tagline',this.value)" placeholder="เช่น หินแห่งจิตวิญญาณ เสริมสมาธิ"></div>
+      </div>
+      <div class="form-row">
+        <div><label>รายละเอียด</label><textarea id="f-desc" oninput="liveUpdate('description',this.value)" placeholder="อธิบายสินค้า ที่มา คุณสมบัติ...">${esc(p.description)}</textarea></div>
+      </div>
+    </div>
+
+    <!-- Price -->
+    <div class="form-section">
+      <div class="form-section-title">ราคา</div>
+      <div class="form-row col3">
+        <div><label>ราคาขาย (฿) *</label><input type="number" id="f-price" value="${p.price}" oninput="liveUpdate('price',+this.value)" min="0"></div>
+        <div><label>ราคาเดิม (ถ้ามี)</label><input type="number" id="f-original" value="${p.price_original||''}" oninput="liveUpdate('price_original',this.value?+this.value:null)" placeholder="ไม่ใส่ = ไม่แสดง" min="0"></div>
+        <div><label>หน่วย</label>
+          <select id="f-unit" onchange="liveUpdate('unit',this.value)">
+            ${['ชิ้น','ชุด','กิโลกรัม','ล็อต','กล่อง'].map(u=>`<option${p.unit===u?' selected':''}>${u}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stock -->
+    <div class="form-section">
+      <div class="form-section-title">สต็อก</div>
+      <div class="toggle-row">
+        <span class="toggle-label">มีสินค้า (In Stock)</span>
+        <label class="toggle"><input type="checkbox" id="f-instock" ${p.in_stock?'checked':''} onchange="liveUpdate('in_stock',this.checked)"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="form-row" style="margin-top:.75rem">
+        <div><label>จำนวนสต็อก (ถ้าน้อยกว่า 5 จะแสดง "เหลือน้อย")</label><input type="number" id="f-stock" value="${p.stock_count||''}" oninput="liveUpdate('stock_count',this.value?+this.value:null)" placeholder="ไม่ใส่ = ไม่แสดงจำนวน" min="0"></div>
+      </div>
+    </div>
+
+    <!-- Badge -->
+    <div class="form-section">
+      <div class="form-section-title">Badge / ป้าย</div>
+      <div class="form-row col2">
+        <div><label>ข้อความ Badge (เว้นว่าง = ไม่แสดง)</label><input type="text" id="f-badge" value="${esc(p.badge)}" oninput="liveUpdate('badge',this.value)" placeholder="เช่น แนะนำ, ขายดี, ใหม่"></div>
+        <div>
+          <label>สี Badge</label>
+          <div class="color-swatches" id="swatches">${swatchesHtml}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Media -->
+    <div class="form-section">
+      <div class="form-section-title">📸 รูปภาพ & คลิป</div>
+
+      <label>อัปโหลดรูปภาพ (สูงสุด 6 รูป)</label>
+      <div class="upload-zone" id="uploadZone">
+        <input type="file" id="fileInput" accept="image/*" multiple onchange="handleImgUpload(this)">
+        <div class="uz-icon">📷</div>
+        <p>คลิกเพื่อเลือกรูป หรือลากวางที่นี่</p>
+        <p style="font-size:.75rem;color:#6b7280;margin-top:.2rem">JPG · PNG · HEIC · WebP</p>
+      </div>
+      <div class="img-grid" id="imgGrid"></div>
+
+      <div style="margin-top:1rem">
+        <label>URL วิดีโอ (YouTube Embed / MP4 URL)</label>
+        <input type="url" id="f-video" value="${esc(p.video_url)}" oninput="liveUpdate('video_url',this.value)" placeholder="https://... หรือ https://www.youtube.com/embed/...">
+        <p style="font-size:.75rem;color:var(--muted);margin-top:.3rem">ถ้ามีวิดีโอ จะใช้แสดงแทนรูปในแบบ Hero</p>
+      </div>
+    </div>
+
+    <!-- Layout & Presentation -->
+    <div class="form-section">
+      <div class="form-section-title">✨ การนำเสนอ</div>
+
+      <button class="ai-suggest" onclick="aiSuggestLayout()">
+        <span class="ai-icon">🤖</span>
+        <div>
+          <div style="font-weight:700">ให้ AI เลือก Layout ให้อัตโนมัติ</div>
+          <div style="font-size:.75rem;opacity:.8;margin-top:.15rem">วิเคราะห์จากรูป วิดีโอ และเนื้อหา แล้วเลือกแบบที่เหมาะสมที่สุด</div>
+        </div>
+      </button>
+
+      <div style="margin-top:1rem">
+        <label>เลือก Layout เอง</label>
+        <div class="layout-picker" id="layoutPicker">
+          <div class="layout-opt${p.layout==='hero'?' active':''}" onclick="setLayout('hero',this)">
+            <span class="lo-icon">🌟</span>
+            <div class="lo-name">Hero</div>
+            <div class="lo-desc">รูป/คลิปใหญ่<br>เหมาะ featured</div>
+          </div>
+          <div class="layout-opt${p.layout==='wide'?' active':''}" onclick="setLayout('wide',this)">
+            <span class="lo-icon">📐</span>
+            <div class="lo-name">Wide</div>
+            <div class="lo-desc">Card กว้าง 2 คอลัมน์</div>
+          </div>
+          <div class="layout-opt${p.layout==='card'?' active':''}" onclick="setLayout('card',this)">
+            <span class="lo-icon">🃏</span>
+            <div class="lo-name">Card</div>
+            <div class="lo-desc">Card มาตรฐาน<br>เหมาะสินค้าทั่วไป</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row col2" style="margin-top:1rem">
+        <div>
+          <label>สถานะ</label>
+          <select id="f-status" onchange="liveUpdate('status',this.value)">
+            <option value="active" ${p.status==='active'?'selected':''}>✅ แสดงหน้าขาย</option>
+            <option value="draft" ${p.status==='draft'?'selected':''}>📝 Draft (ซ่อน)</option>
+            <option value="sold" ${p.status==='sold'?'selected':''}>❌ ขายหมด</option>
+          </select>
+        </div>
+        <div>
+          <label>ลำดับ (น้อย = แสดงก่อน)</label>
+          <input type="number" id="f-order" value="${p.sort_order}" oninput="liveUpdate('sort_order',+this.value)" min="1">
+        </div>
+      </div>
+
+      <div class="form-row" style="margin-top:.75rem">
+        <div>
+          <label>Line ID สำหรับสินค้านี้ (ถ้าต่างจากค่าหลัก)</label>
+          <input type="text" id="f-line" value="${esc(p.line_id)}" oninput="liveUpdate('line_id',this.value)" placeholder="เว้นว่าง = ใช้ค่าหลัก @masterpuch">
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:.75rem;margin-top:1rem">
+      <button class="btn btn-green" onclick="saveAll()">💾 บันทึก</button>
+      <button class="btn btn-ghost" onclick="switchTab('preview',document.querySelector('.tab-btn:nth-child(2)'))">👁 Preview</button>
+      <button class="btn btn-red" onclick="deleteProduct('${p.id}')">🗑 ลบสินค้า</button>
+    </div>
+
+  </div>
+
+  <!-- ══ PREVIEW TAB ══ -->
+  <div id="tab-preview" style="display:none">
+    <div id="previewContent"></div>
+    <div style="text-align:center;margin-top:1.25rem">
+      <a href="/sale.html" target="_blank" class="btn btn-purple">🔗 ดูหน้าขายจริง</a>
+    </div>
+  </div>
+  `;
+
+  // Drag-over on upload zone
+  const uz = document.getElementById('uploadZone');
+  uz.addEventListener('dragover', e => { e.preventDefault(); uz.classList.add('over'); });
+  uz.addEventListener('dragleave', () => uz.classList.remove('over'));
+  uz.addEventListener('drop', e => {
+    e.preventDefault(); uz.classList.remove('over');
+    const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+    addImages(files);
+  });
+
+  renderImgGrid();
+}
+
+// ─────────────────────────────────────────────
+//  TABS
+// ─────────────────────────────────────────────
+function switchTab(name, el) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tab-edit').style.display = name === 'edit' ? 'block' : 'none';
+  document.getElementById('tab-preview').style.display = name === 'preview' ? 'block' : 'none';
+  if (name === 'preview') renderPreview();
+}
+
+// ─────────────────────────────────────────────
+//  PREVIEW
+// ─────────────────────────────────────────────
+function renderPreview() {
+  const p = state.products.find(x => x.id === currentId);
+  if (!p) return;
+  const badge = p.badge ? `<span class="pv-badge" style="background:${p.badge_color}">${p.badge}</span>` : '';
+  const was = p.price_original ? `<span style="font-size:.8rem;color:#6b7280;text-decoration:line-through;margin-left:.5rem">฿${p.price_original.toLocaleString()}</span>` : '';
+  const mediaEmoji = p.video_url ? '🎬' : (p.images[0] ? `<img src="${p.images[0]}" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0">` : '💎');
+
+  let html = '';
+  if (p.layout === 'hero') {
+    html = `
+    <div class="preview-panel">
+      <div class="preview-header"><span>Layout: Hero</span></div>
+      <div class="preview-body">
+        <div class="prev-hero">
+          <div class="prev-hero-media" style="position:relative">${mediaEmoji}</div>
+          <div class="prev-hero-info">
+            ${badge}
+            <h4>${p.name || 'ชื่อสินค้า'}</h4>
+            <div class="pv-tag">${p.tagline || 'tagline...'}</div>
+            <div class="pv-price">฿${(p.price||0).toLocaleString()} ${was}</div>
+            <div class="prev-btn">💬 สั่งผ่าน Line</div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  } else {
+    html = `
+    <div class="preview-panel">
+      <div class="preview-header"><span>Layout: ${p.layout === 'wide' ? 'Wide Card' : 'Card'}</span></div>
+      <div class="preview-body">
+        <div class="prev-card-grid">
+          <div class="prev-card">
+            <div class="prev-card-media" style="position:relative">
+              ${mediaEmoji}
+              ${badge ? `<span class="pv-badge" style="background:${p.badge_color}">${p.badge}</span>` : ''}
+            </div>
+            <div class="prev-card-body">
+              <h5>${p.name || 'ชื่อสินค้า'}</h5>
+              <div style="font-size:.7rem;color:var(--muted)">${p.tagline || ''}</div>
+              <div class="pv-price">฿${(p.price||0).toLocaleString()}</div>
+              <div class="prev-btn">💬 Line</div>
+            </div>
+          </div>
+          <div class="prev-card" style="opacity:.35">
+            <div class="prev-card-media">➕</div>
+            <div class="prev-card-body"><h5 style="color:var(--muted)">สินค้าถัดไป</h5></div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }
+  document.getElementById('previewContent').innerHTML = html;
+}
+
+// ─────────────────────────────────────────────
+//  LIVE UPDATE
+// ─────────────────────────────────────────────
+function liveUpdate(field, value) {
+  const p = state.products.find(x => x.id === currentId);
+  if (p) p[field] = value;
+}
+
+function setLayout(layout, el) {
+  document.querySelectorAll('.layout-opt').forEach(o => o.classList.remove('active'));
+  el.classList.add('active');
+  liveUpdate('layout', layout);
+}
+
+function selectSwatch(color, el) {
+  document.querySelectorAll('.swatch').forEach(s => s.classList.remove('selected'));
+  el.classList.add('selected');
+  liveUpdate('badge_color', color);
+}
+
+// ─────────────────────────────────────────────
+//  AI LAYOUT SUGGESTER
+// ─────────────────────────────────────────────
+function aiSuggestLayout() {
+  const p = state.products.find(x => x.id === currentId);
+  if (!p) return;
+
+  let layout = 'card';
+  let reason = '';
+
+  // Logic: video → hero, many images & long desc → hero, featured order 1 → hero
+  if (p.video_url) {
+    layout = 'hero';
+    reason = 'มีวิดีโอ → Hero ใหญ่เพื่อโชว์คลิป';
+  } else if (p.images.length >= 2 && p.description.length > 80) {
+    layout = 'hero';
+    reason = 'มีรูปหลายรูปและรายละเอียดยาว → Hero แสดงได้ครบ';
+  } else if (p.sort_order === 1 || p.badge) {
+    layout = p.description.length > 50 ? 'wide' : 'card';
+    reason = p.description.length > 50 ? 'สินค้า featured มีรายละเอียด → Wide' : 'สินค้า featured → Card ปกติ';
+  } else {
+    layout = 'card';
+    reason = 'สินค้าทั่วไป → Card มาตรฐาน';
+  }
+
+  // Apply
+  liveUpdate('layout', layout);
+  document.querySelectorAll('.layout-opt').forEach(o => o.classList.remove('active'));
+  const map = { hero: 0, wide: 1, card: 2 };
+  document.querySelectorAll('.layout-opt')[map[layout]].classList.add('active');
+
+  toast(`🤖 AI เลือก: ${layout.toUpperCase()} — ${reason}`);
+}
+
+// ─────────────────────────────────────────────
+//  IMAGE UPLOAD
+// ─────────────────────────────────────────────
+function handleImgUpload(input) {
+  addImages(Array.from(input.files));
+  input.value = '';
+}
+
+function addImages(files) {
+  const remaining = 6 - uploadedImages.length;
+  files.slice(0, remaining).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      uploadedImages.push(e.target.result);
+      const p = state.products.find(x => x.id === currentId);
+      if (p) p.images = [...uploadedImages];
+      renderImgGrid();
+      renderSidebar();
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function removeImg(idx) {
+  uploadedImages.splice(idx, 1);
+  const p = state.products.find(x => x.id === currentId);
+  if (p) p.images = [...uploadedImages];
+  renderImgGrid();
+  renderSidebar();
+}
+
+function renderImgGrid() {
+  const grid = document.getElementById('imgGrid');
+  if (!grid) return;
+  if (!uploadedImages.length) { grid.innerHTML = ''; return; }
+  grid.innerHTML = uploadedImages.map((src, i) => `
+    <div class="img-thumb">
+      <img src="${src}" alt="img${i}">
+      <button class="rm" onclick="removeImg(${i})">✕</button>
+    </div>
+  `).join('');
+}
+
+// ─────────────────────────────────────────────
+//  PAGE SETTINGS
+// ─────────────────────────────────────────────
+function editSettings() {
+  currentId = null;
+  renderSidebar();
+  const s = state.settings;
+  document.getElementById('mainPanel').innerHTML = `
+  <h3 style="margin-bottom:1.5rem;color:var(--gold);font-family:'Playfair Display',serif">⚙️ ตั้งค่าหน้าเพจ</h3>
+  <div class="settings-card">
+    <div class="form-row">
+      <div><label>ชื่อหน้าเพจ</label><input type="text" id="s-title" value="${esc(s.page_title)}" placeholder="ร้านค้า Amethez"></div>
+    </div>
+    <div class="form-row">
+      <div><label>คำอธิบายใต้ชื่อ</label><input type="text" id="s-sub" value="${esc(s.page_subtitle)}"></div>
+    </div>
+    <div class="form-row">
+      <div><label>ข้อความ Gemma</label><textarea id="s-gemma">${esc(s.gemma_message)}</textarea></div>
+    </div>
+    <div class="form-row">
+      <div><label>Line ID หลัก (ใช้สำหรับปุ่มทุกสินค้า)</label><input type="text" id="s-line" value="${esc(s.line_id)}" placeholder="@masterpuch"></div>
+    </div>
+    <div class="toggle-row" style="margin-top:.5rem">
+      <span class="toggle-label">แสดง Countdown Timer</span>
+      <label class="toggle"><input type="checkbox" id="s-timer" ${s.show_timer?'checked':''}><span class="toggle-slider"></span></label>
+    </div>
+    <div class="form-row" style="margin-top:.75rem">
+      <div><label>Timer สิ้นสุดเมื่อ</label><input type="text" id="s-timer-end" value="${esc(s.timer_end)}" placeholder="2026-12-31T23:59:59"></div>
+    </div>
+    <div style="margin-top:1.25rem">
+      <button class="btn btn-green" onclick="saveSettings()">💾 บันทึกการตั้งค่า</button>
+    </div>
+  </div>`;
+}
+
+function saveSettings() {
+  state.settings = {
+    page_title: document.getElementById('s-title').value,
+    page_subtitle: document.getElementById('s-sub').value,
+    gemma_message: document.getElementById('s-gemma').value,
+    line_id: document.getElementById('s-line').value,
+    show_timer: document.getElementById('s-timer').checked,
+    timer_end: document.getElementById('s-timer-end').value
+  };
+  toast('บันทึกการตั้งค่าแล้ว ✓');
+}
+
+// ─────────────────────────────────────────────
+//  SAVE ALL → Export JSON
+// ─────────────────────────────────────────────
+function saveAll() {
+  const data = { settings: state.settings, products: state.products };
+  const json = JSON.stringify(data, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'sale-products.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('💾 Download sale-products.json แล้ว — วางไว้ที่ data/ แล้ว push GitHub');
+}
+
+// ─────────────────────────────────────────────
+//  HELPERS
+// ─────────────────────────────────────────────
+function showDefaultPanel() {
+  document.getElementById('mainPanel').innerHTML = `
+    <div style="text-align:center;padding:4rem 2rem;color:var(--muted)">
+      <div style="font-size:4rem;margin-bottom:1rem">✨</div>
+      <h3 style="color:var(--text);margin-bottom:.5rem">เลือกสินค้าเพื่อแก้ไข</h3>
+      <p style="font-size:.9rem">หรือกด <strong>+ เพิ่ม</strong> ทางซ้ายเพื่อสร้างสินค้าใหม่</p>
+    </div>`;
+}
+
+function esc(s) { return (s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+
+function toast(msg, type='ok') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = type === 'error' ? 'error' : '';
+  el.style.display = 'block';
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => el.style.display = 'none', 3500);
+}
+
+// ─────────────────────────────────────────────
+//  START
+// ─────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>

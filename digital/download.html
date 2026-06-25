@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ดาวน์โหลดไฟล์ | Amethez</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    body { background:#faf8f4; min-height:100vh; display:flex; flex-direction:column; }
+    .dl-wrap { flex:1; display:flex; align-items:center; justify-content:center; padding:2rem 1.25rem; }
+    .dl-card { background:white; border-radius:1.5rem; border:1.5px solid #f0e8ff; max-width:540px; width:100%; overflow:hidden; }
+
+    /* Header */
+    .dl-header { background:linear-gradient(135deg,#1a0936,#2d1b5e); padding:2rem 2rem 1.5rem; text-align:center; }
+    .dl-logo { display:flex; align-items:center; justify-content:center; gap:.6rem; margin-bottom:1.5rem; }
+    .dl-logo svg { width:32px; height:32px; }
+    .dl-logo span { font-family:'Playfair Display',serif; color:white; font-size:1.1rem; letter-spacing:.05em; }
+
+    /* States */
+    .dl-state { padding:2rem; }
+    .dl-icon { font-size:4rem; text-align:center; margin-bottom:1rem; }
+    .dl-product-name { font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--text); text-align:center; margin-bottom:.4rem; line-height:1.3; }
+    .dl-meta { display:flex; gap:.75rem; justify-content:center; flex-wrap:wrap; margin-bottom:1.5rem; }
+    .dl-meta-tag { background:#f5f0ff; color:var(--purple); font-size:.78rem; padding:.25rem .7rem; border-radius:2rem; font-weight:600; }
+
+    /* License */
+    .license-section { background:#fafafa; border:1px solid #f0e8ff; border-radius:1rem; padding:1.25rem 1.5rem; margin-bottom:1.5rem; }
+    .license-title { font-size:.9rem; font-weight:700; color:var(--text); margin-bottom:.875rem; display:flex; align-items:center; gap:.4rem; }
+    .license-grid { display:grid; grid-template-columns:1fr 1fr; gap:.5rem; margin-bottom:1rem; }
+    .license-item { display:flex; align-items:flex-start; gap:.4rem; font-size:.82rem; line-height:1.5; }
+    .license-item.ok  { color:#15803d; }
+    .license-item.no  { color:#dc2626; }
+    .license-icon { flex-shrink:0; font-size:.85rem; margin-top:.05rem; }
+    .license-legal { font-size:.75rem; color:var(--text-muted); line-height:1.6; border-top:1px solid #f0e8ff; padding-top:.875rem; margin-top:.875rem; }
+
+    /* Download button */
+    .btn-download { width:100%; background:linear-gradient(135deg,#7c3aed,#6d28d9); color:white; border:none; padding:1rem 1.5rem; border-radius:.75rem; font-family:Sarabun,sans-serif; font-size:1.1rem; font-weight:700; cursor:pointer; transition:all .2s; display:flex; align-items:center; justify-content:center; gap:.6rem; }
+    .btn-download:hover:not(:disabled) { background:linear-gradient(135deg,#6d28d9,#5b21b6); transform:translateY(-1px); box-shadow:0 8px 24px rgba(124,58,237,.3); }
+    .btn-download:disabled { opacity:.6; cursor:not-allowed; transform:none; }
+    .btn-download.done { background:linear-gradient(135deg,#16a34a,#15803d); }
+
+    .dl-note { text-align:center; font-size:.78rem; color:var(--text-muted); margin-top:.875rem; line-height:1.6; }
+
+    /* Spinner */
+    .spinner { width:48px; height:48px; border:4px solid #f0e8ff; border-top-color:var(--purple); border-radius:50%; animation:spin 1s linear infinite; margin:2rem auto; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    .loading-text { text-align:center; color:var(--text-muted); font-size:.95rem; }
+
+    /* Error */
+    .error-icon { font-size:3.5rem; text-align:center; margin-bottom:1rem; }
+    .error-title { font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--text); text-align:center; margin-bottom:.5rem; }
+    .error-sub { color:var(--text-muted); font-size:.9rem; text-align:center; line-height:1.7; margin-bottom:1.5rem; }
+    .btn-line { display:flex; align-items:center; justify-content:center; gap:.5rem; background:#06C755; color:white; padding:.85rem 1.5rem; border-radius:.6rem; font-family:Sarabun,sans-serif; font-size:1rem; font-weight:700; text-decoration:none; transition:all .2s; }
+    .btn-line:hover { background:#05b04a; }
+
+    /* Footer strip */
+    .dl-footer { background:#f8f5ff; border-top:1px solid #f0e8ff; padding:.875rem 1.5rem; text-align:center; font-size:.78rem; color:var(--text-muted); }
+    .dl-footer a { color:var(--purple); text-decoration:none; }
+  </style>
+</head>
+<body>
+
+<div class="dl-wrap">
+  <div class="dl-card">
+
+    <!-- Brand header -->
+    <div class="dl-header">
+      <div class="dl-logo">
+        <svg viewBox="0 0 36 36" fill="none"><polygon points="18,2 30,12 26,30 10,30 6,12" fill="#7c3aed" opacity="0.9"/><polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity="0.95"/><polygon points="18,8 30,12 18,28" fill="#a78bfa"/><polygon points="18,8 6,12 18,28" fill="#7c3aed"/></svg>
+        <span>AMETHEZ</span>
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div class="dl-state" id="stateLoading">
+      <div class="spinner"></div>
+      <p class="loading-text">กำลังตรวจสอบลิงค์...</p>
+    </div>
+
+    <!-- Ready to download -->
+    <div class="dl-state" id="stateReady" style="display:none">
+      <div class="dl-icon" id="dlIcon">📥</div>
+      <div class="dl-product-name" id="dlName">ชื่อไฟล์</div>
+      <div class="dl-meta" id="dlMeta"></div>
+
+      <!-- License agreement -->
+      <div class="license-section">
+        <div class="license-title">📋 ข้อตกลงการใช้งานลิขสิทธิ์ (License Agreement)</div>
+        <div class="license-grid">
+          <div class="license-item ok"><span class="license-icon">✅</span><span>ใช้งานส่วนตัว</span></div>
+          <div class="license-item ok"><span class="license-icon">✅</span><span>พิมพ์ 1 ชุดส่วนตัว</span></div>
+          <div class="license-item ok"><span class="license-icon">✅</span><span>อ่านในอุปกรณ์ส่วนตัว</span></div>
+          <div class="license-item ok"><span class="license-icon">✅</span><span>จดบันทึกเพิ่มเติม</span></div>
+          <div class="license-item no"><span class="license-icon">❌</span><span>ห้ามแจกหรือส่งต่อ</span></div>
+          <div class="license-item no"><span class="license-icon">❌</span><span>ห้ามขายหรือแสวงหากำไร</span></div>
+          <div class="license-item no"><span class="license-icon">❌</span><span>ห้ามเผยแพร่ออนไลน์</span></div>
+          <div class="license-item no"><span class="license-icon">❌</span><span>ห้ามดัดแปลงเพื่อจำหน่าย</span></div>
+        </div>
+        <div class="license-legal">
+          ผลิตภัณฑ์ดิจิทัลนี้ได้รับการคุ้มครองภายใต้ <strong>พระราชบัญญัติลิขสิทธิ์ พ.ศ. 2537</strong> และกฎหมายทรัพย์สินทางปัญญาที่เกี่ยวข้อง ลิขสิทธิ์ทั้งหมดเป็นของ <strong>Amethez.com</strong> การละเมิดลิขสิทธิ์มีโทษตามกฎหมาย ผู้ซื้อได้รับสิทธิ์ใช้งานแบบ <strong>Non-exclusive, Non-transferable Personal License</strong> เท่านั้น สิทธิ์จะสิ้นสุดทันทีหากมีการละเมิดข้อตกลงใดข้อหนึ่ง<br><br>
+          การกดปุ่มดาวน์โหลดถือว่าท่านได้อ่าน เข้าใจ และยอมรับข้อตกลงทั้งหมดข้างต้นแล้ว<br>
+          <em>© 2026 Amethez.com · All Rights Reserved</em>
+        </div>
+      </div>
+
+      <button class="btn-download" id="dlBtn" onclick="startDownload()">
+        ⬇️ ยอมรับและดาวน์โหลดไฟล์
+      </button>
+      <div class="dl-note">
+        ลิงค์นี้ใช้ได้ <strong>30 วัน</strong> นับจากวันที่ซื้อ · สำหรับบัญชีนี้เท่านั้น<br>
+        ปัญหาการดาวน์โหลด? <a href="https://line.me/R/ti/p/@amethez" target="_blank" style="color:var(--purple)">ติดต่อ Line @amethez</a>
+      </div>
+    </div>
+
+    <!-- Error -->
+    <div class="dl-state" id="stateError" style="display:none">
+      <div class="error-icon">🔒</div>
+      <div class="error-title">ลิงค์ไม่ถูกต้องหรือหมดอายุ</div>
+      <p class="error-sub">
+        ลิงค์ดาวน์โหลดมีอายุ 30 วัน หรืออาจเป็นลิงค์ที่ไม่ถูกต้อง<br>
+        หากท่านเพิ่งซื้อ กรุณาติดต่อเพื่อขอลิงค์ใหม่ฟรี
+      </p>
+      <a href="https://line.me/R/ti/p/@amethez" target="_blank" class="btn-line">💬 ติดต่อ Line @amethez</a>
+      <div style="text-align:center;margin-top:1rem">
+        <a href="/digital/" style="color:var(--purple);font-size:.9rem">← กลับหน้า Digital Products</a>
+      </div>
+    </div>
+
+    <div class="dl-footer">
+      <a href="https://amethez.com">amethez.com</a> ·
+      <a href="/terms.html">Terms</a> ·
+      <a href="https://line.me/R/ti/p/@amethez" target="_blank">Line @amethez</a>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const params  = new URLSearchParams(location.search);
+  const token   = params.get('t');
+  const rawFile = params.get('f');
+  const name    = decodeURIComponent(params.get('n') || 'ไฟล์ดิจิทัล');
+  const pid     = params.get('p') || '';
+  const format  = decodeURIComponent(params.get('fmt') || 'PDF');
+  const pages   = decodeURIComponent(params.get('pg') || '');
+
+  let fileUrl = '';
+  try { fileUrl = rawFile ? atob(rawFile) : ''; } catch(e) {}
+
+  const CAT_EMOJI = { saimu:'🔮', stone:'💎', knowledge:'📚', quote:'✨' };
+
+  function showState(id) {
+    ['stateLoading','stateReady','stateError'].forEach(s => {
+      document.getElementById(s).style.display = (s === id) ? 'block' : 'none';
+    });
+  }
+
+  function init() {
+    if (!token || !fileUrl) {
+      showState('stateError');
+      return;
+    }
+
+    // Populate product info
+    document.getElementById('dlName').textContent = name;
+
+    const meta = document.getElementById('dlMeta');
+    if (format) meta.innerHTML += `<span class="dl-meta-tag">📁 ${format}</span>`;
+    if (pages)  meta.innerHTML += `<span class="dl-meta-tag">📄 ${pages}</span>`;
+    meta.innerHTML += `<span class="dl-meta-tag">🔑 มีลิขสิทธิ์ถูกต้อง</span>`;
+
+    document.title = `ดาวน์โหลด ${name} | Amethez`;
+    showState('stateReady');
+  }
+
+  window.startDownload = function () {
+    const btn = document.getElementById('dlBtn');
+    btn.textContent = '⏳ กำลังเตรียมไฟล์...';
+    btn.disabled = true;
+
+    // Log download event to Make.com (fire-and-forget)
+    try {
+      fetch('https://hook.eu1.make.com/REPLACE_DOWNLOAD_LOG_WEBHOOK', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token, product_id: pid, timestamp: new Date().toISOString() })
+      });
+    } catch(e) {}
+
+    setTimeout(() => {
+      const a = document.createElement('a');
+      a.href = fileUrl;
+      a.download = name + '.' + (format.toLowerCase() === 'pdf' ? 'pdf' : 'zip');
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+
+      btn.textContent = '✅ กำลังดาวน์โหลด...';
+      btn.classList.add('done');
+
+      setTimeout(() => {
+        btn.textContent = '⬇️ ดาวน์โหลดอีกครั้ง';
+        btn.disabled = false;
+      }, 4000);
+    }, 600);
+  };
+
+  // Small delay to show loading animation
+  setTimeout(init, 900);
+})();
+</script>
+
+</body>
+</html>

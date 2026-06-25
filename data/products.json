@@ -1,0 +1,74 @@
+{
+  "products": [
+    {
+      "id": "001",
+      "name": "สะเก็ดดาวไทย (Tektite) แท้ 100%",
+      "price": 199,
+      "url": "https://s.shopee.co.th/xxx-tektite",
+      "image_url": "https://down-th.img.susercontent.com/file/tektite-placeholder",
+      "tags": ["สะเก็ดดาวไทย", "ดำ", "ราก", "ป้องกัน", "พลังโลก"],
+      "category": "หินดิบ",
+      "status": "available"
+    },
+    {
+      "id": "002",
+      "name": "โพรงอเมทิสต์ขนาดใหญ่ บราซิล",
+      "price": 2990,
+      "url": "https://s.shopee.co.th/xxx-amethyst-cave",
+      "image_url": "https://down-th.img.susercontent.com/file/amethyst-cave-placeholder",
+      "tags": ["อเมทิสต์", "ม่วง", "มงกุฎ", "Third Eye", "สมาธิ", "โพรง"],
+      "category": "หินตกแต่ง",
+      "status": "available"
+    },
+    {
+      "id": "003",
+      "name": "ซิทริน หินแห่งความสำเร็จ",
+      "price": 390,
+      "url": "https://s.shopee.co.th/xxx-citrine",
+      "image_url": "https://down-th.img.susercontent.com/file/citrine-placeholder",
+      "tags": ["ซิทริน", "เหลือง", "Solar Plexus", "โชคลาภ", "การเงิน", "ความสำเร็จ"],
+      "category": "หินดิบ",
+      "status": "available"
+    },
+    {
+      "id": "004",
+      "name": "เศษหิน Clear Quartz คริสตัลใส",
+      "price": 40,
+      "url": "https://s.shopee.co.th/xxx-clear-quartz",
+      "image_url": "https://down-th.img.susercontent.com/file/clear-quartz-placeholder",
+      "tags": ["คริสตัลใส", "ใส", "มงกุฎ", "ชำระล้าง", "ขยายพลัง", "ทุกจักระ"],
+      "category": "หินดิบ",
+      "status": "available"
+    },
+    {
+      "id": "005",
+      "name": "Singing Bowl ชามทิเบต ชาร์จพลังหิน",
+      "price": 890,
+      "url": "https://s.shopee.co.th/xxx-singing-bowl",
+      "image_url": "https://down-th.img.susercontent.com/file/singing-bowl-placeholder",
+      "tags": ["singing bowl", "ชาร์จหิน", "เสียง", "ทำความสะอาดหิน", "อุปกรณ์"],
+      "category": "อุปกรณ์",
+      "status": "available"
+    },
+    {
+      "id": "006",
+      "name": "ใบเสจ White Sage ชำระพลังงาน",
+      "price": 150,
+      "url": "https://s.shopee.co.th/xxx-sage",
+      "image_url": "https://down-th.img.susercontent.com/file/sage-placeholder",
+      "tags": ["ใบเสจ", "ชำระล้าง", "ทำความสะอาดหิน", "อุปกรณ์", "พลังงาน"],
+      "category": "อุปกรณ์",
+      "status": "available"
+    },
+    {
+      "id": "007",
+      "name": "เกลือหิมาลัย สีชมพู บริสุทธิ์",
+      "price": 120,
+      "url": "https://s.shopee.co.th/xxx-himalayan-salt",
+      "image_url": "https://down-th.img.susercontent.com/file/salt-placeholder",
+      "tags": ["เกลือหิมาลัย", "ชาร์จหิน", "ชำระล้าง", "อุปกรณ์", "ราก"],
+      "category": "อุปกรณ์",
+      "status": "available"
+    }
+  ]
+}

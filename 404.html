@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — ไม่พบหน้าที่ต้องการ | Amethez</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    body { background: linear-gradient(135deg, #1a1228, #2d1b69); min-height: 100vh; display: flex; flex-direction: column; }
+    .error-page { flex: 1; display: flex; align-items: center; justify-content: center; padding: 3rem 1.5rem; text-align: center; }
+    .error-inner { max-width: 560px; }
+    .crystal-404 { font-size: 7rem; margin-bottom: 1rem; filter: drop-shadow(0 0 30px rgba(167,139,250,.5)); animation: float 3s ease-in-out infinite; }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+    .error-num { font-family: 'Playfair Display', serif; font-size: clamp(5rem,15vw,10rem); font-weight: 900; color: transparent; background: linear-gradient(135deg, #7c3aed, #c9a84c); -webkit-background-clip: text; background-clip: text; line-height: 1; margin-bottom: .5rem; }
+    .error-title { font-family: 'Playfair Display', serif; font-size: 1.75rem; color: white; margin-bottom: .75rem; }
+    .error-desc { color: rgba(255,255,255,.65); font-size: 1rem; line-height: 1.7; margin-bottom: 2rem; }
+    .search-box { display: flex; gap: .75rem; margin-bottom: 2rem; }
+    .search-box input { flex: 1; padding: .75rem 1.25rem; background: rgba(255,255,255,.1); border: 1.5px solid rgba(255,255,255,.2); border-radius: .6rem; color: white; font-family: Sarabun,sans-serif; font-size: 1rem; }
+    .search-box input::placeholder { color: rgba(255,255,255,.4); }
+    .search-box input:focus { outline: none; border-color: var(--purple-light,#a78bfa); }
+    .quick-links { display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; margin-bottom: 2rem; }
+    .quick-link { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); color: rgba(255,255,255,.8); padding: .4rem 1rem; border-radius: 2rem; font-size: .88rem; text-decoration: none; transition: all .2s; }
+    .quick-link:hover { background: rgba(124,58,237,.3); color: white; border-color: var(--purple); }
+    .home-btn { display: inline-flex; align-items: center; gap: .5rem; background: var(--purple); color: white; padding: .85rem 2rem; border-radius: .6rem; font-family: Sarabun,sans-serif; font-size: 1rem; font-weight: 700; text-decoration: none; transition: all .2s; }
+    .home-btn:hover { background: #6d28d9; color: white; transform: translateY(-2px); }
+  </style>
+</head>
+<body>
+<header class="site-header" style="background:rgba(26,18,40,.8);border-color:rgba(255,255,255,.1)">
+  <div class="container nav-inner">
+    <a href="/" class="logo">
+      <svg viewBox="0 0 36 36" fill="none"><polygon points="18,2 30,12 26,30 10,30 6,12" fill="#7c3aed" opacity="0.9"/><polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity="0.95"/><polygon points="18,8 30,12 18,28" fill="#a78bfa"/><polygon points="18,8 6,12 18,28" fill="#7c3aed"/></svg>
+      <span style="color:var(--gold)">AMETHEZ</span>
+    </a>
+  </div>
+</header>
+
+<div class="error-page">
+  <div class="error-inner">
+    <div class="crystal-404">💎</div>
+    <div class="error-num">404</div>
+    <h1 class="error-title">หาหน้านี้ไม่เจอค่ะ</h1>
+    <p class="error-desc">หน้าที่คุณต้องการอาจถูกย้าย ลบ หรือ URL ไม่ถูกต้อง<br>ลองค้นหาหินที่ต้องการได้เลย</p>
+
+    <!-- Search -->
+    <div class="search-box">
+      <input type="search" id="errSearch" placeholder="ค้นหาหิน เช่น อเมทิสต์, ความรัก..." onkeydown="if(event.key==='Enter')doSearch()">
+      <button onclick="doSearch()" class="btn btn-primary">🔍</button>
+    </div>
+
+    <!-- Quick links -->
+    <div class="quick-links">
+      <a href="/stones/amethyst.html" class="quick-link">💜 อเมทิสต์</a>
+      <a href="/stones/citrine.html" class="quick-link">🌟 ซิทริน</a>
+      <a href="/stones/tektite.html" class="quick-link">🌑 สะเก็ดดาวไทย</a>
+      <a href="/categories/chakra.html" class="quick-link">☯️ จักระ</a>
+      <a href="/categories/zodiac.html" class="quick-link">⭐ ราศี</a>
+      <a href="/metha/" class="quick-link">🌙 ดวงรายวัน</a>
+      <a href="/sale.html" class="quick-link">🛒 ร้านค้า</a>
+      <a href="/request.html" class="quick-link">🔍 หาหินที่ต้องการ</a>
+    </div>
+
+    <a href="/" class="home-btn">← กลับหน้าหลัก</a>
+  </div>
+</div>
+
+<script>
+function doSearch() {
+  const q = document.getElementById('errSearch').value.trim();
+  if (q) window.location.href = '/stones/?q=' + encodeURIComponent(q);
+}
+</script>
+</body>
+</html>

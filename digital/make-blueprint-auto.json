@@ -1,0 +1,156 @@
+{
+  "name": "Amethez — Digital Product Auto Delivery (SlipOK)",
+  "flow": [
+    {
+      "id": 1,
+      "module": "gateway:CustomWebHook",
+      "version": 1,
+      "metadata": {
+        "designer": { "x": 0, "y": 0 },
+        "restore": { "parameters": [ { "data": { "editable": "true" } } ] }
+      },
+      "parameters": { "hook": "Amethez Order Webhook", "maxResults": 1 },
+      "mapper": {},
+      "_comment": "STEP 1: รับ FormData จากหน้าเว็บ — fields: email, name, amount, product_id, product_name, slip (รูป), ts"
+    },
+    {
+      "id": 2,
+      "module": "slipok:VerifySlip",
+      "version": 1,
+      "metadata": { "designer": { "x": 300, "y": 0 } },
+      "parameters": {
+        "__IMTCONN__": "SlipOK_Connection",
+        "branchId": "{{REPLACE_SLIPOK_BRANCH_ID}}",
+        "apiKey": "{{REPLACE_SLIPOK_API_KEY}}"
+      },
+      "mapper": {
+        "files": "{{1.slip}}",
+        "amount": "{{1.amount}}",
+        "log": true
+      },
+      "_comment": "STEP 2: SlipOK ตรวจสลิป — คืนค่า success, amount, transRef, receiver"
+    },
+    {
+      "id": 3,
+      "module": "builtin:BasicRouter",
+      "version": 1,
+      "metadata": { "designer": { "x": 600, "y": 0 } },
+      "routes": [
+        {
+          "_comment": "ROUTE A — สลิปผ่าน (success = true และยอดตรง)",
+          "flow": [
+            {
+              "id": 4,
+              "module": "util:SetVariables",
+              "version": 1,
+              "metadata": { "designer": { "x": 900, "y": -150 } },
+              "parameters": {},
+              "mapper": {
+                "variables": [
+                  { "name": "token", "value": "{{uuid()}}" },
+                  { "name": "expires", "value": "{{addDays(now; 30)}}" },
+                  { "name": "fileUrl", "value": "{{REPLACE_GDRIVE_EBOOK_DIRECT_LINK}}" }
+                ]
+              },
+              "filter": {
+                "name": "สลิปผ่าน + ยอดตรง",
+                "conditions": [[
+                  { "a": "{{2.success}}", "o": "equal", "b": "true" },
+                  { "a": "{{2.amount}}", "o": "greater:equal", "b": "299" }
+                ]]
+              },
+              "_comment": "STEP 4a: สร้าง token UUID + วันหมดอายุ 30 วัน"
+            },
+            {
+              "id": 5,
+              "module": "google-sheets:addRow",
+              "version": 2,
+              "metadata": { "designer": { "x": 1200, "y": -150 } },
+              "parameters": {
+                "__IMTCONN__": "Google_Connection",
+                "mode": "select",
+                "spreadsheetId": "{{REPLACE_GOOGLE_SHEET_ID}}",
+                "sheetId": "Orders",
+                "includesHeaders": true
+              },
+              "mapper": {
+                "0": "{{formatDate(now; 'YYYY-MM-DD HH:mm')}}",
+                "1": "{{1.email}}",
+                "2": "{{1.name}}",
+                "3": "{{1.product_id}}",
+                "4": "{{1.amount}}",
+                "5": "{{4.token}}",
+                "6": "{{formatDate(4.expires; 'YYYY-MM-DD')}}"
+              },
+              "_comment": "STEP 5a: บันทึกออเดอร์ลง Google Sheet"
+            },
+            {
+              "id": 6,
+              "module": "google-email:ActionSendEmail",
+              "version": 1,
+              "metadata": { "designer": { "x": 1500, "y": -150 } },
+              "parameters": { "__IMTCONN__": "Gmail_Connection" },
+              "mapper": {
+                "to": [ "{{1.email}}" ],
+                "subject": "🌿 E-Book ของคุณพร้อมแล้ว — โมลดาไวท์ หินเปลี่ยนชีวิต",
+                "contentType": "html",
+                "html": "<div style='font-family:sans-serif;max-width:480px;margin:0 auto;background:#0f0a1e;border-radius:16px;overflow:hidden'><div style='background:linear-gradient(135deg,#1a0936,#2d1b5e);padding:32px;text-align:center'><div style='font-size:48px'>🌿</div><h1 style='color:#fff;font-size:20px;margin:12px 0'>ขอบคุณสำหรับการสั่งซื้อ!</h1><p style='color:rgba(255,255,255,.6);font-size:14px'>E-Book โมลดาไวท์ หินเปลี่ยนชีวิต</p></div><div style='padding:32px;background:#fff'><p style='color:#1a1228;font-size:15px;line-height:1.7'>สวัสดีค่ะ {{1.name}}<br><br>การชำระเงินของคุณได้รับการยืนยันเรียบร้อยแล้ว ✅<br>คลิกปุ่มด้านล่างเพื่อดาวน์โหลด E-Book พร้อม Bonus 3 รายการ</p><div style='text-align:center;margin:28px 0'><a href='https://amethez.com/digital/download.html?t={{4.token}}&f={{base64(4.fileUrl)}}&n={{base64(1.product_name)}}&fmt=PDF&pg=60' style='display:inline-block;background:linear-gradient(135deg,#c9a84c,#b8922e);color:#0f0a1e;padding:14px 32px;border-radius:8px;font-weight:700;text-decoration:none'>⬇️ ดาวน์โหลด E-Book</a></div><p style='color:#6b7280;font-size:13px;line-height:1.6'>📌 ลิงค์นี้ใช้ได้ถึง <strong>{{formatDate(4.expires; 'DD/MM/YYYY')}}</strong><br>📱 อ่านได้บนมือถือ แท็บเล็ต และคอมพิวเตอร์<br>⚠️ ลิขสิทธิ์ส่วนบุคคล ห้ามแชร์หรือจำหน่ายต่อ</p></div><div style='background:#f8f5ff;padding:20px;text-align:center'><p style='color:#7c3aed;font-size:13px;margin:0'>มีคำถาม? Line: <strong>@amethez</strong></p></div></div>",
+                "attachments": []
+              },
+              "_comment": "STEP 6a: ส่งอีเมลพร้อมลิงค์ download.html ที่มี token"
+            },
+            {
+              "id": 7,
+              "module": "line:SendMessage",
+              "version": 1,
+              "metadata": { "designer": { "x": 1800, "y": -150 } },
+              "parameters": { "__IMTCONN__": "Line_Connection" },
+              "mapper": {
+                "message": "🎉 ขายได้! +฿{{1.amount}}\n📦 {{1.product_name}}\n📧 {{1.email}}\n🕐 {{formatDate(now; 'HH:mm')}}"
+              },
+              "_comment": "STEP 7a: แจ้งเตือนเราว่าขายได้ (optional)"
+            }
+          ]
+        },
+        {
+          "_comment": "ROUTE B — สลิปไม่ผ่าน หรือยอดไม่ตรง → แจ้งเตือนตรวจมือ",
+          "flow": [
+            {
+              "id": 8,
+              "module": "line:SendMessage",
+              "version": 1,
+              "metadata": { "designer": { "x": 900, "y": 150 } },
+              "parameters": { "__IMTCONN__": "Line_Connection" },
+              "mapper": {
+                "message": "⚠️ สลิปไม่ผ่านการตรวจอัตโนมัติ — ต้องตรวจด้วยมือ\n📧 {{1.email}}\n💰 อ้างยอด: ฿{{1.amount}}\n❓ เหตุผล: {{2.message}}\n\nตรวจสอบใน Make.com History"
+              },
+              "filter": {
+                "name": "สลิปไม่ผ่าน",
+                "conditions": [[
+                  { "a": "{{2.success}}", "o": "notequal", "b": "true" }
+                ]]
+              },
+              "_comment": "STEP 4b: ส่ง Line แจ้งเราให้ตรวจมือ — กันลูกค้าที่จ่ายจริงแต่ระบบ error"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "instant": true,
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "sequential": false,
+      "confidential": false,
+      "dataloss": false,
+      "dlq": false
+    },
+    "designer": { "orphans": [] },
+    "zone": "eu1.make.com",
+    "_SETUP_NOTES": "แทนที่ค่า {{REPLACE_...}} ทั้งหมด: SLIPOK_BRANCH_ID, SLIPOK_API_KEY, GDRIVE_EBOOK_DIRECT_LINK, GOOGLE_SHEET_ID. และเชื่อม connection: SlipOK, Google Sheets, Gmail, Line. ปรับยอด 299 ตามสินค้าแต่ละชิ้น หรือใช้ {{1.amount}} เทียบกับ lookup ราคาจริงเพื่อกันลูกค้าแก้ราคาในฝั่ง client"
+  }
+}

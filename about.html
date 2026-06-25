@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>เกี่ยวกับเรา — Amethez | ศูนย์รวมความรู้คริสตัลและพลอย</title>
+  <meta name="description" content="Amethez คือศูนย์กลางข้อมูลคริสตัลและพลอยที่ใหญ่ที่สุดในไทย รู้จักทีมผู้เชี่ยวชาญ วิสัยทัศน์ และพันธกิจของเรา">
+  <link rel="canonical" href="https://amethez.com/about.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    /* ── Timeline ── */
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+      width: 2px; background: linear-gradient(to bottom, var(--purple), var(--gold));
+    }
+    .timeline-item { position: relative; margin-bottom: 2rem; }
+    .timeline-item::before {
+      content: ''; position: absolute; left: -2.4rem; top: 0.3rem;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--purple); border: 3px solid var(--bg);
+      box-shadow: 0 0 0 2px var(--purple);
+    }
+    .timeline-date { font-size: 0.8rem; color: var(--purple); font-weight: 700; margin-bottom: 0.25rem; letter-spacing: 0.05em; }
+    .timeline-item h3 { font-size: 1.05rem; margin-bottom: 0.35rem; }
+    .timeline-item p { color: var(--text-muted); font-size: 0.9rem; }
+
+    /* ── Values ── */
+    .value-card {
+      text-align: center; padding: 2rem 1.5rem;
+      background: white; border: 1px solid var(--border);
+      border-radius: 1rem; box-shadow: var(--shadow);
+    }
+    .value-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+    .value-card h3 { margin-bottom: 0.5rem; color: var(--purple-dark); }
+    .value-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; }
+
+    /* ── Avatar profile ── */
+    .avatar-profile {
+      background: white; border: 1px solid var(--border);
+      border-radius: 1.25rem; overflow: hidden;
+      box-shadow: var(--shadow); transition: transform 0.2s;
+    }
+    .avatar-profile:hover { transform: translateY(-4px); }
+    .avatar-header {
+      padding: 2rem 1.75rem 1.25rem;
+      text-align: center;
+    }
+    .avatar-emoji-large {
+      width: 90px; height: 90px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; margin: 0 auto 1rem;
+    }
+    .avatar-profile h3 { font-size: 1.3rem; margin-bottom: 0.25rem; }
+    .avatar-role { font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; margin-bottom: 0.75rem; }
+    .avatar-quote {
+      font-style: italic; font-size: 0.9rem; color: var(--text-muted);
+      border-top: 1px solid var(--border); padding: 1rem 1.75rem;
+      background: #faf8f4; line-height: 1.7;
+    }
+    .avatar-tags {
+      display: flex; flex-wrap: wrap; gap: 0.4rem;
+      justify-content: center; margin-top: 0.75rem;
+    }
+    .avatar-tag {
+      background: #f5f0ff; color: var(--purple);
+      padding: 0.2rem 0.65rem; border-radius: 2rem;
+      font-size: 0.78rem; font-weight: 600;
+    }
+
+    /* ── Numbers ── */
+    .numbers-section { background: linear-gradient(135deg, #2d1b69, #1a1228); color: white; }
+    .number-item { text-align: center; padding: 1.5rem; }
+    .number-big {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem; font-weight: 900;
+      color: var(--gold); line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .number-label { font-size: 0.9rem; color: rgba(255,255,255,0.75); }
+
+    /* ── Partners ── */
+    .partner-pill {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: white; border: 1.5px solid var(--border);
+      padding: 0.6rem 1.25rem; border-radius: 3rem;
+      font-size: 0.9rem; font-weight: 600;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    /* ── Pull quote ── */
+    .pull-quote {
+      border-left: 4px solid var(--gold);
+      padding: 1.25rem 1.75rem;
+      background: linear-gradient(135deg, #fffbeb, #fdf4ff);
+      border-radius: 0 1rem 1rem 0;
+      margin: 2rem 0;
+    }
+    .pull-quote p {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem; font-style: italic;
+      color: var(--text); line-height: 1.6; margin: 0;
+    }
+    .pull-quote cite { display: block; font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem; font-style: normal; }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="site-header">
+  <div class="container nav-inner">
+    <a href="/" class="logo">
+      <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="18,2 30,12 26,30 10,30 6,12" fill="#7c3aed" opacity="0.9"/>
+        <polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity="0.95"/>
+        <polygon points="18,8 30,12 18,28" fill="#a78bfa"/>
+        <polygon points="18,8 6,12 18,28" fill="#7c3aed"/>
+      </svg>
+      <span>AMETHEZ <small class="logo-tagline">Stones · Stories · Soul</small></span>
+    </a>
+    <nav><ul class="nav-links">
+      <li><a href="/stones/">คลังหิน</a></li>
+      <li><a href="/categories/chakra.html">จักระ</a></li>
+      <li><a href="/categories/zodiac.html">ราศี</a></li>
+      <li><a href="/wuchong/">Master Wuchong</a></li>
+      <li><a href="/metha/">อาจารย์เมธา</a></li>
+      <li><a href="/sale.html" style="color:var(--gold)">🛒 ร้านค้า</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<section style="background:linear-gradient(135deg,#1a1228 0%,#2d1b69 50%,#1a1228 100%);padding:5rem 1.5rem;text-align:center;position:relative;overflow:hidden">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(124,58,237,0.25) 0%,transparent 70%)"></div>
+  <div style="position:relative;z-index:1;max-width:700px;margin:0 auto">
+    <!-- Logo large -->
+    <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:72px;height:72px;margin:0 auto 1.5rem;display:block">
+      <polygon points="36,4 60,24 52,60 20,60 12,24" fill="#7c3aed" opacity="0.9"/>
+      <polygon points="36,4 60,24 36,16" fill="#c9a84c" opacity="0.95"/>
+      <polygon points="36,16 60,24 36,56" fill="#a78bfa"/>
+      <polygon points="36,16 12,24 36,56" fill="#7c3aed"/>
+    </svg>
+    <h1 style="color:white;font-size:clamp(2.5rem,6vw,4rem);margin-bottom:0.5rem">เกี่ยวกับ <span style="color:var(--gold)">Amethez</span></h1>
+    <p style="color:rgba(255,255,255,0.8);font-size:1.15rem;line-height:1.8">
+      ศูนย์กลางข้อมูลคริสตัลและพลอยที่ใหญ่ที่สุดในไทย<br>
+      <em style="color:var(--gold-light,#e6c97a)">Stones · Stories · Soul</em>
+    </p>
+  </div>
+</section>
+
+<!-- Numbers -->
+<section class="numbers-section section" style="padding:3rem 0">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr)">
+      <div class="number-item">
+        <div class="number-big">300<span style="font-size:2rem">+</span></div>
+        <div class="number-label">หน้าความรู้เป้าหมาย</div>
+      </div>
+      <div class="number-item">
+        <div class="number-big">3</div>
+        <div class="number-label">ผู้เชี่ยวชาญ Avatar</div>
+      </div>
+      <div class="number-item">
+        <div class="number-big">3</div>
+        <div class="number-label">บทความใหม่ต่อวัน</div>
+      </div>
+      <div class="number-item">
+        <div class="number-big">0<span style="font-size:1.5rem">฿</span></div>
+        <div class="number-label">ค่าปรึกษา ฟรีตลอด</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Story -->
+<section class="section">
+  <div class="container" style="max-width:800px">
+    <div class="section-header">
+      <h2>เรื่องราวของเรา</h2>
+    </div>
+
+    <div class="pull-quote">
+      <p>"หินทุกก้อนมีเรื่องเล่า และทุกคนมีหินที่ใช่สำหรับตัวเอง เราแค่อยากช่วยให้คุณหามันเจอ"</p>
+      <cite>— ทีม Amethez</cite>
+    </div>
+
+    <p>Amethez เกิดขึ้นจากความตั้งใจเดียว คือการสร้าง <strong>แหล่งข้อมูลคริสตัลและพลอยภาษาไทยที่ดีที่สุด</strong> ในประเทศ ไม่ใช่ร้านขายหิน แต่เป็น <em>Hub ความรู้</em> ที่รวบรวมข้อมูลจากหลายมุมมอง ทั้งวิทยาศาสตร์ พลังงาน โหราศาสตร์ และการปฏิบัติจริง</p>
+
+    <p>เราเชื่อว่าคนไทยควรมีแหล่งข้อมูลที่ <strong>ถูกต้อง ครบถ้วน และเข้าถึงง่าย</strong> โดยไม่ต้องพึ่งการแปลจากต่างประเทศหรือข้อมูลที่ไม่น่าเชื่อถือ Amethez จึงถูกออกแบบให้เป็นเหมือน "Wongnai แต่สำหรับโลกของหินคริสตัล"</p>
+
+    <p>โมเดลของเราคือ Broker / Hub — เราให้ความรู้ฟรี 100% เชื่อมคุณกับร้านค้าที่เชื่อถือได้ และดูแลคอมมิวนิตีสายหินไทยให้เติบโตไปด้วยกัน</p>
+  </div>
+</section>
+
+<!-- Values -->
+<section class="section" style="background:#faf8f4;padding:4rem 0">
+  <div class="container">
+    <div class="section-header">
+      <h2>สิ่งที่เราเชื่อ</h2>
+      <p>หลักการที่ทีม Amethez ยึดถือในทุกเนื้อหาที่สร้างขึ้น</p>
+    </div>
+    <div class="grid-3">
+      <div class="value-card">
+        <span class="value-icon">🔬</span>
+        <h3>ข้อมูลที่ถูกต้อง</h3>
+        <p>ทุกบทความผ่านการค้นคว้าจากแหล่งข้อมูลที่เชื่อถือได้ ทั้งข้อมูลวิทยาศาสตร์และประเพณีปฏิบัติที่มีรากฐาน</p>
+      </div>
+      <div class="value-card">
+        <span class="value-icon">🎓</span>
+        <h3>ให้ความรู้ก่อนขาย</h3>
+        <p>เนื้อหาบทความคือความรู้ล้วนๆ ไม่ปนการขาย ส่วน Shopee อยู่แยกต่างหากด้านล่าง เพื่อให้คุณตัดสินใจเองได้</p>
+      </div>
+      <div class="value-card">
+        <span class="value-icon">🤝</span>
+        <h3>เป็นกลางและเป็นธรรม</h3>
+        <p>Amethez ไม่ได้เป็นร้านค้า เราแนะนำร้านค้าที่ดีจริงๆ และไม่รับค่าโฆษณาแบบที่บิดเบือนข้อมูล</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Avatar Team -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>ทีมผู้เชี่ยวชาญ</h2>
+      <p>แต่ละ Avatar มีความเชี่ยวชาญเฉพาะด้าน เพื่อให้คุณได้รับข้อมูลที่ตรงกับความต้องการ</p>
+    </div>
+    <div class="grid-3" style="gap:1.5rem">
+
+      <!-- Crystal Atlas -->
+      <div class="avatar-profile">
+        <div class="avatar-header">
+          <div class="avatar-emoji-large" style="background:linear-gradient(135deg,#f5f0ff,#e0d4ff)">🔬</div>
+          <h3>Crystal Atlas</h3>
+          <div class="avatar-role" style="color:var(--purple)">สารานุกรมหิน</div>
+          <p style="font-size:0.88rem;color:var(--text-muted);line-height:1.7">ฐานข้อมูลหินคริสตัลและพลอยกว่า 300 ชนิด ครบทั้งวิทยาศาสตร์ แหล่งกำเนิด คุณสมบัติ และการนำไปใช้ มาตรฐานระดับสากล</div>
+          <div class="avatar-tags">
+            <span class="avatar-tag">ข้อมูลวิทยาศาสตร์</span>
+            <span class="avatar-tag">Global</span>
+            <span class="avatar-tag">Authoritative</span>
+          </div>
+        </div>
+        <div class="avatar-quote">
+          "ก้อนหินทุกก้อนคือบทบันทึกของเวลา ผมแค่ช่วยอ่านมันออกมาให้คุณฟัง"
+        </div>
+      </div>
+
+      <!-- Master Wuchong -->
+      <div class="avatar-profile">
+        <div class="avatar-header">
+          <div class="avatar-emoji-large" style="background:linear-gradient(135deg,#fff7ed,#fde68a)">🧘</div>
+          <h3>Master Wuchong</h3>
+          <div class="avatar-role" style="color:#b45309">พลังงาน · ความสำเร็จ · สุขภาพ</div>
+          <p style="font-size:0.88rem;color:var(--text-muted);line-height:1.7">ผู้เชี่ยวชาญการใช้หินเพื่อพัฒนาชีวิต ทั้งด้านการเงิน ความสำเร็จ สุขภาพ และการฝึกสมาธิ บทความลึกซึ้งและนำไปใช้ได้จริง</div>
+          <div class="avatar-tags">
+            <span class="avatar-tag" style="background:#fff7ed;color:#b45309">พลังงาน</span>
+            <span class="avatar-tag" style="background:#fff7ed;color:#b45309">Crystal Grid</span>
+            <span class="avatar-tag" style="background:#fff7ed;color:#b45309">คอร์สเรียน</span>
+          </div>
+        </div>
+        <div class="avatar-quote">
+          "หินไม่ใช่เครื่องราง มันคือเครื่องมือช่วยให้คุณดึงพลังที่มีอยู่แล้วในตัวออกมา"
+        </div>
+      </div>
+
+      <!-- อาจารย์เมธา -->
+      <div class="avatar-profile">
+        <div class="avatar-header">
+          <div class="avatar-emoji-large" style="background:linear-gradient(135deg,#0f0a1e,#2d1b69)">🌙</div>
+          <h3>อาจารย์เมธา</h3>
+          <div class="avatar-role" style="color:var(--purple-light,#a78bfa)">ดวง · โหราศาสตร์ · สายมู</div>
+          <p style="font-size:0.88rem;color:var(--text-muted);line-height:1.7">ผู้เชี่ยวชาญด้านโหราศาสตร์ ดวงชะตา และการเลือกหินตามราศีและฤกษ์มงคล ดวงรายวัน 12 ราศีอัปเดตทุกวัน</p>
+          <div class="avatar-tags">
+            <span class="avatar-tag">ดวงรายวัน</span>
+            <span class="avatar-tag">ราศี</span>
+            <span class="avatar-tag">Line OA</span>
+          </div>
+        </div>
+        <div class="avatar-quote">
+          "ดาวบอกทิศ หินให้พลัง คุณเองที่กำหนดชะตา"
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Phase 2 teaser -->
+    <div style="margin-top:2.5rem;padding:1.5rem 2rem;background:#faf8f4;border:1px dashed var(--border);border-radius:1rem;text-align:center">
+      <p style="color:var(--text-muted);font-size:0.9rem;margin:0">
+        <strong>เร็วๆ นี้ — Phase 2:</strong>
+        💁 <strong>Gemma</strong> (Sale Page) &nbsp;·&nbsp;
+        🔨 <strong>Max</strong> (DIY Workshop) &nbsp;·&nbsp;
+        🔮 <strong>Zin</strong> (เปิดใจคุยกับหิน)
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Timeline -->
+<section class="section" style="background:#faf8f4;padding:4rem 0">
+  <div class="container" style="max-width:700px">
+    <div class="section-header">
+      <h2>เส้นทางของเรา</h2>
+      <p>จากแผนสู่การเป็น Hub คริสตัลอันดับ 1 ของไทย</p>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">มิถุนายน 2569</div>
+        <h3>🚀 เปิดตัว Amethez</h3>
+        <p>สร้างโครงสร้างเว็บ Phase 1 พร้อม Crystal Atlas + Master Wuchong + อาจารย์เมธา เริ่มเผยแพร่บทความ 3 ชิ้น/วัน</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">เดือน 1–2</div>
+        <h3>📊 Google Index</h3>
+        <p>สะสมบทความ 60–120 หน้า Google เริ่ม index และ crawl เว็บ Shopee Affiliate เริ่มทำงาน</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">เดือน 3–4</div>
+        <h3>🔍 Keyword หางยาวติด</h3>
+        <p>เป้าหมาย 500+ visitors/เดือน keyword ยาวเริ่มติด Top 10 เช่น "อเมทิสต์ช่วยอะไร" และ "หินเรียกเงิน"</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">เดือน 5–6</div>
+        <h3>📈 Traffic พอสมัคร Shopee Open API</h3>
+        <p>เมื่อ traffic ถึงเกณฑ์ สมัคร Shopee Affiliate Open API เพื่อดึงข้อมูลสินค้าอัตโนมัติ</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">เดือน 9–12</div>
+        <h3>🏆 10,000+ Visitors/เดือน</h3>
+        <p>Keyword กลางติดหน้า 1–2 รายได้ Affiliate เริ่มชัดเจน เปิด Phase 2 Avatars</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">เดือน 18–24</div>
+        <h3>👑 Keyword หลักหน้า 1</h3>
+        <p>"คริสตัล" "หินพลังงาน" ติด Top 5 Amethez กลายเป็น Hub คริสตัลอันดับ 1 ของไทย</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Partners -->
+<section class="section" style="padding:3rem 0">
+  <div class="container" style="text-align:center">
+    <h2 style="margin-bottom:0.5rem">Partner & Ecosystem</h2>
+    <p style="color:var(--text-muted);margin-bottom:2rem">เราทำงานร่วมกับพาร์ทเนอร์ที่เชื่อถือได้</p>
+    <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center">
+      <div class="partner-pill">💎 masterpuch — Partner Shop</div>
+      <div class="partner-pill">🛒 Shopee Affiliate</div>
+      <div class="partner-pill">💬 Line OA @amethez</div>
+      <div class="partner-pill">✨ Google Flow Premium</div>
+      <div class="partner-pill">🤖 Claude AI</div>
+      <div class="partner-pill">⚙️ GitHub Actions</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="background:linear-gradient(135deg,#7c3aed,#5b21b6);padding:4rem 1.5rem;text-align:center">
+  <div class="container" style="max-width:600px">
+    <h2 style="color:white;margin-bottom:0.75rem">ร่วมเดินทางไปกับเรา</h2>
+    <p style="color:rgba(255,255,255,0.8);margin-bottom:2rem">ติดตามเราเพื่อรับบทความใหม่ทุกวัน ดวงรายวัน และโปรโมชันพิเศษก่อนใคร</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+      <a href="https://line.me/R/ti/p/@amethez" target="_blank" class="btn btn-line">➕ Add Line @amethez</a>
+      <a href="/contact.html" class="btn btn-outline">💬 ติดต่อเรา</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo" style="margin-bottom:0.75rem">AMETHEZ</div>
+        <p>ศูนย์กลางข้อมูลคริสตัลและพลอยที่ใหญ่ที่สุดในไทย<br>Stones · Stories · Soul</p>
+      </div>
+      <div class="footer-col">
+        <h4>หมวดหมู่</h4>
+        <ul>
+          <li><a href="/categories/chakra.html">หินตามจักระ</a></li>
+          <li><a href="/categories/zodiac.html">หินตามราศี</a></li>
+          <li><a href="/stones/">คลังหินทั้งหมด</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>เกี่ยวกับ</h4>
+        <ul>
+          <li><a href="/about.html">เกี่ยวกับเรา</a></li>
+          <li><a href="/contact.html">ติดต่อเรา</a></li>
+          <li><a href="/sale.html">ร้านค้า</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Amethez.com — ข้อมูลเพื่อการศึกษา ไม่ใช่คำแนะนำทางการแพทย์</p>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/main.js"></script>
+</body>
+</html>

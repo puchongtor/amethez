@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>อาจารย์เมธา — ดวงรายวัน หินตามดวง สายมู | Amethez</title>
+  <meta name="description" content="อาจารย์เมธา ดวงรายวัน หินเสริมดวง ฤกษ์มงคล และคำแนะนำสายมูจากผู้เชี่ยวชาญ อัปเดตทุกวัน">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav-inner">
+    <a href="/" class="logo">
+      <svg viewBox="0 0 36 36" fill="none"><polygon points="18,2 30,12 26,30 10,30 6,12" fill="#7c3aed" opacity="0.9"/><polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity="0.95"/><polygon points="18,8 30,12 18,28" fill="#a78bfa"/><polygon points="18,8 6,12 18,28" fill="#7c3aed"/></svg>
+      <span>AMETHEZ <small class="logo-tagline">Stones · Stories · Soul</small></span>
+    </a>
+    <nav><ul class="nav-links">
+      <li><a href="/stones/">คลังหิน</a></li>
+      <li><a href="/categories/chakra.html">จักระ</a></li>
+      <li><a href="/categories/zodiac.html">ราศี</a></li>
+      <li><a href="/wuchong/">Master Wuchong</a></li>
+      <li><a href="/metha/" style="color:var(--purple)">อาจารย์เมธา</a></li>
+      <li><a href="/sale.html" style="color:var(--gold)">🛒 ร้านค้า</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<section class="article-hero" style="background:linear-gradient(135deg,#0f0a1e,#1a0a3e,#0f0a1e)">
+  <div class="container" style="max-width:700px">
+    <div style="font-size:4rem;margin-bottom:1rem">🌙</div>
+    <h1>อาจารย์เมธา</h1>
+    <p style="color:rgba(255,255,255,0.85);font-size:1.15rem">ดวงรายวัน · หินตามดวง · ฤกษ์มงคล · คำแนะนำสายมู</p>
+    <div style="margin-top:1.5rem;background:rgba(255,255,255,0.08);border-radius:1rem;padding:1.25rem;border:1px solid rgba(255,255,255,0.15)">
+      <p style="color:var(--gold-light,#e6c97a);font-size:1rem;margin:0" id="todayDate"></p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>ดวงรายวัน 12 ราศี 🌟</h2>
+      <p>อัปเดตทุกวัน — เลือกราศีของคุณ</p>
+    </div>
+
+    <div class="grid-4">
+      <div class="card" style="text-align:center;cursor:pointer" onclick="this.querySelector('.fortune').style.display='block'">
+        <div style="font-size:2rem">♈</div>
+        <h3 style="font-size:1rem">ราศีเมษ</h3>
+        <p class="fortune" style="display:none;font-size:0.9rem;color:var(--text-muted)">วันนี้เหมาะสำหรับการริเริ่มสิ่งใหม่ พลังงานสูง ระวังการตัดสินใจเร็วเกินไป หินแนะนำ: Carnelian</p>
+      </div>
+      <div class="card" style="text-align:center;cursor:pointer" onclick="this.querySelector('.fortune').style.display='block'">
+        <div style="font-size:2rem">♉</div>
+        <h3 style="font-size:1rem">ราศีพฤษภ</h3>
+        <p class="fortune" style="display:none;font-size:0.9rem;color:var(--text-muted)">การเงินดีขึ้น ระวังการใช้จ่ายฟุ่มเฟือย ความรักมีข่าวดี หินแนะนำ: ซิทริน</p>
+      </div>
+      <div class="card" style="text-align:center;cursor:pointer" onclick="this.querySelector('.fortune').style.display='block'">
+        <div style="font-size:2rem">♊</div>
+        <h3 style="font-size:1rem">ราศีเมถุน</h3>
+        <p class="fortune" style="display:none;font-size:0.9rem;color:var(--text-muted)">การสื่อสารเด่น โอกาสใหม่จากคนรู้จัก ระวังข้อมูลผิดพลาด หินแนะนำ: Aquamarine</p>
+      </div>
+      <div class="card" style="text-align:center;cursor:pointer" onclick="this.querySelector('.fortune').style.display='block'">
+        <div style="font-size:2rem">♋</div>
+        <h3 style="font-size:1rem">ราศีกรกฎ</h3>
+        <p class="fortune" style="display:none;font-size:0.9rem;color:var(--text-muted)">ครอบครัวอบอุ่น บ้านนำโชค พักผ่อนดีกว่าเร่งรีบ หินแนะนำ: Moonstone</p>
+      </div>
+      <div class="card" style="text-align:center;cursor:pointer" onclick="this.querySelector('.fortune').style.display='block'">
+        <div style="font-size:2rem">♌</div>
+        <h3 style="font-size:1rem">ราศีสิงห์</h3>
+        <p class="fortune" style="display:none;font-size:0.9rem;color:var(--text-muted)">ดวงเด่น โดดเด่นในสังคม โอกาสแสดงความสามารถ หินแนะนำ: อเมทิสต์</p>
+      </div>
+      <div class="card" style="text-align:center;cursor:pointer" onclick="this.querySelector('.fortune').style.display='block'">
+        <div style="font-size:2rem">♍</div>
+        <h3 style="font-size:1rem">ราศีกันย์</h3>
+        <p class="fortune" style="display:none;font-size:0.9rem;color:var(--text-muted)">งานละเอียดออกมาดี สุขภาพต้องดูแล หลีกเลี่ยงความเครียด หินแนะนำ: Amazonite</p>
+      </div>
+      <div class="card" style="text-align:center;cursor:pointer" onclick="this.querySelector('.fortune').style.display='block'">
+        <div style="font-size:2rem">♎</div>
+        <h3 style="font-size:1rem">ราศีตุลย์</h3>
+        <p class="fortune" style="display:none;font-size:0.9rem;color:var(--text-muted)">ความสัมพันธ์ราบรื่น การเจรจาได้เปรียบ ระวังความลังเล หินแนะนำ: Rose Quartz</p>
+      </div>
+      <div class="card" style="text-align:center;cursor:pointer" onclick="this.querySelector('.fortune').style.display='block'">
+        <div style="font-size:2rem">♏</div>
+        <h3 style="font-size:1rem">ราศีพิจิก</h3>
+        <p class="fortune" style="display:none;font-size:0.9rem;color:var(--text-muted)">ลึกซึ้งและเข้มแข็ง การเปลี่ยนแปลงนำผลดี ระวังอารมณ์รุนแรง หินแนะนำ: โมลดาไวท์</p>
+      </div>
+      <div class="card" style="text-align:center;cursor:pointer" onclick="this.querySelector('.fortune').style.display='block'">
+        <div style="font-size:2rem">♐</div>
+        <h3 style="font-size:1rem">ราศีธนู</h3>
+        <p class="fortune" style="display:none;font-size:0.9rm;color:var(--text-muted)">โชคจากต่างถิ่น การเดินทางเป็นมงคล ความรู้ใหม่มาถึง หินแนะนำ: ซิทริน</p>
+      </div>
+      <div class="card" style="text-align:center;cursor:pointer" onclick="this.querySelector('.fortune').style.display='block'">
+        <div style="font-size:2rem">♑</div>
+        <h3 style="font-size:1rem">ราศีมังกร</h3>
+        <p class="fortune" style="display:none;font-size:0.9rem;color:var(--text-muted)">ความพยายามเห็นผล หัวหน้าให้ความสำคัญ ระวังสุขภาพ หินแนะนำ: Garnet</p>
+      </div>
+      <div class="card" style="text-align:center;cursor:pointer" onclick="this.querySelector('.fortune').style.display='block'">
+        <div style="font-size:2rem">♒</div>
+        <h3 style="font-size:1rem">ราศีกุมภ์</h3>
+        <p class="fortune" style="display:none;font-size:0.9rem;color:var(--text-muted)">ความคิดสร้างสรรค์พุ่ง เพื่อนช่วยเหลือ โปรเจกต์ใหม่น่าสนใจ หินแนะนำ: อเมทิสต์</p>
+      </div>
+      <div class="card" style="text-align:center;cursor:pointer" onclick="this.querySelector('.fortune').style.display='block'">
+        <div style="font-size:2rem">♓</div>
+        <h3 style="font-size:1rem">ราศีมีน</h3>
+        <p class="fortune" style="display:none;font-size:0.9rem;color:var(--text-muted)">สัญชาตญาณแม่นยำ ฝันมีความหมาย ระวังคนหลอกลวง หินแนะนำ: อเมทิสต์</p>
+      </div>
+    </div>
+
+    <p style="text-align:center;color:var(--text-muted);margin-top:2rem;font-size:0.85rem">คลิกที่ราศีของคุณเพื่อดูดวงวันนี้</p>
+  </div>
+</section>
+
+<section class="section" style="background:#f0fdf4;padding:2.5rem 0;text-align:center">
+  <div class="container" style="max-width:500px">
+    <div style="font-size:3rem;margin-bottom:1rem">💬</div>
+    <h2>รับดวงรายวันผ่าน Line OA</h2>
+    <p style="color:var(--text-muted);margin-bottom:1.5rem">แอดเพื่อรับดวงทุกเช้า ฟรี! ไม่มีค่าใช้จ่าย</p>
+    <a href="https://line.me/R/ti/p/@amethez" target="_blank" class="btn btn-line">➕ Add @amethez</a>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-bottom">
+    <p>© 2026 Amethez.com — ดวงเพื่อความบันเทิง ไม่ใช่การพยากรณ์ที่แม่นยำ 100%</p>
+  </div>
+</footer>
+
+<script src="/js/main.js"></script>
+<script>
+  const days = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
+  const months = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+  const now = new Date();
+  document.getElementById('todayDate').textContent = `วัน${days[now.getDay()]}ที่ ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear() + 543}`;
+</script>
+</body>
+</html>

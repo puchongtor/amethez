@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>โมลดาไวท์ — หินเปลี่ยนชีวิต | Amethez</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── PRINT / PDF STYLES ── */
+    @page { size: A4; margin: 2cm 2.2cm; }
+    @media print {
+      .no-print { display: none !important; }
+      .page-break { page-break-before: always; }
+      body { font-size: 11pt; }
+    }
+
+    :root {
+      --gold: #c9a84c;
+      --purple: #7c3aed;
+      --dark: #0f0a1e;
+      --text: #1a1228;
+      --muted: #6b7280;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Sarabun, sans-serif;
+      color: var(--text);
+      background: #f9f7f4;
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    /* ── PRINT BUTTON ── */
+    .print-bar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      background: var(--dark); color: white;
+      padding: .75rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: .85rem;
+    }
+    .print-bar strong { color: var(--gold); }
+    .btn-print {
+      background: var(--gold); color: var(--dark);
+      border: none; padding: .5rem 1.25rem; border-radius: .5rem;
+      font-family: Sarabun, sans-serif; font-size: .85rem; font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* ── BOOK WRAPPER ── */
+    .book { max-width: 740px; margin: 60px auto 4rem; }
+    .page { background: white; padding: 3.5rem 4rem; margin-bottom: 2px; }
+    @media (max-width: 760px) { .page { padding: 2rem 1.5rem; } .book { margin-top: 52px; } }
+
+    /* ── COVER PAGE ── */
+    .cover {
+      background: linear-gradient(155deg, #0f0a1e 0%, #1a0936 50%, #0c1a3a 100%);
+      color: white;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 4rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .cover::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(124,58,237,.25) 0%, transparent 65%);
+    }
+    .cover-gem { font-size: 8rem; margin-bottom: 2rem; position: relative; filter: drop-shadow(0 0 40px rgba(124,58,237,.6)); }
+    .cover-by { font-size: .8rem; color: rgba(255,255,255,.4); letter-spacing: .15em; text-transform: uppercase; margin-bottom: 1rem; position: relative; }
+    .cover-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      line-height: 1.2;
+      margin-bottom: 1.25rem;
+      position: relative;
+    }
+    .cover-title .highlight { color: #c4b5fd; font-style: italic; }
+    .cover-title .gold { color: var(--gold); }
+    .cover-sub { font-size: 1.05rem; color: rgba(255,255,255,.6); line-height: 1.7; max-width: 480px; position: relative; }
+    .cover-line { width: 60px; height: 2px; background: var(--gold); margin: 2rem auto; position: relative; }
+    .cover-authors { position: relative; font-size: .88rem; color: rgba(255,255,255,.5); }
+    .cover-authors strong { color: rgba(255,255,255,.85); }
+    .cover-badge {
+      position: relative;
+      margin-top: 2.5rem;
+      display: inline-flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center;
+    }
+    .cover-badge span {
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.15);
+      padding: .4rem .9rem; border-radius: 2rem;
+      font-size: .75rem; color: rgba(255,255,255,.6);
+    }
+    .cover-badge strong { color: var(--gold); }
+
+    /* ── TYPOGRAPHY ── */
+    h1.chapter-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; color: var(--dark);
+      line-height: 1.3; margin-bottom: .5rem;
+    }
+    .chapter-num { font-size: .75rem; font-weight: 700; color: var(--purple); text-transform: uppercase; letter-spacing: .12em; margin-bottom: .5rem; }
+    .chapter-intro { font-size: 1.05rem; color: var(--muted); line-height: 1.8; border-left: 3px solid var(--purple); padding-left: 1.25rem; margin: 1.5rem 0 2rem; }
+    h2.sec-title { font-family: 'Playfair Display', serif; font-size: 1.35rem; color: var(--dark); margin: 2rem 0 .75rem; }
+    h3.sub-title { font-size: 1rem; font-weight: 700; color: var(--purple); margin: 1.5rem 0 .5rem; }
+    p { margin-bottom: 1rem; }
+    .lead { font-size: 1.05rem; font-weight: 500; color: var(--dark); }
+
+    /* ── CALLOUT BOXES ── */
+    .callout {
+      background: #f5f0ff; border-left: 4px solid var(--purple);
+      border-radius: 0 .75rem .75rem 0;
+      padding: 1.125rem 1.375rem; margin: 1.5rem 0;
+    }
+    .callout-gold {
+      background: linear-gradient(135deg, #fffbeb, #fef3c7);
+      border-left-color: var(--gold);
+    }
+    .callout-dark {
+      background: linear-gradient(135deg, #0f0a1e, #1a0936);
+      border-left-color: var(--gold); color: white;
+    }
+    .callout-dark p { color: rgba(255,255,255,.8); }
+    .callout-dark strong { color: var(--gold); }
+    .callout strong { color: var(--purple); }
+    .callout-gold strong { color: #92400e; }
+    .callout-title { font-weight: 700; margin-bottom: .35rem; }
+
+    /* ── QUOTE ── */
+    blockquote {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-style: italic;
+      color: var(--purple); line-height: 1.7;
+      border: none; padding: 1.5rem 2rem;
+      background: #f9f7ff; border-radius: .875rem;
+      text-align: center; margin: 2rem 0;
+    }
+    blockquote cite { display: block; font-size: .78rem; font-style: normal; color: var(--muted); margin-top: .75rem; }
+
+    /* ── CHECKLIST ── */
+    .checklist { list-style: none; }
+    .checklist li { display: flex; gap: .75rem; align-items: flex-start; padding: .5rem 0; border-bottom: 1px solid #f0e8ff; }
+    .checklist li:last-child { border: none; }
+    .check-icon { flex-shrink: 0; font-size: 1rem; margin-top: .1rem; }
+
+    /* ── TABLE ── */
+    .data-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: .88rem; }
+    .data-table th { background: var(--dark); color: white; padding: .75rem 1rem; text-align: left; font-size: .8rem; }
+    .data-table td { padding: .75rem 1rem; border-bottom: 1px solid #f0e8ff; vertical-align: top; }
+    .data-table tr:hover td { background: #faf7ff; }
+
+    /* ── RITUAL STEPS ── */
+    .ritual-steps { counter-reset: step; }
+    .ritual-step { display: flex; gap: 1.25rem; align-items: flex-start; padding: 1.25rem 0; border-bottom: 1px solid #f0e8ff; }
+    .ritual-step:last-child { border: none; }
+    .step-num { counter-increment: step; content: counter(step); width: 40px; height: 40px; border-radius: 50%; background: var(--purple); color: white; font-weight: 700; font-size: .9rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-num::before { content: counter(step); }
+    .step-body strong { display: block; font-size: .97rem; margin-bottom: .25rem; }
+    .step-body p { font-size: .88rem; color: var(--muted); margin: 0; }
+
+    /* ── WEEK CARDS ── */
+    .week-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.5rem 0; }
+    .week-card { border: 1.5px solid #ede9fe; border-radius: 1rem; padding: 1.25rem; }
+    .week-card h4 { font-size: .85rem; font-weight: 700; color: var(--purple); margin-bottom: .35rem; }
+    .week-card p { font-size: .8rem; color: var(--muted); margin: 0; line-height: 1.5; }
+    @media (max-width: 600px) { .week-grid { grid-template-columns: 1fr; } }
+
+    /* ── DAILY TRACKER ── */
+    .tracker { border: 1px solid #ede9fe; border-radius: 1rem; overflow: hidden; margin: 1.5rem 0; }
+    .tracker-head { background: var(--dark); color: white; padding: .75rem 1.25rem; font-weight: 700; font-size: .88rem; }
+    .tracker-row { display: grid; grid-template-columns: 80px 1fr 1fr; border-bottom: 1px solid #f0e8ff; }
+    .tracker-row:last-child { border: none; }
+    .tracker-cell { padding: .7rem 1rem; font-size: .82rem; border-right: 1px solid #f0e8ff; }
+    .tracker-cell:last-child { border: none; }
+    .tracker-day { font-weight: 700; color: var(--purple); }
+
+    /* ── STONE COMBO ── */
+    .stone-combo { display: flex; gap: .75rem; flex-wrap: wrap; margin: 1rem 0; }
+    .stone-tag { background: #f5f0ff; border: 1.5px solid #ede9fe; border-radius: .75rem; padding: .6rem 1rem; font-size: .85rem; }
+    .stone-tag strong { display: block; color: var(--purple); font-size: .9rem; }
+    .stone-tag span { color: var(--muted); font-size: .78rem; }
+
+    /* ── CHAPTER DIVIDER ── */
+    .ch-divider { border: none; border-top: 2px solid #ede9fe; margin: 3rem 0; }
+
+    /* ── FAQ ── */
+    .faq-item { border-bottom: 1px solid #f0e8ff; padding: 1.125rem 0; }
+    .faq-q { font-weight: 700; color: var(--dark); margin-bottom: .5rem; }
+    .faq-a { color: var(--muted); font-size: .9rem; line-height: 1.7; }
+
+    /* ── AFFIRMATION CARDS ── */
+    .aff-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: .875rem; margin: 1.5rem 0; }
+    .aff-card {
+      background: linear-gradient(135deg, #0f0a1e, #1a0936);
+      color: white; border-radius: 1rem; padding: 1.5rem 1.25rem;
+      text-align: center; min-height: 120px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    .aff-card .gem { font-size: 1.75rem; margin-bottom: .5rem; }
+    .aff-card p { font-family: 'Playfair Display', serif; font-size: .9rem; font-style: italic; color: rgba(255,255,255,.9); margin: 0; line-height: 1.6; }
+
+    /* ── WALLPAPER SPREAD ── */
+    .wp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.5rem 0; }
+    .wp-card {
+      border-radius: 1.5rem; overflow: hidden;
+      aspect-ratio: 9/16; display: flex; align-items: center; justify-content: center;
+      font-size: 4rem; position: relative;
+    }
+    .wp-label { position: absolute; bottom: .75rem; left: 0; right: 0; text-align: center; font-size: .7rem; font-weight: 700; color: rgba(255,255,255,.7); letter-spacing: .06em; }
+
+    /* ── BACK COVER ── */
+    .back-cover {
+      background: linear-gradient(155deg, #0f0a1e, #1a0936);
+      color: white; padding: 4rem 3rem; text-align: center;
+    }
+    .back-cover h2 { font-family: 'Playfair Display', serif; font-size: 1.75rem; margin-bottom: 1rem; }
+    .back-cover p { color: rgba(255,255,255,.6); line-height: 1.8; max-width: 480px; margin: 0 auto 2rem; }
+    .back-cover .logo-mark { font-size: 3rem; margin-bottom: .5rem; }
+  </style>
+</head>
+<body>
+
+<!-- Print Bar -->
+<div class="print-bar no-print">
+  <span>📖 <strong>โมลดาไวท์ — หินเปลี่ยนชีวิต</strong> · Amethez Premium E-Book</span>
+  <button class="btn-print" onclick="window.print()">🖨️ บันทึกเป็น PDF</button>
+</div>
+
+<div class="book">
+
+  <!-- ════ COVER ════ -->
+  <div class="page cover">
+    <div class="cover-gem">🌿</div>
+    <div class="cover-by">Amethez · Premium E-Book</div>
+    <h1 class="cover-title">
+      <span class="highlight">โมลดาไวท์</span><br>
+      หินเปลี่ยนชีวิต<br>
+      <span class="gold">เปิดเส้นทาง เงิน<br>และความสำเร็จ</span>
+    </h1>
+    <div class="cover-line"></div>
+    <p class="cover-sub">
+      ไม่ใช่การขอพร — แต่คือการ align ตัวเองกับโอกาสที่จักรวาลส่งมา
+    </p>
+    <div class="cover-authors">By <strong>Master Wuchong</strong> × <strong>Crystal Atlas</strong></div>
+    <div class="cover-badge">
+      <span>📖 <strong>60</strong> หน้า</span>
+      <span>🎁 Bonus <strong>3 รายการ</strong></span>
+      <span>🌿 <strong>Moldavite</strong> Deep Dive</span>
+    </div>
+  </div>
+
+  <!-- ════ TABLE OF CONTENTS ════ -->
+  <div class="page page-break">
+    <div class="chapter-num">สารบัญ</div>
+    <h1 class="chapter-title">เนื้อหาทั้งหมด</h1>
+    <br>
+    <table class="data-table">
+      <tr><td style="color:var(--purple);font-weight:700">บทที่ 1</td><td><strong>โมลดาไวท์คืออะไรจริงๆ</strong></td><td style="color:var(--muted)">หน้า 4</td></tr>
+      <tr><td style="color:var(--purple);font-weight:700">บทที่ 2</td><td><strong>กรอบคิดต้องเปลี่ยนก่อน</strong></td><td style="color:var(--muted)">หน้า 14</td></tr>
+      <tr><td style="color:var(--purple);font-weight:700">บทที่ 3</td><td><strong>วิธีใช้โมลดาไวท์เพื่อการเงินและความสำเร็จ</strong></td><td style="color:var(--muted)">หน้า 24</td></tr>
+      <tr><td style="color:var(--purple);font-weight:700">บทที่ 4</td><td><strong>21 วัน Transformation Program</strong></td><td style="color:var(--muted)">หน้า 40</td></tr>
+      <tr><td style="color:var(--purple);font-weight:700">บทที่ 5</td><td><strong>เรื่องเล่า คำถาม และขั้นตอนต่อไป</strong></td><td style="color:var(--muted)">หน้า 52</td></tr>
+      <tr><td style="color:var(--gold);font-weight:700">Bonus</td><td><strong>Wallpaper · Affirmation Cards · Tracker</strong></td><td style="color:var(--muted)">หน้า 58</td></tr>
+    </table>
+
+    <br>
+    <div class="callout callout-dark">
+      <p class="callout-title">📌 วิธีใช้หนังสือเล่มนี้ให้ได้ผล</p>
+      <p>อ่านบทที่ 1–2 เพื่อสร้างความเข้าใจก่อน จากนั้นข้ามไปบทที่ 3 ทันทีหากพร้อมลงมือ และใช้บทที่ 4 เป็น roadmap 21 วันของคุณ <strong>อย่าข้ามบทที่ 2</strong> — มันคือฐานที่ทำให้ทุกอย่างได้ผล</p>
+    </div>
+  </div>
+
+  <!-- ════ CHAPTER 1 ════ -->
+  <div class="page page-break">
+    <div class="chapter-num">บทที่ 1</div>
+    <h1 class="chapter-title">โมลดาไวท์คืออะไรจริงๆ</h1>
+    <p class="chapter-intro">
+      ก่อนจะพูดถึงพลังงานหรือความเชื่อใดๆ ต้องเข้าใจให้ตรงกันก่อนว่า โมลดาไวท์คืออะไร มาจากไหน และทำไมมันถึง "แตกต่าง" จากหินชนิดอื่น
+    </p>
+
+    <h2 class="sec-title">กำเนิดจากอุกกาบาต — ไม่ใช่แค่ตำนาน</h2>
+    <p class="lead">โมลดาไวท์ (Moldavite) เป็น Tektite ชนิดหนึ่ง เกิดจากการที่อุกกาบาตพุ่งชนโลกบริเวณที่ปัจจุบันคือประเทศเช็กเกียเมื่อประมาณ <strong>14.8 ล้านปีก่อน</strong></p>
+    <p>ขณะที่อุกกาบาตพุ่งชนโลกด้วยความเร็วหลายพันกิโลเมตรต่อชั่วโมง ความร้อนมหาศาลทำให้หินและดินบนพื้นโลกหลอมละลายและกระเด็นขึ้นสู่ชั้นบรรยากาศ ก่อนจะเย็นตัวลงอย่างรวดเร็วจนกลายเป็นแก้วธรรมชาติสีเขียว ร่วงหล่นลงมาครอบคลุมพื้นที่หลายร้อยกิโลเมตรในยุโรปกลาง</p>
+    <p>นั่นคือเหตุผลว่าทำไมโมลดาไวท์ถึงพบได้เฉพาะในแถบ <strong>โบฮีเมียน (Bohemia) ของเช็กเกีย</strong> — และหาจากที่ไหนในโลกไม่ได้อีกแล้ว</p>
+
+    <div class="callout callout-gold">
+      <p class="callout-title">📊 ข้อมูลจริงจากนักวิทยาศาสตร์</p>
+      <p>โมลดาไวท์ประกอบด้วย Silicon Dioxide (SiO₂) 80% + Aluminum, Iron, Magnesium โครงสร้างเป็นแก้วธรรมชาติ ไม่ใช่แร่ — จึงไม่มีโครงสร้างผลึก ความแข็ง 5.5–7 บน Mohs scale สีเขียวเข้มมาจากปริมาณ Iron Oxide</p>
+    </div>
+
+    <h2 class="sec-title">ทำไมพลังงานถึง "แรง" กว่าหินทั่วไป</h2>
+    <p>นี่คือคำถามที่คนถามมากที่สุด และมีคำตอบทั้งในแง่วิทยาศาสตร์และในแง่พลังงาน</p>
+
+    <h3 class="sub-title">มุมวิทยาศาสตร์</h3>
+    <p>โมลดาไวท์มีต้นกำเนิดนอกโลก — องค์ประกอบทางเคมีบางส่วนมาจากอุกกาบาต ไม่ใช่จากธรณีวิทยาโลก โครงสร้างแก้วที่เกิดจากความร้อนสูงมากและเย็นตัวเร็ว ทำให้มีพลังงานแม่เหล็กไฟฟ้าที่ผิดปกติจากหินทั่วไป</p>
+    <p>นักวิจัยบางส่วนพบว่าโมลดาไวท์มี <strong>infrared absorption spectrum</strong> ที่แตกต่างจาก obsidian หรือแก้วธรรมชาติอื่น — ซึ่งอาจส่งผลต่อการรับรู้ทางประสาทสัมผัสของผู้ถือ</p>
+
+    <h3 class="sub-title">มุมพลังงานและความเชื่อ</h3>
+    <p>ในโลกของหินพลังงาน โมลดาไวท์ถูกเรียกว่า <strong>"The Holy Grail Stone"</strong> — ตำนานบางกระแสเชื่อว่า Holy Grail ที่แท้จริงทำมาจากโมลดาไวท์ที่ร่วงหล่นมาจากดาวเคราะห์อื่น</p>
+    <p>ผู้ใช้หินจำนวนมากรายงานว่ารู้สึกได้ถึงพลังงานทันทีที่จับโมลดาไวท์ — มือร้อน ใจสั่น หรือรู้สึกถึงการเชื่อมต่อบางอย่าง สิ่งเหล่านี้เรียกว่า <strong>"Moldavite Flush"</strong> และเป็นประสบการณ์ที่คนรายงานทั่วโลก</p>
+
+    <blockquote>
+      "โมลดาไวท์ไม่ได้ให้อะไรคุณ — มันเปิดอะไรบางอย่างในตัวคุณที่มีอยู่แล้ว แต่ถูกปิดไว้"
+      <cite>— Master Wuchong</cite>
+    </blockquote>
+
+    <h2 class="sec-title">ของแท้ vs เทียม — ดูยังไงให้มั่นใจ</h2>
+    <p>ตลาดโมลดาไวท์มีของเทียมจำนวนมาก เนื่องจากราคาของแท้สูงขึ้นทุกปี นี่คือวิธีดูเบื้องต้น:</p>
+
+    <table class="data-table">
+      <thead><tr><th>จุดสังเกต</th><th>โมลดาไวท์แท้</th><th>ของเทียม / แก้วสี</th></tr></thead>
+      <tbody>
+        <tr><td>พื้นผิว</td><td>ขรุขระ มีลวดลายธรรมชาติ (Lechatelierite)</td><td>เรียบเกินไป หรือขรุขระสม่ำเสมอ</td></tr>
+        <tr><td>สี</td><td>เขียวมรกตถึงเขียวเข้ม ไม่สม่ำเสมอ</td><td>สีสม่ำเสมอ สดเกินธรรมชาติ</td></tr>
+        <tr><td>ฟองอากาศ</td><td>มีฟองอากาศธรรมชาติข้างใน</td><td>ไม่มีหรือมากเกินไป</td></tr>
+        <tr><td>น้ำหนัก</td><td>เบากว่าที่คิด (แก้ว ไม่ใช่หิน)</td><td>หนักกว่า ถ้าเป็นแก้วสี</td></tr>
+        <tr><td>ราคา</td><td>ชิ้นเล็ก 1–2 กรัม ฿1,500–฿5,000</td><td>ถ้าถูกกว่า ฿500 สงสัยได้เลย</td></tr>
+        <tr><td>Certificate</td><td>มี GIA หรือ Czech Certificate</td><td>ไม่มีหรือเอกสารปลอม</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <p class="callout-title">💡 Tips จาก Crystal Atlas</p>
+      <p>ซื้อจากร้านที่มี Certificate เสมอ และหลีกเลี่ยงโมลดาไวท์ราคาถูกมากบน Marketplace ออนไลน์ที่ไม่มีหลักฐานยืนยัน ของเทียมที่ทำมาดีดูคล้ายมากจนผู้เชี่ยวชาญบางคนยังโดนหลอก</p>
+    </div>
+
+    <h2 class="sec-title">ราคาตลาดและทิศทาง</h2>
+    <p>โมลดาไวท์ถือเป็นทรัพยากรธรรมชาติที่มีจำกัด แหล่งขุดในเช็กเกียมีกฎควบคุมเข้มงวดขึ้นทุกปี ราคาในตลาดโลกจึงสูงขึ้นต่อเนื่อง</p>
+    <table class="data-table">
+      <thead><tr><th>เกรด</th><th>ลักษณะ</th><th>ราคาโดยประมาณ (2026)</th></tr></thead>
+      <tbody>
+        <tr><td>Regular</td><td>สีเขียวเข้ม ลวดลายปกติ</td><td>฿1,500–฿3,000/กรัม</td></tr>
+        <tr><td>Museum Grade</td><td>ลวดลายชัด ใส สวยงามพิเศษ</td><td>฿5,000–฿15,000/กรัม</td></tr>
+        <tr><td>Collector Piece</td><td>รูปทรงพิเศษ ขนาดใหญ่</td><td>฿20,000+/ชิ้น</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ════ CHAPTER 2 ════ -->
+  <div class="page page-break">
+    <div class="chapter-num">บทที่ 2</div>
+    <h1 class="chapter-title">กรอบคิดต้องเปลี่ยนก่อน</h1>
+    <p class="chapter-intro">
+      นี่คือบทที่สำคัญที่สุดในหนังสือเล่มนี้ — และคนมักจะข้ามมัน ถ้าคุณอยากให้โมลดาไวท์ทำงาน คุณต้องเข้าใจหลักการนี้ก่อน
+    </p>
+
+    <h2 class="sec-title">ความเข้าใจผิดที่พบบ่อยที่สุด</h2>
+    <p class="lead">คนส่วนใหญ่คิดว่า "ซื้อโมลดาไวท์ → วางไว้ข้างๆ → เงินจะมา"</p>
+    <p>นั่นคือความเข้าใจผิดที่ทำให้คน "ผิดหวัง" กับหินพลังงาน และเลิกใช้ไปในที่สุด</p>
+    <p>ความจริงคือ <strong>โมลดาไวท์ทำหน้าที่เหมือนเลนส์ขยาย</strong> — มันขยายสิ่งที่มีอยู่ในตัวคุณแล้ว ไม่ว่าจะเป็นความกลัว ความเชื่อ ความมุ่งมั่น หรือโอกาส ถ้าคุณยังคิดแบบเดิม มันจะขยายความคิดแบบเดิมให้ใหญ่ขึ้น</p>
+
+    <div class="callout callout-dark">
+      <p class="callout-title">🌿 หลักการพื้นฐาน</p>
+      <p>โมลดาไวท์ไม่ได้ <strong>"ให้"</strong> คุณเงิน — แต่มันช่วย <strong>"เปิด"</strong> การรับรู้ของคุณให้เห็นโอกาสที่มีอยู่แล้วรอบตัว และ <strong>"align"</strong> พลังงานของคุณกับความสำเร็จที่คุณต้องการ</p>
+    </div>
+
+    <h2 class="sec-title">วิทยาศาสตร์เบื้องหลัง — ทำไม "มันได้ผล"</h2>
+
+    <h3 class="sub-title">1. Placebo Effect ที่ทรงพลังกว่าที่คิด</h3>
+    <p>การวิจัยทางการแพทย์พบว่า Placebo Effect สามารถสร้างผลลัพธ์จริงได้ถึง <strong>30–40%</strong> ในหลายสถานการณ์ เมื่อคุณเชื่อว่าคุณมีพลังงานมากขึ้น ร่างกายและสมองจะสร้างสารเคมีที่ทำให้คุณมีพลังงานมากขึ้นจริงๆ</p>
+    <p>โมลดาไวท์ที่คุณถือไว้ในมือคือ "สัญลักษณ์" ที่สมองใช้เป็น anchor — เตือนให้คุณอยู่ในโหมด "เปิดรับ" มากกว่าปกติ</p>
+
+    <h3 class="sub-title">2. Priming Effect — การตั้งโหมดสมองล่วงหน้า</h3>
+    <p>นักจิตวิทยา Robert Cialdini พิสูจน์ว่าการ "prime" สมองด้วยความคิดหรือวัตถุบางอย่างก่อน ทำให้การตัดสินใจและการรับรู้โอกาสเปลี่ยนไป</p>
+    <p>Ritual ตอนเช้าที่มีโมลดาไวท์เป็นส่วนหนึ่ง ทำหน้าที่ prime สมองให้อยู่ในโหมด "มองหาโอกาส" ตลอดวัน</p>
+
+    <h3 class="sub-title">3. Confirmation Bias ที่ใช้ให้เป็นประโยชน์</h3>
+    <p>สมองมนุษย์มักมองหาหลักฐานที่ยืนยันสิ่งที่เราเชื่อ ถ้าคุณเชื่อว่าวันนี้จะมีโอกาสดี คุณจะ "เห็น" โอกาสมากขึ้น — และโอกาสเหล่านั้นมีอยู่จริงทั้งนั้น แต่คนที่ไม่เชื่อจะมองข้ามไป</p>
+
+    <blockquote>
+      "ทุกสิ่งในจักรวาลคือพลังงาน — ความแตกต่างระหว่างคนรวยกับคนจนไม่ใช่เงิน แต่คือความถี่พลังงานที่พวกเขาส่งออกไป"
+      <cite>— Master Wuchong</cite>
+    </blockquote>
+
+    <h2 class="sec-title">Abundance Mindset — สิ่งที่หินช่วยเสริม</h2>
+    <p>Carol Dweck นักจิตวิทยาจาก Stanford พิสูจน์ว่า <strong>Mindset</strong> คือตัวแปรสำคัญที่สุดในความสำเร็จ ไม่ใช่ความสามารถหรือสติปัญญา</p>
+
+    <ul class="checklist">
+      <li><span class="check-icon">❌</span><span><strong>Scarcity Mindset:</strong> "เงินหายาก · ฉันไม่พอ · ฉันไม่คู่ควร" — พลังงานนี้ดึงดูดความขาดแคลน</span></li>
+      <li><span class="check-icon">✅</span><span><strong>Abundance Mindset:</strong> "โอกาสมีอยู่ทุกที่ · ฉันพร้อมรับ · ความสำเร็จเป็นเรื่องปกติ" — พลังงานนี้ดึงดูดความมั่งคั่ง</span></li>
+    </ul>
+
+    <p style="margin-top:1rem">โมลดาไวท์ทำหน้าที่เป็น <strong>physical reminder</strong> — ทุกครั้งที่คุณสัมผัสมัน มันเตือนให้คุณกลับมาอยู่ใน Abundance Mindset อีกครั้ง</p>
+
+    <div class="callout">
+      <p class="callout-title">✏️ Exercise ก่อนอ่านต่อ</p>
+      <p>จับโมลดาไวท์ไว้ในมือ หลับตา 30 วินาที แล้วถามตัวเองว่า "ความสำเร็จที่ฉันต้องการจริงๆ คืออะไร?" — ไม่ใช่สิ่งที่คนอื่นอยากให้คุณเป็น แต่สิ่งที่ตัวคุณเองต้องการ จดไว้ในสมุด</p>
+    </div>
+
+    <h2 class="sec-title">ทำไมคนรวยหลายคนใช้หินพลังงาน</h2>
+    <p>Steve Jobs สวม crystal bracelet · Oprah Winfrey พูดถึง Law of Attraction อย่างเปิดเผย · นักลงทุนชั้นนำหลายคนในสหรัฐมี crystal บนโต๊ะทำงาน</p>
+    <p>พวกเขาไม่ได้ใช้มันเพราะ "งมงาย" — แต่เพราะเข้าใจว่า <strong>ritual และสัญลักษณ์ทรงพลัง</strong> พวกเขาใช้โมลดาไวท์และหินพลังงานเป็นเครื่องมือ psychological — ไม่ใช่เครื่องรางเวทมนตร์</p>
+  </div>
+
+  <!-- ════ CHAPTER 3 ════ -->
+  <div class="page page-break">
+    <div class="chapter-num">บทที่ 3</div>
+    <h1 class="chapter-title">วิธีใช้โมลดาไวท์เพื่อการเงินและความสำเร็จ</h1>
+    <p class="chapter-intro">
+      นี่คือ core ของหนังสือเล่มนี้ — วิธีใช้งานจริงที่ทดสอบมาแล้ว ไม่ใช่แค่ทฤษฎี
+    </p>
+
+    <h2 class="sec-title">Morning Ritual — 5 นาทีที่เปลี่ยนทั้งวัน</h2>
+    <p>ทำทุกเช้าก่อนออกจากบ้าน — ไม่จำเป็นต้องนานถ้าทำสม่ำเสมอ</p>
+
+    <div class="ritual-steps">
+      <div class="ritual-step">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <strong>ล้างมือและจับโมลดาไวท์ (1 นาที)</strong>
+          <p>ล้างมือด้วยน้ำเย็น แล้วจับโมลดาไวท์ด้วยมือซ้าย (มือรับพลังงาน) รู้สึกถึงน้ำหนักและพื้นผิวขรุขระของมัน หายใจลึก 3 ครั้ง</p>
+        </div>
+      </div>
+      <div class="ritual-step">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <strong>ตั้ง Intention (1 นาที)</strong>
+          <p>พูดในใจหรือออกเสียงเบาๆ ว่า "วันนี้ฉันเปิดรับโอกาสทุกรูปแบบที่จักรวาลส่งมา" — พูดเฉพาะสิ่งที่ต้องการ ไม่ใช่สิ่งที่ไม่ต้องการ</p>
+        </div>
+      </div>
+      <div class="ritual-step">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <strong>Visualization (2 นาที)</strong>
+          <p>หลับตาจินตนาการ "ชีวิตที่ต้องการ" อย่างละเอียด — ไม่ใช่แค่ตัวเลขเงิน แต่รู้สึกว่า "ชีวิตเป็นอย่างนั้นจริงๆ ตอนนี้" ความรู้สึกสำคัญกว่าภาพ</p>
+        </div>
+      </div>
+      <div class="ritual-step">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <strong>Gratitude (1 นาที)</strong>
+          <p>ขอบคุณ 3 สิ่งที่มีในชีวิตตอนนี้ที่เกี่ยวกับการเงินหรือความสำเร็จ — แม้แต่เรื่องเล็กน้อย สมองที่อยู่ในโหมด gratitude เปิดรับโอกาสมากกว่าสมองที่อยู่ในโหมดขาดแคลน</p>
+        </div>
+      </div>
+      <div class="ritual-step">
+        <div class="step-num"></div>
+        <div class="step-body">
+          <strong>วางหรือใส่ (ทันที)</strong>
+          <p>วางโมลดาไวท์ในกระเป๋า/สร้อย/แหวน เพื่อพาไปกับคุณตลอดวัน หรือวางไว้บนโต๊ะทำงานถ้าไม่ได้ออกนอกบ้าน</p>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="sec-title">ใส่ตอนไหน — สำหรับสถานการณ์ทางการเงิน</h2>
+    <table class="data-table">
+      <thead><tr><th>สถานการณ์</th><th>วิธีใช้</th><th>เหตุผล</th></tr></thead>
+      <tbody>
+        <tr><td>ประชุมสำคัญ / เจรจาธุรกิจ</td><td>ใส่กำไลมือซ้าย หรือใส่ในกระเป๋าเสื้อ</td><td>เพิ่มความมั่นใจ เปิดรับโอกาสระหว่างการพูดคุย</td></tr>
+        <tr><td>สัมภาษณ์งาน</td><td>ถือในมือก่อนเข้าห้อง 1 นาที แล้วเก็บในกระเป๋า</td><td>เซ็ต mindset ก่อนพบคนสำคัญ</td></tr>
+        <tr><td>ตัดสินใจลงทุน</td><td>วางบนกระดาษสัญญาหรือเอกสาร ขณะคิดตัดสินใจ</td><td>ช่วยให้ใจนิ่ง เห็นภาพชัดขึ้น</td></tr>
+        <tr><td>ทำงานสร้างรายได้ (freelance/ธุรกิจ)</td><td>วางบนโต๊ะทำงาน มุมขวาบน</td><td>ตรงกับตำแหน่งพลังงานความมั่งคั่ง</td></tr>
+        <tr><td>ส่ง proposal / ข้อเสนอสำคัญ</td><td>จับโมลดาไวท์ขณะส่ง พร้อมบอกว่า "ขอให้ได้รับการตอบรับที่ดี"</td><td>ตั้ง intention ชัดเจน</td></tr>
+      </tbody>
+    </table>
+
+    <h2 class="sec-title">วางไว้ที่ไหนในบ้าน — ฮวงจุ้ยโมลดาไวท์</h2>
+    <p>ตามหลักฮวงจุ้ยและพลังงานสถานที่ โมลดาไวท์ควรวางในตำแหน่งเหล่านี้เพื่อผลด้านการเงิน:</p>
+
+    <ul class="checklist">
+      <li><span class="check-icon">💚</span><span><strong>มุมซ้ายหลังของบ้าน (Wealth Corner):</strong> ตามฮวงจุ้ยคลาสสิก นี่คือมุมที่ดึงดูดความมั่งคั่ง วางโมลดาไวท์ + ซิทริน + ไพไรต์ ที่นี่จะได้ผลมากสุด</span></li>
+      <li><span class="check-icon">💚</span><span><strong>บนโต๊ะทำงาน มุมขวาบน:</strong> สำหรับคนที่ทำงานที่บ้าน ตำแหน่งนี้เสริมพลังงานความสำเร็จขณะทำงาน</span></li>
+      <li><span class="check-icon">💚</span><span><strong>ข้างกระเป๋าสตางค์หรือเอกสารการเงิน:</strong> วางโมลดาไวท์ชิ้นเล็กไว้ในลิ้นชักที่เก็บสมุดบัญชีหรือเอกสารการเงิน</span></li>
+      <li><span class="check-icon">⚠️</span><span><strong>หลีกเลี่ยง:</strong> ห้องน้ำ ห้องครัว และห้องนอน (ถ้าเริ่มใหม่ — พลังงานแรงเกินไปทำให้นอนไม่หลับ)</span></li>
+    </ul>
+
+    <h2 class="sec-title">จับคู่กับหินอื่น — Combination ที่ได้ผล</h2>
+    <div class="stone-combo">
+      <div class="stone-tag">
+        <strong>🌟 ซิทริน</strong>
+        <span>เสริมพลังการเงินโดยตรง · ดึงดูดโชคลาภ · ใส่คู่กันได้เลย</span>
+      </div>
+      <div class="stone-tag">
+        <strong>✨ ไพไรต์</strong>
+        <span>ดึงดูดโอกาสทางธุรกิจ · เพิ่มความมั่นใจ · วาง 3 ชิ้นเป็นสามเหลี่ยม</span>
+      </div>
+      <div class="stone-tag">
+        <strong>🔮 คริสตัลใส</strong>
+        <span>ขยายพลังงานโมลดาไวท์ · ชำระล้างพลังงานลบ · วางไว้ข้างๆ</span>
+      </div>
+      <div class="stone-tag">
+        <strong>💜 อเมทิสต์</strong>
+        <span>เสริมปัญญาการตัดสินใจ · ป้องกันการตัดสินใจผิดพลาด · ดีมากสำหรับนักลงทุน</span>
+      </div>
+    </div>
+
+    <div class="callout callout-gold">
+      <p class="callout-title">⚠️ สิ่งที่ห้ามทำ — พลังงานตก</p>
+      <ul style="list-style:none;margin-top:.5rem">
+        <li>❌ วางโมลดาไวท์บนพื้น (พลังงานตก)</li>
+        <li>❌ ให้คนอื่นจับโมลดาไวท์ส่วนตัวของคุณ (พลังงานปะปน)</li>
+        <li>❌ ซื้อมาแล้วไม่ล้างพลังงานก่อน (รับพลังงานเจ้าของเก่า)</li>
+        <li>❌ ใช้ขณะโกรธหรือท้อแท้รุนแรง (ขยายพลังงานลบ)</li>
+        <li>❌ วางในที่มืดที่ไม่มีคนอยู่นานๆ โดยไม่ล้างพลังงาน</li>
+      </ul>
+    </div>
+
+    <h2 class="sec-title">วิธีล้างพลังงานโมลดาไวท์</h2>
+    <p>ล้างทุก 2 สัปดาห์ หรือหลังเหตุการณ์ที่มีพลังงานหนัก (ทะเลาะ, เครียดมาก, ผิดหวัง)</p>
+    <ul class="checklist">
+      <li><span class="check-icon">🌕</span><span><strong>แสงจันทร์เต็มดวง:</strong> วางกลางแจ้งหรือหน้าต่างคืนพระจันทร์เต็มดวง ทิ้งไว้ข้ามคืน — วิธีที่ดีที่สุดสำหรับโมลดาไวท์</span></li>
+      <li><span class="check-icon">🧂</span><span><strong>เกลือทะเล:</strong> วางในชามเกลือทะเลแห้ง 24 ชั่วโมง (ไม่ใช้น้ำเกลือ — โมลดาไวท์ไม่ชอบน้ำนาน)</span></li>
+      <li><span class="check-icon">🌿</span><span><strong>ควันเสจ/ธูป:</strong> ผ่านควันขาวสะอาด 30 วินาที ตั้งใจล้างพลังงานเก่า</span></li>
+    </ul>
+  </div>
+
+  <!-- ════ CHAPTER 4 ════ -->
+  <div class="page page-break">
+    <div class="chapter-num">บทที่ 4</div>
+    <h1 class="chapter-title">21 วัน Transformation Program</h1>
+    <p class="chapter-intro">
+      21 วันคือระยะเวลาที่สมองใช้สร้าง neural pathway ใหม่ — นี่คือโปรแกรมที่รวม ritual, mindset และ action เข้าด้วยกัน
+    </p>
+
+    <div class="week-grid">
+      <div class="week-card">
+        <h4>Week 1: Reset</h4>
+        <p>วันที่ 1–7<br>ล้างพลังงานเก่า · ปล่อยความเชื่อที่จำกัด · เตรียมรับสิ่งใหม่</p>
+      </div>
+      <div class="week-card">
+        <h4>Week 2: Open</h4>
+        <p>วันที่ 8–14<br>เปิดรับสัญญาณ · สังเกตโอกาสรอบตัว · เริ่ม take action เล็กๆ</p>
+      </div>
+      <div class="week-card">
+        <h4>Week 3: Align</h4>
+        <p>วันที่ 15–21<br>ลงมือกับโอกาสที่เห็น · ตอกย้ำ Abundance Mindset · ขอบคุณสิ่งที่ได้</p>
+      </div>
+    </div>
+
+    <h2 class="sec-title">Daily Ritual ทุกวัน (5–10 นาที)</h2>
+    <ul class="checklist">
+      <li><span class="check-icon">🌅</span><span><strong>เช้า:</strong> Morning Ritual (บทที่ 3) + เขียน intention วันนี้ 1 ประโยค</span></li>
+      <li><span class="check-icon">☀️</span><span><strong>กลางวัน:</strong> แตะโมลดาไวท์ 1 ครั้ง ถามตัวเองว่า "วันนี้เห็นโอกาสอะไรบ้าง?"</span></li>
+      <li><span class="check-icon">🌙</span><span><strong>กลางคืน:</strong> เขียน gratitude 3 ข้อ + สิ่งดีที่เกิดขึ้นวันนี้ (แม้เล็กน้อย)</span></li>
+    </ul>
+
+    <h2 class="sec-title">Week 1 — Reset (วันที่ 1–7)</h2>
+    <p>เป้าหมายหลัก: ปล่อยความเชื่อเดิมที่จำกัดคุณ</p>
+
+    <h3 class="sub-title">Day 1 — ล้างโมลดาไวท์และตั้งใจ</h3>
+    <p>ล้างพลังงานโมลดาไวท์ด้วยแสงจันทร์หรือเกลือ จากนั้นนั่งเงียบๆ 5 นาที เขียนลงในสมุด: <em>"ความเชื่อเกี่ยวกับเงินที่ฉันได้รับมาตั้งแต่เด็กคือ..."</em> — เขียนทุกอย่างที่นึกออก ไม่ตัดสิน</p>
+
+    <h3 class="sub-title">Day 2–3 — ระบุความเชื่อที่จำกัด</h3>
+    <p>จากสิ่งที่เขียนวันแรก เลือกความเชื่อ 3 อย่างที่คิดว่าจำกัดตัวเองมากที่สุด เช่น "เงินหายาก" "คนดีไม่รวย" "ฉันไม่เก่งพอ" — เขียนคำตรงข้ามที่เป็นจริงกว่า</p>
+
+    <h3 class="sub-title">Day 4–7 — ปล่อยและเขียนใหม่</h3>
+    <p>ทุกเช้า จับโมลดาไวท์และพูดความเชื่อใหม่ 3 ข้อ 3 รอบ ทำซ้ำจนรู้สึกว่า "เชื่อ" มากกว่า "แค่พูด" — ความแตกต่างอยู่ที่ความรู้สึกขณะพูด ไม่ใช่จำนวนครั้ง</p>
+
+    <h2 class="sec-title">Week 2 — Open (วันที่ 8–14)</h2>
+    <p>เป้าหมายหลัก: ฝึกมองเห็นโอกาสรอบตัว</p>
+
+    <h3 class="sub-title">Day 8–10 — The Opportunity Journal</h3>
+    <p>เริ่มสังเกตและจดบันทึก "โอกาส" ที่เห็นทุกวัน — ไม่ว่าเล็กหรือใหญ่ คนที่คุยด้วยแล้วน่าสนใจ ไอเดียที่ผ่านมาในหัว บทความที่เจอ Connection ที่อาจจะ lead ไปสู่อะไรบางอย่าง เป้าหมาย: เห็น 3+ โอกาสต่อวัน</p>
+
+    <h3 class="sub-title">Day 11–14 — เลือก 1 โอกาสที่จะ act</h3>
+    <p>จาก Opportunity Journal เลือก 1 โอกาสที่ดูเป็นไปได้มากที่สุด และทำ action เล็กๆ 1 อย่างต่อมัน — ส่งอีเมล โทรหา research เพิ่ม ลงทะเบียน ไม่ต้องสมบูรณ์แบบ แค่ทำ</p>
+
+    <h2 class="sec-title">Week 3 — Align (วันที่ 15–21)</h2>
+    <p>เป้าหมายหลัก: เปลี่ยน pattern ใหม่ให้กลายเป็น default</p>
+
+    <h3 class="sub-title">Day 15–17 — ขยาย action</h3>
+    <p>จากโอกาสที่เลือก ทำ action ใหญ่ขึ้น 1 ระดับ — ถ้าเมื่อก่อนส่งอีเมล ตอนนี้โทรหา ถ้าเมื่อก่อน research ตอนนี้ทดลองเล็กๆ ระหว่างนั้น ทำ morning ritual ต่อเนื่องโดยไม่ขาด</p>
+
+    <h3 class="sub-title">Day 18–21 — Gratitude สิ่งที่เปลี่ยน</h3>
+    <p>ทบทวนสมุด 21 วัน เขียน: <em>"สิ่งที่เปลี่ยนไปในช่วง 3 สัปดาห์นี้คือ..."</em> — ส่วนใหญ่จะพบว่าไม่ใช่เรื่องใหญ่โต แต่เป็นการรับรู้ที่เปลี่ยน และนั่นแหละคือจุดเริ่มต้นของทุกการเปลี่ยนแปลงใหญ่</p>
+
+    <h2 class="sec-title">Daily Tracker Template</h2>
+    <div class="tracker">
+      <div class="tracker-head">📋 Weekly Tracker — สัปดาห์ที่ _____</div>
+      <div class="tracker-row" style="background:#f5f0ff">
+        <div class="tracker-cell tracker-day">วัน</div>
+        <div class="tracker-cell"><strong>Morning Ritual ✅</strong></div>
+        <div class="tracker-cell"><strong>โอกาสที่เห็นวันนี้</strong></div>
+      </div>
+      <div class="tracker-row"><div class="tracker-cell tracker-day">จันทร์</div><div class="tracker-cell">□ ทำแล้ว</div><div class="tracker-cell"></div></div>
+      <div class="tracker-row"><div class="tracker-cell tracker-day">อังคาร</div><div class="tracker-cell">□ ทำแล้ว</div><div class="tracker-cell"></div></div>
+      <div class="tracker-row"><div class="tracker-cell tracker-day">พุธ</div><div class="tracker-cell">□ ทำแล้ว</div><div class="tracker-cell"></div></div>
+      <div class="tracker-row"><div class="tracker-cell tracker-day">พฤหัส</div><div class="tracker-cell">□ ทำแล้ว</div><div class="tracker-cell"></div></div>
+      <div class="tracker-row"><div class="tracker-cell tracker-day">ศุกร์</div><div class="tracker-cell">□ ทำแล้ว</div><div class="tracker-cell"></div></div>
+      <div class="tracker-row"><div class="tracker-cell tracker-day">เสาร์</div><div class="tracker-cell">□ ทำแล้ว</div><div class="tracker-cell"></div></div>
+      <div class="tracker-row"><div class="tracker-cell tracker-day">อาทิตย์</div><div class="tracker-cell">□ ทำแล้ว</div><div class="tracker-cell"></div></div>
+    </div>
+  </div>
+
+  <!-- ════ CHAPTER 5 ════ -->
+  <div class="page page-break">
+    <div class="chapter-num">บทที่ 5</div>
+    <h1 class="chapter-title">เรื่องเล่า คำถาม และขั้นตอนต่อไป</h1>
+    <p class="chapter-intro">
+      3 เคสจริงจากผู้ใช้ที่ share ประสบการณ์กับ Amethez — ชื่อสมมติ เพื่อความเป็นส่วนตัว
+    </p>
+
+    <h2 class="sec-title">เรื่องเล่าที่ 1 — นักธุรกิจที่ติดอยู่ที่เดิม</h2>
+    <p><strong>พิชัย (38) เจ้าของธุรกิจนำเข้า</strong></p>
+    <p>ทำธุรกิจมา 8 ปี รายได้ไม่เคยเติบโตเกิน ฿300,000/เดือน แม้จะพยายามทุกอย่าง เขาซื้อโมลดาไวท์มาด้วยความสงสัย ไม่ค่อยเชื่อ แต่ตัดสินใจทำ 21 วัน program อย่างจริงจัง</p>
+    <p>สิ่งที่เปลี่ยนไม่ใช่โมลดาไวท์ทำให้เงินมา — แต่ Morning Ritual ทำให้เขาเริ่ม <em>สังเกตเห็น</em> ว่าลูกค้าเก่าคนหนึ่งส่งข้อความมาหาเดือนที่แล้วแต่เขาไม่ได้ตอบ เขาโทรกลับ — ได้ออร์เดอร์ใหญ่ที่สุดในชีวิต</p>
+    <blockquote style="font-size:1rem">"ผมไม่รู้ว่าโมลดาไวท์ทำงานหรือเปล่า แต่มันทำให้ผมช้าลง มองรอบๆ มากขึ้น และนั่นเปลี่ยนทุกอย่าง" <cite>— พิชัย</cite></blockquote>
+
+    <h2 class="sec-title">เรื่องเล่าที่ 2 — มนุษย์เงินเดือนที่อยากเปลี่ยนชีวิต</h2>
+    <p><strong>นภา (29) พนักงานบริษัท</strong></p>
+    <p>เงินเดือน ฿35,000 รู้สึกติดอยู่ที่เดิมมา 4 ปี อยากทำ side business แต่กลัวตลอด เธอใช้โมลดาไวท์ในช่วง Week 2 และเริ่มเขียน Opportunity Journal</p>
+    <p>วันที่ 11 เธอเจอบทความเกี่ยวกับ freelance งานที่เธอทำได้ดี ปกติเธอจะเลื่อนผ่านไป แต่คราวนี้หยุดอ่าน ลงทะเบียนสมัคร 2 Platform ใน 3 เดือนได้ freelance รายได้เพิ่ม ฿15,000/เดือน</p>
+    <blockquote style="font-size:1rem">"ข้อมูลพวกนั้นมีอยู่ก่อนหน้านี้นานแล้ว ฉันแค่ไม่เคย 'เห็น' มัน" <cite>— นภา</cite></blockquote>
+
+    <h2 class="sec-title">เรื่องเล่าที่ 3 — นักลงทุนที่ตัดสินใจไม่ได้</h2>
+    <p><strong>วรรณา (45) นักลงทุนรายย่อย</strong></p>
+    <p>มีเงินก้อนอยู่แต่ไม่กล้าลงทุน กลัวผิดพลาดมาหลายปี เธอใช้โมลดาไวท์คู่กับอเมทิสต์ขณะวิเคราะห์การลงทุน ไม่ใช่เพื่อให้หินตัดสินใจแทน — แต่เพื่อให้ใจสงบพอที่จะตัดสินใจด้วยเหตุผล</p>
+    <p>เธอเริ่มลงทุนในพอร์ตเล็กๆ ที่วิเคราะห์มานาน และผลลัพธ์ดีกว่าที่คาด สิ่งสำคัญกว่าผลตอบแทนคือเธอ "หยุดกลัว" และเริ่มลงมือได้</p>
+
+    <hr class="ch-divider">
+    <h2 class="sec-title">คำถามที่พบบ่อย (FAQ)</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">Q: ต้องซื้อโมลดาไวท์แท้เท่านั้นไหม หรือของเทียมก็ได้?</div>
+      <div class="faq-a">ถ้าเป้าหมายคือ psychological ritual — ของเทียมก็ทำหน้าที่ได้บ้าง เพราะ placebo effect ทำงานกับสัญลักษณ์ ไม่ใช่วัตถุ แต่ถ้าคุณรู้ว่าของเทียม ผลลัพธ์จะน้อยกว่า เพราะสมองรู้ว่า "มันไม่จริง" แนะนำให้ซื้อของแท้ขนาดเล็กราคาไม่แพงมากกว่าของเทียมชิ้นใหญ่</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Q: ต้องทำ ritual ทุกวันจริงๆ ไหม ถ้าข้ามบ้างจะเป็นอะไร?</div>
+      <div class="faq-a">ข้ามได้ไม่เป็นอะไร — แต่ผลลัพธ์จะน้อยลงตามความสม่ำเสมอ เหมือนออกกำลังกาย ทำทุกวันได้ผลกว่าทำสัปดาห์ละครั้ง ถ้าข้ามให้ทำต่อวันถัดไปทันที ไม่ต้องเริ่มนับใหม่</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Q: ผลลัพธ์จะเห็นเมื่อไหร่?</div>
+      <div class="faq-a">คนส่วนใหญ่รายงานว่าเริ่มสังเกตเห็นความเปลี่ยนแปลงใน Week 2 — ไม่ใช่เงินที่มา แต่ "โหมดความคิด" ที่เปลี่ยน ผลด้านการเงินที่จับต้องได้มักมาใน 1–3 เดือน เพราะต้องผ่านขั้นตอน เห็นโอกาส → ลงมือ → ได้ผล</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Q: ใช้ร่วมกับหินอื่นได้ไหม?</div>
+      <div class="faq-a">ได้และแนะนำด้วย — Combination ที่ดีที่สุดสำหรับการเงิน: โมลดาไวท์ + ซิทริน + ไพไรต์ สำหรับการตัดสินใจ: โมลดาไวท์ + อเมทิสต์ สำหรับ protection ขณะดึงดูด: โมลดาไวท์ + ทัวร์มาลีนดำ</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Q: ทำไมบางคนบอกว่า "โมลดาไวท์ทำให้ชีวิตวุ่นวาย"?</div>
+      <div class="faq-a">เพราะโมลดาไวท์เป็น "Accelerator" — มันเร่งทุกอย่างในชีวิต รวมถึงเรื่องที่ต้องถูกแก้ไข ถ้าความสัมพันธ์มีปัญหาอยู่ มันจะเร่งให้ถึงจุดตัดสินใจเร็วขึ้น บางคนเรียกว่า "วุ่นวาย" แต่จริงๆ คือ "เร็วขึ้น" นั่นเอง</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Q: ถ้าไม่มีเงินซื้อโมลดาไวท์ จะใช้หินอื่นแทนได้ไหม?</div>
+      <div class="faq-a">ได้ — Citrine (ซิทริน) ราคาถูกกว่ามากและมีพลังงานด้านการเงินโดยตรง หรือ Clear Quartz ที่ขยายพลังงานทุกอย่าง Program 21 วันในหนังสือเล่มนี้ใช้ได้กับหินทุกชนิด</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Q: ต้องเชื่อก่อนถึงได้ผลไหม?</div>
+      <div class="faq-a">ไม่จำเป็น — แต่ต้อง "เปิดใจ" พิชัยในเรื่องเล่าแรกก็ไม่เชื่อ แต่เขาทำอย่างจริงจัง ความเชื่อเต็ม 100% ไม่จำเป็น ขอแค่ไม่ต่อต้านอย่างแข็งกร้าวก็พอ</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Q: ซื้อโมลดาไวท์ที่ไหนดี?</div>
+      <div class="faq-a">แนะนำร้านที่มี Certificate ยืนยันความแท้ เช่น ร้านที่ได้รับการ verify จาก Czech Moldavite Society หรือ GIA ในไทยมีร้านน่าเชื่อถือหลายเจ้า — Line @amethez สามารถแนะนำ Partner ที่เชื่อถือได้ครับ</div>
+    </div>
+  </div>
+
+  <!-- ════ BONUS ════ -->
+  <div class="page page-break">
+    <div class="chapter-num">Bonus #1</div>
+    <h1 class="chapter-title">Affirmation Cards — 7 บัตรคำคม</h1>
+    <p style="color:var(--muted);margin-bottom:1.5rem">พิมพ์ตัดเป็นการ์ด วางไว้บนโต๊ะ ในกระเป๋า หรือติดกระจก ใช้ควบคู่กับ Morning Ritual</p>
+
+    <div class="aff-cards">
+      <div class="aff-card">
+        <div class="gem">🌿</div>
+        <p>"ฉันเปิดรับความมั่งคั่งทุกรูปแบบที่จักรวาลส่งมา"</p>
+      </div>
+      <div class="aff-card">
+        <div class="gem">✨</div>
+        <p>"โอกาสดีๆ มาหาฉันอย่างสม่ำเสมอและง่ายดาย"</p>
+      </div>
+      <div class="aff-card">
+        <div class="gem">💎</div>
+        <p>"ฉันคู่ควรกับความสำเร็จและความมั่งคั่ง"</p>
+      </div>
+      <div class="aff-card">
+        <div class="gem">🌟</div>
+        <p>"เงินไหลเข้าหาฉัน ผ่านหลายช่องทางที่ไม่คาดฝัน"</p>
+      </div>
+      <div class="aff-card">
+        <div class="gem">🔮</div>
+        <p>"ฉันมีปัญญาในการตัดสินใจทางการเงินที่ดี"</p>
+      </div>
+      <div class="aff-card">
+        <div class="gem">🌙</div>
+        <p>"ทุกก้าวที่ฉันก้าวไป ฉันเข้าใกล้เป้าหมายมากขึ้น"</p>
+      </div>
+      <div class="aff-card">
+        <div class="gem">💫</div>
+        <p>"ฉันขอบคุณสิ่งที่มี และเปิดรับสิ่งที่กำลังมา"</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="page page-break">
+    <div class="chapter-num">Bonus #2</div>
+    <h1 class="chapter-title">Wallpaper คริสตัล สำหรับมือถือ</h1>
+    <p style="color:var(--muted);margin-bottom:1.5rem">บันทึกและตั้งเป็น Lock Screen หรือ Home Screen — เปิดมือถือทีก็ได้รับ reminder ทุกครั้ง</p>
+
+    <div class="wp-grid">
+      <div class="wp-card" style="background:linear-gradient(160deg,#0f0a1e,#3b0764)">
+        🌿
+        <div class="wp-label">MOLDAVITE · WEALTH</div>
+      </div>
+      <div class="wp-card" style="background:linear-gradient(160deg,#0c1a3a,#1e3a5f)">
+        💎
+        <div class="wp-label">ABUNDANCE · ALIGNED</div>
+      </div>
+      <div class="wp-card" style="background:linear-gradient(160deg,#1a0a0f,#3d1a00)">
+        🌟
+        <div class="wp-label">CITRINE · FLOW</div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:1.5rem">
+      <p class="callout-title">💡 วิธีใช้ Wallpaper ให้ได้ผล</p>
+      <p>ทุกครั้งที่ปลดล็อคมือถือ ใช้เวลา 3 วินาทีมองภาพและนึกถึง intention ของวัน ทำอย่างสม่ำเสมอ สมองจะเชื่อมโยง "เปิดมือถือ" กับ "โหมดเปิดรับ" โดยอัตโนมัติ</p>
+    </div>
+  </div>
+
+  <!-- ════ BACK COVER ════ -->
+  <div class="page back-cover page-break">
+    <div class="logo-mark">🌿</div>
+    <h2>ขอบคุณที่อ่านจนจบ</h2>
+    <p>ทุกการเปลี่ยนแปลงใหญ่เริ่มต้นจากการตัดสินใจเล็กๆ — และคุณทำไปแล้วด้วยการเปิดอ่านหนังสือเล่มนี้</p>
+    <p>ขั้นตอนต่อไปของคุณคือ <strong style="color:var(--gold)">เริ่ม 21 วัน Program วันนี้เลย</strong> ไม่ต้องรอวันจันทร์ ไม่ต้องรอพร้อม — ทำวันนี้เลย</p>
+    <br>
+    <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:1rem;padding:1.5rem;margin:1.5rem auto;max-width:400px">
+      <div style="color:var(--gold);font-weight:700;margin-bottom:.5rem">🧘 ก้าวต่อไป</div>
+      <p style="color:rgba(255,255,255,.7);font-size:.88rem;line-height:1.7">คอร์ส Master Wuchong "หินกับพลังงาน" เจาะลึกกว่านี้อีก 10 เท่า — จักระ · ฮวงจุ้ย · พลังงานสถานที่ · การสร้าง Crystal Grid เพื่อดึงดูดความสำเร็จ</p>
+      <div style="color:var(--gold);font-size:.85rem;font-weight:700;margin-top:.75rem">ดูรายละเอียดที่ amethez.com/digital</div>
+    </div>
+    <br>
+    <div style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--gold);letter-spacing:.1em">AMETHEZ</div>
+    <div style="font-size:.75rem;color:rgba(255,255,255,.3);margin-top:.25rem;letter-spacing:.1em">STONES · STORIES · SOUL</div>
+    <div style="font-size:.72rem;color:rgba(255,255,255,.25);margin-top:2rem">© 2026 Amethez.com — ลิขสิทธิ์ถูกต้อง ห้ามทำซ้ำหรือจำหน่ายต่อ<br>สงวนลิขสิทธิ์ตาม พ.ร.บ. ลิขสิทธิ์ พ.ศ. 2537</div>
+  </div>
+
+</div><!-- /book -->
+</body>
+</html>

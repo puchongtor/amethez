@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="pageTitle">คุยกับหิน | Amethez</title>
+  <meta name="description" id="pageDesc" content="บทตั้งจิตคุยกับหิน พร้อมคลื่นความถี่บำบัดและภาพเคลื่อนไหวตามเสียง สำหรับทำสมาธิและตั้งจิต">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --gold:#c9a84c; --purple:#7c3aed; --text:#1a1228; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    html,body { height:100%; }
+    body { font-family:Sarabun,sans-serif; color:white; min-height:100vh; background:#0f0a1e; overflow-x:hidden; }
+
+    /* ── Reactive canvas (behind everything) ── */
+    #viz { position:fixed; inset:0; width:100%; height:100%; z-index:0; pointer-events:none; }
+
+    /* ── Top bar ── */
+    .topnav { position:fixed; top:0; left:0; right:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:1rem 1.5rem; background:linear-gradient(to bottom,rgba(0,0,0,.5),transparent); }
+    .topnav a { color:rgba(255,255,255,.7); text-decoration:none; font-size:.85rem; display:flex; align-items:center; gap:.35rem; }
+    .topnav a:hover { color:white; }
+    .topnav .brand { font-family:'Playfair Display',serif; color:var(--gold); font-weight:700; letter-spacing:.05em; }
+
+    /* ── Reader content (above canvas) ── */
+    .reader { position:relative; z-index:10; max-width:680px; margin:0 auto; padding:6rem 1.5rem 14rem; text-align:center; }
+    .stone-orb { font-size:5rem; margin-bottom:1.5rem; display:inline-block; filter:drop-shadow(0 0 50px rgba(124,58,237,.8)); }
+    .reader-kicker { font-size:.75rem; font-weight:700; color:var(--gold); text-transform:uppercase; letter-spacing:.15em; margin-bottom:1rem; }
+    .reader-title { font-family:'Playfair Display',serif; font-size:clamp(1.6rem,4.5vw,2.4rem); line-height:1.3; margin-bottom:.75rem; }
+    .reader-sub { color:rgba(255,255,255,.55); font-size:1rem; margin-bottom:2rem; }
+    .freq-tag { display:inline-flex; align-items:center; gap:.4rem; background:rgba(201,168,76,.12); border:1px solid rgba(201,168,76,.3); color:var(--gold); padding:.3rem .9rem; border-radius:2rem; font-size:.75rem; font-weight:700; margin-bottom:2rem; }
+
+    .howto { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); border-radius:1rem; padding:1.25rem 1.5rem; margin:0 auto 3rem; text-align:left; max-width:520px; backdrop-filter:blur(8px); }
+    .howto summary { font-weight:700; font-size:.9rem; cursor:pointer; color:var(--gold); list-style:none; display:flex; align-items:center; gap:.5rem; }
+    .howto summary::-webkit-details-marker { display:none; }
+    .howto ol { margin:1rem 0 0 1.25rem; color:rgba(255,255,255,.65); font-size:.88rem; line-height:1.9; }
+
+    .reader-intro { color:rgba(255,255,255,.6); font-size:.95rem; line-height:1.9; max-width:540px; margin:0 auto 3.5rem; }
+
+    /* ── Verses ── */
+    .verses { display:flex; flex-direction:column; gap:2.5rem; }
+    .verse { transition:opacity .5s, transform .5s; }
+    .verse-emoji { font-size:2rem; margin-bottom:1rem; }
+    .verse-line { font-family:'Playfair Display',serif; font-size:clamp(1.15rem,3vw,1.5rem); line-height:1.7; color:rgba(255,255,255,.9); margin-bottom:.5rem; transition:all .4s; }
+    .verse.speaking { transform:scale(1.03); }
+    .verse.speaking .verse-line { color:#fff; text-shadow:0 0 30px rgba(201,168,76,.6); }
+    .verse.dim { opacity:.3; }
+    .closing { font-family:'Playfair Display',serif; font-style:italic; font-size:1.4rem; color:var(--gold); margin-top:3rem; letter-spacing:.05em; }
+
+    .related { background:rgba(255,255,255,.04); border-radius:1.25rem; padding:1.75rem; margin-top:4rem; backdrop-filter:blur(8px); }
+    .related h3 { font-family:'Playfair Display',serif; font-size:1.1rem; margin-bottom:1rem; color:var(--gold); }
+    .related-link { display:inline-flex; align-items:center; gap:.4rem; background:rgba(201,168,76,.12); border:1px solid rgba(201,168,76,.3); color:var(--gold); padding:.6rem 1.25rem; border-radius:.6rem; text-decoration:none; font-size:.88rem; font-weight:600; transition:all .2s; }
+    .related-link:hover { background:rgba(201,168,76,.2); }
+
+    /* ── Player ── */
+    .player { position:fixed; bottom:0; left:0; right:0; z-index:60; background:rgba(15,10,30,.85); backdrop-filter:blur(24px); border-top:1px solid rgba(201,168,76,.2); padding:1rem 1.5rem 1.5rem; }
+    .player-inner { max-width:680px; margin:0 auto; }
+    .player-controls { display:flex; align-items:center; justify-content:center; gap:1.25rem; margin-bottom:.875rem; }
+    .pbtn { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); color:white; width:46px; height:46px; border-radius:50%; cursor:pointer; font-size:1.1rem; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+    .pbtn:hover { background:rgba(255,255,255,.15); }
+    .pbtn.main { width:64px; height:64px; font-size:1.5rem; background:linear-gradient(135deg,var(--gold),#b8922e); color:#0f0a1e; border:none; box-shadow:0 4px 24px rgba(201,168,76,.5); }
+    .pbtn.main:hover { transform:scale(1.05); }
+    .pbtn.active { background:rgba(201,168,76,.25); border-color:var(--gold); color:var(--gold); }
+    .player-options { display:flex; align-items:center; justify-content:center; gap:1.25rem; flex-wrap:wrap; }
+    .popt { display:flex; align-items:center; gap:.5rem; font-size:.78rem; color:rgba(255,255,255,.6); }
+    .popt input[type=range] { width:84px; accent-color:var(--gold); }
+    .player-status { text-align:center; font-size:.78rem; color:rgba(255,255,255,.45); margin-bottom:.75rem; min-height:1rem; }
+    .tts-warn { text-align:center; font-size:.78rem; color:#fbbf24; margin-bottom:.5rem; display:none; }
+
+    .loading { position:relative; z-index:10; text-align:center; padding:8rem 1.5rem; color:rgba(255,255,255,.5); }
+    .headphone-hint { position:relative; z-index:10; text-align:center; font-size:.78rem; color:rgba(255,255,255,.35); margin:-2.5rem auto 0; }
+  </style>
+</head>
+<body>
+
+<canvas id="viz"></canvas>
+
+<div class="topnav">
+  <a href="/talk/">← คุยกับหินทั้งหมด</a>
+  <a href="/" class="brand">AMETHEZ</a>
+</div>
+
+<div id="content">
+  <div class="loading">⏳ กำลังโหลดบทตั้งจิต...</div>
+</div>
+
+<!-- Player -->
+<div class="player" id="player" style="display:none">
+  <div class="player-inner">
+    <div class="tts-warn" id="ttsWarn">⚠️ อุปกรณ์นี้อาจไม่รองรับเสียงพูดภาษาไทย — คลื่นความถี่และภาพยังใช้ได้ปกติ</div>
+    <div class="player-status" id="status">พร้อมเริ่ม — กดปุ่มเล่น ▶ (แนะนำใส่หูฟัง 🎧)</div>
+    <div class="player-controls">
+      <button class="pbtn" id="repeatBtn" title="เล่นวนซ้ำ" onclick="toggleRepeat()">🔁</button>
+      <button class="pbtn main" id="playBtn" onclick="togglePlay()">▶</button>
+      <button class="pbtn" id="stopBtn" title="หยุด" onclick="stopAll()">⏹</button>
+    </div>
+    <div class="player-options">
+      <label class="popt">🗣️ เสียงพูด <input type="range" id="vol" min="0" max="1" step="0.1" value="1"></label>
+      <label class="popt">🎶 คลื่นความถี่ <input type="range" id="ambient" min="0" max="0.3" step="0.02" value="0.12"></label>
+      <label class="popt">🐢 จังหวะ <input type="range" id="rate" min="0.6" max="1.2" step="0.05" value="0.82"></label>
+    </div>
+  </div>
+</div>
+
+<script>
+let DATA = null, voices = [], thVoice = null;
+let verseEls = [], queue = [], qIndex = 0, playing = false, repeat = false;
+
+/* คลื่นความถี่บำบัด (Solfeggio) ตามด้าน */
+const FREQ = {
+  wealth:     { hz: 528, name: '528Hz · ความอุดมสมบูรณ์' },
+  success:    { hz: 741, name: '741Hz · ปลดล็อกศักยภาพ' },
+  health:     { hz: 528, name: '528Hz · เยียวยาฟื้นฟู' },
+  love:       { hz: 639, name: '639Hz · ความรักความสัมพันธ์' },
+  protection: { hz: 396, name: '396Hz · ปลดปล่อยความกลัว' },
+  peace:      { hz: 432, name: '432Hz · ความสงบลึก' }
+};
+
+const params = new URLSearchParams(location.search);
+const id = params.get('id');
+
+async function load() {
+  const urls = ['/data/affirmations.json', '../data/affirmations.json'];
+  for (const url of urls) {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) continue;
+      const json = await res.json();
+      DATA = json.affirmations.find(a => a.id === id) || json.affirmations[0];
+      render();
+      return;
+    } catch(e) { /* try next */ }
+  }
+  document.getElementById('content').innerHTML = '<div class="loading">❌ โหลดข้อมูลไม่สำเร็จ <a href="/talk/" style="color:#c9a84c">กลับหน้ารวม</a></div>';
+}
+
+function render() {
+  const d = DATA;
+  const freq = FREQ[d.purpose] || FREQ.peace;
+  document.title = d.title + ' | Amethez';
+  document.getElementById('pageTitle').textContent = d.title + ' | Amethez';
+  document.body.style.background = `radial-gradient(ellipse 90% 70% at 50% 0%, ${d.color_to} 0%, ${d.color_from} 70%)`;
+
+  const versesHtml = d.verses.map((v, vi) =>
+    `<div class="verse" data-vi="${vi}">
+       <div class="verse-emoji">${v.emoji}</div>
+       ${v.lines.map(l => `<div class="verse-line">${l}</div>`).join('')}
+     </div>`
+  ).join('');
+
+  document.getElementById('content').innerHTML = `
+    <div class="reader">
+      <div class="stone-orb">${d.stone_emoji}</div>
+      <div class="reader-kicker">🔮 บทตั้งจิตคุยกับหิน</div>
+      <h1 class="reader-title">${d.title}</h1>
+      <div class="reader-sub">${d.subtitle || ''}</div>
+      <div class="freq-tag">🎶 ${freq.name}</div>
+      <details class="howto">
+        <summary>📖 วิธีใช้บทตั้งจิตนี้</summary>
+        <ol>${d.how_to.map(s => `<li>${s}</li>`).join('')}</ol>
+      </details>
+      <p class="reader-intro">${d.intro}</p>
+      <div class="verses">
+        ${versesHtml}
+        <div class="closing">${d.closing}</div>
+      </div>
+      <div class="related">
+        <h3>🌿 อยากรู้จักหินนี้ลึกขึ้น?</h3>
+        <a href="${d.article_url || ('/stones/encyclopedia.html?q=' + encodeURIComponent(d.stone))}" class="related-link">อ่านบทความ${d.stone} →</a>
+      </div>
+    </div>`;
+
+  verseEls = [...document.querySelectorAll('.verse')];
+  queue = [];
+  d.verses.forEach((v, vi) => v.lines.forEach(l => queue.push({ vi, text: l })));
+  queue.push({ vi: -1, text: d.closing });
+
+  document.getElementById('player').style.display = 'block';
+  if (!('speechSynthesis' in window)) document.getElementById('ttsWarn').style.display = 'block';
+
+  setupColors(d);
+  startViz();
+}
+
+/* ═══════════════ WEB AUDIO — คลื่นความถี่บำบัด ═══════════════ */
+let audioCtx = null, analyser = null, freqData = null;
+let oscMain = null, oscSub = null, oscFifth = null, ambGain = null, lfo = null, lfoGain = null, lowpass = null;
+
+function initAudio() {
+  if (audioCtx) return;
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const hz = (FREQ[DATA.purpose] || FREQ.peace).hz;
+
+  ambGain  = audioCtx.createGain();  ambGain.gain.value = 0;
+  lowpass  = audioCtx.createBiquadFilter(); lowpass.type = 'lowpass'; lowpass.frequency.value = 900;
+  analyser = audioCtx.createAnalyser(); analyser.fftSize = 1024;
+  freqData = new Uint8Array(analyser.frequencyBinCount);
+
+  // โทนหลัก + อ็อกเทฟล่าง + เสียงประสาน (fifth) ให้ฟังนุ่ม
+  oscMain  = audioCtx.createOscillator(); oscMain.type = 'sine';  oscMain.frequency.value = hz;
+  oscSub   = audioCtx.createOscillator(); oscSub.type  = 'sine';  oscSub.frequency.value = hz/2;
+  oscFifth = audioCtx.createOscillator(); oscFifth.type= 'sine';  oscFifth.frequency.value = hz*1.5;
+  const subGain = audioCtx.createGain(); subGain.gain.value = 0.6;
+  const fifthGain = audioCtx.createGain(); fifthGain.gain.value = 0.25;
+
+  // LFO สร้างจังหวะ "หายใจ" ของเสียง (tremolo ช้าๆ)
+  lfo = audioCtx.createOscillator(); lfo.type = 'sine'; lfo.frequency.value = 0.12;
+  lfoGain = audioCtx.createGain(); lfoGain.gain.value = 0.4;
+  lfo.connect(lfoGain);
+
+  oscMain.connect(ambGain);
+  oscSub.connect(subGain).connect(ambGain);
+  oscFifth.connect(fifthGain).connect(ambGain);
+  lfoGain.connect(ambGain.gain);          // modulate amplitude
+  ambGain.connect(lowpass).connect(analyser).connect(audioCtx.destination);
+
+  oscMain.start(); oscSub.start(); oscFifth.start(); lfo.start();
+}
+
+function setAmbient(v) {
+  if (!audioCtx) return;
+  // base gain set by slider; LFO adds breathing on top
+  ambGain.gain.cancelScheduledValues(audioCtx.currentTime);
+  ambGain.gain.setTargetAtTime(v, audioCtx.currentTime, 0.5);
+  lfoGain.gain.value = v * 0.5;
+}
+
+/* ═══════════════ VISUALIZER ═══════════════ */
+let canvas, ctx, W, H, raf = null, t = 0, speakPulse = 0;
+let colA = '#7c3aed', colB = '#c9a84c';
+
+function setupColors(d) {
+  // ใช้สีทองเป็นหลัก + สีตามด้าน
+  const purposeColor = { wealth:'#c9a84c', success:'#a78bfa', health:'#34d399', love:'#f472b6', protection:'#818cf8', peace:'#38bdf8' };
+  colA = purposeColor[d.purpose] || '#a78bfa';
+  colB = '#c9a84c';
+}
+
+function resize() {
+  canvas = document.getElementById('viz');
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  W = canvas.width = innerWidth * dpr;
+  H = canvas.height = innerHeight * dpr;
+  canvas.style.width = innerWidth + 'px';
+  canvas.style.height = innerHeight + 'px';
+  ctx = canvas.getContext('2d');
+}
+
+function startViz() {
+  resize();
+  window.addEventListener('resize', resize);
+  if (!raf) draw();
+}
+
+function draw() {
+  raf = requestAnimationFrame(draw);
+  t += 0.016;
+  ctx.clearRect(0, 0, W, H);
+
+  const cx = W/2, cy = H*0.32;
+  const breath = Math.sin(t * 0.5) * 0.5 + 0.5;        // 0..1 จังหวะหายใจ 4 วิ
+  let amp = 0;
+
+  if (analyser) {
+    analyser.getByteFrequencyData(freqData);
+    let sum = 0; for (let i=0;i<64;i++) sum += freqData[i];
+    amp = sum / 64 / 255;                                // 0..1 ระดับเสียงจริง
+  }
+  speakPulse *= 0.92;
+  const energy = amp * 0.6 + speakPulse * 0.8 + breath * 0.25;
+
+  const baseR = Math.min(W, H) * 0.10;
+  const R = baseR * (1 + breath * 0.18 + speakPulse * 0.25);
+
+  // ── glow orb ──
+  const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 3);
+  g.addColorStop(0, hexA(colA, 0.35 + energy*0.3));
+  g.addColorStop(0.4, hexA(colA, 0.10));
+  g.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = g;
+  ctx.beginPath(); ctx.arc(cx, cy, R*3, 0, Math.PI*2); ctx.fill();
+
+  // ── circular waveform ring ──
+  const N = 96;
+  ctx.beginPath();
+  for (let i=0;i<=N;i++) {
+    const a = (i/N) * Math.PI * 2;
+    const fi = Math.floor(i/N * 96);
+    const wv = analyser ? (freqData[fi]/255) : (Math.sin(a*6 + t*2)*0.3+0.3);
+    const rr = R * 1.5 + wv * R * (0.9 + speakPulse*1.5);
+    const x = cx + Math.cos(a) * rr;
+    const y = cy + Math.sin(a) * rr;
+    i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+  }
+  ctx.closePath();
+  ctx.strokeStyle = hexA(colB, 0.5 + energy*0.4);
+  ctx.lineWidth = 2 * (window.devicePixelRatio||1);
+  ctx.shadowBlur = 24; ctx.shadowColor = colB;
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+
+  // ── concentric pulse rings ──
+  for (let k=1;k<=3;k++) {
+    const pr = R * (1.8 + k*0.7) + Math.sin(t*1.2 - k)*8;
+    ctx.beginPath(); ctx.arc(cx, cy, pr, 0, Math.PI*2);
+    ctx.strokeStyle = hexA(colA, (0.12 - k*0.025) + energy*0.08);
+    ctx.lineWidth = 1.5; ctx.stroke();
+  }
+
+  // ── inner core ──
+  const core = ctx.createRadialGradient(cx, cy, 0, cx, cy, R);
+  core.addColorStop(0, hexA('#ffffff', 0.5 + speakPulse*0.4));
+  core.addColorStop(0.5, hexA(colA, 0.3));
+  core.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = core;
+  ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI*2); ctx.fill();
+
+  // ── floating particles ──
+  for (let i=0;i<24;i++) {
+    const a = i/24 * Math.PI*2 + t*0.1;
+    const dist = R*2 + (i%5)*30 + Math.sin(t*0.8 + i)*20;
+    const x = cx + Math.cos(a)*dist;
+    const y = cy + Math.sin(a)*dist*0.9;
+    const s = (1 + Math.sin(t*2 + i)*0.5) * (window.devicePixelRatio||1);
+    ctx.fillStyle = hexA(colB, 0.3 + energy*0.3);
+    ctx.beginPath(); ctx.arc(x, y, s, 0, Math.PI*2); ctx.fill();
+  }
+}
+
+function hexA(hex, a) {
+  const h = hex.replace('#','');
+  const r = parseInt(h.substring(0,2),16), g = parseInt(h.substring(2,4),16), b = parseInt(h.substring(4,6),16);
+  return `rgba(${r},${g},${b},${Math.max(0,Math.min(1,a))})`;
+}
+
+/* ═══════════════ VOICE ═══════════════ */
+function loadVoices() {
+  voices = speechSynthesis.getVoices();
+  thVoice = voices.find(v => v.lang === 'th-TH' || v.lang.startsWith('th')) || null;
+  if (!thVoice && voices.length) document.getElementById('ttsWarn').style.display = 'block';
+}
+if ('speechSynthesis' in window) { loadVoices(); speechSynthesis.onvoiceschanged = loadVoices; }
+
+function speakNext() {
+  if (qIndex >= queue.length) {
+    if (repeat) { qIndex = 0; speakNext(); return; }
+    finish(); return;
+  }
+  const item = queue[qIndex];
+  highlight(item.vi);
+  speakPulse = 1;                                    // pulse ภาพทุกครั้งที่ขึ้นประโยคใหม่
+  if (!('speechSynthesis' in window) || !thVoice) {
+    // ไม่มีเสียงไทย — เลื่อนอัตโนมัติตามจังหวะ ให้ภาพ+คลื่นยังทำงาน
+    document.getElementById('status').textContent = `กำลังภาวนา… (${qIndex+1}/${queue.length})`;
+    qIndex++; if (playing) setTimeout(speakNext, 3200); return;
+  }
+  const u = new SpeechSynthesisUtterance(item.text);
+  u.lang = 'th-TH'; u.voice = thVoice;
+  u.rate = parseFloat(document.getElementById('rate').value);
+  u.volume = parseFloat(document.getElementById('vol').value);
+  u.pitch = 1;
+  u.onend   = () => { qIndex++; if (playing) setTimeout(speakNext, 450); };
+  u.onerror = () => { qIndex++; if (playing) setTimeout(speakNext, 250); };
+  speechSynthesis.speak(u);
+  document.getElementById('status').textContent = `กำลังอ่าน… (${qIndex+1}/${queue.length})`;
+}
+
+function highlight(vi) {
+  verseEls.forEach(el => {
+    const i = +el.dataset.vi;
+    el.classList.toggle('speaking', i === vi);
+    el.classList.toggle('dim', vi >= 0 && i !== vi);
+  });
+}
+
+/* ═══════════════ CONTROLS ═══════════════ */
+function togglePlay() {
+  initAudio();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  setAmbient(parseFloat(document.getElementById('ambient').value));
+
+  if (playing) {
+    playing = false;
+    document.getElementById('playBtn').textContent = '▶';
+    document.getElementById('status').textContent = 'หยุดชั่วคราว';
+    if ('speechSynthesis' in window) speechSynthesis.pause();
+  } else {
+    playing = true;
+    document.getElementById('playBtn').textContent = '⏸';
+    if ('speechSynthesis' in window && speechSynthesis.paused && speechSynthesis.speaking) {
+      speechSynthesis.resume();
+    } else {
+      if ('speechSynthesis' in window) speechSynthesis.cancel();
+      speakNext();
+    }
+  }
+}
+
+function stopAll() {
+  playing = false; qIndex = 0;
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+  setAmbient(0);
+  document.getElementById('playBtn').textContent = '▶';
+  document.getElementById('status').textContent = 'พร้อมเริ่ม — กดปุ่มเล่น ▶ (แนะนำใส่หูฟัง 🎧)';
+  highlight(null);
+  verseEls.forEach(el => el.classList.remove('dim'));
+}
+
+function finish() {
+  playing = false; qIndex = 0;
+  document.getElementById('playBtn').textContent = '▶';
+  document.getElementById('status').textContent = '🙏 จบบทตั้งจิต — สาธุ';
+  highlight(null);
+  verseEls.forEach(el => el.classList.remove('dim'));
+  // คลื่นความถี่ค่อยๆ เบาลง
+  if (audioCtx) ambGain.gain.setTargetAtTime(0, audioCtx.currentTime, 2);
+}
+
+function toggleRepeat() {
+  repeat = !repeat;
+  document.getElementById('repeatBtn').classList.toggle('active', repeat);
+  document.getElementById('status').textContent = repeat ? '🔁 เปิดเล่นวนซ้ำ' : 'ปิดเล่นวนซ้ำ';
+}
+
+document.addEventListener('input', e => {
+  if (e.target.id === 'ambient' && audioCtx) setAmbient(parseFloat(e.target.value));
+});
+window.addEventListener('beforeunload', () => { if ('speechSynthesis' in window) speechSynthesis.cancel(); });
+load();
+</script>
+</body>
+</html>

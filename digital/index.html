@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Products — คอร์ส E-book PDF | Amethez</title>
+  <meta name="description" content="ดาวน์โหลด E-book คอร์สออนไลน์ PDF และสื่อดิจิทัลเกี่ยวกับหินคริสตัล สายมู และพลังงาน มีทั้งฟรีและเสียเงิน">
+  <link rel="canonical" href="https://amethez.com/digital/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    /* ── Hero ── */
+    .dp-hero { background: linear-gradient(135deg, #0f0a1e 0%, #1e0d3d 50%, #0a2540 100%); padding: 4.5rem 1.5rem 3.5rem; text-align: center; position: relative; overflow: hidden; }
+    .dp-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 50% at 50% 40%, rgba(124,58,237,.2) 0%, transparent 70%); }
+    .dp-hero h1 { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,5vw,3rem); color:white; margin-bottom:.75rem; position:relative; }
+    .dp-hero p { color:rgba(255,255,255,.7); max-width:540px; margin:0 auto 2rem; font-size:1.05rem; position:relative; }
+    .hero-pills { display:flex; gap:.75rem; justify-content:center; flex-wrap:wrap; position:relative; }
+    .hero-pill { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); color:rgba(255,255,255,.85); padding:.4rem 1.1rem; border-radius:2rem; font-size:.88rem; }
+    .hero-pill strong { color:var(--gold); }
+
+    /* ── Filter ── */
+    .dp-filter { background:white; border-bottom:1px solid #f0e8ff; padding:1rem 1.5rem; position:sticky; top:64px; z-index:90; }
+    .dp-filter-inner { max-width:1100px; margin:0 auto; display:flex; gap:.75rem; align-items:center; flex-wrap:wrap; }
+    .cat-tabs { display:flex; gap:.5rem; flex-wrap:wrap; }
+    .cat-tab { background:none; border:1.5px solid #e5e7eb; color:var(--text-muted); padding:.45rem 1.1rem; border-radius:2rem; font-family:Sarabun,sans-serif; font-size:.88rem; cursor:pointer; transition:all .2s; }
+    .cat-tab:hover, .cat-tab.active { background:var(--purple); border-color:var(--purple); color:white; }
+    .price-toggle { display:flex; gap:.4rem; margin-left:auto; }
+    .price-btn { background:none; border:1.5px solid #e5e7eb; color:var(--text-muted); padding:.4rem .9rem; border-radius:2rem; font-family:Sarabun,sans-serif; font-size:.85rem; cursor:pointer; transition:all .2s; }
+    .price-btn.active { background:#f0fdf4; border-color:#22c55e; color:#16a34a; font-weight:700; }
+    .price-btn.active.paid { background:#f5f0ff; border-color:var(--purple); color:var(--purple); }
+
+    /* ── Grid ── */
+    .dp-body { max-width:1100px; margin:0 auto; padding:2rem 1.5rem 5rem; }
+    .dp-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px,1fr)); gap:1.5rem; }
+    .dp-card { background:white; border:1.5px solid #f0e8ff; border-radius:1rem; overflow:hidden; transition:all .2s; display:flex; flex-direction:column; }
+    .dp-card:hover { border-color:var(--purple); box-shadow:0 8px 32px rgba(124,58,237,.12); transform:translateY(-4px); }
+    .dp-thumb { height:160px; background:linear-gradient(135deg, #f5f0ff 0%, #ede9fe 100%); display:flex; align-items:center; justify-content:center; font-size:4rem; position:relative; }
+    .dp-thumb.saimu { background:linear-gradient(135deg,#fdf2f8,#fce7f3); }
+    .dp-thumb.stone  { background:linear-gradient(135deg,#f5f0ff,#ede9fe); }
+    .dp-thumb.knowledge { background:linear-gradient(135deg,#f0fdf4,#dcfce7); }
+    .dp-thumb.quote  { background:linear-gradient(135deg,#fffbeb,#fef3c7); }
+    .dp-badge { position:absolute; top:.75rem; left:.75rem; padding:.25rem .75rem; border-radius:2rem; font-size:.75rem; font-weight:700; color:white; }
+    .dp-type-badge { position:absolute; top:.75rem; right:.75rem; background:rgba(0,0,0,.5); color:white; padding:.2rem .6rem; border-radius:1rem; font-size:.72rem; }
+    .dp-body-inner { padding:1.25rem; flex:1; display:flex; flex-direction:column; }
+    .dp-cat { font-size:.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:.06em; margin-bottom:.4rem; }
+    .dp-title { font-weight:700; font-size:1rem; color:var(--text); line-height:1.4; margin-bottom:.35rem; }
+    .dp-sub { font-size:.85rem; color:var(--text-muted); line-height:1.5; margin-bottom:1rem; }
+    .dp-meta { display:flex; gap:.5rem; flex-wrap:wrap; margin-bottom:1rem; }
+    .dp-meta-tag { background:#f5f0ff; color:var(--purple); font-size:.75rem; padding:.2rem .6rem; border-radius:1rem; }
+    .dp-price-row { display:flex; align-items:center; gap:.75rem; margin-top:auto; }
+    .dp-price { font-size:1.4rem; font-weight:800; font-family:'Playfair Display',serif; }
+    .dp-price.free { color:#16a34a; }
+    .dp-price.paid { color:var(--purple); }
+    .dp-price-orig { font-size:.85rem; color:var(--text-muted); text-decoration:line-through; }
+    .dp-save { background:#fef3c7; color:#92400e; font-size:.72rem; padding:.15rem .5rem; border-radius:1rem; font-weight:700; }
+    .dp-actions { display:flex; gap:.5rem; margin-top:.875rem; }
+    .btn-free { background:#16a34a; color:white; padding:.65rem 1.25rem; border-radius:.5rem; font-family:Sarabun,sans-serif; font-size:.9rem; font-weight:700; border:none; cursor:pointer; flex:1; transition:all .2s; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:.4rem; }
+    .btn-free:hover { background:#15803d; }
+    .btn-buy { background:var(--purple); color:white; padding:.65rem 1.25rem; border-radius:.5rem; font-family:Sarabun,sans-serif; font-size:.9rem; font-weight:700; border:none; cursor:pointer; flex:1; transition:all .2s; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:.4rem; }
+    .btn-buy:hover { background:#6d28d9; }
+    .btn-preview { background:none; border:1.5px solid #e5e7eb; color:var(--text-muted); padding:.65rem .9rem; border-radius:.5rem; font-family:Sarabun,sans-serif; font-size:.85rem; cursor:pointer; transition:all .2s; }
+    .btn-preview:hover { border-color:var(--purple); color:var(--purple); }
+    .no-results { text-align:center; padding:4rem 1.5rem; color:var(--text-muted); }
+
+    /* ── Modal ── */
+    .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:500; align-items:center; justify-content:center; padding:1.5rem; }
+    .modal-overlay.open { display:flex; }
+    .modal-box { background:white; border-radius:1.25rem; max-width:560px; width:100%; max-height:90vh; overflow-y:auto; }
+    .modal-header { padding:1.5rem 1.5rem 0; display:flex; justify-content:space-between; align-items:flex-start; }
+    .modal-close { background:none; border:none; font-size:1.25rem; cursor:pointer; color:var(--text-muted); padding:.25rem; }
+    .modal-thumb { height:200px; display:flex; align-items:center; justify-content:center; font-size:5rem; margin:1rem 1.5rem; border-radius:.875rem; }
+    .modal-body { padding:0 1.5rem 1.5rem; }
+    .modal-price-row { display:flex; align-items:center; gap:1rem; margin:1rem 0; }
+    .modal-price { font-size:2rem; font-weight:800; font-family:'Playfair Display',serif; }
+    .line-pay-box { background:#f0fdf4; border:1px solid #bbf7d0; border-radius:.75rem; padding:1.25rem; margin:1rem 0; }
+    .line-pay-box h4 { color:#16a34a; margin-bottom:.5rem; font-size:.95rem; }
+    .line-pay-box ol { padding-left:1.5rem; color:var(--text-muted); font-size:.9rem; line-height:2; }
+    .line-pay-btn { display:flex; align-items:center; justify-content:center; gap:.5rem; background:#06C755; color:white; padding:.85rem 2rem; border-radius:.6rem; font-family:Sarabun,sans-serif; font-size:1rem; font-weight:700; text-decoration:none; margin-top:1rem; transition:all .2s; }
+    .line-pay-btn:hover { background:#05b04a; }
+
+    /* ── Purchase flow ── */
+    .purchase-steps { display:flex; align-items:center; padding:1.25rem 1.5rem .75rem; gap:0; }
+    .step-item { display:flex; flex-direction:column; align-items:center; gap:.3rem; flex:0 0 auto; }
+    .step-dot { width:28px; height:28px; border-radius:50%; background:#e5e7eb; color:#9ca3af; font-size:.8rem; font-weight:700; display:flex; align-items:center; justify-content:center; transition:all .3s; }
+    .step-item.active .step-dot { background:var(--purple); color:white; }
+    .step-item.done .step-dot { background:#16a34a; color:white; }
+    .step-label { font-size:.7rem; color:var(--text-muted); white-space:nowrap; }
+    .step-item.active .step-label { color:var(--purple); font-weight:700; }
+    .step-line { flex:1; height:2px; background:#e5e7eb; margin:0 .5rem; margin-bottom:1.2rem; }
+    .purchase-step { padding:0 1.5rem 1.5rem; }
+    .qr-wrapper { display:flex; justify-content:center; margin:1rem 0; }
+    .qr-wrapper canvas, .qr-wrapper img { border:6px solid white; box-shadow:0 0 0 1px #e5e7eb; border-radius:.5rem; }
+    .qr-info-box { background:#f8f5ff; border:1px solid #ede9fe; border-radius:.75rem; padding:1rem 1.25rem; margin:1rem 0; }
+    .qr-info-row { display:flex; justify-content:space-between; align-items:center; padding:.4rem 0; font-size:.9rem; border-bottom:1px solid #ede9fe; }
+    .qr-info-row:last-child { border-bottom:none; }
+    .qr-info-row span { color:var(--text-muted); }
+    .qr-amount-badge { font-size:1.5rem; font-weight:800; font-family:'Playfair Display',serif; color:var(--purple); }
+    .buy-form-group { margin-bottom:1rem; }
+    .buy-form-group label { display:block; font-size:.85rem; font-weight:700; color:var(--text); margin-bottom:.4rem; }
+    .buy-form-group input { width:100%; border:1.5px solid #e5e7eb; border-radius:.5rem; padding:.65rem .9rem; font-family:Sarabun,sans-serif; font-size:.95rem; color:var(--text); box-sizing:border-box; transition:border-color .2s; }
+    .buy-form-group input:focus { outline:none; border-color:var(--purple); }
+    .license-box { background:#faf8f4; border:1px solid #e5e7eb; border-radius:.75rem; padding:1rem 1.25rem; margin:1rem 0; font-size:.83rem; }
+    .license-box h4 { font-size:.85rem; font-weight:700; margin-bottom:.5rem; color:var(--text); }
+    .license-box ul { padding-left:1.25rem; color:var(--text-muted); line-height:1.9; margin:0 0 .75rem; }
+    .license-accept { display:flex; align-items:flex-start; gap:.5rem; font-size:.85rem; color:var(--text); cursor:pointer; }
+    .license-accept input { margin-top:.15rem; cursor:pointer; }
+    .step-success { text-align:center; padding:2rem 1.5rem; }
+    .step-success .success-icon { font-size:4rem; margin-bottom:1rem; }
+    .step-success h3 { font-family:'Playfair Display',serif; margin-bottom:.5rem; }
+    .step-success p { color:var(--text-muted); font-size:.95rem; line-height:1.7; }
+    .back-btn { background:none; border:none; color:var(--text-muted); font-family:Sarabun,sans-serif; font-size:.85rem; cursor:pointer; padding:.5rem 0; text-decoration:underline; }
+    .back-btn:hover { color:var(--text); }
+    .free-dl-box { background:#f0fdf4; border:1px solid #bbf7d0; border-radius:.75rem; padding:1.25rem; margin:1rem 0; }
+    .free-dl-box h4 { color:#16a34a; margin-bottom:.75rem; }
+    .free-email-group { display:flex; gap:.5rem; }
+    .free-email-group input { flex:1; border:1.5px solid #e5e7eb; border-radius:.5rem; padding:.65rem .9rem; font-family:Sarabun,sans-serif; font-size:.9rem; }
+    .btn-get-free { background:#16a34a; color:white; border:none; padding:.65rem 1.25rem; border-radius:.5rem; font-family:Sarabun,sans-serif; font-size:.9rem; font-weight:700; cursor:pointer; white-space:nowrap; transition:all .2s; }
+    .btn-get-free:hover { background:#15803d; }
+
+    /* ── Section heading ── */
+    .section-divider { font-size:.8rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:.08em; margin:2rem 0 1rem; padding-bottom:.5rem; border-bottom:1px solid #f0e8ff; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav-inner">
+    <a href="/" class="logo">
+      <svg viewBox="0 0 36 36" fill="none"><polygon points="18,2 30,12 26,30 10,30 6,12" fill="#7c3aed" opacity="0.9"/><polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity="0.95"/><polygon points="18,8 30,12 18,28" fill="#a78bfa"/><polygon points="18,8 6,12 18,28" fill="#7c3aed"/></svg>
+      <span>AMETHEZ <small class="logo-tagline">Stones · Stories · Soul</small></span>
+    </a>
+    <nav><ul class="nav-links">
+      <li><a href="/stones/">💎 คลังหิน</a></li>
+      <li><a href="/guides/">🌿 พลังบำบัด</a></li>
+      <li><a href="/videos/">🎬 วิดีโอ</a></li>
+      <li><a href="/digital/" style="color:var(--purple)">📥 Digital</a></li>
+      <li><a href="/sale.html" style="color:var(--gold)">🛒 ร้านค้า</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="dp-hero">
+  <div class="container">
+    <h1>📥 Digital Products</h1>
+    <p>E-book คอร์ส PDF และสื่อดิจิทัลจาก Amethez — ดาวน์โหลดได้ทันที มีทั้งฟรีและเสียเงิน</p>
+    <div class="hero-pills">
+      <div class="hero-pill">🔮 <strong>สายมู</strong> ดวง ฤกษ์ ทำนาย</div>
+      <div class="hero-pill">💎 <strong>หิน</strong> คู่มือ คริสตัล</div>
+      <div class="hero-pill">📚 <strong>ความรู้</strong> คอร์ส E-book</div>
+      <div class="hero-pill">✨ <strong>คำคม</strong> Affirmation Wallpaper</div>
+    </div>
+  </div>
+</section>
+
+<!-- Filter -->
+<div class="dp-filter">
+  <div class="dp-filter-inner">
+    <div class="cat-tabs">
+      <button class="cat-tab active" data-cat="all" onclick="filterCat(this)">ทั้งหมด</button>
+      <button class="cat-tab" data-cat="saimu" onclick="filterCat(this)">🔮 สายมู</button>
+      <button class="cat-tab" data-cat="stone" onclick="filterCat(this)">💎 หิน</button>
+      <button class="cat-tab" data-cat="knowledge" onclick="filterCat(this)">📚 ความรู้</button>
+      <button class="cat-tab" data-cat="quote" onclick="filterCat(this)">✨ คำคม</button>
+    </div>
+    <div class="price-toggle">
+      <button class="price-btn active" data-price="all" onclick="filterPrice(this)">ทั้งหมด</button>
+      <button class="price-btn" data-price="free" onclick="filterPrice(this)">🆓 ฟรี</button>
+      <button class="price-btn paid" data-price="paid" onclick="filterPrice(this)">💳 เสียเงิน</button>
+    </div>
+  </div>
+</div>
+
+<!-- Products -->
+<div class="dp-body">
+  <div id="resultsInfo" style="font-size:.9rem;color:var(--text-muted);margin-bottom:1.25rem"></div>
+  <div id="dpGrid" class="dp-grid"></div>
+  <div id="noResults" class="no-results" style="display:none">
+    <div style="font-size:3rem;margin-bottom:1rem">📭</div>
+    <p>ยังไม่มีสินค้าในหมวดนี้ — กำลังเพิ่มเนื้อหาใหม่ทุกสัปดาห์</p>
+    <a href="https://line.me/R/ti/p/@amethez" target="_blank" class="btn btn-primary" style="margin-top:1rem;display:inline-flex;align-items:center;gap:.5rem">
+      💬 แจ้งความต้องการผ่าน Line
+    </a>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="productModal" onclick="closeModal(event)">
+  <div class="modal-box" id="modalBox">
+
+    <!-- ── Info View ── -->
+    <div id="viewInfo">
+      <div class="modal-header">
+        <div>
+          <div id="mCat" style="font-size:.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.25rem"></div>
+          <h2 id="mTitle" style="font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--text);line-height:1.3"></h2>
+        </div>
+        <button class="modal-close" onclick="document.getElementById('productModal').classList.remove('open')">✕</button>
+      </div>
+      <div id="mThumb" class="modal-thumb"></div>
+      <div class="modal-body">
+        <div id="mSub" style="color:var(--text-muted);font-size:.95rem;margin-bottom:.75rem"></div>
+        <div id="mDesc" style="color:var(--text);font-size:.93rem;line-height:1.7;margin-bottom:.75rem"></div>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1rem">
+          <div style="font-size:.85rem;color:var(--text-muted)">📄 <span id="mPages"></span></div>
+          <div style="font-size:.85rem;color:var(--text-muted)">📁 <span id="mFormat"></span></div>
+        </div>
+        <div class="modal-price-row">
+          <div id="mPrice" class="modal-price"></div>
+          <div id="mOrig" style="font-size:.9rem;color:var(--text-muted);text-decoration:line-through"></div>
+          <div id="mSave"></div>
+        </div>
+        <div id="mActions"></div>
+      </div>
+    </div>
+
+    <!-- ── Purchase View (paid) ── -->
+    <div id="viewPurchase" style="display:none">
+      <div class="modal-header" style="padding-bottom:.5rem">
+        <div>
+          <div style="font-size:.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.2rem">ชำระเงิน</div>
+          <div id="pvTitle" style="font-weight:700;font-size:1rem;color:var(--text)"></div>
+        </div>
+        <button class="modal-close" onclick="document.getElementById('productModal').classList.remove('open')">✕</button>
+      </div>
+
+      <!-- Step bar -->
+      <div class="purchase-steps">
+        <div class="step-item active" id="si1"><div class="step-dot">1</div><div class="step-label">สแกน QR</div></div>
+        <div class="step-line"></div>
+        <div class="step-item" id="si2"><div class="step-dot">2</div><div class="step-label">ยืนยัน</div></div>
+        <div class="step-line"></div>
+        <div class="step-item" id="si3"><div class="step-dot">3</div><div class="step-label">รับไฟล์</div></div>
+      </div>
+
+      <!-- Step 1: QR -->
+      <div id="stepQR" class="purchase-step">
+        <p style="color:var(--text-muted);font-size:.9rem;text-align:center;margin-bottom:.75rem">สแกนด้วยแอปธนาคารหรือ TrueMoney Wallet</p>
+        <div class="qr-wrapper" id="qrCanvas"></div>
+        <div class="qr-info-box">
+          <div class="qr-info-row"><span>ชื่อบัญชี</span><strong>Amethez.com</strong></div>
+          <div class="qr-info-row"><span>PromptPay</span><strong id="qrPhone">081-XXX-XXXX</strong></div>
+          <div class="qr-info-row"><span>ยอดชำระ</span><span class="qr-amount-badge" id="qrAmount"></span></div>
+        </div>
+        <button class="btn-buy" style="width:100%;margin-top:1rem" onclick="goStep(2)">ชำระเงินแล้ว → ถัดไป ✓</button>
+        <div style="text-align:center;margin-top:.75rem"><button class="back-btn" onclick="backToInfo()">← กลับดูรายละเอียด</button></div>
+      </div>
+
+      <!-- Step 2: Form -->
+      <div id="stepForm" class="purchase-step" style="display:none">
+        <div class="buy-form-group">
+          <label>Email สำหรับรับไฟล์ *</label>
+          <input type="email" id="buyerEmail" placeholder="your@email.com">
+        </div>
+        <div class="buy-form-group">
+          <label>แนบสลิปโอนเงิน * <span style="font-weight:400;color:var(--text-muted)">(ระบบตรวจสอบอัตโนมัติ)</span></label>
+          <input type="file" id="slipFile" accept="image/*" style="width:100%;border:1.5px dashed #c4b5fd;border-radius:.5rem;padding:.65rem .9rem;font-family:Sarabun,sans-serif;font-size:.88rem;cursor:pointer;box-sizing:border-box;background:#faf8ff">
+          <div style="font-size:.78rem;color:var(--text-muted);margin-top:.3rem">รองรับ JPG, PNG · ขนาดไม่เกิน 5MB</div>
+        </div>
+        <div class="buy-form-group">
+          <label>เลข 6 หลักท้ายรายการโอน <span style="font-weight:400;color:var(--text-muted)">(ถ้ามี)</span></label>
+          <input type="text" id="buyerRef" placeholder="เช่น 123456" maxlength="10" inputmode="numeric">
+        </div>
+        <div class="license-box">
+          <h4>📋 ข้อตกลงการใช้งาน (License)</h4>
+          <ul>
+            <li>ใช้งานส่วนตัวเท่านั้น — ห้ามแจก ขาย หรือส่งต่อ</li>
+            <li>ห้ามนำไปเผยแพร่ออนไลน์ในทุกช่องทาง</li>
+            <li>ห้ามดัดแปลงเนื้อหาเพื่อจำหน่ายในชื่ออื่น</li>
+            <li>พิมพ์ได้ 1 ชุดสำหรับใช้งานส่วนตัว</li>
+            <li>ลิขสิทธิ์ทั้งหมดเป็นของ Amethez.com ตาม พ.ร.บ. ลิขสิทธิ์ พ.ศ. 2537</li>
+          </ul>
+          <label class="license-accept"><input type="checkbox" id="acceptTerms"> ฉันอ่านและยอมรับข้อตกลงการใช้งานข้างต้นทุกข้อ</label>
+        </div>
+        <button class="btn-buy" style="width:100%;margin-top:.5rem" id="submitBtn" onclick="submitOrder()">📧 ส่งลิงค์ดาวน์โหลดมาที่ Email</button>
+        <div style="text-align:center;margin-top:.75rem"><button class="back-btn" onclick="goStep(1)">← กลับ QR Code</button></div>
+      </div>
+
+      <!-- Step 3: Success -->
+      <div id="stepSuccess" class="step-success" style="display:none">
+        <div class="success-icon">✅</div>
+        <h3>กำลังตรวจสอบสลิป...</h3>
+        <p>ระบบยืนยันการชำระเงินอัตโนมัติ ลิงค์ดาวน์โหลดจะถูกส่งไปที่<br><strong id="successEmail" style="color:var(--purple)"></strong><br>ภายใน <strong>ไม่เกิน 1 นาที</strong></p>
+        <p style="font-size:.85rem;margin-top:1rem">เช็คได้เลย — มาเร็วมาก! ไม่เจอใน Inbox? ดูโฟลเดอร์ Spam/Junk<br>หรือ <a href="https://line.me/R/ti/p/@amethez" target="_blank" style="color:var(--purple)">ติดต่อ Line @amethez</a></p>
+        <button class="btn-buy" style="margin-top:1.5rem" onclick="document.getElementById('productModal').classList.remove('open')">ปิด</button>
+      </div>
+    </div>
+
+    <!-- ── Free Download View ── -->
+    <div id="viewFree" style="display:none">
+      <div class="modal-header">
+        <div>
+          <div style="font-size:.75rem;font-weight:700;color:#16a34a;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.2rem">🆓 ดาวน์โหลดฟรี</div>
+          <div id="fvTitle" style="font-weight:700;font-size:1rem;color:var(--text)"></div>
+        </div>
+        <button class="modal-close" onclick="document.getElementById('productModal').classList.remove('open')">✕</button>
+      </div>
+      <div style="padding:1.25rem 1.5rem 2rem">
+        <div class="free-dl-box">
+          <h4>📥 รับไฟล์ฟรีทาง Email</h4>
+          <p style="font-size:.88rem;color:var(--text-muted);margin-bottom:.75rem">กรอก Email เพื่อรับลิงค์ดาวน์โหลดทันที ไม่มีค่าใช้จ่าย</p>
+          <div class="free-email-group">
+            <input type="email" id="freeEmail" placeholder="your@email.com">
+            <button class="btn-get-free" id="freeBtn" onclick="submitFree()">รับเลย →</button>
+          </div>
+        </div>
+        <div class="license-box" style="margin-top:1rem">
+          <h4>📋 เงื่อนไขการใช้งาน</h4>
+          <ul>
+            <li>ใช้งานส่วนตัวเท่านั้น — ห้ามแจก ขาย หรือส่งต่อ</li>
+            <li>ลิขสิทธิ์เป็นของ Amethez.com</li>
+          </ul>
+          <p style="font-size:.8rem;color:var(--text-muted);margin:0">การรับไฟล์ถือว่ายอมรับเงื่อนไขข้างต้น</p>
+        </div>
+        <div id="freeSuccess" style="display:none;text-align:center;padding:1.5rem">
+          <div style="font-size:3rem;margin-bottom:.75rem">📬</div>
+          <p style="font-weight:700">ส่งลิงค์ไปแล้ว!</p>
+          <p style="color:var(--text-muted);font-size:.9rem">ตรวจสอบ Email ของคุณ (รวมถึง Spam)</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container footer-bottom">
+    <p>© 2026 Amethez.com · <a href="/privacy.html" style="color:rgba(255,255,255,.5)">Privacy</a> · <a href="/terms.html" style="color:rgba(255,255,255,.5)">Terms</a></p>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+// ════════════════════════════════════════════════
+//  ⚙️  CONFIG — เปลี่ยนค่าตรงนี้ก่อนใช้งานจริง
+// ════════════════════════════════════════════════
+const CFG = {
+  promptpay_phone: '0812345678',          // ← เบอร์ PromptPay จริง
+  promptpay_name:  'Amethez.com',
+  webhook_paid:    'https://hook.eu1.make.com/REPLACE_PAID_WEBHOOK',   // ← Make.com paid webhook
+  webhook_free:    'https://hook.eu1.make.com/REPLACE_FREE_WEBHOOK',   // ← Make.com free webhook
+  line_oa:         'https://line.me/R/ti/p/@amethez',
+  download_base:   'https://amethez.com/digital/download.html'
+};
+
+// ── Load products ──────────────────────────────────────────
+let allProducts = [];
+let activeCat = 'all';
+let activePrice = 'all';
+
+const CAT_LABELS = { saimu:'สายมู', stone:'หิน', knowledge:'ความรู้', quote:'คำคม' };
+const CAT_EMOJI  = { saimu:'🔮', stone:'💎', knowledge:'📚', quote:'✨' };
+const TYPE_LABEL = { pdf:'PDF', course:'คอร์ส', printable:'พิมพ์ได้', digital:'ดิจิทัล' };
+
+async function loadProducts() {
+  try {
+    const res = await fetch('/data/digital-products.json');
+    const data = await res.json();
+    allProducts = data.products.filter(p => p.status === 'active').sort((a,b) => a.sort_order - b.sort_order);
+    renderProducts();
+  } catch(e) {
+    console.error(e);
+  }
+}
+
+// ── Filter ─────────────────────────────────────────────────
+function filterCat(el) {
+  document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  activeCat = el.dataset.cat;
+  renderProducts();
+}
+function filterPrice(el) {
+  document.querySelectorAll('.price-btn').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  activePrice = el.dataset.price;
+  renderProducts();
+}
+
+function getFiltered() {
+  return allProducts.filter(p => {
+    const catOk = activeCat === 'all' || p.category === activeCat;
+    const priceOk = activePrice === 'all' || (activePrice === 'free' && p.is_free) || (activePrice === 'paid' && !p.is_free);
+    return catOk && priceOk;
+  });
+}
+
+// ── Render ─────────────────────────────────────────────────
+function renderProducts() {
+  const filtered = getFiltered();
+  const grid = document.getElementById('dpGrid');
+  const noRes = document.getElementById('noResults');
+  const info = document.getElementById('resultsInfo');
+
+  if (!filtered.length) {
+    grid.innerHTML = '';
+    noRes.style.display = 'block';
+    info.textContent = '';
+    return;
+  }
+  noRes.style.display = 'none';
+
+  // Split free/paid for display
+  const free = filtered.filter(p => p.is_free);
+  const paid = filtered.filter(p => !p.is_free);
+  let html = '';
+
+  if (free.length && paid.length && activePrice === 'all') {
+    html += `<div class="section-divider" style="grid-column:1/-1">🆓 ฟรี — ดาวน์โหลดได้เลย</div>`;
+    html += free.map(renderCard).join('');
+    html += `<div class="section-divider" style="grid-column:1/-1">💳 Premium</div>`;
+    html += paid.map(renderCard).join('');
+  } else {
+    html = filtered.map(renderCard).join('');
+  }
+
+  grid.innerHTML = html;
+  info.textContent = `แสดง ${filtered.length} รายการ`;
+}
+
+function renderCard(p) {
+  const catClass = p.category;
+  const emoji = CAT_EMOJI[p.category] || '📄';
+  const badgeHtml = p.badge ? `<div class="dp-badge" style="background:${p.badge_color}">${p.badge}</div>` : '';
+  const typeHtml = `<div class="dp-type-badge">${TYPE_LABEL[p.type] || p.type}</div>`;
+
+  let priceHtml = '';
+  if (p.is_free) {
+    priceHtml = `<div class="dp-price free">ฟรี</div>`;
+  } else {
+    const save = p.price_original > p.price ? Math.round((1 - p.price/p.price_original)*100) : 0;
+    priceHtml = `
+      <div class="dp-price paid">฿${p.price.toLocaleString()}</div>
+      ${p.price_original > p.price ? `<div class="dp-price-orig">฿${p.price_original.toLocaleString()}</div>` : ''}
+      ${save > 0 ? `<div class="dp-save">ลด ${save}%</div>` : ''}`;
+  }
+
+  let actionBtn;
+  if (p.landing_url) {
+    actionBtn = `<a class="btn-buy" href="${p.landing_url}">🛒 ดูรายละเอียด</a>`;
+  } else if (p.is_free) {
+    actionBtn = `<button class="btn-free" onclick="showModal('${p.id}')">⬇️ ดาวน์โหลดฟรี</button>`;
+  } else {
+    actionBtn = `<button class="btn-buy" onclick="showModal('${p.id}')">🛒 ซื้อเลย</button>`;
+  }
+  const previewBtn = p.landing_url
+    ? `<a class="btn-preview" href="${p.landing_url}">เปิดหน้าขาย</a>`
+    : `<button class="btn-preview" onclick="showModal('${p.id}')">ดูรายละเอียด</button>`;
+
+  return `
+    <div class="dp-card">
+      <div class="dp-thumb ${catClass}">
+        ${emoji}
+        ${badgeHtml}${typeHtml}
+      </div>
+      <div class="dp-body-inner">
+        <div class="dp-cat">${CAT_EMOJI[p.category]} ${CAT_LABELS[p.category]}</div>
+        <div class="dp-title">${p.title}</div>
+        <div class="dp-sub">${p.subtitle}</div>
+        <div class="dp-meta">
+          <span class="dp-meta-tag">📄 ${p.pages}</span>
+          <span class="dp-meta-tag">📁 ${p.format}</span>
+        </div>
+        <div class="dp-price-row">${priceHtml}</div>
+        <div class="dp-actions">${actionBtn}${previewBtn}</div>
+      </div>
+    </div>`;
+}
+
+// ── PromptPay QR Generator ─────────────────────────────────
+function crc16(str) {
+  let crc = 0xFFFF;
+  for (let i = 0; i < str.length; i++) {
+    crc ^= str.charCodeAt(i) << 8;
+    for (let j = 0; j < 8; j++) {
+      crc = (crc & 0x8000) ? ((crc << 1) ^ 0x1021) : (crc << 1);
+      crc &= 0xFFFF;
+    }
+  }
+  return crc;
+}
+
+function buildPromptPayQR(phone, amount) {
+  const f = (id, val) => `${id}${String(val.length).padStart(2,'0')}${val}`;
+  const acct = f('00','A000000677010111') + f('01','0066' + phone.replace(/^0/,''));
+  const amtStr = Number(amount).toFixed(2);
+  let payload = f('00','01') + f('01','12') + f('29', acct) +
+    f('53','764') + f('54', amtStr) + f('58','TH') +
+    f('59', CFG.promptpay_name.slice(0,13)) + f('60','Bangkok') + '6304';
+  return payload + crc16(payload).toString(16).toUpperCase().padStart(4,'0');
+}
+
+// ── Current product in modal ───────────────────────────────
+let currentProduct = null;
+
+// ── Modal: show info view ──────────────────────────────────
+function showModal(id) {
+  const p = allProducts.find(x => x.id === id);
+  if (!p) return;
+  currentProduct = p;
+
+  document.getElementById('viewInfo').style.display = 'block';
+  document.getElementById('viewPurchase').style.display = 'none';
+  document.getElementById('viewFree').style.display = 'none';
+
+  document.getElementById('mCat').textContent = `${CAT_EMOJI[p.category]} ${CAT_LABELS[p.category]}`;
+  document.getElementById('mTitle').textContent = p.title;
+  document.getElementById('mSub').textContent = p.subtitle;
+  document.getElementById('mDesc').textContent = p.description || '';
+  document.getElementById('mPages').textContent = p.pages;
+  document.getElementById('mFormat').textContent = p.format;
+
+  const thumb = document.getElementById('mThumb');
+  thumb.className = `modal-thumb ${p.category}`;
+  thumb.innerHTML = CAT_EMOJI[p.category];
+
+  if (p.is_free) {
+    document.getElementById('mPrice').className = 'modal-price free';
+    document.getElementById('mPrice').textContent = 'ฟรี';
+    document.getElementById('mOrig').textContent = '';
+    document.getElementById('mSave').innerHTML = '';
+    document.getElementById('mActions').innerHTML =
+      `<button class="btn-free" style="width:100%;margin-top:.5rem" onclick="openFreeView()">⬇️ รับไฟล์ฟรี</button>`;
+  } else {
+    const save = p.price_original > p.price ? Math.round((1-p.price/p.price_original)*100) : 0;
+    document.getElementById('mPrice').className = 'modal-price paid';
+    document.getElementById('mPrice').textContent = `฿${p.price.toLocaleString()}`;
+    document.getElementById('mOrig').textContent = p.price_original > p.price ? `฿${p.price_original.toLocaleString()}` : '';
+    document.getElementById('mSave').innerHTML = save > 0 ? `<span class="dp-save">ลด ${save}%</span>` : '';
+    document.getElementById('mActions').innerHTML =
+      `<button class="btn-buy" style="width:100%;margin-top:.5rem" onclick="openPurchaseView()">🛒 ซื้อเลย — ฿${p.price.toLocaleString()}</button>`;
+  }
+
+  document.getElementById('productModal').classList.add('open');
+}
+
+// ── Open purchase flow ─────────────────────────────────────
+function openPurchaseView() {
+  const p = currentProduct;
+  document.getElementById('viewInfo').style.display = 'none';
+  document.getElementById('viewPurchase').style.display = 'block';
+  document.getElementById('pvTitle').textContent = p.title;
+
+  // Generate QR
+  document.getElementById('qrAmount').textContent = `฿${p.price.toLocaleString()}`;
+  const ph = CFG.promptpay_phone;
+  document.getElementById('qrPhone').textContent = ph.replace(/(\d{3})(\d{3})(\d{4})/,'$1-$2-$3');
+
+  const qrPayload = buildPromptPayQR(ph, p.price);
+  const qrEl = document.getElementById('qrCanvas');
+  qrEl.innerHTML = '';
+  new QRCode(qrEl, { text: qrPayload, width: 220, height: 220, colorDark:'#1a1228', colorLight:'#ffffff', correctLevel: QRCode.CorrectLevel.M });
+
+  goStep(1);
+}
+
+// ── Open free download view ────────────────────────────────
+function openFreeView() {
+  document.getElementById('viewInfo').style.display = 'none';
+  document.getElementById('viewFree').style.display = 'block';
+  document.getElementById('fvTitle').textContent = currentProduct.title;
+  document.getElementById('freeEmail').value = '';
+  document.getElementById('freeSuccess').style.display = 'none';
+}
+
+// ── Step navigation ────────────────────────────────────────
+function goStep(n) {
+  ['stepQR','stepForm','stepSuccess'].forEach((id,i) => {
+    document.getElementById(id).style.display = (i+1 === n) ? 'block' : 'none';
+  });
+  [1,2,3].forEach(i => {
+    const el = document.getElementById('si'+i);
+    el.classList.toggle('active', i === n);
+    el.classList.toggle('done', i < n);
+  });
+}
+
+function backToInfo() {
+  document.getElementById('viewPurchase').style.display = 'none';
+  document.getElementById('viewInfo').style.display = 'block';
+}
+
+// ── Submit paid order → Make.com → SlipOK auto-verify ─────
+async function submitOrder() {
+  const email = document.getElementById('buyerEmail').value.trim();
+  const ref   = document.getElementById('buyerRef').value.trim();
+  const terms = document.getElementById('acceptTerms').checked;
+  const slip  = document.getElementById('slipFile') ? document.getElementById('slipFile').files[0] : null;
+
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    alert('กรุณากรอก Email ให้ถูกต้อง'); return;
+  }
+  if (!terms) { alert('กรุณายอมรับข้อตกลงการใช้งานก่อน'); return; }
+
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = '⏳ กำลังส่ง...';
+  btn.disabled = true;
+
+  try {
+    const form = new FormData();
+    form.append('product_id',   currentProduct.id);
+    form.append('product_name', currentProduct.title);
+    form.append('price',        currentProduct.price);
+    form.append('email',        email);
+    form.append('ref',          ref || '');
+    if (slip) form.append('slip', slip, slip.name);
+
+    const res = await fetch(CFG.webhook_paid, { method:'POST', body: form });
+
+    if (res.ok) {
+      document.getElementById('successEmail').textContent = email;
+      goStep(3);
+    } else {
+      throw new Error('webhook error');
+    }
+  } catch(e) {
+    btn.textContent = '📧 ส่งลิงค์ดาวน์โหลดมาที่ Email';
+    btn.disabled = false;
+    alert('เกิดข้อผิดพลาด กรุณาติดต่อ Line @amethez หรือลองใหม่อีกครั้ง');
+  }
+}
+
+// ── Submit free product ────────────────────────────────────
+async function submitFree() {
+  const email = document.getElementById('freeEmail').value.trim();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    alert('กรุณากรอก Email ให้ถูกต้อง'); return;
+  }
+  const btn = document.getElementById('freeBtn');
+  btn.textContent = '⏳ กำลังส่ง...';
+  btn.disabled = true;
+
+  try {
+    await fetch(CFG.webhook_free, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ product_id: currentProduct.id, product_name: currentProduct.title, email })
+    });
+    document.getElementById('freeSuccess').style.display = 'block';
+    document.getElementById('freeEmail').style.display = 'none';
+    btn.style.display = 'none';
+  } catch(e) {
+    btn.textContent = 'รับเลย →';
+    btn.disabled = false;
+    alert('เกิดข้อผิดพลาด กรุณาลองใหม่');
+  }
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('productModal')) {
+    document.getElementById('productModal').classList.remove('open');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadProducts);
+</script>
+</body>
+</html>

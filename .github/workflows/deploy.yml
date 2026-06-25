@@ -1,0 +1,51 @@
+name: Deploy Amethez
+
+on:
+  schedule:
+    - cron: '0 1 * * *'   # 08:00 TH (UTC+7)
+    - cron: '0 6 * * *'   # 13:00 TH
+    - cron: '0 13 * * *'  # 20:00 TH
+  push:
+    branches: [main]
+  workflow_dispatch:       # manual trigger
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check scheduled posts
+        run: node scripts/check-schedule.js
+
+      - name: Generate sitemap
+        run: node scripts/sitemap.js || true
+
+      - name: Deploy to HostNeverDie via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          local-dir: ./
+          server-dir: /public_html/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/.github/**
+            **/scripts/**
+            **/admin/**
+            **/CLAUDE.md
+            **/Amethez.md
+
+      - name: Notify Line OA (new content)
+        if: success()
+        run: |
+          echo "Deploy successful at $(date '+%Y-%m-%d %H:%M:%S TH')"

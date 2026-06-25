@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="metaTitle">ร้านค้า — Amethez</title>
+  <meta name="description" content="สินค้าหินคริสตัลคัดพิเศษจาก Amethez">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    /* ══════════════════════════════════════
+       HERO SHOWCASE — สินค้า featured
+    ══════════════════════════════════════ */
+    .showcase {
+      background: linear-gradient(160deg, #0d0720 0%, #1e0d45 40%, #120828 100%);
+      min-height: 100vh;
+      padding: 3rem 0 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    /* กากบาทแสงพื้นหลัง */
+    .showcase::before {
+      content: '';
+      position: absolute;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 900px; height: 900px;
+      background: radial-gradient(ellipse, rgba(124,58,237,0.22) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .showcase::after {
+      content: '';
+      position: absolute;
+      bottom: -100px; right: -100px;
+      width: 600px; height: 600px;
+      background: radial-gradient(ellipse, rgba(201,168,76,0.08) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .showcase-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Gemma greeting ── */
+    .gemma-strip {
+      display: inline-flex; align-items: center; gap: .75rem;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 3rem; padding: .5rem 1.25rem;
+      margin-bottom: 2.5rem; color: rgba(255,255,255,.85);
+      font-size: .9rem;
+    }
+    .gemma-strip .av { font-size: 1.4rem; }
+
+    /* ── Main grid ── */
+    .product-showcase {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 3.5rem;
+      align-items: start;
+    }
+    @media(max-width:850px) {
+      .product-showcase { grid-template-columns: 1fr; gap: 2rem; }
+    }
+
+    /* ── Media Side ── */
+    .media-side { position: sticky; top: 100px; }
+    .main-image-box {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(124,58,237,.3);
+      border-radius: 1.5rem;
+      aspect-ratio: 1;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; position: relative;
+      box-shadow: 0 0 80px rgba(124,58,237,.2), inset 0 0 40px rgba(0,0,0,.3);
+    }
+    .main-image-box img,
+    .main-image-box video {
+      width: 100%; height: 100%; object-fit: cover;
+      border-radius: 1.5rem;
+    }
+    .main-image-box .crystal-placeholder {
+      font-size: 9rem; filter: drop-shadow(0 0 40px rgba(167,139,250,.6));
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+    /* ป้าย badge บนรูป */
+    .media-badge {
+      position: absolute; top: 1rem; left: 1rem;
+      background: var(--purple);
+      color: white; font-size: .8rem; font-weight: 700;
+      padding: .35rem .9rem; border-radius: 2rem;
+      box-shadow: 0 4px 12px rgba(124,58,237,.5);
+      backdrop-filter: blur(4px);
+    }
+    /* เหลือน้อย */
+    .stock-flame {
+      position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%);
+      background: rgba(0,0,0,.6); backdrop-filter: blur(8px);
+      border: 1px solid rgba(245,158,11,.4);
+      color: #f59e0b; font-size: .82rem; font-weight: 700;
+      padding: .4rem 1.1rem; border-radius: 2rem;
+      white-space: nowrap;
+    }
+    /* thumbnail strip */
+    .thumb-strip {
+      display: flex; gap: .6rem; margin-top: 1rem;
+    }
+    .thumb {
+      width: 64px; height: 64px; border-radius: .6rem;
+      border: 2px solid rgba(255,255,255,.1);
+      overflow: hidden; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; background: rgba(255,255,255,.04);
+      transition: border-color .2s;
+    }
+    .thumb.active, .thumb:hover { border-color: var(--purple); }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ── Info Side ── */
+    .info-side { color: white; }
+
+    .product-label {
+      font-size: .78rem; letter-spacing: .15em;
+      text-transform: uppercase; color: var(--gold);
+      font-weight: 700; margin-bottom: .75rem;
+    }
+    .product-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.75rem, 4vw, 2.6rem);
+      font-weight: 900; line-height: 1.2;
+      color: white; margin-bottom: .6rem;
+    }
+    .product-tagline {
+      font-size: 1rem; color: rgba(255,255,255,.65);
+      line-height: 1.7; margin-bottom: 1.75rem;
+    }
+
+    /* price block */
+    .price-block {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(201,168,76,.25);
+      border-radius: 1rem; padding: 1.25rem 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+    .price-was {
+      font-size: .9rem; color: rgba(255,255,255,.35);
+      text-decoration: line-through; margin-bottom: .25rem;
+    }
+    .price-now {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem; font-weight: 900;
+      color: var(--gold); line-height: 1;
+    }
+    .price-now sup { font-size: 1.2rem; vertical-align: super; }
+    .price-save-pill {
+      display: inline-block; margin-top: .5rem;
+      background: #ef4444; color: white;
+      font-size: .78rem; font-weight: 700;
+      padding: .25rem .75rem; border-radius: 2rem;
+    }
+
+    /* quick specs */
+    .spec-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: .6rem; margin-bottom: 1.75rem;
+    }
+    .spec-item {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: .6rem; padding: .65rem .9rem;
+      display: flex; align-items: center; gap: .6rem;
+    }
+    .spec-icon { font-size: 1.1rem; flex-shrink: 0; }
+    .spec-text .sl { font-size: .72rem; color: rgba(255,255,255,.45); }
+    .spec-text .sv { font-size: .9rem; font-weight: 700; color: white; }
+
+    /* description */
+    .prod-desc {
+      color: rgba(255,255,255,.7); font-size: .92rem;
+      line-height: 1.85; margin-bottom: 1.75rem;
+      padding-bottom: 1.75rem;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    /* benefits tags */
+    .benefit-tags {
+      display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.75rem;
+    }
+    .btag {
+      background: rgba(124,58,237,.2);
+      border: 1px solid rgba(124,58,237,.35);
+      color: #c4b5fd; font-size: .8rem;
+      padding: .3rem .85rem; border-radius: 2rem;
+    }
+
+    /* CTA buttons */
+    .cta-group { display: flex; flex-direction: column; gap: .85rem; }
+    .btn-line-main {
+      display: flex; align-items: center; justify-content: center; gap: .75rem;
+      background: #06C755; color: white;
+      padding: 1rem 1.5rem; border-radius: .85rem;
+      font-family: 'Sarabun', sans-serif;
+      font-size: 1.1rem; font-weight: 700;
+      text-decoration: none; transition: all .2s;
+      box-shadow: 0 8px 24px rgba(6,199,85,.25);
+    }
+    .btn-line-main:hover {
+      background: #05a647; color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(6,199,85,.35);
+    }
+    .btn-line-main .line-logo { font-size: 1.4rem; }
+    .btn-consult {
+      display: flex; align-items: center; justify-content: center; gap: .6rem;
+      background: rgba(255,255,255,.07);
+      border: 1.5px solid rgba(255,255,255,.15);
+      color: white; padding: .85rem;
+      border-radius: .85rem; font-family: 'Sarabun', sans-serif;
+      font-size: .95rem; font-weight: 600;
+      text-decoration: none; transition: all .2s;
+    }
+    .btn-consult:hover {
+      background: rgba(255,255,255,.12); color: white;
+    }
+
+    /* trust badges */
+    .trust-row {
+      display: flex; gap: 1.25rem; margin-top: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .trust-item {
+      display: flex; align-items: center; gap: .4rem;
+      font-size: .78rem; color: rgba(255,255,255,.45);
+    }
+
+    /* ══ More Products ══ */
+    .more-section {
+      background: var(--bg); padding: 4rem 0;
+    }
+
+    /* ══ Floating CTA Mobile ══ */
+    .floating-cta {
+      display: none;
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: rgba(13,7,32,.95);
+      backdrop-filter: blur(16px);
+      border-top: 1px solid rgba(124,58,237,.3);
+      padding: 1rem 1.5rem; z-index: 100;
+    }
+    @media(max-width:640px) { .floating-cta { display: flex; flex-direction: column; gap: .6rem; } }
+    .floating-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; color: var(--gold); font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="site-header">
+  <div class="container nav-inner">
+    <a href="/" class="logo">
+      <svg viewBox="0 0 36 36" fill="none"><polygon points="18,2 30,12 26,30 10,30 6,12" fill="#7c3aed" opacity="0.9"/><polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity="0.95"/><polygon points="18,8 30,12 18,28" fill="#a78bfa"/><polygon points="18,8 6,12 18,28" fill="#7c3aed"/></svg>
+      <span>AMETHEZ <small class="logo-tagline">Stones · Stories · Soul</small></span>
+    </a>
+    <nav><ul class="nav-links">
+      <li><a href="/stones/">คลังหิน</a></li>
+      <li><a href="/categories/chakra.html">จักระ</a></li>
+      <li><a href="/categories/zodiac.html">ราศี</a></li>
+      <li><a href="/wuchong/">Master Wuchong</a></li>
+      <li><a href="/metha/">อาจารย์เมธา</a></li>
+      <li><a href="/sale.html" style="color:var(--gold);font-weight:700">🛒 ร้านค้า</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<!-- ════════════ SHOWCASE ════════════ -->
+<section class="showcase" id="showcase">
+  <div class="showcase-inner">
+
+    <!-- Gemma greeting -->
+    <div class="gemma-strip" id="gemmaStrip">
+      <span class="av">💁</span>
+      <span id="gemmaText">กำลังโหลด...</span>
+    </div>
+
+    <!-- Product showcase -->
+    <div class="product-showcase" id="productShowcase">
+      <div style="text-align:center;padding:4rem;color:rgba(255,255,255,.4)">⏳</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════ MORE PRODUCTS (ถ้ามีหลายชิ้น) ════════════ -->
+<section class="more-section" id="moreSection" style="display:none">
+  <div class="container">
+    <h2 style="margin-bottom:2rem;text-align:center">สินค้าอื่นๆ</h2>
+    <div class="grid-3" id="moreGrid"></div>
+  </div>
+</section>
+
+<!-- Floating CTA (mobile) -->
+<div class="floating-cta" id="floatingCTA" style="display:none">
+  <div style="display:flex;align-items:center;justify-content:space-between">
+    <div>
+      <div style="font-size:.75rem;color:rgba(255,255,255,.5)">ราคาพิเศษ</div>
+      <div class="floating-price" id="floatingPrice"></div>
+    </div>
+    <a id="floatingLineBtn" href="#" target="_blank" class="btn-line-main" style="padding:.65rem 1.25rem;font-size:.9rem">
+      <span class="line-logo">💬</span> สั่งผ่าน Line
+    </a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo" style="margin-bottom:.75rem">AMETHEZ</div>
+        <p>ศูนย์กลางข้อมูลคริสตัลและพลอยที่ใหญ่ที่สุดในไทย</p>
+      </div>
+      <div class="footer-col">
+        <h4>หมวดหมู่</h4>
+        <ul>
+          <li><a href="/categories/chakra.html">หินตามจักระ</a></li>
+          <li><a href="/categories/zodiac.html">หินตามราศี</a></li>
+          <li><a href="/stones/">คลังหินทั้งหมด</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>ลิงก์</h4>
+        <ul>
+          <li><a href="/about.html">เกี่ยวกับเรา</a></li>
+          <li><a href="/contact.html">ติดต่อเรา</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Amethez.com — ราคาและสต็อกอาจเปลี่ยนแปลงได้โดยไม่แจ้งล่วงหน้า</p>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/main.js"></script>
+<script>
+// ───────────────────────────────────
+//  LOAD & RENDER
+// ───────────────────────────────────
+async function loadSalePage() {
+  const data = await fetch('/data/sale-products.json').then(r => r.json());
+  const { settings, products } = data;
+  const active = products.filter(p => p.status === 'active').sort((a,b) => a.sort_order - b.sort_order);
+
+  // page meta
+  document.title = settings.page_title + ' — Amethez';
+  document.getElementById('gemmaText').textContent = settings.gemma_message;
+
+  if (!active.length) {
+    document.getElementById('productShowcase').innerHTML = `
+      <div style="grid-column:span 2;text-align:center;padding:4rem;color:rgba(255,255,255,.4)">
+        <div style="font-size:5rem;margin-bottom:1rem">🔮</div>
+        <p>กำลังเตรียมสินค้าใหม่ — ติดตามที่ Line</p>
+      </div>`;
+    return;
+  }
+
+  const hero = active[0];
+  const rest = active.slice(1);
+  const lineId = hero.line_id || settings.line_id;
+  const lineHref = `https://line.me/R/ti/p/${lineId}`;
+
+  renderHero(hero, lineHref);
+
+  if (rest.length) {
+    document.getElementById('moreSection').style.display = 'block';
+    document.getElementById('moreGrid').innerHTML = rest.map(p => renderSmallCard(p, settings)).join('');
+  }
+
+  // Floating CTA
+  document.getElementById('floatingPrice').textContent = `฿${hero.price.toLocaleString()}`;
+  document.getElementById('floatingLineBtn').href = lineHref;
+
+  // Show floating on scroll
+  const floatEl = document.getElementById('floatingCTA');
+  const showcase = document.getElementById('showcase');
+  window.addEventListener('scroll', () => {
+    const past = window.scrollY > showcase.offsetHeight * 0.4;
+    floatEl.style.display = past ? 'flex' : 'none';
+  });
+}
+
+function renderHero(p, lineHref) {
+  const mediaSrc = p.video_url
+    ? `<video src="${p.video_url}" autoplay loop muted playsinline></video>`
+    : (p.images && p.images[0])
+      ? `<img src="${p.images[0]}" alt="${p.name}">`
+      : `<div class="crystal-placeholder">💎</div>`;
+
+  const thumbs = p.images && p.images.length > 1
+    ? `<div class="thumb-strip">${p.images.map((img,i) =>
+        `<div class="thumb${i===0?' active':''}" onclick="swapImg('${img}',this)"><img src="${img}" alt=""></div>`
+      ).join('')}</div>`
+    : '';
+
+  const wasPart = p.price_original
+    ? `<div class="price-was">ราคาปกติ ฿${p.price_original.toLocaleString()}</div>
+       <span class="price-save-pill">ประหยัด ฿${(p.price_original - p.price).toLocaleString()} (${Math.round((1-p.price/p.price_original)*100)}%)</span>`
+    : '';
+
+  const stockPart = (p.stock_count && p.stock_count <= 5)
+    ? `<div class="stock-flame">🔥 เหลือเพียง ${p.stock_count} ชิ้นในสต็อก</div>`
+    : '';
+
+  const badge = p.badge ? `<div class="media-badge">${p.badge}</div>` : '';
+
+  document.getElementById('productShowcase').innerHTML = `
+    <!-- MEDIA -->
+    <div class="media-side">
+      <div class="main-image-box" id="mainBox">
+        ${mediaSrc}
+        ${badge}
+        ${stockPart}
+      </div>
+      ${thumbs}
+    </div>
+
+    <!-- INFO -->
+    <div class="info-side">
+      <div class="product-label">Crystal Atlas × Gemma · คัดพิเศษ</div>
+      <h1 class="product-name">${p.name}</h1>
+      <p class="product-tagline">${p.tagline}</p>
+
+      <!-- Price -->
+      <div class="price-block">
+        ${wasPart}
+        <div class="price-now"><sup>฿</sup>${p.price.toLocaleString()}</div>
+        <div style="font-size:.82rem;color:rgba(255,255,255,.4);margin-top:.5rem">ราคา / ${p.unit}</div>
+      </div>
+
+      <!-- Specs -->
+      <div class="spec-grid">
+        <div class="spec-item">
+          <span class="spec-icon">⚖️</span>
+          <div class="spec-text"><div class="sl">น้ำหนัก</div><div class="sv">50 กิโลกรัม</div></div>
+        </div>
+        <div class="spec-item">
+          <span class="spec-icon">🌎</span>
+          <div class="spec-text"><div class="sl">แหล่งกำเนิด</div><div class="sv">บราซิล</div></div>
+        </div>
+        <div class="spec-item">
+          <span class="spec-icon">💜</span>
+          <div class="spec-text"><div class="sl">สี</div><div class="sv">Deep Purple</div></div>
+        </div>
+        <div class="spec-item">
+          <span class="spec-icon">✅</span>
+          <div class="spec-text"><div class="sl">สถานะ</div><div class="sv">${p.in_stock ? 'มีสินค้า' : 'สินค้าหมด'}</div></div>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <p class="prod-desc">${p.description}</p>
+
+      <!-- Benefits -->
+      <div class="benefit-tags">
+        <span class="btag">💜 เสริมสมาธิ</span>
+        <span class="btag">🛡️ ป้องกันพลังงานลบ</span>
+        <span class="btag">🌟 ดูดซับพลังงาน</span>
+        <span class="btag">🏠 ตกแต่งบ้าน</span>
+        <span class="btag">☯️ จักระมงกุฎ</span>
+        <span class="btag">🔮 Third Eye</span>
+      </div>
+
+      <!-- CTA -->
+      <div class="cta-group">
+        <a href="${lineHref}" target="_blank" class="btn-line-main">
+          <span class="line-logo">💚</span>
+          สั่งซื้อผ่าน Line — ส่งรูปดูเพิ่มได้เลย
+        </a>
+        <a href="/contact.html" class="btn-consult">
+          💬 ถามก่อนซื้อ — ทีมงานพร้อมตอบทุกคำถาม
+        </a>
+      </div>
+
+      <!-- Trust -->
+      <div class="trust-row">
+        <div class="trust-item">✅ หินแท้ 100%</div>
+        <div class="trust-item">📦 จัดส่งทั่วไทย</div>
+        <div class="trust-item">💬 ตอบภายใน 2 ชม.</div>
+        <div class="trust-item">🔄 รับประกันความพอใจ</div>
+      </div>
+    </div>
+  `;
+}
+
+function swapImg(src, el) {
+  const box = document.getElementById('mainBox');
+  let img = box.querySelector('img');
+  if (!img) {
+    img = document.createElement('img');
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:1.5rem';
+    box.insertBefore(img, box.firstChild);
+  }
+  img.src = src;
+  document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function renderSmallCard(p, settings) {
+  const lineId = p.line_id || settings.line_id;
+  const media = (p.images && p.images[0])
+    ? `<img src="${p.images[0]}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover">`
+    : `<span style="font-size:3.5rem">💎</span>`;
+  return `
+    <div class="card">
+      <div style="aspect-ratio:1;background:#f5f0ff;border-radius:.75rem;display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:1rem">
+        ${media}
+      </div>
+      <h3 style="font-size:1.05rem;margin-bottom:.35rem">${p.name}</h3>
+      <p style="font-size:.85rem;color:var(--text-muted);margin-bottom:.75rem">${p.tagline}</p>
+      <div style="font-size:1.5rem;font-weight:700;color:var(--purple);font-family:'Playfair Display',serif;margin-bottom:1rem">
+        ฿${p.price.toLocaleString()}
+      </div>
+      <a href="https://line.me/R/ti/p/${lineId}" target="_blank" class="btn btn-line" style="width:100%;justify-content:center">
+        💬 สั่งผ่าน Line
+      </a>
+    </div>`;
+}
+
+loadSalePage();
+</script>
+</body>
+</html>

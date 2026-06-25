@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>โมลดาไวท์ หินเปลี่ยนชีวิต — E-Book Premium | Amethez</title>
+  <meta name="description" content="E-Book โมลดาไวท์ เปิดเส้นทางเงินและความสำเร็จ โดย Master Wuchong × Crystal Atlas ฿299 ดาวน์โหลดได้ทันที">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --gold:#c9a84c; --purple:#7c3aed; --dark:#0f0a1e; --text:#1a1228; --muted:#6b7280; --bg:#faf8f4; --border:#ede9fe; --green:#4ade80; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:Sarabun,sans-serif; background:var(--bg); color:var(--text); }
+
+    /* ── NAV ── */
+    .nav { background:rgba(15,10,30,.97); backdrop-filter:blur(12px); padding:.875rem 1.5rem; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; }
+    .nav-logo { font-family:'Playfair Display',serif; color:var(--gold); font-size:1.1rem; font-weight:700; text-decoration:none; letter-spacing:.05em; }
+    .nav-back { color:rgba(255,255,255,.5); font-size:.82rem; text-decoration:none; display:flex; align-items:center; gap:.35rem; }
+    .nav-back:hover { color:white; }
+    .nav-buy { background:var(--gold); color:var(--dark); padding:.45rem 1.1rem; border-radius:2rem; font-size:.82rem; font-weight:700; text-decoration:none; font-family:Sarabun,sans-serif; }
+
+    /* ── HERO ── */
+    .hero { background:linear-gradient(155deg,#0f0a1e 0%,#1a0936 45%,#0c1a3a 100%); padding:5rem 1.5rem 4rem; position:relative; overflow:hidden; }
+    .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 70% 60% at 30% 50%,rgba(124,58,237,.2) 0%,transparent 65%); pointer-events:none; }
+    .hero-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; position:relative; }
+    @media(max-width:720px){ .hero-inner{grid-template-columns:1fr; gap:2.5rem; text-align:center;} }
+
+    /* Book mockup */
+    .book-mockup { position:relative; }
+    .book-3d { width:240px; margin:0 auto; position:relative; filter:drop-shadow(0 40px 80px rgba(0,0,0,.6)); }
+    .book-cover {
+      background:linear-gradient(155deg,#1a0936,#2d1b5e,#0c1a3a);
+      border-radius:4px 16px 16px 4px;
+      padding:2.5rem 2rem;
+      text-align:center; color:white;
+      border:1px solid rgba(201,168,76,.2);
+      position:relative; overflow:hidden;
+    }
+    .book-cover::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 80% 70% at 50% 30%,rgba(124,58,237,.3) 0%,transparent 65%); }
+    .book-cover-gem { font-size:4rem; margin-bottom:1rem; position:relative; filter:drop-shadow(0 0 20px rgba(124,58,237,.8)); }
+    .book-cover-title { font-family:'Playfair Display',serif; font-size:1rem; line-height:1.35; position:relative; }
+    .book-cover-title .g { color:var(--gold); }
+    .book-cover-title .l { color:#c4b5fd; font-style:italic; }
+    .book-cover-sub { font-size:.65rem; color:rgba(255,255,255,.4); margin-top:.5rem; letter-spacing:.05em; position:relative; }
+    .book-cover-line { width:40px; height:1px; background:var(--gold); margin:.875rem auto; position:relative; }
+    .book-cover-by { font-size:.62rem; color:rgba(255,255,255,.35); position:relative; }
+    .book-spine { position:absolute; left:-12px; top:0; bottom:0; width:12px; background:linear-gradient(to right,#0a0718,#1a0936); border-radius:4px 0 0 4px; border-right:1px solid rgba(255,255,255,.05); }
+    .book-shadow { position:absolute; bottom:-20px; left:10px; right:-10px; height:20px; background:radial-gradient(ellipse,rgba(0,0,0,.5) 0%,transparent 70%); filter:blur(8px); }
+    .book-badges { display:flex; gap:.5rem; justify-content:center; margin-top:2rem; flex-wrap:wrap; }
+    .book-badge { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); color:rgba(255,255,255,.6); font-size:.72rem; padding:.25rem .7rem; border-radius:2rem; }
+    .book-badge strong { color:var(--gold); }
+
+    /* Hero copy */
+    .hero-kicker { font-size:.75rem; font-weight:700; color:rgba(201,168,76,.8); text-transform:uppercase; letter-spacing:.12em; margin-bottom:1rem; }
+    .hero-title { font-family:'Playfair Display',serif; font-size:clamp(1.9rem,4.5vw,3rem); color:white; line-height:1.2; margin-bottom:1.25rem; }
+    .hero-title em { font-style:italic; color:#c4b5fd; }
+    .hero-title .gold { color:var(--gold); }
+    .hero-sub { color:rgba(255,255,255,.6); font-size:.97rem; line-height:1.8; margin-bottom:2rem; }
+    .hero-price-row { display:flex; align-items:baseline; gap:.75rem; margin-bottom:1.75rem; flex-wrap:wrap; }
+    .price-now { font-family:'Playfair Display',serif; font-size:2.5rem; color:var(--gold); font-weight:700; }
+    .price-orig { font-size:1.1rem; color:rgba(255,255,255,.3); text-decoration:line-through; }
+    .price-save { background:rgba(201,168,76,.15); color:var(--gold); font-size:.78rem; font-weight:700; padding:.2rem .6rem; border-radius:1rem; }
+    .hero-cta { width:100%; background:linear-gradient(135deg,var(--gold),#b8922e); color:var(--dark); padding:1rem 2rem; border-radius:.75rem; font-family:Sarabun,sans-serif; font-size:1.05rem; font-weight:700; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:.5rem; transition:all .2s; max-width:380px; text-decoration:none; }
+    .hero-cta:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(201,168,76,.4); }
+    .hero-guarantee { display:flex; align-items:center; gap:.5rem; color:rgba(255,255,255,.4); font-size:.78rem; margin-top:.875rem; }
+
+    /* ── SOCIAL PROOF ── */
+    .proof-bar { background:#f8f5ff; border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:1.25rem 1.5rem; }
+    .proof-inner { max-width:900px; margin:0 auto; display:flex; align-items:center; justify-content:center; gap:3rem; flex-wrap:wrap; }
+    .proof-item { text-align:center; }
+    .proof-num { font-family:'Playfair Display',serif; font-size:1.75rem; color:var(--purple); font-weight:700; }
+    .proof-label { font-size:.72rem; color:var(--muted); }
+
+    /* ── SECTIONS ── */
+    .wrap { max-width:900px; margin:0 auto; padding:0 1.5rem; }
+    .section { padding:4rem 1.5rem; }
+    .sec-dark { background:linear-gradient(155deg,#0f0a1e,#1a0936); }
+    .sec-label { font-size:.72rem; font-weight:700; color:var(--purple); text-transform:uppercase; letter-spacing:.12em; margin-bottom:.5rem; }
+    .sec-label-gold { color:rgba(201,168,76,.8); }
+    .sec-title { font-family:'Playfair Display',serif; font-size:1.75rem; color:var(--text); line-height:1.3; margin-bottom:.5rem; }
+    .sec-title-white { color:white; }
+    .sec-sub { color:var(--muted); font-size:.9rem; line-height:1.7; }
+    .sec-sub-white { color:rgba(255,255,255,.5); }
+
+    /* ── WHAT'S INSIDE ── */
+    .chapters-list { display:flex; flex-direction:column; gap:1rem; margin-top:1.75rem; }
+    .ch-item { display:flex; gap:1.25rem; align-items:flex-start; background:white; border:1.5px solid var(--border); border-radius:1rem; padding:1.25rem 1.375rem; transition:all .2s; }
+    .ch-item:hover { border-color:var(--purple); box-shadow:0 4px 16px rgba(124,58,237,.08); }
+    .ch-num { font-family:'Playfair Display',serif; font-size:1.75rem; color:var(--border); font-weight:700; flex-shrink:0; line-height:1; }
+    .ch-body strong { display:block; font-size:.97rem; color:var(--text); margin-bottom:.3rem; }
+    .ch-body span { font-size:.82rem; color:var(--muted); line-height:1.6; }
+    .ch-pages { font-size:.72rem; color:var(--purple); font-weight:700; margin-top:.4rem; }
+
+    /* ── BONUS ── */
+    .bonus-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-top:1.75rem; }
+    @media(max-width:600px){ .bonus-grid{grid-template-columns:1fr;} }
+    .bonus-card { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:1rem; padding:1.375rem; text-align:center; }
+    .bonus-icon { font-size:2.5rem; margin-bottom:.75rem; }
+    .bonus-title { font-weight:700; color:white; font-size:.92rem; margin-bottom:.35rem; }
+    .bonus-sub { font-size:.78rem; color:rgba(255,255,255,.45); line-height:1.5; }
+    .bonus-val { font-size:.75rem; font-weight:700; color:var(--gold); margin-top:.6rem; }
+
+    /* ── FOR WHO ── */
+    .who-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1rem; margin-top:1.75rem; }
+    @media(max-width:560px){ .who-grid{grid-template-columns:1fr;} }
+    .who-card { display:flex; gap:.875rem; align-items:flex-start; background:white; border:1.5px solid var(--border); border-radius:.875rem; padding:1.125rem; }
+    .who-icon { font-size:1.5rem; flex-shrink:0; }
+    .who-text strong { display:block; font-size:.9rem; color:var(--text); font-weight:700; margin-bottom:.2rem; }
+    .who-text span { font-size:.8rem; color:var(--muted); line-height:1.5; }
+
+    /* ── TESTIMONIALS ── */
+    .testi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-top:1.75rem; }
+    @media(max-width:640px){ .testi-grid{grid-template-columns:1fr;} }
+    .testi { background:white; border:1.5px solid var(--border); border-radius:1rem; padding:1.375rem; }
+    .testi-stars { color:#f59e0b; font-size:.9rem; margin-bottom:.75rem; }
+    .testi-text { font-size:.85rem; color:var(--text); line-height:1.7; font-style:italic; margin-bottom:.875rem; }
+    .testi-name { font-size:.75rem; font-weight:700; color:var(--purple); }
+    .testi-role { font-size:.72rem; color:var(--muted); }
+
+    /* ── CTA BLOCK ── */
+    .cta-block { background:linear-gradient(155deg,#0f0a1e,#1a0936,#0c1a3a); border-radius:1.5rem; padding:3rem 2.5rem; text-align:center; margin:0 auto; max-width:640px; border:1px solid rgba(201,168,76,.15); }
+    .cta-gem { font-size:3.5rem; margin-bottom:1rem; filter:drop-shadow(0 0 20px rgba(124,58,237,.6)); }
+    .cta-title { font-family:'Playfair Display',serif; font-size:1.6rem; color:white; margin-bottom:.75rem; line-height:1.3; }
+    .cta-sub { color:rgba(255,255,255,.5); font-size:.88rem; line-height:1.7; margin-bottom:1.75rem; }
+    .cta-price-row { margin-bottom:1.5rem; }
+    .cta-price { font-family:'Playfair Display',serif; font-size:3rem; color:var(--gold); font-weight:700; }
+    .cta-price-note { font-size:.8rem; color:rgba(255,255,255,.35); }
+    .cta-btn { display:flex; align-items:center; justify-content:center; gap:.5rem; background:linear-gradient(135deg,var(--gold),#b8922e); color:var(--dark); padding:1.1rem 2rem; border-radius:.75rem; font-family:Sarabun,sans-serif; font-size:1.05rem; font-weight:700; border:none; cursor:pointer; width:100%; max-width:400px; margin:0 auto; text-decoration:none; transition:all .2s; }
+    .cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(201,168,76,.4); }
+    .cta-secure { display:flex; align-items:center; justify-content:center; gap:1.5rem; margin-top:1.25rem; flex-wrap:wrap; }
+    .cta-secure span { font-size:.75rem; color:rgba(255,255,255,.3); display:flex; align-items:center; gap:.3rem; }
+
+    /* ── MODAL OVERLAY ── */
+    .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.7); z-index:500; align-items:center; justify-content:center; padding:1rem; }
+    .modal-overlay.open { display:flex; }
+    .modal { background:white; border-radius:1.25rem; width:100%; max-width:480px; max-height:90vh; overflow-y:auto; }
+    .modal-head { background:linear-gradient(135deg,#0f0a1e,#1a0936); padding:1.5rem 1.75rem; border-radius:1.25rem 1.25rem 0 0; display:flex; align-items:center; justify-content:space-between; }
+    .modal-head h3 { font-family:'Playfair Display',serif; color:white; font-size:1.15rem; }
+    .modal-close { background:none; border:none; color:rgba(255,255,255,.5); font-size:1.5rem; cursor:pointer; line-height:1; }
+    .modal-body { padding:1.75rem; }
+    .modal-step { display:none; }
+    .modal-step.active { display:block; }
+
+    /* Step 1 — QR */
+    .qr-amount-row { display:flex; align-items:center; justify-content:space-between; background:#f8f5ff; border-radius:.875rem; padding:1rem 1.25rem; margin-bottom:1.5rem; }
+    .qr-amount { font-family:'Playfair Display',serif; font-size:2rem; color:var(--purple); font-weight:700; }
+    .qr-label { font-size:.78rem; color:var(--muted); }
+    .qr-box { background:#f8f5ff; border-radius:1rem; padding:1.5rem; text-align:center; margin-bottom:1.25rem; }
+    .qr-box canvas, .qr-box img { border-radius:.5rem; }
+    .qr-note { font-size:.78rem; color:var(--muted); text-align:center; line-height:1.6; }
+    .qr-pp-logo { font-size:1.5rem; margin-bottom:.25rem; }
+
+    /* Step 2 — Form */
+    .form-label { display:block; font-size:.82rem; font-weight:700; color:var(--text); margin-bottom:.4rem; }
+    .form-input { width:100%; padding:.75rem 1rem; border:1.5px solid #e5e7eb; border-radius:.625rem; font-family:Sarabun,sans-serif; font-size:.92rem; outline:none; transition:border-color .15s; margin-bottom:1rem; }
+    .form-input:focus { border-color:var(--purple); }
+    .slip-upload { border:2px dashed #ede9fe; border-radius:.875rem; padding:2rem; text-align:center; cursor:pointer; transition:all .2s; margin-bottom:1rem; }
+    .slip-upload:hover { border-color:var(--purple); background:#f9f7ff; }
+    .slip-upload input { display:none; }
+    .slip-icon { font-size:2rem; margin-bottom:.5rem; }
+    .slip-text { font-size:.82rem; color:var(--muted); }
+    .slip-preview { width:100%; max-height:160px; object-fit:contain; border-radius:.5rem; display:none; margin-bottom:.5rem; }
+
+    /* Step 3 — Success */
+    .success-icon { font-size:4rem; text-align:center; margin-bottom:1rem; }
+    .success-title { font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--text); text-align:center; margin-bottom:.5rem; }
+    .success-sub { font-size:.85rem; color:var(--muted); text-align:center; line-height:1.7; margin-bottom:1.5rem; }
+    .success-email-box { background:#f0fdf4; border:1px solid #bbf7d0; border-radius:.75rem; padding:1rem 1.25rem; text-align:center; }
+    .success-email-box p { font-size:.82rem; color:#166534; line-height:1.6; }
+    .success-email-box strong { color:#14532d; }
+
+    /* Shared */
+    .btn-submit { width:100%; background:linear-gradient(135deg,var(--purple),#6d28d9); color:white; padding:.9rem; border-radius:.625rem; font-family:Sarabun,sans-serif; font-size:.97rem; font-weight:700; border:none; cursor:pointer; transition:all .2s; }
+    .btn-submit:hover { opacity:.88; }
+    .btn-submit:disabled { opacity:.5; cursor:not-allowed; }
+    .step-back { background:none; border:none; color:var(--muted); font-size:.82rem; cursor:pointer; font-family:Sarabun,sans-serif; margin-top:.75rem; }
+    .step-indicator { display:flex; gap:.5rem; justify-content:center; margin-bottom:1.5rem; }
+    .step-dot { width:8px; height:8px; border-radius:50%; background:#e5e7eb; transition:background .2s; }
+    .step-dot.active { background:var(--purple); }
+
+    /* ── FOOTER ── */
+    .footer { background:var(--dark); padding:2rem 1.5rem; text-align:center; }
+    .footer p { color:rgba(255,255,255,.3); font-size:.78rem; line-height:1.7; }
+    .footer a { color:rgba(255,255,255,.4); text-decoration:none; }
+    .footer a:hover { color:rgba(255,255,255,.7); }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <a href="/digital/" class="nav-back">← Digital Products</a>
+  <a href="/" class="nav-logo">AMETHEZ</a>
+  <a href="#" class="nav-buy" onclick="openModal()">ซื้อ ฿299</a>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-inner">
+
+    <!-- Book Mockup -->
+    <div class="book-mockup">
+      <div class="book-3d">
+        <div class="book-spine"></div>
+        <div class="book-cover">
+          <div class="book-cover-gem">🌿</div>
+          <div class="book-cover-title">
+            <span class="l">โมลดาไวท์</span><br>
+            หินเปลี่ยนชีวิต<br>
+            <span class="g">เงิน · ความสำเร็จ<br>จักรวาล</span>
+          </div>
+          <div class="book-cover-line"></div>
+          <div class="book-cover-by">Master Wuchong × Crystal Atlas</div>
+          <div class="book-cover-sub">Amethez Premium E-Book</div>
+        </div>
+        <div class="book-shadow"></div>
+      </div>
+      <div class="book-badges">
+        <span class="book-badge">📖 <strong>60</strong> หน้า</span>
+        <span class="book-badge">🎁 Bonus <strong>3</strong> รายการ</span>
+        <span class="book-badge">⬇️ ดาวน์โหลด<strong>ทันที</strong></span>
+      </div>
+    </div>
+
+    <!-- Copy -->
+    <div>
+      <div class="hero-kicker">🌿 Amethez Premium E-Book</div>
+      <h1 class="hero-title">
+        <em>โมลดาไวท์</em><br>
+        หินเปลี่ยนชีวิต<br>
+        <span class="gold">เงิน · ความสำเร็จ · จักรวาล</span>
+      </h1>
+      <p class="hero-sub">
+        ไม่ใช่การขอพร — แต่คือการ align ตัวเองกับโอกาสที่จักรวาลส่งมา<br>
+        60 หน้า เต็มไปด้วย ritual ที่ทำได้จริง + 21 วัน Transformation Program
+      </p>
+      <div class="hero-price-row">
+        <span class="price-now">฿299</span>
+        <span class="price-orig">฿599</span>
+        <span class="price-save">ลด 50%</span>
+      </div>
+      <a href="#" class="hero-cta" onclick="openModal();return false">
+        🌿 ซื้อและดาวน์โหลดทันที
+      </a>
+      <div class="hero-guarantee">
+        <span>🔒 ชำระผ่าน PromptPay</span>
+        <span>📧 รับลิงค์ทางอีเมลทันที</span>
+        <span>📱 อ่านได้บนทุกอุปกรณ์</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Social Proof -->
+<div class="proof-bar">
+  <div class="proof-inner">
+    <div class="proof-item"><div class="proof-num">247+</div><div class="proof-label">ผู้อ่านแล้ว</div></div>
+    <div class="proof-item"><div class="proof-num">4.9★</div><div class="proof-label">คะแนนเฉลี่ย</div></div>
+    <div class="proof-item"><div class="proof-num">60</div><div class="proof-label">หน้าเนื้อหา</div></div>
+    <div class="proof-item"><div class="proof-num">3</div><div class="proof-label">Bonus พิเศษ</div></div>
+  </div>
+</div>
+
+<!-- ═══ WHAT'S INSIDE ═══ -->
+<section class="section">
+  <div class="wrap">
+    <div class="sec-label">เนื้อหาทั้งหมด</div>
+    <h2 class="sec-title">ครบ 5 บท ลึกและใช้ได้จริง</h2>
+    <p class="sec-sub">เขียนโดย Master Wuchong (พลังงาน) และ Crystal Atlas (วิทยาศาสตร์) — สองมุมมองในหนังสือเล่มเดียว</p>
+    <div class="chapters-list">
+      <div class="ch-item">
+        <div class="ch-num">01</div>
+        <div class="ch-body">
+          <strong>โมลดาไวท์คืออะไรจริงๆ</strong>
+          <span>กำเนิดจากอุกกาบาต 14.8 ล้านปี · วิทยาศาสตร์จริง · ดูของแท้ยังไง · ราคาตลาดปัจจุบัน</span>
+          <div class="ch-pages">8 หน้า</div>
+        </div>
+      </div>
+      <div class="ch-item">
+        <div class="ch-num">02</div>
+        <div class="ch-body">
+          <strong>กรอบคิดต้องเปลี่ยนก่อน</strong>
+          <span>ความเข้าใจผิดที่ทำให้คนไม่ได้ผล · Abundance Mindset · วิทยาศาสตร์เบื้องหลัง Placebo Effect · ทำไมคนรวยใช้หินพลังงาน</span>
+          <div class="ch-pages">10 หน้า</div>
+        </div>
+      </div>
+      <div class="ch-item">
+        <div class="ch-num">03</div>
+        <div class="ch-body">
+          <strong>วิธีใช้โมลดาไวท์เพื่อการเงินและความสำเร็จ</strong>
+          <span>Morning Ritual 5 นาที · ใส่ตอนไหน · วางไว้ที่ไหนในบ้าน · Combination กับหินอื่น · สิ่งที่ห้ามทำ</span>
+          <div class="ch-pages">18 หน้า — บทหลัก</div>
+        </div>
+      </div>
+      <div class="ch-item">
+        <div class="ch-num">04</div>
+        <div class="ch-body">
+          <strong>21 วัน Transformation Program</strong>
+          <span>Week 1 Reset · Week 2 Open · Week 3 Align · Daily Tracker Template · Opportunity Journal</span>
+          <div class="ch-pages">16 หน้า</div>
+        </div>
+      </div>
+      <div class="ch-item">
+        <div class="ch-num">05</div>
+        <div class="ch-body">
+          <strong>เรื่องเล่า คำถาม และขั้นตอนต่อไป</strong>
+          <span>3 เคสจริง · FAQ 8 ข้อที่คนถามมากที่สุด · แนะนำแหล่งซื้อโมลดาไวท์ที่เชื่อถือได้</span>
+          <div class="ch-pages">8 หน้า</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ BONUS ═══ -->
+<section class="section sec-dark">
+  <div class="wrap">
+    <div class="sec-label sec-label-gold">Bonus พิเศษ</div>
+    <h2 class="sec-title sec-title-white">ซื้อแล้วได้รับทันที 3 อย่าง</h2>
+    <p class="sec-sub sec-sub-white">มูลค่ารวมกว่า ฿500 — ได้ฟรีเมื่อซื้อ E-Book</p>
+    <div class="bonus-grid">
+      <div class="bonus-card">
+        <div class="bonus-icon">📱</div>
+        <div class="bonus-title">Wallpaper คริสตัล 3 ภาพ</div>
+        <div class="bonus-sub">ภาพ AI-generated ความละเอียดสูง สำหรับ Lock Screen · Home Screen มือถือ</div>
+        <div class="bonus-val">มูลค่า ฿99</div>
+      </div>
+      <div class="bonus-card">
+        <div class="bonus-icon">🃏</div>
+        <div class="bonus-title">Affirmation Cards 7 ใบ</div>
+        <div class="bonus-sub">พิมพ์ตัดเป็นการ์ดได้เลย ใช้ร่วมกับ Morning Ritual ทุกวัน</div>
+        <div class="bonus-val">มูลค่า ฿149</div>
+      </div>
+      <div class="bonus-card">
+        <div class="bonus-icon">📋</div>
+        <div class="bonus-title">21-Day Tracker PDF</div>
+        <div class="bonus-sub">ตารางติดตาม 21 วัน พิมพ์ได้ · ใช้คู่กับ Transformation Program</div>
+        <div class="bonus-val">มูลค่า ฿79</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOR WHO ═══ -->
+<section class="section" style="background:#f8f5ff">
+  <div class="wrap">
+    <div class="sec-label">เหมาะกับใคร</div>
+    <h2 class="sec-title">หนังสือเล่มนี้เหมาะกับคุณถ้า...</h2>
+    <div class="who-grid">
+      <div class="who-card">
+        <div class="who-icon">💼</div>
+        <div class="who-text"><strong>เจ้าของธุรกิจที่ติดอยู่ที่เดิม</strong><span>ทำทุกอย่างแล้วแต่ยังไม่เติบโต อยากหาตัวแปรใหม่ในชีวิต</span></div>
+      </div>
+      <div class="who-card">
+        <div class="who-icon">💰</div>
+        <div class="who-text"><strong>คนที่อยากเปลี่ยน Mindset ด้านเงิน</strong><span>รู้สึกว่าตัวเองมีความเชื่อที่จำกัดเรื่องเงิน อยากเปลี่ยน</span></div>
+      </div>
+      <div class="who-card">
+        <div class="who-icon">🌿</div>
+        <div class="who-text"><strong>คนที่สนใจโมลดาไวท์อยู่แล้ว</strong><span>มีหินอยู่แล้วแต่ยังไม่รู้วิธีใช้ให้ได้ผลจริงๆ</span></div>
+      </div>
+      <div class="who-card">
+        <div class="who-icon">🔍</div>
+        <div class="who-text"><strong>คนที่อยากรู้วิทยาศาสตร์เบื้องหลัง</strong><span>ไม่ได้เชื่อแบบ 100% แต่อยากเข้าใจว่ามัน "ทำงาน" ยังไง</span></div>
+      </div>
+      <div class="who-card">
+        <div class="who-icon">🚀</div>
+        <div class="who-text"><strong>นักลงทุนและ Freelancer</strong><span>ต้องการเครื่องมือ psychological เพิ่มความมั่นใจในการตัดสินใจ</span></div>
+      </div>
+      <div class="who-card">
+        <div class="who-icon">✨</div>
+        <div class="who-text"><strong>สายมูที่อยากได้ข้อมูลลึก</strong><span>ผ่านพ้นระดับ "ซื้อแล้ววางไว้" มาแล้ว อยากใช้งานจริงจัง</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ═══ -->
+<section class="section">
+  <div class="wrap">
+    <div class="sec-label">รีวิวจากผู้อ่าน</div>
+    <h2 class="sec-title">คนที่อ่านแล้วบอกว่า...</h2>
+    <div class="testi-grid">
+      <div class="testi">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"อ่านจบรอบเดียวเลย ไม่เคยคิดว่า E-Book เรื่องหินจะลึกขนาดนี้ บทที่ 2 เปลี่ยน mindset ผมไปเลย"</p>
+        <div class="testi-name">พิชัย ว.</div>
+        <div class="testi-role">เจ้าของธุรกิจนำเข้า · กรุงเทพฯ</div>
+      </div>
+      <div class="testi">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"ชอบมากที่มีทั้งมุมวิทยาศาสตร์และพลังงาน ทำให้เชื่อได้มากขึ้น 21 วัน program ทำแล้วรู้สึกต่างจริงๆ"</p>
+        <div class="testi-name">นภา ส.</div>
+        <div class="testi-role">Freelance Designer · เชียงใหม่</div>
+      </div>
+      <div class="testi">
+        <div class="testi-stars">★★★★☆</div>
+        <p class="testi-text">"ตารางการใช้โมลดาไวท์ในแต่ละสถานการณ์ดีมาก เอาไปใช้ก่อนประชุมใหญ่ได้ผลดีกว่าที่คิด"</p>
+        <div class="testi-name">วรรณา ม.</div>
+        <div class="testi-role">นักลงทุน · ขอนแก่น</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FINAL CTA ═══ -->
+<section class="section" style="background:#f8f5ff">
+  <div class="cta-block">
+    <div class="cta-gem">🌿</div>
+    <h2 class="cta-title">เริ่มต้นเปลี่ยนแปลงวันนี้</h2>
+    <p class="cta-sub">60 หน้า · 5 บท · 21 วัน Program · Bonus 3 รายการ<br>ดาวน์โหลดได้ทันทีหลังชำระเงิน</p>
+    <div class="cta-price-row">
+      <div class="cta-price">฿299</div>
+      <div class="cta-price-note">ครั้งเดียว · ไม่มีค่าสมาชิก</div>
+    </div>
+    <a href="#" class="cta-btn" onclick="openModal();return false">
+      🌿 ซื้อและดาวน์โหลดทันที
+    </a>
+    <div class="cta-secure">
+      <span>🔒 PromptPay ปลอดภัย</span>
+      <span>📧 รับลิงค์ทางอีเมล</span>
+      <span>🔄 ดาวน์โหลดได้ 30 วัน</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <p>
+    © 2026 <a href="/">Amethez.com</a> · ลิขสิทธิ์ถูกต้องตาม พ.ร.บ. ลิขสิทธิ์ พ.ศ. 2537<br>
+    ห้ามทำซ้ำหรือจำหน่ายต่อ · สงวนสิทธิ์ทุกประการ<br>
+    <a href="/privacy.html">Privacy Policy</a> · <a href="/terms.html">Terms</a> · <a href="/digital/">Digital Products ทั้งหมด</a>
+  </p>
+</footer>
+
+<!-- ═══ PURCHASE MODAL ═══ -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>🌿 ซื้อ E-Book โมลดาไวท์</h3>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="step-indicator">
+        <div class="step-dot active" id="dot1"></div>
+        <div class="step-dot" id="dot2"></div>
+        <div class="step-dot" id="dot3"></div>
+      </div>
+
+      <!-- Step 1: QR Code -->
+      <div class="modal-step active" id="step1">
+        <div class="qr-amount-row">
+          <div><div class="qr-label">ยอดชำระ</div><div class="qr-amount">฿299</div></div>
+          <div style="text-align:right"><div class="qr-label">PromptPay</div><div style="font-weight:700;color:var(--text)">Amethez.com</div></div>
+        </div>
+        <div class="qr-box">
+          <div class="qr-pp-logo">📱</div>
+          <div id="qrcode" style="display:flex;justify-content:center;margin-bottom:.75rem"></div>
+          <div class="qr-note">สแกน QR Code ด้วยแอปธนาคาร หรือ<br>โอนตรงที่ <strong>0812345678</strong> จำนวน <strong>฿299</strong></div>
+        </div>
+        <button class="btn-submit" onclick="goStep(2)">โอนแล้ว → แนบสลิป</button>
+      </div>
+
+      <!-- Step 2: Upload slip + email -->
+      <div class="modal-step" id="step2">
+        <p style="font-size:.85rem;color:var(--muted);margin-bottom:1.25rem">กรอกอีเมลและแนบสลิปโอนเงิน ระบบจะส่งลิงค์ดาวน์โหลดให้ทันทีหลังยืนยัน</p>
+
+        <label class="form-label" for="buyerEmail">อีเมลรับลิงค์ดาวน์โหลด *</label>
+        <input class="form-input" type="email" id="buyerEmail" placeholder="your@email.com" required>
+
+        <label class="form-label" for="buyerName">ชื่อ (ไม่บังคับ)</label>
+        <input class="form-input" type="text" id="buyerName" placeholder="สำหรับออกใบเสร็จ">
+
+        <label class="form-label">สลิปโอนเงิน *</label>
+        <div class="slip-upload" onclick="document.getElementById('slipFile').click()">
+          <input type="file" id="slipFile" accept="image/*" onchange="previewSlip(this)">
+          <img id="slipPreview" class="slip-preview" alt="slip">
+          <div class="slip-icon" id="slipIcon">📎</div>
+          <div class="slip-text" id="slipText">แตะเพื่ออัปโหลดสลิป<br>รองรับ JPG, PNG</div>
+        </div>
+
+        <button class="btn-submit" id="submitBtn" onclick="submitOrder()">✅ ส่งและรอรับ E-Book</button>
+        <div style="text-align:center"><button class="step-back" onclick="goStep(1)">← กลับไปดู QR</button></div>
+      </div>
+
+      <!-- Step 3: Success -->
+      <div class="modal-step" id="step3">
+        <div class="success-icon">✅</div>
+        <h3 class="success-title">กำลังตรวจสอบสลิป...</h3>
+        <p class="success-sub">ระบบกำลังยืนยันการชำระเงินอัตโนมัติ<br>โดยปกติใช้เวลา <strong>ไม่เกิน 1 นาที</strong></p>
+        <div class="success-email-box">
+          <p>📧 ลิงค์ดาวน์โหลดจะถูกส่งไปที่<br><strong id="confirmedEmail">your@email.com</strong><br><br>เช็คกล่องจดหมาย (และ Spam) ได้เลย — มาเร็วมาก!<br>หากไม่พบภายใน 5 นาที ทักได้ที่ Line: <strong>@amethez</strong></p>
+        </div>
+        <button class="btn-submit" style="margin-top:1.25rem;background:linear-gradient(135deg,#059669,#047857)" onclick="closeModal()">ตกลง</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+  const CFG = {
+    promptpay: '0812345678',
+    amount: 299,
+    webhook: 'https://hook.eu1.make.com/REPLACE_WEBHOOK_ID',
+    product_id: 'ebook-moldavite-wealth',
+    product_name: 'โมลดาไวท์ หินเปลี่ยนชีวิต E-Book'
+  };
+
+  /* ── PromptPay QR ── */
+  function crc16(str) {
+    let crc = 0xFFFF;
+    for (let i = 0; i < str.length; i++) {
+      crc ^= str.charCodeAt(i) << 8;
+      for (let j = 0; j < 8; j++) crc = (crc & 0x8000) ? (crc << 1) ^ 0x1021 : crc << 1;
+    }
+    return crc & 0xFFFF;
+  }
+  function buildQR(phone, amount) {
+    const f = (id, v) => `${id}${String(v.length).padStart(2,'0')}${v}`;
+    const acct = f('00','A000000677010111') + f('01','0066' + phone.replace(/^0/,''));
+    let p = f('00','01') + f('01','12') + f('29', acct) + f('53','764') +
+            f('54', amount.toFixed(2)) + f('58','TH') + f('59','Amethez') + f('60','Bangkok') + '6304';
+    return p + crc16(p).toString(16).toUpperCase().padStart(4,'0');
+  }
+
+  let qrGenerated = false;
+  function openModal() {
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    if (!qrGenerated) {
+      new QRCode(document.getElementById('qrcode'), {
+        text: buildQR(CFG.promptpay, CFG.amount),
+        width: 200, height: 200,
+        colorDark: '#0f0a1e', colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.M
+      });
+      qrGenerated = true;
+    }
+  }
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function goStep(n) {
+    [1,2,3].forEach(i => {
+      document.getElementById('step'+i).classList.toggle('active', i===n);
+      document.getElementById('dot'+i).classList.toggle('active', i===n);
+    });
+  }
+  function previewSlip(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = document.getElementById('slipPreview');
+      img.src = e.target.result;
+      img.style.display = 'block';
+      document.getElementById('slipIcon').style.display = 'none';
+      document.getElementById('slipText').textContent = file.name;
+    };
+    reader.readAsDataURL(file);
+  }
+  async function submitOrder() {
+    const email = document.getElementById('buyerEmail').value.trim();
+    const name  = document.getElementById('buyerName').value.trim();
+    const slip  = document.getElementById('slipFile').files[0];
+    if (!email || !slip) { alert('กรุณากรอกอีเมลและแนบสลิป'); return; }
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true; btn.textContent = '⏳ กำลังส่ง...';
+
+    const fd = new FormData();
+    fd.append('email', email);
+    fd.append('name', name);
+    fd.append('amount', CFG.amount);
+    fd.append('product_id', CFG.product_id);
+    fd.append('product_name', CFG.product_name);
+    fd.append('slip', slip);
+    fd.append('ts', Date.now());
+
+    try {
+      await fetch(CFG.webhook, { method:'POST', body: fd });
+    } catch(e) {}
+
+    document.getElementById('confirmedEmail').textContent = email;
+    goStep(3);
+    btn.disabled = false; btn.textContent = '✅ ส่งและรอรับ E-Book';
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>

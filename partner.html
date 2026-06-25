@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ร้านค้าสมัครสมาชิก — Partner with Amethez</title>
+  <meta name="description" content="เข้าร่วมเครือข่ายร้านหินคริสตัลและพลอยที่ใหญ่ที่สุดในไทย รับลูกค้าที่ตรงกับสินค้าร้านคุณโดยตรงจากระบบ Request & Match">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    .partner-hero { background: linear-gradient(135deg, #0f0a1e 0%, #1e1050 50%, #0a2540 100%); padding: 5rem 1.5rem 4rem; text-align: center; position: relative; overflow: hidden; }
+    .partner-hero::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(201,168,76,.12) 0%, transparent 70%); pointer-events: none; }
+    .partner-badge { display: inline-block; background: rgba(201,168,76,.15); border: 1px solid var(--gold); color: var(--gold); padding: .35rem 1.2rem; border-radius: 2rem; font-size: .85rem; font-weight: 600; margin-bottom: 1.25rem; }
+    .partner-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3rem); color: white; margin-bottom: 1rem; position: relative; z-index: 1; }
+    .partner-hero p { color: rgba(255,255,255,.75); font-size: 1.05rem; max-width: 580px; margin: 0 auto 2.5rem; z-index: 1; position: relative; }
+    .hero-ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+
+    /* Benefits */
+    .benefits-section { padding: 5rem 1.5rem; background: var(--bg); }
+    .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 1.5rem; max-width: 900px; margin: 2.5rem auto 0; }
+    .benefit-card { background: white; border-radius: 1rem; padding: 1.75rem; box-shadow: 0 2px 12px rgba(0,0,0,.06); border: 1px solid #f0e8ff; }
+    .benefit-icon { font-size: 2rem; margin-bottom: .75rem; }
+    .benefit-card h3 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: .5rem; }
+    .benefit-card p { font-size: .9rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* How it works for stores */
+    .store-flow { padding: 4rem 1.5rem; background: white; }
+    .flow-steps { max-width: 700px; margin: 2rem auto 0; }
+    .flow-step { display: flex; gap: 1.25rem; padding: 1.5rem 0; border-bottom: 1px solid #f0e8ff; }
+    .flow-step:last-child { border-bottom: none; }
+    .step-badge { flex-shrink: 0; width: 44px; height: 44px; background: var(--purple); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 1rem; }
+    .flow-step-body h4 { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: .3rem; }
+    .flow-step-body p { font-size: .9rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* Tiers (Phase 2) */
+    .tiers-section { padding: 4rem 1.5rem; background: #faf5ff; }
+    .tier-coming { background: white; border-radius: 1rem; padding: 2rem; max-width: 640px; margin: 2rem auto 0; text-align: center; border: 2px dashed #c4b5fd; }
+    .tier-coming .emoji { font-size: 2.5rem; }
+    .tier-coming h3 { font-family: 'Playfair Display',serif; font-size: 1.4rem; margin: .75rem 0 .5rem; color: var(--text); }
+    .tier-coming p { color: var(--text-muted); line-height: 1.7; }
+
+    /* Form */
+    .apply-section { padding: 4rem 1.5rem; background: #1a1228; }
+    .apply-card { max-width: 640px; margin: 0 auto; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: 1.25rem; padding: 2.5rem; }
+    .apply-card h2 { font-family: 'Playfair Display',serif; font-size: 1.75rem; color: white; margin-bottom: .5rem; }
+    .apply-card .sub { color: rgba(255,255,255,.6); margin-bottom: 2rem; font-size: .95rem; }
+    .field-dark { margin-bottom: 1.4rem; }
+    .field-dark label { display: block; font-size: .9rem; font-weight: 600; color: rgba(255,255,255,.9); margin-bottom: .5rem; }
+    .field-dark label span { color: var(--gold); }
+    .field-dark input, .field-dark select, .field-dark textarea { width: 100%; padding: .8rem 1.1rem; background: rgba(255,255,255,.08); border: 1.5px solid rgba(255,255,255,.15); border-radius: .6rem; font-family: Sarabun,sans-serif; font-size: 1rem; color: white; transition: border .2s; box-sizing: border-box; }
+    .field-dark input::placeholder, .field-dark textarea::placeholder { color: rgba(255,255,255,.3); }
+    .field-dark input:focus, .field-dark select:focus, .field-dark textarea:focus { outline: none; border-color: var(--gold); }
+    .field-dark select option { background: #1a1228; color: white; }
+    .field-dark textarea { min-height: 100px; resize: vertical; }
+    .row2-dark { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .apply-btn { width: 100%; padding: 1rem; background: var(--gold); color: #1a1228; border: none; border-radius: .75rem; font-family: Sarabun,sans-serif; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all .2s; margin-top: .75rem; }
+    .apply-btn:hover { background: #b8973a; transform: translateY(-2px); }
+    .apply-success { display: none; text-align: center; padding: 2rem; }
+    .apply-success .icon { font-size: 3rem; margin-bottom: 1rem; }
+    .apply-success h3 { font-family: 'Playfair Display',serif; font-size: 1.4rem; color: white; margin-bottom: .75rem; }
+    .apply-success p { color: rgba(255,255,255,.7); line-height: 1.7; }
+    .err-msg-dark { color: #fca5a5; font-size: .82rem; margin-top: .3rem; display: none; }
+  </style>
+</head>
+<body>
+<header class="site-header" style="background:rgba(15,10,30,.95);border-color:rgba(255,255,255,.1)">
+  <div class="container nav-inner">
+    <a href="/" class="logo">
+      <svg viewBox="0 0 36 36" fill="none"><polygon points="18,2 30,12 26,30 10,30 6,12" fill="#7c3aed" opacity="0.9"/><polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity="0.95"/><polygon points="18,8 30,12 18,28" fill="#a78bfa"/><polygon points="18,8 6,12 18,28" fill="#7c3aed"/></svg>
+      <span>AMETHEZ <small class="logo-tagline">Stones · Stories · Soul</small></span>
+    </a>
+    <nav><ul class="nav-links">
+      <li><a href="/stones/">คลังหิน</a></li>
+      <li><a href="/request.html">Request & Match</a></li>
+      <li><a href="/contact.html">ติดต่อ</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="partner-hero">
+  <div class="container">
+    <div class="partner-badge">🤝 Partner with Amethez</div>
+    <h1>เปิดร้านอยู่แล้ว?<br>มาเพิ่มลูกค้าด้วยกัน</h1>
+    <p>Amethez ส่งคำขอลูกค้าที่สนใจหินตรงๆ มาให้ร้านคุณ ไม่ต้องแย่งกันโฆษณา ไม่มีสงครามราคา</p>
+    <div class="hero-ctas">
+      <a href="#apply" class="btn btn-primary" style="background:var(--gold);color:#1a1228;padding:.9rem 2rem">สมัครเป็น Partner</a>
+      <a href="#how" class="btn btn-outline" style="border-color:rgba(255,255,255,.3);color:white;padding:.9rem 2rem">ดูข้อมูลเพิ่มเติม</a>
+    </div>
+  </div>
+</section>
+
+<!-- Benefits -->
+<section class="benefits-section">
+  <div class="container">
+    <div style="text-align:center">
+      <h2 class="section-title">ทำไมร้านค้าเลือก Amethez</h2>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">🎯</div>
+        <h3>ลูกค้าตรงกลุ่ม</h3>
+        <p>คนที่ส่งคำขอมาคือคนที่พร้อมซื้อจริงๆ ไม่ใช่แค่เดินผ่านหน้าร้าน</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">⚖️</div>
+        <h3>ไม่มีสงครามราคา</h3>
+        <p>Amethez เน้นคุณภาพและความน่าเชื่อถือ ไม่ใช่แพลตฟอร์มที่แข่งกันถูกสุด</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">📈</div>
+        <h3>เพิ่ม Credibility</h3>
+        <p>ร้านที่เข้าร่วม Amethez Network มี badge ยืนยันคุณภาพจาก Hub ที่ผู้บริโภคไว้ใจ</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🔐</div>
+        <h3>ข้อมูลลูกค้าเป็นของร้าน</h3>
+        <p>เมื่อลูกค้าเลือกร้านคุณ Amethez ส่งต่อการติดต่อโดยตรง ข้อมูลไม่ผ่านคนกลาง</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🌐</div>
+        <h3>SEO พ่วง</h3>
+        <p>ร้านสมาชิกได้รับการกล่าวถึงในบทความของ Amethez ช่วยเพิ่ม visibility ออนไลน์</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">📊</div>
+        <h3>เห็นสถิติคำขอ</h3>
+        <p>รู้ว่าลูกค้าในเครือข่าย Amethez ต้องการอะไรบ้าง วางแผนสต็อกได้ล่วงหน้า</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How it works for stores -->
+<section class="store-flow" id="how">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:1rem">
+      <h2 class="section-title">ระบบทำงานอย่างไรสำหรับร้านค้า</h2>
+    </div>
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="step-badge">1</div>
+        <div class="flow-step-body">
+          <h4>ลูกค้ายื่นคำขอผ่าน Request & Match</h4>
+          <p>ลูกค้าบอกว่าต้องการหินอะไร งบเท่าไหร่ วัตถุประสงค์คืออะไร</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-badge">2</div>
+        <div class="flow-step-body">
+          <h4>Amethez ส่งคำขอมาให้ร้าน (Private)</h4>
+          <p>ร้านค้าสมาชิกที่มีสินค้าตรงความต้องการได้รับการแจ้งเตือนผ่าน Line OA ร้าน มีเวลาตอบกลับ 30 / 60 / 120 นาที</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-badge">3</div>
+        <div class="flow-step-body">
+          <h4>ร้านเสนอสินค้าและราคา</h4>
+          <p>ส่งรูป ราคา เงื่อนไขมาให้ Amethez รวบรวม ลูกค้าจะเห็นแบบเปรียบเทียบ ไม่เห็นว่าร้านไหนเสนออะไร</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-badge">4</div>
+        <div class="flow-step-body">
+          <h4>ลูกค้าเลือกและติดต่อร้านโดยตรง</h4>
+          <p>เมื่อลูกค้าเลือกร้านของคุณ Amethez ส่ง Line ID ลูกค้าให้ร้านปิดดีลเองโดยตรง</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-badge">5</div>
+        <div class="flow-step-body">
+          <h4>ลูกค้าให้ feedback</h4>
+          <p>หลังจบเคส ลูกค้า rate ร้าน คะแนนสะสมช่วยให้ร้านได้รับคำขอคุณภาพสูงขึ้นในอนาคต</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Tiers coming -->
+<section class="tiers-section">
+  <div class="container">
+    <div style="text-align:center">
+      <h2 class="section-title">แผนสมาชิก</h2>
+      <p style="color:var(--text-muted)">ระยะเฟส 1 เปิดรับสมาชิกฟรีจำนวนจำกัด เพื่อทดสอบระบบ</p>
+    </div>
+    <div class="tier-coming">
+      <div class="emoji">🚀</div>
+      <h3>Early Partner — ฟรี (จำกัด 20 ร้านแรก)</h3>
+      <p>ร้านที่สมัครในช่วงเฟส 1 จะได้รับสถานะ "Founding Partner" และเข้าร่วมระบบ Request & Match ก่อนใคร ค่าบริการรายเดือนจะเริ่มใช้เฉพาะในเฟส 2 เป็นต้นไป</p>
+      <div style="margin-top:1.5rem;background:#f5f0ff;border-radius:.75rem;padding:1rem;font-size:.9rem;color:var(--purple)">
+        <strong>สิทธิ์ Founding Partner:</strong> ไม่มีค่าบริการตลอดเฟส 1 · Badge พิเศษบนเว็บ · Priority ในการรับคำขอ
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Apply Form -->
+<section class="apply-section" id="apply">
+  <div class="container">
+    <div class="apply-card">
+      <div id="applyFormState">
+        <h2>สมัครเป็น Partner</h2>
+        <p class="sub">กรอกข้อมูลร้านค้า ทีม Amethez จะติดต่อกลับภายใน 2-3 วันทำการ</p>
+
+        <div class="row2-dark">
+          <div class="field-dark">
+            <label>ชื่อร้านค้า <span>*</span></label>
+            <input type="text" id="shopName" placeholder="ชื่อร้านของคุณ">
+            <p class="err-msg-dark" id="errShop">กรุณาระบุชื่อร้าน</p>
+          </div>
+          <div class="field-dark">
+            <label>Line ID ติดต่อ <span>*</span></label>
+            <input type="text" id="shopLine" placeholder="Line ID ร้าน">
+            <p class="err-msg-dark" id="errShopLine">กรุณาระบุ Line ID</p>
+          </div>
+        </div>
+
+        <div class="field-dark">
+          <label>ประเภทสินค้าหลัก <span>*</span></label>
+          <select id="shopType">
+            <option value="">-- เลือกประเภทหลัก --</option>
+            <option>หินดิบ / Raw Crystals</option>
+            <option>เครื่องประดับหิน</option>
+            <option>โพรงคริสตัล / Geode</option>
+            <option>หินหายาก / Rare Specimens</option>
+            <option>หินมงคล / สายมู</option>
+            <option>อุปกรณ์ดูแลหิน</option>
+            <option>หลายประเภท</option>
+          </select>
+          <p class="err-msg-dark" id="errType">กรุณาเลือกประเภทสินค้า</p>
+        </div>
+
+        <div class="field-dark">
+          <label>ช่องทางขายปัจจุบัน</label>
+          <input type="text" id="shopChannel" placeholder="เช่น Facebook @ชื่อ, Shopee ชื่อร้าน, Line OA, IG...">
+        </div>
+
+        <div class="field-dark">
+          <label>ข้อมูลเพิ่มเติม / สินค้าที่โดดเด่น</label>
+          <textarea id="shopDetail" placeholder="เล่าให้ฟังหน่อยว่าร้านขายอะไร มีจุดแข็งด้านไหน เช่น นำเข้าจากแหล่งตรง เชี่ยวชาญหินราศีใดเป็นพิเศษ ฯลฯ"></textarea>
+        </div>
+
+        <button class="apply-btn" onclick="submitApply()">🤝 ส่งใบสมัคร</button>
+      </div>
+
+      <div class="apply-success" id="applySuccess">
+        <div class="icon">🎉</div>
+        <h3>ได้รับใบสมัครแล้ว!</h3>
+        <p>ทีม Amethez จะติดต่อกลับผ่าน Line ID ที่ให้ไว้ภายใน 2-3 วันทำการ<br>ขอบคุณที่สนใจเป็นส่วนหนึ่งของ Amethez Network 🙏</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-bottom">
+    <p>© 2026 Amethez.com · <a href="/privacy.html" style="color:rgba(255,255,255,.5)">Privacy</a> · <a href="/terms.html" style="color:rgba(255,255,255,.5)">Terms</a></p>
+  </div>
+</footer>
+
+<script>
+function showErrD(id, show) { document.getElementById(id).style.display = show ? 'block' : 'none'; }
+
+function submitApply() {
+  let ok = true;
+  if (!document.getElementById('shopName').value.trim()) { showErrD('errShop', true); ok = false; } else showErrD('errShop', false);
+  if (!document.getElementById('shopLine').value.trim()) { showErrD('errShopLine', true); ok = false; } else showErrD('errShopLine', false);
+  if (!document.getElementById('shopType').value) { showErrD('errType', true); ok = false; } else showErrD('errType', false);
+  if (!ok) return;
+  setTimeout(() => {
+    document.getElementById('applyFormState').style.display = 'none';
+    document.getElementById('applySuccess').style.display = 'block';
+  }, 800);
+}
+</script>
+</body>
+</html>

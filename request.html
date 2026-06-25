@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>หาหินที่ใช่ — Request & Match | Amethez</title>
+  <meta name="description" content="บอกหินที่ต้องการ Amethez จะหาร้านที่ดีที่สุดให้คุณจากเครือข่ายร้านหินทั่วไทย ฟรี ไม่มีค่าใช้จ่าย">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    /* Hero */
+    .req-hero { background: linear-gradient(135deg, #1a1228 0%, #2d1b69 60%, #1e3a5f 100%); padding: 5rem 1.5rem 4rem; text-align: center; position: relative; overflow: hidden; }
+    .req-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(124,58,237,.25) 0%, transparent 70%); }
+    .req-hero-badge { display: inline-block; background: rgba(201,168,76,.15); border: 1px solid rgba(201,168,76,.4); color: var(--gold); padding: .35rem 1.2rem; border-radius: 2rem; font-size: .85rem; font-weight: 600; margin-bottom: 1.25rem; }
+    .req-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.25rem); color: white; line-height: 1.2; margin-bottom: 1rem; position: relative; }
+    .req-hero p { color: rgba(255,255,255,.75); font-size: 1.1rem; max-width: 600px; margin: 0 auto 2rem; position: relative; }
+    .steps-bar { display: flex; justify-content: center; gap: 0; max-width: 600px; margin: 0 auto; position: relative; }
+    .step-item { flex: 1; text-align: center; padding: .75rem .5rem; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); font-size: .82rem; color: rgba(255,255,255,.8); }
+    .step-item:first-child { border-radius: .6rem 0 0 .6rem; }
+    .step-item:last-child { border-radius: 0 .6rem .6rem 0; }
+    .step-item strong { display: block; font-size: 1.3rem; margin-bottom: .2rem; }
+
+    /* How it works */
+    .how-section { padding: 4rem 1.5rem; background: white; }
+    .how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 2rem; max-width: 900px; margin: 2rem auto 0; }
+    .how-card { text-align: center; padding: 1.5rem; }
+    .how-icon { width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; margin: 0 auto 1rem; }
+    .how-num { display: inline-block; width: 28px; height: 28px; background: var(--purple); color: white; border-radius: 50%; font-size: .8rem; font-weight: 700; line-height: 28px; text-align: center; margin-bottom: .5rem; }
+    .how-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: .5rem; color: var(--text); }
+    .how-card p { font-size: .9rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* Form */
+    .form-section { padding: 4rem 1.5rem; background: var(--bg); }
+    .form-card { max-width: 680px; margin: 0 auto; background: white; border-radius: 1.25rem; padding: 2.5rem; box-shadow: 0 4px 24px rgba(0,0,0,.08); }
+    .form-card h2 { font-family: 'Playfair Display',serif; font-size: 1.75rem; color: var(--text); margin-bottom: .5rem; }
+    .form-card .sub { color: var(--text-muted); margin-bottom: 2rem; font-size: .95rem; }
+    .field { margin-bottom: 1.4rem; }
+    .field label { display: block; font-size: .9rem; font-weight: 600; color: var(--text); margin-bottom: .5rem; }
+    .field label span { color: var(--purple); }
+    .field input, .field select, .field textarea { width: 100%; padding: .8rem 1.1rem; border: 1.5px solid #e5e7eb; border-radius: .6rem; font-family: Sarabun,sans-serif; font-size: 1rem; color: var(--text); background: white; transition: border .2s; box-sizing: border-box; }
+    .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--purple); }
+    .field textarea { min-height: 120px; resize: vertical; }
+    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .budget-pills { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .budget-pill { border: 1.5px solid #e5e7eb; color: var(--text); padding: .4rem 1rem; border-radius: 2rem; font-size: .88rem; cursor: pointer; transition: all .2s; background: white; font-family: Sarabun,sans-serif; }
+    .budget-pill:hover, .budget-pill.active { background: var(--purple); border-color: var(--purple); color: white; }
+    .purpose-grid { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .purpose-tag { border: 1.5px solid #e5e7eb; color: var(--text); padding: .35rem .9rem; border-radius: 2rem; font-size: .85rem; cursor: pointer; transition: all .2s; background: white; font-family: Sarabun,sans-serif; }
+    .purpose-tag:hover, .purpose-tag.active { background: #f5f0ff; border-color: var(--purple); color: var(--purple); }
+    .img-upload-zone { border: 2px dashed #e0d8f5; border-radius: .75rem; padding: 1.5rem; text-align: center; cursor: pointer; transition: all .2s; background: #faf8ff; }
+    .img-upload-zone:hover { border-color: var(--purple); background: #f5f0ff; }
+    .upload-previews { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .75rem; }
+    .preview-thumb { position: relative; width: 72px; height: 72px; border-radius: .5rem; overflow: hidden; }
+    .preview-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .preview-thumb .rm { position: absolute; top: 2px; right: 2px; background: rgba(0,0,0,.6); color: white; border: none; border-radius: 50%; width: 18px; height: 18px; font-size: .65rem; cursor: pointer; line-height: 18px; padding: 0; }
+    .privacy-note { font-size: .82rem; color: var(--text-muted); margin-top: 1rem; padding: .75rem 1rem; background: #f0fdf4; border-radius: .5rem; border-left: 3px solid #22c55e; }
+    .submit-btn { width: 100%; padding: 1rem; background: var(--purple); color: white; border: none; border-radius: .75rem; font-family: Sarabun,sans-serif; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all .2s; margin-top: .5rem; }
+    .submit-btn:hover { background: #6d28d9; transform: translateY(-2px); }
+    .submit-btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+    .success-state { display: none; text-align: center; padding: 3rem 2rem; }
+    .success-icon { font-size: 4rem; margin-bottom: 1rem; }
+    .success-state h3 { font-family: 'Playfair Display',serif; font-size: 1.5rem; margin-bottom: .75rem; color: var(--text); }
+    .success-state p { color: var(--text-muted); line-height: 1.7; }
+    .err-msg { color: #dc2626; font-size: .82rem; margin-top: .3rem; display: none; }
+
+    /* Trust */
+    .trust-section { padding: 3rem 1.5rem; background: #1a1228; color: white; text-align: center; }
+    .trust-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 1.5rem; max-width: 700px; margin: 2rem auto 0; }
+    .trust-item { padding: 1.25rem; background: rgba(255,255,255,.06); border-radius: .75rem; border: 1px solid rgba(255,255,255,.1); }
+    .trust-item .icon { font-size: 1.75rem; margin-bottom: .5rem; }
+    .trust-item strong { display: block; color: white; font-size: .95rem; margin-bottom: .3rem; }
+    .trust-item span { color: rgba(255,255,255,.6); font-size: .82rem; }
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <div class="container nav-inner">
+    <a href="/" class="logo">
+      <svg viewBox="0 0 36 36" fill="none"><polygon points="18,2 30,12 26,30 10,30 6,12" fill="#7c3aed" opacity="0.9"/><polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity="0.95"/><polygon points="18,8 30,12 18,28" fill="#a78bfa"/><polygon points="18,8 6,12 18,28" fill="#7c3aed"/></svg>
+      <span>AMETHEZ <small class="logo-tagline">Stones · Stories · Soul</small></span>
+    </a>
+    <nav><ul class="nav-links">
+      <li><a href="/stones/">คลังหิน</a></li>
+      <li><a href="/sale.html" style="color:var(--gold)">🛒 ร้านค้า</a></li>
+      <li><a href="/contact.html">ติดต่อ</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="req-hero">
+  <div class="container">
+    <div class="req-hero-badge">✨ Request & Match — บริการฟรี ไม่มีค่าใช้จ่าย</div>
+    <h1>บอกหินที่ต้องการ<br>เราหาร้านที่ดีที่สุดให้</h1>
+    <p>ไม่ต้องเสียเวลาหาเอง Amethez กระจายคำขอไปยังเครือข่ายร้านหินทั่วไทย แล้วสรุปตัวเลือกมาให้คุณเลือกเอง</p>
+    <div class="steps-bar">
+      <div class="step-item"><strong>1️⃣</strong> กรอกข้อมูล</div>
+      <div class="step-item"><strong>2️⃣</strong> ร้านตอบกลับ</div>
+      <div class="step-item"><strong>3️⃣</strong> เลือกร้านที่ใช่</div>
+      <div class="step-item"><strong>4️⃣</strong> ซื้อโดยตรง</div>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="how-section">
+  <div class="container">
+    <div style="text-align:center">
+      <h2 class="section-title">ระบบทำงานอย่างไร</h2>
+      <p style="color:var(--text-muted);max-width:500px;margin:.5rem auto 0">Amethez เป็น Matchmaker ระหว่างลูกค้ากับร้านค้า — เราไม่ขายของเอง แต่ช่วยให้คุณได้ของที่ดีที่สุดในราคาที่เป็นธรรม</p>
+    </div>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-icon" style="background:#f5f0ff">🔍</div>
+        <div class="how-num">1</div>
+        <h3>กรอกสิ่งที่ต้องการ</h3>
+        <p>ชื่อหิน งบประมาณ วัตถุประสงค์ หรือส่งรูปหินที่ต้องการ</p>
+      </div>
+      <div class="how-card">
+        <div class="how-icon" style="background:#fff0f3">📡</div>
+        <div class="how-num">2</div>
+        <h3>กระจายไปยังร้านสมาชิก</h3>
+        <p>Amethez ส่งคำขอ (แบบ private) ไปยังร้านหินที่เหมาะสมในเครือข่าย</p>
+      </div>
+      <div class="how-card">
+        <div class="how-icon" style="background:#f0fdf4">📋</div>
+        <div class="how-num">3</div>
+        <h3>ได้รับการเปรียบเทียบ</h3>
+        <p>Amethez สรุปตัวเลือกจากร้านที่ตอบกลับมาให้คุณ พร้อมคำแนะนำ</p>
+      </div>
+      <div class="how-card">
+        <div class="how-icon" style="background:#fffbf0">🤝</div>
+        <div class="how-num">4</div>
+        <h3>เลือกและซื้อโดยตรง</h3>
+        <p>คุณเลือกร้านที่ใช่ ติดต่อและชำระเงินกับร้านนั้นโดยตรง ไม่ผ่านตัวกลาง</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Form -->
+<section class="form-section">
+  <div class="container">
+    <div class="form-card">
+      <div id="formState">
+        <h2>แจ้งความต้องการ</h2>
+        <p class="sub">กรอกข้อมูลให้ละเอียดเท่าที่ทำได้ เพื่อให้ร้านสมาชิกเสนอสินค้าที่ตรงใจที่สุด</p>
+
+        <!-- Stone name -->
+        <div class="field">
+          <label>หินที่ต้องการ <span>*</span></label>
+          <input type="text" id="stoneName" placeholder="เช่น อเมทิสต์, โมลดาไวท์, หินดำ..." maxlength="200">
+          <p class="err-msg" id="errStone">กรุณาระบุหินที่ต้องการ</p>
+        </div>
+
+        <!-- Purpose -->
+        <div class="field">
+          <label>วัตถุประสงค์</label>
+          <div class="purpose-grid">
+            <button class="purpose-tag" onclick="toggleTag(this)">ความสำเร็จ / การเงิน</button>
+            <button class="purpose-tag" onclick="toggleTag(this)">ความรัก / ความสัมพันธ์</button>
+            <button class="purpose-tag" onclick="toggleTag(this)">สุขภาพ / พลังงาน</button>
+            <button class="purpose-tag" onclick="toggleTag(this)">สมาธิ / จิตใจ</button>
+            <button class="purpose-tag" onclick="toggleTag(this)">ตกแต่งบ้าน / ออฟฟิศ</button>
+            <button class="purpose-tag" onclick="toggleTag(this)">เครื่องประดับ</button>
+            <button class="purpose-tag" onclick="toggleTag(this)">ของขวัญ</button>
+            <button class="purpose-tag" onclick="toggleTag(this)">สะสม / ของหายาก</button>
+          </div>
+        </div>
+
+        <!-- Budget -->
+        <div class="field">
+          <label>งบประมาณ <span>*</span></label>
+          <div class="budget-pills">
+            <button class="budget-pill" onclick="setBudget(this,'ต่ำกว่า ฿500')">ต่ำกว่า ฿500</button>
+            <button class="budget-pill" onclick="setBudget(this,'฿500–2,000')">฿500–2,000</button>
+            <button class="budget-pill" onclick="setBudget(this,'฿2,000–5,000')">฿2,000–5,000</button>
+            <button class="budget-pill" onclick="setBudget(this,'฿5,000–20,000')">฿5,000–20,000</button>
+            <button class="budget-pill" onclick="setBudget(this,'฿20,000+')">฿20,000+</button>
+            <button class="budget-pill" onclick="setBudget(this,'ยืดหยุ่นได้')">ยืดหยุ่นได้</button>
+          </div>
+          <input type="hidden" id="budget">
+          <p class="err-msg" id="errBudget">กรุณาเลือกงบประมาณ</p>
+        </div>
+
+        <!-- Detail -->
+        <div class="field">
+          <label>รายละเอียดเพิ่มเติม</label>
+          <textarea id="detail" placeholder="เช่น ขนาด สี คุณภาพที่ต้องการ จะใช้ทำอะไร หรืออื่นๆ...&#10;&#10;ยิ่งละเอียดยิ่งดี ร้านจะได้เสนอสิ่งที่ตรงใจ"></textarea>
+        </div>
+
+        <!-- Image upload -->
+        <div class="field">
+          <label>รูปอ้างอิง (ถ้ามี)</label>
+          <div class="img-upload-zone" onclick="document.getElementById('refImgs').click()">
+            <div style="font-size:1.75rem;margin-bottom:.4rem">📸</div>
+            <p style="color:var(--text-muted);font-size:.9rem">กดหรือลากรูปมาวาง (สูงสุด 5 รูป)</p>
+          </div>
+          <input type="file" id="refImgs" accept="image/*" multiple style="display:none" onchange="addImgs(event)">
+          <div class="upload-previews" id="imgPreviews"></div>
+        </div>
+
+        <!-- Contact -->
+        <div class="row2">
+          <div class="field">
+            <label>ชื่อ <span>*</span></label>
+            <input type="text" id="reqName" placeholder="ชื่อ หรือชื่อเล่น" maxlength="100">
+            <p class="err-msg" id="errName">กรุณาระบุชื่อ</p>
+          </div>
+          <div class="field">
+            <label>Line ID <span>*</span></label>
+            <input type="text" id="reqLine" placeholder="Line ID ของคุณ" maxlength="100">
+            <p class="err-msg" id="errLine">กรุณาระบุ Line ID</p>
+          </div>
+        </div>
+
+        <div class="privacy-note">
+          🔒 ข้อมูลส่วนตัวของคุณจะไม่ถูกส่งให้ร้านค้า ร้านจะเห็นเพียงความต้องการของคุณ คุณเป็นคนเลือกว่าจะติดต่อร้านไหนเอง
+        </div>
+
+        <button class="submit-btn" onclick="submitRequest()" id="submitBtn">
+          🔍 ส่งคำขอ — ฟรี ไม่มีค่าใช้จ่าย
+        </button>
+      </div>
+
+      <!-- Success -->
+      <div class="success-state" id="successState">
+        <div class="success-icon">💎</div>
+        <h3>ได้รับคำขอแล้วค่ะ!</h3>
+        <p>ทีมงาน Amethez จะกระจายคำขอไปยังร้านสมาชิกที่เหมาะสม<br>และติดต่อกลับผ่าน Line ID ที่ให้ไว้ภายใน <strong>24 ชั่วโมง</strong><br><br>ขอบคุณที่ไว้วางใจ Amethez นะคะ 🙏</p>
+        <div style="margin-top:1.5rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+          <a href="/stones/" class="btn btn-primary" style="padding:.75rem 1.5rem">🔍 อ่านเพิ่มเติมเรื่องหิน</a>
+          <a href="/" class="btn btn-outline" style="padding:.75rem 1.5rem">กลับหน้าหลัก</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Trust -->
+<section class="trust-section">
+  <div class="container">
+    <h2 style="font-family:'Playfair Display',serif;font-size:1.6rem;margin-bottom:.25rem">ทำไมต้อง Amethez</h2>
+    <p style="color:rgba(255,255,255,.6);font-size:.95rem">เราเป็นกลาง — ไม่มีร้านของตัวเอง ไม่มีผลประโยชน์ทับซ้อน</p>
+    <div class="trust-grid">
+      <div class="trust-item">
+        <div class="icon">🆓</div>
+        <strong>ฟรี 100%</strong>
+        <span>ไม่มีค่าบริการ ไม่มีค่าคอมมิชชันจากคุณ</span>
+      </div>
+      <div class="trust-item">
+        <div class="icon">🔒</div>
+        <strong>ข้อมูลเป็นส่วนตัว</strong>
+        <span>ร้านไม่เห็น Line ID ของคุณจนกว่าคุณจะเลือกเอง</span>
+      </div>
+      <div class="trust-item">
+        <div class="icon">⚖️</div>
+        <strong>เป็นกลาง</strong>
+        <span>Amethez ไม่มีร้านของตัวเอง ไม่ bias ร้านไหน</span>
+      </div>
+      <div class="trust-item">
+        <div class="icon">⚡</div>
+        <strong>รวดเร็ว</strong>
+        <span>ตอบกลับภายใน 24 ชั่วโมง จากหลายร้านพร้อมกัน</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <div class="footer-logo">
+        <svg viewBox="0 0 36 36" fill="none" style="width:28px;height:28px"><polygon points="18,2 30,12 26,30 10,30 6,12" fill="#7c3aed"/><polygon points="18,2 30,12 18,8" fill="#c9a84c"/></svg>
+        <span>AMETHEZ</span>
+      </div>
+      <p style="color:rgba(255,255,255,.5);font-size:.85rem;margin-top:.5rem">Stones · Stories · Soul</p>
+    </div>
+    <div>
+      <p class="footer-heading">บริการ</p>
+      <ul class="footer-links">
+        <li><a href="/request.html">Request & Match</a></li>
+        <li><a href="/sale.html">ร้านค้า</a></li>
+        <li><a href="/stones/">คลังหิน</a></li>
+        <li><a href="/partner.html">ร้านค้าสมัครสมาชิก</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-heading">เนื้อหา</p>
+      <ul class="footer-links">
+        <li><a href="/categories/chakra.html">จักระ</a></li>
+        <li><a href="/categories/zodiac.html">ราศี</a></li>
+        <li><a href="/wuchong/">พลังงาน</a></li>
+        <li><a href="/metha/">ดวงรายวัน</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-heading">เกี่ยวกับ</p>
+      <ul class="footer-links">
+        <li><a href="/about.html">เกี่ยวกับเรา</a></li>
+        <li><a href="/contact.html">ติดต่อ</a></li>
+        <li><a href="/privacy.html">Privacy Policy</a></li>
+        <li><a href="/terms.html">Terms of Service</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>© 2026 Amethez.com — Hub ข้อมูลคริสตัลและพลอยที่ใหญ่ที่สุดในไทย</p>
+  </div>
+</footer>
+
+<script>
+let selectedBudget = '';
+let uploadedImgs = [];
+
+function toggleTag(el) {
+  el.classList.toggle('active');
+}
+function setBudget(el, val) {
+  document.querySelectorAll('.budget-pill').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  selectedBudget = val;
+  document.getElementById('budget').value = val;
+  document.getElementById('errBudget').style.display = 'none';
+}
+function addImgs(e) {
+  const files = Array.from(e.target.files);
+  files.forEach(f => {
+    if (uploadedImgs.length >= 5) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      uploadedImgs.push({ name: f.name, data: ev.target.result });
+      renderPreviews();
+    };
+    reader.readAsDataURL(f);
+  });
+}
+function removeImg(i) {
+  uploadedImgs.splice(i, 1);
+  renderPreviews();
+}
+function renderPreviews() {
+  const c = document.getElementById('imgPreviews');
+  c.innerHTML = uploadedImgs.map((img, i) =>
+    `<div class="preview-thumb"><img src="${img.data}"><button class="rm" onclick="removeImg(${i})">✕</button></div>`
+  ).join('');
+}
+
+function showErr(id, show) {
+  document.getElementById(id).style.display = show ? 'block' : 'none';
+}
+
+function submitRequest() {
+  let ok = true;
+  const stone = document.getElementById('stoneName').value.trim();
+  const name = document.getElementById('reqName').value.trim();
+  const line = document.getElementById('reqLine').value.trim();
+  if (!stone) { showErr('errStone', true); ok = false; } else showErr('errStone', false);
+  if (!selectedBudget) { showErr('errBudget', true); ok = false; } else showErr('errBudget', false);
+  if (!name) { showErr('errName', true); ok = false; } else showErr('errName', false);
+  if (!line) { showErr('errLine', true); ok = false; } else showErr('errLine', false);
+  if (!ok) return;
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true; btn.textContent = 'กำลังส่ง...';
+  // Simulate submission — in production, POST to backend or Line Notify
+  setTimeout(() => {
+    document.getElementById('formState').style.display = 'none';
+    document.getElementById('successState').style.display = 'block';
+  }, 1200);
+}
+</script>
+</body>
+</html>

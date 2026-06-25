@@ -1,0 +1,15 @@
+{
+  "items": [
+    {
+      "id": "001",
+      "title": "บทความอเมทิสต์",
+      "type": "stone_article",
+      "source": "stones/amethyst.html",
+      "destination": "stones/amethyst.html",
+      "publish_date": "2026-06-19",
+      "publish_time": "08:00",
+      "status": "published",
+      "published_at": "2026-06-19T01:00:00.000Z"
+    }
+  ]
+}

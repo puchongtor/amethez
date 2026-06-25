@@ -1,0 +1,74 @@
+{
+  "stones": [
+    {
+      "id": "amethyst",
+      "name_th": "อเมทิสต์",
+      "name_en": "Amethyst",
+      "emoji": "💜",
+      "color": "ม่วง",
+      "chakra": ["มงกุฎ", "Third Eye"],
+      "zodiac": ["กุมภ์", "มีน", "ราศีสิงห์"],
+      "keywords": ["สมาธิ", "จิตวิญญาณ", "ปัญญา", "ความสงบ"],
+      "hardness": "7",
+      "origin": "บราซิล, อุรุกวัย, แซมเบีย",
+      "published": true,
+      "publish_date": "2026-06-19"
+    },
+    {
+      "id": "moldavite",
+      "name_th": "โมลดาไวท์",
+      "name_en": "Moldavite",
+      "emoji": "🌿",
+      "color": "เขียว",
+      "chakra": ["หัวใจ"],
+      "zodiac": ["พิจิก", "กรกฎ"],
+      "keywords": ["การเปลี่ยนแปลง", "จักรวาล", "พลังสูง"],
+      "hardness": "5.5",
+      "origin": "สาธารณรัฐเช็ก",
+      "published": true,
+      "publish_date": "2026-06-19"
+    },
+    {
+      "id": "tektite",
+      "name_th": "สะเก็ดดาวไทย",
+      "name_en": "Thai Tektite",
+      "emoji": "🌑",
+      "color": "ดำ",
+      "chakra": ["ราก"],
+      "zodiac": ["แมงป่อง", "ราศีพฤษภ"],
+      "keywords": ["พลังโลก", "ความมั่นคง", "ป้องกัน"],
+      "hardness": "5-6",
+      "origin": "ไทย",
+      "published": true,
+      "publish_date": "2026-06-19"
+    },
+    {
+      "id": "citrine",
+      "name_th": "ซิทริน",
+      "name_en": "Citrine",
+      "emoji": "🌟",
+      "color": "เหลือง-ส้ม",
+      "chakra": ["Solar Plexus"],
+      "zodiac": ["พฤษภ", "มิถุน", "ราศีธนู"],
+      "keywords": ["โชคลาภ", "ความสำเร็จ", "การเงิน", "พลังงานบวก"],
+      "hardness": "7",
+      "origin": "บราซิล, มาดากัสการ์",
+      "published": true,
+      "publish_date": "2026-06-19"
+    },
+    {
+      "id": "clear-quartz",
+      "name_th": "คริสตัลใส (Clear Quartz)",
+      "name_en": "Clear Quartz",
+      "emoji": "🔮",
+      "color": "ใส",
+      "chakra": ["มงกุฎ", "ทุกจักระ"],
+      "zodiac": ["ทุกราศี"],
+      "keywords": ["พลังงานสากล", "ชำระล้าง", "ขยายพลัง"],
+      "hardness": "7",
+      "origin": "บราซิล, มาดากัสการ์, สหรัฐ",
+      "published": true,
+      "publish_date": "2026-06-19"
+    }
+  ]
+}

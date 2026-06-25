@@ -1,0 +1,89 @@
+{
+  "_comment": "Amethez Master Affiliate Tracking IDs — ใส่ ID จริงก่อน deploy",
+  "updated": "2026-06-25",
+  "accounts": {
+    "shopee": {
+      "affiliate_id": "REPLACE_SHOPEE_ID",
+      "tracking_param": "af_id",
+      "base_url": "https://s.shopee.co.th/",
+      "commission_note": "฿342/item (rare minerals & high-ticket crystals)",
+      "commission_type": "per_item",
+      "tag_triggers": ["คริสตัล", "หิน", "แร่", "พลอย", "อเมทิสต์", "โมลดาไวท์", "ซิทริน", "สะเก็ดดาว", "สะสม", "เครื่องประดับ"],
+      "cta_label": "🛒 ช้อปหินแร่บน Shopee",
+      "platform_color": "#ee4d2d",
+      "active": true
+    },
+    "meb": {
+      "affiliate_id": "REPLACE_MEB_ID",
+      "tracking_param": "ref",
+      "base_url": "https://www.mebmarket.com/",
+      "commission_note": "10–30% ต่อยอดขาย",
+      "commission_type": "percentage",
+      "tag_triggers": ["หนังสือ", "อีบุ๊ค", "ฮวงจุ้ย", "โหราศาสตร์", "สายมู", "ความรู้", "จิตวิญญาณ", "สมาธิ", "ธรรมะ"],
+      "cta_label": "📚 อ่าน E-Book บน MEB",
+      "platform_color": "#e85d04",
+      "active": true
+    },
+    "skilllane": {
+      "affiliate_id": "REPLACE_SKILLLANE_ID",
+      "tracking_param": "ref",
+      "base_url": "https://www.skilllane.com/",
+      "commission_note": "20–50% ต่อการลงทะเบียน",
+      "commission_type": "percentage",
+      "tag_triggers": ["คอร์ส", "เรียนออนไลน์", "พัฒนาตนเอง", "สมาธิ", "healing", "ฮีลลิ่ง", "จักระ", "พลังงาน"],
+      "cta_label": "🎓 ลงทะเบียนคอร์สออนไลน์",
+      "platform_color": "#0ea5e9",
+      "active": true
+    },
+    "futureskill": {
+      "affiliate_id": "REPLACE_FUTURESKILL_ID",
+      "tracking_param": "ref",
+      "base_url": "https://futureskill.com/",
+      "commission_note": "20–50% ต่อการลงทะเบียน",
+      "commission_type": "percentage",
+      "tag_triggers": ["คอร์ส", "เรียนออนไลน์", "ธุรกิจ", "พัฒนาตนเอง", "marketing", "soft skill"],
+      "cta_label": "🚀 เรียนออนไลน์กับ FutureSkill",
+      "platform_color": "#10b981",
+      "active": true
+    },
+    "hostneverdie": {
+      "affiliate_id": "REPLACE_HND_ID",
+      "tracking_param": "ref",
+      "base_url": "https://www.hostneverdie.com/",
+      "commission_note": "฿150 flat rate ต่อ Starter Package",
+      "commission_type": "flat",
+      "tag_triggers": ["เว็บไซต์", "hosting", "โฮสติ้ง", "ธุรกิจออนไลน์", "สร้างเว็บ", "domain", "โดเมน", "อีคอมเมิร์ซ", "ร้านค้าออนไลน์"],
+      "cta_label": "🌐 เปิดเว็บไซต์ด้วย HostNeverDie",
+      "platform_color": "#7c3aed",
+      "active": true
+    },
+    "naiin": {
+      "affiliate_id": "REPLACE_NAIIN_ID",
+      "tracking_param": "ref",
+      "base_url": "https://www.naiin.com/",
+      "commission_note": "5–15% ต่อยอดขาย",
+      "commission_type": "percentage",
+      "tag_triggers": ["หนังสือ", "ฮวงจุ้ย", "โหราศาสตร์", "สายมู", "จิตวิทยา"],
+      "cta_label": "📖 สั่งหนังสือจาก Naiin",
+      "platform_color": "#6366f1",
+      "active": true
+    }
+  },
+
+  "tag_to_platform_matrix": {
+    "คริสตัล":       ["shopee", "skilllane"],
+    "หิน":           ["shopee", "meb"],
+    "แร่":           ["shopee"],
+    "ฮวงจุ้ย":       ["meb", "naiin", "futureskill"],
+    "สมาธิ":         ["skilllane", "meb"],
+    "จักระ":         ["skilllane", "meb"],
+    "พลังงาน":       ["skilllane"],
+    "โหราศาสตร์":    ["meb", "naiin"],
+    "สายมู":         ["meb", "naiin"],
+    "ธุรกิจออนไลน์": ["hostneverdie", "futureskill"],
+    "สร้างเว็บ":     ["hostneverdie"],
+    "เว็บไซต์":      ["hostneverdie"],
+    "คอร์ส":         ["skilllane", "futureskill"],
+    "หนังสือ":       ["meb", "naiin"]
+  }
+}

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ติดต่อเรา — Amethez</title>
+  <meta name="description" content="ติดต่อทีม Amethez ผ่าน Line OA หรือส่งข้อความหาเรา มีผู้เชี่ยวชาญพร้อมตอบทุกคำถามเรื่องคริสตัลและพลอย">
+  <link rel="canonical" href="https://amethez.com/contact.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Form ── */
+    .form-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 1.25rem;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+    }
+    .form-group { margin-bottom: 1.25rem; }
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+    .form-group label span.required { color: #ef4444; margin-left: 3px; }
+    .form-control {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 0.6rem;
+      font-family: 'Sarabun', sans-serif;
+      font-size: 0.95rem;
+      color: var(--text);
+      background: #faf8f4;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .form-control:focus {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px rgba(124,58,237,0.1);
+      background: white;
+    }
+    select.form-control { cursor: pointer; }
+    textarea.form-control { resize: vertical; min-height: 130px; }
+
+    /* ── Upload Zone ── */
+    .upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: 0.75rem;
+      padding: 1.75rem 1rem;
+      text-align: center;
+      background: #faf8f4;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+    .upload-zone:hover, .upload-zone.drag-over {
+      border-color: var(--purple);
+      background: #f5f0ff;
+    }
+    .upload-zone input[type=file] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+    }
+    .upload-icon { font-size: 2.25rem; margin-bottom: 0.5rem; }
+    .upload-zone p { font-size: 0.9rem; color: var(--text-muted); margin: 0; }
+    .upload-zone .hint { font-size: 0.8rem; color: #9ca3af; margin-top: 0.35rem; }
+    .preview-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; margin-top: 1rem;
+    }
+    .preview-item {
+      aspect-ratio: 1; border-radius: 0.5rem; overflow: hidden; position: relative;
+      border: 1px solid var(--border);
+    }
+    .preview-item img { width: 100%; height: 100%; object-fit: cover; }
+    .preview-item .remove-btn {
+      position: absolute; top: 3px; right: 3px;
+      background: rgba(0,0,0,0.55); color: white; border: none;
+      border-radius: 50%; width: 20px; height: 20px; font-size: 11px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ── Contact Channels ── */
+    .channel-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      color: inherit;
+    }
+    .channel-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); color: inherit; }
+    .channel-icon {
+      width: 52px; height: 52px; border-radius: 0.75rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; flex-shrink: 0;
+    }
+    .channel-card h3 { font-size: 1rem; margin-bottom: 0.15rem; }
+    .channel-card p { font-size: 0.85rem; color: var(--text-muted); margin: 0; }
+    .channel-badge {
+      margin-left: auto; font-size: 0.75rem; padding: 0.2rem 0.65rem;
+      border-radius: 2rem; font-weight: 600; flex-shrink: 0;
+    }
+
+    /* ── Success Message ── */
+    #successMsg {
+      display: none;
+      background: #f0fdf4;
+      border: 1.5px solid #86efac;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      text-align: center;
+      margin-top: 1rem;
+    }
+    #successMsg .tick { font-size: 3rem; margin-bottom: 0.5rem; }
+    #successMsg h3 { color: #16a34a; margin-bottom: 0.35rem; }
+    #successMsg p { color: #4b5563; font-size: 0.9rem; }
+
+    /* ── Submit btn loading ── */
+    .btn-submit { width: 100%; padding: 0.9rem; font-size: 1.05rem; position: relative; }
+    .btn-submit:disabled { opacity: 0.65; cursor: not-allowed; }
+
+    /* ── FAQ mini ── */
+    .mini-faq { margin-top: 2rem; }
+    .mini-faq-item {
+      border-left: 3px solid var(--purple);
+      padding: 0.6rem 1rem;
+      margin-bottom: 0.75rem;
+      background: #f5f0ff;
+      border-radius: 0 0.5rem 0.5rem 0;
+    }
+    .mini-faq-item p { margin: 0; font-size: 0.9rem; }
+    .mini-faq-item .q { font-weight: 700; color: var(--purple-dark); }
+    .mini-faq-item .a { color: var(--text-muted); margin-top: 0.2rem; }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="site-header">
+  <div class="container nav-inner">
+    <a href="/" class="logo">
+      <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="18,2 30,12 26,30 10,30 6,12" fill="#7c3aed" opacity="0.9"/>
+        <polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity="0.95"/>
+        <polygon points="18,8 30,12 18,28" fill="#a78bfa"/>
+        <polygon points="18,8 6,12 18,28" fill="#7c3aed"/>
+      </svg>
+      <span>AMETHEZ <small class="logo-tagline">Stones · Stories · Soul</small></span>
+    </a>
+    <nav><ul class="nav-links">
+      <li><a href="/stones/">คลังหิน</a></li>
+      <li><a href="/categories/chakra.html">จักระ</a></li>
+      <li><a href="/categories/zodiac.html">ราศี</a></li>
+      <li><a href="/wuchong/">Master Wuchong</a></li>
+      <li><a href="/metha/">อาจารย์เมธา</a></li>
+      <li><a href="/sale.html" style="color:var(--gold)">🛒 ร้านค้า</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="article-hero" style="padding:3.5rem 1.5rem">
+  <div class="container" style="max-width:700px;text-align:center">
+    <div style="font-size:3.5rem;margin-bottom:0.75rem">💬</div>
+    <h1>ติดต่อเรา</h1>
+    <p style="color:rgba(255,255,255,0.8);font-size:1.05rem;margin-top:0.5rem">
+      มีคำถามเรื่องหิน ต้องการคำแนะนำ หรืออยากส่งรูปหินมาให้ดู?<br>
+      ทีม Amethez พร้อมช่วยเสมอ ตอบภายใน 24 ชั่วโมง
+    </p>
+  </div>
+</section>
+
+<!-- Main Content -->
+<section class="section">
+  <div class="container">
+    <div class="contact-grid">
+
+      <!-- Left: Channels + FAQ -->
+      <div>
+        <h2 style="margin-bottom:1.25rem;font-size:1.4rem">ช่องทางติดต่อ</h2>
+
+        <a href="https://line.me/R/ti/p/@amethez" target="_blank" class="channel-card">
+          <div class="channel-icon" style="background:#e8faf0">🟢</div>
+          <div>
+            <h3>Line OA @amethez</h3>
+            <p>ช่องหลัก · ตอบเร็วที่สุด · ปรึกษาได้ทุกเรื่อง</p>
+          </div>
+          <span class="channel-badge" style="background:#e8faf0;color:#16a34a">แนะนำ</span>
+        </a>
+
+        <a href="https://line.me/R/ti/p/@masterpuch" target="_blank" class="channel-card">
+          <div class="channel-icon" style="background:#fdf4ff">💎</div>
+          <div>
+            <h3>Line @masterpuch</h3>
+            <p>Partner shop · ซื้อขายหิน · ราคาพิเศษ</p>
+          </div>
+          <span class="channel-badge" style="background:#f5f0ff;color:var(--purple)">Partner</span>
+        </a>
+
+        <a href="https://www.facebook.com/amethez" target="_blank" class="channel-card">
+          <div class="channel-icon" style="background:#eff6ff">📘</div>
+          <div>
+            <h3>Facebook Page</h3>
+            <p>ติดตามข่าวสาร บทความใหม่ และโปรโมชัน</p>
+          </div>
+          <span class="channel-badge" style="background:#eff6ff;color:#2563eb">Facebook</span>
+        </a>
+
+        <!-- Mini FAQ -->
+        <div class="mini-faq">
+          <h3 style="margin-bottom:1rem;font-size:1rem;color:var(--text-muted)">คำถามที่พบบ่อย</h3>
+          <div class="mini-faq-item">
+            <p class="q">ส่งรูปหินมาให้ดูได้ไหม?</p>
+            <p class="a">ได้เลย! ใช้ฟอร์มด้านขวา หรือส่งผ่าน Line @amethez โดยตรง</p>
+          </div>
+          <div class="mini-faq-item">
+            <p class="q">ตอบคำถามนานแค่ไหน?</p>
+            <p class="a">Line ตอบภายใน 2-4 ชั่วโมง ฟอร์มตอบภายใน 24 ชั่วโมง</p>
+          </div>
+          <div class="mini-faq-item">
+            <p class="q">ปรึกษาฟรีไหม?</p>
+            <p class="a">ฟรีทุกคำถาม! ไม่มีค่าใช้จ่ายในการปรึกษา</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Form -->
+      <div>
+        <div class="form-card">
+          <h2 style="margin-bottom:0.35rem;font-size:1.4rem">ส่งข้อความหาเรา</h2>
+          <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1.75rem">กรอกข้อมูลด้านล่าง หรือแนบรูปหินเพื่อให้ผู้เชี่ยวชาญช่วยดูให้</p>
+
+          <form id="contactForm" novalidate>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+              <div class="form-group">
+                <label>ชื่อ <span class="required">*</span></label>
+                <input type="text" class="form-control" id="fname" placeholder="ชื่อของคุณ" required>
+              </div>
+              <div class="form-group">
+                <label>Line ID / เบอร์โทร</label>
+                <input type="text" class="form-control" id="contact" placeholder="@yourlineid">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>หัวข้อการติดต่อ <span class="required">*</span></label>
+              <select class="form-control" id="topic" required>
+                <option value="" disabled selected>เลือกหัวข้อ...</option>
+                <option value="stone-id">🔍 ขอให้ช่วยระบุชนิดหิน</option>
+                <option value="stone-advice">💡 ขอคำแนะนำเรื่องหิน</option>
+                <option value="energy">🧘 ปรึกษาเรื่องพลังงาน / สมาธิ</option>
+                <option value="zodiac">🌙 ถามเรื่องดวงชะตาและหินประจำราศี</option>
+                <option value="buy">🛒 สอบถามสินค้าและราคา</option>
+                <option value="chakra">☯️ ถามเรื่องจักระ</option>
+                <option value="care">✨ วิธีดูแลและชาร์จหิน</option>
+                <option value="partner">🤝 ร่วมงานกับ Amethez</option>
+                <option value="other">📝 อื่นๆ</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>ข้อความ <span class="required">*</span></label>
+              <textarea class="form-control" id="message" placeholder="เล่าให้ฟังได้เลยค่ะ เช่น ลักษณะหิน สีสัน หรือคำถามที่อยากรู้..." required></textarea>
+              <div style="text-align:right;font-size:0.78rem;color:var(--text-muted);margin-top:0.25rem">
+                <span id="charCount">0</span> / 1000
+              </div>
+            </div>
+
+            <!-- File Upload -->
+            <div class="form-group">
+              <label>แนบรูปหิน <span style="color:var(--text-muted);font-weight:400">(ไม่บังคับ)</span></label>
+              <div class="upload-zone" id="uploadZone">
+                <input type="file" id="fileInput" accept="image/*" multiple>
+                <div class="upload-icon">📸</div>
+                <p>คลิกเพื่อเลือกรูป หรือลากวางที่นี่</p>
+                <p class="hint">รองรับ JPG, PNG, HEIC · สูงสุด 5 รูป · แต่ละรูปไม่เกิน 10MB</p>
+              </div>
+              <div class="preview-grid" id="previewGrid"></div>
+            </div>
+
+            <!-- Error message -->
+            <div id="formError" style="display:none;background:#fef2f2;border:1px solid #fecaca;border-radius:0.5rem;padding:0.75rem 1rem;color:#dc2626;font-size:0.9rem;margin-bottom:1rem"></div>
+
+            <button type="submit" class="btn btn-primary btn-submit" id="submitBtn">
+              <span id="btnText">📨 ส่งข้อความ</span>
+            </button>
+
+          </form>
+
+          <!-- Success -->
+          <div id="successMsg">
+            <div class="tick">✅</div>
+            <h3>ส่งข้อความแล้ว!</h3>
+            <p>ทีม Amethez จะติดต่อกลับภายใน 24 ชั่วโมงค่ะ<br>
+            หรือติดต่อเร็วกว่าผ่าน <a href="https://line.me/R/ti/p/@amethez" target="_blank" style="color:var(--purple)">Line @amethez</a></p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Map / Location Banner -->
+<section style="background:linear-gradient(135deg,#1a1228,#2d1b69);padding:3rem 1.5rem;text-align:center;color:white">
+  <div class="container" style="max-width:600px">
+    <div style="font-size:2.5rem;margin-bottom:1rem">⏰</div>
+    <h2 style="color:white;margin-bottom:0.5rem">เวลาทำการ</h2>
+    <p style="color:rgba(255,255,255,0.75);line-height:2">
+      จันทร์ – ศุกร์: 9:00 – 20:00 น.<br>
+      เสาร์ – อาทิตย์: 10:00 – 18:00 น.<br>
+      <span style="color:var(--gold)">Line OA ตอบทุกวัน ไม่เว้นวันหยุด</span>
+    </p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo" style="margin-bottom:0.75rem">AMETHEZ</div>
+        <p>ศูนย์กลางข้อมูลคริสตัลและพลอยที่ใหญ่ที่สุดในไทย<br>Stones · Stories · Soul</p>
+      </div>
+      <div class="footer-col">
+        <h4>หมวดหมู่</h4>
+        <ul>
+          <li><a href="/categories/chakra.html">หินตามจักระ</a></li>
+          <li><a href="/categories/zodiac.html">หินตามราศี</a></li>
+          <li><a href="/stones/">คลังหินทั้งหมด</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>ลิงก์</h4>
+        <ul>
+          <li><a href="/about.html">เกี่ยวกับเรา</a></li>
+          <li><a href="/contact.html">ติดต่อเรา</a></li>
+          <li><a href="/sale.html">ร้านค้า</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Amethez.com — ข้อมูลเพื่อการศึกษา ไม่ใช่คำแนะนำทางการแพทย์</p>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/main.js"></script>
+<script>
+// ── Character counter ──
+const msgEl = document.getElementById('message');
+const counter = document.getElementById('charCount');
+msgEl.addEventListener('input', () => {
+  const n = msgEl.value.length;
+  counter.textContent = n;
+  counter.style.color = n > 900 ? '#ef4444' : 'var(--text-muted)';
+  if (n > 1000) msgEl.value = msgEl.value.slice(0, 1000);
+});
+
+// ── File upload ──
+const fileInput = document.getElementById('fileInput');
+const previewGrid = document.getElementById('previewGrid');
+const uploadZone = document.getElementById('uploadZone');
+let selectedFiles = [];
+
+fileInput.addEventListener('change', handleFiles);
+
+uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+uploadZone.addEventListener('drop', e => {
+  e.preventDefault();
+  uploadZone.classList.remove('drag-over');
+  const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+  addFiles(files);
+});
+
+function handleFiles() {
+  addFiles(Array.from(fileInput.files));
+  fileInput.value = '';
+}
+
+function addFiles(newFiles) {
+  const remaining = 5 - selectedFiles.length;
+  const toAdd = newFiles.slice(0, remaining);
+  selectedFiles.push(...toAdd);
+  renderPreviews();
+}
+
+function removeFile(idx) {
+  selectedFiles.splice(idx, 1);
+  renderPreviews();
+}
+
+function renderPreviews() {
+  previewGrid.innerHTML = '';
+  selectedFiles.forEach((file, i) => {
+    const url = URL.createObjectURL(file);
+    const div = document.createElement('div');
+    div.className = 'preview-item';
+    div.innerHTML = `<img src="${url}" alt="preview"><button class="remove-btn" onclick="removeFile(${i})">✕</button>`;
+    previewGrid.appendChild(div);
+  });
+
+  // Update upload zone hint
+  const hint = uploadZone.querySelector('.hint');
+  if (selectedFiles.length >= 5) {
+    hint.textContent = 'ครบ 5 รูปแล้ว';
+    uploadZone.style.opacity = '0.5';
+    fileInput.disabled = true;
+  } else {
+    hint.textContent = `รองรับ JPG, PNG, HEIC · เพิ่มได้อีก ${5 - selectedFiles.length} รูป`;
+    uploadZone.style.opacity = '1';
+    fileInput.disabled = false;
+  }
+}
+
+// ── Form submit ──
+document.getElementById('contactForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const errEl = document.getElementById('formError');
+  errEl.style.display = 'none';
+
+  // Validate
+  const fname = document.getElementById('fname').value.trim();
+  const topic = document.getElementById('topic').value;
+  const message = document.getElementById('message').value.trim();
+
+  if (!fname) { showError('กรุณากรอกชื่อของคุณ'); return; }
+  if (!topic) { showError('กรุณาเลือกหัวข้อการติดต่อ'); return; }
+  if (!message) { showError('กรุณาใส่ข้อความ'); return; }
+
+  // Loading state
+  const btn = document.getElementById('submitBtn');
+  const btnText = document.getElementById('btnText');
+  btn.disabled = true;
+  btnText.textContent = '⏳ กำลังส่ง...';
+
+  // Simulate send (replace with actual API / FormSpree / Netlify Forms)
+  await new Promise(r => setTimeout(r, 1200));
+
+  // Success
+  document.getElementById('contactForm').style.display = 'none';
+  document.getElementById('successMsg').style.display = 'block';
+});
+
+function showError(msg) {
+  const el = document.getElementById('formError');
+  el.textContent = '⚠️ ' + msg;
+  el.style.display = 'block';
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+</script>
+</body>
+</html>

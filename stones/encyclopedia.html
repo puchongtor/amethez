@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สารานุกรมหินคริสตัลและพลอย — ครบทุกชนิด | Amethez</title>
+  <meta name="description" content="สารานุกรมหินคริสตัลและพลอยที่ครบที่สุดในไทย กว่า 300 ชนิด ค้นหาด้วยชื่อ สี จักระ ราศี หรือวัตถุประสงค์">
+  <meta name="keywords" content="สารานุกรมหิน หินคริสตัล หินพลอย หินมงคล crystal encyclopedia จักระ ราศี">
+  <link rel="canonical" href="https://amethez.com/stones/encyclopedia.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "สารานุกรมหินคริสตัลและพลอย",
+    "description": "รวมข้อมูลหินคริสตัลและพลอยทุกชนิดที่ครบที่สุดในไทย",
+    "publisher": { "@type": "Organization", "name": "Amethez", "url": "https://amethez.com" }
+  }
+  </script>
+  <style>
+    /* ── Hero ── */
+    .enc-hero { background: linear-gradient(135deg, #1a1228 0%, #2d1b69 100%); padding: 4rem 1.5rem 3rem; text-align: center; }
+    .enc-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 5vw, 3rem); color: white; margin-bottom: .75rem; }
+    .enc-hero p { color: rgba(255,255,255,.7); font-size: 1.05rem; max-width: 560px; margin: 0 auto 2rem; }
+    .enc-stats { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; }
+    .enc-stat { text-align: center; color: white; }
+    .enc-stat strong { display: block; font-size: 2rem; font-family: 'Playfair Display',serif; color: var(--gold); }
+    .enc-stat span { font-size: .85rem; color: rgba(255,255,255,.6); }
+
+    /* ── Filter Bar ── */
+    .filter-bar { background: white; border-bottom: 1px solid #f0e8ff; padding: 1.25rem 1.5rem; position: sticky; top: 64px; z-index: 90; }
+    .filter-inner { max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; }
+    .search-wrap { position: relative; flex: 1; min-width: 200px; }
+    .search-wrap input { width: 100%; padding: .7rem 1rem .7rem 2.5rem; border: 1.5px solid #e5e7eb; border-radius: .6rem; font-family: Sarabun,sans-serif; font-size: 1rem; color: var(--text); box-sizing: border-box; }
+    .search-wrap input:focus { outline: none; border-color: var(--purple); }
+    .search-wrap .icon { position: absolute; left: .75rem; top: 50%; transform: translateY(-50%); color: #9ca3af; pointer-events: none; }
+    .filter-pills { display: flex; gap: .5rem; flex-wrap: wrap; }
+    .filter-group { display: flex; align-items: center; gap: .4rem; }
+    .filter-group label { font-size: .82rem; font-weight: 600; color: var(--text-muted); white-space: nowrap; }
+    .filter-select { padding: .5rem .9rem; border: 1.5px solid #e5e7eb; border-radius: 2rem; font-family: Sarabun,sans-serif; font-size: .88rem; color: var(--text); background: white; cursor: pointer; }
+    .filter-select:focus { outline: none; border-color: var(--purple); }
+    .clear-btn { background: none; border: 1.5px solid #e5e7eb; color: var(--text-muted); padding: .45rem 1rem; border-radius: 2rem; font-family: Sarabun,sans-serif; font-size: .85rem; cursor: pointer; transition: all .2s; }
+    .clear-btn:hover { border-color: var(--purple); color: var(--purple); }
+
+    /* ── Results ── */
+    .enc-body { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+    .results-info { font-size: .9rem; color: var(--text-muted); margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem; }
+    .view-toggle { display: flex; gap: .4rem; }
+    .view-btn { background: none; border: 1.5px solid #e5e7eb; padding: .35rem .6rem; border-radius: .4rem; cursor: pointer; font-size: 1rem; transition: all .15s; }
+    .view-btn.active { background: var(--purple); border-color: var(--purple); color: white; }
+
+    /* ── Stone Grid ── */
+    .stone-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
+    .stone-grid.list-view { grid-template-columns: 1fr; gap: .5rem; }
+
+    .enc-card { background: white; border: 1.5px solid #f0e8ff; border-radius: .875rem; padding: 1.25rem; text-decoration: none; color: inherit; transition: all .2s; display: flex; flex-direction: column; align-items: center; text-align: center; gap: .5rem; }
+    .enc-card:hover { border-color: var(--purple); box-shadow: 0 4px 16px rgba(124,58,237,.12); transform: translateY(-3px); }
+    /* Thumbnail: real photo if available, emoji fallback */
+    .enc-emoji { width: 100%; height: 120px; display: flex; align-items: center; justify-content: center; font-size: 2.75rem; line-height: 1; background: linear-gradient(135deg, #f7f3ff, #ede9fe); border-radius: .6rem; overflow: hidden; position: relative; }
+    .enc-emoji .ph { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+    .enc-emoji img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .enc-name-th { font-weight: 700; font-size: 1rem; color: var(--text); }
+    .enc-name-en { font-size: .8rem; color: var(--text-muted); }
+    .enc-tags { display: flex; flex-wrap: wrap; gap: .3rem; justify-content: center; margin-top: .25rem; }
+    .enc-tag { background: #f5f0ff; color: var(--purple); font-size: .72rem; padding: .15rem .5rem; border-radius: 1rem; }
+    .enc-hardness { font-size: .75rem; color: var(--text-muted); margin-top: .2rem; }
+    .no-article { opacity: .5; pointer-events: none; }
+    .coming-badge { background: #fef3c7; color: #92400e; font-size: .7rem; padding: .15rem .5rem; border-radius: 1rem; }
+
+    /* List view card */
+    .list-view .enc-card { flex-direction: row; text-align: left; align-items: center; gap: 1rem; padding: .875rem 1.25rem; }
+    .list-view .enc-emoji { width: 56px; height: 56px; font-size: 2rem; flex-shrink: 0; border-radius: .5rem; }
+    .list-view .enc-tags { justify-content: flex-start; }
+    .list-view .enc-name-wrap { flex: 1; }
+
+    /* ── Alphabet Index ── */
+    .alpha-index { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: 1.5rem; }
+    .alpha-btn { background: none; border: 1.5px solid #e5e7eb; color: var(--text-muted); width: 34px; height: 34px; border-radius: .4rem; font-family: Sarabun,sans-serif; font-size: .85rem; cursor: pointer; transition: all .15s; }
+    .alpha-btn:hover, .alpha-btn.active { background: var(--purple); border-color: var(--purple); color: white; }
+    .alpha-section-title { font-size: .75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .08em; margin: 1.5rem 0 .75rem; padding-bottom: .4rem; border-bottom: 1px solid #f0e8ff; }
+
+    /* ── No results ── */
+    .no-results { text-align: center; padding: 4rem 1.5rem; color: var(--text-muted); }
+    .no-results .icon { font-size: 3rem; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav-inner">
+    <a href="/" class="logo">
+      <svg viewBox="0 0 36 36" fill="none"><polygon points="18,2 30,12 26,30 10,30 6,12" fill="#7c3aed" opacity="0.9"/><polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity="0.95"/><polygon points="18,8 30,12 18,28" fill="#a78bfa"/><polygon points="18,8 6,12 18,28" fill="#7c3aed"/></svg>
+      <span>AMETHEZ <small class="logo-tagline">Stones · Stories · Soul</small></span>
+    </a>
+    <nav><ul class="nav-links">
+      <li><a href="/stones/" class="active">คลังหิน</a></li>
+      <li><a href="/categories/chakra.html">จักระ</a></li>
+      <li><a href="/categories/zodiac.html">ราศี</a></li>
+      <li><a href="/wuchong/">Master Wuchong</a></li>
+      <li><a href="/metha/">อาจารย์เมธา</a></li>
+      <li><a href="/sale.html" style="color:var(--gold)">🛒 ร้านค้า</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="enc-hero">
+  <div class="container">
+    <div style="font-size:.9rem;color:rgba(255,255,255,.5);margin-bottom:.75rem">
+      <a href="/" style="color:rgba(255,255,255,.5)">หน้าหลัก</a> ›
+      <a href="/stones/" style="color:rgba(255,255,255,.5)">คลังหิน</a> › สารานุกรม
+    </div>
+    <h1>💎 สารานุกรมหินคริสตัลและพลอย</h1>
+    <p>รวมข้อมูลหินทุกชนิดอย่างครบถ้วน ค้นหาด้วยชื่อ สี จักระ ราศี หรือวัตถุประสงค์</p>
+    <div class="enc-stats">
+      <div class="enc-stat"><strong id="totalCount">5</strong><span>หินที่มีบทความ</span></div>
+      <div class="enc-stat"><strong>300+</strong><span>เป้าหมายสิ้นปี</span></div>
+      <div class="enc-stat"><strong>7</strong><span>จักระที่ครอบคลุม</span></div>
+      <div class="enc-stat"><strong>12</strong><span>ราศีที่เกี่ยวข้อง</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Filter Bar -->
+<div class="filter-bar">
+  <div class="filter-inner">
+    <div class="search-wrap">
+      <span class="icon">🔍</span>
+      <input type="search" id="encSearch" placeholder="ค้นหาหิน เช่น อเมทิสต์, moldavite, ม่วง..." oninput="filterStones()">
+    </div>
+    <div class="filter-group">
+      <label>สี</label>
+      <select class="filter-select" id="filterColor" onchange="filterStones()">
+        <option value="">ทั้งหมด</option>
+        <option value="ม่วง">ม่วง</option>
+        <option value="เขียว">เขียว</option>
+        <option value="ดำ">ดำ</option>
+        <option value="เหลือง">เหลือง-ส้ม</option>
+        <option value="ใส">ใส</option>
+        <option value="ชมพู">ชมพู</option>
+        <option value="น้ำเงิน">น้ำเงิน</option>
+        <option value="แดง">แดง</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>จักระ</label>
+      <select class="filter-select" id="filterChakra" onchange="filterStones()">
+        <option value="">ทั้งหมด</option>
+        <option value="มงกุฎ">มงกุฎ</option>
+        <option value="Third Eye">Third Eye</option>
+        <option value="คอ">คอ</option>
+        <option value="หัวใจ">หัวใจ</option>
+        <option value="Solar Plexus">Solar Plexus</option>
+        <option value="สะดือ">สะดือ</option>
+        <option value="ราก">ราก</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>ราศี</label>
+      <select class="filter-select" id="filterZodiac" onchange="filterStones()">
+        <option value="">ทั้งหมด</option>
+        <option value="เมษ">เมษ ♈</option>
+        <option value="พฤษภ">พฤษภ ♉</option>
+        <option value="มิถุน">มิถุน ♊</option>
+        <option value="กรกฎ">กรกฎ ♋</option>
+        <option value="สิงห์">สิงห์ ♌</option>
+        <option value="กันย์">กันย์ ♍</option>
+        <option value="ตุลย์">ตุลย์ ♎</option>
+        <option value="พิจิก">พิจิก ♏</option>
+        <option value="ธนู">ธนู ♐</option>
+        <option value="มังกร">มังกร ♑</option>
+        <option value="กุมภ์">กุมภ์ ♒</option>
+        <option value="มีน">มีน ♓</option>
+      </select>
+    </div>
+    <button class="clear-btn" onclick="clearFilters()">✕ ล้าง</button>
+  </div>
+</div>
+
+<!-- Body -->
+<div class="enc-body">
+  <div class="results-info">
+    <span id="resultsText">แสดง 5 รายการ</span>
+    <div class="view-toggle">
+      <button class="view-btn active" id="gridBtn" onclick="setView('grid')" title="แบบตาราง">⊞</button>
+      <button class="view-btn" id="listBtn" onclick="setView('list')" title="แบบรายการ">☰</button>
+    </div>
+  </div>
+
+  <div id="stoneGrid" class="stone-grid"></div>
+
+  <div class="no-results" id="noResults" style="display:none">
+    <div class="icon">🔍</div>
+    <p>ไม่พบหินที่ตรงกับคำค้นหา<br>ลองเปลี่ยนคำค้นหรือ filter</p>
+    <a href="/request.html" class="btn btn-primary" style="margin-top:1rem;display:inline-block">หาหินนี้ผ่าน Request & Match</a>
+  </div>
+
+  <!-- Coming soon section -->
+  <div id="comingSoonSection" style="margin-top:3rem;padding-top:2rem;border-top:1px solid #f0e8ff">
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--text);margin-bottom:1rem">🚀 กำลังเพิ่มเนื้อหา</h3>
+    <p style="color:var(--text-muted);margin-bottom:1.5rem;font-size:.95rem">หินด้านล่างอยู่ระหว่างการเขียนบทความ เพิ่มทุกวันวันละ 3 บทความ</p>
+    <div id="comingSoonGrid" class="stone-grid"></div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <div class="footer-logo">
+        <svg viewBox="0 0 36 36" fill="none" style="width:28px;height:28px"><polygon points="18,2 30,12 26,30 10,30 6,12" fill="#7c3aed"/><polygon points="18,2 30,12 18,8" fill="#c9a84c"/></svg>
+        <span>AMETHEZ</span>
+      </div>
+    </div>
+    <div>
+      <p class="footer-heading">หมวดหมู่</p>
+      <ul class="footer-links">
+        <li><a href="/categories/chakra.html">จักระ</a></li>
+        <li><a href="/categories/zodiac.html">ราศี</a></li>
+        <li><a href="/categories/color.html">สี</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-heading">บริการ</p>
+      <ul class="footer-links">
+        <li><a href="/request.html">Request & Match</a></li>
+        <li><a href="/sale.html">ร้านค้า</a></li>
+        <li><a href="/contact.html">ติดต่อ</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>© 2026 Amethez.com · <a href="/privacy.html" style="color:rgba(255,255,255,.5)">Privacy</a> · <a href="/terms.html" style="color:rgba(255,255,255,.5)">Terms</a></p>
+  </div>
+</footer>
+
+<script>
+// ── Data ──────────────────────────────────────────────────
+const STONES = [
+  { id:'amethyst',     name_th:'อเมทิสต์',          name_en:'Amethyst',       emoji:'💜', color:'ม่วง',      chakra:['มงกุฎ','Third Eye'], zodiac:['กุมภ์','มีน','สิงห์'],     keywords:['สมาธิ','ปัญญา','ความสงบ'],    hardness:'7',   url:'/stones/amethyst.html',     published:true  },
+  { id:'moldavite',    name_th:'โมลดาไวท์',          name_en:'Moldavite',      emoji:'🌿', color:'เขียว',     chakra:['หัวใจ'],             zodiac:['พิจิก','กรกฎ'],             keywords:['เปลี่ยนแปลง','จักรวาล','พลังสูง'], hardness:'5.5', url:'/stones/moldavite.html',   published:true  },
+  { id:'tektite',      name_th:'สะเก็ดดาวไทย',       name_en:'Thai Tektite',   emoji:'🌑', color:'ดำ',        chakra:['ราก'],               zodiac:['แมงป่อง','พฤษภ'],           keywords:['ความมั่นคง','ป้องกัน','พลังโลก'], hardness:'5-6', url:'/stones/tektite.html',     published:true  },
+  { id:'citrine',      name_th:'ซิทริน',             name_en:'Citrine',        emoji:'🌟', color:'เหลือง-ส้ม', chakra:['Solar Plexus'],     zodiac:['พฤษภ','มิถุน','ธนู'],       keywords:['โชคลาภ','ความสำเร็จ','การเงิน'], hardness:'7',   url:'/stones/citrine.html',     published:true  },
+  { id:'clear-quartz', name_th:'คริสตัลใส',          name_en:'Clear Quartz',   emoji:'🔮', color:'ใส',        chakra:['มงกุฎ','ทุกจักระ'], zodiac:['ทุกราศี'],                  keywords:['ขยายพลัง','ชำระล้าง','สากล'],  hardness:'7',   url:'/stones/clear-quartz.html',published:true  },
+];
+
+const COMING_SOON = [
+  { name_th:'โรสควอตซ์',     name_en:'Rose Quartz',      emoji:'🌸', color:'ชมพู',    chakra:['หัวใจ'],        keywords:['ความรัก','ความเมตตา'] },
+  { name_th:'ลาพิสลาซูลี',   name_en:'Lapis Lazuli',     emoji:'🔵', color:'น้ำเงิน', chakra:['Third Eye','คอ'], keywords:['ปัญญา','ความจริง'] },
+  { name_th:'ออบซิเดียน',    name_en:'Obsidian',          emoji:'⚫', color:'ดำ',      chakra:['ราก'],          keywords:['ป้องกัน','รากฐาน'] },
+  { name_th:'โซดาไลต์',      name_en:'Sodalite',          emoji:'💙', color:'น้ำเงิน', chakra:['คอ','Third Eye'], keywords:['ความชัดเจน','สื่อสาร'] },
+  { name_th:'มาลาไคต์',      name_en:'Malachite',         emoji:'🟢', color:'เขียว',   chakra:['หัวใจ'],        keywords:['การเปลี่ยนแปลง','การรักษา'] },
+  { name_th:'การ์เน็ต',       name_en:'Garnet',            emoji:'🔴', color:'แดง',     chakra:['ราก'],          keywords:['พลังงาน','ความหลงใหล'] },
+  { name_th:'มูนสโตน',        name_en:'Moonstone',         emoji:'🌙', color:'ขาว-เงิน', chakra:['มงกุฎ'],       keywords:['สัญชาตญาณ','จันทร์','ความสมดุล'] },
+  { name_th:'แลปราโดไรต์',   name_en:'Labradorite',       emoji:'🦋', color:'น้ำเงิน-เขียว', chakra:['Third Eye'], keywords:['การปกป้อง','จักรวาล','สัญชาตญาณ'] },
+  { name_th:'ไพไรต์',         name_en:'Pyrite',            emoji:'🪙', color:'ทอง',    chakra:['Solar Plexus'], keywords:['ความมั่งคั่ง','ป้องกัน'] },
+  { name_th:'อะเมโซไนต์',    name_en:'Amazonite',         emoji:'🌊', color:'เขียว-น้ำเงิน', chakra:['คอ','หัวใจ'], keywords:['ความจริง','สมดุล'] },
+  { name_th:'เฮมาไทต์',      name_en:'Hematite',          emoji:'⬛', color:'ดำ-เทา', chakra:['ราก'],          keywords:['ความมั่นคง','พลังโลก','ดิน'] },
+  { name_th:'เซเลไนต์',      name_en:'Selenite',          emoji:'🕯️', color:'ขาว',   chakra:['มงกุฎ'],        keywords:['ชาร์จหิน','ชำระล้าง','แสงสว่าง'] },
+];
+
+let currentView = 'grid';
+let filtered = [...STONES];
+
+// ── Render ────────────────────────────────────────────────
+function renderCard(s, isComingSoon = false) {
+  if (isComingSoon) {
+    return `
+      <div class="enc-card no-article" style="opacity:.55;cursor:default">
+        <div class="enc-emoji">${s.emoji}</div>
+        <div class="enc-name-wrap">
+          <div class="enc-name-th">${s.name_th}</div>
+          <div class="enc-name-en">${s.name_en}</div>
+          <div class="enc-tags" style="margin-top:.4rem">
+            <span class="coming-badge">กำลังเขียน...</span>
+          </div>
+        </div>
+      </div>`;
+  }
+  const chakraTags = s.chakra.slice(0,2).map(c => `<span class="enc-tag">${c}</span>`).join('');
+  // Real photo if /images/stones/{id}.webp exists, otherwise emoji fallback (img removes itself on error)
+  const imgSrc = '/images/stones/' + s.id + '.webp';
+  const thumb = `<div class="enc-emoji"><span class="ph">${s.emoji}</span><img src="${imgSrc}" alt="${s.name_th} ${s.name_en} หินคริสตัล" loading="lazy" onerror="this.remove()"></div>`;
+  return `
+    <a href="${s.url}" class="enc-card">
+      ${thumb}
+      <div class="enc-name-wrap">
+        <div class="enc-name-th">${s.name_th}</div>
+        <div class="enc-name-en">${s.name_en}</div>
+        <div class="enc-tags">${chakraTags}</div>
+        <div class="enc-hardness">Mohs ${s.hardness}</div>
+      </div>
+    </a>`;
+}
+
+function render() {
+  const grid = document.getElementById('stoneGrid');
+  const noRes = document.getElementById('noResults');
+  const resText = document.getElementById('resultsText');
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '';
+    noRes.style.display = 'block';
+    resText.textContent = 'ไม่พบผลลัพธ์';
+  } else {
+    noRes.style.display = 'none';
+    grid.innerHTML = filtered.map(s => renderCard(s)).join('');
+    resText.textContent = `แสดง ${filtered.length} รายการ`;
+  }
+
+  // Coming soon
+  const comingGrid = document.getElementById('comingSoonGrid');
+  comingGrid.innerHTML = COMING_SOON.map(s => renderCard(s, true)).join('');
+}
+
+// ── Filter ────────────────────────────────────────────────
+function filterStones() {
+  const q = document.getElementById('encSearch').value.toLowerCase().trim();
+  const color = document.getElementById('filterColor').value;
+  const chakra = document.getElementById('filterChakra').value;
+  const zodiac = document.getElementById('filterZodiac').value;
+
+  filtered = STONES.filter(s => {
+    const matchQ = !q || s.name_th.toLowerCase().includes(q) || s.name_en.toLowerCase().includes(q) || s.keywords.some(k => k.includes(q)) || s.color.toLowerCase().includes(q);
+    const matchColor = !color || s.color.includes(color);
+    const matchChakra = !chakra || s.chakra.some(c => c.includes(chakra));
+    const matchZodiac = !zodiac || s.zodiac.some(z => z.includes(zodiac));
+    return matchQ && matchColor && matchChakra && matchZodiac;
+  });
+
+  render();
+}
+
+function clearFilters() {
+  document.getElementById('encSearch').value = '';
+  document.getElementById('filterColor').value = '';
+  document.getElementById('filterChakra').value = '';
+  document.getElementById('filterZodiac').value = '';
+  filtered = [...STONES];
+  render();
+}
+
+// ── View toggle ───────────────────────────────────────────
+function setView(v) {
+  currentView = v;
+  const grid = document.getElementById('stoneGrid');
+  const comingGrid = document.getElementById('comingSoonGrid');
+  grid.className = v === 'list' ? 'stone-grid list-view' : 'stone-grid';
+  comingGrid.className = v === 'list' ? 'stone-grid list-view' : 'stone-grid';
+  document.getElementById('gridBtn').classList.toggle('active', v === 'grid');
+  document.getElementById('listBtn').classList.toggle('active', v === 'list');
+}
+
+// ── Init ──────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('totalCount').textContent = STONES.filter(s => s.published).length;
+  render();
+});
+</script>
+</body>
+</html>

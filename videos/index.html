@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>วิดีโอคริสตัลและพลังงาน | Amethez</title>
+  <meta name="description" content="รวมวิดีโอความรู้เรื่องคริสตัล หินพลังงาน ฮวงจุ้ย และการบำบัดด้วยหิน พร้อมสรุปโดย AI และแนะนำสินค้าที่เกี่ยวข้อง">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    /* ── Hero ── */
+    .vh-hero {
+      background: linear-gradient(135deg, #0f0a1e 0%, #1e0d3d 50%, #0a1829 100%);
+      padding: 4rem 1.5rem 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .vh-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(124,58,237,.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .vh-hero-label {
+      font-size: .78rem;
+      font-weight: 700;
+      color: rgba(201,168,76,.8);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      margin-bottom: 1rem;
+    }
+    .vh-hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      color: white;
+      margin-bottom: 1rem;
+      line-height: 1.25;
+    }
+    .vh-hero-sub {
+      color: rgba(255,255,255,.5);
+      font-size: 1rem;
+      max-width: 560px;
+      margin: 0 auto 1.75rem;
+      line-height: 1.7;
+    }
+    .vh-stats {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .vh-stat { text-align: center; }
+    .vh-stat-num { font-family: 'Playfair Display', serif; font-size: 1.75rem; color: #c9a84c; font-weight: 700; }
+    .vh-stat-label { font-size: .73rem; color: rgba(255,255,255,.4); }
+
+    /* ── Filter bar ── */
+    .vh-filter {
+      background: white;
+      border-bottom: 1px solid #ede9fe;
+      padding: 1rem 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .vh-filter-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      gap: .6rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .vh-filter-label { font-size: .8rem; color: #6b7280; margin-right: .2rem; }
+    .vh-pill {
+      padding: .35rem .9rem;
+      border-radius: 2rem;
+      font-size: .8rem;
+      font-family: Sarabun, sans-serif;
+      cursor: pointer;
+      border: 1.5px solid #ede9fe;
+      background: white;
+      color: #6b7280;
+      transition: all .15s;
+    }
+    .vh-pill:hover, .vh-pill.active {
+      background: #7c3aed;
+      border-color: #7c3aed;
+      color: white;
+    }
+
+    /* ── Grid ── */
+    .vh-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+    }
+    .vh-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* ── Video Card ── */
+    .vh-card {
+      background: white;
+      border-radius: 1rem;
+      overflow: hidden;
+      border: 1px solid #ede9fe;
+      transition: all .2s;
+      display: flex;
+      flex-direction: column;
+    }
+    .vh-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(124,58,237,.12);
+      border-color: #c4b5fd;
+    }
+    .vh-card-thumb {
+      position: relative;
+      padding-bottom: 56.25%;
+      background: #1a0936;
+      overflow: hidden;
+    }
+    .vh-card-thumb img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .3s;
+    }
+    .vh-card:hover .vh-card-thumb img { transform: scale(1.04); }
+    .vh-play-btn {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,.25);
+      opacity: 0;
+      transition: opacity .2s;
+    }
+    .vh-card:hover .vh-play-btn { opacity: 1; }
+    .vh-play-icon {
+      width: 52px;
+      height: 52px;
+      background: rgba(255,255,255,.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      padding-left: 3px;
+    }
+    .vh-card-body { padding: 1.25rem; flex: 1; display: flex; flex-direction: column; }
+    .vh-card-tags { display: flex; gap: .3rem; flex-wrap: wrap; margin-bottom: .75rem; }
+    .vh-card-tag {
+      font-size: .68rem;
+      background: #f5f0ff;
+      color: #7c3aed;
+      padding: .15rem .5rem;
+      border-radius: 2rem;
+    }
+    .vh-card-title {
+      font-weight: 700;
+      color: #1a1228;
+      font-size: .97rem;
+      line-height: 1.45;
+      margin-bottom: .5rem;
+    }
+    .vh-card-summary {
+      font-size: .82rem;
+      color: #6b7280;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+      flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .vh-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: .75rem;
+      border-top: 1px solid #f3f0ff;
+    }
+    .vh-avatar-chip {
+      display: flex;
+      align-items: center;
+      gap: .3rem;
+      font-size: .75rem;
+      color: #7c3aed;
+      font-weight: 600;
+    }
+    .vh-read-btn {
+      background: linear-gradient(135deg, #7c3aed, #6d28d9);
+      color: white;
+      padding: .4rem .9rem;
+      border-radius: .5rem;
+      font-size: .78rem;
+      font-weight: 700;
+      font-family: Sarabun, sans-serif;
+      text-decoration: none;
+      transition: all .15s;
+    }
+    .vh-read-btn:hover { opacity: .85; }
+
+    /* ── Empty state ── */
+    .vh-empty {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 4rem 2rem;
+      color: #9ca3af;
+    }
+    .vh-empty-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .vh-empty h3 { color: #374151; margin-bottom: .5rem; }
+
+    /* ── CTA Section ── */
+    .vh-cta {
+      background: linear-gradient(135deg, #f8f5ff, #fdf4ff);
+      border-top: 1px solid #ede9fe;
+      padding: 3rem 1.5rem;
+      text-align: center;
+    }
+    .vh-cta h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: #1a1228;
+      margin-bottom: .75rem;
+    }
+    .vh-cta p { color: #6b7280; margin-bottom: 1.5rem; }
+    .vh-cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    @media (max-width: 640px) {
+      .vh-grid { grid-template-columns: 1fr; }
+      .vh-stats { gap: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav-inner">
+    <a href="/" class="logo">
+      <svg viewBox="0 0 36 36" fill="none"><polygon points="18,2 30,12 26,30 10,30 6,12" fill="#7c3aed" opacity="0.9"/><polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity="0.95"/><polygon points="18,8 30,12 18,28" fill="#a78bfa"/><polygon points="18,8 6,12 18,28" fill="#7c3aed"/></svg>
+      <span>AMETHEZ <small class="logo-tagline">Stones · Stories · Soul</small></span>
+    </a>
+    <nav><ul class="nav-links">
+      <li><a href="/stones/">💎 คลังหิน</a></li>
+      <li><a href="/guides/">🌿 พลังบำบัด</a></li>
+      <li><a href="/videos/" style="color:#7c3aed;font-weight:700">🎬 วิดีโอ</a></li>
+      <li><a href="/digital/">📥 Digital</a></li>
+      <li><a href="/sale.html" style="color:#c9a84c;font-weight:700">🛒 ร้านค้า</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="vh-hero">
+  <div class="vh-hero-label">🎬 Video Knowledge Hub</div>
+  <h1 class="vh-hero-title">วิดีโอความรู้คริสตัล<br>สรุปโดย AI พร้อมแนะนำสินค้า</h1>
+  <p class="vh-hero-sub">คัดสรรวิดีโอดีๆ จาก YouTube พร้อมสรุปเป็นภาษาไทยโดย Crystal Atlas และแนะนำหนังสือ คอร์ส และสินค้าที่เกี่ยวข้อง</p>
+  <div class="vh-stats">
+    <div class="vh-stat"><div class="vh-stat-num" id="vidCount">0</div><div class="vh-stat-label">วิดีโอทั้งหมด</div></div>
+    <div class="vh-stat"><div class="vh-stat-num">5</div><div class="vh-stat-label">Platform Affiliate</div></div>
+    <div class="vh-stat"><div class="vh-stat-num">ฟรี</div><div class="vh-stat-label">ดูได้ทันที</div></div>
+  </div>
+</section>
+
+<!-- Filter -->
+<div class="vh-filter">
+  <div class="vh-filter-inner">
+    <span class="vh-filter-label">หมวด:</span>
+    <button class="vh-pill active" onclick="filterVideos('all', this)">ทั้งหมด</button>
+    <button class="vh-pill" onclick="filterVideos('crystal', this)">💎 คริสตัล</button>
+    <button class="vh-pill" onclick="filterVideos('fengshui', this)">🏠 ฮวงจุ้ย</button>
+    <button class="vh-pill" onclick="filterVideos('mindset', this)">🧘 พลังงาน</button>
+    <button class="vh-pill" onclick="filterVideos('business', this)">💼 ธุรกิจ</button>
+  </div>
+</div>
+
+<!-- Grid -->
+<div class="vh-section">
+  <div class="vh-grid" id="videoGrid">
+    <!-- Populated by JS from video-index.json or inline data -->
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="vh-cta">
+  <h2>สนใจอ่านบทความเชิงลึก?</h2>
+  <p>คลังหินคริสตัลกว่า 300+ บทความ พร้อมคู่มือพลังบำบัดโดยผู้เชี่ยวชาญ</p>
+  <div class="vh-cta-btns">
+    <a href="/stones/" class="btn btn-purple">💎 คลังหิน A–Z</a>
+    <a href="/guides/" class="btn" style="background:#f5f0ff;color:#7c3aed;border:1.5px solid #ede9fe">🌿 คู่มือพลังบำบัด</a>
+    <a href="/digital/" class="btn" style="background:#1a0936;color:#c9a84c">📥 คู่มือ PDF ฟรี</a>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-bottom">
+    <p>© 2026 Amethez.com — ข้อมูลเพื่อการศึกษา ไม่ใช่คำแนะนำทางการแพทย์</p>
+  </div>
+</footer>
+
+<script>
+// ── Video index (auto-populated when pages are generated) ──────────────────
+// วิธีเพิ่ม: เมื่อ generate หน้าใหม่ ให้เพิ่ม entry ใน array นี้
+// หรือ fetch จาก /data/video-index.json ถ้ามีไฟล์
+
+const VIDEO_INDEX = [
+  // ตัวอย่าง — ลบออกได้เมื่อมีหน้าจริง
+  {
+    slug: 'demo-amethyst-healing',
+    title: 'อเมทิสต์กับการบำบัดจักระมงกุฎ — วิทยาศาสตร์ + สายมู',
+    summary: 'วิดีโอนี้อธิบายกลไกการทำงานของอเมทิสต์ในการปรับสมดุลพลังงานจักระมงกุฎ ผสมผสานระหว่างความเชื่อโบราณและการวิจัยสมัยใหม่',
+    tags: ['อเมทิสต์','จักระ','การบำบัด'],
+    category: 'crystal',
+    avatar: 'atlas',
+    vid: 'dQw4w9WgXcQ',
+    date: '2026-06-25'
+  }
+];
+
+const avatarMap = {
+  atlas:   { icon: '🔬', name: 'Crystal Atlas' },
+  wuchong: { icon: '🧘', name: 'Master Wuchong' },
+  metha:   { icon: '🌙', name: 'อาจารย์เมธา' }
+};
+
+let allVideos = [...VIDEO_INDEX];
+let activeFilter = 'all';
+
+// Try loading from video-index.json
+fetch('/data/video-index.json')
+  .then(r => r.json())
+  .then(data => {
+    allVideos = data.videos || allVideos;
+    renderGrid(allVideos);
+    document.getElementById('vidCount').textContent = allVideos.length;
+  })
+  .catch(() => {
+    renderGrid(allVideos);
+    document.getElementById('vidCount').textContent = allVideos.length;
+  });
+
+function filterVideos(cat, el) {
+  document.querySelectorAll('.vh-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  activeFilter = cat;
+  const filtered = cat === 'all' ? allVideos : allVideos.filter(v => v.category === cat);
+  renderGrid(filtered);
+}
+
+function renderGrid(videos) {
+  const grid = document.getElementById('videoGrid');
+  if (!videos.length) {
+    grid.innerHTML = `<div class="vh-empty"><div class="vh-empty-icon">🎬</div><h3>ยังไม่มีวิดีโอในหมวดนี้</h3><p>กลับมาเร็วๆ นี้ — ทีมงาน Amethez กำลังเพิ่มวิดีโอใหม่ทุกสัปดาห์</p></div>`;
+    return;
+  }
+  grid.innerHTML = videos.map(v => {
+    const av = avatarMap[v.avatar] || avatarMap.atlas;
+    const tagHtml = (v.tags || []).slice(0,3).map(t => `<span class="vh-card-tag">${t}</span>`).join('');
+    return `
+      <article class="vh-card">
+        <a href="/videos/${v.slug}.html" class="vh-card-thumb">
+          <img src="https://img.youtube.com/vi/${v.vid}/mqdefault.jpg" alt="${v.title}" loading="lazy">
+          <div class="vh-play-btn"><div class="vh-play-icon">▶</div></div>
+        </a>
+        <div class="vh-card-body">
+          <div class="vh-card-tags">${tagHtml}</div>
+          <h2 class="vh-card-title">${v.title}</h2>
+          <p class="vh-card-summary">${v.summary}</p>
+          <div class="vh-card-footer">
+            <div class="vh-avatar-chip">${av.icon} ${av.name}</div>
+            <a href="/videos/${v.slug}.html" class="vh-read-btn">อ่านสรุป →</a>
+          </div>
+        </div>
+      </article>`;
+  }).join('');
+}
+</script>
+<script src="/js/main.js"></script>
+</body>
+</html>
