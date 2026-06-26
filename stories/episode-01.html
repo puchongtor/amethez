@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ตอนที่ 1 — วันที่ระบบล่ม | ระบบล่าแร่ธาตุส่องออร่า | Amethez</title>
+  <meta name="description" content="ตอนที่ 1: วันที่ระบบล่ม — ภัทรมีแผนชีวิตที่สมบูรณ์แบบ จนกระทั่งมันพังทลายในคืนเดียว นิยายปรัชญาชีวิต อ่านฟรี">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/amethez/css/main.css">
+  <style>
+    :root { --gold:#c9a84c; --purple:#7c3aed; --dark:#0f0a1e; --text:#1a1228; --muted:#6b7280; --bg:#faf8f4; --border:#ede9fe; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:Sarabun,sans-serif; background:var(--dark); color:#d4ccE8; }
+
+    /* NAV */
+    .topbar { background:linear-gradient(90deg,#1a0936,#2d1b5e,#1a0936); padding:.55rem 1.5rem; display:flex; align-items:center; justify-content:center; gap:2rem; flex-wrap:wrap; }
+    .topbar span { color:rgba(255,255,255,.65); font-size:.78rem; }
+    .topbar strong { color:var(--gold); }
+    .nav { position:sticky; top:0; z-index:100; background:rgba(15,10,30,.95); backdrop-filter:blur(12px); border-bottom:1px solid rgba(124,58,237,.2); }
+    .nav-inner { max-width:1160px; margin:0 auto; padding:.875rem 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+    .logo { display:flex; align-items:center; gap:.6rem; text-decoration:none; flex-shrink:0; }
+    .logo svg { width:32px; height:32px; }
+    .logo-text { font-family:'Playfair Display',serif; font-size:1.2rem; color:white; font-weight:700; letter-spacing:.04em; }
+    .logo-sub { font-size:.65rem; color:rgba(255,255,255,.5); display:block; letter-spacing:.08em; }
+    .nav-links { display:flex; align-items:center; gap:.25rem; list-style:none; }
+    .nav-links a { font-size:.875rem; font-weight:600; color:rgba(255,255,255,.8); text-decoration:none; padding:.4rem .75rem; border-radius:.5rem; transition:all .15s; white-space:nowrap; }
+    .nav-links a:hover { background:rgba(124,58,237,.2); color:white; }
+    .nav-links .nav-shop { background:linear-gradient(135deg,#c9a84c,#b8922e); color:#0f0a1e !important; border-radius:2rem; padding:.4rem 1rem !important; }
+    .nav-links .nav-digital { color:#a78bfa !important; }
+    .nav-links .nav-stories { color:var(--gold) !important; }
+    .hamburger { display:none; background:none; border:none; font-size:1.5rem; cursor:pointer; color:white; }
+    @media(max-width:860px){ .nav-links{display:none}.nav-links.open{display:flex;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:rgba(15,10,30,.98);padding:1rem 1.5rem;gap:.25rem;border-bottom:1px solid rgba(124,58,237,.2)}.hamburger{display:block} }
+
+    /* READING */
+    .ep-header { max-width:720px; margin:0 auto; padding:4rem 1.5rem 2rem; }
+    .breadcrumb { font-size:.78rem; color:rgba(255,255,255,.35); margin-bottom:1.5rem; }
+    .breadcrumb a { color:rgba(255,255,255,.4); text-decoration:none; }
+    .breadcrumb a:hover { color:var(--gold); }
+    .ep-type-badge { display:inline-flex; align-items:center; gap:.4rem; background:rgba(167,139,250,.12); border:1px solid rgba(167,139,250,.3); color:#c4b5fd; padding:.3rem .85rem; border-radius:2rem; font-size:.72rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; margin-bottom:1.25rem; }
+    .ep-num { font-size:.85rem; color:rgba(255,255,255,.35); margin-bottom:.5rem; letter-spacing:.06em; }
+    h1.ep-title { font-family:'Playfair Display',serif; font-size:clamp(2rem,5vw,3rem); color:white; line-height:1.25; margin-bottom:1rem; }
+    .ep-tagline { font-size:1rem; color:rgba(255,255,255,.5); font-style:italic; line-height:1.7; margin-bottom:2rem; }
+    .ep-meta { display:flex; gap:1.5rem; flex-wrap:wrap; font-size:.78rem; color:rgba(255,255,255,.35); padding-bottom:2rem; border-bottom:1px solid rgba(255,255,255,.07); }
+
+    /* CONTENT */
+    .ep-content { max-width:720px; margin:0 auto; padding:2.5rem 1.5rem 4rem; }
+    .ep-content p { font-size:1.05rem; line-height:2; color:rgba(255,255,255,.75); margin-bottom:1.75rem; }
+    .ep-content p.scene-break { text-align:center; color:rgba(255,255,255,.2); font-size:1.2rem; letter-spacing:.3em; margin:2.5rem 0; }
+    .ep-content h2 { font-family:'Playfair Display',serif; font-size:1.4rem; color:white; margin:3rem 0 1.25rem; line-height:1.4; }
+    .ep-content h3 { font-family:'Playfair Display',serif; font-size:1.1rem; color:#c4b5fd; margin:2rem 0 1rem; }
+
+    /* ILLUSION SYSTEM BOX */
+    .system-box { background:linear-gradient(135deg,rgba(167,139,250,.07),rgba(124,58,237,.05)); border:1px solid rgba(167,139,250,.2); border-radius:.875rem; padding:1.75rem 2rem; margin:2.5rem 0; }
+    .system-box .system-label { font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#a78bfa; margin-bottom:.75rem; display:flex; align-items:center; gap:.4rem; }
+    .system-box .system-title { font-family:'Playfair Display',serif; font-size:1.2rem; color:#c4b5fd; margin-bottom:.75rem; }
+    .system-box p { font-size:.92rem; color:rgba(200,190,240,.65); line-height:1.9; margin-bottom:.75rem; }
+    .system-box p:last-child { margin-bottom:0; }
+    .system-box .system-crack { text-align:center; font-size:.8rem; color:rgba(167,139,250,.4); letter-spacing:.15em; margin-top:1rem; }
+
+    /* SILA SPEAKS */
+    .sila-speaks { background:rgba(0,0,0,.35); border-left:3px solid var(--gold); border-radius:0 .75rem .75rem 0; padding:1.5rem 1.75rem; margin:2.5rem 0; }
+    .sila-name { font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin-bottom:.75rem; display:flex; align-items:center; gap:.4rem; }
+    .sila-speaks p { font-size:1rem; color:rgba(255,255,255,.8); line-height:1.9; font-style:italic; margin-bottom:.5rem; }
+    .sila-speaks p:last-child { margin-bottom:0; }
+
+    /* NAV BOTTOM */
+    .ep-nav { max-width:720px; margin:0 auto; padding:0 1.5rem 5rem; display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap; }
+    .ep-nav-btn { display:inline-flex; align-items:center; gap:.5rem; padding:.75rem 1.25rem; border-radius:.5rem; font-family:Sarabun,sans-serif; font-size:.9rem; font-weight:600; text-decoration:none; transition:all .2s; }
+    .ep-nav-prev { background:rgba(255,255,255,.05); color:rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.1); }
+    .ep-nav-prev:hover { background:rgba(255,255,255,.08); color:white; }
+    .ep-nav-next { background:linear-gradient(135deg,#7c3aed,#6d28d9); color:white; box-shadow:0 4px 16px rgba(124,58,237,.3); }
+    .ep-nav-next:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(124,58,237,.45); }
+    .ep-nav-index { font-size:.8rem; color:rgba(255,255,255,.3); text-decoration:none; }
+    .ep-nav-index:hover { color:var(--gold); }
+
+    /* MOLDAVITE */
+    .moldavite-cta { max-width:720px; margin:0 auto 2rem; padding:0 1.5rem; }
+    .cta-box { background:linear-gradient(135deg,#0f2a1a,#0a1f12); border:1px solid rgba(34,197,94,.2); border-radius:1rem; padding:1.75rem 2rem; }
+    .cta-box h3 { font-family:'Playfair Display',serif; font-size:1.1rem; color:white; margin-bottom:.5rem; }
+    .cta-box p { font-size:.85rem; color:rgba(255,255,255,.5); line-height:1.7; margin-bottom:1rem; }
+    .cta-btn { display:inline-flex; align-items:center; gap:.4rem; background:linear-gradient(135deg,#166534,#15803d); color:white; padding:.65rem 1.25rem; border-radius:.5rem; font-family:Sarabun,sans-serif; font-size:.85rem; font-weight:700; text-decoration:none; }
+
+    .footer { border-top:1px solid rgba(255,255,255,.06); padding:2rem 1.5rem; text-align:center; color:rgba(255,255,255,.3); font-size:.8rem; }
+    .footer a { color:rgba(255,255,255,.4); text-decoration:none; }
+    .footer a:hover { color:var(--gold); }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <span>📖 ระบบล่าแร่ธาตุส่องออร่า · <strong>อ่านฟรี 21 ตอน</strong></span>
+</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/amethez/" class="logo">
+      <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity=".95"/>
+        <polygon points="18,8 30,12 18,28" fill="#a78bfa"/>
+        <polygon points="18,8 6,12 18,28" fill="#7c3aed"/>
+      </svg>
+      <div><div class="logo-text">AMETHEZ</div><small class="logo-sub">Stones · Stories · Soul</small></div>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/amethez/stones/">💎 คลังหิน</a></li>
+      <li><a href="/amethez/guides/">🌿 พลังบำบัด</a></li>
+      <li><a href="/amethez/talk/">🔮 คุยกับหิน</a></li>
+      <li><a href="/amethez/videos/">🎬 วิดีโอ</a></li>
+      <li><a href="/amethez/stories/" class="nav-stories">📖 นิยาย</a></li>
+      <li><a href="/amethez/digital/" class="nav-digital">📥 Digital</a></li>
+      <li><a href="/amethez/sale.html" class="nav-shop">🛒 ร้านค้า</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<div class="ep-header">
+  <div class="breadcrumb"><a href="/amethez/">Amethez</a> › <a href="/amethez/stories/">นิยาย</a> › ตอนที่ 1</div>
+  <div class="ep-type-badge">🌀 ตอนคี่ · ระบบมโน</div>
+  <div class="ep-num">ตอนที่ 1 จาก 21</div>
+  <h1 class="ep-title">วันที่ระบบล่ม</h1>
+  <p class="ep-tagline">"แผนที่ดีที่สุดคือแผนที่รอดพ้นการปะทะกับความเป็นจริงได้ — แต่ไม่มีแผนไหนทำได้"</p>
+  <div class="ep-meta">
+    <span>⏱ อ่านประมาณ 18 นาที</span>
+    <span>📅 ซีรีส์ปรัชญาชีวิต</span>
+    <span>🆓 อ่านฟรี</span>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="ep-content">
+
+  <!-- SYSTEM BOX -->
+  <div class="system-box">
+    <div class="system-label">🌀 ระบบมโน — ภาพในหัว ก่อนที่ทุกอย่างจะเริ่ม</div>
+    <div class="system-title">ระบบชีวิตพลิกชะตา v1.0</div>
+    <p>ภัทรจินตนาการภาพนี้มาตลอดสามปี: ตัวเองนั่งอยู่ในออฟฟิศมุมสูงชั้น 32 แก้วกาแฟอยู่ข้างมือ จอโน้ตบุ๊คแสดงตัวเลขสีเขียวที่ไต่ขึ้นทุกนาที บริษัทสตาร์ทอัพของเขาจะถูกประเมินมูลค่าที่ร้อยล้านบาท ก่อนวันเกิดปีที่ 30</p>
+    <p>แผนมีครบ: ระดมทุน Series A ภายในไตรมาสสอง ขยายทีมจาก 8 เป็น 25 คน เข้าตลาดหลักทรัพย์เมื่ออายุ 35 เกษียณเมื่ออายุ 40 แล้วใช้ชีวิตเดินทางไปทั่วโลกกับเงินที่หมุนเองได้</p>
+    <p>ทุกอย่างอยู่ในแผน ทุกอย่างอยู่ภายใต้การควบคุม</p>
+    <div class="system-crack">— — — รอยร้าวในระบบกำลังก่อตัว — — —</div>
+  </div>
+
+  <h2>คืนที่ทุกอย่างเปลี่ยนไป</h2>
+
+  <p>22:47 น. ของวันพุธ ภัทร วิชิตพงศ์ นั่งอยู่ในห้องประชุมที่มีแต่เขาคนเดียว</p>
+
+  <p>อีเมลฉบับนั้นเปิดอยู่บนหน้าจอมาสี่สิบนาทีแล้ว เขาอ่านมันซ้ำสิบกว่าครั้ง ราวกับว่าถ้าอ่านมากพอ ความหมายมันจะเปลี่ยนไป</p>
+
+  <p><em>ทีมงานของ Vertex Capital ขอแจ้งให้ทราบว่าหลังจากการพิจารณาอย่างรอบคอบ เราตัดสินใจที่จะไม่ดำเนินการต่อในรอบการลงทุน Series A ของ TechPath สาเหตุหลักมาจากความกังวลเกี่ยวกับหน่วยเมตริกส์การเติบโต และทิศทางตลาดในระยะกลาง...</em></p>
+
+  <p>มันไม่ใช่แค่ Vertex หนึ่งเจ้า ในสามเดือนที่ผ่านมา เขาเข้าพิตช์ให้นักลงทุนสิบเจ้า และทุกคนบอก "ไม่" ด้วยเหตุผลที่แตกต่างกันออกไป แต่สรุปลงที่สิ่งเดียวกัน</p>
+
+  <p>พวกเขาไม่เชื่อในสิ่งที่เขาเชื่อ</p>
+
+  <p class="scene-break">· · ·</p>
+
+  <h2>สิ่งที่เขาไม่ยอมบอกใคร</h2>
+
+  <p>TechPath เริ่มต้นด้วยความฝันที่ชัดเจน: แพลตฟอร์มที่ช่วยให้คนทั่วไปเรียนรู้ทักษะดิจิทัลได้โดยไม่ต้องมีพื้นฐาน ภัทรเชื่อในสิ่งนี้ด้วยหัวใจทั้งดวง</p>
+
+  <p>แต่มีสิ่งหนึ่งที่เขาไม่เคยบอกใครในทีม ไม่เคยบอกแฟน ไม่เคยแม้แต่บอกตัวเอง</p>
+
+  <p>ตัวเลขในบัญชีบริษัทหมดแล้ว</p>
+
+  <p>เงินที่เหลืออยู่จะจ่ายเงินเดือนได้อีกหนึ่งเดือน หลังจากนั้น ถ้าไม่มีการระดมทุน บริษัทจะปิดตัว</p>
+
+  <p>เขาใช้เวลาสามปีในการสร้างสิ่งนี้ขึ้นมา ลาออกจากงานบริษัทที่มั่นคง ปฏิเสธข้อเสนองานในต่างประเทศที่เงินเดือนสองแสนต่อเดือน ยืมเงินพ่อแม่ที่เก็บมาทั้งชีวิตมาลงทุน</p>
+
+  <p>และตอนนี้ เขากำลังนั่งอยู่คนเดียวในห้องเย็นเฉียบ มองอีเมลที่บอกว่าเส้นทางที่เขาเลือกนั้น — อาจผิด</p>
+
+  <p class="scene-break">· · ·</p>
+
+  <h2>ระบบล่ม</h2>
+
+  <p>ตอน 01:15 น. ภัทรเดินออกมาจากออฟฟิศ อากาศกรุงเทพข้างนอกยังร้อนอยู่แม้กลางดึก รถไฟฟ้าหยุดวิ่งแล้ว เขาเรียก Grab แต่มือกดผิดบ้านสามครั้งกว่าจะถูก</p>
+
+  <p>บนรถ เขาเปิดโน้ตบุ๊คขึ้นมาโดยสัญชาตญาณ แล้วนั่งจ้องหน้าจอเปล่าๆ อยู่นานสิบห้านาที</p>
+
+  <p>ไม่มีอะไรจะพิมพ์</p>
+
+  <p>สามปีที่ผ่านมา ทุกครั้งที่เจอปัญหา เขาจะพิมพ์แผน วิเคราะห์ตัวเลข หาทางออก แต่คืนนี้ ความคิดที่มีอยู่ในหัวมีแค่อย่างเดียว</p>
+
+  <p><em>ถ้าฉันเป็นคนผิด ตั้งแต่ต้น ล่ะ?</em></p>
+
+  <p>มันเป็นคำถามที่ไม่มีระบบใดตอบได้ ไม่มีแผนใดเตรียมรับมือได้ และนั่นคือสิ่งที่น่ากลัวที่สุดสำหรับคนที่ชีวิตทั้งชีวิตสร้างขึ้นมาบนรากฐานของการมีแผน</p>
+
+  <p class="scene-break">· · ·</p>
+
+  <h2>ห้องเล็กในอพาร์ทเมนท์</h2>
+
+  <p>บ้านเดิมในย่านบางนา — ที่เขาเช่าตั้งแต่ปีแรกที่เริ่มทำสตาร์ทอัพ เพราะถูก เพราะอยู่ใกล้ออฟฟิศ เพราะบอกตัวเองว่าจะย้ายออกเมื่อบริษัทโต — ยังเหมือนเดิมทุกอย่าง</p>
+
+  <p>มีโต๊ะทำงานข้างหน้าต่าง กองหนังสือธุรกิจที่อ่านเสร็จแล้วเรียงชั้นข้างฝา รูปถ่ายที่ออฟฟิศวันแรกติดอยู่บนกระดาน และในมุมหนึ่งของชั้นหนังสือ มีก้อนหินสีเขียวเข้มวางอยู่</p>
+
+  <p>เขาหยิบก้อนหินขึ้นมาถือโดยไม่รู้ตัว</p>
+
+  <p>แม่ให้มาก่อนเขาจะออกจากบ้าน บอกว่าเป็นโมลดาไวท์ หินจากดาวตก ที่ตกลงมาบนโลกเมื่อ 15 ล้านปีก่อน แม่บอกว่ามันช่วยในเรื่องการเปลี่ยนแปลง ตอนนั้นเขาแค่ยิ้มและรับมาวางไว้</p>
+
+  <p>วันนี้เขาถือมันนานกว่าปกติ</p>
+
+  <p>ผิวมันเย็น ขรุขระเล็กน้อย มีน้ำหนักในมือพอดี ไม่รู้ทำไม เขารู้สึกว่าจะวางมันลงไม่ได้</p>
+
+  <p class="scene-break">· · ·</p>
+
+  <h2>เสียงที่ไม่มีที่มา</h2>
+
+  <p>มันอาจเป็นความเหนื่อยล้า อาจเป็นความเครียดสะสมที่ดันขึ้นมาในคืนที่เงียบสงบที่สุดในรอบปี หรืออาจเป็นแค่จินตนาการของคนที่นอนไม่หลับ</p>
+
+  <p>แต่ขณะที่ภัทรนั่งอยู่คนเดียวในความมืด ก้อนหินในมือ เขาได้ยินบางอย่าง</p>
+
+  <p>ไม่ใช่เสียงที่หูได้ยิน แต่เป็นเสียงที่ดูเหมือนผุดขึ้นมาในหัวพร้อมกันทั้งหมด ชัดเจนผิดปกติ</p>
+
+  <div class="sila-speaks">
+    <div class="sila-name">💚 คุณศิลา</div>
+    <p>"ความเจ็บปวดที่รู้สึกอยู่ตอนนี้ไม่ได้บอกว่าแกผิด มันบอกว่าแกมาถึงขอบแล้ว"</p>
+    <p>"ขอบไม่ใช่จุดจบ มันคือจุดที่แผนที่ที่เดิมใช้งานได้หมดอายุ"</p>
+    <p>"อย่าเพิ่งหาแผนใหม่คืนนี้"</p>
+  </div>
+
+  <p>ภัทรวางก้อนหินลงบนโต๊ะ</p>
+
+  <p>เขาไม่รู้ว่าเสียงนั้นคืออะไร ไม่รู้ว่ามาจากไหน ไม่รู้ว่าตัวเองกำลังโรคจิต หรือแค่เพ้อเจ้อเพราะเหนื่อยเกินไป</p>
+
+  <p>แต่มีบางอย่างในคำพูดสามประโยคนั้นที่ทำให้ความตึงในไหล่ของเขาคลายลงเล็กน้อย</p>
+
+  <p>เขานอนลงบนเตียงโดยไม่ได้เปลี่ยนเสื้อ ไม่ได้ตั้งนาฬิกา ไม่ได้กำหนดว่าพรุ่งนี้จะทำอะไร</p>
+
+  <p>เป็นครั้งแรกในรอบสามปี ที่เขานอนหลับโดยไม่มีแผนใดในหัวเลย</p>
+
+  <p class="scene-break">· · ·</p>
+
+  <h2>สิ่งที่ระบบมโนไม่เคยบอก</h2>
+
+  <p>มาร์คัส ออเรลิอุส จักรพรรดิโรมันและนักปรัชญาสโตอิก เคยเขียนไว้ว่า: <em>"ถ้าได้รับบาดเจ็บ อย่าตั้งคำถามว่า 'ทำไมฉันถึงถูกทำให้เจ็บ' ตั้งคำถามว่า 'ฉันจะทำอะไรได้บ้างกับสิ่งที่เหลืออยู่'"</em></p>
+
+  <p>ระบบมโนของภัทรบอกเขาเสมอว่า ถ้าทำทุกอย่างถูกต้อง ผลลัพธ์ต้องดี แต่ไม่มีระบบใดเตรียมรับมือกับสิ่งที่เกิดขึ้นจริงได้ทั้งหมด</p>
+
+  <p>ไม่มีใครบอกเขาว่า บางครั้ง การทำทุกอย่างถูกต้องก็ยังแพ้ได้ ไม่มีใครบอกว่า ความพ่ายแพ้ไม่ใช่สัญญาณว่าแกผิดตั้งแต่ต้น</p>
+
+  <p>บางครั้ง มันแค่บอกว่า แกต้องหาข้อมูลใหม่</p>
+
+  <p>และนั่นคือสิ่งที่จะเริ่มต้นในตอนต่อไป</p>
+
+</div>
+
+<!-- MOLDAVITE CTA -->
+<div class="moldavite-cta">
+  <div class="cta-box">
+    <h3>💚 โมลดาไวท์ — หินที่ภัทรถือคืนนั้น</h3>
+    <p>โมลดาไวท์คือหินอุกกาบาตที่ก่อกำเนิดจากการพุ่งชนของอุกกาบาตเมื่อ 15 ล้านปีก่อนในยุโรปกลาง มักถูกเรียกว่า "หินแห่งการเปลี่ยนแปลง" เพราะพลังงานสูงที่รู้สึกได้แม้แต่คนที่ไม่เชื่อเรื่องพลังงาน</p>
+    <a href="/amethez/stones/moldavite.html" class="cta-btn">💚 อ่านเรื่องโมลดาไวท์</a>
+  </div>
+</div>
+
+<!-- EPISODE NAV -->
+<div class="ep-nav">
+  <a href="/amethez/stories/" class="ep-nav-btn ep-nav-prev">← รายการตอน</a>
+  <a href="/amethez/stories/" class="ep-nav-index">ดูทุกตอน</a>
+  <a href="/amethez/stories/episode-02.html" class="ep-nav-btn ep-nav-next">ตอนที่ 2 →</a>
+</div>
+
+<div class="footer">
+  <p><a href="/amethez/">Amethez</a> · <a href="/amethez/stories/">นิยาย</a> · <a href="/amethez/stones/">คลังหิน</a> · <a href="/amethez/contact.html">ติดต่อ</a></p>
+  <p style="margin-top:.5rem">© 2025 Amethez · Stones · Stories · Soul</p>
+</div>
+
+</body>
+</html>

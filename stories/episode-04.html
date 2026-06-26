@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ตอนที่ 4 — คนที่คุณไม่รู้จักในกระจก | ระบบล่าแร่ธาตุส่องออร่า | Amethez</title>
+  <meta name="description" content="ตอนที่ 4: ตอนคู่ ความจริงดิบ — พฤติกรรมที่แท้จริงไม่ตรงกับสิ่งที่บอกตัวเอง และเขายังไม่รู้ อ่านฟรี">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/amethez/css/main.css">
+  <style>
+    :root { --gold:#c9a84c; --purple:#7c3aed; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:Sarabun,sans-serif; background:#0f0a1e; color:#d4cce8; }
+    .topbar { background:linear-gradient(90deg,#1a0936,#2d1b5e,#1a0936); padding:.55rem 1.5rem; display:flex; align-items:center; justify-content:center; }
+    .topbar span { color:rgba(255,255,255,.65); font-size:.78rem; }
+    .topbar strong { color:var(--gold); }
+    .nav { position:sticky; top:0; z-index:100; background:rgba(15,10,30,.95); backdrop-filter:blur(12px); border-bottom:1px solid rgba(201,168,76,.15); }
+    .nav-inner { max-width:1160px; margin:0 auto; padding:.875rem 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+    .logo { display:flex; align-items:center; gap:.6rem; text-decoration:none; flex-shrink:0; }
+    .logo svg { width:32px; height:32px; }
+    .logo-text { font-family:'Playfair Display',serif; font-size:1.2rem; color:white; font-weight:700; letter-spacing:.04em; }
+    .logo-sub { font-size:.65rem; color:rgba(255,255,255,.5); display:block; letter-spacing:.08em; }
+    .nav-links { display:flex; align-items:center; gap:.25rem; list-style:none; }
+    .nav-links a { font-size:.875rem; font-weight:600; color:rgba(255,255,255,.8); text-decoration:none; padding:.4rem .75rem; border-radius:.5rem; transition:all .15s; white-space:nowrap; }
+    .nav-links a:hover { background:rgba(201,168,76,.1); color:white; }
+    .nav-links .nav-shop { background:linear-gradient(135deg,#c9a84c,#b8922e); color:#0f0a1e !important; border-radius:2rem; padding:.4rem 1rem !important; }
+    .nav-links .nav-digital { color:#a78bfa !important; }
+    .nav-links .nav-stories { color:var(--gold) !important; }
+    .hamburger { display:none; background:none; border:none; font-size:1.5rem; cursor:pointer; color:white; }
+    @media(max-width:860px){ .nav-links{display:none}.nav-links.open{display:flex;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:rgba(15,10,30,.98);padding:1rem 1.5rem;gap:.25rem;border-bottom:1px solid rgba(201,168,76,.15)}.hamburger{display:block} }
+
+    .ep-header { max-width:720px; margin:0 auto; padding:4rem 1.5rem 2rem; }
+    .breadcrumb { font-size:.78rem; color:rgba(255,255,255,.35); margin-bottom:1.5rem; }
+    .breadcrumb a { color:rgba(255,255,255,.4); text-decoration:none; }
+    .breadcrumb a:hover { color:var(--gold); }
+    .ep-type-badge { display:inline-flex; align-items:center; gap:.4rem; background:rgba(201,168,76,.1); border:1px solid rgba(201,168,76,.25); color:var(--gold); padding:.3rem .85rem; border-radius:2rem; font-size:.72rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; margin-bottom:1.25rem; }
+    .ep-num { font-size:.85rem; color:rgba(255,255,255,.35); margin-bottom:.5rem; letter-spacing:.06em; }
+    h1.ep-title { font-family:'Playfair Display',serif; font-size:clamp(2rem,5vw,3rem); color:white; line-height:1.25; margin-bottom:1rem; }
+    .ep-tagline { font-size:1rem; color:rgba(255,255,255,.5); font-style:italic; line-height:1.7; margin-bottom:2rem; }
+    .ep-meta { display:flex; gap:1.5rem; flex-wrap:wrap; font-size:.78rem; color:rgba(255,255,255,.35); padding-bottom:2rem; border-bottom:1px solid rgba(255,255,255,.07); }
+
+    .ep-content { max-width:720px; margin:0 auto; padding:2.5rem 1.5rem 4rem; }
+    .ep-content p { font-size:1.05rem; line-height:2; color:rgba(255,255,255,.75); margin-bottom:1.75rem; }
+    .ep-content p.scene-break { text-align:center; color:rgba(255,255,255,.2); font-size:1.2rem; letter-spacing:.3em; margin:2.5rem 0; }
+    .ep-content h2 { font-family:'Playfair Display',serif; font-size:1.4rem; color:white; margin:3rem 0 1.25rem; line-height:1.4; }
+
+    .reality-box { background:rgba(201,168,76,.05); border:1px solid rgba(201,168,76,.2); border-radius:.875rem; padding:1.75rem 2rem; margin:2.5rem 0; }
+    .reality-label { font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--gold); margin-bottom:.75rem; }
+    .reality-box p { font-size:.92rem; color:rgba(220,200,160,.7); line-height:2; margin-bottom:.75rem; }
+    .reality-box p:last-child { margin-bottom:0; }
+
+    .mirror-list { margin:1.5rem 0; padding:0; list-style:none; }
+    .mirror-list li { padding:.85rem 1.25rem; border-left:2px solid rgba(201,168,76,.25); margin-bottom:.5rem; background:rgba(255,255,255,.03); border-radius:0 .4rem .4rem 0; }
+    .mirror-list li .said { font-size:.82rem; color:rgba(255,255,255,.4); margin-bottom:.25rem; }
+    .mirror-list li .said::before { content:"พูดว่า: "; color:rgba(201,168,76,.5); font-weight:600; }
+    .mirror-list li .did { font-size:.88rem; color:rgba(255,255,255,.7); }
+    .mirror-list li .did::before { content:"ทำจริง: "; color:#f87171; font-weight:600; font-size:.82rem; }
+
+    .ep-nav { max-width:720px; margin:0 auto; padding:0 1.5rem 5rem; display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap; }
+    .ep-nav-btn { display:inline-flex; align-items:center; gap:.5rem; padding:.75rem 1.25rem; border-radius:.5rem; font-family:Sarabun,sans-serif; font-size:.9rem; font-weight:600; text-decoration:none; transition:all .2s; }
+    .ep-nav-prev { background:rgba(255,255,255,.05); color:rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.1); }
+    .ep-nav-prev:hover { background:rgba(255,255,255,.08); color:white; }
+    .ep-nav-next { background:linear-gradient(135deg,#7c3aed,#6d28d9); color:white; box-shadow:0 4px 16px rgba(124,58,237,.3); }
+    .ep-nav-next:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(124,58,237,.45); }
+    .ep-nav-index { font-size:.8rem; color:rgba(255,255,255,.3); text-decoration:none; }
+    .ep-nav-index:hover { color:var(--gold); }
+
+    .moldavite-cta { max-width:720px; margin:0 auto 2rem; padding:0 1.5rem; }
+    .cta-box { background:linear-gradient(135deg,#0f2a1a,#0a1f12); border:1px solid rgba(34,197,94,.2); border-radius:1rem; padding:1.75rem 2rem; }
+    .cta-box h3 { font-family:'Playfair Display',serif; font-size:1.1rem; color:white; margin-bottom:.5rem; }
+    .cta-box p { font-size:.85rem; color:rgba(255,255,255,.5); line-height:1.7; margin-bottom:1rem; }
+    .cta-btn { display:inline-flex; align-items:center; gap:.4rem; background:linear-gradient(135deg,#166534,#15803d); color:white; padding:.65rem 1.25rem; border-radius:.5rem; font-family:Sarabun,sans-serif; font-size:.85rem; font-weight:700; text-decoration:none; }
+    .footer { border-top:1px solid rgba(255,255,255,.06); padding:2rem 1.5rem; text-align:center; color:rgba(255,255,255,.3); font-size:.8rem; }
+    .footer a { color:rgba(255,255,255,.4); text-decoration:none; }
+    .footer a:hover { color:var(--gold); }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <span>📖 ระบบล่าแร่ธาตุส่องออร่า · <strong>อ่านฟรี 21 ตอน</strong></span>
+</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/amethez/" class="logo">
+      <svg viewBox="0 0 36 36" fill="none"><polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity=".95"/><polygon points="18,8 30,12 18,28" fill="#a78bfa"/><polygon points="18,8 6,12 18,28" fill="#7c3aed"/></svg>
+      <div><div class="logo-text">AMETHEZ</div><small class="logo-sub">Stones · Stories · Soul</small></div>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/amethez/stones/">💎 คลังหิน</a></li>
+      <li><a href="/amethez/guides/">🌿 พลังบำบัด</a></li>
+      <li><a href="/amethez/talk/">🔮 คุยกับหิน</a></li>
+      <li><a href="/amethez/videos/">🎬 วิดีโอ</a></li>
+      <li><a href="/amethez/stories/" class="nav-stories">📖 นิยาย</a></li>
+      <li><a href="/amethez/digital/" class="nav-digital">📥 Digital</a></li>
+      <li><a href="/amethez/sale.html" class="nav-shop">🛒 ร้านค้า</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+  </div>
+</nav>
+
+<div class="ep-header">
+  <div class="breadcrumb"><a href="/amethez/">Amethez</a> › <a href="/amethez/stories/">นิยาย</a> › ตอนที่ 4</div>
+  <div class="ep-type-badge">🪙 ตอนคู่ · ความจริงดิบ</div>
+  <div class="ep-num">ตอนที่ 4 จาก 21</div>
+  <h1 class="ep-title">คนที่คุณ<br>ไม่รู้จักในกระจก</h1>
+  <p class="ep-tagline">"สิ่งที่บอกตัวเองไม่ใช่สิ่งที่เป็นอยู่จริง — และช่องว่างระหว่างสองอย่างนั้นคือที่ที่ชีวิตจริงซ่อนอยู่"</p>
+  <div class="ep-meta">
+    <span>⏱ อ่านประมาณ 15 นาที</span>
+    <span>📅 ซีรีส์ปรัชญาชีวิต</span>
+    <span>🆓 อ่านฟรี</span>
+  </div>
+</div>
+
+<div class="ep-content">
+
+  <div class="reality-box">
+    <div class="reality-label">⚠️ ตอนคู่ — ความจริงดิบ ไม่มีการตีความ</div>
+    <p>ในตอนนี้ไม่มีคำอธิบายว่าทำไม ไม่มีบทเรียน ไม่มีคุณศิลา มีแค่สิ่งที่เกิดขึ้นจริง อ่านแล้วสังเกตเอง</p>
+  </div>
+
+  <h2>หกเดือนหลังจากเริ่มงานใหม่</h2>
+
+  <p>ภัทรบอกตัวเองว่าเขากำลังใช้ชีวิตอย่างมีวินัย</p>
+
+  <p>แต่นี่คือสิ่งที่เกิดขึ้นจริงในหกเดือนนั้น</p>
+
+  <ul class="mirror-list">
+    <li>
+      <div class="said">"ฉันตื่นตีห้าครึ่งเพื่อเรียนทุกเช้า"</div>
+      <div class="did">ตื่นตีห้าครึ่ง 3 วันในสัปดาห์แรก จากนั้นค่อยๆ ขยับเป็นหกโมง แล้วหกโมงครึ่ง</div>
+    </li>
+    <li>
+      <div class="said">"ฉันเก็บเงินได้สามหมื่นต่อเดือน"</div>
+      <div class="did">เดือนแรกเก็บได้ 28,000 เดือนที่สองเก็บได้ 19,000 เพราะซื้อหนังสือและคอร์สออนไลน์ "เพื่อพัฒนาตัวเอง"</div>
+    </li>
+    <li>
+      <div class="said">"ฉันกำลังเรียนรู้จากความผิดพลาดที่ผ่านมา"</div>
+      <div class="did">เปิดไฟล์ "ข้อมูล" ที่เขียนไว้ครั้งเดียวในสองสัปดาห์แรก หลังจากนั้นไม่ได้เปิดอีกเลย</div>
+    </li>
+    <li>
+      <div class="said">"ฉันจัดการกับเรื่องหนี้พ่อแม่"</div>
+      <div class="did">โอนเงินกลับไปสองครั้ง ครั้งละหมื่นบาท และหยุดพูดถึงมัน เพราะพ่อแม่บอกว่า "ไม่เป็นไร"</div>
+    </li>
+    <li>
+      <div class="said">"ฉันสื่อสารตรงไปตรงมากับคนในชีวิต"</div>
+      <div class="did">ยังไม่ได้บอกแฟนว่าสถานะการเงินจริงๆ เป็นอย่างไร บอกแค่ว่า "ค่อยๆ ดีขึ้น"</div>
+    </li>
+  </ul>
+
+  <p class="scene-break">· · ·</p>
+
+  <h2>วันที่แฟนถาม</h2>
+
+  <p>ปลาย พ.ย. มินตรา แฟนของเขา นั่งลงข้างๆ ในร้านอาหารที่เคยมาด้วยกันเสมอ แล้วถามอย่างตรงไปตรงมา</p>
+
+  <p>"แผนจริงๆ ของแกคืออะไร?"</p>
+
+  <p>ภัทรอธิบายแผน Phoenix ทั้งหมดเป็นเวลาสิบห้านาที มันฟังดูดีมาก เขาอธิบายได้ลื่น เพราะเขาคิดมันมาหลายเดือนแล้ว</p>
+
+  <p>มินตราฟังจนจบ แล้วถามคำถามที่สองซึ่งสั้นกว่า</p>
+
+  <p>"ตอนนี้มีเงินเท่าไหร่?"</p>
+
+  <p>ภัทรหยุด</p>
+
+  <p>เขาตอบตัวเลขที่ถูก แต่มันฟังดูเล็กกว่าที่คิดเยอะมากเมื่อพูดออกมาดังๆ</p>
+
+  <p>มินตราพยักหน้า ไม่ได้พูดอะไรเพิ่ม</p>
+
+  <p>พวกเขากินข้าวจนจบโดยไม่ได้คุยเรื่องนี้อีก</p>
+
+  <p class="scene-break">· · ·</p>
+
+  <h2>ระยะห่างที่วัดไม่ได้</h2>
+
+  <p>ความสัมพันธ์ระหว่างภัทรกับมินตรากินเวลามาสี่ปี รอดจากช่วงที่เขาเริ่มทำสตาร์ทอัพมาได้</p>
+
+  <p>แต่ในหกเดือนที่ผ่านมา มีบางอย่างเปลี่ยนไป ไม่ใช่การทะเลาะ ไม่ใช่เหตุการณ์ใหญ่ แค่ระยะห่างเล็กๆ ที่ค่อยๆ สะสม</p>
+
+  <p>เขาไม่ได้เล่าวันที่แย่ๆ ให้เธอฟัง เพราะไม่อยากดูอ่อนแอ</p>
+
+  <p>เธอไม่ได้ถามซ้ำหลังจากเขาตอบว่า "โอเค" เพราะเธอเรียนรู้แล้วว่าเขาไม่ตอบตรงๆ</p>
+
+  <p>พวกเขาอยู่ด้วยกันแต่ไม่ได้อยู่ในที่เดียวกัน</p>
+
+  <p class="scene-break">· · ·</p>
+
+  <h2>กระจกในห้องน้ำ</h2>
+
+  <p>คืนวันนั้น กลับถึงบ้านตอนสี่ทุ่ม ภัทรล้างหน้าในห้องน้ำ</p>
+
+  <p>เขามองคนในกระจกอยู่ครู่หนึ่ง</p>
+
+  <p>คนนั้นหน้าตาเหมือนเขา แต่ดูเหนื่อยกว่าที่รู้สึก หรือ — บางที — เหนื่อยเท่ากับที่รู้สึกจริงๆ แต่ไม่เคยยอมรับ</p>
+
+  <p>เขาไม่รู้ว่าสองอย่างนั้นต่างกันอย่างไร</p>
+
+  <p>ปิดไฟห้องน้ำ เข้าไปนอน</p>
+
+  <p>นอนตาค้างอยู่นานก่อนหลับ</p>
+
+</div>
+
+<div class="moldavite-cta">
+  <div class="cta-box">
+    <h3>💚 โมลดาไวท์ — กระจกที่ไม่มีความเมตตา</h3>
+    <p>นักใช้คริสตัลหลายคนบอกว่าโมลดาไวท์เปิดเผยสิ่งที่ซ่อนอยู่ บางครั้งเป็นสิ่งที่ไม่อยากเห็น แต่นั่นคือเหตุผลที่มันมีคุณค่า</p>
+    <a href="/amethez/stones/moldavite.html" class="cta-btn">💚 อ่านเรื่องโมลดาไวท์</a>
+  </div>
+</div>
+
+<div class="ep-nav">
+  <a href="/amethez/stories/episode-03.html" class="ep-nav-btn ep-nav-prev">← ตอนที่ 3</a>
+  <a href="/amethez/stories/" class="ep-nav-index">ดูทุกตอน</a>
+  <a href="/amethez/stories/episode-05.html" class="ep-nav-btn ep-nav-next">ตอนที่ 5 →</a>
+</div>
+
+<div class="footer">
+  <p><a href="/amethez/">Amethez</a> · <a href="/amethez/stories/">นิยาย</a> · <a href="/amethez/stones/">คลังหิน</a></p>
+  <p style="margin-top:.5rem">© 2025 Amethez · Stones · Stories · Soul</p>
+</div>
+</body>
+</html>

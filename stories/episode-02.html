@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ตอนที่ 2 — สิ่งที่เหลืออยู่หลังเถ้าถ่าน | ระบบล่าแร่ธาตุส่องออร่า | Amethez</title>
+  <meta name="description" content="ตอนที่ 2: ตอนคู่ ความจริงดิบ — ไม่มีระบบมโน มีแค่ตัวเลขในบัญชีและกองหนี้ที่ถ่วงอยู่ อ่านฟรี">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/amethez/css/main.css">
+  <style>
+    :root { --gold:#c9a84c; --purple:#7c3aed; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:Sarabun,sans-serif; background:#0f0a1e; color:#d4cce8; }
+    .topbar { background:linear-gradient(90deg,#1a0936,#2d1b5e,#1a0936); padding:.55rem 1.5rem; display:flex; align-items:center; justify-content:center; }
+    .topbar span { color:rgba(255,255,255,.65); font-size:.78rem; }
+    .topbar strong { color:var(--gold); }
+    .nav { position:sticky; top:0; z-index:100; background:rgba(15,10,30,.95); backdrop-filter:blur(12px); border-bottom:1px solid rgba(201,168,76,.15); }
+    .nav-inner { max-width:1160px; margin:0 auto; padding:.875rem 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+    .logo { display:flex; align-items:center; gap:.6rem; text-decoration:none; flex-shrink:0; }
+    .logo svg { width:32px; height:32px; }
+    .logo-text { font-family:'Playfair Display',serif; font-size:1.2rem; color:white; font-weight:700; letter-spacing:.04em; }
+    .logo-sub { font-size:.65rem; color:rgba(255,255,255,.5); display:block; letter-spacing:.08em; }
+    .nav-links { display:flex; align-items:center; gap:.25rem; list-style:none; }
+    .nav-links a { font-size:.875rem; font-weight:600; color:rgba(255,255,255,.8); text-decoration:none; padding:.4rem .75rem; border-radius:.5rem; transition:all .15s; white-space:nowrap; }
+    .nav-links a:hover { background:rgba(201,168,76,.1); color:white; }
+    .nav-links .nav-shop { background:linear-gradient(135deg,#c9a84c,#b8922e); color:#0f0a1e !important; border-radius:2rem; padding:.4rem 1rem !important; }
+    .nav-links .nav-digital { color:#a78bfa !important; }
+    .nav-links .nav-stories { color:var(--gold) !important; }
+    .hamburger { display:none; background:none; border:none; font-size:1.5rem; cursor:pointer; color:white; }
+    @media(max-width:860px){ .nav-links{display:none}.nav-links.open{display:flex;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:rgba(15,10,30,.98);padding:1rem 1.5rem;gap:.25rem;border-bottom:1px solid rgba(201,168,76,.15)}.hamburger{display:block} }
+
+    .ep-header { max-width:720px; margin:0 auto; padding:4rem 1.5rem 2rem; }
+    .breadcrumb { font-size:.78rem; color:rgba(255,255,255,.35); margin-bottom:1.5rem; }
+    .breadcrumb a { color:rgba(255,255,255,.4); text-decoration:none; }
+    .breadcrumb a:hover { color:var(--gold); }
+    .ep-type-badge { display:inline-flex; align-items:center; gap:.4rem; background:rgba(201,168,76,.1); border:1px solid rgba(201,168,76,.25); color:var(--gold); padding:.3rem .85rem; border-radius:2rem; font-size:.72rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; margin-bottom:1.25rem; }
+    .ep-num { font-size:.85rem; color:rgba(255,255,255,.35); margin-bottom:.5rem; letter-spacing:.06em; }
+    h1.ep-title { font-family:'Playfair Display',serif; font-size:clamp(2rem,5vw,3rem); color:white; line-height:1.25; margin-bottom:1rem; }
+    .ep-tagline { font-size:1rem; color:rgba(255,255,255,.5); font-style:italic; line-height:1.7; margin-bottom:2rem; }
+    .ep-meta { display:flex; gap:1.5rem; flex-wrap:wrap; font-size:.78rem; color:rgba(255,255,255,.35); padding-bottom:2rem; border-bottom:1px solid rgba(255,255,255,.07); }
+
+    .ep-content { max-width:720px; margin:0 auto; padding:2.5rem 1.5rem 4rem; }
+    .ep-content p { font-size:1.05rem; line-height:2; color:rgba(255,255,255,.75); margin-bottom:1.75rem; }
+    .ep-content p.scene-break { text-align:center; color:rgba(255,255,255,.2); font-size:1.2rem; letter-spacing:.3em; margin:2.5rem 0; }
+    .ep-content h2 { font-family:'Playfair Display',serif; font-size:1.4rem; color:white; margin:3rem 0 1.25rem; line-height:1.4; }
+
+    /* RAW REALITY BOX — gold tone for even episodes */
+    .reality-box { background:rgba(201,168,76,.05); border:1px solid rgba(201,168,76,.2); border-radius:.875rem; padding:1.75rem 2rem; margin:2.5rem 0; }
+    .reality-label { font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--gold); margin-bottom:.75rem; }
+    .reality-box p { font-size:.92rem; color:rgba(220,200,160,.7); line-height:2; margin-bottom:.75rem; }
+    .reality-box p:last-child { margin-bottom:0; }
+
+    /* DATA TABLE */
+    .data-table { width:100%; border-collapse:collapse; margin:2rem 0; font-size:.9rem; }
+    .data-table th { text-align:left; padding:.6rem 1rem; background:rgba(201,168,76,.08); color:var(--gold); font-size:.75rem; letter-spacing:.06em; text-transform:uppercase; border-bottom:1px solid rgba(201,168,76,.15); }
+    .data-table td { padding:.75rem 1rem; color:rgba(255,255,255,.65); border-bottom:1px solid rgba(255,255,255,.05); }
+    .data-table td.red { color:#f87171; }
+    .data-table td.white { color:rgba(255,255,255,.85); font-weight:600; }
+    .data-table tr:last-child td { border-bottom:none; }
+
+    .ep-nav { max-width:720px; margin:0 auto; padding:0 1.5rem 5rem; display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap; }
+    .ep-nav-btn { display:inline-flex; align-items:center; gap:.5rem; padding:.75rem 1.25rem; border-radius:.5rem; font-family:Sarabun,sans-serif; font-size:.9rem; font-weight:600; text-decoration:none; transition:all .2s; }
+    .ep-nav-prev { background:rgba(255,255,255,.05); color:rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.1); }
+    .ep-nav-prev:hover { background:rgba(255,255,255,.08); color:white; }
+    .ep-nav-next { background:linear-gradient(135deg,#7c3aed,#6d28d9); color:white; box-shadow:0 4px 16px rgba(124,58,237,.3); }
+    .ep-nav-next:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(124,58,237,.45); }
+    .ep-nav-index { font-size:.8rem; color:rgba(255,255,255,.3); text-decoration:none; }
+    .ep-nav-index:hover { color:var(--gold); }
+
+    .moldavite-cta { max-width:720px; margin:0 auto 2rem; padding:0 1.5rem; }
+    .cta-box { background:linear-gradient(135deg,#0f2a1a,#0a1f12); border:1px solid rgba(34,197,94,.2); border-radius:1rem; padding:1.75rem 2rem; }
+    .cta-box h3 { font-family:'Playfair Display',serif; font-size:1.1rem; color:white; margin-bottom:.5rem; }
+    .cta-box p { font-size:.85rem; color:rgba(255,255,255,.5); line-height:1.7; margin-bottom:1rem; }
+    .cta-btn { display:inline-flex; align-items:center; gap:.4rem; background:linear-gradient(135deg,#166534,#15803d); color:white; padding:.65rem 1.25rem; border-radius:.5rem; font-family:Sarabun,sans-serif; font-size:.85rem; font-weight:700; text-decoration:none; }
+    .footer { border-top:1px solid rgba(255,255,255,.06); padding:2rem 1.5rem; text-align:center; color:rgba(255,255,255,.3); font-size:.8rem; }
+    .footer a { color:rgba(255,255,255,.4); text-decoration:none; }
+    .footer a:hover { color:var(--gold); }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <span>📖 ระบบล่าแร่ธาตุส่องออร่า · <strong>อ่านฟรี 21 ตอน</strong></span>
+</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/amethez/" class="logo">
+      <svg viewBox="0 0 36 36" fill="none"><polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity=".95"/><polygon points="18,8 30,12 18,28" fill="#a78bfa"/><polygon points="18,8 6,12 18,28" fill="#7c3aed"/></svg>
+      <div><div class="logo-text">AMETHEZ</div><small class="logo-sub">Stones · Stories · Soul</small></div>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/amethez/stones/">💎 คลังหิน</a></li>
+      <li><a href="/amethez/guides/">🌿 พลังบำบัด</a></li>
+      <li><a href="/amethez/talk/">🔮 คุยกับหิน</a></li>
+      <li><a href="/amethez/videos/">🎬 วิดีโอ</a></li>
+      <li><a href="/amethez/stories/" class="nav-stories">📖 นิยาย</a></li>
+      <li><a href="/amethez/digital/" class="nav-digital">📥 Digital</a></li>
+      <li><a href="/amethez/sale.html" class="nav-shop">🛒 ร้านค้า</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+  </div>
+</nav>
+
+<div class="ep-header">
+  <div class="breadcrumb"><a href="/amethez/">Amethez</a> › <a href="/amethez/stories/">นิยาย</a> › ตอนที่ 2</div>
+  <div class="ep-type-badge">🪙 ตอนคู่ · ความจริงดิบ</div>
+  <div class="ep-num">ตอนที่ 2 จาก 21</div>
+  <h1 class="ep-title">สิ่งที่เหลืออยู่<br>หลังเถ้าถ่าน</h1>
+  <p class="ep-tagline">"ตอนคู่ไม่มีระบบมโน ไม่มีเสียงปลอบประโลม<br>มีแค่สิ่งที่เป็นอยู่จริงๆ"</p>
+  <div class="ep-meta">
+    <span>⏱ อ่านประมาณ 15 นาที</span>
+    <span>📅 ซีรีส์ปรัชญาชีวิต</span>
+    <span>🆓 อ่านฟรี</span>
+  </div>
+</div>
+
+<div class="ep-content">
+
+  <div class="reality-box">
+    <div class="reality-label">⚠️ หมายเหตุบรรณาธิการ</div>
+    <p>ตอนคู่ของซีรีส์นี้เป็นความจริงดิบ ไม่มีระบบมโน ไม่มีคุณศิลาพูด ไม่มีสัญลักษณ์ มีแค่สิ่งที่ตัวละครเผชิญอยู่จริงๆ อ่านมันแบบที่มันเป็น</p>
+  </div>
+
+  <h2>เช้าวันถัดมา — ตัวเลขบนโต๊ะ</h2>
+
+  <p>ภัทรตื่นมาตอนเก้าโมง ซึ่งผิดปกติมาก เพราะสามปีที่ผ่านมาเขาตื่นหกโมงทุกวัน</p>
+
+  <p>เขาไม่ได้ตั้งนาฬิกา และที่น่าแปลกคือ เขาไม่รู้สึกผิดกับมัน</p>
+
+  <p>แต่ความรู้สึกนั้นหายไปภายในสิบนาที เมื่อเขาเปิดโน้ตบุ๊คขึ้นมาและเริ่มเปิดสเปรดชีตที่เขาหลีกเลี่ยงมาสองสัปดาห์</p>
+
+  <p>ถึงเวลาต้องดูตัวเลขจริงๆ</p>
+
+  <table class="data-table">
+    <tr><th>รายการ</th><th>จำนวน</th></tr>
+    <tr><td>เงินในบัญชีบริษัท</td><td class="red">฿287,400</td></tr>
+    <tr><td>เงินเดือนทีม 8 คน (1 เดือน)</td><td class="red">฿340,000</td></tr>
+    <tr><td>ค่าเช่าออฟฟิศ (ค้างชำระ)</td><td class="red">฿45,000</td></tr>
+    <tr><td>หนี้ซอฟต์โลน (เงินกู้พ่อแม่)</td><td class="red">฿800,000</td></tr>
+    <tr><td>ขาดทุนสะสม 3 ปี</td><td class="red">฿2,100,000+</td></tr>
+    <tr><td>นักลงทุนที่ตอบรับ</td><td class="red">0 ราย</td></tr>
+    <tr><td>เวลาที่เหลือก่อนบริษัทปิด</td><td class="white">ประมาณ 3–4 สัปดาห์</td></tr>
+  </table>
+
+  <p>เขาดูตัวเลขอยู่นานสิบห้านาทีโดยไม่ขยับ</p>
+
+  <p>ไม่ใช่เพราะตกใจ แต่เพราะเขากำลังยอมรับสิ่งที่รู้อยู่แล้วมาสักพักหนึ่ง เพียงแต่ไม่เคยกล้าเปิดดูพร้อมกันทั้งหมด</p>
+
+  <p class="scene-break">· · ·</p>
+
+  <h2>โทรศัพท์ที่ต้องโทร</h2>
+
+  <p>มีโทรศัพท์สามสายที่เขาต้องโทรวันนี้</p>
+
+  <p>สายแรก: แจ้งทีมว่าสถานการณ์เป็นอย่างไร ไม่ใช่เวอร์ชันปรับแต่งที่เขาเคยพูดในการประชุม แต่เวอร์ชันจริง</p>
+
+  <p>สายที่สอง: โทรหาพ่อแม่ บอกว่าเงินแปดแสนที่ยืมไปนั้น ยังไม่รู้ว่าจะคืนเมื่อไหร่</p>
+
+  <p>สายที่สาม: โทรหาแฟน — เพื่อบอกว่าที่บอกว่า "ทุกอย่างโอเค" มาสองเดือนนั้น ไม่จริง</p>
+
+  <p>เขาดูรายชื่อผู้ติดต่อในโทรศัพท์อยู่นาน แล้วล็อคหน้าจอ</p>
+
+  <p>วางโทรศัพท์หน้าลงบนโต๊ะ</p>
+
+  <p>ออกไปซื้อกาแฟแทน</p>
+
+  <p class="scene-break">· · ·</p>
+
+  <h2>ร้านกาแฟหน้าอพาร์ทเมนท์</h2>
+
+  <p>ร้านเล็กๆ ที่เขาไม่เคยแวะ เพราะปกติจะวิ่งออกไปตอนหกโมงเช้าและไม่มีเวลาสำหรับการนั่งดูอะไรเฉยๆ</p>
+
+  <p>มีลุงคนหนึ่งนั่งอ่านหนังสือพิมพ์อยู่มุมหนึ่ง มีแม่บ้านสองคนคุยกันเรื่องลูก มีนักศึกษาที่เปิดโน้ตบุ๊คและดูเหมือนกำลังทำรายงาน</p>
+
+  <p>ชีวิตคนอื่นดำเนินต่อไปตามปกติ</p>
+
+  <p>ภัทรสั่งกาแฟเย็นแก้วหนึ่ง นั่งลงในมุมที่ไม่มีใคร แล้วก็ไม่ได้ทำอะไรเลยยี่สิบนาที</p>
+
+  <p>ในชีวิตสามปีที่ผ่านมา เขาไม่เคยไม่ทำอะไรยี่สิบนาทีโดยไม่รู้สึกผิด</p>
+
+  <p>วันนี้รู้สึกผิดแค่นิดเดียว</p>
+
+  <p class="scene-break">· · ·</p>
+
+  <h2>สิ่งที่เขารู้แต่ไม่เคยยอมรับ</h2>
+
+  <p>TechPath มีปัญหาหลักสองข้อที่เขารู้มาตั้งแต่ปีที่สอง</p>
+
+  <p>ข้อแรก: ต้นทุนในการได้ผู้ใช้ใหม่แต่ละคนสูงกว่ามูลค่าที่ผู้ใช้นั้นสร้างให้บริษัทสองเท่า Unit economics ไม่ผ่าน ไม่ว่าจะปรับ pricing ยังไงก็ตาม</p>
+
+  <p>ข้อสอง: ตลาดที่เขาคิดว่ามีอยู่ มีอยู่จริง แต่คนในตลาดนั้นไม่ได้จ่ายเงินในแบบที่เขาคิด พวกเขาต้องการฟรี และจะจ่ายก็ต่อเมื่อเห็นผลชัดเจนก่อน ซึ่งแปลว่าโมเดลธุรกิจทั้งหลังต้องออกแบบใหม่ตั้งแต่ต้น</p>
+
+  <p>นักลงทุนทุกคนเห็นสองอย่างนี้ นั่นคือเหตุผลที่พวกเขาปฏิเสธ</p>
+
+  <p>และเหตุผลที่เขาไม่เคยแก้ ก็เพราะการแก้สองอย่างนี้แปลว่า ต้องยอมรับว่าแผนเดิมผิด</p>
+
+  <p>และตอนที่คนเราสร้างตัวตนบนสิ่งใดสิ่งหนึ่ง การยอมรับว่าสิ่งนั้นผิดคือการยอมรับว่าตัวเองผิด</p>
+
+  <p>ซึ่งเจ็บกว่าแค่ธุรกิจล้มเหลวมาก</p>
+
+  <p class="scene-break">· · ·</p>
+
+  <h2>กลับบ้านพร้อมกาแฟแก้วเปล่า</h2>
+
+  <p>เขากลับมาถึงห้องตอนบ่ายโมง</p>
+
+  <p>ยังไม่ได้โทรหาใครสักคน</p>
+
+  <p>แต่เขาเปิดโน้ตบุ๊คขึ้นมา และพิมพ์สิ่งที่ไม่เคยเขียนมาก่อน ไม่ใช่แผน ไม่ใช่ SWOT ไม่ใช่ financial model</p>
+
+  <p>เขาพิมพ์ว่า: <em>"สิ่งที่รู้ว่าผิดแต่ไม่ยอมแก้"</em></p>
+
+  <p>แล้วเริ่มเขียนรายการ</p>
+
+  <p>มันใช้เวลาสองชั่วโมง และเมื่อเขียนเสร็จ รายการนั้นมีสิบเจ็ดข้อ</p>
+
+  <p>เขาอ่านมันซ้ำสองรอบ แล้วบันทึกไฟล์ในชื่อว่า <em>"ข้อมูล"</em></p>
+
+  <p>ไม่ใช่ <em>"ปัญหา"</em> ไม่ใช่ <em>"ความล้มเหลว"</em></p>
+
+  <p>แค่ <em>"ข้อมูล"</em></p>
+
+  <p>เขาไม่รู้ว่าทำไมถึงเลือกคำนั้น มันผุดขึ้นมาในหัวเอง</p>
+
+  <p>แต่มันรู้สึกถูกต้อง</p>
+
+</div>
+
+<div class="moldavite-cta">
+  <div class="cta-box">
+    <h3>💚 โมลดาไวท์ — หินที่เริ่มต้นจากการพุ่งชน</h3>
+    <p>โมลดาไวท์เกิดจากความร้อนและแรงกระแทกรุนแรงสุดขีด แต่กลายเป็นสิ่งที่มีคุณค่าและหายาก บางอย่างต้องผ่านการทำลายก่อนถึงจะกลายเป็นสิ่งที่แท้จริง</p>
+    <a href="/amethez/stones/moldavite.html" class="cta-btn">💚 อ่านเรื่องโมลดาไวท์</a>
+  </div>
+</div>
+
+<div class="ep-nav">
+  <a href="/amethez/stories/episode-01.html" class="ep-nav-btn ep-nav-prev">← ตอนที่ 1</a>
+  <a href="/amethez/stories/" class="ep-nav-index">ดูทุกตอน</a>
+  <a href="/amethez/stories/episode-03.html" class="ep-nav-btn ep-nav-next">ตอนที่ 3 →</a>
+</div>
+
+<div class="footer">
+  <p><a href="/amethez/">Amethez</a> · <a href="/amethez/stories/">นิยาย</a> · <a href="/amethez/stones/">คลังหิน</a></p>
+  <p style="margin-top:.5rem">© 2025 Amethez · Stones · Stories · Soul</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ตอนที่ 5 — เสียงที่มาจากก้อนหิน | ระบบล่าแร่ธาตุส่องออร่า | Amethez</title>
+  <meta name="description" content="ตอนที่ 5: เสียงที่มาจากก้อนหิน — คุณศิลาพูดครั้งแรกอย่างชัดเจน แต่ภัทรไม่แน่ใจว่าตัวเองฟังอยู่จริงๆ หรือแค่อยากได้ยิน อ่านฟรี">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/amethez/css/main.css">
+  <style>
+    :root { --gold:#c9a84c; --purple:#7c3aed; --dark:#0f0a1e; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:Sarabun,sans-serif; background:var(--dark); color:#d4cce8; }
+    .topbar { background:linear-gradient(90deg,#1a0936,#2d1b5e,#1a0936); padding:.55rem 1.5rem; display:flex; align-items:center; justify-content:center; }
+    .topbar span { color:rgba(255,255,255,.65); font-size:.78rem; }
+    .topbar strong { color:var(--gold); }
+    .nav { position:sticky; top:0; z-index:100; background:rgba(15,10,30,.95); backdrop-filter:blur(12px); border-bottom:1px solid rgba(124,58,237,.2); }
+    .nav-inner { max-width:1160px; margin:0 auto; padding:.875rem 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+    .logo { display:flex; align-items:center; gap:.6rem; text-decoration:none; flex-shrink:0; }
+    .logo svg { width:32px; height:32px; }
+    .logo-text { font-family:'Playfair Display',serif; font-size:1.2rem; color:white; font-weight:700; letter-spacing:.04em; }
+    .logo-sub { font-size:.65rem; color:rgba(255,255,255,.5); display:block; letter-spacing:.08em; }
+    .nav-links { display:flex; align-items:center; gap:.25rem; list-style:none; }
+    .nav-links a { font-size:.875rem; font-weight:600; color:rgba(255,255,255,.8); text-decoration:none; padding:.4rem .75rem; border-radius:.5rem; transition:all .15s; white-space:nowrap; }
+    .nav-links a:hover { background:rgba(124,58,237,.2); color:white; }
+    .nav-links .nav-shop { background:linear-gradient(135deg,#c9a84c,#b8922e); color:#0f0a1e !important; border-radius:2rem; padding:.4rem 1rem !important; }
+    .nav-links .nav-digital { color:#a78bfa !important; }
+    .nav-links .nav-stories { color:var(--gold) !important; }
+    .hamburger { display:none; background:none; border:none; font-size:1.5rem; cursor:pointer; color:white; }
+    @media(max-width:860px){ .nav-links{display:none}.nav-links.open{display:flex;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:rgba(15,10,30,.98);padding:1rem 1.5rem;gap:.25rem;border-bottom:1px solid rgba(124,58,237,.2)}.hamburger{display:block} }
+
+    .ep-header { max-width:720px; margin:0 auto; padding:4rem 1.5rem 2rem; }
+    .breadcrumb { font-size:.78rem; color:rgba(255,255,255,.35); margin-bottom:1.5rem; }
+    .breadcrumb a { color:rgba(255,255,255,.4); text-decoration:none; }
+    .breadcrumb a:hover { color:var(--gold); }
+    .ep-type-badge { display:inline-flex; align-items:center; gap:.4rem; background:rgba(167,139,250,.12); border:1px solid rgba(167,139,250,.3); color:#c4b5fd; padding:.3rem .85rem; border-radius:2rem; font-size:.72rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; margin-bottom:1.25rem; }
+    .ep-num { font-size:.85rem; color:rgba(255,255,255,.35); margin-bottom:.5rem; }
+    h1.ep-title { font-family:'Playfair Display',serif; font-size:clamp(2rem,5vw,3rem); color:white; line-height:1.25; margin-bottom:1rem; }
+    .ep-tagline { font-size:1rem; color:rgba(255,255,255,.5); font-style:italic; line-height:1.7; margin-bottom:2rem; }
+    .ep-meta { display:flex; gap:1.5rem; flex-wrap:wrap; font-size:.78rem; color:rgba(255,255,255,.35); padding-bottom:2rem; border-bottom:1px solid rgba(255,255,255,.07); }
+
+    .ep-content { max-width:720px; margin:0 auto; padding:2.5rem 1.5rem 4rem; }
+    .ep-content p { font-size:1.05rem; line-height:2; color:rgba(255,255,255,.75); margin-bottom:1.75rem; }
+    .ep-content p.scene-break { text-align:center; color:rgba(255,255,255,.2); font-size:1.2rem; letter-spacing:.3em; margin:2.5rem 0; }
+    .ep-content h2 { font-family:'Playfair Display',serif; font-size:1.4rem; color:white; margin:3rem 0 1.25rem; line-height:1.4; }
+
+    .system-box { background:linear-gradient(135deg,rgba(167,139,250,.07),rgba(124,58,237,.05)); border:1px solid rgba(167,139,250,.2); border-radius:.875rem; padding:1.75rem 2rem; margin:2.5rem 0; }
+    .system-label { font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#a78bfa; margin-bottom:.75rem; }
+    .system-title { font-family:'Playfair Display',serif; font-size:1.2rem; color:#c4b5fd; margin-bottom:.75rem; }
+    .system-box p { font-size:.92rem; color:rgba(200,190,240,.65); line-height:1.9; margin-bottom:.75rem; }
+    .system-box p:last-child { margin-bottom:0; }
+    .system-crack { text-align:center; font-size:.8rem; color:rgba(167,139,250,.4); letter-spacing:.15em; margin-top:1rem; }
+
+    /* SILA — enhanced for ep5, her big moment */
+    .sila-speaks { background:rgba(0,0,0,.45); border:1px solid rgba(201,168,76,.2); border-left:3px solid var(--gold); border-radius:.75rem; padding:2rem 2.25rem; margin:3rem 0; position:relative; }
+    .sila-speaks::before { content:'💚'; position:absolute; top:-14px; left:24px; background:var(--dark); padding:0 8px; font-size:1.1rem; }
+    .sila-name { font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem; }
+    .sila-speaks p { font-size:1.05rem; color:rgba(255,255,255,.85); line-height:2; font-style:italic; margin-bottom:.75rem; }
+    .sila-speaks p:last-child { margin-bottom:0; }
+    .sila-speaks p.sila-key { color:white; font-size:1.1rem; border-left:2px solid rgba(201,168,76,.4); padding-left:1rem; }
+
+    .doubt-box { background:rgba(255,255,255,.02); border:1px dashed rgba(255,255,255,.1); border-radius:.75rem; padding:1.5rem 1.75rem; margin:2rem 0; }
+    .doubt-box p { font-size:.92rem; color:rgba(255,255,255,.5); line-height:1.9; font-style:italic; margin-bottom:.5rem; }
+    .doubt-box p:last-child { margin-bottom:0; }
+
+    .ep-nav { max-width:720px; margin:0 auto; padding:0 1.5rem 5rem; display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap; }
+    .ep-nav-btn { display:inline-flex; align-items:center; gap:.5rem; padding:.75rem 1.25rem; border-radius:.5rem; font-family:Sarabun,sans-serif; font-size:.9rem; font-weight:600; text-decoration:none; transition:all .2s; }
+    .ep-nav-prev { background:rgba(255,255,255,.05); color:rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.1); }
+    .ep-nav-prev:hover { background:rgba(255,255,255,.08); color:white; }
+    .ep-nav-next { background:linear-gradient(135deg,rgba(201,168,76,.8),rgba(184,146,46,.8)); color:#0f0a1e; font-weight:700; }
+    .ep-nav-next:hover { transform:translateY(-2px); opacity:.9; }
+    .ep-nav-index { font-size:.8rem; color:rgba(255,255,255,.3); text-decoration:none; }
+    .ep-nav-index:hover { color:var(--gold); }
+
+    .moldavite-cta { max-width:720px; margin:0 auto 2rem; padding:0 1.5rem; }
+    .cta-box { background:linear-gradient(135deg,#0f2a1a,#0a1f12); border:1px solid rgba(34,197,94,.25); border-radius:1rem; padding:1.75rem 2rem; }
+    .cta-box h3 { font-family:'Playfair Display',serif; font-size:1.1rem; color:white; margin-bottom:.5rem; }
+    .cta-box p { font-size:.85rem; color:rgba(255,255,255,.5); line-height:1.7; margin-bottom:1rem; }
+    .cta-btn { display:inline-flex; align-items:center; gap:.4rem; background:linear-gradient(135deg,#166534,#15803d); color:white; padding:.65rem 1.25rem; border-radius:.5rem; font-family:Sarabun,sans-serif; font-size:.85rem; font-weight:700; text-decoration:none; }
+    .footer { border-top:1px solid rgba(255,255,255,.06); padding:2rem 1.5rem; text-align:center; color:rgba(255,255,255,.3); font-size:.8rem; }
+    .footer a { color:rgba(255,255,255,.4); text-decoration:none; }
+    .footer a:hover { color:var(--gold); }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <span>📖 ระบบล่าแร่ธาตุส่องออร่า · <strong>อ่านฟรี 21 ตอน</strong></span>
+</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/amethez/" class="logo">
+      <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity=".95"/>
+        <polygon points="18,8 30,12 18,28" fill="#a78bfa"/>
+        <polygon points="18,8 6,12 18,28" fill="#7c3aed"/>
+      </svg>
+      <div><div class="logo-text">AMETHEZ</div><small class="logo-sub">Stones · Stories · Soul</small></div>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/amethez/stones/">💎 คลังหิน</a></li>
+      <li><a href="/amethez/guides/">🌿 พลังบำบัด</a></li>
+      <li><a href="/amethez/talk/">🔮 คุยกับหิน</a></li>
+      <li><a href="/amethez/videos/">🎬 วิดีโอ</a></li>
+      <li><a href="/amethez/stories/" class="nav-stories">📖 นิยาย</a></li>
+      <li><a href="/amethez/digital/" class="nav-digital">📥 Digital</a></li>
+      <li><a href="/amethez/sale.html" class="nav-shop">🛒 ร้านค้า</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+  </div>
+</nav>
+
+<div class="ep-header">
+  <div class="breadcrumb"><a href="/amethez/">Amethez</a> › <a href="/amethez/stories/">นิยาย</a> › ตอนที่ 5</div>
+  <div class="ep-type-badge">🌀 ตอนคี่ · ระบบมโน</div>
+  <div class="ep-num">ตอนที่ 5 จาก 21</div>
+  <h1 class="ep-title">เสียงที่มา<br>จากก้อนหิน</h1>
+  <p class="ep-tagline">"เสียงที่น่าเชื่อถือที่สุดไม่ใช่เสียงที่บอกว่าแกทำได้ แต่เสียงที่บอกว่าแกกำลังหลอกตัวเองอยู่"</p>
+  <div class="ep-meta">
+    <span>⏱ อ่านประมาณ 20 นาที</span>
+    <span>🌀 ตอนคี่ — คุณศิลาปรากฏตัวอย่างชัดเจนครั้งแรก</span>
+    <span>🆓 อ่านฟรี</span>
+  </div>
+</div>
+
+<div class="ep-content">
+
+  <div class="system-box">
+    <div class="system-label">🌀 ระบบมโน — ก่อนที่ทุกอย่างจะเปลี่ยน</div>
+    <div class="system-title">ระบบชีวิตฉบับ 2.0 — เดือนที่แปด</div>
+    <p>ภัทรบอกตัวเองว่าทุกอย่างกำลังดำเนินตามแผน งานใหม่มั่นคง เงินค่อยๆ สะสม กำลังเรียนรู้ทักษะใหม่ ความสัมพันธ์กับมินตรา "โอเค" ปัญหาเรื่องหนี้ "กำลังจัดการ" ทุกสัปดาห์เขาเขียนสรุปสิ่งที่ทำได้ในสมุดบันทึก</p>
+    <p>ภาพในหัวคือตัวเองกำลังก้าวหน้าอย่างช้าๆ แต่แน่นอน เหมือนน้ำที่ค่อยๆ กัดหิน ในที่สุดก็จะสำเร็จ</p>
+    <div class="system-crack">— — — แต่มีบางอย่างที่เขาไม่ยอมมอง — — —</div>
+  </div>
+
+  <h2>คืนวันศุกร์ที่แปลกไป</h2>
+
+  <p>ปกติวันศุกร์คืนภัทรจะไปกินข้าวกับมินตรา แต่คืนนั้นเธอบอกว่าไม่สบายและขอพักก่อน เขากลับมาห้องคนเดียว ตั้งใจจะเปิดโน้ตบุ๊คทำงาน</p>
+
+  <p>แต่เปิดขึ้นมาแล้วก็นั่งเฉยอยู่นานสี่สิบนาทีโดยไม่ได้พิมพ์อะไร</p>
+
+  <p>ความรู้สึกที่อธิบายไม่ได้เริ่มโตขึ้นในหน้าอก ไม่ใช่ความเศร้า ไม่ใช่ความกลัว มันคล้ายกับความรู้สึกว่า <em>มีบางอย่างที่ไม่สมดุล</em> แต่เขาหาไม่ได้ว่าคืออะไร</p>
+
+  <p>เขาปิดโน้ตบุ๊ค ลุกขึ้น เดินไปหยิบน้ำ</p>
+
+  <p>และมือก็แตะก้อนโมลดาไวท์บนชั้นหนังสืออีกครั้ง</p>
+
+  <p class="scene-break">· · ·</p>
+
+  <h2>เย็นชาและหนักในมือ</h2>
+
+  <p>ภัทรนั่งลงบนพื้นพิงกำแพง ก้อนหินในมือ แสงไฟในห้องหรี่ลง</p>
+
+  <p>เขาไม่ได้ทำสมาธิ ไม่ได้อธิษฐาน ไม่ได้ทำอะไรเลย แค่นั่งและถือ</p>
+
+  <p>แต่ในความเงียบนั้น สิ่งที่เขาหลีกเลี่ยงมาแปดเดือนค่อยๆ โผล่ขึ้นมา</p>
+
+  <p>ความจริงที่ว่า เดือนที่แปดนี้ เขาออมเงินได้น้อยกว่าเดือนแรกสามสิบเปอร์เซ็นต์ ความจริงที่ว่ามินตราบอกว่าไม่สบาย แต่เธอดูไม่เหมือนคนป่วยทางกาย ความจริงที่ว่าเขาหยุดเปิดไฟล์ "ข้อมูล" ตั้งแต่เดือนที่สาม ความจริงที่ว่า "ระบบ 2.0" ไม่ได้ต่างจาก "ระบบ 1.0" เลย ยกเว้นฉากหลัง</p>
+
+  <p>และนั่นคือเมื่อเสียงผุดขึ้นมา</p>
+
+  <p>ไม่ใช่กระซิบ ไม่ใช่เสียงดัง มันคือความคิดที่ชัดเจนอย่างผิดปกติ ราวกับว่ามันไม่ได้มาจากส่วนที่เขาควบคุม</p>
+
+  <div class="sila-speaks">
+    <div class="sila-name">💚 คุณศิลา — เสียงครั้งนี้ชัดกว่าทุกครั้งที่ผ่านมา</div>
+    <p class="sila-key">"แกสร้างระบบที่สองโดยไม่ได้ถามว่าระบบแรกพังเพราะอะไรกันแน่"</p>
+    <p>"แกรู้ว่าปัญหาคืออะไร แกเขียนมันลงในไฟล์ชื่อ 'ข้อมูล' แต่แกไม่ได้ใช้ข้อมูลนั้น"</p>
+    <p>"เพราะการใช้มันแปลว่าต้องเปลี่ยนสิ่งที่แกยังไม่พร้อมเปลี่ยน"</p>
+  </div>
+
+  <p>ภัทรนั่งนิ่ง</p>
+
+  <p>เขารู้สึกว่าควรจะโต้แย้ง ควรจะหาเหตุผลว่าเสียงนั้นไม่ถูก แต่ไม่มีเหตุผลไหนที่ใช้ได้จริง</p>
+
+  <p class="scene-break">· · ·</p>
+
+  <h2>คำถามที่เสียงถาม</h2>
+
+  <div class="doubt-box">
+    <p>ภัทรนั่งถามตัวเองว่า: "นี่ฉันกำลังบ้าอยู่หรือเปล่า ได้ยินเสียงจากก้อนหิน"</p>
+    <p>แต่ถัดจากนั้น มีความคิดที่น่าสนใจกว่า: ไม่ว่าเสียงนั้นจะมาจากไหน — จากหิน จากจิตใต้สำนึก หรือแค่จากส่วนของตัวเองที่ซื่อสัตย์ที่สุด — มันพูดสิ่งที่เขารู้อยู่แล้วทั้งนั้น</p>
+    <p>แล้วมันสำคัญไหม ว่าเสียงนั้นมาจากไหน?</p>
+  </div>
+
+  <p>เขานั่งกับคำถามนั้นอยู่นาน</p>
+
+  <p>แล้วเสียงก็พูดต่อ และครั้งนี้ภัทรตั้งใจฟัง</p>
+
+  <div class="sila-speaks">
+    <div class="sila-name">💚 คุณศิลา</div>
+    <p>"มีสามอย่างที่แกรู้ว่าต้องทำแต่ยังไม่ทำ ไม่ใช่เพราะไม่มีเวลา ไม่ใช่เพราะไม่มีทาง"</p>
+    <p>"แกรู้ว่าอะไรบ้าง"</p>
+  </div>
+
+  <p>ภัทรลุกขึ้น หยิบสมุดบันทึกออกมา ก้อนหินวางอยู่ข้างๆ บนพื้น</p>
+
+  <p>เขานั่งเขียนอยู่นานสามสิบนาที ไม่ใช่แผน ไม่ใช่ระบบ แต่เป็นการตอบคำถามที่เสียงถาม</p>
+
+  <p class="scene-break">· · ·</p>
+
+  <h2>สิ่งที่เขาเขียนลงในสมุด</h2>
+
+  <p>สิ่งแรก: โทรหาพ่อแม่และบอกตัวเลขที่แท้จริง ไม่ใช่เพื่อขอโทษ แต่เพื่อให้พวกเขารู้ว่าลูกชายอยู่ตรงไหน เพราะตลอดแปดเดือนที่ผ่านมา เขาให้ความสบายใจกับตัวเองโดยไม่ทำให้พวกเขาสบายใจจริงๆ</p>
+
+  <p>สิ่งที่สอง: คุยกับมินตราจริงๆ ไม่ใช่อธิบายแผน แต่บอกว่าตัวเองกลัวอะไร รู้สึกอะไร คิดอะไรในหัว เพราะเขาปกป้องความสัมพันธ์ด้วยการไม่บอกความจริง ซึ่งไม่ได้ปกป้องอะไรเลย</p>
+
+  <p>สิ่งที่สาม: เปิดไฟล์ "ข้อมูล" ขึ้นมา และทำตามสิ่งที่เขียนไว้ อย่างน้อยหนึ่งข้อ ในสัปดาห์นี้</p>
+
+  <p>สามอย่างนั้นไม่มีอะไรยิ่งใหญ่ ไม่มีแผนธุรกิจ ไม่มีการพลิกชะตา มีแค่สามบทสนทนาที่เขาหลีกเลี่ยงมาตลอด</p>
+
+  <p class="scene-break">· · ·</p>
+
+  <h2>ก่อนนอน</h2>
+
+  <p>ภัทรวางสมุดลง มองก้อนหินที่วางอยู่บนพื้น</p>
+
+  <p>เขาไม่รู้ว่าโมลดาไวท์มีพลังงานจริงหรือเปล่า ไม่รู้ว่าเสียงที่ได้ยินคือ "คุณศิลา" จริงๆ หรือแค่จิตใต้สำนึกของตัวเอง ไม่รู้ว่ามันสำคัญไหมที่จะรู้</p>
+
+  <p>สิ่งที่รู้คือ ตอนที่เขาถือก้อนหินนั้น เขาฟังสิ่งที่รู้อยู่แล้วอย่างตั้งใจเป็นครั้งแรกในรอบนาน</p>
+
+  <p>เขาวางก้อนหินไว้บนโต๊ะทำงาน ข้างๆ สมุดบันทึก ไม่ใช่บนชั้นหนังสือที่ห่างออกไป</p>
+
+  <p>แล้วก็นอนหลับได้เร็วกว่าเดิม</p>
+
+  <p class="scene-break">· · ·</p>
+
+  <h2>บทส่งท้ายจากบรรณาธิการ</h2>
+
+  <p style="color:rgba(255,255,255,.55);font-size:.92rem;line-height:1.9;font-style:italic;">ห้าตอนแรกของซีรีส์นี้ไม่ได้เล่าเรื่องของคนพิเศษ มันเล่าเรื่องของคนที่ทำสิ่งที่คนส่วนใหญ่ทำ — สร้างระบบ หลีกเลี่ยงความเจ็บปวด หาคำอธิบายที่ฟังดูดีสำหรับพฤติกรรมที่ไม่ดีพอ</p>
+  <p style="color:rgba(255,255,255,.55);font-size:.92rem;line-height:1.9;font-style:italic;">คุณศิลาไม่ได้ให้คำตอบ เธอแค่ถามคำถามที่ภัทรรู้คำตอบอยู่แล้ว แต่ไม่กล้าถาม นั่นคือธรรมชาติของเสียงภายในที่แท้จริง มันไม่มีทางออกให้เรา มันแค่บังคับให้เราหยุดหนีจากทางออกที่เราเห็นอยู่แล้ว</p>
+  <p style="color:rgba(201,168,76,.7);font-size:.85rem;margin-top:.5rem;">— รดา บรรณาธิการ</p>
+
+</div>
+
+<!-- MOLDAVITE CTA -->
+<div class="moldavite-cta">
+  <div class="cta-box">
+    <h3>💚 โมลดาไวท์ — หินที่บังคับให้ฟังตัวเอง</h3>
+    <p>ผู้ใช้โมลดาไวท์หลายคนรายงานว่ามันทำให้ "เห็นตัวเองชัดขึ้น" ซึ่งไม่ใช่ประสบการณ์ที่น่าสบายเสมอไป แต่คือประสบการณ์ที่จำเป็นสำหรับคนที่อยากเปลี่ยนแปลงจริงๆ</p>
+    <a href="/amethez/stones/moldavite.html" class="cta-btn">💚 อ่านเรื่องโมลดาไวท์</a>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="ep-nav">
+  <a href="/amethez/stories/episode-04.html" class="ep-nav-btn ep-nav-prev">← ตอนที่ 4</a>
+  <a href="/amethez/stories/" class="ep-nav-index">ดูทุกตอน</a>
+  <a href="/amethez/stories/" class="ep-nav-btn ep-nav-next">ตอนที่ 6 — เร็วๆ นี้</a>
+</div>
+
+<div class="footer">
+  <p><a href="/amethez/">Amethez</a> · <a href="/amethez/stories/">นิยาย</a> · <a href="/amethez/stones/">คลังหิน</a></p>
+  <p style="margin-top:.5rem">© 2025 Amethez · Stones · Stories · Soul</p>
+</div>
+</body>
+</html>

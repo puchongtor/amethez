@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>นิยาย — ระบบล่าแร่ธาตุส่องออร่า | Amethez</title>
+  <meta name="description" content="ซีรีส์นิยายปรัชญาชีวิต ระบบล่าแร่ธาตุส่องออร่า พลิกชะตาพันล้าน 21 ตอน อ่านฟรี ไม่มีค่าใช้จ่าย">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/amethez/css/main.css">
+  <style>
+    :root { --gold:#c9a84c; --purple:#7c3aed; --dark:#0f0a1e; --text:#1a1228; --muted:#6b7280; --bg:#faf8f4; --border:#ede9fe; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:Sarabun,sans-serif; background:var(--dark); color:#e8e0f0; }
+
+    /* NAV */
+    .topbar { background:linear-gradient(90deg,#1a0936,#2d1b5e,#1a0936); padding:.55rem 1.5rem; display:flex; align-items:center; justify-content:center; gap:2rem; flex-wrap:wrap; }
+    .topbar span { color:rgba(255,255,255,.65); font-size:.78rem; }
+    .topbar strong { color:var(--gold); }
+    .nav { position:sticky; top:0; z-index:100; background:rgba(15,10,30,.95); backdrop-filter:blur(12px); border-bottom:1px solid rgba(124,58,237,.2); }
+    .nav-inner { max-width:1160px; margin:0 auto; padding:.875rem 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+    .logo { display:flex; align-items:center; gap:.6rem; text-decoration:none; flex-shrink:0; }
+    .logo svg { width:32px; height:32px; }
+    .logo-text { font-family:'Playfair Display',serif; font-size:1.2rem; color:white; font-weight:700; letter-spacing:.04em; }
+    .logo-sub { font-size:.65rem; color:rgba(255,255,255,.5); display:block; letter-spacing:.08em; }
+    .nav-links { display:flex; align-items:center; gap:.25rem; list-style:none; }
+    .nav-links a { font-size:.875rem; font-weight:600; color:rgba(255,255,255,.8); text-decoration:none; padding:.4rem .75rem; border-radius:.5rem; transition:all .15s; white-space:nowrap; }
+    .nav-links a:hover { background:rgba(124,58,237,.2); color:white; }
+    .nav-links .nav-shop { background:linear-gradient(135deg,#c9a84c,#b8922e); color:#0f0a1e !important; border-radius:2rem; padding:.4rem 1rem !important; }
+    .nav-links .nav-shop:hover { opacity:.88; background:linear-gradient(135deg,#c9a84c,#b8922e) !important; }
+    .nav-links .nav-digital { color:#a78bfa !important; }
+    .nav-links .nav-stories { color:var(--gold) !important; }
+    .hamburger { display:none; background:none; border:none; font-size:1.5rem; cursor:pointer; color:white; }
+    @media(max-width:860px){ .nav-links{display:none}.nav-links.open{display:flex;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:rgba(15,10,30,.98);padding:1rem 1.5rem;gap:.25rem;border-bottom:1px solid rgba(124,58,237,.2);box-shadow:0 8px 24px rgba(0,0,0,.5)}.hamburger{display:block} }
+
+    /* HERO */
+    .hero { position:relative; padding:5rem 1.5rem 4rem; text-align:center; background:linear-gradient(180deg,#0f0a1e 0%,#1a0936 50%,#0f0a1e 100%); overflow:hidden; }
+    .hero-crystal { position:absolute; top:-60px; right:-40px; width:350px; opacity:.07; pointer-events:none; }
+    .hero-badge { display:inline-flex; align-items:center; gap:.45rem; background:rgba(201,168,76,.12); border:1px solid rgba(201,168,76,.35); color:var(--gold); padding:.35rem 1rem; border-radius:2rem; font-size:.75rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin-bottom:1.5rem; }
+    .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2rem,5.5vw,3.5rem); color:white; line-height:1.25; margin-bottom:1rem; }
+    .hero h1 em { font-style:italic; color:#c4b5fd; }
+    .hero-subtitle { font-size:1.05rem; color:rgba(255,255,255,.55); line-height:1.9; max-width:560px; margin:0 auto 1.5rem; }
+    .hero-meta { display:flex; gap:1.5rem; justify-content:center; flex-wrap:wrap; margin-bottom:2.5rem; }
+    .hero-meta-item { font-size:.82rem; color:rgba(255,255,255,.45); display:flex; align-items:center; gap:.35rem; }
+    .hero-meta-item strong { color:var(--gold); }
+    .sila-quote { max-width:520px; margin:0 auto 2.5rem; padding:1.25rem 1.5rem; background:rgba(201,168,76,.06); border-left:3px solid var(--gold); border-radius:0 .5rem .5rem 0; }
+    .sila-quote p { font-size:.95rem; color:rgba(255,255,255,.75); line-height:1.8; font-style:italic; }
+    .sila-quote cite { display:block; margin-top:.75rem; font-size:.78rem; color:var(--gold); font-style:normal; letter-spacing:.05em; }
+    .btn-start { display:inline-flex; align-items:center; gap:.5rem; background:linear-gradient(135deg,#7c3aed,#6d28d9); color:white; padding:.9rem 2rem; border-radius:.625rem; font-family:Sarabun,sans-serif; font-size:1rem; font-weight:700; text-decoration:none; box-shadow:0 4px 20px rgba(124,58,237,.4); transition:all .2s; }
+    .btn-start:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(124,58,237,.5); }
+
+    /* EPISODES */
+    .episodes-section { max-width:860px; margin:0 auto; padding:3rem 1.5rem 5rem; }
+    .sec-label { font-size:.75rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin-bottom:.75rem; }
+    .sec-title { font-family:'Playfair Display',serif; font-size:clamp(1.5rem,3vw,2rem); color:white; margin-bottom:2.5rem; }
+    .episode-grid { display:flex; flex-direction:column; gap:1rem; }
+    .ep-card { display:flex; align-items:flex-start; gap:1.25rem; padding:1.25rem 1.5rem; background:rgba(255,255,255,.04); border:1px solid rgba(124,58,237,.15); border-radius:.875rem; text-decoration:none; color:inherit; transition:all .2s; }
+    .ep-card:hover { background:rgba(124,58,237,.1); border-color:rgba(124,58,237,.4); transform:translateX(4px); }
+    .ep-card.available { cursor:pointer; }
+    .ep-card.coming { opacity:.45; cursor:default; pointer-events:none; }
+    .ep-number { flex-shrink:0; width:48px; height:48px; background:linear-gradient(135deg,rgba(124,58,237,.3),rgba(109,40,217,.3)); border:1px solid rgba(124,58,237,.4); border-radius:.625rem; display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; color:#c4b5fd; }
+    .ep-card.even .ep-number { background:linear-gradient(135deg,rgba(201,168,76,.15),rgba(184,146,46,.15)); border-color:rgba(201,168,76,.3); color:var(--gold); }
+    .ep-info { flex:1; min-width:0; }
+    .ep-tag { font-size:.7rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.35rem; }
+    .ep-tag.odd { color:#a78bfa; }
+    .ep-tag.even { color:var(--gold); }
+    .ep-tag.coming-soon { color:rgba(255,255,255,.3); }
+    .ep-title { font-family:'Playfair Display',serif; font-size:1.05rem; color:white; margin-bottom:.35rem; line-height:1.4; }
+    .ep-desc { font-size:.84rem; color:rgba(255,255,255,.5); line-height:1.7; }
+    .ep-arrow { flex-shrink:0; color:rgba(124,58,237,.5); font-size:1.1rem; align-self:center; }
+    .ep-card:hover .ep-arrow { color:#a78bfa; }
+
+    /* PHILOSOPHY BOX */
+    .philosophy { max-width:860px; margin:0 auto 4rem; padding:0 1.5rem; }
+    .phil-box { background:linear-gradient(135deg,rgba(124,58,237,.08),rgba(109,40,217,.04)); border:1px solid rgba(124,58,237,.2); border-radius:1rem; padding:2rem 2.5rem; }
+    .phil-box h3 { font-family:'Playfair Display',serif; font-size:1.3rem; color:white; margin-bottom:1rem; }
+    .phil-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; margin-top:1.5rem; }
+    .phil-item { text-align:center; padding:1rem; background:rgba(255,255,255,.03); border-radius:.5rem; }
+    .phil-item .icon { font-size:1.75rem; margin-bottom:.5rem; }
+    .phil-item p { font-size:.82rem; color:rgba(255,255,255,.55); line-height:1.6; }
+    .phil-item strong { display:block; color:rgba(255,255,255,.85); font-size:.9rem; margin-bottom:.25rem; }
+
+    /* MOLDAVITE CTA */
+    .moldavite-cta { max-width:860px; margin:0 auto 4rem; padding:0 1.5rem; }
+    .cta-box { background:linear-gradient(135deg,#0f2a1a,#0a1f12); border:1px solid rgba(34,197,94,.2); border-radius:1rem; padding:2rem 2.5rem; display:flex; align-items:center; gap:2rem; flex-wrap:wrap; }
+    .cta-text h3 { font-family:'Playfair Display',serif; font-size:1.25rem; color:white; margin-bottom:.5rem; }
+    .cta-text p { font-size:.88rem; color:rgba(255,255,255,.55); line-height:1.7; }
+    .cta-btn { flex-shrink:0; display:inline-flex; align-items:center; gap:.4rem; background:linear-gradient(135deg,#166534,#15803d); color:white; padding:.75rem 1.5rem; border-radius:.5rem; font-family:Sarabun,sans-serif; font-size:.9rem; font-weight:700; text-decoration:none; white-space:nowrap; transition:all .2s; }
+    .cta-btn:hover { opacity:.88; transform:translateY(-1px); }
+
+    /* ── RADA EDITOR ── */
+    .rada-intro { background:linear-gradient(135deg,rgba(201,168,76,.06),rgba(124,58,237,.04)); border-bottom:1px solid rgba(201,168,76,.12); padding:2.5rem 1.5rem; }
+    .rada-wrap { max-width:860px; margin:0 auto; display:flex; align-items:center; gap:2rem; flex-wrap:wrap; }
+    .rada-avatar { flex-shrink:0; }
+    .rada-avatar-ring { width:88px; height:88px; border-radius:50%; background:linear-gradient(135deg,var(--gold),#b8922e); padding:2px; }
+    .rada-avatar-inner { width:100%; height:100%; border-radius:50%; background:linear-gradient(135deg,#1a0936,#2d1b5e); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--gold); font-weight:700; }
+    .rada-text { flex:1; min-width:220px; }
+    .rada-label { font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(201,168,76,.6); margin-bottom:.3rem; }
+    .rada-name { font-family:'Playfair Display',serif; font-size:1.5rem; color:white; margin-bottom:.6rem; }
+    .rada-bio { font-size:.88rem; color:rgba(255,255,255,.55); line-height:1.8; margin-bottom:.75rem; }
+    .rada-quote { font-size:.92rem; color:rgba(255,255,255,.75); font-style:italic; border-left:2px solid var(--gold); padding-left:1rem; margin:0; line-height:1.7; }
+    @media(max-width:600px){ .rada-wrap{flex-direction:column;text-align:center} .rada-quote{text-align:left} }
+
+    /* FOOTER */
+    .footer { border-top:1px solid rgba(255,255,255,.06); padding:2rem 1.5rem; text-align:center; color:rgba(255,255,255,.3); font-size:.8rem; }
+    .footer a { color:rgba(255,255,255,.4); text-decoration:none; }
+    .footer a:hover { color:var(--gold); }
+  </style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <span>✨ อ่านฟรี ไม่มีค่าใช้จ่าย — <strong>21 ตอน</strong> ครบซีรีส์</span>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/amethez/" class="logo">
+      <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity=".95"/>
+        <polygon points="18,8 30,12 18,28" fill="#a78bfa"/>
+        <polygon points="18,8 6,12 18,28" fill="#7c3aed"/>
+      </svg>
+      <div><div class="logo-text">AMETHEZ</div><small class="logo-sub">Stones · Stories · Soul</small></div>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/amethez/stones/">💎 คลังหิน</a></li>
+      <li><a href="/amethez/guides/">🌿 พลังบำบัด</a></li>
+      <li><a href="/amethez/talk/">🔮 คุยกับหิน</a></li>
+      <li><a href="/amethez/videos/">🎬 วิดีโอ</a></li>
+      <li><a href="/amethez/stories/" class="nav-stories">📖 นิยาย</a></li>
+      <li><a href="/amethez/digital/" class="nav-digital">📥 Digital</a></li>
+      <li><a href="/amethez/sale.html" class="nav-shop">🛒 ร้านค้า</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+  </div>
+</nav>
+
+<!-- RADA EDITOR INTRO -->
+<section class="rada-intro">
+  <div class="rada-wrap">
+    <div class="rada-avatar">
+      <div class="rada-avatar-ring">
+        <div class="rada-avatar-inner">รดา</div>
+      </div>
+    </div>
+    <div class="rada-text">
+      <div class="rada-label">บรรณาธิการประจำหมวดนิยาย</div>
+      <h2 class="rada-name">คุณรดา</h2>
+      <p class="rada-bio">นักอ่านตัวยง นักเดินทางจิตใจ และผู้เชื่อว่าเรื่องเล่าที่ดีสามารถเปลี่ยนมุมมองได้ลึกกว่าคำแนะนำใดๆ รดาดูแลหมวดนิยายของ Amethez โดยเลือกและบรรณาธิการเรื่องที่เชื่อว่าจะ "เจาะเข้าไปถึงส่วนที่คนอ่านไม่ยอมมองตัวเอง"</p>
+      <blockquote class="rada-quote">"นิยายที่ดีไม่ได้ให้คำตอบ มันบังคับให้คุณถามคำถามที่กลัวจะถาม"</blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">📖 ซีรีส์นิยายปรัชญา · อ่านฟรี 100%</div>
+  <h1>ระบบล่าแร่ธาตุ<br><em>ส่องออร่า</em><br>พลิกชะตาพันล้าน</h1>
+  <p class="hero-subtitle">เรื่องของชายคนหนึ่งที่สูญเสียทุกอย่าง<br>แล้วค้นพบว่าความล้มเหลวคือข้อมูล ไม่ใช่จุดจบ</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">📚 <strong>21 ตอน</strong> ครบซีรีส์</div>
+    <div class="hero-meta-item">⏱ <strong>ตอนละ 15–20 นาที</strong></div>
+    <div class="hero-meta-item">🆓 <strong>อ่านฟรี</strong> ไม่มีค่าใช้จ่าย</div>
+  </div>
+  <div class="sila-quote">
+    <p>"แร่ธาตุในโลกนี้ไม่ได้เกิดในวันเดียว บางก้อนใช้เวลาล้านปีกว่าจะกลายเป็นสิ่งที่มีค่า ชีวิตคนก็ไม่ต่างกัน"</p>
+    <cite>— คุณศิลา เสียงจากโมลดาไวท์</cite>
+  </div>
+  <a href="/amethez/stories/episode-01.html" class="btn-start">📖 เริ่มอ่านตอนที่ 1</a>
+</section>
+
+<!-- PHILOSOPHY -->
+<div class="philosophy">
+  <div class="phil-box">
+    <h3>เขาวงกตแห่งความฝัน — แก่นปรัชญาของซีรีส์</h3>
+    <p style="color:rgba(255,255,255,.6);font-size:.9rem;line-height:1.8;">ซีรีส์นี้ไม่ใช่นิยายมหัศจรรย์ที่พระเอกได้พลังแล้วชนะทุกอย่าง แต่เป็นการเดินทางภายในจิตใจของคนธรรมดาที่ต้องเผชิญกับความจริงที่โหดร้ายที่สุด — ตัวเอง</p>
+    <div class="phil-grid">
+      <div class="phil-item">
+        <div class="icon">🏛️</div>
+        <strong>ปรัชญาสโตอิก</strong>
+        <p>ควบคุมได้เฉพาะสิ่งที่อยู่ในมือ ปล่อยวางที่เหลือ</p>
+      </div>
+      <div class="phil-item">
+        <div class="icon">⚔️</div>
+        <strong>ภูมิปัญญาสงคราม</strong>
+        <p>ไม่มีแผนรบใดรอดพ้นการปะทะกับความเป็นจริง</p>
+      </div>
+      <div class="phil-item">
+        <div class="icon">💎</div>
+        <strong>ภาษาของหิน</strong>
+        <p>ความกดดันสร้างเพชร เวลาสร้างโมลดาไวท์</p>
+      </div>
+      <div class="phil-item">
+        <div class="icon">🔄</div>
+        <strong>ล้มเหลวคือข้อมูล</strong>
+        <p>ทุกความพ่ายแพ้มีข้อมูลซ่อนอยู่ — ถ้ารู้จักอ่าน</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EPISODE LIST -->
+<div class="episodes-section">
+  <div class="sec-label">รายการตอน</div>
+  <div class="sec-title">21 ตอน — เดินทางจากจุดต่ำสุด</div>
+
+  <div class="episode-grid">
+
+    <!-- EP 1 -->
+    <a href="/amethez/stories/episode-01.html" class="ep-card available">
+      <div class="ep-number">1</div>
+      <div class="ep-info">
+        <div class="ep-tag odd">ตอนคี่ · ระบบมโน</div>
+        <div class="ep-title">วันที่ระบบล่ม</div>
+        <div class="ep-desc">ภัทรมีแผนชีวิตที่สมบูรณ์แบบ — จนกระทั่งมันพังทลายในคืนเดียว</div>
+      </div>
+      <div class="ep-arrow">→</div>
+    </a>
+
+    <!-- EP 2 -->
+    <a href="/amethez/stories/episode-02.html" class="ep-card even available">
+      <div class="ep-number">2</div>
+      <div class="ep-info">
+        <div class="ep-tag even">ตอนคู่ · ความจริงดิบ</div>
+        <div class="ep-title">สิ่งที่เหลืออยู่หลังเถ้าถ่าน</div>
+        <div class="ep-desc">ไม่มีระบบมโน ไม่มีเสียงปลอบประโลม มีแค่ตัวเลขในบัญชีและกองหนี้ที่ถ่วงอยู่</div>
+      </div>
+      <div class="ep-arrow">→</div>
+    </a>
+
+    <!-- EP 3 -->
+    <a href="/amethez/stories/episode-03.html" class="ep-card available">
+      <div class="ep-number">3</div>
+      <div class="ep-info">
+        <div class="ep-tag odd">ตอนคี่ · ระบบมโน</div>
+        <div class="ep-title">แผนชีวิตฉบับใหม่</div>
+        <div class="ep-desc">ภัทรสร้างระบบใหม่ — แต่ระบบใหม่ก็ยังมีจุดบอดที่เขาไม่ยอมมอง</div>
+      </div>
+      <div class="ep-arrow">→</div>
+    </a>
+
+    <!-- EP 4 -->
+    <a href="/amethez/stories/episode-04.html" class="ep-card even available">
+      <div class="ep-number">4</div>
+      <div class="ep-info">
+        <div class="ep-tag even">ตอนคู่ · ความจริงดิบ</div>
+        <div class="ep-title">คนที่คุณไม่รู้จักในกระจก</div>
+        <div class="ep-desc">พฤติกรรมที่แท้จริงไม่ตรงกับสิ่งที่บอกตัวเอง — และเขายังไม่รู้</div>
+      </div>
+      <div class="ep-arrow">→</div>
+    </a>
+
+    <!-- EP 5 -->
+    <a href="/amethez/stories/episode-05.html" class="ep-card available">
+      <div class="ep-number">5</div>
+      <div class="ep-info">
+        <div class="ep-tag odd">ตอนคี่ · ระบบมโน</div>
+        <div class="ep-title">เสียงที่มาจากก้อนหิน</div>
+        <div class="ep-desc">คุณศิลาพูดครั้งแรก — แต่ภัทรไม่แน่ใจว่าตัวเองฟังอยู่จริงๆ หรือแค่อยากได้ยิน</div>
+      </div>
+      <div class="ep-arrow">→</div>
+    </a>
+
+    <!-- EP 6–21 COMING SOON -->
+    <div class="ep-card coming">
+      <div class="ep-number" style="color:rgba(255,255,255,.2);">6</div>
+      <div class="ep-info">
+        <div class="ep-tag coming-soon">เร็วๆ นี้</div>
+        <div class="ep-title" style="color:rgba(255,255,255,.35);">ราคาของการตัดสินใจ</div>
+        <div class="ep-desc">— กำลังเขียน —</div>
+      </div>
+    </div>
+
+    <div class="ep-card coming">
+      <div class="ep-number" style="color:rgba(255,255,255,.2);">7–21</div>
+      <div class="ep-info">
+        <div class="ep-tag coming-soon">เร็วๆ นี้</div>
+        <div class="ep-title" style="color:rgba(255,255,255,.35);">ตอนที่ 7 ถึง 21</div>
+        <div class="ep-desc">กำลังเขียน — ติดตามได้ทาง Line OA @amethez</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MOLDAVITE CTA -->
+<div class="moldavite-cta">
+  <div class="cta-box">
+    <div class="cta-text">
+      <h3>🌑 โมลดาไวท์ — หินที่คุณศิลาเป็นตัวแทน</h3>
+      <p>หินอุกกาบาตที่ใช้เวลา 15 ล้านปีก่อกำเนิด มักถูกเรียกว่า "หินแห่งการเปลี่ยนแปลง" เพราะพลังงานสูงจนบางคนรู้สึกได้ทันทีที่สัมผัส คุณศิลาในนิยายเป็นสัญลักษณ์ของเสียงภายในที่รู้จักตัวตนเราดีกว่าตัวเราเอง</p>
+    </div>
+    <a href="/amethez/stones/moldavite.html" class="cta-btn">💚 อ่านเรื่องโมลดาไวท์</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p><a href="/amethez/">Amethez</a> · <a href="/amethez/stories/">นิยาย</a> · <a href="/amethez/stones/">คลังหิน</a> · <a href="/amethez/contact.html">ติดต่อ</a></p>
+  <p style="margin-top:.5rem">© 2025 Amethez · Stones · Stories · Soul</p>
+</div>
+
+</body>
+</html>
