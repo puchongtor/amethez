@@ -231,9 +231,9 @@
   <div style="color:var(--border)">|</div>
   <div class="topbar-title">🛒 Sale Page Manager</div>
   <div class="topbar-right">
-    <a href="/amethez/sale.html" target="_blank" class="btn btn-ghost btn-sm">👁 ดูหน้าขาย</a>
+    <a href="/sale.html" target="_blank" class="btn btn-ghost btn-sm">👁 ดูหน้าขาย</a>
     <button class="btn btn-green btn-sm" onclick="saveAll()">💾 บันทึกทั้งหมด</button>
-    <a href="/amethez/admin/" class="btn btn-ghost btn-sm">← Admin</a>
+    <a href="/admin/" class="btn btn-ghost btn-sm">← Admin</a>
   </div>
 </div>
 
@@ -294,7 +294,7 @@ const SWATCHES = ['#7c3aed','#c9a84c','#ef4444','#10b981','#3b82f6','#f59e0b','#
 // ─────────────────────────────────────────────
 async function init() {
   try {
-    const data = await fetch('/amethez/data/sale-products.json').then(r => r.json());
+    const data = await fetch('/data/sale-products.json').then(r => r.json());
     state.settings = data.settings;
     state.products = data.products;
   } catch {
@@ -535,7 +535,7 @@ function renderEditor(p) {
   <div id="tab-preview" style="display:none">
     <div id="previewContent"></div>
     <div style="text-align:center;margin-top:1.25rem">
-      <a href="/amethez/sale.html" target="_blank" class="btn btn-purple">🔗 ดูหน้าขายจริง</a>
+      <a href="/sale.html" target="_blank" class="btn btn-purple">🔗 ดูหน้าขายจริง</a>
     </div>
   </div>
   `;

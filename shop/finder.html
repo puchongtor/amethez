@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ค้นหาหินมงคล — เลือกตามราศี จักระ สี ราคา | Amethez</title>
+  <meta name="description" content="ค้นหาหินคริสตัลและอัญมณีมงคลที่ใช่สำหรับคุณ กรองตามราศี วันเกิด จักระ สี รูปทรง กลุ่มความเชื่อ และงบประมาณ">
+  <link rel="canonical" href="https://amethez.com/shop/finder.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    :root { --gold:#c9a84c; --purple:#7c3aed; --dark:#0f0a1e; --text:#1a1228; --muted:#6b7280; --bg:#faf8f4; --border:#ede9fe; }
+
+    /* ── Hero ── */
+    .finder-hero {
+      background: linear-gradient(160deg, #0f0a1e, #1a0936, #0c1a3a);
+      padding: 3.5rem 1.5rem 2.5rem; text-align: center;
+    }
+    .finder-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.75rem, 4vw, 2.75rem); color: white; margin-bottom: .5rem; }
+    .finder-hero p { color: rgba(255,255,255,.65); font-size: 1rem; max-width: 540px; margin: 0 auto; }
+
+    /* ── Mode Toggle ── */
+    .mode-toggle {
+      display: flex; gap: 0; max-width: 340px; margin: 0 auto 1.5rem;
+      background: rgba(255,255,255,.1); border-radius: .75rem; padding: .25rem; border: 1px solid rgba(255,255,255,.15);
+    }
+    .mode-btn {
+      flex: 1; padding: .6rem 1rem; border: none; background: transparent;
+      border-radius: .55rem; font-family: Sarabun, sans-serif; font-size: .9rem; font-weight: 600;
+      color: rgba(255,255,255,.55); cursor: pointer; transition: all .2s;
+    }
+    .mode-btn.active { background: white; color: var(--text); box-shadow: 0 2px 8px rgba(0,0,0,.15); }
+
+    /* ── Filter Panel ── */
+    .filter-panel {
+      background: white; border-bottom: 1px solid var(--border);
+      position: sticky; top: 64px; z-index: 80;
+      box-shadow: 0 2px 16px rgba(0,0,0,.06);
+    }
+    .filter-inner { max-width: 1200px; margin: 0 auto; padding: 1.25rem 1.5rem; }
+
+    /* Birthday row */
+    .bday-row {
+      display: flex; align-items: center; gap: .75rem; flex-wrap: wrap;
+      margin-bottom: 1rem; padding: .875rem 1rem;
+      background: linear-gradient(135deg, #f5f0ff, #fdf8ee);
+      border-radius: .875rem; border: 1.5px solid #e0d4fa;
+    }
+    .bday-label { font-size: .82rem; font-weight: 700; color: var(--purple); white-space: nowrap; }
+    .bday-input {
+      padding: .45rem .875rem; border: 1.5px solid var(--border); border-radius: .5rem;
+      font-family: Sarabun, sans-serif; font-size: .9rem; color: var(--text);
+      outline: none; transition: border-color .2s;
+    }
+    .bday-input:focus { border-color: var(--purple); }
+    .bday-result {
+      display: flex; align-items: center; gap: .4rem;
+      background: var(--purple); color: white;
+      padding: .3rem .875rem; border-radius: 2rem; font-size: .82rem; font-weight: 700;
+    }
+
+    /* Filter grid */
+    .filter-grid { display: flex; gap: .625rem; flex-wrap: wrap; align-items: flex-end; }
+    .filter-group { display: flex; flex-direction: column; gap: .3rem; min-width: 130px; }
+    .filter-group label { font-size: .72rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+    .filter-select {
+      padding: .5rem .875rem; border: 1.5px solid var(--border); border-radius: .625rem;
+      font-family: Sarabun, sans-serif; font-size: .88rem; color: var(--text);
+      background: white; cursor: pointer; outline: none; transition: border-color .2s;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right .75rem center; padding-right: 2rem;
+    }
+    .filter-select:focus { border-color: var(--purple); }
+    .filter-select.has-value { border-color: var(--purple); background-color: #f5f0ff; color: var(--purple); }
+
+    /* Price range */
+    .price-group { min-width: 200px; }
+    .price-range-wrap { display: flex; flex-direction: column; gap: .25rem; }
+    .price-labels { display: flex; justify-content: space-between; font-size: .78rem; color: var(--muted); }
+    .price-slider {
+      width: 100%; accent-color: var(--purple); cursor: pointer;
+      height: 4px; border-radius: 2px;
+    }
+    .price-display { font-size: .82rem; font-weight: 700; color: var(--purple); text-align: center; }
+
+    /* Active filters */
+    .active-filters { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .875rem; align-items: center; }
+    .active-tag {
+      display: inline-flex; align-items: center; gap: .35rem;
+      background: var(--purple); color: white; font-size: .78rem; font-weight: 600;
+      padding: .25rem .7rem; border-radius: 2rem;
+    }
+    .active-tag button { background: none; border: none; color: white; cursor: pointer; font-size: .85rem; padding: 0; line-height: 1; opacity: .75; }
+    .active-tag button:hover { opacity: 1; }
+    .clear-all { font-size: .8rem; color: var(--muted); text-decoration: underline; cursor: pointer; background: none; border: none; font-family: Sarabun, sans-serif; }
+
+    /* ── Results ── */
+    .results-wrap { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .results-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; flex-wrap: wrap; gap: .75rem; }
+    .results-count { font-size: .88rem; color: var(--muted); }
+    .results-count strong { color: var(--text); }
+    .sort-select {
+      padding: .4rem .875rem; border: 1.5px solid var(--border); border-radius: .5rem;
+      font-family: Sarabun, sans-serif; font-size: .85rem; color: var(--text);
+      background: white; cursor: pointer; outline: none;
+    }
+
+    /* Product grid */
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.125rem; }
+
+    /* Product card */
+    .product-card {
+      background: white; border: 1.5px solid var(--border); border-radius: 1.125rem;
+      overflow: hidden; transition: all .2s; display: flex; flex-direction: column;
+      text-decoration: none; color: inherit;
+    }
+    .product-card:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(124,58,237,.12); border-color: #c4b5fd; }
+    .product-thumb {
+      height: 160px; display: flex; align-items: center; justify-content: center;
+      font-size: 4.5rem; position: relative;
+    }
+    .product-body { padding: 1rem 1.125rem 1.25rem; flex: 1; display: flex; flex-direction: column; }
+    .product-badges { display: flex; gap: .375rem; flex-wrap: wrap; margin-bottom: .5rem; }
+    .badge {
+      font-size: .65rem; font-weight: 700; padding: .18rem .55rem; border-radius: 2rem;
+      text-transform: uppercase; letter-spacing: .04em;
+    }
+    .badge-chakra { background: #ede9fe; color: #6d28d9; }
+    .badge-belief { background: #fef3c7; color: #92400e; }
+    .badge-shape { background: #d1fae5; color: #065f46; }
+    .product-name { font-weight: 700; font-size: .95rem; color: var(--text); line-height: 1.4; margin-bottom: .4rem; }
+    .product-tags { display: flex; flex-wrap: wrap; gap: .3rem; margin-bottom: .75rem; }
+    .product-tag { font-size: .7rem; color: var(--muted); background: #f5f5f5; padding: .12rem .45rem; border-radius: 2rem; }
+    .product-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+    .product-price { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: var(--purple); }
+    .product-price span { font-size: .75rem; font-weight: 400; font-family: Sarabun, sans-serif; color: var(--muted); }
+    .btn-buy {
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: white; padding: .45rem 1rem; border-radius: .5rem;
+      font-family: Sarabun, sans-serif; font-size: .82rem; font-weight: 700;
+      text-decoration: none; transition: all .15s; display: inline-flex; align-items: center; gap: .3rem;
+    }
+    .btn-buy:hover { opacity: .88; transform: translateY(-1px); }
+
+    /* Empty state */
+    .empty-state { text-align: center; padding: 4rem 2rem; }
+    .empty-state .empty-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+    .empty-state h3 { font-family: 'Playfair Display', serif; margin-bottom: .5rem; }
+    .empty-state p { color: var(--muted); font-size: .9rem; }
+
+    /* Article mode */
+    #articleMode { display: none; }
+    .article-search-wrap { padding: 1.25rem 1.5rem; background: white; border-bottom: 1px solid var(--border); }
+    .article-search-inner { max-width: 700px; margin: 0 auto; position: relative; }
+    .article-search-inner input {
+      width: 100%; padding: .9rem 1.25rem .9rem 3rem;
+      border: 2px solid var(--border); border-radius: 3rem;
+      font-family: Sarabun, sans-serif; font-size: 1rem;
+      outline: none; transition: all .2s;
+    }
+    .article-search-inner input:focus { border-color: var(--purple); box-shadow: 0 4px 20px rgba(124,58,237,.12); }
+    .article-search-inner .si { position: absolute; left: 1.1rem; top: 50%; transform: translateY(-50%); font-size: 1.1rem; }
+    .article-grid { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
+    .article-chip {
+      background: white; border: 1.5px solid var(--border); border-radius: 1rem;
+      padding: 1.25rem; text-decoration: none; display: flex; gap: .875rem; align-items: flex-start; transition: all .15s;
+    }
+    .article-chip:hover { border-color: var(--purple); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(124,58,237,.1); }
+    .ac-emoji { font-size: 2rem; flex-shrink: 0; }
+    .ac-name { font-weight: 700; font-size: .95rem; color: var(--text); margin-bottom: .2rem; }
+    .ac-sub { font-size: .8rem; color: var(--muted); line-height: 1.5; }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .filter-grid { gap: .5rem; }
+      .filter-group { min-width: calc(50% - .25rem); }
+      .price-group { min-width: 100%; }
+      .product-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+      .product-thumb { height: 120px; font-size: 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav-inner">
+    <a href="/" class="logo">
+      <svg viewBox="0 0 36 36" fill="none">
+        <polygon points="18,2 30,12 26,30 10,30 6,12" fill="#7c3aed" opacity="0.9"/>
+        <polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity="0.95"/>
+        <polygon points="18,8 30,12 18,28" fill="#a78bfa"/>
+        <polygon points="18,8 6,12 18,28" fill="#7c3aed"/>
+      </svg>
+      <span>AMETHEZ <small class="logo-tagline">Stones · Stories · Soul</small></span>
+    </a>
+    <nav><ul class="nav-links">
+      <li><a href="/stones/">💎 คลังหิน</a></li>
+      <li><a href="/guides/">🌿 พลังบำบัด</a></li>
+      <li><a href="/categories/chakra.html">จักระ</a></li>
+      <li><a href="/categories/zodiac.html">ราศี</a></li>
+      <li><a href="/stories/">📖 นิยาย</a></li>
+      <li><a href="/sale.html" style="color:var(--gold)">🛒 ร้านค้า</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<!-- Hero + Mode Toggle -->
+<section class="finder-hero">
+  <div style="position:relative">
+    <p style="font-size:.72rem;font-weight:700;color:rgba(201,168,76,.8);text-transform:uppercase;letter-spacing:.12em;margin-bottom:.75rem">Smart Crystal Finder</p>
+    <h1>หาหินที่ใช่ สำหรับคุณโดยเฉพาะ</h1>
+    <p>กรองตามราศี จักระ สี รูปทรง และงบประมาณ — ระบบหาสินค้าที่ตรงที่สุดจากคลังของเรา</p>
+    <div style="height:1.5rem"></div>
+    <div class="mode-toggle">
+      <button class="mode-btn" id="modeArticle" onclick="setMode('article')">📖 บทความ</button>
+      <button class="mode-btn active" id="modeProduct" onclick="setMode('product')">💎 สินค้า</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PRODUCT MODE ══ -->
+<div id="productMode">
+
+  <!-- Filter Panel -->
+  <div class="filter-panel">
+    <div class="filter-inner">
+
+      <!-- Birthday row -->
+      <div class="bday-row">
+        <span class="bday-label">🗓️ ใส่วันเกิด</span>
+        <input type="date" id="bdayInput" class="bday-input" onchange="calcZodiac(this.value)">
+        <div id="bdayResult" style="display:none" class="bday-result">
+          <span id="bdayZodiac"></span>
+        </div>
+        <span style="font-size:.8rem;color:#9c84c5">→ ระบบจะเลือกราศีให้อัตโนมัติ</span>
+      </div>
+
+      <!-- Filter dropdowns -->
+      <div class="filter-grid">
+        <div class="filter-group">
+          <label>🌈 สี</label>
+          <select class="filter-select" id="fColor" onchange="applyFilters()">
+            <option value="">ทุกสี</option>
+            <option value="ม่วง">💜 ม่วง</option>
+            <option value="ชมพู">🩷 ชมพู</option>
+            <option value="เขียว">💚 เขียว</option>
+            <option value="เหลือง">💛 เหลือง</option>
+            <option value="ดำ">🖤 ดำ</option>
+            <option value="ใส">🔮 ใส/ขาว</option>
+            <option value="น้ำเงิน">💙 น้ำเงิน</option>
+            <option value="น้ำตาล">🤎 น้ำตาล</option>
+            <option value="หลากสี">🌈 หลากสี</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label>☯️ จักระ</label>
+          <select class="filter-select" id="fChakra" onchange="applyFilters()">
+            <option value="">ทุกจักระ</option>
+            <option value="ราก">🔴 ราก (Root)</option>
+            <option value="Sacral">🟠 Sacral</option>
+            <option value="Solar Plexus">🟡 Solar Plexus</option>
+            <option value="หัวใจ">💚 หัวใจ (Heart)</option>
+            <option value="คอหอย">🔵 คอหอย (Throat)</option>
+            <option value="Third Eye">🟣 Third Eye</option>
+            <option value="มงกุฎ">🔮 มงกุฎ (Crown)</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label>♈ ราศี</label>
+          <select class="filter-select" id="fZodiac" onchange="applyFilters()">
+            <option value="">ทุกราศี</option>
+            <option value="เมษ">♈ เมษ</option>
+            <option value="พฤษภ">♉ พฤษภ</option>
+            <option value="มิถุน">♊ มิถุน</option>
+            <option value="กรกฎ">♋ กรกฎ</option>
+            <option value="สิงห์">♌ สิงห์</option>
+            <option value="กันย์">♍ กันย์</option>
+            <option value="ตุลย์">♎ ตุลย์</option>
+            <option value="พิจิก">♏ พิจิก</option>
+            <option value="ธนู">♐ ธนู</option>
+            <option value="แคปริคอร์น">♑ มกร</option>
+            <option value="กุมภ์">♒ กุมภ์</option>
+            <option value="มีน">♓ มีน</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label>💎 รูปทรง</label>
+          <select class="filter-select" id="fShape" onchange="applyFilters()">
+            <option value="">ทุกรูปทรง</option>
+            <option value="หินดิบ">🪨 หินดิบ (Raw)</option>
+            <option value="ทรงกลม">⚪ ทรงกลม (Sphere)</option>
+            <option value="ทรงพีระมิด">🔺 พีระมิด</option>
+            <option value="โพรง">🫙 โพรง (Geode)</option>
+            <option value="กำไล">📿 กำไล</option>
+            <option value="สร้อย">📿 สร้อย</option>
+            <option value="แผ่น">🪬 แผ่น</option>
+            <option value="อุปกรณ์">🎵 อุปกรณ์</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label>🙏 ความเชื่อ</label>
+          <select class="filter-select" id="fBelief" onchange="applyFilters()">
+            <option value="">ทุกกลุ่ม</option>
+            <option value="เสริมโชค">🍀 เสริมโชคลาภ</option>
+            <option value="ความรัก">💕 ความรัก</option>
+            <option value="ป้องกัน">🛡️ ป้องกัน</option>
+            <option value="การงาน">💼 การงาน/ธุรกิจ</option>
+            <option value="สุขภาพ">🌿 สุขภาพ</option>
+            <option value="สมาธิ">🧘 สมาธิ/จิตวิญญาณ</option>
+          </select>
+        </div>
+
+        <div class="filter-group price-group">
+          <label>💰 งบประมาณ (฿<span id="priceVal">5,000</span>)</label>
+          <div class="price-range-wrap">
+            <input type="range" class="price-slider" id="fPrice" min="40" max="5000" value="5000" step="50" oninput="updatePrice(this.value)">
+            <div class="price-labels"><span>฿40</span><span>฿5,000+</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active filters -->
+      <div class="active-filters" id="activeFilters"></div>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="results-wrap">
+    <div class="results-header">
+      <div class="results-count">แสดง <strong id="resultCount">0</strong> รายการ</div>
+      <select class="sort-select" id="sortSelect" onchange="sortProducts()">
+        <option value="default">เรียงตาม: แนะนำ</option>
+        <option value="price-asc">ราคา: ต่ำ → สูง</option>
+        <option value="price-desc">ราคา: สูง → ต่ำ</option>
+        <option value="name">ชื่อ ก → ฮ</option>
+      </select>
+    </div>
+    <div class="product-grid" id="productGrid"></div>
+  </div>
+
+</div>
+
+<!-- ══ ARTICLE MODE ══ -->
+<div id="articleMode">
+  <div class="article-search-wrap">
+    <div class="article-search-inner">
+      <span class="si">🔍</span>
+      <input type="search" id="articleSearch" placeholder="ค้นหาบทความหิน เช่น อเมทิสต์, ความรัก, จักระหัวใจ..." oninput="searchArticles(this.value)">
+    </div>
+  </div>
+  <div class="article-grid" id="articleGrid"></div>
+</div>
+
+<!-- Footer -->
+<footer class="site-footer" style="margin-top:3rem">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo" style="margin-bottom:.75rem">AMETHEZ</div>
+        <p>ศูนย์กลางข้อมูลคริสตัลและพลอยที่ใหญ่ที่สุดในไทย</p>
+      </div>
+      <div class="footer-col">
+        <h4>ค้นหาหิน</h4>
+        <ul>
+          <li><a href="/categories/chakra.html">ตามจักระ</a></li>
+          <li><a href="/categories/zodiac.html">ตามราศี</a></li>
+          <li><a href="/categories/purpose.html">ตามวัตถุประสงค์</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>ช่องทางซื้อ</h4>
+        <ul>
+          <li><a href="/sale.html">ร้านค้า Amethez</a></li>
+          <li><a href="https://line.me/ti/p/~@masterpuch" target="_blank">Line @masterpuch</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Amethez.com — ข้อมูลเพื่อการศึกษา ไม่ใช่คำแนะนำทางการแพทย์</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── Data ────────────────────────────────────────────
+let allProducts = [];
+let filtered = [];
+
+// Static article list (ขยายได้จาก stones.json)
+const articles = [
+  { name: 'อเมทิสต์', sub: 'หินสีม่วงแห่งปัญญาและจิตวิญญาณ', emoji: '💜', url: '/stones/amethyst.html', tags: ['ม่วง', 'สมาธิ', 'จักระมงกุฎ'] },
+  { name: 'โมลดาไวท์', sub: 'หินจากนอกโลก พลังเปลี่ยนแปลง', emoji: '🌿', url: '/stones/moldavite.html', tags: ['เขียว', 'เปลี่ยนแปลง', 'จักรวาล'] },
+  { name: 'สะเก็ดดาวไทย', sub: 'อุกกาบาตแห่งพลังโลก', emoji: '🌑', url: '/stones/tektite.html', tags: ['ดำ', 'ป้องกัน', 'พลังงาน'] },
+  { name: 'ซิทริน', sub: 'หินแห่งโชคลาภและการเงิน', emoji: '🌟', url: '/stones/citrine.html', tags: ['เหลือง', 'การเงิน', 'โชค'] },
+  { name: 'คริสตัลใส', sub: 'Master Healer ขยายพลังทุกชนิด', emoji: '🔮', url: '/stones/clear-quartz.html', tags: ['ใส', 'ขยายพลัง', 'บำบัด'] },
+  { name: 'โรสควอตซ์', sub: 'หินแห่งความรักและการรักตัวเอง', emoji: '🩷', url: '/stones/rose-quartz.html', tags: ['ชมพู', 'ความรัก', 'หัวใจ'] },
+  { name: 'ทัวร์มาลีนดำ', sub: 'โล่ป้องกันพลังงานลบที่ทรงพลังที่สุด', emoji: '🖤', url: '/stones/black-tourmaline.html', tags: ['ดำ', 'ป้องกัน', 'EMF'] },
+  { name: 'รุทรากษะ', sub: 'เมล็ดศักดิ์สิทธิ์แห่งพระศิวะ', emoji: '📿', url: '/stones/rudraksha.html', tags: ['ศักดิ์สิทธิ์', 'สุขภาพ', 'สมาธิ'] },
+  { name: 'หินตามจักระ 7 ชั้น', sub: 'คู่มือเลือกหินตามจักระทั้ง 7', emoji: '☯️', url: '/categories/chakra.html', tags: ['จักระ', 'พลังงาน', 'สมดุล'] },
+  { name: 'หินตามราศี 12 ดวง', sub: 'หินประจำราศีตะวันตกทุกดวง', emoji: '♈', url: '/categories/zodiac.html', tags: ['ราศี', 'ดวง', 'โหราศาสตร์'] },
+  { name: 'หินตามปีนักษัตร', sub: '12 นักษัตรจีนกับคริสตัลมงคล', emoji: '🐉', url: '/categories/chinese-zodiac.html', tags: ['นักษัตร', 'จีน', 'ปีเกิด'] },
+  { name: '7 วิธีชาร์จและล้างหิน', sub: 'วิธีที่ถูกต้องตามประเภทหิน', emoji: '🌊', url: '/guides/cleanse.html', tags: ['ชาร์จ', 'ล้างหิน', 'แสงจันทร์'] },
+];
+
+// Zodiac mapping (approximate date ranges → Thai zodiac name)
+function calcZodiac(dateStr) {
+  if (!dateStr) return;
+  const d = new Date(dateStr);
+  const m = d.getMonth() + 1;
+  const day = d.getDate();
+  let sign = '';
+  if ((m === 3 && day >= 21) || (m === 4 && day <= 19)) sign = 'เมษ';
+  else if ((m === 4 && day >= 20) || (m === 5 && day <= 20)) sign = 'พฤษภ';
+  else if ((m === 5 && day >= 21) || (m === 6 && day <= 20)) sign = 'มิถุน';
+  else if ((m === 6 && day >= 21) || (m === 7 && day <= 22)) sign = 'กรกฎ';
+  else if ((m === 7 && day >= 23) || (m === 8 && day <= 22)) sign = 'สิงห์';
+  else if ((m === 8 && day >= 23) || (m === 9 && day <= 22)) sign = 'กันย์';
+  else if ((m === 9 && day >= 23) || (m === 10 && day <= 22)) sign = 'ตุลย์';
+  else if ((m === 10 && day >= 23) || (m === 11 && day <= 21)) sign = 'พิจิก';
+  else if ((m === 11 && day >= 22) || (m === 12 && day <= 21)) sign = 'ธนู';
+  else if ((m === 12 && day >= 22) || (m === 1 && day <= 19)) sign = 'แคปริคอร์น';
+  else if ((m === 1 && day >= 20) || (m === 2 && day <= 18)) sign = 'กุมภ์';
+  else sign = 'มีน';
+
+  document.getElementById('bdayResult').style.display = 'flex';
+  document.getElementById('bdayZodiac').textContent = '♈ ราศี' + sign;
+  document.getElementById('fZodiac').value = sign;
+  document.getElementById('fZodiac').classList.add('has-value');
+  applyFilters();
+}
+
+// ── Filters ─────────────────────────────────────────
+let priceMax = 5000;
+
+function updatePrice(val) {
+  priceMax = parseInt(val);
+  document.getElementById('priceVal').textContent = priceMax >= 5000 ? '5,000+' : val;
+  applyFilters();
+}
+
+function applyFilters() {
+  const color   = document.getElementById('fColor').value;
+  const chakra  = document.getElementById('fChakra').value;
+  const zodiac  = document.getElementById('fZodiac').value;
+  const shape   = document.getElementById('fShape').value;
+  const belief  = document.getElementById('fBelief').value;
+
+  filtered = allProducts.filter(p => {
+    if (p.status !== 'available') return false;
+    if (color   && p.color !== color) return false;
+    if (chakra  && !p.chakra.includes(chakra)) return false;
+    if (zodiac  && !p.zodiac.includes(zodiac)) return false;
+    if (shape   && !p.shape.includes(shape)) return false;
+    if (belief  && !p.belief_group.includes(belief)) return false;
+    if (p.price > priceMax && priceMax < 5000) return false;
+    return true;
+  });
+
+  sortProducts();
+  renderActiveFilters({ color, chakra, zodiac, shape, belief });
+}
+
+function sortProducts() {
+  const sort = document.getElementById('sortSelect').value;
+  const arr = [...filtered];
+  if (sort === 'price-asc') arr.sort((a, b) => a.price - b.price);
+  else if (sort === 'price-desc') arr.sort((a, b) => b.price - a.price);
+  else if (sort === 'name') arr.sort((a, b) => a.name.localeCompare(b.name, 'th'));
+  renderProducts(arr);
+}
+
+function renderProducts(list) {
+  const grid = document.getElementById('productGrid');
+  document.getElementById('resultCount').textContent = list.length;
+
+  if (!list.length) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
+      <div class="empty-icon">🔍</div>
+      <h3>ไม่พบสินค้าที่ตรงเงื่อนไข</h3>
+      <p>ลองปรับฟิลเตอร์ใหม่ หรือ<button onclick="clearAll()" style="color:var(--purple);background:none;border:none;cursor:pointer;font-size:.9rem;font-family:Sarabun,sans-serif">ล้างทั้งหมด</button></p>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map(p => {
+    const chakraBadges = p.chakra.slice(0, 2).map(c => `<span class="badge badge-chakra">${c}</span>`).join('');
+    const beliefBadges = p.belief_group.slice(0, 1).map(b => `<span class="badge badge-belief">${b}</span>`).join('');
+    const shapeBadges  = p.shape.slice(0, 1).map(s => `<span class="badge badge-shape">${s}</span>`).join('');
+    const tagList = p.tags.slice(0, 4).map(t => `<span class="product-tag">${t}</span>`).join('');
+    const gradients = {
+      'ม่วง': 'linear-gradient(135deg,#4c1d95,#7c3aed,#a78bfa)',
+      'ชมพู': 'linear-gradient(135deg,#831843,#be185d,#f9a8d4)',
+      'เขียว': 'linear-gradient(135deg,#064e3b,#059669,#6ee7b7)',
+      'เหลือง': 'linear-gradient(135deg,#78350f,#d97706,#fde68a)',
+      'ดำ': 'linear-gradient(135deg,#0a0a0a,#1f2937,#374151)',
+      'ใส': 'linear-gradient(135deg,#e0e7ff,#c7d2fe,#ede9fe)',
+      'น้ำเงิน': 'linear-gradient(135deg,#1e3a5f,#1d4ed8,#93c5fd)',
+      'น้ำตาล': 'linear-gradient(135deg,#3d2314,#78350f,#d97706)',
+      'หลากสี': 'linear-gradient(135deg,#7c3aed,#db2777,#d97706,#059669)',
+      '': 'linear-gradient(135deg,#1a1228,#2d1b5e)',
+    };
+    const bg = gradients[p.color] || gradients[''];
+    return `
+    <a href="${p.url}" target="_blank" rel="noopener" class="product-card">
+      <div class="product-thumb" style="background:${bg}">${p.emoji}</div>
+      <div class="product-body">
+        <div class="product-badges">${chakraBadges}${beliefBadges}${shapeBadges}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-tags">${tagList}</div>
+        <div class="product-bottom">
+          <div class="product-price">฿${p.price.toLocaleString()} <span>บาท</span></div>
+          <a href="${p.url}" target="_blank" rel="noopener" class="btn-buy">🛒 ดูสินค้า</a>
+        </div>
+      </div>
+    </a>`;
+  }).join('');
+}
+
+function renderActiveFilters({ color, chakra, zodiac, shape, belief }) {
+  const wrap = document.getElementById('activeFilters');
+  const active = [];
+  if (color)  active.push({ key: 'fColor',  label: '🎨 ' + color });
+  if (chakra) active.push({ key: 'fChakra', label: '☯️ ' + chakra });
+  if (zodiac) active.push({ key: 'fZodiac', label: '♈ ' + zodiac });
+  if (shape)  active.push({ key: 'fShape',  label: '💎 ' + shape });
+  if (belief) active.push({ key: 'fBelief', label: '🙏 ' + belief });
+  if (priceMax < 5000) active.push({ key: 'fPrice', label: '💰 ≤฿' + priceMax });
+
+  if (!active.length) { wrap.innerHTML = ''; return; }
+  wrap.innerHTML = active.map(a =>
+    `<span class="active-tag">${a.label} <button onclick="clearFilter('${a.key}')">✕</button></span>`
+  ).join('') + `<button class="clear-all" onclick="clearAll()">ล้างทั้งหมด</button>`;
+}
+
+function clearFilter(id) {
+  if (id === 'fPrice') {
+    document.getElementById('fPrice').value = 5000;
+    updatePrice(5000);
+  } else {
+    document.getElementById(id).value = '';
+    document.getElementById(id).classList.remove('has-value');
+  }
+  applyFilters();
+}
+
+function clearAll() {
+  ['fColor','fChakra','fZodiac','fShape','fBelief'].forEach(id => {
+    document.getElementById(id).value = '';
+    document.getElementById(id).classList.remove('has-value');
+  });
+  document.getElementById('fPrice').value = 5000;
+  document.getElementById('bdayInput').value = '';
+  document.getElementById('bdayResult').style.display = 'none';
+  priceMax = 5000;
+  document.getElementById('priceVal').textContent = '5,000+';
+  applyFilters();
+}
+
+// ── Mode toggle ──────────────────────────────────────
+function setMode(mode) {
+  document.getElementById('modeArticle').classList.toggle('active', mode === 'article');
+  document.getElementById('modeProduct').classList.toggle('active', mode === 'product');
+  document.getElementById('productMode').style.display = mode === 'product' ? '' : 'none';
+  document.getElementById('articleMode').style.display  = mode === 'article' ? '' : 'none';
+  if (mode === 'article') renderArticleGrid('');
+}
+
+// ── Article search ───────────────────────────────────
+function searchArticles(query) {
+  const q = query.trim().toLowerCase();
+  const list = q ? articles.filter(a =>
+    a.name.includes(q) || a.sub.includes(q) || a.tags.some(t => t.includes(q))
+  ) : articles;
+  renderArticleGrid('', list);
+}
+
+function renderArticleGrid(query, list) {
+  const items = list !== undefined ? list : articles;
+  document.getElementById('articleGrid').innerHTML = items.map(a =>
+    `<a href="${a.url}" class="article-chip">
+      <span class="ac-emoji">${a.emoji}</span>
+      <div>
+        <div class="ac-name">${a.name}</div>
+        <div class="ac-sub">${a.sub}</div>
+        <div style="display:flex;gap:.3rem;flex-wrap:wrap;margin-top:.4rem">${a.tags.map(t => `<span style="font-size:.7rem;background:#f5f0ff;color:var(--purple);padding:.12rem .45rem;border-radius:2rem">${t}</span>`).join('')}</div>
+      </div>
+    </a>`
+  ).join('');
+}
+
+// ── Init ─────────────────────────────────────────────
+async function init() {
+  try {
+    const res = await fetch('/data/products.json');
+    const data = await res.json();
+    allProducts = data.products;
+  } catch (e) {
+    // fallback empty
+    allProducts = [];
+  }
+  applyFilters();
+}
+
+init();
+
+// Parse URL params — รับค่าจาก index.html หรือ links ภายนอก
+(function parseURL() {
+  const p = new URLSearchParams(location.search);
+  if (p.get('mode') === 'article') setMode('article');
+  const map = { zodiac: 'fZodiac', chakra: 'fChakra', belief: 'fBelief', color: 'fColor', shape: 'fShape' };
+  Object.entries(map).forEach(([param, id]) => {
+    const val = p.get(param);
+    if (val) {
+      const el = document.getElementById(id);
+      if (el) { el.value = val; el.classList.add('has-value'); }
+    }
+  });
+  // Re-apply filters after setting values from URL
+  if ([...p.keys()].some(k => map[k])) applyFilters();
+})();
+</script>
+
+<link rel="stylesheet" href="/css/sila.css">
+<script src="/js/sila.js"></script>
+</body>
+</html>

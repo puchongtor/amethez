@@ -7,7 +7,7 @@
   <meta name="description" content="สินค้าหินคริสตัลคัดพิเศษจาก Amethez">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/amethez/css/main.css">
+  <link rel="stylesheet" href="/css/main.css">
   <style>
     /* ══════════════════════════════════════
        HERO SHOWCASE — สินค้า featured
@@ -268,17 +268,17 @@
 <!-- Header -->
 <header class="site-header">
   <div class="container nav-inner">
-    <a href="/amethez/" class="logo">
+    <a href="/" class="logo">
       <svg viewBox="0 0 36 36" fill="none"><polygon points="18,2 30,12 26,30 10,30 6,12" fill="#7c3aed" opacity="0.9"/><polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity="0.95"/><polygon points="18,8 30,12 18,28" fill="#a78bfa"/><polygon points="18,8 6,12 18,28" fill="#7c3aed"/></svg>
       <span>AMETHEZ <small class="logo-tagline">Stones · Stories · Soul</small></span>
     </a>
     <nav><ul class="nav-links">
-      <li><a href="/amethez/stones/">คลังหิน</a></li>
-      <li><a href="/amethez/categories/chakra.html">จักระ</a></li>
-      <li><a href="/amethez/categories/zodiac.html">ราศี</a></li>
-      <li><a href="/amethez/wuchong/">Master Wuchong</a></li>
-      <li><a href="/amethez/metha/">อาจารย์เมธา</a></li>
-      <li><a href="/amethez/sale.html" style="color:var(--gold);font-weight:700">🛒 ร้านค้า</a></li>
+      <li><a href="/stones/">คลังหิน</a></li>
+      <li><a href="/categories/chakra.html">จักระ</a></li>
+      <li><a href="/categories/zodiac.html">ราศี</a></li>
+      <li><a href="/wuchong/">Master Wuchong</a></li>
+      <li><a href="/metha/">อาจารย์เมธา</a></li>
+      <li><a href="/sale.html" style="color:var(--gold);font-weight:700">🛒 ร้านค้า</a></li>
     </ul></nav>
   </div>
 </header>
@@ -408,16 +408,16 @@
       <div class="footer-col">
         <h4>หมวดหมู่</h4>
         <ul>
-          <li><a href="/amethez/categories/chakra.html">หินตามจักระ</a></li>
-          <li><a href="/amethez/categories/zodiac.html">หินตามราศี</a></li>
-          <li><a href="/amethez/stones/">คลังหินทั้งหมด</a></li>
+          <li><a href="/categories/chakra.html">หินตามจักระ</a></li>
+          <li><a href="/categories/zodiac.html">หินตามราศี</a></li>
+          <li><a href="/stones/">คลังหินทั้งหมด</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>ลิงก์</h4>
         <ul>
-          <li><a href="/amethez/about.html">เกี่ยวกับเรา</a></li>
-          <li><a href="/amethez/contact.html">ติดต่อเรา</a></li>
+          <li><a href="/about.html">เกี่ยวกับเรา</a></li>
+          <li><a href="/contact.html">ติดต่อเรา</a></li>
         </ul>
       </div>
     </div>
@@ -427,13 +427,13 @@
   </div>
 </footer>
 
-<script src="/amethez/js/main.js"></script>
+<script src="/js/main.js"></script>
 <script>
 // ───────────────────────────────────
 //  LOAD & RENDER
 // ───────────────────────────────────
 async function loadSalePage() {
-  const data = await fetch('/amethez/data/sale-products.json').then(r => r.json());
+  const data = await fetch('/data/sale-products.json').then(r => r.json());
   const { settings, products } = data;
   const active = products.filter(p => p.status === 'active').sort((a,b) => a.sort_order - b.sort_order);
 
@@ -562,7 +562,7 @@ function renderHero(p, lineHref) {
           <span class="line-logo">💚</span>
           สั่งซื้อผ่าน Line — ส่งรูปดูเพิ่มได้เลย
         </a>
-        <a href="/amethez/contact.html" class="btn-consult">
+        <a href="/contact.html" class="btn-consult">
           💬 ถามก่อนซื้อ — ทีมงานพร้อมตอบทุกคำถาม
         </a>
       </div>
@@ -614,7 +614,7 @@ function renderSmallCard(p, settings) {
 
 loadSalePage();
 </script>
-<link rel="stylesheet" href="/amethez/css/sila.css">
-<script src="/amethez/js/sila.js"></script>
+<link rel="stylesheet" href="/css/sila.css">
+<script src="/js/sila.js"></script>
 </body>
 </html>

@@ -71,9 +71,9 @@
 <body>
 
 <nav class="nav">
-  <a href="/amethez/" class="back">← หน้าหลัก</a>
-  <a href="/amethez/" class="brand">AMETHEZ</a>
-  <a href="/amethez/stones/" class="back">คลังหิน →</a>
+  <a href="/" class="back">← หน้าหลัก</a>
+  <a href="/" class="brand">AMETHEZ</a>
+  <a href="/stones/" class="back">คลังหิน →</a>
 </nav>
 
 <section class="hero">
@@ -111,7 +111,7 @@
 </section>
 
 <footer class="footer">
-  <p>© 2026 <a href="/amethez/">Amethez.com</a> · บทตั้งจิตเพื่อการพัฒนาจิตใจ · <a href="/amethez/stones/">คลังหิน</a> · <a href="/amethez/digital/">Digital</a></p>
+  <p>© 2026 <a href="/">Amethez.com</a> · บทตั้งจิตเพื่อการพัฒนาจิตใจ · <a href="/stones/">คลังหิน</a> · <a href="/digital/">Digital</a></p>
 </footer>
 
 <script>
@@ -153,7 +153,7 @@ function render() {
   grid.innerHTML = items.map(a => {
     const pur = purposeMap[a.purpose] || { emoji:'✨', label:'', color:'#7c3aed' };
     return `
-      <a class="card" href="/amethez/talk/read.html?id=${a.id}">
+      <a class="card" href="/talk/read.html?id=${a.id}">
         <div class="card-bg" style="background:radial-gradient(ellipse 90% 70% at 50% 0%, ${a.color_to} 0%, ${a.color_from} 75%)"></div>
         <div class="card-inner">
           <div class="card-orb">${a.stone_emoji}</div>
@@ -168,7 +168,7 @@ function render() {
 
 load();
 </script>
-<link rel="stylesheet" href="/amethez/css/sila.css">
-<script src="/amethez/js/sila.js"></script>
+<link rel="stylesheet" href="/css/sila.css">
+<script src="/js/sila.js"></script>
 </body>
 </html>

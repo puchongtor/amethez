@@ -12,7 +12,7 @@
   <link rel="canonical" href="https://amethez.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/amethez/css/main.css">
+  <link rel="stylesheet" href="/css/main.css">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"WebSite","name":"Amethez","url":"https://amethez.com","potentialAction":{"@type":"SearchAction","target":"https://amethez.com/stones/encyclopedia.html?q={search_term_string}","query-input":"required name=search_term_string"}}
   </script>
@@ -194,7 +194,7 @@
 <!-- Nav -->
 <nav class="nav">
   <div class="nav-inner">
-    <a href="/amethez/" class="logo">
+    <a href="/" class="logo">
       <svg viewBox="0 0 36 36" fill="none">
         <polygon points="18,2 30,12 26,30 10,30 6,12" fill="#7c3aed" opacity=".9"/>
         <polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity=".95"/>
@@ -204,12 +204,13 @@
       <div><div class="logo-text">AMETHEZ</div><small class="logo-sub">Stones · Stories · Soul</small></div>
     </a>
     <ul class="nav-links" id="navLinks">
-      <li><a href="/amethez/stones/">💎 คลังหิน</a></li>
-      <li><a href="/amethez/guides/">🌿 พลังบำบัด</a></li>
-      <li><a href="/amethez/talk/">🔮 คุยกับหิน</a></li>
-      <li><a href="/amethez/videos/">🎬 วิดีโอ</a></li>`n      <li><a href="/amethez/stories/" class="nav-stories">📖 นิยาย</a></li>
-      <li><a href="/amethez/digital/" class="nav-digital">📥 Digital</a></li>
-      <li><a href="/amethez/sale.html" class="nav-shop">🛒 ร้านค้า</a></li>
+      <li><a href="/stones/">💎 คลังหิน</a></li>
+      <li><a href="/guides/">🌿 พลังบำบัด</a></li>
+      <li><a href="/talk/">🔮 คุยกับหิน</a></li>
+      <li><a href="/videos/">🎬 วิดีโอ</a></li>
+      <li><a href="/stories/" class="nav-stories">📖 นิยาย</a></li>
+      <li><a href="/digital/" class="nav-digital">📥 Digital</a></li>
+      <li><a href="/sale.html" class="nav-shop">🛒 ร้านค้า</a></li>
     </ul>
     <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
   </div>
@@ -222,27 +223,127 @@
     <h1>ความรู้<em>คริสตัล</em><br>ครบ ลึก ถูกต้อง<br>ที่สุดในไทย</h1>
     <p class="hero-sub">หิน 300+ ชนิด ทั้งวิทยาศาสตร์ พลังงาน และสายมู<br>จาก 3 ผู้เชี่ยวชาญในบรรยากาศเดียวกัน</p>
     <div class="hero-actions">
-      <a href="/amethez/stones/encyclopedia.html" class="btn-primary">💎 เปิดสารานุกรมหิน</a>
-      <a href="/amethez/digital/" class="btn-ghost">📥 คู่มือฟรี</a>
+      <a href="/stones/encyclopedia.html" class="btn-primary">💎 เปิดสารานุกรมหิน</a>
+      <a href="/digital/" class="btn-ghost">📥 คู่มือฟรี</a>
     </div>
   </div>
 </section>
 
-<!-- Search -->
+<!-- Search + Smart Finder -->
 <div style="background:var(--bg);padding:2.5rem 1.5rem 2rem">
-  <div class="search-bar">
-    <span class="search-icon">🔍</span>
-    <input class="search-input" id="searchInput" type="search" placeholder="ค้นหาหิน เช่น อเมทิสต์, ความรัก, จักระหัวใจ...">
-    <div class="search-hints">
-      <span class="hint" onclick="doSearch('ความรัก')">ความรัก</span>
-      <span class="hint" onclick="doSearch('การเงิน')">การเงิน</span>
-      <span class="hint" onclick="doSearch('สมาธิ')">สมาธิ</span>
-      <span class="hint" onclick="doSearch('ป้องกัน')">ป้องกัน</span>
-      <span class="hint" onclick="doSearch('จักระ')">จักระ</span>
-      <span class="hint" onclick="doSearch('ราศี')">ราศี</span>
+
+  <!-- Mode toggle -->
+  <div style="display:flex;justify-content:center;margin-bottom:1rem">
+    <div style="display:flex;background:#f0ebff;border-radius:.75rem;padding:.25rem;gap:.25rem;border:1.5px solid var(--border)">
+      <button id="tabArticle" onclick="switchSearchMode('article')"
+        style="padding:.55rem 1.25rem;border:none;border-radius:.55rem;font-family:Sarabun,sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s;background:var(--purple);color:white">
+        📖 บทความ
+      </button>
+      <button id="tabProduct" onclick="switchSearchMode('product')"
+        style="padding:.55rem 1.25rem;border:none;border-radius:.55rem;font-family:Sarabun,sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s;background:transparent;color:var(--purple)">
+        💎 หาสินค้า
+      </button>
     </div>
   </div>
+
+  <!-- Article search (default) -->
+  <div id="searchModeArticle">
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" id="searchInput" type="search" placeholder="ค้นหาบทความหิน เช่น อเมทิสต์, ความรัก, จักระหัวใจ...">
+      <div class="search-hints">
+        <span class="hint" onclick="doSearch('ความรัก')">ความรัก</span>
+        <span class="hint" onclick="doSearch('การเงิน')">การเงิน</span>
+        <span class="hint" onclick="doSearch('สมาธิ')">สมาธิ</span>
+        <span class="hint" onclick="doSearch('ป้องกัน')">ป้องกัน</span>
+        <span class="hint" onclick="doSearch('จักระ')">จักระ</span>
+        <span class="hint" onclick="doSearch('ราศี')">ราศี</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product finder (hidden by default) -->
+  <div id="searchModeProduct" style="display:none;max-width:640px;margin:0 auto">
+    <div style="background:white;border:1.5px solid var(--border);border-radius:1.125rem;padding:1.25rem;box-shadow:0 4px 20px rgba(124,58,237,.08)">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.625rem;margin-bottom:.75rem">
+        <select id="qColor" style="padding:.5rem .75rem;border:1.5px solid var(--border);border-radius:.5rem;font-family:Sarabun,sans-serif;font-size:.88rem;color:var(--text);appearance:none;background:white url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E\") no-repeat right .75rem center">
+          <option value="">🌈 ทุกสี</option>
+          <option value="ม่วง">💜 ม่วง</option>
+          <option value="ชมพู">🩷 ชมพู</option>
+          <option value="เขียว">💚 เขียว</option>
+          <option value="เหลือง">💛 เหลือง</option>
+          <option value="ดำ">🖤 ดำ</option>
+          <option value="ใส">🔮 ใส</option>
+          <option value="น้ำเงิน">💙 น้ำเงิน</option>
+        </select>
+        <select id="qChakra" style="padding:.5rem .75rem;border:1.5px solid var(--border);border-radius:.5rem;font-family:Sarabun,sans-serif;font-size:.88rem;color:var(--text);appearance:none;background:white url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E\") no-repeat right .75rem center">
+          <option value="">☯️ ทุกจักระ</option>
+          <option value="ราก">🔴 ราก</option>
+          <option value="Solar Plexus">🟡 Solar Plexus</option>
+          <option value="หัวใจ">💚 หัวใจ</option>
+          <option value="Third Eye">🟣 Third Eye</option>
+          <option value="มงกุฎ">🔮 มงกุฎ</option>
+        </select>
+        <select id="qBelief" style="padding:.5rem .75rem;border:1.5px solid var(--border);border-radius:.5rem;font-family:Sarabun,sans-serif;font-size:.88rem;color:var(--text);appearance:none;background:white url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E\") no-repeat right .75rem center">
+          <option value="">🙏 ทุกกลุ่มความเชื่อ</option>
+          <option value="เสริมโชค">🍀 เสริมโชคลาภ</option>
+          <option value="ความรัก">💕 ความรัก</option>
+          <option value="ป้องกัน">🛡️ ป้องกัน</option>
+          <option value="การงาน">💼 การงาน</option>
+          <option value="สุขภาพ">🌿 สุขภาพ</option>
+          <option value="สมาธิ">🧘 สมาธิ</option>
+        </select>
+        <select id="qShape" style="padding:.5rem .75rem;border:1.5px solid var(--border);border-radius:.5rem;font-family:Sarabun,sans-serif;font-size:.88rem;color:var(--text);appearance:none;background:white url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E\") no-repeat right .75rem center">
+          <option value="">💎 ทุกรูปทรง</option>
+          <option value="หินดิบ">🪨 หินดิบ</option>
+          <option value="ทรงกลม">⚪ ทรงกลม</option>
+          <option value="กำไล">📿 กำไล</option>
+          <option value="โพรง">🫙 โพรง</option>
+          <option value="อุปกรณ์">🎵 อุปกรณ์</option>
+        </select>
+      </div>
+      <a id="findBtn" href="/shop/finder.html"
+        style="display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;padding:.85rem;background:linear-gradient(135deg,#7c3aed,#6d28d9);color:white;border-radius:.75rem;font-family:Sarabun,sans-serif;font-size:.95rem;font-weight:700;text-decoration:none;transition:all .2s;box-shadow:0 4px 16px rgba(124,58,237,.3)">
+        🔍 ค้นหาสินค้า
+      </a>
+      <p style="text-align:center;font-size:.75rem;color:var(--muted);margin-top:.625rem">ฟิลเตอร์เพิ่มเติม: ราศี · ขนาด · งบประมาณ →
+        <a href="/shop/finder.html" style="color:var(--purple);font-weight:700">หน้าค้นหาเต็ม</a>
+      </p>
+    </div>
+  </div>
+
 </div>
+
+<script>
+function switchSearchMode(mode) {
+  const isProduct = mode === 'product';
+  document.getElementById('searchModeArticle').style.display = isProduct ? 'none' : '';
+  document.getElementById('searchModeProduct').style.display = isProduct ? '' : 'none';
+  document.getElementById('tabArticle').style.background = isProduct ? 'transparent' : 'var(--purple)';
+  document.getElementById('tabArticle').style.color = isProduct ? 'var(--purple)' : 'white';
+  document.getElementById('tabProduct').style.background = isProduct ? 'var(--purple)' : 'transparent';
+  document.getElementById('tabProduct').style.color = isProduct ? 'white' : 'var(--purple)';
+  if (isProduct) updateFinderLink();
+}
+
+function updateFinderLink() {
+  const color  = document.getElementById('qColor').value;
+  const chakra = document.getElementById('qChakra').value;
+  const belief = document.getElementById('qBelief').value;
+  const shape  = document.getElementById('qShape').value;
+  const params = new URLSearchParams();
+  if (color)  params.set('color',  color);
+  if (chakra) params.set('chakra', chakra);
+  if (belief) params.set('belief', belief);
+  if (shape)  params.set('shape',  shape);
+  const qs = params.toString();
+  document.getElementById('findBtn').href = '/shop/finder.html' + (qs ? '?' + qs : '');
+}
+
+['qColor','qChakra','qBelief','qShape'].forEach(id =>
+  document.getElementById(id)?.addEventListener('change', updateFinderLink)
+);
+</script>
 <hr class="divider">
 
 <!-- ═══ CATEGORIES ═══ -->
@@ -253,35 +354,35 @@
       <div class="sec-title">เลือกหินที่ใช่ ตรงความต้องการ</div>
     </div>
     <div class="cat-pills">
-      <a href="/amethez/categories/chakra.html" class="cat-pill">
+      <a href="/categories/chakra.html" class="cat-pill">
         <span class="cat-pill-icon">☯️</span>
         <div class="cat-pill-text"><strong>หินตามจักระ</strong><span>จักระ 1–7</span></div>
       </a>
-      <a href="/amethez/categories/zodiac.html" class="cat-pill">
+      <a href="/categories/zodiac.html" class="cat-pill">
         <span class="cat-pill-icon">♈</span>
         <div class="cat-pill-text"><strong>หินตามราศี</strong><span>12 ราศี</span></div>
       </a>
-      <a href="/amethez/categories/birthday-stone.html" class="cat-pill">
+      <a href="/categories/birthday-stone.html" class="cat-pill">
         <span class="cat-pill-icon">📅</span>
         <div class="cat-pill-text"><strong>หินตามวันเกิด</strong><span>7 วัน สีมงคล</span></div>
       </a>
-      <a href="/amethez/categories/birth-month.html" class="cat-pill">
+      <a href="/categories/birth-month.html" class="cat-pill">
         <span class="cat-pill-icon">🗓️</span>
         <div class="cat-pill-text"><strong>หินตามเดือน</strong><span>Birthstone</span></div>
       </a>
-      <a href="/amethez/categories/master-crystal.html" class="cat-pill">
+      <a href="/categories/master-crystal.html" class="cat-pill">
         <span class="cat-pill-icon">💎</span>
         <div class="cat-pill-text"><strong>Master Crystal</strong><span>ฮีลเลอร์</span></div>
       </a>
-      <a href="/amethez/categories/color.html" class="cat-pill">
+      <a href="/categories/color.html" class="cat-pill">
         <span class="cat-pill-icon">🎨</span>
         <div class="cat-pill-text"><strong>หินตามสี</strong><span>9 สีพลังงาน</span></div>
       </a>
-      <a href="/amethez/categories/chinese-zodiac.html" class="cat-pill">
+      <a href="/categories/chinese-zodiac.html" class="cat-pill">
         <span class="cat-pill-icon">🐉</span>
         <div class="cat-pill-text"><strong>อัญมณีปีเกิด</strong><span>12 นักษัตร</span></div>
       </a>
-      <a href="/amethez/categories/purpose.html" class="cat-pill">
+      <a href="/categories/purpose.html" class="cat-pill">
         <span class="cat-pill-icon">🎯</span>
         <div class="cat-pill-text"><strong>ตามวัตถุประสงค์</strong><span>เงิน · ความรัก</span></div>
       </a>
@@ -289,47 +390,47 @@
 
     <!-- Popular stones row -->
     <div class="stone-row">
-      <a href="/amethez/stones/amethyst.html" class="stone-chip">
+      <a href="/stones/amethyst.html" class="stone-chip">
         <span class="stone-emoji">💜</span>
         <div class="stone-name">อเมทิสต์</div>
         <div class="stone-kw">สมาธิ · ปัญญา</div>
       </a>
-      <a href="/amethez/stones/moldavite.html" class="stone-chip">
+      <a href="/stones/moldavite.html" class="stone-chip">
         <span class="stone-emoji">🌿</span>
         <div class="stone-name">โมลดาไวท์</div>
         <div class="stone-kw">เปลี่ยนแปลง</div>
       </a>
-      <a href="/amethez/stones/tektite.html" class="stone-chip">
+      <a href="/stones/tektite.html" class="stone-chip">
         <span class="stone-emoji">🌑</span>
         <div class="stone-name">สะเก็ดดาวไทย</div>
         <div class="stone-kw">ป้องกัน</div>
       </a>
-      <a href="/amethez/stones/citrine.html" class="stone-chip">
+      <a href="/stones/citrine.html" class="stone-chip">
         <span class="stone-emoji">🌟</span>
         <div class="stone-name">ซิทริน</div>
         <div class="stone-kw">โชค · การเงิน</div>
       </a>
-      <a href="/amethez/stones/clear-quartz.html" class="stone-chip">
+      <a href="/stones/clear-quartz.html" class="stone-chip">
         <span class="stone-emoji">🔮</span>
         <div class="stone-name">คริสตัลใส</div>
         <div class="stone-kw">ชำระล้าง</div>
       </a>
-      <a href="/amethez/stones/rudraksha.html" class="stone-chip">
+      <a href="/stones/rudraksha.html" class="stone-chip">
         <span class="stone-emoji">📿</span>
         <div class="stone-name">รุทรากษะ</div>
         <div class="stone-kw">ศักดิ์สิทธิ์</div>
       </a>
-      <a href="/amethez/stones/black-tourmaline.html" class="stone-chip">
+      <a href="/stones/black-tourmaline.html" class="stone-chip">
         <span class="stone-emoji">🖤</span>
         <div class="stone-name">ทัวร์มาลีนดำ</div>
         <div class="stone-kw">ป้องกันพลังลบ</div>
       </a>
-      <a href="/amethez/stones/rose-quartz.html" class="stone-chip">
+      <a href="/stones/rose-quartz.html" class="stone-chip">
         <span class="stone-emoji">🩷</span>
         <div class="stone-name">โรสควอตซ์</div>
         <div class="stone-kw">ความรัก</div>
       </a>
-      <a href="/amethez/stones/encyclopedia.html" class="stone-chip stone-more">
+      <a href="/stones/encyclopedia.html" class="stone-chip stone-more">
         <span class="stone-emoji">📚</span>
         <div class="stone-name">A–Z ทั้งหมด</div>
         <div class="stone-kw">300+ ชนิด</div>
@@ -347,11 +448,11 @@
         <div class="sec-label">บทความล่าสุด</div>
         <div class="sec-title">ความรู้เพิ่มใหม่ทุกวัน</div>
       </div>
-      <a href="/amethez/stones/" class="see-all">ดูทั้งหมด →</a>
+      <a href="/stones/" class="see-all">ดูทั้งหมด →</a>
     </div>
     <div class="article-bento">
       <!-- Main feature -->
-      <a href="/amethez/stones/amethyst.html" class="ab-main">
+      <a href="/stones/amethyst.html" class="ab-main">
         <div class="ab-thumb-big" style="background:linear-gradient(135deg,#4c1d95,#7c3aed,#a78bfa)">💜</div>
         <div class="ab-body">
           <div class="ab-cat">Crystal Atlas · สารานุกรมหิน</div>
@@ -360,7 +461,7 @@
         </div>
       </a>
       <!-- Side cards -->
-      <a href="/amethez/stones/moldavite.html" class="ab-sm">
+      <a href="/stones/moldavite.html" class="ab-sm">
         <div class="ab-thumb-sm" style="background:linear-gradient(135deg,#064e3b,#059669)">🌿</div>
         <div class="ab-body-sm">
           <div class="ab-cat">Crystal Atlas</div>
@@ -368,7 +469,7 @@
           <div class="ab-sub-sm">ราคาตลาด วิธีดูของจริง และพลังงานที่ทำให้คนกลัว</div>
         </div>
       </a>
-      <a href="/amethez/guides/cleanse.html" class="ab-sm">
+      <a href="/guides/cleanse.html" class="ab-sm">
         <div class="ab-thumb-sm" style="background:linear-gradient(135deg,#0c4a6e,#0369a1)">🌊</div>
         <div class="ab-body-sm">
           <div class="ab-cat">คู่มือพลังบำบัด</div>
@@ -389,11 +490,11 @@
         <div class="sec-label">บทความแนะนำ</div>
         <div class="sec-title">เริ่มต้นที่นี่ — เนื้อหาที่อ่านมากที่สุด</div>
       </div>
-      <a href="/amethez/stones/" class="see-all">ดูทั้งหมด →</a>
+      <a href="/stones/" class="see-all">ดูทั้งหมด →</a>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.125rem;margin-top:1.75rem">
 
-      <a href="/amethez/stones/amethyst.html" style="text-decoration:none;background:white;border:1.5px solid var(--border);border-radius:1rem;overflow:hidden;transition:all .2s;display:flex;flex-direction:column" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 28px rgba(124,58,237,.12)';this.style.borderColor='#c4b5fd'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='var(--border)'">
+      <a href="/stones/amethyst.html" style="text-decoration:none;background:white;border:1.5px solid var(--border);border-radius:1rem;overflow:hidden;transition:all .2s;display:flex;flex-direction:column" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 28px rgba(124,58,237,.12)';this.style.borderColor='#c4b5fd'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='var(--border)'">
         <div style="height:110px;background:linear-gradient(135deg,#4c1d95,#7c3aed,#a78bfa);display:flex;align-items:center;justify-content:center;font-size:3rem">💜</div>
         <div style="padding:1rem 1.125rem 1.25rem;flex:1;display:flex;flex-direction:column">
           <div style="font-size:.7rem;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem">Crystal Atlas</div>
@@ -403,7 +504,7 @@
         </div>
       </a>
 
-      <a href="/amethez/stones/moldavite.html" style="text-decoration:none;background:white;border:1.5px solid var(--border);border-radius:1rem;overflow:hidden;transition:all .2s;display:flex;flex-direction:column" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 28px rgba(124,58,237,.12)';this.style.borderColor='#c4b5fd'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='var(--border)'">
+      <a href="/stones/moldavite.html" style="text-decoration:none;background:white;border:1.5px solid var(--border);border-radius:1rem;overflow:hidden;transition:all .2s;display:flex;flex-direction:column" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 28px rgba(124,58,237,.12)';this.style.borderColor='#c4b5fd'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='var(--border)'">
         <div style="height:110px;background:linear-gradient(135deg,#064e3b,#059669,#34d399);display:flex;align-items:center;justify-content:center;font-size:3rem">🌿</div>
         <div style="padding:1rem 1.125rem 1.25rem;flex:1;display:flex;flex-direction:column">
           <div style="font-size:.7rem;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem">Crystal Atlas</div>
@@ -413,7 +514,7 @@
         </div>
       </a>
 
-      <a href="/amethez/stones/citrine.html" style="text-decoration:none;background:white;border:1.5px solid var(--border);border-radius:1rem;overflow:hidden;transition:all .2s;display:flex;flex-direction:column" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 28px rgba(124,58,237,.12)';this.style.borderColor='#c4b5fd'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='var(--border)'">
+      <a href="/stones/citrine.html" style="text-decoration:none;background:white;border:1.5px solid var(--border);border-radius:1rem;overflow:hidden;transition:all .2s;display:flex;flex-direction:column" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 28px rgba(124,58,237,.12)';this.style.borderColor='#c4b5fd'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='var(--border)'">
         <div style="height:110px;background:linear-gradient(135deg,#78350f,#d97706,#fbbf24);display:flex;align-items:center;justify-content:center;font-size:3rem">🌟</div>
         <div style="padding:1rem 1.125rem 1.25rem;flex:1;display:flex;flex-direction:column">
           <div style="font-size:.7rem;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem">Crystal Atlas</div>
@@ -423,7 +524,7 @@
         </div>
       </a>
 
-      <a href="/amethez/stones/tektite.html" style="text-decoration:none;background:white;border:1.5px solid var(--border);border-radius:1rem;overflow:hidden;transition:all .2s;display:flex;flex-direction:column" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 28px rgba(124,58,237,.12)';this.style.borderColor='#c4b5fd'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='var(--border)'">
+      <a href="/stones/tektite.html" style="text-decoration:none;background:white;border:1.5px solid var(--border);border-radius:1rem;overflow:hidden;transition:all .2s;display:flex;flex-direction:column" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 28px rgba(124,58,237,.12)';this.style.borderColor='#c4b5fd'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='var(--border)'">
         <div style="height:110px;background:linear-gradient(135deg,#111827,#1f2937,#374151);display:flex;align-items:center;justify-content:center;font-size:3rem">🌑</div>
         <div style="padding:1rem 1.125rem 1.25rem;flex:1;display:flex;flex-direction:column">
           <div style="font-size:.7rem;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem">Crystal Atlas</div>
@@ -433,7 +534,7 @@
         </div>
       </a>
 
-      <a href="/amethez/categories/chakra.html" style="text-decoration:none;background:white;border:1.5px solid var(--border);border-radius:1rem;overflow:hidden;transition:all .2s;display:flex;flex-direction:column" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 28px rgba(124,58,237,.12)';this.style.borderColor='#c4b5fd'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='var(--border)'">
+      <a href="/categories/chakra.html" style="text-decoration:none;background:white;border:1.5px solid var(--border);border-radius:1rem;overflow:hidden;transition:all .2s;display:flex;flex-direction:column" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 28px rgba(124,58,237,.12)';this.style.borderColor='#c4b5fd'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='var(--border)'">
         <div style="height:110px;background:linear-gradient(135deg,#1e1b4b,#4338ca,#818cf8);display:flex;align-items:center;justify-content:center;font-size:3rem">☯️</div>
         <div style="padding:1rem 1.125rem 1.25rem;flex:1;display:flex;flex-direction:column">
           <div style="font-size:.7rem;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem">หมวดหมู่</div>
@@ -443,7 +544,7 @@
         </div>
       </a>
 
-      <a href="/amethez/talk/" style="text-decoration:none;background:white;border:1.5px solid var(--border);border-radius:1rem;overflow:hidden;transition:all .2s;display:flex;flex-direction:column" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 28px rgba(124,58,237,.12)';this.style.borderColor='#c4b5fd'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='var(--border)'">
+      <a href="/talk/" style="text-decoration:none;background:white;border:1.5px solid var(--border);border-radius:1rem;overflow:hidden;transition:all .2s;display:flex;flex-direction:column" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 28px rgba(124,58,237,.12)';this.style.borderColor='#c4b5fd'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='var(--border)'">
         <div style="height:110px;background:linear-gradient(135deg,#0f0a1e,#2d1b69,#7c3aed);display:flex;align-items:center;justify-content:center;font-size:3rem">🔮</div>
         <div style="padding:1rem 1.125rem 1.25rem;flex:1;display:flex;flex-direction:column">
           <div style="font-size:.7rem;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem">Talk to Stones</div>
@@ -467,12 +568,12 @@
         <div class="sec-title sec-title-white">E-Book · Wallpaper · คอร์ส</div>
         <div class="sec-sub sec-sub-white">ดาวน์โหลดได้ทันที · มีทั้งฟรีและพรีเมียม</div>
       </div>
-      <a href="/amethez/digital/" class="see-all see-all-white">ดูทั้งหมด →</a>
+      <a href="/digital/" class="see-all see-all-white">ดูทั้งหมด →</a>
     </div>
     <div class="dp-grid">
 
       <!-- Wallpaper — tall -->
-      <a href="/amethez/digital/" class="dp-card dp-wall">
+      <a href="/digital/" class="dp-card dp-wall">
         <div class="dp-wall-img" style="background:linear-gradient(160deg,#1e0a3c,#0a1f3d)">
           <div class="phone-frame">🔮</div>
         </div>
@@ -485,7 +586,7 @@
       </a>
 
       <!-- E-book free -->
-      <a href="/amethez/digital/" class="dp-card">
+      <a href="/digital/" class="dp-card">
         <div class="dp-wall-img" style="background:linear-gradient(135deg,#1a0936,#3b0764);height:160px">
           <div style="font-size:3.5rem">📖</div>
         </div>
@@ -498,7 +599,7 @@
       </a>
 
       <!-- Affirmation Cards free -->
-      <a href="/amethez/digital/" class="dp-card">
+      <a href="/digital/" class="dp-card">
         <div class="dp-wall-img" style="background:linear-gradient(135deg,#0c1a3a,#1e3a5f);height:160px">
           <div style="font-size:3.5rem">🃏</div>
         </div>
@@ -511,7 +612,7 @@
       </a>
 
       <!-- Bible paid -->
-      <a href="/amethez/digital/" class="dp-card">
+      <a href="/digital/" class="dp-card">
         <div class="dp-wall-img" style="background:linear-gradient(135deg,#0f0a1e,#2d1b5e);height:160px">
           <div style="font-size:3.5rem">💎</div>
         </div>
@@ -524,7 +625,7 @@
       </a>
 
       <!-- Course paid -->
-      <a href="/amethez/digital/" class="dp-card">
+      <a href="/digital/" class="dp-card">
         <div class="dp-wall-img" style="background:linear-gradient(135deg,#1a0936,#0c1a3a);height:160px">
           <div style="font-size:3.5rem">🧘</div>
         </div>
@@ -549,30 +650,30 @@
         <div class="sec-label">คู่มือพลังบำบัด</div>
         <div class="sec-title">ใช้หินให้ถูกวิธี ได้ผลจริง</div>
       </div>
-      <a href="/amethez/guides/" class="see-all">ดูทั้งหมด →</a>
+      <a href="/guides/" class="see-all">ดูทั้งหมด →</a>
     </div>
     <div class="guides-compact">
-      <a href="/amethez/guides/cleanse.html" class="guide-row">
+      <a href="/guides/cleanse.html" class="guide-row">
         <span class="guide-icon">🌊</span>
         <div class="guide-label"><strong>ชาร์จและล้างหิน</strong><span>7 วิธีที่ได้ผลจริง</span></div>
       </a>
-      <a href="/amethez/guides/how-to-wear.html" class="guide-row">
+      <a href="/guides/how-to-wear.html" class="guide-row">
         <span class="guide-icon">📿</span>
         <div class="guide-label"><strong>วิธีใส่กำไลหิน</strong><span>ซ้าย-ขวา ต่างกันอย่างไร</span></div>
       </a>
-      <a href="/amethez/guides/healing-color.html" class="guide-row">
+      <a href="/guides/healing-color.html" class="guide-row">
         <span class="guide-icon">🌈</span>
         <div class="guide-label"><strong>หินตามสีพลังงาน</strong><span>9 สี · ความหมาย</span></div>
       </a>
-      <a href="/amethez/guides/stone-shape.html" class="guide-row">
+      <a href="/guides/stone-shape.html" class="guide-row">
         <span class="guide-icon">🔷</span>
         <div class="guide-label"><strong>รูปทรงหิน</strong><span>Pyramid · Tower · Sphere</span></div>
       </a>
-      <a href="/amethez/guides/healing-affliction.html" class="guide-row">
+      <a href="/guides/healing-affliction.html" class="guide-row">
         <span class="guide-icon">🙏</span>
         <div class="guide-label"><strong>หินแก้ปัญหา</strong><span>เงิน · ความรัก · สุขภาพ</span></div>
       </a>
-      <a href="/amethez/videos/" class="guide-row" style="border-color:var(--purple)">
+      <a href="/videos/" class="guide-row" style="border-color:var(--purple)">
         <span class="guide-icon">🎬</span>
         <div class="guide-label"><strong style="color:var(--purple)">วิดีโอพร้อมสรุป AI</strong><span>คลิปดีพร้อม insight</span></div>
       </a>
@@ -588,7 +689,7 @@
     <div class="sec-label sec-label-gold" style="text-align:center">ใหม่ · Talk to Your Stones</div>
     <div class="sec-title sec-title-white" style="margin-bottom:.75rem">คุยกับหิน — บทตั้งจิตพร้อมเปิดฟังเสียง</div>
     <p class="sec-sub sec-sub-white" style="margin-bottom:1.75rem">บทตั้งจิตสำหรับแต่ละหินและความตั้งใจ การเงิน ความรัก ปกป้อง ความสำเร็จ<br>กดเล่นแล้วฟัง หรือท่องตาม ใช้ทำสมาธิทุกวัน</p>
-    <a href="/amethez/talk/" class="btn-primary" style="background:linear-gradient(135deg,#c9a84c,#b8922e);color:#0f0a1e;box-shadow:0 4px 20px rgba(201,168,76,.35)">🔊 เปิดฟังบทตั้งจิต</a>
+    <a href="/talk/" class="btn-primary" style="background:linear-gradient(135deg,#c9a84c,#b8922e);color:#0f0a1e;box-shadow:0 4px 20px rgba(201,168,76,.35)">🔊 เปิดฟังบทตั้งจิต</a>
   </div>
 </section>
 <hr class="divider">
@@ -602,7 +703,7 @@
       <div class="sec-sub">วิทยาศาสตร์ · พลังงาน · สายมู — รู้จริงทุกด้านในที่เดียว</div>
     </div>
     <div class="expert-strip">
-      <a href="/amethez/stones/" class="ex-card">
+      <a href="/stones/" class="ex-card">
         <div class="ex-icon ex-icon-atlas">🔬</div>
         <div class="ex-name">Crystal Atlas</div>
         <div class="ex-role">สารานุกรมหินคริสตัล</div>
@@ -611,7 +712,7 @@
           <span class="ex-tag">แร่วิทยา</span><span class="ex-tag">แหล่งกำเนิด</span><span class="ex-tag">ราคาตลาด</span>
         </div>
       </a>
-      <a href="/amethez/wuchong/" class="ex-card">
+      <a href="/wuchong/" class="ex-card">
         <div class="ex-icon ex-icon-wuchong">🧘</div>
         <div class="ex-name">Master Wuchong</div>
         <div class="ex-role">พลังงาน · ความสำเร็จ · การเงิน</div>
@@ -620,7 +721,7 @@
           <span class="ex-tag">จักระ</span><span class="ex-tag">การเงิน</span><span class="ex-tag">สุขภาพ</span>
         </div>
       </a>
-      <a href="/amethez/metha/" class="ex-card">
+      <a href="/metha/" class="ex-card">
         <div class="ex-icon ex-icon-metha">🌙</div>
         <div class="ex-name">อาจารย์เมธา</div>
         <div class="ex-role">ดวง · โหราศาสตร์ · สายมู</div>
@@ -656,31 +757,31 @@
     <div>
       <h4>คลังความรู้</h4>
       <ul>
-        <li><a href="/amethez/stones/encyclopedia.html">สารานุกรมหิน A–Z</a></li>
-        <li><a href="/amethez/guides/">คู่มือพลังบำบัด</a></li>
-        <li><a href="/amethez/categories/chakra.html">หินตามจักระ</a></li>
-        <li><a href="/amethez/categories/zodiac.html">หินตามราศี</a></li>
-        <li><a href="/amethez/videos/">วิดีโอและสรุป AI</a></li>
+        <li><a href="/stones/encyclopedia.html">สารานุกรมหิน A–Z</a></li>
+        <li><a href="/guides/">คู่มือพลังบำบัด</a></li>
+        <li><a href="/categories/chakra.html">หินตามจักระ</a></li>
+        <li><a href="/categories/zodiac.html">หินตามราศี</a></li>
+        <li><a href="/videos/">วิดีโอและสรุป AI</a></li>
       </ul>
     </div>
     <div>
       <h4>ผู้เชี่ยวชาญ</h4>
       <ul>
-        <li><a href="/amethez/stones/">Crystal Atlas</a></li>
-        <li><a href="/amethez/wuchong/">Master Wuchong</a></li>
-        <li><a href="/amethez/metha/">อาจารย์เมธา</a></li>
-        <li><a href="/amethez/digital/">📥 Digital Products</a></li>
-        <li><a href="/amethez/sale.html">🛒 ร้านค้า</a></li>
+        <li><a href="/stones/">Crystal Atlas</a></li>
+        <li><a href="/wuchong/">Master Wuchong</a></li>
+        <li><a href="/metha/">อาจารย์เมธา</a></li>
+        <li><a href="/digital/">📥 Digital Products</a></li>
+        <li><a href="/sale.html">🛒 ร้านค้า</a></li>
       </ul>
     </div>
     <div>
       <h4>บริการ</h4>
       <ul>
-        <li><a href="/amethez/request.html">Request & Match</a></li>
-        <li><a href="/amethez/partner.html">สมัครเป็น Partner</a></li>
-        <li><a href="/amethez/about.html">เกี่ยวกับเรา</a></li>
-        <li><a href="/amethez/privacy.html">Privacy Policy</a></li>
-        <li><a href="/amethez/terms.html">Terms of Service</a></li>
+        <li><a href="/request.html">Request & Match</a></li>
+        <li><a href="/partner.html">สมัครเป็น Partner</a></li>
+        <li><a href="/about.html">เกี่ยวกับเรา</a></li>
+        <li><a href="/privacy.html">Privacy Policy</a></li>
+        <li><a href="/terms.html">Terms of Service</a></li>
       </ul>
     </div>
   </div>
@@ -697,7 +798,7 @@ document.getElementById('searchInput').addEventListener('keydown', function(e) {
   if (e.key === 'Enter' && this.value.trim()) doSearch(this.value.trim());
 });
 </script>
-<link rel="stylesheet" href="/amethez/css/sila.css">
-<script src="/amethez/js/sila.js"></script>
+<link rel="stylesheet" href="/css/sila.css">
+<script src="/js/sila.js"></script>
 </body>
 </html>
