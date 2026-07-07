@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — จัดการโพรงอเมทิสต์</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --purple:#7c3aed; --gold:#c9a84c; --bg:#f5f3ff; --text:#1a1228; --green:#059669; --red:#dc2626; --yellow:#d97706; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Sarabun',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+
+  /* LOGIN */
+  #loginScreen { display:flex; align-items:center; justify-content:center; min-height:100vh; background:linear-gradient(135deg,#2d1b69,#4c1d95); }
+  .login-box { background:white; border-radius:1.5rem; padding:2.5rem 2rem; width:100%; max-width:340px; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,.3); }
+  .login-box .logo { font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--gold); margin-bottom:.25rem; }
+  .login-box .sub { font-size:.82rem; color:#9ca3af; margin-bottom:2rem; }
+  .login-box input { width:100%; border:1.5px solid #e5e7eb; border-radius:.6rem; padding:.8rem 1rem; font-size:1rem; font-family:'Sarabun',sans-serif; margin-bottom:1rem; outline:none; }
+  .login-box input:focus { border-color:var(--purple); }
+  .btn-login { width:100%; background:var(--purple); color:white; border:none; border-radius:.6rem; padding:.9rem; font-size:1rem; font-family:'Sarabun',sans-serif; font-weight:700; cursor:pointer; }
+  .login-err { color:var(--red); font-size:.85rem; margin-top:.75rem; display:none; }
+
+  /* APP */
+  #app { display:none; }
+  .topbar { background:white; border-bottom:2px solid #ede8ff; padding:0 1.5rem; display:flex; align-items:center; justify-content:space-between; height:58px; position:sticky; top:0; z-index:100; }
+  .topbar-logo { font-family:'Playfair Display',serif; color:var(--gold); font-size:1.2rem; }
+  .topbar-logo span { font-family:'Sarabun',sans-serif; font-size:.75rem; color:#9ca3af; margin-left:.5rem; }
+  .topbar-actions { display:flex; gap:.75rem; align-items:center; }
+  .btn { padding:.5rem 1.1rem; border-radius:.5rem; font-size:.875rem; font-family:'Sarabun',sans-serif; font-weight:600; cursor:pointer; border:none; display:inline-flex; align-items:center; gap:.4rem; }
+  .btn-primary { background:var(--purple); color:white; }
+  .btn-success { background:var(--green); color:white; }
+  .btn-danger { background:var(--red); color:white; }
+  .btn-outline { background:white; border:1.5px solid #d1d5db; color:var(--text); }
+  .btn-sm { padding:.35rem .75rem; font-size:.8rem; }
+  .btn:hover { opacity:.88; }
+  .btn-logout { background:none; border:none; color:#9ca3af; font-size:.85rem; cursor:pointer; font-family:'Sarabun',sans-serif; }
+
+  /* LAYOUT */
+  .main { max-width:1100px; margin:0 auto; padding:1.5rem; }
+  .stats-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1rem; margin-bottom:1.5rem; }
+  .stat-card { background:white; border-radius:.75rem; padding:1.2rem; border:1.5px solid #ede8ff; text-align:center; }
+  .stat-num { font-size:1.8rem; font-weight:700; }
+  .stat-label { font-size:.8rem; color:#6b7280; margin-top:.2rem; }
+  .stat-purple { color:var(--purple); }
+  .stat-green { color:var(--green); }
+  .stat-yellow { color:var(--yellow); }
+  .stat-gray { color:#9ca3af; }
+
+  /* FORM */
+  .card { background:white; border-radius:1rem; padding:1.5rem; border:1.5px solid #ede8ff; margin-bottom:1.5rem; }
+  .card-title { font-size:1rem; font-weight:700; margin-bottom:1.2rem; display:flex; align-items:center; gap:.5rem; }
+  .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  .form-group { display:flex; flex-direction:column; gap:.35rem; }
+  .form-group.full { grid-column:1/-1; }
+  .form-group label { font-size:.82rem; font-weight:600; color:#4b5563; }
+  .form-group input, .form-group select, .form-group textarea {
+    border:1.5px solid #e5e7eb; border-radius:.5rem; padding:.65rem .85rem;
+    font-size:.9rem; font-family:'Sarabun',sans-serif; outline:none; color:var(--text);
+    transition:border-color .2s;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color:var(--purple); }
+  .form-group textarea { resize:vertical; min-height:80px; }
+  .img-preview { width:100%; height:140px; border-radius:.5rem; object-fit:cover; margin-top:.5rem; display:none; background:#f5f0ff; }
+  .form-actions { display:flex; gap:.75rem; margin-top:1.25rem; flex-wrap:wrap; }
+
+  /* PRODUCT LIST */
+  .list-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; flex-wrap:wrap; gap:.75rem; }
+  .search-input { border:1.5px solid #e5e7eb; border-radius:.5rem; padding:.55rem .85rem; font-size:.875rem; font-family:'Sarabun',sans-serif; width:220px; outline:none; }
+  .search-input:focus { border-color:var(--purple); }
+  .product-table { width:100%; border-collapse:collapse; font-size:.875rem; }
+  .product-table th { text-align:left; padding:.65rem .85rem; background:#f9fafb; color:#6b7280; font-weight:600; font-size:.78rem; letter-spacing:.03em; border-bottom:1px solid #e5e7eb; }
+  .product-table td { padding:.75rem .85rem; border-bottom:1px solid #f3f4f6; vertical-align:middle; }
+  .product-table tr:hover td { background:#fdfcff; }
+  .td-img { width:56px; height:56px; object-fit:cover; border-radius:.5rem; background:#f5f0ff; display:flex; align-items:center; justify-content:center; font-size:1.5rem; }
+  .td-img img { width:56px; height:56px; object-fit:cover; border-radius:.5rem; }
+  .td-name { font-weight:600; max-width:200px; }
+  .td-name small { display:block; color:#9ca3af; font-weight:400; font-size:.78rem; margin-top:.15rem; }
+  .status-badge { padding:.2rem .6rem; border-radius:2rem; font-size:.75rem; font-weight:600; white-space:nowrap; }
+  .badge-available { background:#d1fae5; color:#065f46; }
+  .badge-reserved { background:#fef3c7; color:#92400e; }
+  .badge-sold { background:#f3f4f6; color:#6b7280; }
+  .actions-cell { display:flex; gap:.4rem; }
+  .empty-table { text-align:center; padding:3rem 1rem; color:#9ca3af; }
+
+  /* MODAL */
+  .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:200; display:none; align-items:center; justify-content:center; padding:1rem; }
+  .modal-overlay.open { display:flex; }
+  .modal { background:white; border-radius:1rem; padding:1.75rem; width:100%; max-width:560px; max-height:90vh; overflow-y:auto; }
+  .modal h3 { font-size:1.1rem; font-weight:700; margin-bottom:1.25rem; }
+  .modal-actions { display:flex; gap:.75rem; margin-top:1.5rem; justify-content:flex-end; }
+
+  /* TOAST */
+  .toast { position:fixed; bottom:1.5rem; right:1.5rem; background:#1a1228; color:white; padding:.85rem 1.25rem; border-radius:.75rem; font-size:.875rem; z-index:300; transform:translateY(120%); transition:transform .3s; box-shadow:0 4px 16px rgba(0,0,0,.25); }
+  .toast.show { transform:translateY(0); }
+  .toast.success { background:var(--green); }
+  .toast.error { background:var(--red); }
+
+  @media(max-width:640px) {
+    .form-grid { grid-template-columns:1fr; }
+    .form-group.full { grid-column:1; }
+    .product-table { font-size:.8rem; }
+    .search-input { width:100%; }
+    .list-header { flex-direction:column; align-items:flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="logo">AMETHEZ</div>
+    <div class="sub">Admin — จัดการสินค้า</div>
+    <input type="password" id="pwInput" placeholder="รหัสผ่าน" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="btn-login" onclick="doLogin()">เข้าสู่ระบบ</button>
+    <div class="login-err" id="loginErr">รหัสผ่านไม่ถูกต้อง</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="topbar">
+    <div class="topbar-logo">AMETHEZ <span>Admin Panel</span></div>
+    <div class="topbar-actions">
+      <a href="/geode/" target="_blank" class="btn btn-outline btn-sm">👁 ดูหน้าสินค้า</a>
+      <button class="btn btn-success btn-sm" onclick="exportJSON()">📤 Export JSON</button>
+      <button class="btn-logout" onclick="doLogout()">ออกจากระบบ</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <!-- STATS -->
+    <div class="stats-row" id="statsRow"></div>
+
+    <!-- ADD / EDIT FORM -->
+    <div class="card" id="formCard">
+      <div class="card-title" id="formTitle">➕ เพิ่มสินค้าใหม่</div>
+      <input type="hidden" id="editId">
+      <div class="form-grid">
+        <div class="form-group full">
+          <label>ชื่อสินค้า *</label>
+          <input type="text" id="fName" placeholder="เช่น โพรงอเมทิสต์บราซิล ขนาดกลาง สีม่วงเข้ม">
+        </div>
+        <div class="form-group">
+          <label>น้ำหนัก (กิโลกรัม)</label>
+          <input type="number" id="fWeight" placeholder="เช่น 3.5" step="0.1" min="0">
+        </div>
+        <div class="form-group">
+          <label>ขนาด / มิติ</label>
+          <input type="text" id="fSize" placeholder="เช่น 25×18×12 ซม.">
+        </div>
+        <div class="form-group">
+          <label>ราคา (บาท) — ว่างไว้ = สอบถามราคา</label>
+          <input type="number" id="fPrice" placeholder="เช่น 4500" min="0">
+        </div>
+        <div class="form-group">
+          <label>หน่วยราคา</label>
+          <input type="text" id="fPriceUnit" placeholder="เช่น /ชิ้น หรือ /กิโล" value="/ชิ้น">
+        </div>
+        <div class="form-group">
+          <label>สถานะ</label>
+          <select id="fStatus">
+            <option value="available">🟢 พร้อมขาย</option>
+            <option value="reserved">🟡 จองแล้ว</option>
+            <option value="sold">⚫ ขายแล้ว</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>แหล่งที่มา</label>
+          <input type="text" id="fOrigin" placeholder="เช่น บราซิล / อุรุกวัย">
+        </div>
+        <div class="form-group full">
+          <label>URL รูปภาพ</label>
+          <input type="url" id="fImage" placeholder="https://..." oninput="previewImg(this.value)">
+          <img id="imgPreview" class="img-preview" alt="preview">
+        </div>
+        <div class="form-group full">
+          <label>รายละเอียด</label>
+          <textarea id="fDesc" placeholder="เช่น สีม่วงเข้มสม่ำเสมอ ผลึกชัดเจน ฐานแน่น เหมาะวางบนโต๊ะทำงาน..."></textarea>
+        </div>
+        <div class="form-group full">
+          <label>หมายเหตุภายใน (ไม่แสดงหน้าสินค้า)</label>
+          <input type="text" id="fNote" placeholder="เช่น รับฝากจากคุณสมชาย 15/6/69">
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary" onclick="saveProduct()">💾 บันทึกสินค้า</button>
+        <button class="btn btn-outline" onclick="clearForm()">✕ ล้างฟอร์ม</button>
+      </div>
+    </div>
+
+    <!-- PRODUCT LIST -->
+    <div class="card">
+      <div class="list-header">
+        <div class="card-title" style="margin:0">📦 รายการสินค้าทั้งหมด</div>
+        <input type="text" class="search-input" id="searchInput" placeholder="🔍 ค้นหาชื่อสินค้า..." oninput="renderTable()">
+      </div>
+      <div style="overflow-x:auto">
+        <table class="product-table" id="productTable">
+          <thead>
+            <tr>
+              <th>รูป</th>
+              <th>ชื่อสินค้า</th>
+              <th>น้ำหนัก</th>
+              <th>ราคา</th>
+              <th>สถานะ</th>
+              <th>จัดการ</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM DELETE MODAL -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal">
+    <h3>🗑 ยืนยันการลบสินค้า?</h3>
+    <p style="color:#6b7280;font-size:.9rem">สินค้านี้จะถูกลบออกจากระบบถาวร และจะไม่แสดงในหน้าสินค้าอีก</p>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal()">ยกเลิก</button>
+      <button class="btn btn-danger" id="confirmDeleteBtn">ลบสินค้า</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'amethez_geodes';
+const PASS_KEY    = 'amethez_admin_auth';
+const PASSWORD    = 'amethez2026'; // เปลี่ยนรหัสที่นี่
+
+let products = [];
+let deleteTarget = null;
+
+// ── AUTH ──────────────────────────────────────────────
+function doLogin() {
+  const val = document.getElementById('pwInput').value;
+  if (val === PASSWORD) {
+    sessionStorage.setItem(PASS_KEY, '1');
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    loadData();
+    renderStats();
+    renderTable();
+  } else {
+    document.getElementById('loginErr').style.display = 'block';
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwInput').focus();
+  }
+}
+
+function doLogout() {
+  sessionStorage.removeItem(PASS_KEY);
+  location.reload();
+}
+
+// Auto-login if session active
+if (sessionStorage.getItem(PASS_KEY)) {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+}
+
+// ── DATA ──────────────────────────────────────────────
+function loadData() {
+  try { products = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+  catch { products = []; }
+}
+
+function saveData() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
+  window.dispatchEvent(new StorageEvent('storage', { key: STORAGE_KEY }));
+}
+
+function genId() {
+  return 'G' + Date.now().toString(36).toUpperCase();
+}
+
+// ── STATS ─────────────────────────────────────────────
+function renderStats() {
+  const total = products.length;
+  const avail = products.filter(p => p.status === 'available').length;
+  const rsv   = products.filter(p => p.status === 'reserved').length;
+  const sold  = products.filter(p => p.status === 'sold').length;
+  document.getElementById('statsRow').innerHTML = `
+    <div class="stat-card"><div class="stat-num stat-purple">${total}</div><div class="stat-label">ทั้งหมด</div></div>
+    <div class="stat-card"><div class="stat-num stat-green">${avail}</div><div class="stat-label">🟢 พร้อมขาย</div></div>
+    <div class="stat-card"><div class="stat-num stat-yellow">${rsv}</div><div class="stat-label">🟡 จองแล้ว</div></div>
+    <div class="stat-card"><div class="stat-num stat-gray">${sold}</div><div class="stat-label">⚫ ขายแล้ว</div></div>
+  `;
+}
+
+// ── FORM ──────────────────────────────────────────────
+function clearForm() {
+  ['fName','fWeight','fSize','fPrice','fImage','fDesc','fNote','fOrigin'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('fPriceUnit').value = '/ชิ้น';
+  document.getElementById('fStatus').value = 'available';
+  document.getElementById('editId').value = '';
+  document.getElementById('imgPreview').style.display = 'none';
+  document.getElementById('formTitle').textContent = '➕ เพิ่มสินค้าใหม่';
+  document.getElementById('fName').focus();
+}
+
+function previewImg(url) {
+  const el = document.getElementById('imgPreview');
+  if (url && url.startsWith('http')) {
+    el.src = url;
+    el.style.display = 'block';
+    el.onerror = () => { el.style.display = 'none'; };
+  } else {
+    el.style.display = 'none';
+  }
+}
+
+function saveProduct() {
+  const name = document.getElementById('fName').value.trim();
+  if (!name) { toast('กรุณาใส่ชื่อสินค้า', 'error'); document.getElementById('fName').focus(); return; }
+
+  const editId = document.getElementById('editId').value;
+  const product = {
+    id:         editId || genId(),
+    name,
+    weight:     document.getElementById('fWeight').value || '',
+    size:       document.getElementById('fSize').value.trim(),
+    price:      document.getElementById('fPrice').value || '',
+    price_unit: document.getElementById('fPriceUnit').value.trim(),
+    status:     document.getElementById('fStatus').value,
+    origin:     document.getElementById('fOrigin').value.trim(),
+    image_url:  document.getElementById('fImage').value.trim(),
+    description:document.getElementById('fDesc').value.trim(),
+    note:       document.getElementById('fNote').value.trim(),
+    updated:    new Date().toLocaleDateString('th-TH'),
+  };
+
+  if (editId) {
+    const idx = products.findIndex(p => p.id === editId);
+    if (idx >= 0) { product.created = products[idx].created; products[idx] = product; }
+  } else {
+    product.created = product.updated;
+    products.unshift(product);
+  }
+
+  saveData();
+  renderStats();
+  renderTable();
+  clearForm();
+  toast(editId ? 'แก้ไขสินค้าแล้ว ✓' : 'เพิ่มสินค้าแล้ว ✓', 'success');
+}
+
+// ── TABLE ─────────────────────────────────────────────
+function renderTable() {
+  const kw = (document.getElementById('searchInput')?.value || '').toLowerCase();
+  const list = kw ? products.filter(p => p.name.toLowerCase().includes(kw)) : products;
+
+  const badgeMap = {
+    available: ['badge-available','🟢 พร้อมขาย'],
+    reserved:  ['badge-reserved','🟡 จอง'],
+    sold:      ['badge-sold','⚫ ขายแล้ว'],
+  };
+
+  const rows = list.map(p => {
+    const [cls, label] = badgeMap[p.status] || badgeMap.available;
+    const imgCell = p.image_url
+      ? `<div class="td-img"><img src="${esc(p.image_url)}" alt="" onerror="this.parentElement.innerHTML='💎'"></div>`
+      : `<div class="td-img">💎</div>`;
+    return `<tr>
+      <td>${imgCell}</td>
+      <td class="td-name">${esc(p.name)}<small>${p.origin ? '📍'+p.origin : ''} ${p.updated ? '· '+p.updated : ''}</small></td>
+      <td>${p.weight ? p.weight+' กก.' : '—'}</td>
+      <td>${p.price ? '฿'+Number(p.price).toLocaleString() : '<span style="color:#9ca3af">สอบถาม</span>'}</td>
+      <td><span class="status-badge ${cls}">${label}</span></td>
+      <td><div class="actions-cell">
+        <button class="btn btn-outline btn-sm" onclick="editProduct('${p.id}')">✏️</button>
+        <button class="btn btn-outline btn-sm" onclick="cycleStatus('${p.id}')" title="เปลี่ยนสถานะ">🔄</button>
+        <button class="btn btn-danger btn-sm" onclick="confirmDelete('${p.id}')">🗑</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('tableBody').innerHTML = rows || `<tr><td colspan="6" class="empty-table">ยังไม่มีสินค้า — เพิ่มสินค้าแรกด้านบน</td></tr>`;
+}
+
+function esc(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── ACTIONS ───────────────────────────────────────────
+function editProduct(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('editId').value = p.id;
+  document.getElementById('fName').value = p.name;
+  document.getElementById('fWeight').value = p.weight || '';
+  document.getElementById('fSize').value = p.size || '';
+  document.getElementById('fPrice').value = p.price || '';
+  document.getElementById('fPriceUnit').value = p.price_unit || '/ชิ้น';
+  document.getElementById('fStatus').value = p.status || 'available';
+  document.getElementById('fOrigin').value = p.origin || '';
+  document.getElementById('fImage').value = p.image_url || '';
+  document.getElementById('fDesc').value = p.description || '';
+  document.getElementById('fNote').value = p.note || '';
+  document.getElementById('formTitle').textContent = '✏️ แก้ไขสินค้า: ' + p.name;
+  previewImg(p.image_url);
+  document.getElementById('formCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function cycleStatus(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  const cycle = { available: 'reserved', reserved: 'sold', sold: 'available' };
+  const labels = { available: '🟢 พร้อมขาย', reserved: '🟡 จองแล้ว', sold: '⚫ ขายแล้ว' };
+  p.status = cycle[p.status] || 'available';
+  p.updated = new Date().toLocaleDateString('th-TH');
+  saveData();
+  renderStats();
+  renderTable();
+  toast('เปลี่ยนสถานะเป็น ' + labels[p.status], 'success');
+}
+
+function confirmDelete(id) {
+  deleteTarget = id;
+  document.getElementById('deleteModal').classList.add('open');
+  document.getElementById('confirmDeleteBtn').onclick = () => {
+    products = products.filter(p => p.id !== deleteTarget);
+    saveData();
+    renderStats();
+    renderTable();
+    closeModal();
+    toast('ลบสินค้าแล้ว', 'success');
+  };
+}
+
+function closeModal() {
+  document.getElementById('deleteModal').classList.remove('open');
+  deleteTarget = null;
+}
+
+// ── EXPORT ────────────────────────────────────────────
+function exportJSON() {
+  const data = JSON.stringify(products, null, 2);
+  const blob = new Blob([data], { type: 'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = 'geodes-' + new Date().toISOString().slice(0,10) + '.json';
+  a.click(); URL.revokeObjectURL(url);
+  toast('Export JSON สำเร็จ ✓', 'success');
+}
+
+// ── TOAST ─────────────────────────────────────────────
+function toast(msg, type = '') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast show' + (type ? ' ' + type : '');
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+// ── INIT ──────────────────────────────────────────────
+if (sessionStorage.getItem(PASS_KEY)) {
+  loadData();
+  renderStats();
+  renderTable();
+}
+
+document.getElementById('deleteModal').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeModal();
+});
+</script>
+</body>
+</html>

@@ -33,7 +33,8 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
-          port: 22
+          protocol: ftp
+          port: 21
           local-dir: ./
           server-dir: /public_html/
           exclude: |

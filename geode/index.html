@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>โพรงอเมทิสต์ — Amethez</title>
+<meta name="description" content="โพรงอเมทิสต์คัดคุณภาพ นำเข้าตรงจากบราซิล ราคาพิเศษ ติดต่อสั่งซื้อผ่าน Line ได้เลย">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/main.css">
+<style>
+  :root { --purple:#7c3aed; --gold:#c9a84c; --bg:#faf8f4; --text:#1a1228; --line:#06C755; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Sarabun',sans-serif; background:var(--bg); color:var(--text); }
+
+  /* NAV */
+  .site-header { background:white; border-bottom:1px solid #ede8ff; padding:0 1.5rem; position:sticky; top:0; z-index:100; }
+  .nav-inner { max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; height:60px; }
+  .nav-logo { font-family:'Playfair Display',serif; font-weight:700; color:var(--gold); font-size:1.4rem; text-decoration:none; }
+  .nav-logo span { color:var(--purple); font-size:.7rem; display:block; font-family:'Sarabun',sans-serif; font-weight:400; letter-spacing:.15em; }
+  .nav-links { display:flex; gap:1.5rem; list-style:none; }
+  .nav-links a { color:var(--text); text-decoration:none; font-size:.9rem; }
+  .nav-links a:hover { color:var(--purple); }
+  .btn-nav { background:var(--line); color:white !important; padding:.4rem 1rem; border-radius:.5rem; }
+
+  /* HERO */
+  .hero { background:linear-gradient(135deg,#2d1b69 0%,#4c1d95 50%,#1e40af 100%); color:white; padding:4rem 1.5rem 3rem; text-align:center; }
+  .hero .badge { background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.3); padding:.3rem .9rem; border-radius:2rem; font-size:.8rem; display:inline-block; margin-bottom:1rem; }
+  .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,4vw,2.8rem); margin-bottom:.75rem; }
+  .hero h1 em { color:#fde68a; font-style:normal; }
+  .hero p { opacity:.9; max-width:540px; margin:0 auto 2rem; line-height:1.8; }
+  .trust-badges { display:flex; gap:1.5rem; justify-content:center; flex-wrap:wrap; }
+  .trust-badge { display:flex; align-items:center; gap:.4rem; font-size:.85rem; opacity:.85; }
+
+  /* FILTER BAR */
+  .filter-bar { background:white; border-bottom:1px solid #ede8ff; padding:.75rem 1.5rem; position:sticky; top:60px; z-index:90; }
+  .filter-inner { max-width:1100px; margin:0 auto; display:flex; gap:.75rem; align-items:center; flex-wrap:wrap; }
+  .filter-inner label { font-size:.85rem; color:#6b7280; }
+  .filter-btn { padding:.4rem .9rem; border-radius:2rem; border:1.5px solid #d1d5db; background:white; cursor:pointer; font-size:.85rem; font-family:'Sarabun',sans-serif; transition:all .2s; }
+  .filter-btn.active, .filter-btn:hover { border-color:var(--purple); color:var(--purple); background:#f5f0ff; }
+  #productCount { margin-left:auto; font-size:.85rem; color:#6b7280; }
+
+  /* GRID */
+  .products-section { padding:2.5rem 1.5rem; }
+  .products-inner { max-width:1100px; margin:0 auto; }
+  .products-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.5rem; }
+
+  /* CARD */
+  .product-card { background:white; border-radius:1rem; overflow:hidden; box-shadow:0 2px 12px rgba(124,58,237,.08); border:1px solid #ede8ff; transition:transform .2s,box-shadow .2s; }
+  .product-card:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(124,58,237,.15); }
+  .card-img { width:100%; height:220px; object-fit:cover; display:block; background:#f5f0ff; }
+  .card-img-placeholder { width:100%; height:220px; background:linear-gradient(135deg,#4c1d95,#6d28d9); display:flex; align-items:center; justify-content:center; font-size:4rem; }
+  .card-body { padding:1.2rem; }
+  .card-status { display:inline-block; padding:.2rem .65rem; border-radius:2rem; font-size:.75rem; font-weight:600; margin-bottom:.6rem; }
+  .status-available { background:#d1fae5; color:#065f46; }
+  .status-reserved { background:#fef3c7; color:#92400e; }
+  .status-sold { background:#f3f4f6; color:#6b7280; }
+  .card-name { font-weight:700; font-size:1rem; margin-bottom:.4rem; }
+  .card-meta { display:flex; gap:1rem; margin-bottom:.75rem; }
+  .card-meta span { font-size:.85rem; color:#6b7280; display:flex; align-items:center; gap:.3rem; }
+  .card-price { font-size:1.3rem; font-weight:700; color:var(--purple); margin-bottom:.3rem; }
+  .card-price .per { font-size:.75rem; color:#9ca3af; font-weight:400; }
+  .card-desc { font-size:.85rem; color:#6b7280; line-height:1.6; margin-bottom:1rem; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .btn-line-card { display:flex; align-items:center; justify-content:center; gap:.5rem; background:var(--line); color:white; text-decoration:none; padding:.7rem; border-radius:.6rem; font-weight:600; font-size:.9rem; transition:opacity .2s; }
+  .btn-line-card:hover { opacity:.9; }
+  .btn-sold { background:#e5e7eb; color:#9ca3af; cursor:default; display:flex; align-items:center; justify-content:center; padding:.7rem; border-radius:.6rem; font-size:.9rem; }
+
+  /* EMPTY */
+  .empty-state { text-align:center; padding:4rem 1rem; color:#9ca3af; }
+  .empty-state .em { font-size:4rem; display:block; margin-bottom:1rem; }
+
+  /* INFO SECTION */
+  .info-section { background:linear-gradient(135deg,#f5f0ff,#faf8f4); padding:3rem 1.5rem; }
+  .info-inner { max-width:900px; margin:0 auto; }
+  .info-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1.5rem; margin-top:2rem; }
+  .info-card { background:white; border-radius:.75rem; padding:1.5rem; text-align:center; border:1px solid #ede8ff; }
+  .info-card .ic { font-size:2rem; margin-bottom:.5rem; }
+  .info-card h4 { font-weight:700; margin-bottom:.3rem; font-size:.95rem; }
+  .info-card p { font-size:.82rem; color:#6b7280; line-height:1.6; }
+  .section-title { font-family:'Playfair Display',serif; font-size:1.6rem; text-align:center; margin-bottom:.5rem; }
+  .section-sub { text-align:center; color:#6b7280; font-size:.9rem; }
+
+  /* CTA CONSIGN */
+  .cta-consign { background:#1a1228; color:white; padding:3rem 1.5rem; text-align:center; }
+  .cta-consign h2 { font-family:'Playfair Display',serif; font-size:1.6rem; margin-bottom:.75rem; }
+  .cta-consign p { opacity:.8; margin-bottom:1.5rem; }
+  .btn-consign { background:var(--gold); color:#1a1228; font-weight:700; padding:.85rem 2rem; border-radius:.75rem; text-decoration:none; display:inline-block; }
+
+  footer { background:#1a1228; color:#9ca3af; text-align:center; padding:2rem 1rem; font-size:.85rem; }
+  footer a { color:var(--gold); text-decoration:none; }
+
+  @media(max-width:600px) {
+    .nav-links { display:none; }
+    .filter-inner { gap:.5rem; }
+    #productCount { width:100%; margin-left:0; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">AMETHEZ <span>Stones · Stories · Soul</span></a>
+    <ul class="nav-links">
+      <li><a href="/stones/encyclopedia.html">สารานุกรมหิน</a></li>
+      <li><a href="/geode/" style="color:var(--purple);font-weight:600">โพรงอเมทิสต์</a></li>
+      <li><a href="/consign.html">ฝากขาย</a></li>
+      <li><a href="https://line.me/ti/p/~@masterpuch" target="_blank" rel="noopener" class="btn-nav">📲 สั่งซื้อ Line</a></li>
+    </ul>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="badge">💎 คัดคุณภาพโดยผู้เชี่ยวชาญ 10+ ปี</div>
+  <h1>โพรงอเมทิสต์ <em>คัดพิเศษ</em><br>นำเข้าตรงจากบราซิล</h1>
+  <p>เลือกชิ้นที่ชอบ ติดต่อผ่าน Line เพื่อสอบถามน้ำหนัก ขนาดจริง และนัดรับหรือจัดส่ง</p>
+  <div class="trust-badges">
+    <div class="trust-badge">✅ หินแท้ 100%</div>
+    <div class="trust-badge">📦 นำเข้าตรง ไม่ผ่านคนกลาง</div>
+    <div class="trust-badge">🤝 ซื้อได้ ฝากได้</div>
+    <div class="trust-badge">🚚 จัดส่งทั่วไทย</div>
+  </div>
+</div>
+
+<!-- FILTER -->
+<div class="filter-bar">
+  <div class="filter-inner">
+    <label>แสดง:</label>
+    <button class="filter-btn active" onclick="setFilter('all',this)">ทั้งหมด</button>
+    <button class="filter-btn" onclick="setFilter('available',this)">🟢 พร้อมขาย</button>
+    <button class="filter-btn" onclick="setFilter('reserved',this)">🟡 จอง</button>
+    <span id="productCount"></span>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<div class="products-section">
+  <div class="products-inner">
+    <div class="products-grid" id="productsGrid">
+      <div class="empty-state" style="grid-column:1/-1">
+        <span class="em">⏳</span>
+        <p>กำลังโหลดสินค้า...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INFO -->
+<div class="info-section">
+  <div class="info-inner">
+    <h2 class="section-title">ทำไมต้องโพรงอเมทิสต์จาก Amethez?</h2>
+    <p class="section-sub">ผ่านการคัดสรรจากผู้มีประสบการณ์ด้านหินมากกว่า 10 ปี</p>
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="ic">🇧🇷</div>
+        <h4>แหล่งนำเข้าตรง</h4>
+        <p>นำเข้าตรงจากเหมืองบราซิลและอุรุกวัย ไม่ผ่านคนกลาง ราคาถูกกว่าท้องตลาด</p>
+      </div>
+      <div class="info-card">
+        <div class="ic">🔍</div>
+        <h4>คัดทุกชิ้น</h4>
+        <p>ตรวจสอบคุณภาพสีม่วง ความหนาของผลึก และรูปทรงก่อนนำมาลงขายทุกชิ้น</p>
+      </div>
+      <div class="info-card">
+        <div class="ic">📏</div>
+        <h4>ข้อมูลครบถ้วน</h4>
+        <p>ทุกชิ้นมีน้ำหนักจริง ขนาดจริง และรูปถ่ายจากหลายมุม ไม่มีการตกแต่งสี</p>
+      </div>
+      <div class="info-card">
+        <div class="ic">💬</div>
+        <h4>ซื้อง่ายผ่าน Line</h4>
+        <p>เลือกชิ้นที่ชอบแล้วส่ง ID สินค้ามาทาง Line เราจะแจ้งราคาและเงื่อนไขการส่งทันที</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA CONSIGN -->
+<div class="cta-consign">
+  <h2>มีโพรงอยากฝากขาย?</h2>
+  <p>เราเปิดรับฝากขายโพรงอเมทิสต์และหินคริสตัลทุกชนิด มีสัญญาชัดเจน ราคายุติธรรม</p>
+  <a href="/consign.html" class="btn-consign">ดูรายละเอียดการฝากขาย →</a>
+</div>
+
+<footer>
+  <p>© 2026 Amethez — <a href="/">หน้าหลัก</a> · <a href="/stones/amethyst.html">บทความอเมทิสต์</a> · <a href="/consign.html">ฝากขาย</a></p>
+  <p style="margin-top:.5rem;font-size:.8rem">Stones · Stories · Soul</p>
+</footer>
+
+<script>
+const LINE_ID = '@masterpuch';
+const LINE_URL = 'https://line.me/ti/p/~@masterpuch';
+const STORAGE_KEY = 'amethez_geodes';
+
+let allProducts = [];
+let currentFilter = 'all';
+
+function loadProducts() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    allProducts = raw ? JSON.parse(raw) : [];
+  } catch { allProducts = []; }
+}
+
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderProducts();
+}
+
+function renderProducts() {
+  const grid = document.getElementById('productsGrid');
+  const list = currentFilter === 'all'
+    ? allProducts
+    : allProducts.filter(p => p.status === currentFilter);
+
+  document.getElementById('productCount').textContent =
+    `แสดง ${list.length} จาก ${allProducts.length} รายการ`;
+
+  if (!list.length) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
+      <span class="em">${allProducts.length === 0 ? '💜' : '🔍'}</span>
+      <p>${allProducts.length === 0
+        ? 'กำลังจัดเตรียมสินค้า — ติดต่อสอบถามทาง Line ได้เลย'
+        : 'ไม่มีสินค้าในหมวดนี้ตอนนี้'}</p>
+      ${allProducts.length === 0 ? `<a href="${LINE_URL}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.5rem;margin-top:1rem;background:var(--line);color:white;padding:.75rem 1.5rem;border-radius:.75rem;text-decoration:none;font-weight:600">📲 ติดต่อ Line</a>` : ''}
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map(p => {
+    const statusMap = { available: ['status-available','🟢 พร้อมขาย'], reserved: ['status-reserved','🟡 จองแล้ว'], sold: ['status-sold','⚫ ขายแล้ว'] };
+    const [cls, label] = statusMap[p.status] || statusMap.available;
+    const img = p.image_url
+      ? `<img class="card-img" src="${escHtml(p.image_url)}" alt="${escHtml(p.name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+      : '';
+    const placeholder = `<div class="card-img-placeholder" ${p.image_url ? 'style="display:none"' : ''}>💎</div>`;
+    const lineMsg = encodeURIComponent(`สนใจ: ${p.name} (ID: ${p.id})`);
+    const lineBtn = p.status === 'sold'
+      ? `<div class="btn-sold">ขายไปแล้ว</div>`
+      : `<a href="${LINE_URL}?text=${lineMsg}" target="_blank" rel="noopener" class="btn-line-card">
+           <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.14 2 11.22c0 3.45 2.17 6.47 5.42 8.2l-.42 1.54c-.06.23.17.42.38.3L9.9 19.8A11.25 11.25 0 0012 20c5.52 0 10-4.14 10-9.22S17.52 2 12 2z"/></svg>
+           สอบถาม / สั่งซื้อ
+         </a>`;
+
+    return `<div class="product-card">
+      ${img}${placeholder}
+      <div class="card-body">
+        <span class="card-status ${cls}">${label}</span>
+        <div class="card-name">${escHtml(p.name)}</div>
+        <div class="card-meta">
+          ${p.weight ? `<span>⚖️ ${p.weight} กก.</span>` : ''}
+          ${p.size ? `<span>📐 ${escHtml(p.size)}</span>` : ''}
+        </div>
+        ${p.price ? `<div class="card-price">฿${Number(p.price).toLocaleString()} <span class="per">${p.price_unit || ''}</span></div>` : '<div class="card-price" style="font-size:1rem;color:#6b7280">📲 สอบถามราคา</div>'}
+        ${p.description ? `<div class="card-desc">${escHtml(p.description)}</div>` : ''}
+        ${lineBtn}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function escHtml(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+loadProducts();
+renderProducts();
+
+// refresh if admin updated in another tab
+window.addEventListener('storage', e => {
+  if (e.key === STORAGE_KEY) { loadProducts(); renderProducts(); }
+});
+</script>
+
+<link rel="stylesheet" href="/css/sila.css">
+<script src="/js/sila.js"></script>
+</body>
+</html>

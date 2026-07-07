@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ฝากหินขาย — Amethez</title>
+<meta name="description" content="ฝากขายหินคริสตัลและโพรงอเมทิสต์กับ Amethez ศูนย์กลางหินพลังงานที่น่าเชื่อถือที่สุดในไทย">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/main.css">
+<style>
+  :root {
+    --purple: #7c3aed;
+    --purple-light: #ede9fe;
+    --gold: #c9a84c;
+    --bg: #faf8f4;
+    --text: #1a1228;
+    --line-green: #06C755;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Sarabun', sans-serif; background: var(--bg); color: var(--text); }
+
+  /* NAV */
+  .site-header { background: white; border-bottom: 1px solid #ede8ff; padding: 0 1.5rem; position: sticky; top: 0; z-index: 100; }
+  .nav-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .nav-logo { font-family: 'Playfair Display', serif; font-weight: 700; color: var(--gold); font-size: 1.4rem; text-decoration: none; }
+  .nav-logo span { color: var(--purple); font-size: .7rem; display: block; font-family: 'Sarabun', sans-serif; font-weight: 400; letter-spacing: .15em; }
+  .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+  .nav-links a { color: var(--text); text-decoration: none; font-size: .9rem; }
+  .nav-links a:hover { color: var(--purple); }
+  .btn-nav { background: var(--purple); color: white !important; padding: .4rem 1rem; border-radius: .5rem; }
+
+  /* HERO */
+  .hero-consign {
+    background: linear-gradient(135deg, #2d1b69 0%, #4c1d95 40%, #6d28d9 100%);
+    color: white;
+    text-align: center;
+    padding: 5rem 1.5rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-consign::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpolygon points='30 0 60 30 30 60 0 30'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-consign .badge { background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3); color: white; padding: .35rem 1rem; border-radius: 2rem; font-size: .85rem; display: inline-block; margin-bottom: 1.5rem; }
+  .hero-consign h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); margin-bottom: 1rem; }
+  .hero-consign h1 span { color: #fde68a; }
+  .hero-consign p { font-size: 1.1rem; opacity: .9; max-width: 600px; margin: 0 auto 2rem; line-height: 1.8; }
+  .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-line { background: var(--line-green); color: white; padding: .9rem 2rem; border-radius: .75rem; text-decoration: none; font-weight: 700; font-size: 1rem; display: inline-flex; align-items: center; gap: .5rem; }
+  .btn-outline { border: 2px solid white; color: white; padding: .9rem 2rem; border-radius: .75rem; text-decoration: none; font-weight: 600; font-size: 1rem; }
+
+  /* SECTIONS */
+  section { padding: 4rem 1.5rem; }
+  .section-inner { max-width: 1000px; margin: 0 auto; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; text-align: center; margin-bottom: .5rem; }
+  .section-sub { text-align: center; color: #6b7280; margin-bottom: 3rem; font-size: 1rem; }
+
+  /* WHY GRID */
+  .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+  .why-card { background: white; border-radius: 1rem; padding: 2rem 1.5rem; text-align: center; box-shadow: 0 2px 12px rgba(124,58,237,.08); border: 1px solid #ede8ff; }
+  .why-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .why-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: .5rem; color: var(--purple); }
+  .why-card p { font-size: .9rem; color: #6b7280; line-height: 1.7; }
+
+  /* STEPS */
+  .steps-bg { background: linear-gradient(135deg, #f5f0ff, #faf8f4); }
+  .steps-list { display: flex; flex-direction: column; gap: 1.5rem; max-width: 680px; margin: 0 auto; }
+  .step-item { display: flex; gap: 1.5rem; align-items: flex-start; background: white; border-radius: 1rem; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,.05); }
+  .step-num { width: 44px; height: 44px; background: var(--purple); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 700; flex-shrink: 0; }
+  .step-body h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: .3rem; }
+  .step-body p { font-size: .9rem; color: #6b7280; line-height: 1.7; }
+
+  /* WHAT WE ACCEPT */
+  .accept-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
+  .accept-item { background: white; border-radius: .75rem; padding: 1.2rem; text-align: center; border: 1.5px solid #ede8ff; }
+  .accept-item .em { font-size: 2rem; margin-bottom: .5rem; }
+  .accept-item span { font-size: .9rem; font-weight: 600; display: block; }
+  .accept-item small { font-size: .8rem; color: #9ca3af; }
+
+  /* TERMS */
+  .terms-box { background: white; border-radius: 1rem; padding: 2rem; border: 1.5px solid #ede8ff; max-width: 680px; margin: 0 auto; }
+  .terms-box h3 { font-weight: 700; margin-bottom: 1rem; color: var(--purple); }
+  .terms-box ul { list-style: none; display: flex; flex-direction: column; gap: .75rem; }
+  .terms-box li { display: flex; gap: .75rem; align-items: flex-start; font-size: .95rem; line-height: 1.6; }
+  .terms-box li::before { content: '✓'; color: var(--purple); font-weight: 700; flex-shrink: 0; }
+
+  /* CTA */
+  .cta-section { background: linear-gradient(135deg, #4c1d95, #6d28d9); color: white; text-align: center; }
+  .cta-section h2 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 1rem; }
+  .cta-section p { opacity: .9; margin-bottom: 2rem; font-size: 1rem; }
+  .cta-cards { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+  .cta-card { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); border-radius: .75rem; padding: 1rem 1.5rem; }
+  .cta-card .label { font-size: .75rem; opacity: .7; }
+  .cta-card .val { font-size: 1rem; font-weight: 700; }
+
+  /* FOOTER */
+  footer { background: #1a1228; color: #9ca3af; text-align: center; padding: 2rem 1rem; font-size: .85rem; }
+  footer a { color: var(--gold); text-decoration: none; }
+
+  @media (max-width: 600px) {
+    .hero-consign { padding: 3.5rem 1rem 3rem; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">AMETHEZ <span>Stones · Stories · Soul</span></a>
+    <ul class="nav-links">
+      <li><a href="/stones/encyclopedia.html">สารานุกรมหิน</a></li>
+      <li><a href="/geode/">โพรงอเมทิสต์</a></li>
+      <li><a href="/consign.html" style="color:var(--purple);font-weight:600">ฝากขาย</a></li>
+      <li><a href="https://line.me/ti/p/~@masterpuch" target="_blank" rel="noopener" class="btn-nav">Line OA</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero-consign">
+  <div class="badge">💎 รับฝากขายหินคริสตัลและโพรงอเมทิสต์</div>
+  <h1>ฝากหินขายกับ <span>Amethez</span><br>ขายได้ราคาดี มีคนเชื่อถือ</h1>
+  <p>เราช่วยนำหินของคุณไปถึงมือลูกค้าที่ใช่ ด้วยเว็บไซต์ที่น่าเชื่อถือ ฐานลูกค้าจริง และการดูแลระดับมืออาชีพ ไม่ต้องมีร้าน ไม่ต้องโฆษณาเอง</p>
+  <div class="hero-btns">
+    <a href="https://line.me/ti/p/~@masterpuch" target="_blank" rel="noopener" class="btn-line">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.14 2 11.22c0 3.45 2.17 6.47 5.42 8.2l-.42 1.54c-.06.23.17.42.38.3L9.9 19.8A11.25 11.25 0 0012 20c5.52 0 10-4.14 10-9.22S17.52 2 12 2z"/></svg>
+      ติดต่อ @masterpuch
+    </a>
+    <a href="#steps" class="btn-outline">ดูขั้นตอน →</a>
+  </div>
+</section>
+
+<!-- WHY -->
+<section>
+  <div class="section-inner">
+    <h2 class="section-title">ทำไมต้องฝากกับ Amethez?</h2>
+    <p class="section-sub">เราไม่ใช่แค่นายหน้า — เราสร้างความน่าเชื่อถือให้สินค้าของคุณ</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">🌐</div>
+        <h3>เว็บไซต์น่าเชื่อถือ</h3>
+        <p>สินค้าของคุณจะอยู่บนเว็บที่มีเนื้อหาคริสตัลมากกว่า 300+ บทความ ลูกค้าเห็นแล้วไว้ใจ</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">📸</div>
+        <h3>รูปและรายละเอียดครบ</h3>
+        <p>เราจัดการรูปถ่าย รายละเอียดสินค้า น้ำหนัก ขนาด ให้ครบถ้วน ลูกค้าตัดสินใจง่ายขึ้น</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">💬</div>
+        <h3>ฐานลูกค้า Line OA</h3>
+        <p>ส่งหาสมาชิก Line OA โดยตรง ลูกค้าที่สนใจหินโดยเฉพาะ ไม่ใช่คนสุ่ม</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🤝</div>
+        <h3>ทำสัญญาชัดเจน</h3>
+        <p>มีสัญญาฝากขายเป็นลายลักษณ์อักษร ระบุเงื่อนไขและการแบ่งรายได้ชัดเจนทุกขั้นตอน</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🔒</div>
+        <h3>สินค้าปลอดภัย</h3>
+        <p>เก็บรักษาหินอย่างถูกวิธี มีการตรวจสอบสภาพก่อนและหลัง พร้อมประกันความเสียหาย</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">💰</div>
+        <h3>ราคายุติธรรม</h3>
+        <p>แบ่งรายได้โปร่งใส ไม่มีค่าใช้จ่ายซ่อนเร้น คุณได้รับเงินทันทีที่ขายได้</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section class="steps-bg" id="steps">
+  <div class="section-inner">
+    <h2 class="section-title">ขั้นตอนการฝากขาย</h2>
+    <p class="section-sub">ง่าย โปร่งใส ไม่มีค่าใช้จ่ายล่วงหน้า</p>
+    <div class="steps-list">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>ติดต่อและส่งรูปสินค้า</h3>
+          <p>ส่งรูปหรือข้อมูลหินที่ต้องการฝากมาทาง Line @masterpuch เราจะประเมินและแจ้งเงื่อนไขภายใน 24 ชั่วโมง</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>นัดดูสินค้าและตกลงราคา</h3>
+          <p>นัดพบเพื่อตรวจสอบสินค้าจริง ตกลงราคาฝาก และเงื่อนไขร่วมกัน สามารถพาไปส่งที่ร้านหรือนัดรับก็ได้</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>ทำสัญญาฝากขาย</h3>
+          <p>ทำสัญญาเป็นลายลักษณ์อักษร ระบุมูลค่าสินค้า ระยะเวลาฝาก เงื่อนไขคืนสินค้า และการแบ่งรายได้</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>ลงขาย รับเงินทันทีที่ขายได้</h3>
+          <p>เราถ่ายรูป เขียนรายละเอียด ลงเว็บ และโปรโมท เมื่อขายได้จะแจ้งทันทีและโอนเงินตามเงื่อนไขที่ตกลง</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE ACCEPT -->
+<section>
+  <div class="section-inner">
+    <h2 class="section-title">รับฝากขายอะไรได้บ้าง?</h2>
+    <p class="section-sub">เน้นหินคุณภาพ มีที่มาชัดเจน ไม่รับหินปลอมหรือสีย้อม</p>
+    <div class="accept-grid">
+      <div class="accept-item">
+        <div class="em">💜</div>
+        <span>โพรงอเมทิสต์</span>
+        <small>บราซิล / อุรุกวัย</small>
+      </div>
+      <div class="accept-item">
+        <div class="em">🪨</div>
+        <span>หินดิบ Raw</span>
+        <small>ทุกชนิด คุณภาพดี</small>
+      </div>
+      <div class="accept-item">
+        <div class="em">✨</div>
+        <span>คริสตัลใส</span>
+        <small>Point / Cluster</small>
+      </div>
+      <div class="accept-item">
+        <div class="em">🌑</div>
+        <span>หินสีดำ</span>
+        <small>ทัวร์มาลีน / ออบซิเดียน</small>
+      </div>
+      <div class="accept-item">
+        <div class="em">🟡</div>
+        <span>ซิทริน</span>
+        <small>ธรรมชาติ / ไม่อบสี</small>
+      </div>
+      <div class="accept-item">
+        <div class="em">🌿</div>
+        <span>โมลดาไวท์</span>
+        <small>สะเก็ดดาวทุกชนิด</small>
+      </div>
+      <div class="accept-item">
+        <div class="em">🔴</div>
+        <span>หินหายาก</span>
+        <small>Paraiba / Alexandrite</small>
+      </div>
+      <div class="accept-item">
+        <div class="em">📿</div>
+        <span>เครื่องประดับหิน</span>
+        <small>สร้อย / กำไล งานดี</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TERMS -->
+<section style="background:#f5f0ff; padding: 3rem 1.5rem;">
+  <div class="section-inner">
+    <h2 class="section-title">เงื่อนไขและข้อตกลงเบื้องต้น</h2>
+    <p class="section-sub">โปร่งใส ยุติธรรม ปกป้องทั้งสองฝ่าย</p>
+    <div class="terms-box">
+      <h3>📋 สิ่งที่ต้องรู้ก่อนฝากขาย</h3>
+      <ul>
+        <li>สินค้าต้องเป็นหินแท้ ไม่มีการเสริมสีหรือปลอมแปลง สามารถตรวจสอบได้</li>
+        <li>ราคาฝากขายและสัดส่วนรายได้ตกลงกันก่อนลงนามสัญญา</li>
+        <li>ระยะเวลาฝากขายขั้นต่ำ 30 วัน สูงสุด 6 เดือน ต่อสัญญาได้</li>
+        <li>หากสินค้าไม่ขายภายในระยะเวลา สามารถรับคืนได้ตามเงื่อนไข</li>
+        <li>เราถ่ายรูปและเขียนรายละเอียดเอง สินค้าต้องอยู่กับเราระหว่างฝาก</li>
+        <li>รับเงินภายใน 3 วันทำการหลังสินค้าขายได้</li>
+        <li>รับฝากสินค้ามูลค่าตั้งแต่ 500 บาทขึ้นไปต่อชิ้น/ชุด</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section-inner">
+    <h2>พร้อมฝากขายแล้วใช่ไหม?</h2>
+    <p>ติดต่อเราทาง Line ได้เลย แค่ส่งรูปสินค้ามา เราจะประเมินและแจ้งผลภายใน 24 ชั่วโมง</p>
+    <div class="cta-cards">
+      <div class="cta-card">
+        <div class="label">ตอบกลับใน</div>
+        <div class="val">⏱ 24 ชั่วโมง</div>
+      </div>
+      <div class="cta-card">
+        <div class="label">ค่าใช้จ่ายล่วงหน้า</div>
+        <div class="val">✅ ไม่มี</div>
+      </div>
+      <div class="cta-card">
+        <div class="label">ทำสัญญา</div>
+        <div class="val">📄 ชัดเจนทุกข้อ</div>
+      </div>
+    </div>
+    <a href="https://line.me/ti/p/~@masterpuch" target="_blank" rel="noopener" class="btn-line" style="font-size:1.1rem; padding: 1rem 2.5rem;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.14 2 11.22c0 3.45 2.17 6.47 5.42 8.2l-.42 1.54c-.06.23.17.42.38.3L9.9 19.8A11.25 11.25 0 0012 20c5.52 0 10-4.14 10-9.22S17.52 2 12 2z"/></svg>
+      ส่งรูปสินค้ามาเลย @masterpuch
+    </a>
+    <p style="margin-top:1rem; font-size:.85rem; opacity:.6;">เปิดรับทุกวัน 09:00 – 21:00 น.</p>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Amethez — <a href="/">หน้าหลัก</a> · <a href="/geode/">โพรงอเมทิสต์</a> · <a href="/consign.html">ฝากขาย</a></p>
+  <p style="margin-top:.5rem; font-size:.8rem;">Stones · Stories · Soul</p>
+</footer>
+
+<link rel="stylesheet" href="/css/sila.css">
+<script src="/js/sila.js"></script>
+</body>
+</html>
