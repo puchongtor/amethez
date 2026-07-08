@@ -1,7 +1,6 @@
 /**
  * ศิลา — Amethez Crystal AI Chat
- * Powered by Groq (llama-3.1-8b-instant) — Free tier
- * Key managed via Admin Panel (localStorage) — NOT in source code
+ * Powered by Groq (llama-3.1-8b-instant)
  */
 (function () {
   'use strict';
@@ -9,56 +8,67 @@
   const CONFIG = {
     model: 'llama-3.1-8b-instant',
     maxTokens: 600,
-    greetDelay: 20000,
-    scrollTrigger: 0.35,
     keyStore: 'amethez_gemini_key',
     historyStore: 'sila_history',
-    maxHistory: 40,
+    maxHistory: 60,
   };
 
   const SYSTEM_PROMPT = `คุณคือ "ศิลา" — ผู้เชี่ยวชาญหินคริสตัลและพลังงานของ Amethez เว็บศูนย์รวมความรู้หินที่ใหญ่ที่สุดในไทย
 
-บุคลิก:
-- ลึกซึ้ง อบอุ่น เหมือนพี่สาวที่รู้จักหิน
-- พูดภาษาพลังงาน ออร่า จักระ ได้อย่างเป็นธรรมชาติ
-- ไม่ hard sell แต่แนะนำสิ่งที่เหมาะกับลูกค้าจริงๆ
-- ใช้ภาษาไทย เป็นกันเอง
+บุคลิก: ลึกซึ้ง อบอุ่น เหมือนเพื่อนที่รู้จักหิน พูดภาษาพลังงาน ออร่า จักระ ใช้ภาษาไทยเป็นกันเอง
 
-ความรู้หิน:
-- อเมทิสต์: ม่วง จักระมงกุฎ/ตาที่สาม ความสงบ สมาธิ ความฝัน
-- โรสควอตซ์: ชมพู จักระหัวใจ ความรัก เยียวยาจิตใจ
-- ทัวร์มาลีนดำ: ดำ จักระราก ปกป้องพลังงานลบ ดูดซับ EMF
-- โมลดาไวท์: เขียวจากอวกาศ transformation เร่งพลังงาน
-- ซิทริน: เหลือง ความมั่งคั่ง โชคลาภ ดึงดูดเงิน
-- คริสตัลใส: ขาวใส แอมพลิฟาย เสริมพลังหินอื่น
-- โพรงอเมทิสต์: ฮวงจุ้ย ดูดซับพลังงานลบ วางในบ้าน
-- ไพรีต์: สีทอง เงินทอง ความมั่งคั่ง
-- ลาพิส ลาซูลี: น้ำเงิน ปัญญา ความจริง การสื่อสาร
+ความรู้หิน: อเมทิสต์(สงบ/สมาธิ) โรสควอตซ์(ความรัก) ทัวร์มาลีนดำ(ปกป้อง) โมลดาไวท์(transformation) ซิทริน(เงิน/โชค) คริสตัลใส(แอมพลิฟาย) โพรงอเมทิสต์(ฮวงจุ้ย) ไพรีต์(ความมั่งคั่ง) ลาพิสลาซูลี(ปัญญา)
 
-แนวทางตอบ:
-1. ตอบคำถามด้วยความรู้หินก่อน (2-3 ประโยค)
-2. ถ้าเกี่ยวกับหินที่มีบทความ → แนะนำลิงก์ markdown [ชื่อ](url)
-3. ถ้าถามซื้อหิน → /geode/
-4. ถ้าถามจักระ → /categories/chakra.html
-5. ถ้าถามราศี → /categories/zodiac.html
-6. ถ้าอยากฝากขาย → /consign.html
-
+แนวทาง: ตอบด้วยความรู้ก่อน แนะนำลิงก์ markdown ถ้าเกี่ยวข้อง ตอบสั้นกระชับ 3-4 ประโยค
 หน้าเว็บ: / | /stones/amethyst.html | /stones/rose-quartz.html | /stones/black-tourmaline.html | /stones/moldavite.html | /categories/chakra.html | /categories/zodiac.html | /geode/ | /consign.html
+ห้ามแต่งลิงก์ที่ไม่มีในรายการ`;
 
-ตอบสั้นกระชับ ไม่เกิน 4-5 ประโยค ห้ามแต่งลิงก์ที่ไม่มีในรายการ`;
+  // ── PAGE GREETINGS ──────────────────────────────────────────────
+  const PAGE_GREETINGS = [
+    { test: p => p.includes('amethyst'),
+      msgs: ['💜 อ่านเรื่องอเมทิสต์กันอยู่เหรอคะ? หินนี้ดีมากเลยนะ ช่วยเรื่องสมาธิและการนอนหลับได้ดีค่ะ',
+             '✨ อเมทิสต์หน้านี้ครบมากเลยค่ะ มีอะไรอยากถามเพิ่มไหมคะ?'] },
+    { test: p => p.includes('rose-quartz'),
+      msgs: ['🩷 โรสควอตซ์หินแห่งความรักค่ะ กำลังมองหาเพื่อตัวเองหรือให้คนพิเศษอยู่คะ?',
+             '💗 อ่านเรื่องโรสควอตซ์อยู่ใช่ไหมคะ? มีอะไรสงสัยถามได้เลยนะคะ'] },
+    { test: p => p.includes('black-tourmaline'),
+      msgs: ['🖤 ทัวร์มาลีนดำปกป้องพลังงานลบได้ดีมากเลยค่ะ กำลังมองหาหินปกป้องอยู่ใช่ไหมคะ?',
+             '🛡️ หน้านี้มีข้อมูลทัวร์มาลีนดำครบเลยนะคะ ถามเพิ่มได้เลยค่ะ'] },
+    { test: p => p.includes('moldavite'),
+      msgs: ['🌿 โมลดาไวท์มาจากอวกาศค่ะ พลังงานแรงมากๆ เลย พร้อมรับการเปลี่ยนแปลงแล้วใช่ไหมคะ?',
+             '☄️ สนใจโมลดาไวท์เหรอคะ? หินนี้เร่งพลังงานชีวิตได้มากเลยนะคะ'] },
+    { test: p => p.includes('chakra'),
+      msgs: ['🔮 กำลังเรียนรู้เรื่องจักระอยู่เหรอคะ? แต่ละจักระมีหินที่เหมาะกันต่างกันไปเลยค่ะ',
+             '✨ หน้าจักระนี้ครบมากเลยนะคะ อยากรู้เรื่องจักระไหนเป็นพิเศษไหมคะ?'] },
+    { test: p => p.includes('zodiac'),
+      msgs: ['⭐ กำลังดูหินตามราศีอยู่เหรอคะ? บอกราศีมาได้เลย ศิลาแนะนำให้ค่ะ',
+             '🌙 แต่ละราศีมีหินเสริมดวงต่างกันเลยนะคะ ราศีอะไรอยู่คะ?'] },
+    { test: p => p.includes('geode'),
+      msgs: ['💎 โพรงอเมทิสต์ที่นี่สวยมากเลยนะคะ มีคำถามเรื่องขนาดหรือการวางในบ้านไหมคะ?',
+             '🏠 กำลังเลือกโพรงอเมทิสต์อยู่ใช่ไหมคะ? ให้ศิลาช่วยแนะนำได้เลยค่ะ'] },
+    { test: p => p.includes('consign'),
+      msgs: ['🤝 อยากฝากขายหินกับ Amethez เหรอคะ? มีข้อสงสัยอะไรถามได้เลยนะคะ',
+             '💼 เรารับฝากขายหินหลายประเภทเลยค่ะ มีอะไรอยากรู้เพิ่มไหมคะ?'] },
+  ];
 
-  // ── STATE ────────────────────────────────────────────────────────
+  const DEFAULT_GREETINGS = [
+    'สวัสดีค่ะ 💜 ศิลาอยู่ตรงนี้เสมอเลยนะคะ มีอะไรอยากรู้เรื่องหินคริสตัลถามได้เลยค่ะ',
+    'ยินดีต้อนรับสู่ Amethez ค่ะ ✨ มีหินที่สนใจตัวไหนไหมคะ?',
+    'สวัสดีค่ะ 🔮 วันนี้กำลังมองหาหินเพื่ออะไรอยู่คะ?',
+  ];
+
+  function getPageGreeting() {
+    const p = location.pathname;
+    const match = PAGE_GREETINGS.find(pg => pg.test(p));
+    const pool = match ? match.msgs : DEFAULT_GREETINGS;
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  // ── HISTORY ──────────────────────────────────────────────────────
   let messages = [];
-  let hasGreeted = false;
-  let isLoading = false;
-  let panelOpen = false;
-  let products = [];
 
-  // ── HISTORY (localStorage) ───────────────────────────────────────
   function saveHistory() {
-    try {
-      localStorage.setItem(CONFIG.historyStore, JSON.stringify(messages.slice(-CONFIG.maxHistory)));
-    } catch {}
+    try { localStorage.setItem(CONFIG.historyStore, JSON.stringify(messages.slice(-CONFIG.maxHistory))); } catch {}
   }
 
   function loadHistory() {
@@ -68,25 +78,15 @@
     } catch { messages = []; }
   }
 
-  function clearHistory() {
-    messages = [];
-    localStorage.removeItem(CONFIG.historyStore);
-    document.getElementById('sila-msgs').innerHTML = '';
-    addBubble('bot', 'ลบประวัติแชทแล้วค่ะ 🌸 มีอะไรให้ช่วยใหม่ไหมคะ?');
-  }
-
-  function restoreUI() {
-    messages.forEach(m => addBubble(m.role === 'user' ? 'usr' : 'bot', m.content));
-  }
-
   // ── API ──────────────────────────────────────────────────────────
-  function getKey() {
-    return localStorage.getItem(CONFIG.keyStore) || '';
-  }
+  let isLoading = false;
+  let products = [];
+
+  function getKey() { return localStorage.getItem(CONFIG.keyStore) || ''; }
 
   async function callGroq(userMsg) {
     const key = getKey();
-    if (!key) return '⚙️ ยังไม่ได้ตั้งค่า API key ค่ะ ไปที่ [Admin Panel](/admin/) แล้วใส่ Groq key ที่แท็บ "ตั้งค่า" นะคะ';
+    if (!key) return '⚙️ ยังไม่ได้ตั้งค่า API key ค่ะ ไปที่ [Admin Panel](/admin/) แท็บ "ตั้งค่า" นะคะ';
 
     let productCtx = '';
     if (products.length) {
@@ -144,28 +144,16 @@
     return div;
   }
 
-  // ── DETECT PAGE CONTEXT ──────────────────────────────────────────
-  function detectGreeting() {
-    const p = location.pathname;
-    if (p.includes('amethyst')) return 'สวัสดีค่ะ 💜 กำลังอ่านเรื่องอเมทิสต์อยู่ใช่ไหมคะ? มีอะไรอยากรู้เพิ่มเติมไหมคะ';
-    if (p.includes('rose-quartz')) return 'สวัสดีค่ะ 🩷 โรสควอตซ์เป็นหินแห่งความรักนะคะ มีคำถามไหมคะ?';
-    if (p.includes('black-tourmaline')) return 'สวัสดีค่ะ 🖤 ทัวร์มาลีนดำช่วยปกป้องพลังงานได้ดีมากค่ะ';
-    if (p.includes('moldavite')) return 'สวัสดีค่ะ 🌿 โมลดาไวท์พลังงานแรงมากนะคะ พร้อมรับพลังงานใหม่แล้วใช่ไหมคะ?';
-    if (p.includes('chakra')) return 'สวัสดีค่ะ 🔮 อยากรู้เรื่องจักระกับหินที่เข้ากันไหมคะ?';
-    if (p.includes('geode')) return 'สวัสดีค่ะ 💎 สนใจโพรงอเมทิสต์อยู่ใช่ไหมคะ? มีคำถามได้เลยค่ะ';
-    if (p.includes('consign')) return 'สวัสดีค่ะ 🤝 อยากฝากขายหินกับเราใช่ไหมคะ? ถามได้เลยนะคะ';
-    return 'สวัสดีค่ะ 💜 ศิลาเป็นผู้ช่วยด้านหินคริสตัลของ Amethez ค่ะ มีอะไรให้ช่วยไหมคะ?';
-  }
+  // ── UI ───────────────────────────────────────────────────────────
+  let panelOpen = false;
 
-  // ── UI BUILD ─────────────────────────────────────────────────────
   function buildUI() {
     const style = document.createElement('style');
     style.textContent = `
       #sila-fab{position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;width:56px;height:56px;
         border-radius:50%;background:linear-gradient(135deg,#7c3aed,#5b21b6);
         border:none;cursor:pointer;box-shadow:0 4px 20px rgba(124,58,237,.45);
-        display:flex;align-items:center;justify-content:center;font-size:1.5rem;
-        transition:transform .2s;color:white;position:fixed;}
+        display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:white;}
       #sila-fab:hover{transform:scale(1.08);}
       #sila-notif{position:absolute;top:-3px;right:-3px;width:14px;height:14px;
         background:#ef4444;border-radius:50%;border:2px solid white;display:none;}
@@ -173,23 +161,23 @@
 
       #sila-panel{position:fixed;bottom:5rem;right:1.5rem;z-index:9998;
         width:350px;max-height:560px;background:white;border-radius:1.25rem;
-        box-shadow:0 20px 60px rgba(0,0,0,.2);display:none;flex-direction:column;
+        box-shadow:0 20px 60px rgba(0,0,0,.2);flex-direction:column;
         overflow:hidden;border:1px solid #ede8ff;font-family:'Sarabun',sans-serif;
-        transition:opacity .2s,transform .2s;}
+        display:none;}
       #sila-panel.open{display:flex;}
 
       .s-head{background:linear-gradient(135deg,#4c1d95,#7c3aed);padding:.85rem 1.1rem;
         display:flex;align-items:center;gap:.7rem;flex-shrink:0;}
-      .s-avatar{width:38px;height:38px;background:rgba(255,255,255,.2);
-        border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+      .s-avatar{width:38px;height:38px;background:rgba(255,255,255,.2);border-radius:50%;
+        display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
       .s-info{flex:1;min-width:0;}
       .s-name{color:white;font-weight:700;font-size:.9rem;}
       .s-status{color:rgba(255,255,255,.75);font-size:.72rem;display:flex;align-items:center;gap:.3rem;margin-top:1px;}
       .s-dot{width:6px;height:6px;background:#4ade80;border-radius:50%;flex-shrink:0;animation:s-pulse 2s infinite;}
       @keyframes s-pulse{0%,100%{opacity:1}50%{opacity:.4}}
-      .s-head-btns{display:flex;gap:.25rem;align-items:center;}
+      .s-head-btns{display:flex;gap:.2rem;}
       .s-hbtn{background:none;border:none;color:rgba(255,255,255,.65);cursor:pointer;
-        font-size:.85rem;padding:.3rem .4rem;border-radius:.35rem;line-height:1;transition:all .15s;}
+        font-size:.9rem;padding:.3rem .45rem;border-radius:.35rem;line-height:1;transition:all .15s;font-family:sans-serif;}
       .s-hbtn:hover{color:white;background:rgba(255,255,255,.15);}
 
       #sila-msgs{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;
@@ -200,6 +188,8 @@
       .s-bubble{max-width:86%;padding:.6rem .85rem;border-radius:1rem;font-size:.875rem;line-height:1.65;word-break:break-word;}
       .s-bubble.bot{background:#f5f0ff;color:#1a1228;border-radius:1rem 1rem 1rem .2rem;}
       .s-bubble.usr{background:#7c3aed;color:white;margin-left:auto;border-radius:1rem 1rem .2rem 1rem;}
+      .s-bubble.page-greet{background:#f0fdf4;border-left:3px solid #4ade80;border-radius:.5rem;
+        font-size:.82rem;color:#166534;max-width:100%;}
       .s-bubble.typing{background:#f5f0ff;}
       .s-dots{display:flex;gap:4px;align-items:center;padding:.15rem 0;}
       .s-dots span{width:7px;height:7px;background:#a78bfa;border-radius:50%;
@@ -208,7 +198,7 @@
       .s-dots span:nth-child(3){animation-delay:.3s;}
       @keyframes s-td{0%,80%,100%{transform:scale(.7);opacity:.4}40%{transform:scale(1);opacity:1}}
 
-      #sila-input-row{display:flex;gap:.5rem;padding:.65rem .75rem;border-top:1px solid #f0ebff;flex-shrink:0;background:white;}
+      #sila-input-row{display:flex;gap:.5rem;padding:.65rem .75rem;border-top:1px solid #f0ebff;flex-shrink:0;}
       #sila-inp{flex:1;border:1.5px solid #e5e7eb;border-radius:.7rem;padding:.5rem .8rem;
         font-size:.875rem;font-family:'Sarabun',sans-serif;outline:none;resize:none;
         max-height:80px;transition:border-color .2s;line-height:1.4;}
@@ -231,13 +221,12 @@
     fab.id = 'sila-fab';
     fab.setAttribute('aria-label', 'เปิดแชทศิลา');
     fab.innerHTML = `💎<span id="sila-notif"></span>`;
-    fab.onclick = togglePanel;
+    fab.addEventListener('click', togglePanel);
     document.body.appendChild(fab);
 
     // Panel
     const panel = document.createElement('div');
     panel.id = 'sila-panel';
-    panel.setAttribute('role', 'dialog');
     panel.innerHTML = `
       <div class="s-head">
         <div class="s-avatar">🔮</div>
@@ -246,20 +235,36 @@
           <div class="s-status"><span class="s-dot"></span>ผู้เชี่ยวชาญหินคริสตัล</div>
         </div>
         <div class="s-head-btns">
-          <button class="s-hbtn" onclick="silaClearHistory()" title="ล้างแชท">🗑</button>
-          <button class="s-hbtn" onclick="silaMinimize()" title="ย่อ">—</button>
+          <button class="s-hbtn" id="sila-clear-btn" title="ล้างแชท">🗑</button>
+          <button class="s-hbtn" id="sila-min-btn" title="ย่อ">&#8722;</button>
         </div>
       </div>
       <div id="sila-msgs"></div>
       <div id="sila-input-row">
         <textarea id="sila-inp" placeholder="ถามเรื่องหินคริสตัล..." rows="1"></textarea>
-        <button id="sila-send" onclick="silaSend()" aria-label="ส่ง">
+        <button id="sila-send" aria-label="ส่ง">
           <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg>
         </button>
-      </div>`;
+    </div>`;
     document.body.appendChild(panel);
 
-    const inp = document.getElementById('sila-inp');
+    // ใช้ addEventListener แทน onclick inline
+    panel.querySelector('#sila-min-btn').addEventListener('click', () => {
+      panelOpen = false;
+      panel.classList.remove('open');
+    });
+
+    panel.querySelector('#sila-clear-btn').addEventListener('click', () => {
+      if (!confirm('ล้างประวัติแชทกับศิลาทั้งหมด?')) return;
+      messages = [];
+      localStorage.removeItem(CONFIG.historyStore);
+      document.getElementById('sila-msgs').innerHTML = '';
+      addBubble('bot', 'ลบประวัติแชทแล้วค่ะ 🌸 มีอะไรให้ช่วยไหมคะ?');
+    });
+
+    panel.querySelector('#sila-send').addEventListener('click', silaSend);
+
+    const inp = panel.querySelector('#sila-inp');
     inp.addEventListener('input', () => {
       inp.style.height = 'auto';
       inp.style.height = Math.min(inp.scrollHeight, 80) + 'px';
@@ -269,48 +274,21 @@
     });
   }
 
-  // ── CONTROLS ─────────────────────────────────────────────────────
   function togglePanel() {
     panelOpen = !panelOpen;
-    document.getElementById('sila-panel').classList.toggle('open', panelOpen);
+    const panel = document.getElementById('sila-panel');
+    panel.classList.toggle('open', panelOpen);
     document.getElementById('sila-notif').classList.remove('show');
 
     if (panelOpen) {
-      if (!hasGreeted) {
-        hasGreeted = true;
-        if (messages.length === 0) {
-          setTimeout(() => {
-            addBubble('bot', detectGreeting());
-            messages.push({ role: 'sila', content: detectGreeting() });
-            saveHistory();
-          }, 250);
-        } else {
-          restoreUI();
-        }
-        if (!getKey()) {
-          setTimeout(() => addBubble('bot', '⚙️ ยังไม่ได้ตั้งค่า API key ค่ะ ไปที่ <a href="/admin/" style="color:#a78bfa">Admin Panel</a> แท็บ "ตั้งค่า" นะคะ'), 800);
-        }
-      }
-      setTimeout(() => document.getElementById('sila-inp')?.focus(), 200);
-      setTimeout(() => {
-        const msgs = document.getElementById('sila-msgs');
-        msgs.scrollTop = msgs.scrollHeight;
-      }, 100);
+      const msgs = document.getElementById('sila-msgs');
+      msgs.scrollTop = msgs.scrollHeight;
+      setTimeout(() => document.getElementById('sila-inp')?.focus(), 150);
     }
   }
 
-  window.silaMinimize = function () {
-    panelOpen = false;
-    document.getElementById('sila-panel').classList.remove('open');
-  };
-
-  window.silaClearHistory = function () {
-    if (!confirm('ล้างประวัติแชทกับศิลาทั้งหมด?')) return;
-    clearHistory();
-  };
-
   // ── SEND ─────────────────────────────────────────────────────────
-  window.silaSend = async function () {
+  async function silaSend() {
     if (isLoading) return;
     const inp = document.getElementById('sila-inp');
     const text = inp.value.trim();
@@ -338,29 +316,16 @@
       isLoading = false;
       document.getElementById('sila-send').disabled = false;
     }
-  };
+  }
+
+  window.silaSend = silaSend;
 
   // ── LOAD PRODUCTS ────────────────────────────────────────────────
   async function loadProducts() {
     try {
       const res = await fetch('/data/products.json');
-      const data = await res.json();
-      products = data.products || [];
+      products = (await res.json()).products || [];
     } catch { products = []; }
-  }
-
-  // ── NOTIF ────────────────────────────────────────────────────────
-  function scheduleNotif() {
-    setTimeout(() => {
-      if (!panelOpen) document.getElementById('sila-notif')?.classList.add('show');
-    }, CONFIG.greetDelay);
-
-    let done = false;
-    window.addEventListener('scroll', () => {
-      if (done || panelOpen) return;
-      const ratio = window.scrollY / (document.body.scrollHeight - window.innerHeight || 1);
-      if (ratio > CONFIG.scrollTrigger) { done = true; document.getElementById('sila-notif')?.classList.add('show'); }
-    }, { passive: true });
   }
 
   // ── BOOT ────────────────────────────────────────────────────────
@@ -368,8 +333,30 @@
     loadHistory();
     buildUI();
     loadProducts();
-    scheduleNotif();
-    if (messages.length > 0) hasGreeted = true;
+
+    // Restore previous messages
+    if (messages.length > 0) {
+      messages.forEach(m => addBubble(m.role === 'user' ? 'usr' : 'bot', m.content));
+    }
+
+    // Page greeting — ทักทายทุกหน้า เหมือนเพื่อนเดินด้วยกัน
+    const greeting = getPageGreeting();
+    const greetEl = addBubble('page-greet', greeting);
+    // เก็บ greeting ไว้ใน messages ด้วยเพื่อให้ AI มี context
+    messages.push({ role: 'sila', content: greeting });
+    saveHistory();
+
+    // Notif dot หลัง 20s ถ้าไม่ได้เปิด
+    setTimeout(() => {
+      if (!panelOpen) document.getElementById('sila-notif')?.classList.add('show');
+    }, 20000);
+
+    let scrollDone = false;
+    window.addEventListener('scroll', () => {
+      if (scrollDone || panelOpen) return;
+      const ratio = window.scrollY / (document.body.scrollHeight - window.innerHeight || 1);
+      if (ratio > 0.35) { scrollDone = true; document.getElementById('sila-notif')?.classList.add('show'); }
+    }, { passive: true });
   }
 
   if (document.readyState === 'loading') {
