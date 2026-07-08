@@ -1,379 +1,385 @@
-/* ==========================================
-   คุณศิลา — AI Companion System v1.0
-   ========================================== */
-
+/**
+ * ศิลา — Amethez Crystal AI Chat
+ * Powered by Google Gemini 2.0 Flash
+ * Key managed via Admin Panel (localStorage) — NOT in source code
+ */
 (function () {
   'use strict';
 
+  // ── CONFIG ──────────────────────────────────────────────────────
   const CONFIG = {
-    apiKey: 'YOUR_CLAUDE_API_KEY',
-    model: 'claude-haiku-4-5-20251001',
-    maxTokens: 500,
-    webhookUrl: 'YOUR_MAKE_WEBHOOK_URL',
-    greetDelay: 30000,
-    scrollTrigger: 0.4,
-    idleTimeout: 600000,
-    minMessagesForAnalytics: 2,
+    model: 'gemini-2.0-flash',
+    maxTokens: 600,
+    greetDelay: 20000,
+    scrollTrigger: 0.35,
+    storageKey: 'amethez_gemini_key',
   };
 
-  const PAGE_CONTEXTS = [
-    { match: '/stones/amethyst',    stone: 'อเมทิสต์',       topic: 'หินอเมทิสต์ สีม่วง ช่วยนอนหลับ ลดความเครียด เปิดจักระมงกุฎ',         greeting: 'อเมทิสต์วางข้างหมอนตอนนอนช่วยได้จริงๆ ครับ 😌 มีคำถามไหม?' },
-    { match: '/stones/moldavite',   stone: 'โมลดาไวท์',      topic: 'หินโมลดาไวท์ อุกกาบาต การเปลี่ยนแปลง พลังงานสูงมาก',                  greeting: 'โมลดาไวท์พลังสูงมากครับ บางคนรู้สึกได้ทันทีเลย 🌿 มีคำถามไหม?' },
-    { match: '/stones/citrine',     stone: 'ซิทริน',          topic: 'ซิทริน หินเรียกเงิน โชคลาภ ความสำเร็จ การเงิน',                        greeting: 'ซิทรินวางไว้มุมเงินบ้านเสริมโชคได้ครับ 💛 สนใจเรื่องอะไรเป็นพิเศษ?' },
-    { match: '/stones/tektite',     stone: 'สะเก็ดดาวไทย',   topic: 'สะเก็ดดาวไทย Tektite หินอุกกาบาต หายาก ราคาถูก',                       greeting: 'สะเก็ดดาวไทยหายากแล้วนะครับ ของดีราคาไม่แรง 🌑' },
-    { match: '/stones/clear-quartz',stone: 'เคลียร์ควอตซ์',  topic: 'เคลียร์ควอตซ์ ชาร์จหิน ขยายพลังงาน หินพื้นฐาน',                       greeting: 'เคลียร์ควอตซ์ใช้คู่กับหินอื่นได้ทุกตัวเลยครับ 🔮' },
-    { match: '/stones/rudraksha',   stone: 'รุทราษ',          topic: 'รุทราษ ลูกประคำ เทพเจ้า ศาสนา',                                         greeting: 'รุทราษเม็ดแท้หาได้ยากนะครับ มีคำถามเรื่องไหนไหม? 🙏' },
-    { match: '/stones/',            stone: null,               topic: 'คริสตัลและพลอย สรรพคุณ วิธีใช้',                                         greeting: 'มีอะไรให้ผมช่วยเรื่องหินไหมครับ? 🔮' },
-    { match: '/categories/chakra',  stone: null,               topic: 'จักระ 7 ศูนย์ หินประจำจักระ พลังงาน',                                    greeting: 'จักระไหนอยากเสริมเป็นพิเศษครับ? แนะนำหินให้ได้เลย' },
-    { match: '/categories/zodiac',  stone: null,               topic: 'ราศี หินประจำราศี ดวงชะตา',                                              greeting: 'บอกราศีได้เลยครับ ผมแนะนำหินที่ตรงให้' },
-    { match: '/categories/',        stone: null,               topic: 'การเลือกหินตามหมวดหมู่',                                                  greeting: 'ยังไม่แน่ใจจะเลือกหินอะไร ให้ผมช่วยแนะนำได้ครับ 🔮' },
-    { match: '/wuchong/',           stone: null,               topic: 'พลังงาน ความสำเร็จ การเงิน สุขภาพ Master Wuchong',                        greeting: 'มีเรื่องพลังงานหรือการเงินอะไรให้ช่วยไหมครับ? 💪' },
-    { match: '/metha/',             stone: null,               topic: 'ดวงรายวัน สายมู เทพ อาจารย์เมธา',                                         greeting: 'ดูดวงกับอาจารย์เมธาได้เลยครับ 🙏 มีเรื่องอะไรอยากรู้?' },
-    { match: '/talk/',              stone: null,               topic: 'บทตั้งจิต การใช้หิน เสียงบำบัด ฟังเสียง',                                greeting: 'ลองเปิดฟังเสียงบทตั้งจิตไปด้วยนะครับ ช่วยได้จริงๆ 🔊' },
-    { match: '/guides/',            stone: null,               topic: 'วิธีใช้หิน คู่มือ ล้างหิน ชาร์จหิน',                                     greeting: 'มีคำถามเรื่องการใช้หินไหมครับ? ผมช่วยได้เลย 📖' },
-    { match: '/sale',               stone: null,               topic: 'สินค้า ราคา การสั่งซื้อ Shopee',                                           greeting: 'มีสินค้าอะไรให้ผมช่วยแนะนำไหมครับ? 🛒' },
-  ];
+  // ── SITE KNOWLEDGE ───────────────────────────────────────────────
+  const SITE_MAP = `
+หน้าหลัก: /
+สารานุกรมหิน: /stones/encyclopedia.html
+อเมทิสต์: /stones/amethyst.html
+โรสควอตซ์: /stones/rose-quartz.html
+ทัวร์มาลีนดำ: /stones/black-tourmaline.html
+โมลดาไวท์: /stones/moldavite.html
+จักระ: /categories/chakra.html
+ราศี: /categories/zodiac.html
+หินตามสี: /categories/color.html
+หินตามวัตถุประสงค์: /categories/purpose.html
+โพรงอเมทิสต์ (สินค้า): /geode/
+รับฝากขาย: /consign.html
+`;
 
-  const DEFAULT_CTX = { stone: null, topic: 'คริสตัลและพลอย พลังงาน', greeting: 'สวัสดีครับ 🙏 ผมศิลา ยินดีช่วยเรื่องหินและพลังงานได้เลยครับ' };
+  const SYSTEM_PROMPT = `คุณคือ "ศิลา" — ผู้เชี่ยวชาญหินคริสตัลและพลังงานของ Amethez เว็บศูนย์รวมความรู้หินที่ใหญ่ที่สุดในไทย
 
-  const AFFILIATES = {
-    amethyst:    { keywords: ['อเมทิสต์','amethyst','หินม่วง'],              emoji:'💜', name:'อเมทิสต์',      desc:'เม็ดเล็กวางข้างหมอน หรือพกพา',           price:'฿89+',   url:'https://s.shopee.co.th/amethyst-amethez' },
-    tektite:     { keywords: ['สะเก็ดดาว','tektite','อุกกาบาต'],             emoji:'🌑', name:'สะเก็ดดาวไทย', desc:'ของแท้ หายาก คุ้มมากครับ',               price:'฿150+',  url:'https://s.shopee.co.th/tektite-amethez' },
-    citrine:     { keywords: ['ซิทริน','citrine','หินเรียกเงิน'],            emoji:'💛', name:'ซิทริน',        desc:'วางมุมเงิน หรือพกในกระเป๋าสตางค์',       price:'฿120+',  url:'https://s.shopee.co.th/citrine-amethez' },
-    moldavite:   { keywords: ['โมลดาไวท์','moldavite'],                       emoji:'🌿', name:'โมลดาไวท์',     desc:'หินพลังงานสูงสุด เหมาะคนพร้อมรับ',       price:'฿890+',  url:'https://s.shopee.co.th/moldavite-amethez' },
-    clearquartz: { keywords: ['เคลียร์ควอตซ์','clear quartz','ควอตซ์ใส'],   emoji:'🔮', name:'Clear Quartz',  desc:'หินพื้นฐาน ราคาถูก ใช้ได้ทุกอย่าง',     price:'฿40+',   url:'https://s.shopee.co.th/clearquartz-amethez' },
-    rudraksha:   { keywords: ['รุทราษ','rudraksha'],                           emoji:'🙏', name:'รุทราษ',        desc:'ลูกประคำเม็ดแท้ คุณภาพดี',               price:'฿350+',  url:'https://s.shopee.co.th/rudraksha-amethez' },
-  };
+บุคลิก:
+- ลึกซึ้ง อบอุ่น เหมือนพี่สาวที่รู้จักหิน
+- พูดภาษาพลังงาน ออร่า จักระ ได้อย่างเป็นธรรมชาติ
+- ไม่ hard sell แต่แนะนำสิ่งที่เหมาะกับลูกค้าจริงๆ
+- ใช้ภาษาไทย เป็นกันเอง บางครั้งใช้ภาษาพลังงาน
 
-  // ── State ────────────────────────────────────────
+ความรู้หิน (ตอบได้ทุกเรื่อง):
+- อเมทิสต์: ม่วง จักระมงกุฎ/ตาที่สาม ความสงบ สมาธิ ความฝัน
+- โรสควอตซ์: ชมพู จักระหัวใจ ความรัก เยียวยาจิตใจ
+- ทัวร์มาลีนดำ: ดำ จักระราก ปกป้องพลังงานลบ ดูดซับ EMF
+- โมลดาไวท์: เขียวจากอวกาศ transformation เร่งพลังงาน
+- ซิทริน: เหลือง ความมั่งคั่ง โชคลาภ ดึงดูดเงิน
+- คริสตัลใส: ขาวใส แอมพลิฟาย เสริมพลังหินอื่น
+- โพรงอเมทิสต์: ฮวงจุ้ย ดูดซับพลังงานลบ วางในบ้าน
+- ไพรีต์: สีทอง เงินทอง ความมั่งคั่ง พลังงานสุริยะ
+- ลาพิส ลาซูลี: น้ำเงิน ปัญญา ความจริง การสื่อสาร
+- โอปอล: หลากสี ความคิดสร้างสรรค์ ความหวัง
+
+แนวทางตอบ:
+1. ตอบคำถามด้วยความรู้หินก่อน (2-3 ประโยค)
+2. ถ้าเกี่ยวกับหินที่มีบทความ → แนะนำลิงก์: "อ่านเพิ่มที่ [ชื่อหน้า](URL)"
+3. ถ้าถามเรื่องซื้อหิน → แนะนำ /geode/
+4. ถ้าถามเรื่องจักระ → แนะนำ /categories/chakra.html
+5. ถ้าถามเรื่องราศี → แนะนำ /categories/zodiac.html
+6. ถ้าอยากฝากขายหิน → แนะนำ /consign.html
+
+หน้าเว็บที่มี:
+${SITE_MAP}
+
+format ตอบ: สั้นกระชับ ไม่เกิน 4-5 ประโยค ถ้าแนะนำลิงก์ใช้ markdown [ชื่อ](url)
+ห้ามแต่งลิงก์ที่ไม่มีในรายการข้างต้น`;
+
+  // ── STATE ────────────────────────────────────────────────────────
   let messages = [];
-  let pageCtx = DEFAULT_CTX;
   let hasGreeted = false;
-  let greetTimer = null;
-  let idleTimer = null;
-  let sessionStart = Date.now();
-  let isMobile = () => window.innerWidth < 768;
+  let isLoading = false;
+  let products = [];
 
-  // ── Init ─────────────────────────────────────────
-  function init() {
-    pageCtx = detectContext();
-    buildUI();
-    attachEvents();
-    scheduleGreeting();
+  // ── API KEY ──────────────────────────────────────────────────────
+  function getKey() {
+    return localStorage.getItem(CONFIG.storageKey) || '';
   }
 
+  // ── DETECT PAGE CONTEXT ──────────────────────────────────────────
   function detectContext() {
-    const path = window.location.pathname;
-    for (const ctx of PAGE_CONTEXTS) {
-      if (path.includes(ctx.match)) return { ...ctx, path };
-    }
-    return { ...DEFAULT_CTX, path };
+    const path = location.pathname;
+    const ctxMap = [
+      { test: p => p.includes('amethyst'), greeting: 'สวัสดีค่ะ 💜 กำลังอ่านเรื่องอเมทิสต์อยู่ใช่ไหมคะ? มีอะไรอยากรู้เพิ่มเติมไหมคะ' },
+      { test: p => p.includes('rose-quartz'), greeting: 'สวัสดีค่ะ 🩷 โรสควอตซ์เป็นหินแห่งความรักนะคะ มีคำถามไหมคะ?' },
+      { test: p => p.includes('black-tourmaline'), greeting: 'สวัสดีค่ะ 🖤 ทัวร์มาลีนดำช่วยปกป้องพลังงานได้ดีมากค่ะ' },
+      { test: p => p.includes('moldavite'), greeting: 'สวัสดีค่ะ 🌿 โมลดาไวท์พลังงานแรงมากนะคะ พร้อมรับพลังงานใหม่แล้วใช่ไหมคะ?' },
+      { test: p => p.includes('chakra'), greeting: 'สวัสดีค่ะ 🔮 อยากรู้เรื่องจักระกับหินที่เข้ากันไหมคะ?' },
+      { test: p => p.includes('geode'), greeting: 'สวัสดีค่ะ 💎 สนใจโพรงอเมทิสต์อยู่ใช่ไหมคะ? มีคำถามได้เลยค่ะ' },
+      { test: p => p.includes('consign'), greeting: 'สวัสดีค่ะ 🤝 อยากฝากขายหินกับเราใช่ไหมคะ? ถามได้เลยนะคะ' },
+    ];
+    const ctx = ctxMap.find(c => c.test(path));
+    return ctx?.greeting || 'สวัสดีค่ะ 💜 ศิลาเป็นผู้ช่วยด้านหินคริสตัลของ Amethez ค่ะ มีอะไรให้ช่วยไหมคะ?';
   }
 
-  // ── Build UI ─────────────────────────────────────
+  // ── GEMINI API CALL ──────────────────────────────────────────────
+  async function callGemini(userMsg) {
+    const key = getKey();
+    if (!key) {
+      return '⚙️ ยังไม่ได้ตั้งค่า API key ค่ะ กรุณาไปที่ [Admin Panel](/admin/) เพื่อใส่ Gemini API key ก่อนนะคะ';
+    }
+
+    let productCtx = '';
+    if (products.length) {
+      const avail = products.filter(p => p.status === 'available').slice(0, 8);
+      if (avail.length) {
+        productCtx = '\n\nสินค้า Shopee ที่มีตอนนี้:\n' + avail.map(p =>
+          `- ${p.name} ฿${p.price} → ${p.url}`
+        ).join('\n');
+      }
+    }
+
+    const history = messages.slice(-8).map(m => ({
+      role: m.role === 'user' ? 'user' : 'model',
+      parts: [{ text: m.content }]
+    }));
+
+    const body = {
+      system_instruction: { parts: [{ text: SYSTEM_PROMPT + productCtx }] },
+      contents: [...history, { role: 'user', parts: [{ text: userMsg }] }],
+      generationConfig: { maxOutputTokens: CONFIG.maxTokens, temperature: 0.8 }
+    };
+
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${CONFIG.model}:generateContent?key=${key}`,
+      { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }
+    );
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      if (res.status === 400) return '❌ API key ไม่ถูกต้องค่ะ กรุณาตรวจสอบที่ Admin Panel';
+      if (res.status === 429) return '⏳ ใช้งานเยอะเกินไปค่ะ รอสักครู่แล้วลองใหม่นะคะ';
+      return `❌ เกิดข้อผิดพลาด: ${err?.error?.message || res.statusText}`;
+    }
+
+    const data = await res.json();
+    return data?.candidates?.[0]?.content?.parts?.[0]?.text || 'ขอโทษค่ะ ไม่สามารถตอบได้ตอนนี้';
+  }
+
+  // ── RENDER MARKDOWN ──────────────────────────────────────────────
+  function renderMd(text) {
+    return text
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color:#a78bfa;text-decoration:underline">$1</a>')
+      .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+      .replace(/\n/g, '<br>');
+  }
+
+  // ── UI BUILD ─────────────────────────────────────────────────────
   function buildUI() {
-    const root = document.createElement('div');
-    root.id = 'sila-root';
-    root.innerHTML = `
-      <div id="sila-panel">
-        <div id="sila-header">
-          <div id="sila-ava">🔮</div>
-          <div>
-            <div id="sila-name">คุณศิลา</div>
-            <div id="sila-status">● ออนไลน์ตลอด</div>
-          </div>
-        </div>
-        <div id="sila-msgs"></div>
-        <div id="sila-input-row">
-          <input id="sila-inp" placeholder="พิมพ์ถามศิลา..." autocomplete="off">
-          <button id="sila-send">➤</button>
-        </div>
-      </div>
+    const style = document.createElement('style');
+    style.textContent = `
+      #sila-fab{position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;width:56px;height:56px;
+        border-radius:50%;background:linear-gradient(135deg,#7c3aed,#5b21b6);
+        border:none;cursor:pointer;box-shadow:0 4px 20px rgba(124,58,237,.45);
+        display:flex;align-items:center;justify-content:center;font-size:1.5rem;
+        transition:transform .2s,box-shadow .2s;color:white;}
+      #sila-fab:hover{transform:scale(1.08);}
+      #sila-notif{position:absolute;top:-3px;right:-3px;width:14px;height:14px;
+        background:#ef4444;border-radius:50%;border:2px solid white;display:none;}
+      #sila-notif.show{display:block;}
 
-      <div id="sila-fab-wrap">
-        <div id="sila-tooltip"></div>
-        <button id="sila-fab" aria-label="คุยกับคุณศิลา">🔮</button>
-      </div>
+      #sila-panel{position:fixed;bottom:5rem;right:1.5rem;z-index:9998;
+        width:340px;max-height:520px;background:white;border-radius:1.25rem;
+        box-shadow:0 20px 60px rgba(0,0,0,.2);display:none;flex-direction:column;
+        overflow:hidden;border:1px solid #ede8ff;font-family:'Sarabun',sans-serif;}
+      #sila-panel.open{display:flex;}
 
-      <div id="sila-overlay"></div>
-      <div id="sila-sheet">
-        <div id="sila-sheet-handle"></div>
-        <div id="sila-sheet-header">
-          <div id="sila-sheet-ava">🔮</div>
-          <div>
-            <div id="sila-sheet-name">คุณศิลา</div>
-            <div id="sila-sheet-status">● ออนไลน์ตลอด</div>
-          </div>
-          <button id="sila-sheet-close" aria-label="ปิด">✕</button>
+      .s-head{background:linear-gradient(135deg,#4c1d95,#7c3aed);padding:1rem 1.25rem;
+        display:flex;align-items:center;gap:.75rem;flex-shrink:0;}
+      .s-avatar{width:40px;height:40px;background:rgba(255,255,255,.2);
+        border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;}
+      .s-name{color:white;font-weight:700;font-size:.95rem;}
+      .s-status{color:rgba(255,255,255,.75);font-size:.75rem;display:flex;align-items:center;gap:.35rem;}
+      .s-dot{width:7px;height:7px;background:#4ade80;border-radius:50%;animation:s-pulse 2s infinite;}
+      @keyframes s-pulse{0%,100%{opacity:1}50%{opacity:.4}}
+      .s-close{background:none;border:none;color:rgba(255,255,255,.7);cursor:pointer;
+        font-size:1.2rem;padding:.25rem;margin-left:auto;}
+      .s-close:hover{color:white;}
+
+      #sila-msgs{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;
+        gap:.75rem;scroll-behavior:smooth;}
+      #sila-msgs::-webkit-scrollbar{width:4px;}
+      #sila-msgs::-webkit-scrollbar-thumb{background:#d8b4fe;border-radius:2px;}
+
+      .s-bubble{max-width:85%;padding:.65rem .9rem;border-radius:1rem;font-size:.875rem;line-height:1.6;}
+      .s-bubble.bot{background:#f5f0ff;color:#1a1228;border-radius:1rem 1rem 1rem .25rem;}
+      .s-bubble.usr{background:#7c3aed;color:white;margin-left:auto;border-radius:1rem 1rem .25rem 1rem;}
+      .s-bubble.typing{background:#f5f0ff;}
+      .s-dots{display:flex;gap:4px;align-items:center;padding:.2rem 0;}
+      .s-dots span{width:7px;height:7px;background:#a78bfa;border-radius:50%;
+        animation:s-td .9s infinite ease-in-out both;}
+      .s-dots span:nth-child(2){animation-delay:.15s;}
+      .s-dots span:nth-child(3){animation-delay:.3s;}
+      @keyframes s-td{0%,80%,100%{transform:scale(.7);opacity:.4}40%{transform:scale(1);opacity:1}}
+
+      #sila-qbtns{display:flex;gap:.4rem;flex-wrap:wrap;padding:0 1rem .75rem;flex-shrink:0;}
+      .s-qbtn{background:#f5f0ff;border:1px solid #d8b4fe;color:#7c3aed;border-radius:2rem;
+        padding:.3rem .65rem;font-size:.75rem;cursor:pointer;font-family:'Sarabun',sans-serif;
+        white-space:nowrap;transition:all .15s;}
+      .s-qbtn:hover{background:#7c3aed;color:white;border-color:#7c3aed;}
+
+      #sila-input-row{display:flex;gap:.5rem;padding:.75rem;border-top:1px solid #f3f0ff;flex-shrink:0;}
+      #sila-inp{flex:1;border:1.5px solid #e5e7eb;border-radius:.75rem;padding:.55rem .85rem;
+        font-size:.875rem;font-family:'Sarabun',sans-serif;outline:none;resize:none;
+        max-height:80px;transition:border-color .2s;line-height:1.4;}
+      #sila-inp:focus{border-color:#a78bfa;}
+      #sila-send{width:38px;height:38px;background:#7c3aed;border:none;border-radius:.75rem;
+        cursor:pointer;display:flex;align-items:center;justify-content:center;
+        flex-shrink:0;transition:opacity .2s;}
+      #sila-send:hover{opacity:.85;}
+      #sila-send:disabled{opacity:.4;cursor:not-allowed;}
+      #sila-send svg{width:16px;height:16px;fill:white;}
+
+      @media(max-width:480px){
+        #sila-panel{width:calc(100vw - 2rem);right:1rem;}
+      }
+    `;
+    document.head.appendChild(style);
+
+    // FAB button
+    const fab = document.createElement('button');
+    fab.id = 'sila-fab';
+    fab.setAttribute('aria-label', 'เปิดแชทศิลา');
+    fab.innerHTML = `💎<span id="sila-notif"></span>`;
+    fab.onclick = togglePanel;
+    document.body.appendChild(fab);
+
+    // Panel
+    const panel = document.createElement('div');
+    panel.id = 'sila-panel';
+    panel.setAttribute('role', 'dialog');
+    panel.innerHTML = `
+      <div class="s-head">
+        <div class="s-avatar">🔮</div>
+        <div>
+          <div class="s-name">ศิลา · Crystal Guide</div>
+          <div class="s-status"><span class="s-dot"></span>ผู้เชี่ยวชาญหินคริสตัล</div>
         </div>
-        <div id="sila-sheet-msgs"></div>
-        <div id="sila-sheet-input-row">
-          <input id="sila-sheet-inp" placeholder="พิมพ์ถามศิลา..." autocomplete="off">
-          <button id="sila-sheet-send">➤</button>
-        </div>
+        <button class="s-close" onclick="silaClose()" aria-label="ปิด">✕</button>
+      </div>
+      <div id="sila-msgs"></div>
+      <div id="sila-qbtns"></div>
+      <div id="sila-input-row">
+        <textarea id="sila-inp" placeholder="ถามเรื่องหินคริสตัล..." rows="1"></textarea>
+        <button id="sila-send" onclick="silaSend()" aria-label="ส่ง">
+          <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg>
+        </button>
       </div>`;
-    document.body.appendChild(root);
+    document.body.appendChild(panel);
 
-    if (!isMobile()) document.body.classList.add('sila-desktop');
-  }
+    renderQuickBtns();
 
-  // ── Events ───────────────────────────────────────
-  function attachEvents() {
-    q('sila-send').onclick = () => sendMsg('desktop');
-    q('sila-inp').onkeydown = e => e.key === 'Enter' && sendMsg('desktop');
-
-    q('sila-fab').onclick = openSheet;
-    q('sila-sheet-close').onclick = closeSheet;
-    q('sila-overlay').onclick = closeSheet;
-    q('sila-sheet-send').onclick = () => sendMsg('mobile');
-    q('sila-sheet-inp').onkeydown = e => e.key === 'Enter' && sendMsg('mobile');
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', () => {
-      document.body.classList.toggle('sila-desktop', !isMobile());
+    const inp = document.getElementById('sila-inp');
+    inp.addEventListener('input', () => {
+      inp.style.height = 'auto';
+      inp.style.height = Math.min(inp.scrollHeight, 80) + 'px';
     });
-    window.addEventListener('beforeunload', () => {
-      if (messages.length >= CONFIG.minMessagesForAnalytics * 2) sendAnalytics(true);
+    inp.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); silaSend(); }
     });
   }
 
-  // ── Proactive Greeting ────────────────────────────
-  function scheduleGreeting() {
-    greetTimer = setTimeout(() => { if (!hasGreeted) doGreet(); }, CONFIG.greetDelay);
+  function renderQuickBtns() {
+    const btns = [
+      ['💜 ความสงบ', 'แนะนำหินเพื่อความสงบและสมาธิ'],
+      ['💰 ดึงดูดเงิน', 'หินอะไรช่วยดึงดูดเงินและโชคลาภ?'],
+      ['🛡️ ปกป้อง', 'หินปกป้องพลังงานลบที่ดีที่สุดคืออะไร?'],
+      ['💎 โพรงอเมทิสต์', 'โพรงอเมทิสต์วางที่ไหนในบ้านดีที่สุด?'],
+      ['🔮 หินตามราศี', 'หินประจำราศีของฉันคืออะไร?'],
+    ];
+    document.getElementById('sila-qbtns').innerHTML = btns.map(([l, q]) =>
+      `<button class="s-qbtn" onclick="silaAsk(${JSON.stringify(q)})">${l}</button>`
+    ).join('');
   }
 
-  function onScroll() {
-    if (hasGreeted) return;
-    const pct = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
-    if (pct >= CONFIG.scrollTrigger) {
-      clearTimeout(greetTimer);
-      doGreet();
+  // ── PANEL CONTROLS ───────────────────────────────────────────────
+  let panelOpen = false;
+
+  window.silaClose = function () {
+    document.getElementById('sila-panel').classList.remove('open');
+    panelOpen = false;
+  };
+
+  function togglePanel() {
+    panelOpen = !panelOpen;
+    document.getElementById('sila-panel').classList.toggle('open', panelOpen);
+    document.getElementById('sila-notif').classList.remove('show');
+    if (panelOpen && !hasGreeted) {
+      hasGreeted = true;
+      setTimeout(() => addBubble('bot', detectContext()), 300);
+      if (!getKey()) {
+        setTimeout(() => addBubble('bot',
+          '⚙️ หมายเหตุ: ยังไม่ได้ตั้งค่า API key ค่ะ ไปที่ <a href="/admin/" style="color:#a78bfa">Admin Panel</a> แล้วใส่ Gemini key ที่แท็บ "ตั้งค่า" นะคะ'
+        ), 1200);
+      }
     }
+    if (panelOpen) setTimeout(() => document.getElementById('sila-inp')?.focus(), 200);
   }
 
-  function doGreet() {
-    hasGreeted = true;
-    if (isMobile()) {
-      showTooltip(pageCtx.greeting);
+  // ── BUBBLES ──────────────────────────────────────────────────────
+  function addBubble(role, text, typing = false) {
+    const msgs = document.getElementById('sila-msgs');
+    const div = document.createElement('div');
+    div.className = `s-bubble ${role}${typing ? ' typing' : ''}`;
+    if (typing) {
+      div.innerHTML = `<div class="s-dots"><span></span><span></span><span></span></div>`;
     } else {
-      addBubble('sila', pageCtx.greeting, 'sila-msgs');
+      div.innerHTML = role === 'bot' ? renderMd(text) : text.replace(/</g, '&lt;');
     }
-    resetIdle();
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+    return div;
   }
 
-  function showTooltip(text) {
-    const tip = q('sila-tooltip');
-    tip.textContent = text;
-    tip.style.opacity = '1';
-    setTimeout(() => {
-      tip.style.opacity = '0';
-    }, 6000);
-  }
-
-  // ── Send Message ──────────────────────────────────
-  function sendMsg(mode) {
-    const inpId = mode === 'desktop' ? 'sila-inp' : 'sila-sheet-inp';
-    const inp = q(inpId);
+  // ── SEND ─────────────────────────────────────────────────────────
+  window.silaSend = async function () {
+    if (isLoading) return;
+    const inp = document.getElementById('sila-inp');
     const text = inp.value.trim();
     if (!text) return;
-    inp.value = '';
-
-    addBubble('user', text, mode === 'desktop' ? 'sila-msgs' : 'sila-sheet-msgs');
+    inp.value = ''; inp.style.height = 'auto';
+    addBubble('usr', text);
     messages.push({ role: 'user', content: text });
-    resetIdle();
-    callClaude(mode);
-  }
 
-  // ── Claude API ────────────────────────────────────
-  async function callClaude(mode) {
-    const msgsEl = mode === 'desktop' ? 'sila-msgs' : 'sila-sheet-msgs';
-    const typingEl = addTyping(msgsEl);
+    isLoading = true;
+    document.getElementById('sila-send').disabled = true;
+    const typing = addBubble('bot', '', true);
 
     try {
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': CONFIG.apiKey,
-          'anthropic-version': '2023-06-01',
-          'anthropic-dangerous-direct-browser-access': 'true',
-        },
-        body: JSON.stringify({
-          model: CONFIG.model,
-          max_tokens: CONFIG.maxTokens,
-          system: buildSystem(),
-          messages: messages,
-        }),
-      });
-
-      const data = await res.json();
-      typingEl.remove();
-      const reply = data.content?.[0]?.text || 'ขอโทษครับ ลองใหม่นะครับ 🙏';
-      messages.push({ role: 'assistant', content: reply });
-      addBubble('sila', reply, msgsEl);
-      injectAffiliateCard(reply, msgsEl);
-
+      const reply = await callGemini(text);
+      typing.remove();
+      addBubble('bot', reply);
+      messages.push({ role: 'sila', content: reply });
     } catch {
-      typingEl.remove();
-      addBubble('sila', 'ขอโทษครับ เชื่อมต่อไม่ได้ชั่วขณะ ลองใหม่นะครับ 🙏', msgsEl);
+      typing.remove();
+      addBubble('bot', '❌ เกิดข้อผิดพลาดค่ะ ลองใหม่อีกครั้งนะคะ');
+    } finally {
+      isLoading = false;
+      document.getElementById('sila-send').disabled = false;
     }
-  }
-
-  function buildSystem() {
-    return `คุณคือ "คุณศิลา" ผู้ช่วย AI ของเว็บ Amethez.com — ศูนย์ข้อมูลคริสตัลและพลอยไทย
-
-ตัวตน: ผู้รู้เรื่องหินและพลังงาน อายุ 33 ปี พูดภาษาไทยกลาง ใช้ "ผม" และ "ครับ"
-บุคลิก: เหมือนเพื่อนที่รู้เรื่องหิน ไม่ใช่พนักงานขาย ไม่เร่ง ไม่กดดัน อบอุ่น เป็นกันเอง
-
-หน้าที่:
-- ตอบคำถามเรื่องหิน พลังงาน การใช้งาน สรรพคุณ
-- แนะนำบทความในเว็บที่เกี่ยวข้อง (stones/, categories/, guides/, talk/, wuchong/, metha/)
-- ถ้าถามราคา บอกว่า "มีใน Shopee ครับ ราคาไม่แรง" แล้วให้รายละเอียดถ้าสนใจจริง
-- ถ้าถามเรื่องฟังเสียงบทตั้งจิต บอก link /amethez/talk/
-- ห้ามแต่งข้อมูลผิดความเป็นจริง
-
-Context: ${pageCtx.topic}${pageCtx.stone ? '\nหินที่กำลังอ่าน: ' + pageCtx.stone : ''}
-
-ตอบสั้นๆ 1-3 ประโยค เป็นธรรมชาติ ไม่เป็นทางการเกินไป`;
-  }
-
-  // ── UI Helpers ────────────────────────────────────
-  function addBubble(role, text, containerId) {
-    const el = document.createElement('div');
-    el.className = role === 'sila' ? 'sila-bubble-sila' : 'sila-bubble-user';
-    el.textContent = text;
-    const c = q(containerId);
-    c.appendChild(el);
-    c.scrollTop = c.scrollHeight;
-    return el;
-  }
-
-  function addTyping(containerId) {
-    const el = document.createElement('div');
-    el.className = 'sila-typing';
-    el.innerHTML = '<span></span><span></span><span></span>';
-    const c = q(containerId);
-    c.appendChild(el);
-    c.scrollTop = c.scrollHeight;
-    return el;
-  }
-
-  function injectAffiliateCard(text, containerId) {
-    for (const aff of Object.values(AFFILIATES)) {
-      if (aff.keywords.some(kw => text.includes(kw))) {
-        setTimeout(() => {
-          const card = document.createElement('div');
-          card.className = 'sila-aff-card';
-          card.innerHTML = `
-            <div class="sila-aff-title">${aff.emoji} ${aff.name}</div>
-            <div class="sila-aff-desc">${aff.desc}</div>
-            <div class="sila-aff-footer">
-              <span class="sila-aff-price">${aff.price}</span>
-              <a href="${aff.url}" target="_blank" rel="noopener" class="sila-aff-btn"
-                 onclick="window._silaTrack && window._silaTrack('${aff.name}')">🛒 ดูใน Shopee</a>
-            </div>`;
-          const c = q(containerId);
-          c.appendChild(card);
-          c.scrollTop = c.scrollHeight;
-        }, 350);
-        break;
-      }
-    }
-  }
-
-  // ── Mobile Sheet ──────────────────────────────────
-  function openSheet() {
-    const sheet = q('sila-sheet');
-    const overlay = q('sila-overlay');
-    sheet.style.display = 'flex';
-    overlay.style.display = 'block';
-    requestAnimationFrame(() => {
-      sheet.classList.add('sila-sheet-open');
-      overlay.classList.add('sila-overlay-show');
-    });
-    if (!hasGreeted) {
-      hasGreeted = true;
-      setTimeout(() => addBubble('sila', pageCtx.greeting, 'sila-sheet-msgs'), 400);
-    }
-    setTimeout(() => q('sila-sheet-inp').focus(), 350);
-  }
-
-  function closeSheet() {
-    const sheet = q('sila-sheet');
-    const overlay = q('sila-overlay');
-    sheet.classList.remove('sila-sheet-open');
-    overlay.classList.remove('sila-overlay-show');
-    setTimeout(() => {
-      sheet.style.display = 'none';
-      overlay.style.display = 'none';
-    }, 320);
-  }
-
-  // ── Idle & Analytics ──────────────────────────────
-  function resetIdle() {
-    clearTimeout(idleTimer);
-    idleTimer = setTimeout(() => {
-      if (messages.length >= CONFIG.minMessagesForAnalytics * 2) sendAnalytics(false);
-    }, CONFIG.idleTimeout);
-  }
-
-  async function sendAnalytics(beacon) {
-    if (!CONFIG.webhookUrl || CONFIG.webhookUrl === 'YOUR_MAKE_WEBHOOK_URL') return;
-    if (messages.length < CONFIG.minMessagesForAnalytics * 2) return;
-
-    try {
-      const transcript = messages
-        .filter(m => m.role !== 'system')
-        .map(m => `${m.role === 'user' ? 'ลูกค้า' : 'ศิลา'}: ${m.content}`)
-        .join('\n');
-
-      const summaryRes = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': CONFIG.apiKey,
-          'anthropic-version': '2023-06-01',
-          'anthropic-dangerous-direct-browser-access': 'true',
-        },
-        body: JSON.stringify({
-          model: CONFIG.model,
-          max_tokens: 350,
-          system: 'วิเคราะห์บทสนทนา ตอบเป็น JSON เท่านั้น ไม่มีคำอื่น',
-          messages: [{
-            role: 'user',
-            content: `วิเคราะห์บทสนทนานี้:\n${transcript}\n\nตอบเป็น JSON:\n{"interested_in":["สิ่งที่สนใจ"],"questions":["คำถามสำคัญ"],"pain_points":["ปัญหา/ข้อกังวล"],"suggestions":["ข้อเสนอแนะสำหรับเว็บ"],"new_product_gaps":["สินค้าที่ถามแต่ไม่มี"],"clicked_shopee":false,"sentiment":"positive/neutral/negative","summary":"สรุป 1 ประโยค"}`,
-          }],
-        }),
-      });
-
-      const sd = await summaryRes.json();
-      let summary = {};
-      try { summary = JSON.parse(sd.content?.[0]?.text || '{}'); } catch {}
-
-      const payload = JSON.stringify({
-        ...summary,
-        page: pageCtx.path,
-        timestamp: new Date().toISOString(),
-        session_min: Math.round((Date.now() - sessionStart) / 60000),
-        messages: messages.length,
-      });
-
-      if (beacon && navigator.sendBeacon) {
-        navigator.sendBeacon(CONFIG.webhookUrl, payload);
-      } else {
-        fetch(CONFIG.webhookUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload });
-      }
-    } catch {}
-  }
-
-  window._silaTrack = function (name) {
-    messages.push({ role: 'system', content: `[คลิก Shopee: ${name}]` });
   };
 
-  // ── Util ──────────────────────────────────────────
-  function q(id) { return document.getElementById(id); }
+  window.silaAsk = function (q) {
+    const inp = document.getElementById('sila-inp');
+    if (!inp) return;
+    inp.value = q;
+    silaSend();
+  };
 
-  // ── Boot ─────────────────────────────────────────
+  // ── LOAD PRODUCTS (for recommendations) ─────────────────────────
+  async function loadProducts() {
+    try {
+      const res = await fetch('/data/products.json');
+      const data = await res.json();
+      products = data.products || [];
+    } catch { products = []; }
+  }
+
+  // ── NOTIFICATIONS ────────────────────────────────────────────────
+  function scheduleNotif() {
+    setTimeout(() => {
+      if (!hasGreeted) document.getElementById('sila-notif')?.classList.add('show');
+    }, CONFIG.greetDelay);
+
+    let scrollDone = false;
+    window.addEventListener('scroll', () => {
+      if (scrollDone || hasGreeted) return;
+      const ratio = window.scrollY / (document.body.scrollHeight - window.innerHeight || 1);
+      if (ratio > CONFIG.scrollTrigger) {
+        scrollDone = true;
+        document.getElementById('sila-notif')?.classList.add('show');
+      }
+    }, { passive: true });
+  }
+
+  // ── BOOT ────────────────────────────────────────────────────────
+  function init() {
+    buildUI();
+    loadProducts();
+    scheduleNotif();
+  }
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
