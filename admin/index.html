@@ -125,10 +125,23 @@ textarea.form-input{resize:vertical;min-height:80px;}
 /* ── MODAL ── */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:center;justify-content:center;padding:1rem;}
 .modal-overlay.open{display:flex;}
-.modal{background:white;border-radius:1rem;padding:1.75rem;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;}
-.modal h3{font-size:1.05rem;font-weight:700;margin-bottom:1.25rem;}
-.modal-actions{display:flex;gap:.75rem;justify-content:flex-end;margin-top:1.5rem;}
-.img-modal-preview{width:100%;height:180px;object-fit:contain;border-radius:.5rem;background:#f5f0ff;margin:1rem 0;display:none;}
+.modal{background:white;border-radius:1rem;padding:1.75rem;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;}
+.modal h3{font-size:1.05rem;font-weight:700;margin-bottom:.5rem;}
+.modal-actions{display:flex;gap:.75rem;justify-content:flex-end;margin-top:1.25rem;flex-wrap:wrap;}
+.img-modal-preview{width:100%;height:220px;object-fit:contain;border-radius:.75rem;background:#f5f0ff;margin:.75rem 0 0;display:none;}
+.img-upload-zone{border:2px dashed #d8b4fe;border-radius:.75rem;padding:2.5rem 1rem;text-align:center;cursor:pointer;transition:all .2s;background:#faf8ff;margin:.75rem 0;}
+.img-upload-zone:hover,.img-upload-zone.drag{border-color:#7c3aed;background:#f0ebff;}
+.img-upload-zone .uz-icon{font-size:2.5rem;margin-bottom:.5rem;}
+.img-upload-zone .uz-title{font-weight:600;color:#4c1d95;font-size:.95rem;}
+.img-upload-zone .uz-sub{font-size:.8rem;color:#9ca3af;margin-top:.25rem;}
+.img-url-toggle{font-size:.78rem;color:#7c3aed;cursor:pointer;text-decoration:underline;display:inline-block;margin-top:.4rem;}
+.img-url-row{display:none;margin-top:.6rem;gap:.4rem;align-items:center;}
+.img-url-row.show{display:flex;}
+.img-url-row input{flex:1;}
+.img-preview-wrap{position:relative;margin:.75rem 0 0;display:none;}
+.img-preview-wrap.show{display:block;}
+.img-preview-wrap img{width:100%;height:220px;object-fit:contain;border-radius:.75rem;background:#f5f0ff;display:block;}
+.img-preview-wrap .img-rm{position:absolute;top:.5rem;right:.5rem;background:rgba(0,0,0,.5);color:white;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;}
 
 /* ── QUICK GRID ── */
 .quick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;}
@@ -366,11 +379,30 @@ textarea.form-input{resize:vertical;min-height:80px;}
 <div class="modal-overlay" id="imgModal">
   <div class="modal">
     <h3 id="imgModalTitle">ตั้งค่ารูปภาพ</h3>
-    <div id="imgModalMeta" style="font-size:.8rem;color:#9ca3af;margin-bottom:1rem;"></div>
-    <label class="fl">URL รูปภาพ</label>
-    <input class="form-input" id="imgModalUrl" placeholder="https://..." style="width:100%;margin-top:.35rem" oninput="previewMImg(this.value)">
-    <img id="imgModalPreview" class="img-modal-preview">
-    <div id="imgModalPromptBox" style="margin-top:1rem;"></div>
+    <div id="imgModalMeta" style="font-size:.8rem;color:#9ca3af;margin-bottom:.75rem;"></div>
+
+    <!-- Upload zone -->
+    <div class="img-upload-zone" id="imgDropZone">
+      <input type="file" id="imgFileInput" accept="image/*" style="display:none">
+      <div class="uz-icon">🖼️</div>
+      <div class="uz-title">คลิกเพื่อเลือกรูป หรือลากวางที่นี่</div>
+      <div class="uz-sub">PNG · JPG · WEBP · GIF — รูปจะถูกเก็บใน browser</div>
+    </div>
+
+    <!-- URL fallback -->
+    <span class="img-url-toggle" id="imgUrlToggle">📎 ใส่ URL แทน</span>
+    <div class="img-url-row" id="imgUrlRow">
+      <input class="form-input" id="imgModalUrl" placeholder="https://..." style="font-size:.85rem">
+      <button class="btn btn-outline btn-sm" onclick="applyUrlInput()">ใช้</button>
+    </div>
+
+    <!-- Preview -->
+    <div class="img-preview-wrap" id="imgPreviewWrap">
+      <img id="imgModalPreview" src="" alt="preview">
+      <button class="img-rm" id="imgRemoveBtn" title="เอารูปออก">✕</button>
+    </div>
+
+    <div id="imgModalPromptBox" style="margin-top:.75rem;"></div>
     <div class="modal-actions">
       <button class="btn btn-outline" onclick="closeImgModal()">ยกเลิก</button>
       <button class="btn btn-danger btn-sm" onclick="clearSlot()">🗑 ลบรูป</button>
@@ -640,25 +672,110 @@ function openSlot(id){
   document.getElementById('imgModal').classList.add('open');
   setTimeout(()=>document.getElementById('imgModalUrl').focus(),100);
 }
-function closeImgModal(){ document.getElementById('imgModal').classList.remove('open'); curSlot=null; }
-function previewMImg(url){
-  const el=document.getElementById('imgModalPreview');
-  if(url&&(url.startsWith('http')||url.startsWith('/'))){ el.src=url; el.style.display='block'; el.onerror=()=>el.style.display='none'; }
-  else el.style.display='none';
+function closeImgModal(){ document.getElementById('imgModal').classList.remove('open'); curSlot=null; _pendingImgData=''; }
+
+// ── IMAGE UPLOAD SYSTEM ──────────────────────────────────────────
+let _pendingImgData = '';
+
+function setImgPreview(src){
+  _pendingImgData = src;
+  const wrap=document.getElementById('imgPreviewWrap');
+  const img=document.getElementById('imgModalPreview');
+  if(src){ img.src=src; wrap.classList.add('show'); }
+  else { img.src=''; wrap.classList.remove('show'); }
 }
+
+function applyUrlInput(){
+  const url=document.getElementById('imgModalUrl').value.trim();
+  if(!url) return;
+  setImgPreview(url);
+}
+
+function initImgModal(){
+  const zone=document.getElementById('imgDropZone');
+  const fileInput=document.getElementById('imgFileInput');
+  const urlToggle=document.getElementById('imgUrlToggle');
+  const urlRow=document.getElementById('imgUrlRow');
+  const removeBtn=document.getElementById('imgRemoveBtn');
+
+  // Click zone → open file picker
+  zone.addEventListener('click',()=>fileInput.click());
+
+  // File selected
+  fileInput.addEventListener('change',()=>{
+    const file=fileInput.files[0]; if(!file) return;
+    readFile(file);
+    fileInput.value='';
+  });
+
+  // Drag & drop
+  zone.addEventListener('dragover',e=>{ e.preventDefault(); zone.classList.add('drag'); });
+  zone.addEventListener('dragleave',()=>zone.classList.remove('drag'));
+  zone.addEventListener('drop',e=>{
+    e.preventDefault(); zone.classList.remove('drag');
+    const file=e.dataTransfer.files[0]; if(!file||!file.type.startsWith('image/')) return;
+    readFile(file);
+  });
+
+  // Paste image from clipboard (Ctrl+V)
+  document.addEventListener('paste',e=>{
+    if(!document.getElementById('imgModal').classList.contains('open')) return;
+    const item=Array.from(e.clipboardData.items).find(i=>i.type.startsWith('image/'));
+    if(item) readFile(item.getAsFile());
+  });
+
+  // Toggle URL input
+  urlToggle.addEventListener('click',()=>urlRow.classList.toggle('show'));
+
+  // Remove preview
+  removeBtn.addEventListener('click',()=>{ setImgPreview(''); document.getElementById('imgModalUrl').value=''; });
+}
+
+function readFile(file){
+  // warn if too large (>3MB raw → base64 ~4MB)
+  if(file.size > 3*1024*1024){
+    if(!confirm(`รูปขนาด ${(file.size/1024/1024).toFixed(1)}MB อาจใช้พื้นที่ browser เยอะ ดำเนินการต่อไหม?`)) return;
+  }
+  const reader=new FileReader();
+  reader.onload=e=>setImgPreview(e.target.result);
+  reader.readAsDataURL(file);
+}
+
+function openImgModal(id){
+  curSlot=id;
+  const s=SLOTS.find(z=>z.id===id);
+  const url=getImgs()[id]||'';
+  _pendingImgData='';
+  document.getElementById('imgModalTitle').textContent='รูป: '+s.label;
+  document.getElementById('imgModalMeta').textContent=`หน้า: ${s.page} · ขนาด: ${s.size}`;
+  document.getElementById('imgModalUrl').value='';
+  document.getElementById('imgUrlRow').classList.remove('show');
+  setImgPreview(url);
+  document.getElementById('imgModalPromptBox').innerHTML=`
+    <div style="margin-top:.75rem">
+      <div style="font-size:.78rem;font-weight:600;color:#4b5563;margin-bottom:.5rem">✨ Prompt สำหรับรูปนี้:</div>
+      <div class="prompt-text prompt-eng">${x(s.en)}</div>
+      <div class="prompt-text prompt-th">${x(s.th)}</div>
+      <button class="btn btn-gold btn-sm" style="margin-top:.6rem" onclick="copyP('${id}')">📋 Copy Prompt (EN)</button>
+    </div>`;
+  document.getElementById('imgModal').classList.add('open');
+}
+
 function saveSlot(){
   if(!curSlot) return;
-  const url=document.getElementById('imgModalUrl').value.trim();
-  const d=getImgs(); if(url) d[curSlot]=url; else delete d[curSlot];
+  const data=_pendingImgData || document.getElementById('imgModalUrl').value.trim();
+  const d=getImgs(); if(data) d[curSlot]=data; else delete d[curSlot];
   setImgs(d); closeImgModal(); renderSlots(); renderDash(); toast('บันทึกรูปแล้ว ✓','ok');
 }
+
 function clearSlot(){
   if(!curSlot) return;
   const d=getImgs(); delete d[curSlot]; setImgs(d);
-  document.getElementById('imgModalUrl').value='';
-  document.getElementById('imgModalPreview').style.display='none';
+  setImgPreview('');
   renderSlots(); renderDash(); toast('ลบรูปแล้ว','ok'); closeImgModal();
 }
+
+function previewMImg(url){ setImgPreview(url); } // backward compat
 function exportImages(){
   const blob=new Blob([JSON.stringify(getImgs(),null,2)],{type:'application/json'});
   const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
@@ -835,6 +952,7 @@ function toast(msg,type=''){
 // ── INIT ──────────────────────────────────────
 function init(){
   loadGeodes(); renderDash(); renderPTable();
+  initImgModal();
   document.getElementById('imgModal').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeImgModal(); });
   document.getElementById('importModal').addEventListener('click',e=>{ if(e.target===e.currentTarget) e.currentTarget.classList.remove('open'); });
 }
