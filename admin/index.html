@@ -1,1561 +1,732 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Amethez Admin Panel</title>
-  <meta name="robots" content="noindex, nofollow">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #0f0a1e; --card: #1a1035; --border: #2d1f4e;
-      --purple: #7c3aed; --purple-light: #a78bfa;
-      --gold: #c9a84c; --text: #e2d9f3; --muted: #8b7db8;
-      --green: #10b981; --red: #ef4444; --yellow: #f59e0b;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: var(--bg); color: var(--text); font-family: 'Sarabun', sans-serif; font-size: 15px; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amethez Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--purple:#7c3aed;--purple-light:#ede9fe;--gold:#c9a84c;--bg:#f5f3ff;--text:#1a1228;--green:#059669;--red:#dc2626;--yellow:#d97706;--border:#e5e7eb;--card:#fff;--sidebar:#1a1228;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
 
-    /* Login */
-    #loginScreen {
-      min-height: 100vh; display: flex; align-items: center; justify-content: center;
-    }
-    .login-box {
-      background: var(--card); border: 1px solid var(--border); border-radius: 1rem;
-      padding: 2.5rem; width: 360px; text-align: center;
-    }
-    .login-box h1 { font-family: 'Playfair Display', serif; color: var(--gold); margin-bottom: 0.25rem; }
-    .login-box p { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; }
-    .login-box input {
-      width: 100%; padding: 0.75rem 1rem; background: var(--bg); border: 1px solid var(--border);
-      border-radius: 0.5rem; color: var(--text); font-family: Sarabun, sans-serif;
-      font-size: 1rem; margin-bottom: 1rem;
-    }
-    .login-box button {
-      width: 100%; padding: 0.75rem; background: var(--purple); border: none;
-      border-radius: 0.5rem; color: white; font-family: Sarabun, sans-serif;
-      font-size: 1rem; font-weight: 600; cursor: pointer;
-    }
-    .login-box button:hover { background: #6d28d9; }
-    #loginError { color: var(--red); font-size: 0.85rem; margin-top: 0.75rem; display: none; }
+/* ── LOGIN ── */
+#loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,#1a1228 0%,#2d1b69 60%,#4c1d95 100%);}
+.login-box{background:white;border-radius:1.5rem;padding:2.5rem 2rem;width:100%;max-width:360px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.4);}
+.login-logo{font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);letter-spacing:.05em;}
+.login-sub{font-size:.82rem;color:#9ca3af;margin-bottom:2rem;}
+.login-box input{width:100%;border:1.5px solid var(--border);border-radius:.6rem;padding:.85rem 1rem;font-size:1rem;font-family:'Sarabun',sans-serif;outline:none;margin-bottom:1rem;transition:border-color .2s;}
+.login-box input:focus{border-color:var(--purple);}
+.btn-login{width:100%;background:linear-gradient(135deg,var(--purple),#5b21b6);color:white;border:none;border-radius:.6rem;padding:.9rem;font-size:1rem;font-family:'Sarabun',sans-serif;font-weight:700;cursor:pointer;}
+.login-err{color:var(--red);font-size:.85rem;margin-top:.75rem;display:none;}
 
-    /* Admin Layout */
-    #adminApp { display: none; min-height: 100vh; }
-    .admin-header {
-      background: var(--card); border-bottom: 1px solid var(--border);
-      padding: 0.75rem 1.5rem; display: flex; align-items: center; justify-content: space-between;
-      position: sticky; top: 0; z-index: 100;
-    }
-    .admin-logo { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1.3rem; }
-    .admin-body { display: flex; }
-    .sidebar {
-      width: 220px; background: var(--card); border-right: 1px solid var(--border);
-      min-height: calc(100vh - 52px); padding: 1rem 0; flex-shrink: 0; position: sticky; top: 52px;
-    }
-    .sidebar-item {
-      display: flex; align-items: center; gap: 0.75rem;
-      padding: 0.75rem 1.25rem; cursor: pointer; color: var(--muted);
-      transition: all 0.15s; font-size: 0.95rem; border-left: 3px solid transparent;
-    }
-    .sidebar-item:hover { background: rgba(124,58,237,0.1); color: var(--text); }
-    .sidebar-item.active { background: rgba(124,58,237,0.15); color: var(--purple-light); border-left-color: var(--purple); }
-    .sidebar-icon { font-size: 1.1rem; width: 20px; text-align: center; }
+/* ── LAYOUT ── */
+#app{display:none;min-height:100vh;}
+.sidebar{width:220px;background:var(--sidebar);position:fixed;top:0;left:0;height:100vh;display:flex;flex-direction:column;padding:1.5rem 0;z-index:50;}
+.sidebar-logo{padding:0 1.5rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.1);}
+.sidebar-logo .name{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.2rem;}
+.sidebar-logo .sub{font-size:.72rem;color:#9ca3af;letter-spacing:.1em;}
+.nav-item{display:flex;align-items:center;gap:.75rem;padding:.75rem 1.5rem;color:#9ca3af;cursor:pointer;transition:all .15s;font-size:.9rem;border-left:3px solid transparent;}
+.nav-item:hover{color:white;background:rgba(255,255,255,.06);}
+.nav-item.active{color:white;background:rgba(124,58,237,.25);border-left-color:var(--purple);}
+.nav-item .ic{width:18px;text-align:center;font-size:1rem;}
+.sidebar-footer{margin-top:auto;padding:1rem 1.5rem;border-top:1px solid rgba(255,255,255,.1);}
+.btn-logout{background:none;border:none;color:#9ca3af;font-size:.82rem;cursor:pointer;font-family:'Sarabun',sans-serif;display:flex;align-items:center;gap:.5rem;}
+.main-area{margin-left:220px;min-height:100vh;display:flex;flex-direction:column;}
+.topbar{background:white;border-bottom:1px solid var(--border);padding:0 2rem;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:40;}
+.topbar h1{font-size:1rem;font-weight:700;}
+.topbar-right{display:flex;gap:.75rem;align-items:center;}
+.content{padding:2rem;flex:1;}
 
-    .main-content { flex: 1; padding: 2rem; }
-    .tab-panel { display: none; }
-    .tab-panel.active { display: block; }
+/* ── BUTTONS ── */
+.btn{padding:.5rem 1rem;border-radius:.5rem;font-size:.85rem;font-family:'Sarabun',sans-serif;font-weight:600;cursor:pointer;border:none;display:inline-flex;align-items:center;gap:.4rem;transition:opacity .2s;}
+.btn:hover{opacity:.85;}
+.btn-primary{background:var(--purple);color:white;}
+.btn-success{background:var(--green);color:white;}
+.btn-danger{background:var(--red);color:white;}
+.btn-outline{background:white;border:1.5px solid var(--border);color:var(--text);}
+.btn-gold{background:var(--gold);color:#1a1228;}
+.btn-sm{padding:.35rem .75rem;font-size:.78rem;}
 
-    /* Cards */
-    .panel-card {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 0.75rem; padding: 1.5rem; margin-bottom: 1.5rem;
-    }
-    .panel-card h3 { color: var(--purple-light); margin-bottom: 1.25rem; font-size: 1rem; }
+/* ── CARDS ── */
+.card{background:var(--card);border-radius:.875rem;padding:1.5rem;border:1px solid var(--border);margin-bottom:1.5rem;}
+.card-title{font-size:.95rem;font-weight:700;margin-bottom:1.25rem;display:flex;align-items:center;gap:.5rem;}
+.section-title{font-family:'Playfair Display',serif;font-size:1.3rem;margin-bottom:.4rem;}
+.section-sub{color:#6b7280;font-size:.875rem;margin-bottom:1.5rem;}
 
-    /* Form elements */
-    label { display: block; color: var(--muted); font-size: 0.85rem; margin-bottom: 0.35rem; margin-top: 1rem; }
-    label:first-child { margin-top: 0; }
-    input[type=text], input[type=date], input[type=time], input[type=number],
-    input[type=url], textarea, select {
-      width: 100%; padding: 0.6rem 0.9rem; background: var(--bg); border: 1px solid var(--border);
-      border-radius: 0.5rem; color: var(--text); font-family: Sarabun, sans-serif; font-size: 0.95rem;
-    }
-    input:focus, textarea:focus, select:focus { outline: none; border-color: var(--purple); }
-    textarea { resize: vertical; min-height: 100px; }
+/* ── STATS ── */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin-bottom:1.5rem;}
+.stat-card{background:white;border-radius:.875rem;padding:1.25rem;border:1px solid var(--border);text-align:center;}
+.stat-num{font-size:2rem;font-weight:700;}
+.stat-label{font-size:.78rem;color:#6b7280;margin-top:.2rem;}
+.c-purple{color:var(--purple);}.c-green{color:var(--green);}.c-gold{color:var(--gold);}.c-gray{color:#9ca3af;}
 
-    .btn { padding: 0.6rem 1.25rem; border-radius: 0.5rem; border: none; cursor: pointer; font-family: Sarabun, sans-serif; font-size: 0.9rem; font-weight: 600; }
-    .btn-purple { background: var(--purple); color: white; }
-    .btn-purple:hover { background: #6d28d9; }
-    .btn-gold { background: var(--gold); color: #1a1228; }
-    .btn-green { background: var(--green); color: white; }
-    .btn-red { background: var(--red); color: white; }
-    .btn-sm { padding: 0.35rem 0.75rem; font-size: 0.8rem; }
+/* ── TABS ── */
+.tab-panels>div{display:none;}
+.tab-panels>div.active{display:block;}
 
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+/* ── IMAGE MANAGER ── */
+.img-slots-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.25rem;}
+.img-slot{background:white;border:1.5px solid var(--border);border-radius:.875rem;overflow:hidden;transition:box-shadow .2s;}
+.img-slot:hover{box-shadow:0 4px 16px rgba(124,58,237,.12);}
+.img-slot.has-img{border-color:#a78bfa;}
+.slot-preview{width:100%;height:160px;background:linear-gradient(135deg,#f5f0ff,#ede9fe);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.slot-preview img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
+.slot-body{padding:1rem;}
+.slot-name{font-weight:700;font-size:.9rem;margin-bottom:.2rem;}
+.slot-page{font-size:.75rem;color:#9ca3af;margin-bottom:.75rem;}
+.slot-actions{display:flex;gap:.5rem;flex-wrap:wrap;}
+.img-filter-bar{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.25rem;align-items:center;}
+.filter-chip{padding:.3rem .75rem;border-radius:2rem;font-size:.78rem;font-family:'Sarabun',sans-serif;border:1.5px solid var(--border);background:white;cursor:pointer;}
+.filter-chip.active,.filter-chip:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-light);}
 
-    /* Table */
-    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-    th { background: rgba(124,58,237,0.15); padding: 0.6rem 0.75rem; text-align: left; color: var(--muted); font-weight: 600; font-size: 0.8rem; }
-    td { padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
-    tr:hover td { background: rgba(255,255,255,0.02); }
+/* ── PROMPTS ── */
+.prompt-list{display:flex;flex-direction:column;gap:1rem;}
+.prompt-item{background:white;border:1px solid var(--border);border-radius:.75rem;padding:1.25rem;}
+.prompt-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem;gap:1rem;}
+.prompt-meta{flex:1;}
+.prompt-name{font-weight:700;font-size:.9rem;}
+.prompt-page{font-size:.75rem;color:#9ca3af;margin-top:.15rem;}
+.prompt-size{font-size:.72rem;color:#c4b5fd;background:#f5f0ff;padding:.15rem .4rem;border-radius:.25rem;margin-top:.3rem;display:inline-block;}
+.prompt-text{background:#f9fafb;border-radius:.5rem;padding:.85rem 1rem;font-size:.82rem;color:#4b5563;line-height:1.6;font-family:monospace;white-space:pre-wrap;border:1px solid #f0f0f0;}
+.prompt-eng{border-left:3px solid var(--purple);}
+.prompt-th{border-left:3px solid var(--gold);font-size:.78rem;color:#9ca3af;margin-top:.4rem;}
 
-    .badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 2rem; font-size: 0.75rem; font-weight: 600; }
-    .badge-green { background: rgba(16,185,129,0.15); color: var(--green); }
-    .badge-yellow { background: rgba(245,158,11,0.15); color: var(--yellow); }
-    .badge-red { background: rgba(239,68,68,0.15); color: var(--red); }
+/* ── PRODUCTS ── */
+.product-table{width:100%;border-collapse:collapse;font-size:.875rem;}
+.product-table th{text-align:left;padding:.6rem .85rem;background:#f9fafb;color:#6b7280;font-size:.78rem;border-bottom:1px solid var(--border);}
+.product-table td{padding:.75rem .85rem;border-bottom:1px solid #f3f4f6;vertical-align:middle;}
+.product-table tr:hover td{background:#fdfcff;}
+.status-badge{padding:.2rem .6rem;border-radius:2rem;font-size:.72rem;font-weight:600;}
+.badge-available{background:#d1fae5;color:#065f46;}
+.badge-reserved{background:#fef3c7;color:#92400e;}
+.badge-sold{background:#f3f4f6;color:#6b7280;}
+.td-img{width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:#f5f0ff;border-radius:.4rem;font-size:1.3rem;}
+.td-img img{width:48px;height:48px;object-fit:cover;border-radius:.4rem;}
 
-    /* Stats */
-    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
-    .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.25rem; }
-    .stat-label { color: var(--muted); font-size: 0.8rem; margin-bottom: 0.4rem; }
-    .stat-value { font-size: 1.75rem; font-weight: 700; color: var(--purple-light); }
-    .stat-sub { font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem; }
+/* ── FORM ── */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.form-group{display:flex;flex-direction:column;gap:.3rem;}
+.form-group.full{grid-column:1/-1;}
+label.fl{font-size:.8rem;font-weight:600;color:#4b5563;}
+.form-input{border:1.5px solid var(--border);border-radius:.5rem;padding:.65rem .85rem;font-size:.875rem;font-family:'Sarabun',sans-serif;outline:none;color:var(--text);transition:border-color .2s;}
+.form-input:focus{border-color:var(--purple);}
+textarea.form-input{resize:vertical;min-height:80px;}
 
-    /* Google Flow */
-    .prompt-box { background: var(--bg); border: 1px solid var(--border); border-radius: 0.5rem; padding: 1rem; font-family: monospace; font-size: 0.85rem; color: #a78bfa; white-space: pre-wrap; position: relative; }
-    .copy-btn { position: absolute; top: 0.5rem; right: 0.5rem; }
+/* ── ARTICLES ── */
+.article-list{display:flex;flex-direction:column;gap:.75rem;}
+.article-item{background:white;border:1px solid var(--border);border-radius:.75rem;padding:1rem 1.25rem;display:flex;align-items:center;gap:1rem;}
+.article-emoji{font-size:1.8rem;flex-shrink:0;}
+.article-info{flex:1;}
+.article-name{font-weight:700;font-size:.9rem;}
+.article-path{font-size:.75rem;color:#9ca3af;}
 
-    /* Toast */
-    #toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--green); color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-size: 0.9rem; display: none; z-index: 999; }
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:center;justify-content:center;padding:1rem;}
+.modal-overlay.open{display:flex;}
+.modal{background:white;border-radius:1rem;padding:1.75rem;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;}
+.modal h3{font-size:1.05rem;font-weight:700;margin-bottom:1.25rem;}
+.modal-actions{display:flex;gap:.75rem;justify-content:flex-end;margin-top:1.5rem;}
+.img-modal-preview{width:100%;height:180px;object-fit:contain;border-radius:.5rem;background:#f5f0ff;margin:1rem 0;display:none;}
 
-    /* Video Generator extras */
-    .quick-tag { background:rgba(124,58,237,.15); color:var(--purple-light); font-size:.72rem; padding:.2rem .6rem; border-radius:2rem; cursor:pointer; transition:all .15s; }
-    .quick-tag:hover { background:var(--purple); color:white; }
-    .aff-chip { display:inline-flex; align-items:center; gap:.3rem; padding:.25rem .7rem; border-radius:2rem; font-size:.75rem; font-weight:700; }
-    .step-check { display:flex; align-items:center; gap:.5rem; padding:.35rem 0; font-size:.82rem; }
-    .step-check.ok  { color:var(--green); }
-    .step-check.err { color:var(--muted); }
-    .vp-history-item { display:flex; align-items:center; justify-content:space-between; padding:.65rem 0; border-bottom:1px solid var(--border); font-size:.85rem; }
-    .vp-history-item:last-child { border-bottom:none; }
-  </style>
+/* ── QUICK GRID ── */
+.quick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;}
+.quick-card{background:white;border:1.5px solid var(--border);border-radius:.875rem;padding:1.25rem;text-align:center;text-decoration:none;color:var(--text);transition:all .15s;cursor:pointer;}
+.quick-card:hover{border-color:var(--purple);box-shadow:0 4px 12px rgba(124,58,237,.12);}
+.quick-card .qic{font-size:2rem;margin-bottom:.5rem;}
+.quick-card .qt{font-size:.875rem;font-weight:600;}
+.quick-card .qs{font-size:.75rem;color:#9ca3af;margin-top:.2rem;}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:#1a1228;color:white;padding:.85rem 1.25rem;border-radius:.75rem;font-size:.875rem;z-index:300;transform:translateY(120%);transition:transform .3s;box-shadow:0 4px 16px rgba(0,0,0,.25);max-width:300px;}
+.toast.show{transform:translateY(0);}
+.toast.ok{background:var(--green);}
+.toast.err{background:var(--red);}
+
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%);}
+  .main-area{margin-left:0;}
+  .form-grid{grid-template-columns:1fr;}
+  .form-group.full{grid-column:1;}
+}
+</style>
 </head>
 <body>
 
-<!-- Login -->
+<!-- LOGIN -->
 <div id="loginScreen">
   <div class="login-box">
-    <h1>AMETHEZ</h1>
-    <p>Admin Panel — เข้าสู่ระบบ</p>
-    <input type="password" id="passwordInput" placeholder="รหัสผ่าน" onkeydown="if(event.key==='Enter')login()">
-    <button onclick="login()">เข้าสู่ระบบ</button>
-    <div id="loginError">รหัสผ่านไม่ถูกต้อง</div>
+    <div class="login-logo">AMETHEZ</div>
+    <div class="login-sub">Admin Panel · จัดการเว็บไซต์</div>
+    <input type="password" id="pwInput" placeholder="รหัสผ่าน" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="btn-login" onclick="doLogin()">เข้าสู่ระบบ</button>
+    <div class="login-err" id="loginErr">❌ รหัสผ่านไม่ถูกต้อง</div>
   </div>
 </div>
 
-<!-- Admin App -->
-<div id="adminApp">
-  <header class="admin-header">
-    <div class="admin-logo">⬡ AMETHEZ Admin</div>
-    <div style="display:flex;align-items:center;gap:1rem">
-      <span style="color:var(--muted);font-size:0.85rem" id="clockDisplay"></span>
-      <button class="btn btn-red btn-sm" onclick="logout()">ออกจากระบบ</button>
+<!-- APP -->
+<div id="app">
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <div class="name">AMETHEZ</div>
+      <div class="sub">ADMIN PANEL</div>
     </div>
-  </header>
+    <div style="padding:.75rem 0;">
+      <div class="nav-item active" onclick="showTab('dashboard',this)"><span class="ic">📊</span> ภาพรวม</div>
+      <div class="nav-item" onclick="showTab('images',this)"><span class="ic">🖼️</span> รูปภาพ</div>
+      <div class="nav-item" onclick="showTab('prompts',this)"><span class="ic">✨</span> AI Prompts</div>
+      <div class="nav-item" onclick="showTab('products',this)"><span class="ic">💎</span> สินค้า</div>
+      <div class="nav-item" onclick="showTab('articles',this)"><span class="ic">📝</span> บทความ</div>
+    </div>
+    <div class="sidebar-footer">
+      <button class="btn-logout" onclick="doLogout()">🚪 ออกจากระบบ</button>
+    </div>
+  </div>
 
-  <div class="admin-body">
-    <!-- Sidebar -->
-    <nav class="sidebar">
-      <div class="sidebar-item active" onclick="showTab('dashboard',this)"><span class="sidebar-icon">📊</span>ภาพรวม</div>
-      <div class="sidebar-item" onclick="showTab('atlas',this)"><span class="sidebar-icon">🔬</span>Crystal Atlas</div>
-      <div class="sidebar-item" onclick="showTab('wuchong',this)"><span class="sidebar-icon">🧘</span>Master Wuchong</div>
-      <div class="sidebar-item" onclick="showTab('metha',this)"><span class="sidebar-icon">🌙</span>อาจารย์เมธา</div>
-      <div class="sidebar-item" onclick="showTab('shopee',this)"><span class="sidebar-icon">🛒</span>Shopee Links</div>
-      <div class="sidebar-item" onclick="showTab('sale',this)"><span class="sidebar-icon">💁</span>Sale Page</div>
-      <div class="sidebar-item" onclick="showTab('digital',this)"><span class="sidebar-icon">📥</span>Digital Products</div>
-      <div class="sidebar-item" onclick="showTab('flow',this)"><span class="sidebar-icon">✨</span>Google Flow</div>
-      <div class="sidebar-item" onclick="showTab('video',this)"><span class="sidebar-icon">🎬</span>Video Pages</div>
-      <div class="sidebar-item" onclick="showTab('affiliate',this)"><span class="sidebar-icon">🔗</span>Affiliate Links</div>
-    </nav>
-
-    <!-- Main -->
-    <main class="main-content">
-
-      <!-- Dashboard -->
-      <div id="tab-dashboard" class="tab-panel active">
-        <h2 style="margin-bottom:1.5rem;font-family:'Playfair Display',serif;color:var(--gold)">ภาพรวม</h2>
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-label">บทความทั้งหมด</div>
-            <div class="stat-value">5</div>
-            <div class="stat-sub">+3 วันนี้</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">สินค้า Shopee</div>
-            <div class="stat-value">7</div>
-            <div class="stat-sub">Available ทั้งหมด</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">รอ Publish</div>
-            <div class="stat-value">0</div>
-            <div class="stat-sub">Scheduled posts</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">หน้าทั้งหมด</div>
-            <div class="stat-value">12</div>
-            <div class="stat-sub">เป้าหมาย 300+</div>
-          </div>
-        </div>
-
-        <div class="panel-card">
-          <h3>⏰ Schedule วันนี้</h3>
-          <table>
-            <thead><tr><th>เวลา</th><th>เนื้อหา</th><th>สถานะ</th></tr></thead>
-            <tbody>
-              <tr><td>08:00</td><td>บทความอเมทิสต์</td><td><span class="badge badge-green">✓ Published</span></td></tr>
-              <tr><td>13:00</td><td>—</td><td><span class="badge badge-yellow">ว่าง</span></td></tr>
-              <tr><td>20:00</td><td>—</td><td><span class="badge badge-yellow">ว่าง</span></td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="panel-card">
-          <h3>📝 Quick Actions</h3>
-          <div style="display:flex;gap:1rem;flex-wrap:wrap">
-            <button class="btn btn-purple" onclick="showTab('atlas',document.querySelector('[onclick*=atlas]'))">+ บทความหินใหม่</button>
-            <button class="btn btn-gold" onclick="showTab('shopee',document.querySelector('[onclick*=shopee]'))">+ เพิ่มสินค้า Shopee</button>
-            <button class="btn btn-green" onclick="showTab('metha',document.querySelector('[onclick*=metha]'))">+ ดวงรายวัน</button>
-            <button class="btn btn-purple" onclick="showTab('flow',document.querySelector('[onclick*=flow]'))">✨ Google Flow Prompt</button>
-          </div>
-        </div>
+  <div class="main-area">
+    <div class="topbar">
+      <h1 id="topbarTitle">📊 ภาพรวม</h1>
+      <div class="topbar-right">
+        <a href="/" target="_blank" class="btn btn-outline btn-sm">👁 ดูเว็บ</a>
+        <a href="/geode/" target="_blank" class="btn btn-outline btn-sm">💎 สินค้า</a>
       </div>
+    </div>
 
-      <!-- Crystal Atlas -->
-      <div id="tab-atlas" class="tab-panel">
-        <h2 style="margin-bottom:1.5rem;font-family:'Playfair Display',serif;color:var(--gold)">🔬 Crystal Atlas — บทความหิน</h2>
-        <div class="panel-card">
-          <h3>เพิ่มบทความใหม่</h3>
-          <div class="grid-2">
-            <div>
-              <label>ชื่อหิน (ภาษาไทย)</label>
-              <input type="text" id="stoneTH" placeholder="เช่น โมลดาไวท์">
-            </div>
-            <div>
-              <label>ชื่อหิน (ภาษาอังกฤษ)</label>
-              <input type="text" id="stoneEN" placeholder="เช่น Moldavite">
-            </div>
-          </div>
-          <label>สี</label>
-          <input type="text" id="stoneColor" placeholder="เช่น เขียว">
-          <label>จักระ</label>
-          <input type="text" id="stoneChakra" placeholder="เช่น หัวใจ, Third Eye">
-          <label>ราศีที่เหมาะ</label>
-          <input type="text" id="stoneZodiac" placeholder="เช่น พิจิก, กรกฎ">
-          <label>คำสำคัญ (keywords)</label>
-          <input type="text" id="stoneKeywords" placeholder="เช่น การเปลี่ยนแปลง, จักรวาล">
-          <label>เนื้อหาบทความ (ใส่ข้อมูลหิน)</label>
-          <textarea id="stoneContent" style="min-height:150px" placeholder="ใส่ข้อมูลหินที่นี่ Claude จะช่วยสร้างบทความ..."></textarea>
-          <div class="grid-2" style="margin-top:1rem">
-            <div>
-              <label>Publish Date</label>
-              <input type="date" id="publishDate">
-            </div>
-            <div>
-              <label>Publish Time</label>
-              <select id="publishTime">
-                <option value="08:00">08:00 (เช้า)</option>
-                <option value="13:00">13:00 (บ่าย)</option>
-                <option value="20:00">20:00 (เย็น)</option>
-              </select>
-            </div>
-          </div>
-          <div style="margin-top:1.25rem;display:flex;gap:0.75rem">
-            <button class="btn btn-purple" onclick="generateArticle()">🤖 สร้างบทความด้วย Claude</button>
-            <button class="btn btn-gold" onclick="scheduleArticle()">📅 Schedule</button>
-          </div>
-        </div>
+    <div class="content">
+      <div class="tab-panels" id="tabPanels">
 
-        <div class="panel-card">
-          <h3>บทความที่มีอยู่</h3>
-          <table>
-            <thead><tr><th>หิน</th><th>วันที่</th><th>สถานะ</th><th>Actions</th></tr></thead>
-            <tbody>
-              <tr>
-                <td>💜 อเมทิสต์ (Amethyst)</td>
-                <td>19 มิ.ย. 2569</td>
-                <td><span class="badge badge-green">Published</span></td>
-                <td><a href="/stones/amethyst.html" target="_blank" class="btn btn-sm btn-purple">ดู</a></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Master Wuchong -->
-      <div id="tab-wuchong" class="tab-panel">
-        <h2 style="margin-bottom:1.5rem;font-family:'Playfair Display',serif;color:var(--gold)">🧘 Master Wuchong — บทความพลังงาน</h2>
-        <div class="panel-card">
-          <h3>เพิ่มบทความพลังงาน</h3>
-          <label>หัวข้อบทความ</label>
-          <input type="text" placeholder="เช่น หินเรียกเงิน 5 ชนิดที่ได้ผลจริง">
-          <label>หมวดหมู่</label>
-          <select>
-            <option>ความสำเร็จ</option>
-            <option>การเงิน</option>
-            <option>สุขภาพ</option>
-            <option>ความรัก</option>
-            <option>Crystal Grid</option>
-            <option>พิธีกรรม</option>
-          </select>
-          <label>เนื้อหา</label>
-          <textarea style="min-height:150px" placeholder="ใส่ข้อมูลที่นี่..."></textarea>
-          <div class="grid-2" style="margin-top:1rem">
-            <div><label>Publish Date</label><input type="date"></div>
-            <div><label>Publish Time</label><select><option>08:00</option><option>13:00</option><option>20:00</option></select></div>
-          </div>
-          <div style="margin-top:1.25rem;display:flex;gap:0.75rem">
-            <button class="btn btn-purple">🤖 สร้างด้วย Claude</button>
-            <button class="btn btn-gold">📅 Schedule</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- อาจารย์เมธา -->
-      <div id="tab-metha" class="tab-panel">
-        <h2 style="margin-bottom:1.5rem;font-family:'Playfair Display',serif;color:var(--gold)">🌙 อาจารย์เมธา — ดวงรายวัน</h2>
-        <div class="panel-card">
-          <h3>เขียนดวงล่วงหน้า</h3>
-          <label>วันที่</label>
-          <input type="date" id="methaDate">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem">
-            <div><label>♈ ราศีเมษ</label><textarea style="min-height:70px" placeholder="ดวงราศีเมษวันนี้..."></textarea></div>
-            <div><label>♉ ราศีพฤษภ</label><textarea style="min-height:70px" placeholder="ดวงราศีพฤษภวันนี้..."></textarea></div>
-            <div><label>♊ ราศีเมถุน</label><textarea style="min-height:70px" placeholder="ดวงราศีเมถุนวันนี้..."></textarea></div>
-            <div><label>♋ ราศีกรกฎ</label><textarea style="min-height:70px" placeholder="ดวงราศีกรกฎวันนี้..."></textarea></div>
-            <div><label>♌ ราศีสิงห์</label><textarea style="min-height:70px" placeholder="ดวงราศีสิงห์วันนี้..."></textarea></div>
-            <div><label>♍ ราศีกันย์</label><textarea style="min-height:70px" placeholder="ดวงราศีกันย์วันนี้..."></textarea></div>
-            <div><label>♎ ราศีตุลย์</label><textarea style="min-height:70px" placeholder="ดวงราศีตุลย์วันนี้..."></textarea></div>
-            <div><label>♏ ราศีพิจิก</label><textarea style="min-height:70px" placeholder="ดวงราศีพิจิกวันนี้..."></textarea></div>
-            <div><label>♐ ราศีธนู</label><textarea style="min-height:70px" placeholder="ดวงราศีธนูวันนี้..."></textarea></div>
-            <div><label>♑ ราศีมังกร</label><textarea style="min-height:70px" placeholder="ดวงราศีมังกรวันนี้..."></textarea></div>
-            <div><label>♒ ราศีกุมภ์</label><textarea style="min-height:70px" placeholder="ดวงราศีกุมภ์วันนี้..."></textarea></div>
-            <div><label>♓ ราศีมีน</label><textarea style="min-height:70px" placeholder="ดวงราศีมีนวันนี้..."></textarea></div>
-          </div>
-          <div style="margin-top:1.25rem;display:flex;gap:0.75rem">
-            <button class="btn btn-purple">🤖 Generate ด้วย Claude</button>
-            <button class="btn btn-gold">📅 Schedule</button>
-            <button class="btn btn-green">✓ บันทึก</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Shopee Links -->
-      <div id="tab-shopee" class="tab-panel">
-        <h2 style="margin-bottom:1.5rem;font-family:'Playfair Display',serif;color:var(--gold)">🛒 Shopee Links</h2>
-        <div class="panel-card">
-          <h3>เพิ่มสินค้าใหม่</h3>
-          <label>ชื่อสินค้า</label>
-          <input type="text" id="productName" placeholder="เช่น สร้อยข้อมืออเมทิสต์ 8mm">
-          <div class="grid-2">
-            <div><label>ราคา (บาท)</label><input type="number" id="productPrice" placeholder="490"></div>
-            <div><label>หมวดหมู่</label>
-              <select id="productCat">
-                <option>หินดิบ</option><option>เครื่องประดับ</option><option>หินตกแต่ง</option><option>อุปกรณ์</option>
-              </select>
-            </div>
-          </div>
-          <label>Shopee URL (Affiliate Link)</label>
-          <input type="url" id="productURL" placeholder="https://s.shopee.co.th/...">
-          <label>Image URL</label>
-          <input type="url" id="productImg" placeholder="https://down-th.img.susercontent.com/...">
-          <label>Tags (คั่นด้วยจุลภาค)</label>
-          <input type="text" id="productTags" placeholder="อเมทิสต์, ม่วง, สร้อยข้อมือ, มงกุฎ">
-          <p style="color:var(--muted);font-size:0.8rem;margin-top:0.5rem">💡 ใส่ tags แล้วระบบจะ auto-match กับบทความหินที่ตรงกันทุกหน้า</p>
-          <div style="margin-top:1.25rem">
-            <button class="btn btn-gold" onclick="addProduct()">+ เพิ่มสินค้า</button>
-          </div>
-        </div>
-
-        <div class="panel-card">
-          <h3>สินค้าปัจจุบัน</h3>
-          <div id="productTable" style="color:var(--muted);text-align:center;padding:2rem">กำลังโหลด...</div>
-        </div>
-      </div>
-
-      <!-- Sale Page -->
-      <div id="tab-sale" class="tab-panel">
-        <h2 style="margin-bottom:1.5rem;font-family:'Playfair Display',serif;color:var(--gold)">💁 Sale Page — Gemma</h2>
-        <div class="panel-card">
-          <h3>จัดการสินค้าหน้าขาย</h3>
-          <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1rem">สินค้าทั้งหมดดึงจาก products.json อัตโนมัติ สามารถปรับ featured items ได้ที่นี่</p>
-          <a href="/sale.html" target="_blank" class="btn btn-purple">👁 ดูหน้า Sale Page</a>
-        </div>
-        <div class="panel-card">
-          <h3>ข้อความ Gemma</h3>
-          <label>คำทักทาย</label>
-          <input type="text" value="สวัสดีค่ะ! Gemma คัดเลือกสินค้าที่ดีที่สุดมาให้แล้ว 💜">
-          <button class="btn btn-green" style="margin-top:1rem">บันทึก</button>
-        </div>
-      </div>
-
-      <!-- Google Flow -->
-      <div id="tab-flow" class="tab-panel">
-        <h2 style="margin-bottom:1.5rem;font-family:'Playfair Display',serif;color:var(--gold)">✨ Google Flow — Image Prompts</h2>
-
-        <div class="panel-card">
-          <h3>เลือกหิน เพื่อสร้าง Prompt</h3>
-          <label>หิน</label>
-          <select id="flowStone" onchange="generatePrompts()">
-            <option value="amethyst">อเมทิสต์ (Amethyst)</option>
-            <option value="moldavite">โมลดาไวท์ (Moldavite)</option>
-            <option value="tektite">สะเก็ดดาวไทย (Tektite)</option>
-            <option value="citrine">ซิทริน (Citrine)</option>
-            <option value="clear-quartz">Clear Quartz</option>
-          </select>
-        </div>
-
-        <div class="panel-card">
-          <h3>📸 Prompt รูปนิ่ง (Thumbnail)</h3>
-          <div class="prompt-box" id="promptStill">
-Raw amethyst crystal cluster, deep purple violet, natural cave formation,
-dramatic lighting, macro photography, white background, 8K detail,
-gemstone photography, professional studio lighting</div>
-          <button class="btn btn-gold btn-sm" style="margin-top:0.75rem" onclick="copyPrompt('promptStill')">📋 Copy Prompt</button>
-        </div>
-
-        <div class="panel-card">
-          <h3>🎬 Prompt วิดีโอสั้น (TikTok/Reels)</h3>
-          <div class="prompt-box" id="promptVideo">
-Large Brazilian amethyst geode cave slowly revealed by camera zoom,
-deep purple crystals glistening, dramatic lighting, cinematic 4K,
-smooth slow motion, ethereal atmosphere, crystal cave</div>
-          <button class="btn btn-gold btn-sm" style="margin-top:0.75rem" onclick="copyPrompt('promptVideo')">📋 Copy Prompt</button>
-        </div>
-
-        <div class="panel-card">
-          <h3>📋 Workflow</h3>
-          <ol style="color:var(--muted);font-size:0.9rem;line-height:2.2">
-            <li>เลือกหินด้านบน → Copy Prompt ที่ต้องการ</li>
-            <li>เปิด <strong style="color:var(--text)">Google Flow</strong> → วาง Prompt → Generate</li>
-            <li>Download รูป/วิดีโอที่ได้</li>
-            <li>Upload กลับมาใส่ในบทความผ่าน Admin</li>
-            <li>กด Publish → GitHub Actions push → เว็บขึ้นอัตโนมัติ</li>
-          </ol>
-        </div>
-      </div>
-
-      <!-- ══ VIDEO PAGES ══ -->
-      <div id="tab-video" class="tab-panel">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem">
-          <h2 style="font-family:'Playfair Display',serif;color:var(--gold)">🎬 Video Pages Generator</h2>
-          <div style="display:flex;gap:.75rem">
-            <a href="/videos/" target="_blank" class="btn btn-purple btn-sm">👁 ดู Video Hub</a>
-          </div>
-        </div>
-
-        <!-- Stats -->
-        <div class="grid-3" style="margin-bottom:1.5rem">
-          <div class="stat-card"><div class="stat-label">วิดีโอที่สร้างแล้ว</div><div class="stat-value" id="vpCount" style="color:var(--gold)">0</div><div class="stat-sub">หน้าที่ generate แล้ว</div></div>
-          <div class="stat-card"><div class="stat-label">Affiliate ที่ inject</div><div class="stat-value" id="vpAffCount" style="color:var(--green)">—</div><div class="stat-sub">จาก tags ที่กำหนด</div></div>
-          <div class="stat-card"><div class="stat-label">Platform ทั้งหมด</div><div class="stat-value" style="color:#a78bfa">5</div><div class="stat-sub">Shopee · MEB · Course · HND · Naiin</div></div>
-        </div>
-
-        <!-- STEP 1: YouTube URL -->
-        <div class="panel-card">
-          <h3>📺 STEP 1 — วาง YouTube URL</h3>
-          <div style="display:flex;gap:.75rem;align-items:flex-end">
-            <div style="flex:1">
-              <label>YouTube URL *</label>
-              <input type="url" id="vpYoutubeUrl" placeholder="https://www.youtube.com/watch?v=xxxxx หรือ youtu.be/xxxxx"
-                oninput="extractVideoId(this.value)">
-            </div>
-            <button class="btn btn-purple" onclick="fetchVideoMeta()">🔍 ดึงข้อมูล</button>
-          </div>
-          <div id="vpVideoPreview" style="display:none;margin-top:1.25rem">
-            <div style="display:flex;gap:1rem;align-items:flex-start;background:var(--bg);border-radius:.5rem;padding:1rem">
-              <img id="vpThumb" src="" alt="" style="width:160px;height:90px;object-fit:cover;border-radius:.375rem;flex-shrink:0">
-              <div style="flex:1;min-width:0">
-                <div style="font-size:.75rem;color:var(--muted);margin-bottom:.3rem">Video ID: <code id="vpVideoId" style="color:var(--purple-light)"></code></div>
-                <div id="vpFetchedTitle" style="font-weight:600;color:var(--text);font-size:.95rem;line-height:1.4"></div>
-                <div style="font-size:.78rem;color:var(--green);margin-top:.35rem">✓ พร้อม embed แล้ว</div>
+        <!-- DASHBOARD -->
+        <div id="tab-dashboard" class="active">
+          <div class="section-title">ยินดีต้อนรับ 👋</div>
+          <div class="section-sub">ภาพรวมสถานะเว็บไซต์ Amethez</div>
+          <div class="stats-grid" id="dashStats"></div>
+          <div class="card">
+            <div class="card-title">⚡ Quick Actions</div>
+            <div class="quick-grid">
+              <div class="quick-card" onclick="showTab('images',document.querySelectorAll('.nav-item')[1])">
+                <div class="qic">🖼️</div><div class="qt">จัดการรูป</div><div class="qs">ใส่ URL ทุกหน้า</div>
               </div>
+              <div class="quick-card" onclick="showTab('prompts',document.querySelectorAll('.nav-item')[2])">
+                <div class="qic">✨</div><div class="qt">AI Prompts</div><div class="qs">Copy → Google Flow</div>
+              </div>
+              <div class="quick-card" onclick="showTab('products',document.querySelectorAll('.nav-item')[3])">
+                <div class="qic">💎</div><div class="qt">เพิ่มสินค้า</div><div class="qs">โพรงอเมทิสต์</div>
+              </div>
+              <a href="/consign.html" target="_blank" class="quick-card">
+                <div class="qic">🤝</div><div class="qt">ฝากขาย</div><div class="qs">ดูหน้า consign</div>
+              </a>
+              <a href="/stones/amethyst.html" target="_blank" class="quick-card">
+                <div class="qic">💜</div><div class="qt">อเมทิสต์</div><div class="qs">บทความหลัก</div>
+              </a>
+              <a href="/categories/chakra.html" target="_blank" class="quick-card">
+                <div class="qic">🔮</div><div class="qt">จักระ</div><div class="qs">หมวดจักระ</div>
+              </a>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">📋 รูปที่ยังขาด</div>
+            <div id="dashImgStatus"></div>
+          </div>
+        </div>
+
+        <!-- IMAGES -->
+        <div id="tab-images">
+          <div class="section-title">🖼️ จัดการรูปภาพ</div>
+          <div class="section-sub">วาง URL จาก Google Drive, cPanel File Manager หรือ Cloudinary</div>
+          <div class="img-filter-bar" id="imgFilterBar"></div>
+          <div style="display:flex;gap:.75rem;margin-bottom:1.25rem;flex-wrap:wrap;">
+            <button class="btn btn-outline btn-sm" onclick="exportImages()">📤 Export URLs</button>
+            <button class="btn btn-outline btn-sm" onclick="document.getElementById('importModal').classList.add('open')">📥 Import URLs</button>
+            <button class="btn btn-danger btn-sm" onclick="if(confirm('ล้างรูปทั้งหมด?')){setImgs({});renderImgSlots();renderDashboard();toast('ล้างแล้ว')}">🗑 ล้างทั้งหมด</button>
+          </div>
+          <div class="img-slots-grid" id="imgSlotsGrid"></div>
+        </div>
+
+        <!-- PROMPTS -->
+        <div id="tab-prompts">
+          <div class="section-title">✨ AI Image Prompts</div>
+          <div class="section-sub">Copy prompt → วางใน Google Flow / Veo 3 / Midjourney → Generate → เอา URL มาใส่ที่แท็บรูปภาพ</div>
+          <div style="display:flex;gap:.75rem;margin-bottom:1.25rem;flex-wrap:wrap;">
+            <button class="btn btn-gold btn-sm" onclick="copyAllPrompts()">📋 Copy ทุก Prompt</button>
+            <button class="btn btn-outline btn-sm" onclick="exportPrompts()">📤 Export .txt</button>
+          </div>
+          <div class="prompt-list" id="promptList"></div>
+        </div>
+
+        <!-- PRODUCTS -->
+        <div id="tab-products">
+          <div class="section-title">💎 จัดการสินค้า</div>
+          <div class="section-sub">โพรงอเมทิสต์ — แสดงที่ /geode/</div>
+          <div class="card">
+            <div class="card-title" id="prodFormTitle">➕ เพิ่มโพรงใหม่</div>
+            <input type="hidden" id="pEditId">
+            <div class="form-grid">
+              <div class="form-group full"><label class="fl">ชื่อสินค้า *</label>
+                <input class="form-input" id="pName" placeholder="เช่น โพรงอเมทิสต์บราซิล สีม่วงเข้ม"></div>
+              <div class="form-group"><label class="fl">น้ำหนัก (กก.)</label>
+                <input class="form-input" type="number" id="pWeight" placeholder="3.5" step="0.1"></div>
+              <div class="form-group"><label class="fl">ขนาด</label>
+                <input class="form-input" id="pSize" placeholder="25×18×12 ซม."></div>
+              <div class="form-group"><label class="fl">ราคา (บาท) — ว่าง = สอบถาม</label>
+                <input class="form-input" type="number" id="pPrice" placeholder="4500"></div>
+              <div class="form-group"><label class="fl">สถานะ</label>
+                <select class="form-input" id="pStatus">
+                  <option value="available">🟢 พร้อมขาย</option>
+                  <option value="reserved">🟡 จอง</option>
+                  <option value="sold">⚫ ขายแล้ว</option>
+                </select></div>
+              <div class="form-group"><label class="fl">แหล่งที่มา</label>
+                <input class="form-input" id="pOrigin" placeholder="บราซิล / อุรุกวัย"></div>
+              <div class="form-group full"><label class="fl">URL รูปภาพ</label>
+                <input class="form-input" id="pImage" placeholder="https://..." oninput="previewPImg(this.value)">
+                <img id="pImgPreview" style="width:100%;height:120px;object-fit:cover;border-radius:.5rem;margin-top:.5rem;display:none"></div>
+              <div class="form-group full"><label class="fl">รายละเอียด</label>
+                <textarea class="form-input" id="pDesc" placeholder="สีม่วงเข้มสม่ำเสมอ ผลึกชัดเจน..."></textarea></div>
+              <div class="form-group full"><label class="fl">หมายเหตุ (ไม่แสดงลูกค้า)</label>
+                <input class="form-input" id="pNote" placeholder="รับฝากจากคุณ... วันที่..."></div>
+            </div>
+            <div style="display:flex;gap:.75rem;margin-top:1.25rem;">
+              <button class="btn btn-primary" onclick="saveProd()">💾 บันทึก</button>
+              <button class="btn btn-outline" onclick="clearPForm()">✕ ล้าง</button>
+            </div>
+          </div>
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem;">
+              <div class="card-title" style="margin:0">📦 รายการทั้งหมด</div>
+              <input class="form-input" style="width:200px" id="prodSearch" placeholder="🔍 ค้นหา..." oninput="renderPTable()">
+            </div>
+            <div style="overflow-x:auto">
+              <table class="product-table">
+                <thead><tr><th>รูป</th><th>ชื่อ</th><th>น้ำหนัก</th><th>ราคา</th><th>สถานะ</th><th>จัดการ</th></tr></thead>
+                <tbody id="pTableBody"></tbody>
+              </table>
             </div>
           </div>
         </div>
 
-        <!-- STEP 2: Page Info -->
-        <div class="panel-card">
-          <h3>📝 STEP 2 — กรอกข้อมูลหน้า</h3>
-          <div>
-            <label>ชื่อหน้า (SEO Title) *</label>
-            <input type="text" id="vpTitle" placeholder="เช่น ฮวงจุ้ยคริสตัล — จัดบ้านด้วยหินพลังงาน">
-          </div>
-          <div style="margin-top:.875rem">
-            <label>URL Slug * <span style="color:var(--muted);font-weight:400">(ใช้ภาษาอังกฤษ ไม่มีช่องว่าง)</span></label>
-            <div style="display:flex;align-items:center;gap:.5rem">
-              <span style="color:var(--muted);font-size:.85rem;white-space:nowrap">/videos/</span>
-              <input type="text" id="vpSlug" placeholder="fengshui-crystal" style="flex:1">
-              <span style="color:var(--muted);font-size:.85rem;white-space:nowrap">.html</span>
-            </div>
-          </div>
-          <div style="margin-top:.875rem">
-            <label>Tags * <span style="color:var(--muted);font-weight:400">(คั่นด้วย comma — ใช้จับคู่ affiliate)</span></label>
-            <input type="text" id="vpTags" placeholder="ฮวงจุ้ย,คริสตัล,บ้าน,ความมั่งคั่ง,หิน" oninput="previewAffiliateMatch()">
-            <div style="margin-top:.5rem;display:flex;gap:.4rem;flex-wrap:wrap" id="vpTagSuggestions">
-              <span style="font-size:.75rem;color:var(--muted)">แนะนำ:</span>
-              <span class="quick-tag" onclick="addTag('คริสตัล')">คริสตัล</span>
-              <span class="quick-tag" onclick="addTag('หิน')">หิน</span>
-              <span class="quick-tag" onclick="addTag('ฮวงจุ้ย')">ฮวงจุ้ย</span>
-              <span class="quick-tag" onclick="addTag('สมาธิ')">สมาธิ</span>
-              <span class="quick-tag" onclick="addTag('จักระ')">จักระ</span>
-              <span class="quick-tag" onclick="addTag('ธุรกิจออนไลน์')">ธุรกิจออนไลน์</span>
-              <span class="quick-tag" onclick="addTag('สร้างเว็บ')">สร้างเว็บ</span>
-              <span class="quick-tag" onclick="addTag('สายมู')">สายมู</span>
-            </div>
-          </div>
-
-          <!-- Affiliate preview -->
-          <div id="vpAffPreview" style="display:none;background:var(--bg);border:1px solid var(--border);border-radius:.5rem;padding:1rem;margin-top:1rem">
-            <div style="font-size:.8rem;font-weight:700;color:var(--purple-light);margin-bottom:.6rem">🔗 Affiliate ที่จะ inject อัตโนมัติ:</div>
-            <div id="vpAffList" style="display:flex;gap:.4rem;flex-wrap:wrap"></div>
-          </div>
+        <!-- ARTICLES -->
+        <div id="tab-articles">
+          <div class="section-title">📝 บทความและหน้าทั้งหมด</div>
+          <div class="section-sub">ลิงก์ไปแต่ละหน้า — คลิก 🖼️ เพื่อจัดการรูปของหน้านั้น</div>
+          <div class="article-list" id="articleList"></div>
         </div>
 
-        <!-- STEP 3: AI Summary -->
-        <div class="panel-card">
-          <h3>🤖 STEP 3 — AI Summary (Claude)</h3>
-          <div style="background:var(--bg);border:1px solid rgba(124,58,237,.3);border-radius:.5rem;padding:1rem;margin-bottom:1rem">
-            <div style="font-size:.8rem;color:var(--purple-light);margin-bottom:.6rem;font-weight:600">วิธีใช้ (2 ขั้นตอน):</div>
-            <div style="font-size:.82rem;color:var(--muted);line-height:1.8">
-              1. กด <strong style="color:var(--gold)">"สร้าง Claude Prompt"</strong> → Copy prompt → เปิด claude.ai → วาง → รับ summary<br>
-              2. Copy ผลลัพธ์จาก Claude → วางในกล่องด้านล่าง
-            </div>
-          </div>
-          <button class="btn btn-gold" onclick="generateClaudePrompt()" style="margin-bottom:1rem">📋 สร้าง Claude Prompt แล้ว Copy</button>
-          <div id="vpClaudePromptBox" style="display:none;margin-bottom:1rem">
-            <div class="prompt-box" id="vpClaudePromptText" style="max-height:200px;overflow-y:auto;font-size:.78rem"></div>
-          </div>
-          <label>Key Takeaways (3–5 ข้อ) * <span style="color:var(--muted);font-weight:400">— ใส่แต่ละข้อในบรรทัดใหม่</span></label>
-          <textarea id="vpTakeaways" placeholder="• หินอเมทิสต์ช่วยเพิ่มสมาธิในการทำงาน&#10;• ควรวางทางทิศตะวันออกเฉียงเหนือตามหลักฮวงจุ้ย&#10;• ชาร์จพลังงานทุก 2 สัปดาห์ด้วยแสงจันทร์" style="min-height:120px"></textarea>
-          <label style="margin-top:.875rem">บทสรุปฉบับเต็ม (AI-generated Thai) *</label>
-          <textarea id="vpSummary" placeholder="วางข้อความ AI summary ภาษาไทยตรงนี้..." style="min-height:160px"></textarea>
-        </div>
-
-        <!-- STEP 4: Generate -->
-        <div class="panel-card">
-          <h3>⚡ STEP 4 — Generate หน้าเว็บ</h3>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">
-            <div>
-              <label>Avatar ผู้แนะนำ</label>
-              <select id="vpAvatar">
-                <option value="atlas">🔬 Crystal Atlas</option>
-                <option value="wuchong">🧘 Master Wuchong</option>
-                <option value="metha">🌙 อาจารย์เมธา</option>
-              </select>
-            </div>
-            <div>
-              <label>หมวดหมู่</label>
-              <select id="vpCategory">
-                <option value="crystal">💎 คริสตัล &amp; หิน</option>
-                <option value="fengshui">🏠 ฮวงจุ้ย &amp; พื้นที่</option>
-                <option value="mindset">🧘 พลังงาน &amp; สมาธิ</option>
-                <option value="business">💼 ธุรกิจ &amp; ออนไลน์</option>
-              </select>
-            </div>
-          </div>
-          <div id="vpReadyCheck" style="background:var(--bg);border-radius:.5rem;padding:1rem;font-size:.85rem;margin-bottom:1.25rem"></div>
-          <div style="display:flex;gap:.875rem;flex-wrap:wrap">
-            <button class="btn btn-purple" onclick="generateVideoPage()" style="font-size:1rem;padding:.75rem 1.75rem">⚡ Generate &amp; Download HTML</button>
-            <button class="btn" style="background:var(--border)" onclick="previewVideoPage()">👁 Preview (ใน tab ใหม่)</button>
-            <button class="btn" style="background:var(--border)" onclick="clearVpForm()">🗑 ล้างฟอร์ม</button>
-          </div>
-          <div style="margin-top:1rem;font-size:.8rem;color:var(--muted)">
-            หลัง download → วางไฟล์ไว้ที่ <code style="color:var(--purple-light)">/videos/[slug].html</code> → push GitHub → เว็บขึ้นเอง
-          </div>
-        </div>
-
-        <!-- Video history (local) -->
-        <div class="panel-card">
-          <h3>📋 ประวัติหน้าที่สร้าง (session นี้)</h3>
-          <div id="vpHistory" style="color:var(--muted);font-size:.85rem">ยังไม่มีประวัติ — Generate หน้าแรกได้เลย</div>
-        </div>
       </div>
-
-      <!-- ══ AFFILIATE LINKS MANAGER ══ -->
-      <div id="tab-affiliate" class="tab-panel">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem">
-          <h2 style="font-family:'Playfair Display',serif;color:var(--gold)">🔗 Affiliate Links Manager</h2>
-          <button class="btn btn-gold btn-sm" onclick="saveAffiliateAccounts()">💾 บันทึก IDs</button>
-        </div>
-
-        <!-- Platform IDs -->
-        <div class="panel-card">
-          <h3>⚙️ Affiliate IDs (ใส่ครั้งเดียว ใช้ทั้งเว็บ)</h3>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem" id="affAccountForms">
-            <div style="background:var(--bg);border-radius:.5rem;padding:1rem">
-              <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem">
-                <span style="font-size:1.25rem">🛒</span>
-                <div><div style="font-weight:700;color:var(--text)">Shopee Affiliate</div><div style="font-size:.75rem;color:var(--muted)">฿342/item · หิน แร่ เครื่องประดับ</div></div>
-              </div>
-              <label>Affiliate ID</label><input type="text" id="aff_shopee" placeholder="REPLACE_SHOPEE_ID">
-            </div>
-            <div style="background:var(--bg);border-radius:.5rem;padding:1rem">
-              <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem">
-                <span style="font-size:1.25rem">📚</span>
-                <div><div style="font-weight:700;color:var(--text)">MEB E-Book</div><div style="font-size:.75rem;color:var(--muted)">10–30% · หนังสือ ฮวงจุ้ย สายมู</div></div>
-              </div>
-              <label>Affiliate ID</label><input type="text" id="aff_meb" placeholder="REPLACE_MEB_ID">
-            </div>
-            <div style="background:var(--bg);border-radius:.5rem;padding:1rem">
-              <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem">
-                <span style="font-size:1.25rem">🎓</span>
-                <div><div style="font-weight:700;color:var(--text)">SkillLane / FutureSkill</div><div style="font-size:.75rem;color:var(--muted)">20–50% · คอร์สออนไลน์</div></div>
-              </div>
-              <label>SkillLane ID</label><input type="text" id="aff_skilllane" placeholder="REPLACE_SKILLLANE_ID">
-              <label>FutureSkill ID</label><input type="text" id="aff_futureskill" placeholder="REPLACE_FUTURESKILL_ID" style="margin-top:.5rem">
-            </div>
-            <div style="background:var(--bg);border-radius:.5rem;padding:1rem">
-              <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem">
-                <span style="font-size:1.25rem">🌐</span>
-                <div><div style="font-weight:700;color:var(--text)">HostNeverDie</div><div style="font-size:.75rem;color:var(--muted)">฿150 flat · Starter Package</div></div>
-              </div>
-              <label>Affiliate ID</label><input type="text" id="aff_hostneverdie" placeholder="REPLACE_HND_ID">
-            </div>
-          </div>
-          <div style="margin-top:1rem;padding:.75rem;background:rgba(201,168,76,.08);border-radius:.5rem;font-size:.82rem;color:var(--muted)">
-            💡 กด "บันทึก IDs" → ดาวน์โหลด affiliate-accounts.json → วางใน <code style="color:var(--purple-light)">data/</code> → push GitHub
-          </div>
-        </div>
-
-        <!-- Products list -->
-        <div class="panel-card">
-          <h3>📦 Affiliate Products ทั้งหมด</h3>
-          <div id="affProductsList" style="color:var(--muted);font-size:.85rem">กำลังโหลด...</div>
-        </div>
-
-        <!-- Commission tracker -->
-        <div class="panel-card">
-          <h3>💰 Commission Rate ภาพรวม</h3>
-          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.75rem">
-            <div style="background:var(--bg);border-radius:.5rem;padding:1rem;text-align:center">
-              <div style="font-size:1.5rem;margin-bottom:.4rem">🛒</div>
-              <div style="font-weight:700;color:#ee4d2d">฿342/item</div>
-              <div style="font-size:.75rem;color:var(--muted)">Shopee · หินแร่</div>
-            </div>
-            <div style="background:var(--bg);border-radius:.5rem;padding:1rem;text-align:center">
-              <div style="font-size:1.5rem;margin-bottom:.4rem">📚</div>
-              <div style="font-weight:700;color:#e85d04">10–30%</div>
-              <div style="font-size:.75rem;color:var(--muted)">MEB · E-Book</div>
-            </div>
-            <div style="background:var(--bg);border-radius:.5rem;padding:1rem;text-align:center">
-              <div style="font-size:1.5rem;margin-bottom:.4rem">🎓</div>
-              <div style="font-weight:700;color:#0ea5e9">20–50%</div>
-              <div style="font-size:.75rem;color:var(--muted)">SkillLane · FutureSkill</div>
-            </div>
-            <div style="background:var(--bg);border-radius:.5rem;padding:1rem;text-align:center">
-              <div style="font-size:1.5rem;margin-bottom:.4rem">🌐</div>
-              <div style="font-weight:700;color:#7c3aed">฿150 flat</div>
-              <div style="font-size:.75rem;color:var(--muted)">HostNeverDie · Starter</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Digital Products -->
-      <div id="tab-digital" class="tab-panel">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem">
-          <h2 style="font-family:'Playfair Display',serif;color:var(--gold)">📥 Digital Products</h2>
-          <div style="display:flex;gap:.75rem">
-            <a href="/digital/" target="_blank" class="btn btn-purple btn-sm">👁 ดูหน้าหน้าร้าน</a>
-            <button class="btn btn-gold btn-sm" onclick="saveDigital()">💾 บันทึก JSON</button>
-          </div>
-        </div>
-
-        <!-- Stats -->
-        <div class="grid-3" style="margin-bottom:1.5rem">
-          <div class="stat-card"><div class="stat-label">สินค้าทั้งหมด</div><div class="stat-value" id="dpTotal">0</div><div class="stat-sub">active</div></div>
-          <div class="stat-card"><div class="stat-label">ฟรี</div><div class="stat-value" id="dpFree" style="color:#10b981">0</div><div class="stat-sub">ดาวน์โหลดได้เลย</div></div>
-          <div class="stat-card"><div class="stat-label">เสียเงิน</div><div class="stat-value" id="dpPaid" style="color:var(--gold)">0</div><div class="stat-sub">ผ่าน Line</div></div>
-        </div>
-
-        <!-- Add New -->
-        <div class="panel-card">
-          <h3>➕ เพิ่มสินค้าใหม่</h3>
-          <div class="grid-2">
-            <div>
-              <label>ชื่อสินค้า *</label>
-              <input type="text" id="dpTitle" placeholder="เช่น คู่มือหินสำหรับมือใหม่">
-            </div>
-            <div>
-              <label>หมวดหมู่ *</label>
-              <select id="dpCat">
-                <option value="saimu">🔮 สายมู</option>
-                <option value="stone">💎 หิน</option>
-                <option value="knowledge">📚 ความรู้</option>
-                <option value="quote">✨ คำคม</option>
-              </select>
-            </div>
-          </div>
-          <div>
-            <label>คำอธิบายสั้น (subtitle)</label>
-            <input type="text" id="dpSub" placeholder="บรรทัดเดียวอธิบายสินค้า">
-          </div>
-          <div>
-            <label>รายละเอียด</label>
-            <textarea id="dpDesc" placeholder="อธิบายเนื้อหา ความยาว ประโยชน์ที่ได้รับ..." style="min-height:80px"></textarea>
-          </div>
-          <div class="grid-3">
-            <div>
-              <label>ประเภทไฟล์</label>
-              <select id="dpType">
-                <option value="pdf">PDF</option>
-                <option value="course">คอร์ส (Video)</option>
-                <option value="printable">พิมพ์ได้</option>
-                <option value="digital">ดิจิทัลอื่นๆ</option>
-              </select>
-            </div>
-            <div>
-              <label>จำนวนหน้า / บท</label>
-              <input type="text" id="dpPages" placeholder="เช่น 24 หน้า, 8 บท">
-            </div>
-            <div>
-              <label>Format</label>
-              <input type="text" id="dpFormat" placeholder="เช่น PDF A4, Video+PDF">
-            </div>
-          </div>
-          <div class="grid-2">
-            <div>
-              <label>ราคา (0 = ฟรี)</label>
-              <input type="number" id="dpPrice" placeholder="0" min="0">
-            </div>
-            <div>
-              <label>ราคาเดิม (ก่อนลด)</label>
-              <input type="number" id="dpPriceOrig" placeholder="0" min="0">
-            </div>
-          </div>
-          <div class="grid-2">
-            <div>
-              <label>Badge (ข้อความ)</label>
-              <input type="text" id="dpBadge" placeholder="เช่น ขายดี, ใหม่, แนะนำ">
-            </div>
-            <div>
-              <label>สี Badge</label>
-              <div style="display:flex;gap:.5rem;margin-top:.35rem;flex-wrap:wrap">
-                <button onclick="setBadgeColor(this,'#7c3aed')" style="background:#7c3aed;width:28px;height:28px;border:none;border-radius:50%;cursor:pointer"></button>
-                <button onclick="setBadgeColor(this,'#c9a84c')" style="background:#c9a84c;width:28px;height:28px;border:none;border-radius:50%;cursor:pointer"></button>
-                <button onclick="setBadgeColor(this,'#10b981')" style="background:#10b981;width:28px;height:28px;border:none;border-radius:50%;cursor:pointer"></button>
-                <button onclick="setBadgeColor(this,'#ef4444')" style="background:#ef4444;width:28px;height:28px;border:none;border-radius:50%;cursor:pointer"></button>
-                <button onclick="setBadgeColor(this,'#f59e0b')" style="background:#f59e0b;width:28px;height:28px;border:none;border-radius:50%;cursor:pointer"></button>
-              </div>
-              <input type="hidden" id="dpBadgeColor" value="#7c3aed">
-            </div>
-          </div>
-          <div>
-            <label>URL ไฟล์ (สำหรับฟรี — Google Drive / Direct link)</label>
-            <input type="url" id="dpFileUrl" placeholder="https://drive.google.com/...">
-          </div>
-          <div style="margin-top:1rem;display:flex;gap:.75rem">
-            <button class="btn btn-purple" onclick="addDigitalProduct()">➕ เพิ่มสินค้า</button>
-            <button class="btn" style="background:var(--border)" onclick="clearDpForm()">ล้างฟอร์ม</button>
-          </div>
-        </div>
-
-        <!-- Product List -->
-        <div class="panel-card">
-          <h3>📋 สินค้าทั้งหมด</h3>
-          <div style="display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap">
-            <button class="btn btn-sm" style="background:var(--border)" data-dpfilter="all" onclick="filterDpAdmin(this)">ทั้งหมด</button>
-            <button class="btn btn-sm" style="background:var(--border)" data-dpfilter="saimu" onclick="filterDpAdmin(this)">🔮 สายมู</button>
-            <button class="btn btn-sm" style="background:var(--border)" data-dpfilter="stone" onclick="filterDpAdmin(this)">💎 หิน</button>
-            <button class="btn btn-sm" style="background:var(--border)" data-dpfilter="knowledge" onclick="filterDpAdmin(this)">📚 ความรู้</button>
-            <button class="btn btn-sm" style="background:var(--border)" data-dpfilter="quote" onclick="filterDpAdmin(this)">✨ คำคม</button>
-          </div>
-          <div id="dpProductList"></div>
-        </div>
-      </div>
-
-    </main>
+    </div>
   </div>
 </div>
 
-<div id="toast">✓ บันทึกแล้ว</div>
+<!-- IMG MODAL -->
+<div class="modal-overlay" id="imgModal">
+  <div class="modal">
+    <h3 id="imgModalTitle">ตั้งค่ารูปภาพ</h3>
+    <div id="imgModalMeta" style="font-size:.8rem;color:#9ca3af;margin-bottom:1rem;"></div>
+    <label class="fl">URL รูปภาพ</label>
+    <input class="form-input" id="imgModalUrl" placeholder="https://..." style="width:100%;margin-top:.35rem" oninput="previewMImg(this.value)">
+    <img id="imgModalPreview" class="img-modal-preview">
+    <div id="imgModalPromptBox" style="margin-top:1rem;"></div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeImgModal()">ยกเลิก</button>
+      <button class="btn btn-danger btn-sm" onclick="clearSlot()">🗑 ลบรูป</button>
+      <button class="btn btn-primary" onclick="saveSlot()">💾 บันทึก</button>
+    </div>
+  </div>
+</div>
+
+<!-- IMPORT MODAL -->
+<div class="modal-overlay" id="importModal">
+  <div class="modal">
+    <h3>📥 Import Image URLs</h3>
+    <p style="font-size:.85rem;color:#6b7280;margin-bottom:1rem">วาง JSON ที่ export ไว้</p>
+    <textarea class="form-input" id="importJson" style="width:100%;height:140px" placeholder='{"home_hero":"https://...","chakra_crown":"https://..."}'></textarea>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="document.getElementById('importModal').classList.remove('open')">ยกเลิก</button>
+      <button class="btn btn-primary" onclick="doImport()">Import</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
 
 <script>
-const PASS = 'amethez2026';
+const PASSWORD='amethez2026';
+const AUTH_KEY='amethez_admin_auth';
+const IMG_KEY='amethez_images';
+const GEODES_KEY='amethez_geodes';
 
-function login() {
-  const pw = document.getElementById('passwordInput').value;
-  if (pw === PASS) {
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('adminApp').style.display = 'block';
-    startClock();
-    loadProducts();
-  } else {
-    document.getElementById('loginError').style.display = 'block';
+// ── IMAGE SLOTS ──────────────────────────────
+const SLOTS=[
+  {id:'logo',label:'โลโก้ AMETHEZ',page:'ทุกหน้า',group:'global',size:'400×100',
+   en:'AMETHEZ crystal brand logo, amethyst purple and gold serif typography, luxury minimalist, transparent background 400x100',
+   th:'โลโก้ AMETHEZ ตัวอักษรสีทองอเมทิสต์ม่วง สไตล์หรู พื้นหลังโปร่งใส'},
+  {id:'favicon',label:'Favicon / App Icon',page:'ทุกหน้า',group:'global',size:'512×512',
+   en:'Amethyst crystal point icon, deep purple violet, simple minimal flat design, transparent background, app icon 512x512',
+   th:'ไอคอนคริสตัลอเมทิสต์ม่วง ทรงแหลม มินิมอล พื้นหลังโปร่งใส'},
+  {id:'home_hero',label:'Hero Banner — หน้าหลัก',page:'index.html',group:'homepage',size:'1920×800',
+   en:'Dramatic large amethyst geode cave, deep violet purple crystals glistening with golden light from above, cinematic wide angle shot, 8K ultra detailed luxury photography, dark background',
+   th:'โพรงอเมทิสต์ขนาดใหญ่ แสงทองจากด้านบน บรรยากาศลึกลับ ถ่ายมุมกว้าง 8K'},
+  {id:'home_cat_chakra',label:'Category — จักระ',page:'index.html',group:'homepage',size:'600×400',
+   en:'Seven chakra crystals arranged vertically each glowing corresponding color red to violet, dramatic studio lighting, black background, 4K',
+   th:'หินจักระ 7 ดวงเรียงกัน แต่ละดวงเปล่งแสงสีของตัวเอง พื้นหลังดำ'},
+  {id:'home_cat_zodiac',label:'Category — ราศี',page:'index.html',group:'homepage',size:'600×400',
+   en:'Zodiac constellation wheel with crystals and gemstones, gold and purple tones, night sky background, mystical astrological art, 4K',
+   th:'วงล้อราศีกับหินคริสตัล สีทองม่วง ท้องฟ้ายามค่ำ'},
+  {id:'home_cat_color',label:'Category — สีหิน',page:'index.html',group:'homepage',size:'600×400',
+   en:'Rainbow spectrum of gemstones arranged by color ROYGBIV, white marble surface overhead shot, luxury product photography, 4K',
+   th:'หินเรียงตามสีรุ้ง พื้นหินอ่อนขาว ถ่ายจากมุมบน'},
+  {id:'home_cat_purpose',label:'Category — ความเชื่อ',page:'index.html',group:'homepage',size:'600×400',
+   en:'Hands holding various healing crystals, soft ethereal golden light, spiritual wellness concept photography, 4K',
+   th:'มือถือหินคริสตัลหลายชนิด แสงทองนวล บรรยากาศสปิริชวล'},
+  {id:'chakra_crown',label:'จักระมงกุฎ Crown',page:'categories/chakra.html',group:'chakra',size:'800×800',
+   en:'Crown chakra Sahasrara sacred geometry mandala, thousand-petal lotus violet and white, golden lines, dark spiritual background, 4K digital art',
+   th:'สัญลักษณ์จักระมงกุฎ ดอกบัวพันกลีบ สีม่วงขาว เส้นทองศักดิ์สิทธิ์'},
+  {id:'chakra_third_eye',label:'จักระตาที่สาม Third Eye',page:'categories/chakra.html',group:'chakra',size:'800×800',
+   en:'Third eye chakra Ajna mandala, indigo blue two-petal lotus, Om symbol center, sacred geometry glowing, dark background, 4K',
+   th:'สัญลักษณ์จักระตาที่สาม สีครามน้ำเงิน ดอกบัว 2 กลีบ โอม'},
+  {id:'chakra_throat',label:'จักระลำคอ Throat',page:'categories/chakra.html',group:'chakra',size:'800×800',
+   en:'Throat chakra Vishuddha mandala, sky blue sixteen-petal lotus, sacred geometry, glowing blue light, dark background, 4K',
+   th:'สัญลักษณ์จักระลำคอ สีฟ้าท้องฟ้า ดอกบัว 16 กลีบ'},
+  {id:'chakra_heart',label:'จักระหัวใจ Heart',page:'categories/chakra.html',group:'chakra',size:'800×800',
+   en:'Heart chakra Anahata mandala, emerald green twelve-petal lotus, Star of David hexagram, sacred geometry, glowing green, dark background, 4K',
+   th:'สัญลักษณ์จักระหัวใจ สีเขียวมรกต ดอกบัว 12 กลีบ ดาวแห่งดาวิด'},
+  {id:'chakra_solar',label:'จักระสุริยะ Solar Plexus',page:'categories/chakra.html',group:'chakra',size:'800×800',
+   en:'Solar plexus chakra Manipura mandala, golden yellow ten-petal lotus, radiant sun energy sacred geometry, dark background, 4K',
+   th:'สัญลักษณ์จักระสุริยะ สีทองเหลือง ดอกบัว 10 กลีบ พลังอาทิตย์'},
+  {id:'chakra_sacral',label:'จักระสะดือ Sacral',page:'categories/chakra.html',group:'chakra',size:'800×800',
+   en:'Sacral chakra Svadhisthana mandala, warm orange six-petal lotus, crescent moon, sacred geometry glow, dark background, 4K',
+   th:'สัญลักษณ์จักระสะดือ สีส้มอบอุ่น ดอกบัว 6 กลีบ เสี้ยวจันทร์'},
+  {id:'chakra_root',label:'จักระราก Root',page:'categories/chakra.html',group:'chakra',size:'800×800',
+   en:'Root chakra Muladhara mandala, deep red four-petal lotus, downward triangle, earth energy, glowing crimson, dark background, 4K',
+   th:'สัญลักษณ์จักระราก สีแดงเข้ม ดอกบัว 4 กลีบ สามเหลี่ยมชี้ลง'},
+  {id:'stone_amethyst_hero',label:'อเมทิสต์ — Hero',page:'stones/amethyst.html',group:'stones',size:'1200×600',
+   en:'Raw amethyst crystal cluster macro photography, deep violet purple translucent crystals, dramatic side lighting, dark slate background, 8K ultra detailed',
+   th:'คลัสเตอร์อเมทิสต์ดิบ สีม่วงเข้มโปร่งแสง แสงด้านข้าง พื้นหลังดำ มาโคร 8K'},
+  {id:'stone_amethyst_healing',label:'อเมทิสต์ — Healing',page:'stones/amethyst.html',group:'stones',size:'800×600',
+   en:'Hands holding large amethyst crystal point during meditation, soft purple glow, ethereal spiritual light, healing session photography, 4K',
+   th:'มือถืออเมทิสต์ขณะทำสมาธิ แสงม่วงอ่อน บรรยากาศสปิริชวล'},
+  {id:'stone_rose_quartz_hero',label:'โรสควอตซ์ — Hero',page:'stones/rose-quartz.html',group:'stones',size:'1200×600',
+   en:'Rose quartz crystal cluster soft pink translucent, morning natural light, white marble surface, delicate feminine energy, luxury gemstone photography 8K',
+   th:'โรสควอตซ์สีชมพูอ่อน แสงธรรมชาติยามเช้า พื้นหินอ่อนขาว ดูหรู'},
+  {id:'stone_black_tourmaline_hero',label:'ทัวร์มาลีนดำ — Hero',page:'stones/black-tourmaline.html',group:'stones',size:'1200×600',
+   en:'Raw black tourmaline schorl crystals, deep jet black with vertical striations, dramatic white side lighting contrast, dark background, macro 8K',
+   th:'ทัวร์มาลีนดำดิบ สีดำลึก เส้นแนวตั้งชัดเจน แสงขาวด้านข้าง'},
+  {id:'stone_moldavite_hero',label:'โมลดาไวท์ — Hero',page:'stones/moldavite.html',group:'stones',size:'1200×600',
+   en:'Authentic moldavite tektite specimen, deep forest green translucent glass, natural textures, backlit emerald glow, dark background, macro 8K',
+   th:'โมลดาไวท์แท้ สีเขียวป่าโปร่งแสง พื้นผิวธรรมชาติ แสงส่องผ่านด้านหลัง'},
+  {id:'geode_hero',label:'โพรงอเมทิสต์ — Hero',page:'geode/index.html',group:'geode',size:'1920×700',
+   en:'Stunning large Brazilian amethyst geode cave wide open, deep violet purple crystal interior, warm golden light illuminating from within, cinematic 8K wide angle',
+   th:'โพรงอเมทิสต์บราซิลขนาดใหญ่ สีม่วงเข้ม แสงทองจากภายใน มุมกว้าง 8K'},
+  {id:'geode_interior',label:'โพรงอเมทิสต์ — ภายใน',page:'geode/index.html',group:'geode',size:'800×600',
+   en:'Close up of amethyst geode interior, perfect purple crystal formation, natural cave texture, selective focus, luxury gemstone photography 4K',
+   th:'ภายในโพรงอเมทิสต์ ผลึกม่วงสวยงาม โฟกัสเฉพาะจุด ภาพถ่ายสินค้า 4K'},
+  {id:'consign_hero',label:'รับฝากขาย — Hero',page:'consign.html',group:'consign',size:'1200×600',
+   en:'Professional business partnership handshake with crystals and gemstones on wooden table, warm studio lighting, trust and commerce concept, 4K',
+   th:'การจับมือธุรกิจ มีหินคริสตัลบนโต๊ะไม้ แสงอบอุ่น บรรยากาศน่าเชื่อถือ'},
+];
+
+const GROUPS={global:'🌐 Global',homepage:'🏠 หน้าหลัก',chakra:'🔮 จักระ',stones:'💎 บทความหิน',geode:'🪨 โพรง',consign:'🤝 ฝากขาย'};
+const ARTICLES=[
+  {e:'💜',n:'อเมทิสต์',p:'/stones/amethyst.html'},
+  {e:'🩷',n:'โรสควอตซ์',p:'/stones/rose-quartz.html'},
+  {e:'🖤',n:'ทัวร์มาลีนดำ',p:'/stones/black-tourmaline.html'},
+  {e:'🌿',n:'โมลดาไวท์',p:'/stones/moldavite.html'},
+  {e:'🔮',n:'จักระ',p:'/categories/chakra.html'},
+  {e:'⭐',n:'ราศี',p:'/categories/zodiac.html'},
+  {e:'🌈',n:'สีหิน',p:'/categories/color.html'},
+  {e:'🙏',n:'วัตถุประสงค์',p:'/categories/purpose.html'},
+  {e:'🐉',n:'นักษัตรจีน',p:'/categories/chinese-zodiac.html'},
+  {e:'💎',n:'โพรงอเมทิสต์',p:'/geode/'},
+  {e:'🤝',n:'รับฝากขาย',p:'/consign.html'},
+];
+
+// ── AUTH ──────────────────────────────────────
+function doLogin(){
+  if(document.getElementById('pwInput').value===PASSWORD){
+    sessionStorage.setItem(AUTH_KEY,'1');
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('app').style.display='block';
+    init();
+  }else{
+    document.getElementById('loginErr').style.display='block';
+    document.getElementById('pwInput').value='';
+    document.getElementById('pwInput').focus();
   }
 }
-
-function logout() {
-  document.getElementById('loginScreen').style.display = 'flex';
-  document.getElementById('adminApp').style.display = 'none';
-  document.getElementById('passwordInput').value = '';
+function doLogout(){ sessionStorage.removeItem(AUTH_KEY); location.reload(); }
+if(sessionStorage.getItem(AUTH_KEY)){
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('app').style.display='block';
 }
 
-function showTab(name, el) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
-  el.classList.add('active');
-  if (name === 'digital' && !dpData.products.length) loadDigitalProducts();
+// ── TABS ──────────────────────────────────────
+const TAB_TITLES={dashboard:'📊 ภาพรวม',images:'🖼️ รูปภาพ',prompts:'✨ AI Prompts',products:'💎 สินค้า',articles:'📝 บทความ'};
+function showTab(name,el){
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  if(el) el.classList.add('active');
+  document.querySelectorAll('.tab-panels>div').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  document.getElementById('topbarTitle').textContent=TAB_TITLES[name]||name;
+  if(name==='images') renderSlots();
+  if(name==='prompts') renderPrompts();
+  if(name==='products'){ loadGeodes(); renderPTable(); }
+  if(name==='articles') renderArticles();
+  if(name==='dashboard') renderDash();
 }
 
-function startClock() {
-  function tick() {
-    const now = new Date();
-    document.getElementById('clockDisplay').textContent =
-      now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-  }
-  tick();
-  setInterval(tick, 1000);
-}
+// ── IMAGE STORAGE ─────────────────────────────
+function getImgs(){ try{ return JSON.parse(localStorage.getItem(IMG_KEY)||'{}'); }catch{ return {}; } }
+function setImgs(d){ localStorage.setItem(IMG_KEY,JSON.stringify(d)); }
 
-function showToast(msg = 'บันทึกแล้ว') {
-  const t = document.getElementById('toast');
-  t.textContent = '✓ ' + msg;
-  t.style.display = 'block';
-  setTimeout(() => t.style.display = 'none', 2500);
-}
-
-async function loadProducts() {
-  try {
-    const res = await fetch('/data/products.json');
-    const { products } = await res.json();
-    const html = `<table><thead><tr><th>สินค้า</th><th>ราคา</th><th>Tags</th><th>สถานะ</th></tr></thead><tbody>
-      ${products.map(p => `<tr>
-        <td>${p.name}</td>
-        <td>฿${p.price.toLocaleString()}</td>
-        <td style="font-size:0.75rem;color:var(--muted)">${p.tags.join(', ')}</td>
-        <td><span class="badge ${p.status === 'available' ? 'badge-green' : 'badge-red'}">${p.status}</span></td>
-      </tr>`).join('')}
-    </tbody></table>`;
-    document.getElementById('productTable').innerHTML = html;
-  } catch(e) {
-    document.getElementById('productTable').textContent = 'ไม่สามารถโหลดข้อมูลได้';
-  }
-}
-
-function generateArticle() { showToast('ฟีเจอร์นี้ต้องการ Claude API — เชื่อมต่อใน scripts/generate.js'); }
-function scheduleArticle() { showToast('Scheduled!'); }
-function addProduct() { showToast('เพิ่มสินค้าแล้ว (ต้อง push products.json ขึ้น GitHub)'); }
-
-const prompts = {
-  amethyst: {
-    still: `Raw amethyst crystal cluster, deep purple violet, natural cave formation,\ndramatic lighting, macro photography, white background, 8K detail,\ngemstone photography, professional studio lighting`,
-    video: `Large Brazilian amethyst geode cave slowly revealed by camera zoom,\ndeep purple crystals glistening, dramatic lighting, cinematic 4K,\nsmooth slow motion, ethereal atmosphere, crystal cave`
-  },
-  moldavite: {
-    still: `Raw moldavite crystal, forest green translucent, extraterrestrial origin,\nmacro photography, white background, 8K detail, glowing ethereal light,\nnatural texture wrinkled surface`,
-    video: `Moldavite crystal rotating slowly, forest green translucent stone,\nmystical green light refracting, cosmic space background, cinematic 4K,\nsmooth rotation, otherworldly atmosphere`
-  },
-  tektite: {
-    still: `Thai tektite meteorite glass, dark black rough surface, glossy texture,\nmacro photography, white background, 8K detail, dramatic side lighting,\nnatural lunar-like surface texture`,
-    video: `Black tektite stone slowly rotating, dramatic moody lighting,\nglassy dark surface catching light, cosmic origin story, cinematic 4K,\nsmooth rotation, mysterious atmosphere`
-  },
-  citrine: {
-    still: `Natural citrine crystal point, golden yellow orange, transparent,\ndramatic light refraction rainbow, macro photography, white background, 8K,\nsunlight through crystal, warm golden glow`,
-    video: `Citrine crystal cluster in morning sunlight, golden yellow warm glow,\nrays of light through crystal, success energy visualization, cinematic 4K,\ntime-lapse light movement, abundance atmosphere`
-  },
-  'clear-quartz': {
-    still: `Perfect clear quartz crystal point, completely transparent rainbow inclusion,\nlight refraction spectrum, macro photography, white background, 8K detail,\ncrystal clarity, prismatic light effects`,
-    video: `Clear quartz master healer crystal slowly rotating, perfect transparency,\nrainbow light spectrum refracting, universal healing energy, cinematic 4K,\nsmooth rotation, pure white light atmosphere`
-  }
-};
-
-function generatePrompts() {
-  const stone = document.getElementById('flowStone').value;
-  const p = prompts[stone] || prompts.amethyst;
-  document.getElementById('promptStill').textContent = p.still;
-  document.getElementById('promptVideo').textContent = p.video;
-}
-
-function copyPrompt(id) {
-  const text = document.getElementById(id).textContent;
-  navigator.clipboard.writeText(text).then(() => showToast('Copy แล้ว! เปิด Google Flow และวาง'));
-}
-
-document.getElementById('passwordInput').addEventListener('keydown', e => { if(e.key === 'Enter') login(); });
-
-// ── Digital Products ───────────────────────────────────────
-let dpData = { categories: [], products: [] };
-let dpFilterCat = 'all';
-let dpBadgeColorVal = '#7c3aed';
-const DP_CAT_LABEL = { saimu:'สายมู', stone:'หิน', knowledge:'ความรู้', quote:'คำคม' };
-const DP_CAT_EMOJI = { saimu:'🔮', stone:'💎', knowledge:'📚', quote:'✨' };
-const DP_TYPE_LABEL = { pdf:'PDF', course:'คอร์ส', printable:'พิมพ์ได้', digital:'ดิจิทัล' };
-
-async function loadDigitalProducts() {
-  try {
-    const res = await fetch('/data/digital-products.json');
-    dpData = await res.json();
-    renderDpAdmin();
-    updateDpStats();
-  } catch(e) {
-    document.getElementById('dpProductList').innerHTML = '<p style="color:var(--muted)">ไม่สามารถโหลดข้อมูลได้</p>';
-  }
-}
-
-function updateDpStats() {
-  const active = dpData.products.filter(p => p.status === 'active');
-  document.getElementById('dpTotal').textContent = active.length;
-  document.getElementById('dpFree').textContent = active.filter(p => p.is_free).length;
-  document.getElementById('dpPaid').textContent = active.filter(p => !p.is_free).length;
-}
-
-function renderDpAdmin() {
-  const filtered = dpData.products.filter(p => dpFilterCat === 'all' || p.category === dpFilterCat);
-  if (!filtered.length) {
-    document.getElementById('dpProductList').innerHTML = '<p style="color:var(--muted);padding:1rem 0">ยังไม่มีสินค้าในหมวดนี้</p>';
-    return;
-  }
-  const rows = filtered.map(p => {
-    const save = (!p.is_free && p.price_original > p.price) ? Math.round((1 - p.price/p.price_original)*100) : 0;
-    return `
-    <div style="display:flex;align-items:center;gap:1rem;padding:.875rem 0;border-bottom:1px solid var(--border)">
-      <div style="font-size:1.75rem;width:40px;text-align:center">${DP_CAT_EMOJI[p.category]}</div>
-      <div style="flex:1;min-width:0">
-        <div style="font-weight:600;color:var(--text);font-size:.9rem">${p.title}</div>
-        <div style="font-size:.78rem;color:var(--muted);margin-top:.2rem">${DP_CAT_LABEL[p.category]} · ${DP_TYPE_LABEL[p.type]||p.type} · ${p.pages}</div>
+let activeGroup='all';
+function renderSlots(){
+  const imgs=getImgs();
+  const bar=document.getElementById('imgFilterBar');
+  bar.innerHTML='<span style="font-size:.82rem;color:#6b7280">กรอง:</span>';
+  [{k:'all',v:'ทั้งหมด'},...Object.entries(GROUPS).map(([k,v])=>({k,v}))].forEach(({k,v})=>{
+    const c=document.createElement('button');
+    c.className='filter-chip'+(activeGroup===k?' active':'');
+    c.textContent=v; c.onclick=()=>{ activeGroup=k; renderSlots(); };
+    bar.appendChild(c);
+  });
+  const list=activeGroup==='all'?SLOTS:SLOTS.filter(s=>s.group===activeGroup);
+  document.getElementById('imgSlotsGrid').innerHTML=list.map(s=>{
+    const url=imgs[s.id]||''; const has=!!url;
+    return `<div class="img-slot${has?' has-img':''}">
+      <div class="slot-preview">
+        ${has?`<img src="${x(url)}" loading="lazy" onerror="this.style.display='none'">`:''}
+        ${!has?`<div style="text-align:center"><div style="font-size:2rem">📷</div><div style="font-size:.72rem;color:#9ca3af;margin-top:.3rem">ยังไม่มีรูป</div></div>`:''}
       </div>
-      <div style="text-align:right;white-space:nowrap">
-        ${p.is_free
-          ? '<span class="badge badge-green">ฟรี</span>'
-          : `<span style="font-weight:700;color:var(--gold)">฿${p.price.toLocaleString()}</span>${save>0?` <span class="badge badge-yellow">-${save}%</span>`:''}`
-        }
-      </div>
-      <div style="display:flex;gap:.5rem">
-        <button class="btn btn-sm" style="background:var(--border)" onclick="editDp('${p.id}')">✏️</button>
-        <button class="btn btn-sm btn-red" onclick="toggleDpStatus('${p.id}')">${p.status==='active'?'⏸':'▶'}</button>
-        <button class="btn btn-sm btn-red" onclick="deleteDp('${p.id}')">🗑</button>
+      <div class="slot-body">
+        <div class="slot-name">${x(s.label)}</div>
+        <div class="slot-page">${x(s.page)} · ${s.size}</div>
+        <div class="slot-actions">
+          <button class="btn btn-primary btn-sm" onclick="openSlot('${s.id}')">✏️ ใส่รูป</button>
+          <button class="btn btn-gold btn-sm" onclick="copyP('${s.id}')">✨ Prompt</button>
+        </div>
       </div>
     </div>`;
   }).join('');
-  document.getElementById('dpProductList').innerHTML = rows;
 }
 
-function filterDpAdmin(el) {
-  document.querySelectorAll('[data-dpfilter]').forEach(b => b.style.background = 'var(--border)');
-  el.style.background = 'var(--purple)';
-  dpFilterCat = el.dataset.dpfilter;
-  renderDpAdmin();
+let curSlot=null;
+function openSlot(id){
+  curSlot=id;
+  const s=SLOTS.find(z=>z.id===id);
+  const url=getImgs()[id]||'';
+  document.getElementById('imgModalTitle').textContent='รูป: '+s.label;
+  document.getElementById('imgModalMeta').textContent=`หน้า: ${s.page} · ขนาด: ${s.size}`;
+  document.getElementById('imgModalUrl').value=url;
+  previewMImg(url);
+  document.getElementById('imgModalPromptBox').innerHTML=`
+    <div style="margin-top:.75rem">
+      <div style="font-size:.78rem;font-weight:600;color:#4b5563;margin-bottom:.5rem">✨ Prompt สำหรับรูปนี้:</div>
+      <div class="prompt-text prompt-eng">${x(s.en)}</div>
+      <div class="prompt-text prompt-th">${x(s.th)}</div>
+      <button class="btn btn-gold btn-sm" style="margin-top:.6rem" onclick="copyP('${id}')">📋 Copy Prompt (EN)</button>
+    </div>`;
+  document.getElementById('imgModal').classList.add('open');
+  setTimeout(()=>document.getElementById('imgModalUrl').focus(),100);
+}
+function closeImgModal(){ document.getElementById('imgModal').classList.remove('open'); curSlot=null; }
+function previewMImg(url){
+  const el=document.getElementById('imgModalPreview');
+  if(url&&(url.startsWith('http')||url.startsWith('/'))){ el.src=url; el.style.display='block'; el.onerror=()=>el.style.display='none'; }
+  else el.style.display='none';
+}
+function saveSlot(){
+  if(!curSlot) return;
+  const url=document.getElementById('imgModalUrl').value.trim();
+  const d=getImgs(); if(url) d[curSlot]=url; else delete d[curSlot];
+  setImgs(d); closeImgModal(); renderSlots(); renderDash(); toast('บันทึกรูปแล้ว ✓','ok');
+}
+function clearSlot(){
+  if(!curSlot) return;
+  const d=getImgs(); delete d[curSlot]; setImgs(d);
+  document.getElementById('imgModalUrl').value='';
+  document.getElementById('imgModalPreview').style.display='none';
+  renderSlots(); renderDash(); toast('ลบรูปแล้ว','ok'); closeImgModal();
+}
+function exportImages(){
+  const blob=new Blob([JSON.stringify(getImgs(),null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='amethez-images-'+new Date().toISOString().slice(0,10)+'.json'; a.click();
+  toast('Export สำเร็จ','ok');
+}
+function doImport(){
+  try{
+    const d=JSON.parse(document.getElementById('importJson').value);
+    const imgs=getImgs(); Object.assign(imgs,d); setImgs(imgs);
+    document.getElementById('importModal').classList.remove('open');
+    renderSlots(); renderDash(); toast('Import สำเร็จ '+Object.keys(d).length+' รูป','ok');
+  }catch{ toast('JSON ไม่ถูกต้อง','err'); }
 }
 
-function setBadgeColor(el, color) {
-  dpBadgeColorVal = color;
-  document.getElementById('dpBadgeColor').value = color;
-  document.querySelectorAll('[onclick^="setBadgeColor"]').forEach(b => b.style.outline = 'none');
-  el.style.outline = '2px solid white';
-}
-
-function addDigitalProduct() {
-  const title = document.getElementById('dpTitle').value.trim();
-  const cat   = document.getElementById('dpCat').value;
-  if (!title) { showToast('กรุณาระบุชื่อสินค้า'); return; }
-
-  const price = parseFloat(document.getElementById('dpPrice').value) || 0;
-  const priceOrig = parseFloat(document.getElementById('dpPriceOrig').value) || 0;
-  const newProduct = {
-    id: 'dp' + Date.now(),
-    title,
-    subtitle:   document.getElementById('dpSub').value.trim(),
-    category:   cat,
-    type:       document.getElementById('dpType').value,
-    price,
-    price_original: priceOrig || price,
-    is_free:    price === 0,
-    pages:      document.getElementById('dpPages').value.trim() || '-',
-    format:     document.getElementById('dpFormat').value.trim() || 'PDF',
-    description: document.getElementById('dpDesc').value.trim(),
-    preview_image: '',
-    file_url:   document.getElementById('dpFileUrl').value.trim(),
-    line_delivery: price > 0,
-    tags: [],
-    badge:       document.getElementById('dpBadge').value.trim(),
-    badge_color: document.getElementById('dpBadgeColor').value,
-    downloads: 0,
-    status: 'active',
-    sort_order: dpData.products.length + 1,
-    created_at: new Date().toISOString().slice(0,10)
-  };
-
-  dpData.products.push(newProduct);
-  renderDpAdmin();
-  updateDpStats();
-  clearDpForm();
-  showToast('เพิ่มสินค้าแล้ว — กด "บันทึก JSON" เพื่อดาวน์โหลด');
-}
-
-function editDp(id) {
-  const p = dpData.products.find(x => x.id === id);
-  if (!p) return;
-  document.getElementById('dpTitle').value = p.title;
-  document.getElementById('dpSub').value = p.subtitle;
-  document.getElementById('dpCat').value = p.category;
-  document.getElementById('dpType').value = p.type;
-  document.getElementById('dpPages').value = p.pages;
-  document.getElementById('dpFormat').value = p.format;
-  document.getElementById('dpPrice').value = p.price;
-  document.getElementById('dpPriceOrig').value = p.price_original;
-  document.getElementById('dpBadge').value = p.badge;
-  document.getElementById('dpBadgeColor').value = p.badge_color;
-  document.getElementById('dpFileUrl').value = p.file_url;
-  document.getElementById('dpDesc').value = p.description;
-  // Remove old and let user re-add
-  dpData.products = dpData.products.filter(x => x.id !== id);
-  renderDpAdmin();
-  updateDpStats();
-  document.getElementById('dpTitle').focus();
-  showToast('โหลดข้อมูลเก่าแล้ว — แก้ไขแล้วกด "เพิ่มสินค้า"');
-}
-
-function toggleDpStatus(id) {
-  const p = dpData.products.find(x => x.id === id);
-  if (!p) return;
-  p.status = p.status === 'active' ? 'draft' : 'active';
-  renderDpAdmin();
-  updateDpStats();
-  showToast(`${p.status === 'active' ? 'เปิด' : 'ปิด'}การแสดงผลแล้ว`);
-}
-
-function deleteDp(id) {
-  if (!confirm('ลบสินค้านี้?')) return;
-  dpData.products = dpData.products.filter(x => x.id !== id);
-  renderDpAdmin();
-  updateDpStats();
-  showToast('ลบแล้ว');
-}
-
-function clearDpForm() {
-  ['dpTitle','dpSub','dpDesc','dpPages','dpFormat','dpPrice','dpPriceOrig','dpBadge','dpFileUrl'].forEach(id => {
-    document.getElementById(id).value = '';
-  });
-  document.getElementById('dpCat').value = 'saimu';
-  document.getElementById('dpType').value = 'pdf';
-  document.getElementById('dpBadgeColor').value = '#7c3aed';
-}
-
-function saveDigital() {
-  const json = JSON.stringify(dpData, null, 2);
-  const blob = new Blob([json], { type: 'application/json' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'digital-products.json';
-  a.click();
-  showToast('ดาวน์โหลด digital-products.json แล้ว — วางทับไฟล์เดิมใน data/');
-}
-
-// ══════════════════════════════════════════════════════
-//  🎬  VIDEO PAGE GENERATOR
-// ══════════════════════════════════════════════════════
-
-let vpAffAccounts = null;
-let vpAffProducts = null;
-let vpHistory = [];
-
-// ── Load affiliate data ────────────────────────────────
-async function loadAffiliateData() {
-  if (vpAffAccounts && vpAffProducts) return;
-  try {
-    const [accRes, prodRes] = await Promise.all([
-      fetch('/data/affiliate-accounts.json'),
-      fetch('/data/affiliate-products.json')
-    ]);
-    vpAffAccounts = await accRes.json();
-    vpAffProducts = await prodRes.json();
-    renderAffProductsList();
-  } catch(e) {
-    console.warn('Affiliate data load failed', e);
-  }
-}
-
-// ── Extract YouTube video ID ───────────────────────────
-function extractVideoId(url) {
-  if (!url) return '';
-  const patterns = [
-    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([A-Za-z0-9_-]{11})/,
-    /youtube\.com\/shorts\/([A-Za-z0-9_-]{11})/
-  ];
-  for (const p of patterns) {
-    const m = url.match(p);
-    if (m) {
-      document.getElementById('vpVideoId').textContent = m[1];
-      autoSlug();
-      return m[1];
-    }
-  }
-  return '';
-}
-
-// ── Fetch YouTube oEmbed metadata ─────────────────────
-async function fetchVideoMeta() {
-  const url = document.getElementById('vpYoutubeUrl').value.trim();
-  const vid = extractVideoId(url);
-  if (!vid) { showToast('URL ไม่ถูกต้อง — ลองวาง YouTube URL ใหม่'); return; }
-
-  try {
-    const oembed = `https://www.youtube.com/oembed?url=https://youtu.be/${vid}&format=json`;
-    const res = await fetch(oembed);
-    if (!res.ok) throw new Error();
-    const data = await res.json();
-
-    document.getElementById('vpFetchedTitle').textContent = data.title;
-    document.getElementById('vpThumb').src = `https://img.youtube.com/vi/${vid}/mqdefault.jpg`;
-    document.getElementById('vpVideoPreview').style.display = 'block';
-
-    if (!document.getElementById('vpTitle').value)
-      document.getElementById('vpTitle').value = data.title;
-    autoSlug();
-    showToast('ดึงข้อมูลวิดีโอสำเร็จ ✓');
-  } catch(e) {
-    // oEmbed may fail for some videos; still show thumbnail
-    document.getElementById('vpThumb').src = `https://img.youtube.com/vi/${vid}/mqdefault.jpg`;
-    document.getElementById('vpFetchedTitle').textContent = '(กรอกชื่อด้านล่างเอง)';
-    document.getElementById('vpVideoPreview').style.display = 'block';
-  }
-  checkReadiness();
-}
-
-// ── Auto-generate URL slug from title ─────────────────
-function autoSlug() {
-  const title = document.getElementById('vpTitle').value;
-  const slug = title
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-    .slice(0, 60) || 'video-' + Date.now();
-  document.getElementById('vpSlug').value = slug;
-}
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('vpTitle')?.addEventListener('input', autoSlug);
-});
-
-// ── Add quick tag ──────────────────────────────────────
-function addTag(tag) {
-  const el = document.getElementById('vpTags');
-  const current = el.value.split(',').map(t => t.trim()).filter(Boolean);
-  if (!current.includes(tag)) {
-    el.value = [...current, tag].join(', ');
-    previewAffiliateMatch();
-  }
-}
-
-// ── Match affiliates by tags ───────────────────────────
-function matchAffiliates(tagsStr) {
-  if (!vpAffAccounts) return [];
-  const tags = tagsStr.split(',').map(t => t.trim().toLowerCase()).filter(Boolean);
-  const matrix = vpAffAccounts.tag_to_platform_matrix || {};
-  const matched = new Set();
-
-  tags.forEach(tag => {
-    Object.entries(matrix).forEach(([key, platforms]) => {
-      if (key.toLowerCase().includes(tag) || tag.includes(key.toLowerCase())) {
-        platforms.forEach(p => matched.add(p));
-      }
-    });
-    // Direct account tag_triggers check
-    Object.entries(vpAffAccounts.accounts).forEach(([key, acc]) => {
-      if (acc.active && acc.tag_triggers.some(t => t.toLowerCase().includes(tag) || tag.includes(t.toLowerCase()))) {
-        matched.add(key);
-      }
-    });
-  });
-  return [...matched];
-}
-
-// ── Preview affiliate match in form ───────────────────
-function previewAffiliateMatch() {
-  loadAffiliateData().then(() => {
-    const tags = document.getElementById('vpTags').value;
-    const matched = matchAffiliates(tags);
-    const preview = document.getElementById('vpAffPreview');
-    const list    = document.getElementById('vpAffList');
-    const counter = document.getElementById('vpAffCount');
-
-    if (!matched.length) { preview.style.display = 'none'; return; }
-
-    const colors = { shopee:'#ee4d2d', meb:'#e85d04', skilllane:'#0ea5e9', futureskill:'#10b981', hostneverdie:'#7c3aed', naiin:'#6366f1' };
-    const labels = { shopee:'🛒 Shopee', meb:'📚 MEB', skilllane:'🎓 SkillLane', futureskill:'🚀 FutureSkill', hostneverdie:'🌐 HostNeverDie', naiin:'📖 Naiin' };
-
-    list.innerHTML = matched.map(p => {
-      const c = colors[p] || '#666';
-      return `<span class="aff-chip" style="background:${c}20;color:${c}">${labels[p] || p}</span>`;
-    }).join('');
-
-    preview.style.display = 'block';
-    counter.textContent = matched.length;
-    checkReadiness();
-  });
-}
-
-// ── Generate Claude prompt ─────────────────────────────
-function generateClaudePrompt() {
-  const title = document.getElementById('vpTitle').value || '(ชื่อวิดีโอ)';
-  const tags  = document.getElementById('vpTags').value  || '(tags)';
-  const vid   = document.getElementById('vpVideoId').textContent || '(video id)';
-
-  const prompt = `คุณคือ Crystal Atlas นักเขียนอาวุโสของ Amethez.com เว็บไซต์ข้อมูลคริสตัลและพลังงานที่ใหญ่ที่สุดในไทย
-
-วิดีโอที่ต้องการสรุป:
-- ชื่อ: ${title}
-- YouTube ID: ${vid}
-- หัวข้อหลัก: ${tags}
-
-กรุณาสร้าง:
-
-1. **Key Takeaways (3–5 ข้อ)** — แต่ละข้อเริ่มต้นด้วย "•" ภาษาไทยกระชับชัดเจน ไม่เกิน 1 บรรทัด
-
-2. **บทสรุปฉบับ Premium Thai (3–4 ย่อหน้า)** — เขียนในสไตล์ผู้เชี่ยวชาญ ให้ความรู้จริง อ่านแล้วอยากดูวิดีโอต่อ ใช้ภาษาสุภาพและน่าเชื่อถือ แต่ไม่เป็นทางการเกินไป
-
-3. **Meta Description (1 ประโยค ไม่เกิน 155 ตัวอักษร)** — สำหรับ SEO
-
-Tone: เป็นกันเอง มีความเชี่ยวชาญ เน้น value ให้ผู้อ่าน ไม่ใช้ศัพท์เทคนิคเกินไป`;
-
-  document.getElementById('vpClaudePromptText').textContent = prompt;
-  document.getElementById('vpClaudePromptBox').style.display = 'block';
-  navigator.clipboard.writeText(prompt).then(() => {
-    showToast('Copy Prompt แล้ว! เปิด claude.ai แล้ววาง');
-  });
-}
-
-// ── Readiness check ────────────────────────────────────
-function checkReadiness() {
-  const checks = [
-    { id: 'vpVideoId',   label: 'YouTube Video ID',    ok: () => !!document.getElementById('vpVideoId').textContent },
-    { id: 'vpTitle',     label: 'ชื่อหน้า',             ok: () => !!document.getElementById('vpTitle').value.trim() },
-    { id: 'vpSlug',      label: 'URL Slug',              ok: () => !!document.getElementById('vpSlug').value.trim() },
-    { id: 'vpTags',      label: 'Tags',                  ok: () => !!document.getElementById('vpTags').value.trim() },
-    { id: 'vpTakeaways', label: 'Key Takeaways',         ok: () => !!document.getElementById('vpTakeaways').value.trim() },
-    { id: 'vpSummary',   label: 'AI Summary',            ok: () => !!document.getElementById('vpSummary').value.trim() },
-  ];
-  const box = document.getElementById('vpReadyCheck');
-  box.innerHTML = checks.map(c => {
-    const pass = c.ok();
-    return `<div class="step-check ${pass?'ok':'err'}">${pass?'✓':'○'} ${c.label}</div>`;
-  }).join('');
-}
-setInterval(checkReadiness, 1500);
-
-// ── Build affiliate matrix HTML for generated page ─────
-function buildAffiliateMatrix(tags) {
-  if (!vpAffAccounts || !vpAffProducts) return '';
-  const matched = matchAffiliates(tags);
-  if (!matched.length) return '';
-
-  const accs = vpAffAccounts.accounts;
-
-  // Match specific products from affiliate-products.json
-  const tagArr = tags.split(',').map(t => t.trim().toLowerCase());
-  const matchedProds = (vpAffProducts.products || [])
-    .filter(p => p.status === 'active' && p.tags.some(t => tagArr.some(pg => t.toLowerCase().includes(pg) || pg.includes(t.toLowerCase()))))
-    .slice(0, 2);
-
-  let cards = '';
-
-  // Matched specific products first
-  matchedProds.forEach(p => {
-    const isCourse = p.category === 'course';
-    const save = p.price_original > p.price ? Math.round((1-p.price/p.price_original)*100) : 0;
-    cards += `
-      <div class="vp-aff-card">
-        <div class="vp-aff-icon">${isCourse ? '🎓' : '📚'}</div>
-        <div class="vp-aff-content">
-          <div class="vp-aff-platform">${p.platform_label}</div>
-          <div class="vp-aff-title">${p.title}</div>
-          <div class="vp-aff-cta-text">${p.ai_cta}</div>
-          <div class="vp-aff-price-row">
-            <span class="vp-aff-price">฿${p.price.toLocaleString()}</span>
-            ${save > 0 ? `<span class="vp-aff-save">ลด ${save}%</span>` : ''}
-          </div>
-          <a href="${p.affiliate_url}" target="_blank" rel="noopener" class="vp-aff-btn">
-            ${isCourse ? '🎓 ดูรายละเอียดคอร์ส' : '📚 ดูหนังสือเล่มนี้'} →
-          </a>
+// ── PROMPTS ──────────────────────────────────
+function renderPrompts(){
+  document.getElementById('promptList').innerHTML=SLOTS.map(s=>`
+    <div class="prompt-item">
+      <div class="prompt-header">
+        <div class="prompt-meta">
+          <div class="prompt-name">${x(s.label)}</div>
+          <div class="prompt-page">${x(s.page)}</div>
+          <div class="prompt-size">${s.size}</div>
         </div>
-      </div>`;
-  });
-
-  // Platform-level cards for matched platforms (that don't have specific products)
-  const coveredPlatforms = new Set(matchedProds.map(p => p.platform));
-  matched.filter(p => !coveredPlatforms.has(p)).slice(0, 3).forEach(key => {
-    const acc = accs[key];
-    if (!acc || !acc.active) return;
-    const affUrl = acc.base_url + '?ref=' + (localStorage.getItem('aff_' + key) || acc.affiliate_id);
-    cards += `
-      <div class="vp-aff-card">
-        <div class="vp-aff-icon">${acc.cta_label.split(' ')[0]}</div>
-        <div class="vp-aff-content">
-          <div class="vp-aff-platform">${acc.platform_label || key}</div>
-          <div class="vp-aff-title">${acc.cta_label.replace(/^[^\s]+\s/, '')}</div>
-          <div class="vp-aff-cta-text">แนะนำโดย Amethez · ${acc.commission_note}</div>
-          <a href="${affUrl}" target="_blank" rel="noopener" class="vp-aff-btn">${acc.cta_label} →</a>
-        </div>
-      </div>`;
-  });
-
-  return cards ? `
-    <section class="vp-affiliate-section">
-      <div class="vp-aff-header">
-        <h2>💎 Amethez Handpicked Recommendations</h2>
-        <p>คัดเลือกโดยผู้เชี่ยวชาญ · ลิงค์ Affiliate สนับสนุนการสร้างเนื้อหาฟรีของเรา</p>
+        <button class="btn btn-gold btn-sm" onclick="copyP('${s.id}')">📋 Copy EN</button>
       </div>
-      <div class="vp-aff-grid">${cards}</div>
-      <p class="vp-aff-disclaimer">⚠️ ลิงค์ด้านบนเป็น Affiliate Link — Amethez ได้รับค่าคอมมิชชั่นเล็กน้อยโดยไม่มีค่าใช้จ่ายเพิ่มจากคุณ</p>
-    </section>` : '';
+      <div class="prompt-text prompt-eng">${x(s.en)}</div>
+      <div class="prompt-text prompt-th">${x(s.th)}</div>
+    </div>`).join('');
+}
+function copyP(id){
+  const s=SLOTS.find(z=>z.id===id); if(!s) return;
+  navigator.clipboard.writeText(s.en).then(()=>toast('Copied: '+s.label,'ok'));
+}
+function copyAllPrompts(){
+  const all=SLOTS.map(s=>`=== ${s.label} (${s.page}) ===\n${s.en}\n`).join('\n');
+  navigator.clipboard.writeText(all).then(()=>toast('Copied ทั้งหมด '+SLOTS.length+' prompts','ok'));
+}
+function exportPrompts(){
+  const all=SLOTS.map(s=>`=== ${s.label} ===\nPage: ${s.page} | Size: ${s.size}\nEN: ${s.en}\nTH: ${s.th}\n`).join('\n---\n\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([all],{type:'text/plain;charset=utf-8'}));
+  a.download='amethez-prompts.txt'; a.click(); toast('Export .txt สำเร็จ','ok');
 }
 
-// ── Build complete page HTML ───────────────────────────
-function buildPageHTML(data) {
-  const { vid, title, slug, tags, takeaways, summary, avatar, category } = data;
-  const avatarMap = {
-    atlas:   { name:'Crystal Atlas',  icon:'🔬', role:'สารานุกรมหินคริสตัล' },
-    wuchong: { name:'Master Wuchong', icon:'🧘', role:'พลังงาน · ความสำเร็จ' },
-    metha:   { name:'อาจารย์เมธา',    icon:'🌙', role:'ดวง · สายมู · ราศี' }
+// ── PRODUCTS ──────────────────────────────────
+let geodes=[];
+function loadGeodes(){ try{ geodes=JSON.parse(localStorage.getItem(GEODES_KEY)||'[]'); }catch{ geodes=[]; } }
+function saveGeodes(){ localStorage.setItem(GEODES_KEY,JSON.stringify(geodes)); }
+function genId(){ return 'G'+Date.now().toString(36).toUpperCase(); }
+function clearPForm(){
+  ['pName','pWeight','pSize','pPrice','pImage','pDesc','pNote','pOrigin'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+  document.getElementById('pStatus').value='available';
+  document.getElementById('pEditId').value='';
+  document.getElementById('pImgPreview').style.display='none';
+  document.getElementById('prodFormTitle').textContent='➕ เพิ่มโพรงใหม่';
+}
+function previewPImg(url){
+  const el=document.getElementById('pImgPreview');
+  if(url&&url.startsWith('http')){ el.src=url; el.style.display='block'; el.onerror=()=>el.style.display='none'; }
+  else el.style.display='none';
+}
+function saveProd(){
+  const name=document.getElementById('pName').value.trim();
+  if(!name){ toast('กรุณาใส่ชื่อสินค้า','err'); return; }
+  const eid=document.getElementById('pEditId').value;
+  const p={id:eid||genId(),name,
+    weight:document.getElementById('pWeight').value||'',
+    size:document.getElementById('pSize').value.trim(),
+    price:document.getElementById('pPrice').value||'',
+    price_unit:'/ชิ้น',
+    status:document.getElementById('pStatus').value,
+    origin:document.getElementById('pOrigin').value.trim(),
+    image_url:document.getElementById('pImage').value.trim(),
+    description:document.getElementById('pDesc').value.trim(),
+    note:document.getElementById('pNote').value.trim(),
+    updated:new Date().toLocaleDateString('th-TH'),
   };
-  const av = avatarMap[avatar] || avatarMap.atlas;
-  const tagArr = tags.split(',').map(t => `<span class="vp-tag">${t.trim()}</span>`).join('');
-  const takeawayLines = takeaways.split('\n').filter(l => l.trim()).map(l =>
-    `<li>${l.replace(/^[•\-*]\s*/, '')}</li>`).join('');
-  const affMatrix = buildAffiliateMatrix(tags);
-  const today = new Date().toLocaleDateString('th-TH', { year:'numeric', month:'long', day:'numeric' });
-
-  return `<!DOCTYPE html>
-<html lang="th">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${title} | Amethez</title>
-  <meta name="description" content="${summary.slice(0, 155)}">
-  <meta property="og:title" content="${title} | Amethez">
-  <meta property="og:image" content="https://img.youtube.com/vi/${vid}/maxresdefault.jpg">
-  <meta property="og:type" content="article">
-  <link rel="canonical" href="https://amethez.com/videos/${slug}.html">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/main.css">
-  <link rel="stylesheet" href="/css/affiliate.css">
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"VideoObject","name":"${title}","description":"${summary.slice(0,200)}","thumbnailUrl":"https://img.youtube.com/vi/${vid}/maxresdefault.jpg","embedUrl":"https://www.youtube.com/embed/${vid}","uploadDate":"${new Date().toISOString().slice(0,10)}","publisher":{"@type":"Organization","name":"Amethez","url":"https://amethez.com"}}
-  </script>
-  <style>
-    .vp-hero { background:#0f0a1e; padding:2rem 1.5rem 0; }
-    .vp-video-wrap { max-width:860px; margin:0 auto; position:relative; padding-bottom:56.25%; height:0; border-radius:1rem; overflow:hidden; box-shadow:0 24px 64px rgba(0,0,0,.5); }
-    .vp-video-wrap iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
-    .vp-content { max-width:860px; margin:0 auto; padding:2.5rem 1.5rem; }
-    .vp-tags { display:flex; gap:.4rem; flex-wrap:wrap; margin-bottom:1.25rem; }
-    .vp-tag { background:#f5f0ff; color:#7c3aed; font-size:.75rem; padding:.2rem .65rem; border-radius:2rem; }
-    .vp-title { font-family:'Playfair Display',serif; font-size:clamp(1.5rem,4vw,2.2rem); color:#1a1228; line-height:1.3; margin-bottom:.75rem; }
-    .vp-meta { display:flex; align-items:center; gap:.75rem; font-size:.82rem; color:#6b7280; margin-bottom:2rem; flex-wrap:wrap; }
-    .vp-avatar-chip { display:flex; align-items:center; gap:.4rem; background:#f5f0ff; color:#7c3aed; padding:.3rem .8rem; border-radius:2rem; font-weight:700; }
-    .vp-takeaways { background:linear-gradient(135deg,#f8f5ff,#fdf4ff); border:1.5px solid #ede9fe; border-radius:1rem; padding:1.5rem 1.75rem; margin-bottom:2rem; }
-    .vp-takeaways h2 { font-size:1rem; font-weight:700; color:#7c3aed; margin-bottom:.875rem; }
-    .vp-takeaways ul { list-style:none; padding:0; margin:0; }
-    .vp-takeaways li { padding:.4rem 0; color:#1a1228; font-size:.95rem; line-height:1.6; display:flex; gap:.5rem; }
-    .vp-takeaways li::before { content:'✦'; color:#c9a84c; flex-shrink:0; margin-top:.1rem; }
-    .vp-summary { font-size:1rem; color:#374151; line-height:1.85; margin-bottom:2rem; }
-    .vp-summary p { margin-bottom:1rem; }
-    .vp-affiliate-section { background:linear-gradient(135deg,#0f0a1e,#1e0d3d); border-radius:1.25rem; padding:2rem; margin:2.5rem 0; border:1px solid rgba(201,168,76,.2); }
-    .vp-aff-header { margin-bottom:1.5rem; }
-    .vp-aff-header h2 { font-family:'Playfair Display',serif; color:white; font-size:1.3rem; margin-bottom:.3rem; }
-    .vp-aff-header p { color:rgba(255,255,255,.45); font-size:.82rem; }
-    .vp-aff-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:1rem; }
-    .vp-aff-card { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:.875rem; padding:1.25rem; display:flex; gap:1rem; align-items:flex-start; transition:all .2s; }
-    .vp-aff-card:hover { background:rgba(255,255,255,.1); border-color:rgba(201,168,76,.4); }
-    .vp-aff-icon { font-size:2rem; flex-shrink:0; }
-    .vp-aff-platform { font-size:.7rem; font-weight:700; color:rgba(201,168,76,.8); text-transform:uppercase; letter-spacing:.06em; margin-bottom:.3rem; }
-    .vp-aff-title { font-weight:700; color:white; font-size:.9rem; line-height:1.4; margin-bottom:.4rem; }
-    .vp-aff-cta-text { font-size:.78rem; color:rgba(255,255,255,.55); line-height:1.55; margin-bottom:.75rem; }
-    .vp-aff-price-row { display:flex; align-items:center; gap:.5rem; margin-bottom:.65rem; }
-    .vp-aff-price { font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; color:#c9a84c; }
-    .vp-aff-save { background:rgba(201,168,76,.15); color:#c9a84c; font-size:.7rem; padding:.15rem .5rem; border-radius:1rem; font-weight:700; }
-    .vp-aff-btn { display:block; background:linear-gradient(135deg,#c9a84c,#b8922e); color:#0f0a1e; padding:.6rem 1rem; border-radius:.5rem; font-family:Sarabun,sans-serif; font-size:.82rem; font-weight:700; text-decoration:none; text-align:center; transition:all .2s; }
-    .vp-aff-btn:hover { opacity:.9; }
-    .vp-aff-disclaimer { margin-top:1.25rem; font-size:.72rem; color:rgba(255,255,255,.25); text-align:center; border-top:1px solid rgba(255,255,255,.06); padding-top:.875rem; }
-  </style>
-</head>
-<body>
-
-<header class="site-header">
-  <div class="container nav-inner">
-    <a href="/" class="logo">
-      <svg viewBox="0 0 36 36" fill="none"><polygon points="18,2 30,12 26,30 10,30 6,12" fill="#7c3aed" opacity="0.9"/><polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity="0.95"/><polygon points="18,8 30,12 18,28" fill="#a78bfa"/><polygon points="18,8 6,12 18,28" fill="#7c3aed"/></svg>
-      <span>AMETHEZ <small class="logo-tagline">Stones · Stories · Soul</small></span>
-    </a>
-    <nav><ul class="nav-links">
-      <li><a href="/stones/">💎 คลังหิน</a></li>
-      <li><a href="/guides/">🌿 พลังบำบัด</a></li>
-      <li><a href="/videos/">🎬 วิดีโอ</a></li>
-      <li><a href="/digital/" style="color:#7c3aed;font-weight:700">📥 Digital</a></li>
-      <li><a href="/sale.html" style="color:#c9a84c;font-weight:700">🛒 ร้านค้า</a></li>
-    </ul></nav>
-  </div>
-</header>
-
-<div class="vp-hero">
-  <div class="vp-video-wrap">
-    <iframe src="https://www.youtube.com/embed/${vid}?rel=0&modestbranding=1"
-      title="${title}" allowfullscreen loading="lazy"></iframe>
-  </div>
-</div>
-
-<div class="vp-content">
-  <div class="vp-tags">${tagArr}</div>
-  <h1 class="vp-title">${title}</h1>
-  <div class="vp-meta">
-    <span class="vp-avatar-chip">${av.icon} ${av.name}</span>
-    <span>${av.role}</span>
-    <span>·</span>
-    <span>${today}</span>
-  </div>
-
-  <div class="vp-takeaways">
-    <h2>✦ Key Takeaways — สิ่งที่ควรรู้จากวิดีโอนี้</h2>
-    <ul>${takeawayLines}</ul>
-  </div>
-
-  <div class="vp-summary">
-    ${summary.split('\n\n').map(p => p.trim() ? `<p>${p.trim()}</p>` : '').join('')}
-  </div>
-
-  ${affMatrix}
-
-  <div style="border-top:1.5px solid #f0e8ff;padding-top:1.5rem;margin-top:2rem">
-    <p style="font-size:.85rem;color:#6b7280">อ่านบทความเพิ่มเติม: <a href="/stones/" style="color:#7c3aed">คลังหินคริสตัล A–Z</a> · <a href="/guides/" style="color:#7c3aed">คู่มือพลังบำบัด</a> · <a href="/videos/" style="color:#7c3aed">วิดีโอทั้งหมด</a></p>
-  </div>
-</div>
-
-<footer class="site-footer">
-  <div class="container footer-bottom">
-    <p>© 2026 Amethez.com — ข้อมูลเพื่อการศึกษา ไม่ใช่คำแนะนำทางการแพทย์</p>
-  </div>
-</footer>
-<script src="/js/main.js"><\/script>
-</body>
-</html>`;
+  if(eid){ const i=geodes.findIndex(g=>g.id===eid); if(i>=0){ p.created=geodes[i].created; geodes[i]=p; } }
+  else{ p.created=p.updated; geodes.unshift(p); }
+  saveGeodes(); renderPTable(); renderDash(); clearPForm();
+  toast(eid?'แก้ไขแล้ว ✓':'เพิ่มสินค้าแล้ว ✓','ok');
+}
+function editProd(id){
+  const p=geodes.find(g=>g.id===id); if(!p) return;
+  document.getElementById('pEditId').value=p.id;
+  document.getElementById('pName').value=p.name;
+  document.getElementById('pWeight').value=p.weight||'';
+  document.getElementById('pSize').value=p.size||'';
+  document.getElementById('pPrice').value=p.price||'';
+  document.getElementById('pStatus').value=p.status||'available';
+  document.getElementById('pOrigin').value=p.origin||'';
+  document.getElementById('pImage').value=p.image_url||'';
+  document.getElementById('pDesc').value=p.description||'';
+  document.getElementById('pNote').value=p.note||'';
+  document.getElementById('prodFormTitle').textContent='✏️ แก้ไข: '+p.name;
+  previewPImg(p.image_url);
+  document.getElementById('tab-products').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function cycleStatus(id){
+  const p=geodes.find(g=>g.id===id); if(!p) return;
+  p.status={available:'reserved',reserved:'sold',sold:'available'}[p.status]||'available';
+  p.updated=new Date().toLocaleDateString('th-TH');
+  saveGeodes(); renderPTable(); renderDash(); toast('เปลี่ยนสถานะแล้ว','ok');
+}
+function delProd(id){
+  if(!confirm('ลบสินค้านี้?')) return;
+  geodes=geodes.filter(g=>g.id!==id); saveGeodes(); renderPTable(); renderDash(); toast('ลบแล้ว','ok');
+}
+function renderPTable(){
+  const kw=(document.getElementById('prodSearch')?.value||'').toLowerCase();
+  const list=kw?geodes.filter(p=>p.name.toLowerCase().includes(kw)):geodes;
+  const BM={available:['badge-available','🟢 พร้อมขาย'],reserved:['badge-reserved','🟡 จอง'],sold:['badge-sold','⚫ ขายแล้ว']};
+  document.getElementById('pTableBody').innerHTML=list.length?list.map(p=>{
+    const [cls,lbl]=BM[p.status]||BM.available;
+    const img=p.image_url?`<div class="td-img"><img src="${x(p.image_url)}" onerror="this.parentElement.innerHTML='💎'"></div>`:`<div class="td-img">💎</div>`;
+    return `<tr><td>${img}</td><td style="font-weight:600;max-width:180px">${x(p.name)}</td>
+      <td>${p.weight?p.weight+' กก.':'—'}</td>
+      <td>${p.price?'฿'+Number(p.price).toLocaleString():'<span style="color:#9ca3af">สอบถาม</span>'}</td>
+      <td><span class="status-badge ${cls}">${lbl}</span></td>
+      <td><div style="display:flex;gap:.35rem">
+        <button class="btn btn-outline btn-sm" onclick="editProd('${p.id}')">✏️</button>
+        <button class="btn btn-outline btn-sm" onclick="cycleStatus('${p.id}')">🔄</button>
+        <button class="btn btn-danger btn-sm" onclick="delProd('${p.id}')">🗑</button>
+      </div></td></tr>`;
+  }).join(''):`<tr><td colspan="6" style="text-align:center;padding:2rem;color:#9ca3af">ยังไม่มีสินค้า</td></tr>`;
 }
 
-// ── Generate + download page ───────────────────────────
-function generateVideoPage() {
-  const vid      = document.getElementById('vpVideoId').textContent.trim();
-  const title    = document.getElementById('vpTitle').value.trim();
-  const slug     = document.getElementById('vpSlug').value.trim();
-  const tags     = document.getElementById('vpTags').value.trim();
-  const takeaways= document.getElementById('vpTakeaways').value.trim();
-  const summary  = document.getElementById('vpSummary').value.trim();
-  const avatar   = document.getElementById('vpAvatar').value;
-  const category = document.getElementById('vpCategory').value;
-
-  if (!vid || !title || !slug || !tags || !takeaways || !summary) {
-    showToast('กรอกข้อมูลให้ครบทุกช่องก่อน ⚠️');
-    checkReadiness();
-    return;
-  }
-
-  const html = buildPageHTML({ vid, title, slug, tags, takeaways, summary, avatar, category });
-  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
-  const a    = document.createElement('a');
-  a.href     = URL.createObjectURL(blob);
-  a.download = slug + '.html';
-  a.click();
-
-  // Save to history
-  vpHistory.unshift({ slug, title, tags, ts: new Date().toLocaleTimeString('th-TH') });
-  document.getElementById('vpCount').textContent = vpHistory.length;
-  renderVpHistory();
-  showToast(`ดาวน์โหลด ${slug}.html แล้ว → วางไว้ใน /videos/`);
-}
-
-// ── Preview page in new tab ────────────────────────────
-function previewVideoPage() {
-  const vid      = document.getElementById('vpVideoId').textContent.trim();
-  const title    = document.getElementById('vpTitle').value.trim() || 'Preview';
-  const slug     = document.getElementById('vpSlug').value.trim()  || 'preview';
-  const tags     = document.getElementById('vpTags').value.trim()  || 'คริสตัล';
-  const takeaways= document.getElementById('vpTakeaways').value.trim() || '• Preview takeaway';
-  const summary  = document.getElementById('vpSummary').value.trim()   || 'Preview summary...';
-  const avatar   = document.getElementById('vpAvatar').value;
-  const category = document.getElementById('vpCategory').value;
-
-  if (!vid) { showToast('ต้องมี Video ID ก่อน Preview'); return; }
-  const html = buildPageHTML({ vid, title, slug, tags, takeaways, summary, avatar, category });
-  const win  = window.open('', '_blank');
-  win.document.write(html);
-  win.document.close();
-}
-
-function renderVpHistory() {
-  const el = document.getElementById('vpHistory');
-  if (!vpHistory.length) { el.innerHTML = '<div style="color:var(--muted);font-size:.85rem">ยังไม่มีประวัติ</div>'; return; }
-  el.innerHTML = vpHistory.map(h => `
-    <div class="vp-history-item">
-      <div>
-        <div style="font-weight:600;color:var(--text)">${h.title}</div>
-        <div style="font-size:.75rem;color:var(--muted)">/videos/${h.slug}.html · ${h.ts}</div>
+// ── ARTICLES ──────────────────────────────────
+function renderArticles(){
+  document.getElementById('articleList').innerHTML=ARTICLES.map(a=>`
+    <div class="article-item">
+      <div class="article-emoji">${a.e}</div>
+      <div class="article-info">
+        <div class="article-name">${a.n}</div>
+        <div class="article-path">${a.p}</div>
       </div>
-      <span style="font-size:.75rem;color:var(--muted)">${h.tags.split(',').slice(0,3).join(' · ')}</span>
+      <div style="display:flex;gap:.5rem">
+        <a href="${a.p}" target="_blank" class="btn btn-outline btn-sm">👁 ดู</a>
+      </div>
     </div>`).join('');
 }
 
-function clearVpForm() {
-  ['vpYoutubeUrl','vpTitle','vpSlug','vpTags','vpTakeaways','vpSummary'].forEach(id => {
-    document.getElementById(id).value = '';
-  });
-  document.getElementById('vpVideoId').textContent = '';
-  document.getElementById('vpVideoPreview').style.display = 'none';
-  document.getElementById('vpAffPreview').style.display   = 'none';
-  document.getElementById('vpClaudePromptBox').style.display = 'none';
-  document.getElementById('vpAffCount').textContent = '—';
-  checkReadiness();
+// ── DASHBOARD ─────────────────────────────────
+function renderDash(){
+  loadGeodes();
+  const imgs=getImgs();
+  const set=Object.keys(imgs).length;
+  const total=SLOTS.length;
+  const avail=geodes.filter(g=>g.status==='available').length;
+  document.getElementById('dashStats').innerHTML=`
+    <div class="stat-card"><div class="stat-num c-green">${set}</div><div class="stat-label">รูปที่ใส่แล้ว</div></div>
+    <div class="stat-card"><div class="stat-num c-gold">${total-set}</div><div class="stat-label">รูปที่ยังขาด</div></div>
+    <div class="stat-card"><div class="stat-num c-purple">${total}</div><div class="stat-label">Slots ทั้งหมด</div></div>
+    <div class="stat-card"><div class="stat-num c-purple">${geodes.length}</div><div class="stat-label">สินค้าโพรง</div></div>
+    <div class="stat-card"><div class="stat-num c-green">${avail}</div><div class="stat-label">พร้อมขาย</div></div>
+    <div class="stat-card"><div class="stat-num c-gray">${ARTICLES.length}</div><div class="stat-label">หน้าทั้งหมด</div></div>`;
+  const missing=SLOTS.filter(s=>!imgs[s.id]);
+  document.getElementById('dashImgStatus').innerHTML=missing.length===0
+    ?`<div style="color:var(--green);font-weight:700;font-size:.95rem">✅ ครบทุกรูปแล้ว!</div>`
+    :`<div style="color:var(--yellow);margin-bottom:.75rem;font-size:.875rem">⚠️ ยังขาดรูป ${missing.length} จุด — คลิกเพื่อเพิ่ม:</div>
+      <div style="display:flex;flex-wrap:wrap;gap:.4rem">${missing.map(s=>`<button onclick="showTab('images',document.querySelectorAll('.nav-item')[1]);setTimeout(()=>openSlot('${s.id}'),300)" class="btn btn-outline btn-sm" style="font-size:.75rem">${x(s.label)}</button>`).join('')}</div>`;
 }
 
-// ══════════════════════════════════════════════════════
-//  🔗  AFFILIATE ACCOUNTS MANAGER
-// ══════════════════════════════════════════════════════
-
-async function renderAffProductsList() {
-  await loadAffiliateData();
-  if (!vpAffProducts) return;
-  const el = document.getElementById('affProductsList');
-  if (!el) return;
-  const rows = vpAffProducts.products.map(p => `
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:.65rem 0;border-bottom:1px solid var(--border);font-size:.85rem">
-      <div>
-        <span style="font-weight:600;color:var(--text)">${p.title}</span>
-        <span style="color:var(--muted);font-size:.75rem;margin-left:.5rem">${p.platform_label} · ${p.category === 'course' ? '🎓' : '📚'}</span>
-      </div>
-      <div style="display:flex;align-items:center;gap:.75rem">
-        <span style="color:var(--gold);font-weight:700">฿${p.price.toLocaleString()}</span>
-        <span style="font-size:.72rem;color:var(--muted)">${p.tags.slice(0,3).join(', ')}</span>
-      </div>
-    </div>`).join('');
-  el.innerHTML = rows || '<div style="color:var(--muted)">ไม่มีข้อมูล</div>';
+// ── UTIL ──────────────────────────────────────
+function x(s){ if(!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function toast(msg,type=''){
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.className='toast show'+(type?' '+type:'');
+  clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('show'),2800);
 }
 
-function saveAffiliateAccounts() {
-  const ids = ['shopee','meb','skilllane','futureskill','hostneverdie'];
-  ids.forEach(key => {
-    const val = document.getElementById('aff_' + key)?.value.trim();
-    if (val) localStorage.setItem('aff_' + key, val);
-  });
-  showToast('บันทึก Affiliate IDs ใน browser แล้ว (localStorage)');
+// ── INIT ──────────────────────────────────────
+function init(){
+  loadGeodes(); renderDash(); renderPTable();
+  document.getElementById('imgModal').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeImgModal(); });
+  document.getElementById('importModal').addEventListener('click',e=>{ if(e.target===e.currentTarget) e.currentTarget.classList.remove('open'); });
 }
-
-// Load saved IDs on tab open
-function loadSavedAffIds() {
-  ['shopee','meb','skilllane','futureskill','hostneverdie'].forEach(key => {
-    const saved = localStorage.getItem('aff_' + key);
-    const el = document.getElementById('aff_' + key);
-    if (saved && el) el.value = saved;
-  });
-}
-
-// Extend showTab to init video/affiliate tabs
-const _origShowTab = window.showTab;
-window.showTab = function(name, el) {
-  _origShowTab(name, el);
-  if (name === 'video')     { loadAffiliateData(); checkReadiness(); }
-  if (name === 'affiliate') { loadSavedAffIds(); renderAffProductsList(); }
-};
-
+if(sessionStorage.getItem(AUTH_KEY)) init();
 </script>
 </body>
 </html>
