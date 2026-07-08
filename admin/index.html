@@ -322,14 +322,14 @@ textarea.form-input{resize:vertical;min-height:80px;}
             <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem">
               <span style="font-size:1.8rem">🤖</span>
               <div>
-                <div style="font-weight:700;font-size:1rem">ศิลา Chat — Gemini API Key</div>
-                <div style="font-size:.8rem;color:#9ca3af">ใช้สำหรับระบบแชทคริสตัล AI</div>
+                <div style="font-weight:700;font-size:1rem">ศิลา Chat — Groq API Key</div>
+                <div style="font-size:.8rem;color:#9ca3af">ใช้สำหรับระบบแชทคริสตัล AI (ฟรี)</div>
               </div>
             </div>
-            <label class="fl">Gemini API Key (จาก aistudio.google.com)</label>
+            <label class="fl">Groq API Key (จาก console.groq.com)</label>
             <div style="display:flex;gap:.5rem;margin-top:.4rem">
               <input class="form-input" id="geminiKeyInput" type="password"
-                placeholder="AIzaSy... หรือ AQ.Ab8..." style="flex:1"
+                placeholder="gsk_..." style="flex:1"
                 oninput="updateKeyStatus()">
               <button class="btn btn-outline btn-sm" onclick="toggleKeyVis()" id="keyToggleBtn" style="flex-shrink:0">👁</button>
             </div>
@@ -337,14 +337,14 @@ textarea.form-input{resize:vertical;min-height:80px;}
             <div style="display:flex;gap:.75rem;margin-top:1rem;flex-wrap:wrap">
               <button class="btn btn-primary" onclick="saveGeminiKey()">💾 บันทึก Key</button>
               <button class="btn btn-danger btn-sm" onclick="clearGeminiKey()">🗑 ลบ Key</button>
-              <a href="https://aistudio.google.com/apikey" target="_blank" class="btn btn-outline btn-sm">🔗 aistudio.google.com</a>
+              <a href="https://console.groq.com/keys" target="_blank" class="btn btn-outline btn-sm">🔗 console.groq.com</a>
             </div>
             <div style="margin-top:1.25rem;padding:1rem;background:#f5f0ff;border-radius:.6rem;font-size:.82rem;color:#5b21b6;line-height:1.7">
-              <strong>วิธีสร้าง Gemini API Key:</strong><br>
-              1. ไปที่ <strong>aistudio.google.com/apikey</strong><br>
-              2. กด <strong>"Create API Key"</strong><br>
-              3. เลือก project → Copy key (ขึ้นต้นด้วย <code>AIzaSy</code>)<br>
-              4. วาง key ด้านบน → กด บันทึก<br>
+              <strong>วิธีสร้าง Groq API Key:</strong><br>
+              1. ไปที่ <strong>console.groq.com</strong> → Login ด้วย Google<br>
+              2. เมนูซ้าย → <strong>"API Keys"</strong><br>
+              3. กด <strong>"Create API key"</strong> → ตั้งชื่อ "Amethez"<br>
+              4. Copy key (ขึ้นต้นด้วย <code>gsk_</code>) → วางด้านบน → บันทึก<br>
               <br>
               ⚠️ <strong>ห้าม</strong> ส่ง key ในแชท หรือใส่ในโค้ด GitHub
             </div>
@@ -566,14 +566,15 @@ async function testGemini(){
   if(!key){ res.innerHTML='❌ ยังไม่ได้ใส่ key'; res.style.color='#dc2626'; return; }
   res.innerHTML='⏳ กำลังทดสอบ...'; res.style.color='#9ca3af';
   try{
-    const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`,{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({contents:[{role:'user',parts:[{text:'สวัสดี ตอบสั้นๆ 1 ประโยค'}]}]})
+    const r=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+      body:JSON.stringify({model:'llama-3.1-8b-instant',messages:[{role:'user',content:'สวัสดี ตอบสั้นๆ 1 ประโยค'}],max_tokens:50})
     });
     const d=await r.json();
     if(r.ok){
-      const txt=d?.candidates?.[0]?.content?.parts?.[0]?.text||'(ไม่มีข้อความ)';
-      res.innerHTML=`✅ ใช้งานได้! Gemini ตอบ: <em>${txt.slice(0,80)}</em>`;
+      const txt=d?.choices?.[0]?.message?.content||'(ไม่มีข้อความ)';
+      res.innerHTML=`✅ ใช้งานได้! ศิลาตอบ: <em>${txt.slice(0,100)}</em>`;
       res.style.color='#059669';
     } else {
       res.innerHTML=`❌ Error ${r.status}: ${d?.error?.message||r.statusText}`;
