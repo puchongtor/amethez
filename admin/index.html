@@ -280,6 +280,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 
             <!-- Row 2: Full body editor -->
             <div class="card" id="edBodyCard" style="margin-bottom:0;display:none">
+              <!-- Header -->
               <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem">
                 <div class="card-title" style="margin:0">📄 เนื้อหาบทความทั้งหมด</div>
                 <div style="display:flex;gap:.5rem;align-items:center">
@@ -287,15 +288,45 @@ textarea.form-input{resize:vertical;min-height:80px;}
                   <button class="btn btn-outline btn-sm" onclick="resetBodyToOriginal()">↺ โหลดต้นฉบับ</button>
                 </div>
               </div>
-              <div style="font-size:.78rem;color:#6b7280;margin-bottom:.75rem;line-height:1.6;background:#fffbeb;padding:.6rem .85rem;border-radius:.5rem;border-left:3px solid #f59e0b">
-                ✏️ แก้ไข HTML ได้เลย — รองรับ &lt;h2&gt; &lt;p&gt; &lt;ul&gt; &lt;strong&gt; &lt;img&gt; &lt;div class="..."&gt; ครบทุก tag<br>
-                รูปที่ใส่จาก slot ด้านบนจะแสดงโดยอัตโนมัติ ไม่ต้องระบุ src ในนี้
+
+              <!-- Tab bar -->
+              <div style="display:flex;gap:0;margin-bottom:0;border-bottom:2px solid #e9e0f5">
+                <button id="tabBtnHtml" onclick="switchBodyTab('html')"
+                  style="padding:.5rem 1.25rem;border:none;border-bottom:2px solid #7c3aed;margin-bottom:-2px;background:none;font-size:.85rem;font-weight:700;color:#7c3aed;cursor:pointer">
+                  &lt;/&gt; HTML
+                </button>
+                <button id="tabBtnPreview" onclick="switchBodyTab('preview')"
+                  style="padding:.5rem 1.25rem;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;background:none;font-size:.85rem;font-weight:600;color:#9ca3af;cursor:pointer">
+                  👁 Preview
+                </button>
+                <div style="flex:1"></div>
+                <span id="edBodyLen" style="font-size:.72rem;color:#9ca3af;align-self:center;padding-right:.5rem"></span>
               </div>
-              <textarea id="edBodyTA" rows="30"
-                style="width:100%;font-family:monospace;font-size:.8rem;line-height:1.7;border:1.5px solid #e9e0f5;border-radius:.5rem;padding:.85rem 1rem;resize:vertical;background:#fdfcff;color:#1a1228;tab-size:2"
-                placeholder="กำลังโหลดเนื้อหา..."
-                oninput="onBodyEdit(this.value)"></textarea>
-              <div style="margin-top:.5rem;font-size:.72rem;color:#9ca3af;text-align:right" id="edBodyLen"></div>
+
+              <!-- HTML tab -->
+              <div id="bodyTabHtml">
+                <div style="font-size:.75rem;color:#6b7280;margin:.75rem 0;line-height:1.6;background:#fffbeb;padding:.5rem .85rem;border-radius:.5rem;border-left:3px solid #f59e0b">
+                  ✏️ แก้ไข HTML ได้เลย — &lt;h2&gt; &lt;p&gt; &lt;ul&gt; &lt;strong&gt; &lt;img&gt; &lt;div class="..."&gt; ครบทุก tag | รูปจาก slot แสดงอัตโนมัติ ไม่ต้องระบุ src
+                </div>
+                <textarea id="edBodyTA" rows="30"
+                  style="width:100%;font-family:'Consolas','Courier New',monospace;font-size:.8rem;line-height:1.7;border:1.5px solid #e9e0f5;border-radius:.5rem;padding:.85rem 1rem;resize:vertical;background:#fdfcff;color:#1a1228;tab-size:2"
+                  placeholder="กำลังโหลดเนื้อหา..."
+                  oninput="onBodyEdit(this.value)"></textarea>
+              </div>
+
+              <!-- Preview tab -->
+              <div id="bodyTabPreview" style="display:none">
+                <div style="display:flex;gap:.5rem;align-items:center;margin:.75rem 0 .5rem;flex-wrap:wrap">
+                  <button class="btn btn-outline btn-sm" onclick="refreshPreview()">🔄 Refresh Preview</button>
+                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.78rem;color:#6b7280;cursor:pointer">
+                    <input type="checkbox" id="previewAutoRefresh" checked style="cursor:pointer"> auto-refresh ทุกครั้งที่พิมพ์
+                  </label>
+                  <span style="font-size:.72rem;color:#9ca3af;margin-left:auto">รูปภาพจาก slot จะแสดงถ้าเผยแพร่แล้ว</span>
+                </div>
+                <iframe id="bodyPreviewFrame"
+                  style="width:100%;height:700px;border:1.5px solid #e9e0f5;border-radius:.5rem;background:#faf8f4"
+                  sandbox="allow-same-origin allow-scripts"></iframe>
+              </div>
             </div>
           </div>
         </div>
@@ -1450,15 +1481,6 @@ async function fetchOrigBody(path){
   } catch(e){ return ''; }
 }
 
-function onBodyEdit(val){
-  if(!currentPage) return;
-  setTextVal(currentPage,'body',val);
-  updateBodyLen(val);
-  const st=document.getElementById('edBodyStatus');
-  st.textContent='● แก้ไขแล้ว (ยังไม่เผยแพร่)';
-  st.style.color='#f59e0b';
-}
-
 function updateBodyLen(val){
   const el=document.getElementById('edBodyLen');
   if(el) el.textContent=val.length.toLocaleString()+' ตัวอักษร · '+
@@ -1482,8 +1504,91 @@ async function resetBodyToOriginal(){
   }
 }
 
+// ── Body tab switching ────────────────────────────────
+let _currentBodyTab = 'html';
+
+function switchBodyTab(tab){
+  _currentBodyTab = tab;
+  const isHtml = tab === 'html';
+
+  // Tab panel visibility
+  document.getElementById('bodyTabHtml').style.display    = isHtml ? '' : 'none';
+  document.getElementById('bodyTabPreview').style.display = isHtml ? 'none' : '';
+
+  // Tab button styles
+  const btnHtml    = document.getElementById('tabBtnHtml');
+  const btnPreview = document.getElementById('tabBtnPreview');
+  btnHtml.style.borderBottomColor    = isHtml ? '#7c3aed' : 'transparent';
+  btnHtml.style.color                = isHtml ? '#7c3aed' : '#9ca3af';
+  btnHtml.style.fontWeight           = isHtml ? '700' : '600';
+  btnPreview.style.borderBottomColor = isHtml ? 'transparent' : '#7c3aed';
+  btnPreview.style.color             = isHtml ? '#9ca3af' : '#7c3aed';
+  btnPreview.style.fontWeight        = isHtml ? '600' : '700';
+
+  if(!isHtml) refreshPreview();
+}
+
+function refreshPreview(){
+  const html = document.getElementById('edBodyTA')?.value || '';
+  const p    = currentPage ? PAGES.find(pg=>pg.key===currentPage) : null;
+  const imgs = getImgs();
+
+  // Build CSS urls relative to site root
+  const origin = location.origin;
+
+  // Replace data-cms-img placeholders with actual urls from localStorage
+  let previewHtml = html.replace(
+    /data-cms-img="([^"]+)"/g,
+    (match, key) => {
+      const url = imgs[key];
+      return url
+        ? `data-cms-img="${key}" src="${url}" style="display:block"`
+        : `data-cms-img="${key}"`;
+    }
+  );
+
+  const srcdoc = `<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="${origin}/css/main.css">
+  <link rel="stylesheet" href="${origin}/css/affiliate.css">
+  <style>
+    body { background:#faf8f4; padding:2rem 1.5rem; max-width:860px; margin:0 auto; }
+    img.cms-inline-img[src]{ display:block !important; }
+    img.cms-inline-img:not([src]){ display:none; }
+    /* highlight editable areas on hover */
+    [data-cms-img]:hover { outline:2px dashed #7c3aed44; outline-offset:2px; }
+  </style>
+</head>
+<body>
+${previewHtml}
+</body>
+</html>`;
+
+  const frame = document.getElementById('bodyPreviewFrame');
+  frame.srcdoc = srcdoc;
+}
+
+function onBodyEdit(val){
+  if(!currentPage) return;
+  setTextVal(currentPage,'body',val);
+  updateBodyLen(val);
+  const st=document.getElementById('edBodyStatus');
+  st.textContent='● แก้ไขแล้ว (ยังไม่เผยแพร่)';
+  st.style.color='#f59e0b';
+  // Auto-refresh preview if on preview tab
+  if(_currentBodyTab==='preview' && document.getElementById('previewAutoRefresh')?.checked){
+    refreshPreview();
+  }
+}
+
 function closePageEditor(){
   currentPage=null;
+  _currentBodyTab='html';
   document.getElementById('pageEditorView').style.display='none';
   document.getElementById('pageListView').style.display='';
   renderPageGrid();
