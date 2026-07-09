@@ -60,11 +60,62 @@ body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--text);min
 .stat-card{background:white;border-radius:.875rem;padding:1.25rem;border:1px solid var(--border);text-align:center;}
 .stat-num{font-size:2rem;font-weight:700;}
 .stat-label{font-size:.78rem;color:#6b7280;margin-top:.2rem;}
-.c-purple{color:var(--purple);}.c-green{color:var(--green);}.c-gold{color:var(--gold);}.c-gray{color:#9ca3af;}
+.c-purple{color:var(--purple);}.c-green{color:var(--green);}.c-gold{color:var(--gold);}.c-gray{color:#9ca3af;}.c-blue{color:#0891b2;}
+.stats-two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+@media(max-width:900px){.stats-two-col{grid-template-columns:1fr;}}
 
 /* ── TABS ── */
 .tab-panels>div{display:none;}
 .tab-panels>div.active{display:block;}
+
+/* ── STATS TAB ── */
+.stats-month-bar{display:flex;align-items:center;gap:1rem;margin-bottom:1.75rem;flex-wrap:wrap;}
+.month-pill{display:flex;align-items:center;gap:.5rem;background:white;border:1.5px solid var(--border);border-radius:.75rem;padding:.4rem .9rem;font-size:.88rem;font-weight:600;}
+.month-pill select{border:none;background:none;font-family:'Sarabun',sans-serif;font-size:.88rem;font-weight:700;color:var(--text);cursor:pointer;outline:none;}
+.goal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem;margin-bottom:1.75rem;}
+.goal-card{background:white;border:1px solid var(--border);border-radius:1rem;padding:1.25rem;position:relative;overflow:hidden;}
+.goal-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:1rem 1rem 0 0;}
+.goal-card.purple::before{background:linear-gradient(90deg,#7c3aed,#a78bfa);}
+.goal-card.green::before{background:linear-gradient(90deg,#059669,#34d399);}
+.goal-card.gold::before{background:linear-gradient(90deg,#c9a84c,#fbbf24);}
+.goal-card.blue::before{background:linear-gradient(90deg,#0891b2,#38bdf8);}
+.goal-label{font-size:.75rem;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.5rem;}
+.goal-nums{display:flex;align-items:baseline;gap:.4rem;margin-bottom:.65rem;}
+.goal-actual{font-size:1.6rem;font-weight:800;color:var(--text);}
+.goal-sep{font-size:1rem;color:#d1d5db;}
+.goal-target{font-size:.95rem;color:#9ca3af;font-weight:600;}
+.goal-bar-wrap{background:#f3f4f6;border-radius:2rem;height:7px;overflow:hidden;}
+.goal-bar{height:100%;border-radius:2rem;transition:width .4s ease;}
+.goal-pct{font-size:.72rem;color:#6b7280;margin-top:.4rem;text-align:right;}
+.goal-edit-row{display:flex;gap:.5rem;margin-top:.85rem;padding-top:.75rem;border-top:1px solid #f3f4f6;}
+.goal-edit-row input{flex:1;border:1px solid var(--border);border-radius:.4rem;padding:.3rem .5rem;font-size:.8rem;font-family:'Sarabun',sans-serif;text-align:center;}
+.goal-edit-row label{font-size:.7rem;color:#9ca3af;display:block;margin-bottom:.15rem;text-align:center;}
+
+.prog-section{margin-bottom:1.75rem;}
+.prog-item{display:flex;align-items:center;gap:1rem;padding:.75rem 0;border-bottom:1px solid #f3f4f6;}
+.prog-item:last-child{border:none;}
+.prog-icon{font-size:1.3rem;width:2rem;text-align:center;flex-shrink:0;}
+.prog-info{flex:1;min-width:0;}
+.prog-title{font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:.3rem;}
+.prog-bar-wrap{background:#f3f4f6;border-radius:2rem;height:8px;overflow:hidden;}
+.prog-bar{height:100%;border-radius:2rem;background:linear-gradient(90deg,#7c3aed,#a78bfa);transition:width .5s ease;}
+.prog-nums{font-size:.78rem;color:#6b7280;margin-top:.25rem;}
+.prog-pct{font-size:.85rem;font-weight:700;min-width:40px;text-align:right;flex-shrink:0;}
+
+.rev-table{width:100%;border-collapse:collapse;font-size:.875rem;}
+.rev-table th{text-align:left;padding:.6rem .85rem;background:#f9fafb;color:#6b7280;font-size:.78rem;border-bottom:1px solid var(--border);}
+.rev-table td{padding:.65rem .85rem;border-bottom:1px solid #f3f4f6;vertical-align:middle;}
+.rev-table tr:hover td{background:#fdfcff;}
+.rev-input{border:1px solid var(--border);border-radius:.4rem;padding:.3rem .5rem;font-size:.85rem;font-family:'Sarabun',sans-serif;width:100px;text-align:right;}
+.rev-input:focus{outline:none;border-color:var(--purple);}
+
+.ga4-connect{display:flex;align-items:center;gap:1rem;padding:1rem;background:#f0fdf4;border:1.5px solid #86efac;border-radius:.75rem;flex-wrap:wrap;}
+.ga4-connect.disconnected{background:#fff7ed;border-color:#fcd34d;}
+.ga4-connect.error{background:#fef2f2;border-color:#fca5a5;}
+.ga4-status-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.dot-green{background:#22c55e;box-shadow:0 0 6px #22c55e88;}
+.dot-yellow{background:#eab308;}
+.dot-red{background:#ef4444;}
 
 /* ── IMAGE MANAGER ── */
 .img-slots-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.25rem;}
@@ -190,6 +241,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
     </div>
     <div style="padding:.75rem 0;">
       <div class="nav-item active" onclick="showTab('dashboard',this)"><span class="ic">📊</span> ภาพรวม</div>
+      <div class="nav-item" onclick="showTab('stats',this)"><span class="ic">📈</span> สถิติ & เป้าหมาย</div>
       <div class="nav-item" onclick="showTab('pages',this)"><span class="ic">🎨</span> แก้ไขหน้า</div>
       <div class="nav-item" onclick="showTab('prompts',this)"><span class="ic">✨</span> AI Prompts</div>
       <div class="nav-item" onclick="showTab('products',this)"><span class="ic">💎</span> สินค้า</div>
@@ -383,6 +435,135 @@ textarea.form-input{resize:vertical;min-height:80px;}
           <div class="prompt-list" id="promptList"></div>
         </div>
 
+        <!-- STATS -->
+        <div id="tab-stats">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem">
+            <div>
+              <div class="section-title">📈 สถิติ &amp; เป้าหมาย</div>
+              <div class="section-sub">ติดตามความคืบหน้าและวัดผลรายเดือน</div>
+            </div>
+            <div class="stats-month-bar" style="margin:0">
+              <div class="month-pill">
+                📅
+                <select id="statsMonthSel" onchange="loadStatsMonth()"></select>
+              </div>
+              <button class="btn btn-outline btn-sm" onclick="saveStatsMonth()">💾 บันทึก</button>
+              <button class="btn btn-gold btn-sm" onclick="openGoalEditor()">🎯 แก้เป้าหมาย</button>
+            </div>
+          </div>
+
+          <!-- GOAL CARDS -->
+          <div class="goal-grid" id="goalGrid"></div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;flex-wrap:wrap" class="stats-two-col">
+
+            <!-- CONTENT PROGRESS -->
+            <div class="card">
+              <div class="card-title">📚 Content Progress</div>
+              <div class="prog-section" id="progSection"></div>
+            </div>
+
+            <!-- GA4 -->
+            <div class="card">
+              <div class="card-title">📊 Google Analytics 4</div>
+              <div id="ga4Block">
+                <div class="ga4-connect disconnected" id="ga4StatusBar">
+                  <div class="ga4-status-dot dot-yellow"></div>
+                  <div style="flex:1">
+                    <div style="font-weight:700;font-size:.88rem">ยังไม่ได้เชื่อมต่อ GA4</div>
+                    <div style="font-size:.78rem;color:#6b7280">ใส่ GA4 Measurement ID ในหน้าตั้งค่าก่อน</div>
+                  </div>
+                  <button class="btn btn-outline btn-sm" onclick="showTab('settings',document.querySelectorAll('.nav-item')[7])">ไปตั้งค่า →</button>
+                </div>
+
+                <div id="ga4AuthSection" style="display:none;margin-top:1rem">
+                  <div style="font-size:.82rem;color:#6b7280;margin-bottom:.75rem">ต้อง authorize Google เพื่อดึงข้อมูลจริง (OAuth — ปลอดภัย ไม่มี password ผ่านเรา)</div>
+                  <button class="btn btn-primary" onclick="ga4Authorize()" id="btnGA4Auth">🔐 เชื่อมต่อ Google Analytics</button>
+                  <div id="ga4AuthStatus" style="font-size:.8rem;margin-top:.5rem;color:#6b7280"></div>
+                </div>
+
+                <div id="ga4DataSection" style="display:none;margin-top:1rem">
+                  <div class="ga4-connect" style="margin-bottom:1rem">
+                    <div class="ga4-status-dot dot-green"></div>
+                    <div style="flex:1;font-size:.85rem;font-weight:700">เชื่อมต่อแล้ว · <span id="ga4PropLabel"></span></div>
+                    <button class="btn btn-outline btn-sm" onclick="ga4Disconnect()">ยกเลิก</button>
+                  </div>
+                  <div class="stats-grid" id="ga4MetricsGrid" style="margin:0;gap:.75rem"></div>
+                  <div style="margin-top:1rem">
+                    <div style="font-size:.78rem;font-weight:700;color:#6b7280;margin-bottom:.5rem">🏆 หน้ายอดนิยม (30 วัน)</div>
+                    <div id="ga4TopPages" style="font-size:.8rem"></div>
+                  </div>
+                  <button class="btn btn-outline btn-sm" style="margin-top:.75rem" onclick="ga4FetchData()">🔄 รีเฟรชข้อมูล</button>
+                </div>
+
+                <!-- Manual fallback -->
+                <div id="ga4ManualSection" style="margin-top:1rem">
+                  <div style="font-size:.78rem;color:#9ca3af;margin-bottom:.5rem">หรือกรอกเองจาก GA4 Dashboard:</div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem">
+                    <div><label style="font-size:.72rem;color:#6b7280;display:block;margin-bottom:.2rem">Sessions (เดือนนี้)</label>
+                      <input class="rev-input" style="width:100%" type="number" id="manualSessions" placeholder="0" oninput="updateManualGA4()"></div>
+                    <div><label style="font-size:.72rem;color:#6b7280;display:block;margin-bottom:.2rem">Pageviews</label>
+                      <input class="rev-input" style="width:100%" type="number" id="manualPageviews" placeholder="0" oninput="updateManualGA4()"></div>
+                    <div><label style="font-size:.72rem;color:#6b7280;display:block;margin-bottom:.2rem">New Users</label>
+                      <input class="rev-input" style="width:100%" type="number" id="manualUsers" placeholder="0" oninput="updateManualGA4()"></div>
+                    <div><label style="font-size:.72rem;color:#6b7280;display:block;margin-bottom:.2rem">Bounce Rate %</label>
+                      <input class="rev-input" style="width:100%" type="number" id="manualBounce" placeholder="0" oninput="updateManualGA4()"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- REVENUE TRACKER -->
+          <div class="card" style="margin-top:1.5rem">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem">
+              <div class="card-title" style="margin:0">💰 Revenue Tracker</div>
+              <span style="font-size:.78rem;color:#9ca3af">กรอกจากพอร์ทัล Shopee / ยอดขาย E-Book</span>
+            </div>
+            <div style="overflow-x:auto">
+              <table class="rev-table">
+                <thead>
+                  <tr>
+                    <th>เดือน</th>
+                    <th>Shopee Aff (฿)</th>
+                    <th>เป้า Shopee</th>
+                    <th>E-Book (฿)</th>
+                    <th>เป้า E-Book</th>
+                    <th>LINE/Partner (฿)</th>
+                    <th>รวม</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="revTableBody"></tbody>
+                <tfoot>
+                  <tr style="font-weight:700;background:#f9fafb">
+                    <td style="padding:.65rem .85rem;font-size:.82rem">รวมทั้งหมด</td>
+                    <td id="revTotalShopee" style="padding:.65rem .85rem;color:var(--green)">฿0</td>
+                    <td></td>
+                    <td id="revTotalEbook" style="padding:.65rem .85rem;color:var(--green)">฿0</td>
+                    <td></td>
+                    <td id="revTotalLine" style="padding:.65rem .85rem;color:var(--green)">฿0</td>
+                    <td id="revTotalAll" style="padding:.65rem .85rem;color:var(--purple);font-size:1rem">฿0</td>
+                    <td></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+
+          <!-- GOAL EDITOR MODAL -->
+          <div id="goalModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:center;justify-content:center">
+            <div style="background:white;border-radius:1.25rem;padding:2rem;max-width:480px;width:90%;max-height:80vh;overflow-y:auto">
+              <div style="font-family:'Playfair Display',serif;font-size:1.25rem;margin-bottom:1.25rem">🎯 ตั้งเป้าหมาย</div>
+              <div style="display:grid;gap:.75rem" id="goalEditorFields"></div>
+              <div style="display:flex;gap:.75rem;margin-top:1.5rem">
+                <button class="btn btn-primary" onclick="saveGoalEditor()">💾 บันทึกเป้าหมาย</button>
+                <button class="btn btn-outline" onclick="closeGoalEditor()">ยกเลิก</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- PRODUCTS -->
         <div id="tab-products">
           <div class="section-title">💎 จัดการสินค้า</div>
@@ -557,6 +738,32 @@ textarea.form-input{resize:vertical;min-height:80px;}
             <div style="font-weight:700;margin-bottom:.75rem">🧪 ทดสอบ Groq API</div>
             <button class="btn btn-outline" onclick="testGemini()">ส่ง ping ทดสอบ</button>
             <div id="geminiTestResult" style="margin-top:.75rem;font-size:.85rem;display:none"></div>
+          </div>
+
+          <div class="card" style="max-width:560px;margin-top:1rem">
+            <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem">
+              <span style="font-size:1.8rem">📊</span>
+              <div>
+                <div style="font-weight:700;font-size:1rem">Google Analytics 4</div>
+                <div style="font-size:.8rem;color:#9ca3af">ใส่ครั้งเดียว — ดูข้อมูล traffic จริงในหน้า Stats</div>
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom:.875rem">
+              <label class="fl">GA4 Property ID (ตัวเลข เช่น 123456789)</label>
+              <input class="form-input" id="ga4MidInput" placeholder="เช่น 123456789" style="margin-top:.35rem"
+                oninput="saveGA4Settings()">
+            </div>
+            <div class="form-group" style="margin-bottom:.875rem">
+              <label class="fl">OAuth Client ID (จาก Google Cloud Console)</label>
+              <input class="form-input" id="ga4ClientInput" placeholder="xxx.apps.googleusercontent.com" style="margin-top:.35rem"
+                oninput="saveGA4Settings()">
+            </div>
+            <div style="background:#f0f9ff;border-radius:.6rem;padding:.85rem;font-size:.78rem;color:#0369a1;line-height:1.8">
+              <strong>วิธีหา GA4 Property ID:</strong><br>
+              analytics.google.com → Admin → Property Settings → Property ID (ตัวเลขด้านบนขวา)<br><br>
+              <strong>วิธีสร้าง OAuth Client ID (ถ้าต้องการดึง API):</strong><br>
+              console.cloud.google.com → APIs → OAuth 2.0 → Web App → Authorized origins: <code>${window.location.origin}</code>
+            </div>
           </div>
 
           <div class="card" style="max-width:560px;margin-top:1rem">
@@ -809,7 +1016,7 @@ if(sessionStorage.getItem(AUTH_KEY)){
 }
 
 // ── TABS ──────────────────────────────────────
-const TAB_TITLES={dashboard:'📊 ภาพรวม',pages:'🎨 แก้ไขหน้า',prompts:'✨ AI Prompts',products:'💎 สินค้า',shopee:'🛒 Shopee Aff',articles:'📝 บทความ',settings:'⚙️ ตั้งค่า'};
+const TAB_TITLES={dashboard:'📊 ภาพรวม',stats:'📈 สถิติ & เป้าหมาย',pages:'🎨 แก้ไขหน้า',prompts:'✨ AI Prompts',products:'💎 สินค้า',shopee:'🛒 Shopee Aff',articles:'📝 บทความ',settings:'⚙️ ตั้งค่า'};
 function showTab(name,el){
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   if(el) el.classList.add('active');
@@ -819,6 +1026,7 @@ function showTab(name,el){
   if(name==='pages') renderPageGrid();
   if(name==='prompts') renderPrompts();
   if(name==='products'){ loadGeodes(); renderPTable(); }
+  if(name==='stats') initStatsTab();
   if(name==='shopee'){ loadAff(); initAffTags(); renderAffTable(); }
   if(name==='articles') renderArticles();
   if(name==='dashboard') renderDash();
@@ -832,6 +1040,17 @@ function loadSettingsTab(){
   document.getElementById('geminiKeyInput').value=key;
   updateKeyStatus();
   loadGhSettings();
+  // GA4
+  const mid=document.getElementById('ga4MidInput');
+  if(mid) mid.value=localStorage.getItem('amethez_ga4_mid')||'';
+  const cid=document.getElementById('ga4ClientInput');
+  if(cid) cid.value=localStorage.getItem(GA4_CLIENT_ID_KEY)||'';
+}
+function saveGA4Settings(){
+  const mid=document.getElementById('ga4MidInput')?.value.trim()||'';
+  const cid=document.getElementById('ga4ClientInput')?.value.trim()||'';
+  localStorage.setItem('amethez_ga4_mid',mid);
+  localStorage.setItem(GA4_CLIENT_ID_KEY,cid);
 }
 function updateKeyStatus(){
   const val=document.getElementById('geminiKeyInput').value.trim();
@@ -1177,6 +1396,305 @@ function renderPTable(){
         <button class="btn btn-danger btn-sm" onclick="delProd('${p.id}')">🗑</button>
       </div></td></tr>`;
   }).join(''):`<tr><td colspan="6" style="text-align:center;padding:2rem;color:#9ca3af">ยังไม่มีสินค้า</td></tr>`;
+}
+
+// ── STATS & GOALS ─────────────────────────────
+const STATS_KEY = 'amethez_stats';
+const GOALS_KEY = 'amethez_goals';
+const GA4_TOKEN_KEY = 'amethez_ga4_token';
+
+const DEFAULT_GOALS = {
+  pages: { label:'หน้าใหม่ที่เพิ่ม', icon:'📄', color:'purple', target:30 },
+  traffic: { label:'Sessions (GA4)', icon:'👥', color:'blue', target:5000 },
+  shopee: { label:'Shopee Aff (฿)', icon:'🛒', color:'green', target:1000 },
+  ebook: { label:'E-Book Revenue (฿)', icon:'📚', color:'gold', target:500 },
+};
+
+const CONTENT_TARGETS = { stones:300, articles:30, affProducts:50 };
+
+function getStats(){ try{ return JSON.parse(localStorage.getItem(STATS_KEY)||'{}'); }catch{ return {}; } }
+function saveStats(d){ localStorage.setItem(STATS_KEY,JSON.stringify(d)); }
+function getGoals(){ try{ return JSON.parse(localStorage.getItem(GOALS_KEY)||'{}'); }catch{ return {}; } }
+function saveGoalsStore(d){ localStorage.setItem(GOALS_KEY,JSON.stringify(d)); }
+
+function curMonthKey(){
+  const n=new Date(); return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}`;
+}
+function monthLabel(k){
+  const [y,m]=k.split('-');
+  const names=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  return `${names[+m-1]} ${+y+543}`;
+}
+
+function initStatsMonths(){
+  const sel = document.getElementById('statsMonthSel'); if(!sel) return;
+  sel.innerHTML = '';
+  const now = new Date();
+  for(let i=0;i<12;i++){
+    const d = new Date(now.getFullYear(), now.getMonth()-i, 1);
+    const k = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+    const o = document.createElement('option'); o.value=k; o.textContent=monthLabel(k);
+    sel.appendChild(o);
+  }
+}
+
+function getCurMonthData(){
+  const k = document.getElementById('statsMonthSel')?.value || curMonthKey();
+  const stats = getStats();
+  return stats[k] || { shopee:0, ebook:0, line:0, sessions:0, pageviews:0, users:0, bounce:0 };
+}
+
+function loadStatsMonth(){
+  const k = document.getElementById('statsMonthSel')?.value || curMonthKey();
+  const data = getCurMonthData();
+  // fill manual GA4 fields
+  ['sessions','pageviews','users','bounce'].forEach(f=>{
+    const el = document.getElementById('manual'+f.charAt(0).toUpperCase()+f.slice(1));
+    if(el) el.value = data[f]||'';
+  });
+  renderGoalCards(); renderProgSection(); renderRevTable();
+  checkGA4Connected();
+}
+
+function saveStatsMonth(){
+  const k = document.getElementById('statsMonthSel')?.value || curMonthKey();
+  const stats = getStats();
+  if(!stats[k]) stats[k]={};
+  ['sessions','pageviews','users','bounce'].forEach(f=>{
+    const el = document.getElementById('manual'+f.charAt(0).toUpperCase()+f.slice(1));
+    if(el) stats[k][f] = Number(el.value)||0;
+  });
+  saveStats(stats); renderGoalCards(); toast('บันทึกแล้ว ✓','ok');
+}
+
+function updateManualGA4(){ /* live update goal cards */ renderGoalCards(); }
+
+function renderGoalCards(){
+  const k = document.getElementById('statsMonthSel')?.value || curMonthKey();
+  const stats = getStats(); const data = stats[k]||{};
+  const goals = getGoals();
+  loadAff(); loadGeodes();
+
+  // calculate actuals
+  const stoneCount = ARTICLES.filter(a=>a.p&&a.p.startsWith('/stones/')).length;
+  const blogCount  = ARTICLES.filter(a=>a.p&&a.p.startsWith('/blog/')).length;
+  const affCount   = affProducts.length;
+  const sessions   = Number(document.getElementById('manualSessions')?.value)||data.sessions||0;
+
+  const actuals = {
+    pages: stoneCount + blogCount + affCount,
+    traffic: sessions,
+    shopee: data.shopee||0,
+    ebook: data.ebook||0,
+  };
+
+  const grid = document.getElementById('goalGrid'); if(!grid) return;
+  grid.innerHTML = Object.entries(DEFAULT_GOALS).map(([key,g])=>{
+    const target = goals[key]?.target ?? g.target;
+    const actual = actuals[key]||0;
+    const pct = target>0 ? Math.min(100,Math.round(actual/target*100)) : 0;
+    const barColor = pct>=100?'#059669':pct>=60?'#7c3aed':'#f97316';
+    const isMoney = key==='shopee'||key==='ebook';
+    const fmt = v => isMoney ? '฿'+v.toLocaleString() : v.toLocaleString();
+    return `<div class="goal-card ${g.color}">
+      <div class="goal-label">${g.icon} ${g.label}</div>
+      <div class="goal-nums">
+        <span class="goal-actual">${fmt(actual)}</span>
+        <span class="goal-sep">/</span>
+        <span class="goal-target">${fmt(target)}</span>
+      </div>
+      <div class="goal-bar-wrap"><div class="goal-bar" style="width:${pct}%;background:${barColor}"></div></div>
+      <div class="goal-pct">${pct}% ${pct>=100?'✅':pct>=60?'🔄':'⏳'}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderProgSection(){
+  loadAff();
+  const stoneCount = ARTICLES.filter(a=>a.p&&a.p.startsWith('/stones/')).length;
+  const blogCount  = ARTICLES.filter(a=>a.p&&a.p.startsWith('/blog/')).length;
+  const affCount   = affProducts.length;
+
+  const items = [
+    { icon:'💎', label:'หิน A-Z', actual:stoneCount, target:CONTENT_TARGETS.stones, color:'linear-gradient(90deg,#7c3aed,#a78bfa)' },
+    { icon:'📖', label:'บทความ Blog', actual:blogCount, target:CONTENT_TARGETS.articles, color:'linear-gradient(90deg,#0891b2,#38bdf8)' },
+    { icon:'🛒', label:'สินค้า Shopee Aff', actual:affCount, target:CONTENT_TARGETS.affProducts, color:'linear-gradient(90deg,#f97316,#fbbf24)' },
+    { icon:'🎬', label:'Crystal Talks (วิดีโอ)', actual:5, target:50, color:'linear-gradient(90deg,#dc2626,#f87171)' },
+  ];
+
+  const el = document.getElementById('progSection'); if(!el) return;
+  el.innerHTML = items.map(it=>{
+    const pct = Math.min(100, Math.round(it.actual/it.target*100));
+    return `<div class="prog-item">
+      <div class="prog-icon">${it.icon}</div>
+      <div class="prog-info">
+        <div class="prog-title">${it.label}</div>
+        <div class="prog-bar-wrap"><div class="prog-bar" style="width:${pct}%;background:${it.color}"></div></div>
+        <div class="prog-nums">${it.actual.toLocaleString()} / ${it.target.toLocaleString()}</div>
+      </div>
+      <div class="prog-pct" style="color:${pct>=100?'#059669':pct>=50?'#7c3aed':'#6b7280'}">${pct}%</div>
+    </div>`;
+  }).join('');
+}
+
+// ── REVENUE TABLE ──
+function renderRevTable(){
+  const stats = getStats(); const goals = getGoals();
+  const now = new Date();
+  const rows = [];
+  for(let i=5;i>=0;i--){
+    const d = new Date(now.getFullYear(), now.getMonth()-i, 1);
+    const k = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+    const data = stats[k]||{};
+    rows.push({ k, label:monthLabel(k), ...data });
+  }
+
+  const isCur = k => k === curMonthKey();
+  document.getElementById('revTableBody').innerHTML = rows.map(r=>`
+    <tr ${isCur(r.k)?'style="background:#fdfcff;font-weight:600"':''}>
+      <td>${r.label}${isCur(r.k)?' <span style="font-size:.65rem;background:#7c3aed;color:white;padding:.1rem .4rem;border-radius:2rem">เดือนนี้</span>':''}</td>
+      <td><input class="rev-input" type="number" value="${r.shopee||''}" placeholder="0"
+        onchange="updateRevCell('${r.k}','shopee',this.value)"></td>
+      <td style="color:#9ca3af;font-size:.8rem">฿${(goals.shopee?.target||1000).toLocaleString()}</td>
+      <td><input class="rev-input" type="number" value="${r.ebook||''}" placeholder="0"
+        onchange="updateRevCell('${r.k}','ebook',this.value)"></td>
+      <td style="color:#9ca3af;font-size:.8rem">฿${(goals.ebook?.target||500).toLocaleString()}</td>
+      <td><input class="rev-input" type="number" value="${r.line||''}" placeholder="0"
+        onchange="updateRevCell('${r.k}','line',this.value)"></td>
+      <td style="font-weight:700;color:var(--purple)">฿${((r.shopee||0)+(r.ebook||0)+(r.line||0)).toLocaleString()}</td>
+      <td></td>
+    </tr>`).join('');
+
+  let ts=0,te=0,tl=0;
+  rows.forEach(r=>{ ts+=r.shopee||0; te+=r.ebook||0; tl+=r.line||0; });
+  document.getElementById('revTotalShopee').textContent='฿'+ts.toLocaleString();
+  document.getElementById('revTotalEbook').textContent='฿'+te.toLocaleString();
+  document.getElementById('revTotalLine').textContent='฿'+tl.toLocaleString();
+  document.getElementById('revTotalAll').textContent='฿'+(ts+te+tl).toLocaleString();
+}
+
+function updateRevCell(k,field,val){
+  const stats=getStats(); if(!stats[k]) stats[k]={};
+  stats[k][field]=Number(val)||0; saveStats(stats); renderRevTable(); renderGoalCards();
+  toast('บันทึกแล้ว ✓','ok');
+}
+
+// ── GOAL EDITOR ──
+function openGoalEditor(){
+  const goals=getGoals();
+  document.getElementById('goalEditorFields').innerHTML = Object.entries(DEFAULT_GOALS).map(([key,g])=>`
+    <div>
+      <label style="font-size:.8rem;font-weight:700;color:#6b7280;display:block;margin-bottom:.3rem">${g.icon} ${g.label}</label>
+      <input class="form-input" type="number" id="ge_${key}" value="${goals[key]?.target??g.target}" placeholder="${g.target}">
+    </div>`).join('');
+  document.getElementById('goalModal').style.display='flex';
+}
+function closeGoalEditor(){ document.getElementById('goalModal').style.display='none'; }
+function saveGoalEditor(){
+  const goals=getGoals();
+  Object.keys(DEFAULT_GOALS).forEach(key=>{
+    const el=document.getElementById('ge_'+key);
+    if(el){ if(!goals[key]) goals[key]={}; goals[key].target=Number(el.value)||DEFAULT_GOALS[key].target; }
+  });
+  saveGoalsStore(goals); closeGoalEditor(); renderGoalCards(); renderRevTable(); toast('บันทึกเป้าหมายแล้ว ✓','ok');
+}
+
+// ── GA4 OAuth ──
+const GA4_CLIENT_ID_KEY = 'amethez_ga4_client_id';
+const GA4_PROP_KEY = 'amethez_ga4_property';
+let ga4AccessToken = null;
+
+function checkGA4Connected(){
+  const mid = localStorage.getItem('amethez_ga4_mid')||'';
+  const token = sessionStorage.getItem(GA4_TOKEN_KEY);
+  const statusBar = document.getElementById('ga4StatusBar');
+  const authSec = document.getElementById('ga4AuthSection');
+  const dataSec = document.getElementById('ga4DataSection');
+  const manualSec = document.getElementById('ga4ManualSection');
+
+  if(!mid){
+    statusBar.style.display='flex'; authSec.style.display='none';
+    dataSec.style.display='none'; manualSec.style.display='block'; return;
+  }
+  statusBar.style.display='none';
+  if(token){
+    ga4AccessToken=token;
+    authSec.style.display='none'; dataSec.style.display='block'; manualSec.style.display='none';
+    document.getElementById('ga4PropLabel').textContent='Property: '+mid;
+    ga4FetchData();
+  } else {
+    authSec.style.display='block'; dataSec.style.display='none'; manualSec.style.display='block';
+  }
+}
+
+function ga4Authorize(){
+  const clientId = localStorage.getItem(GA4_CLIENT_ID_KEY);
+  if(!clientId){ toast('กรุณาใส่ GA4 OAuth Client ID ในหน้าตั้งค่าก่อน','err'); return; }
+  const scope = encodeURIComponent('https://www.googleapis.com/auth/analytics.readonly');
+  const redirect = encodeURIComponent(window.location.href.split('?')[0]);
+  const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirect}&response_type=token&scope=${scope}`;
+  window.open(url,'ga4auth','width=520,height=620');
+  document.getElementById('ga4AuthStatus').textContent='⏳ รอ authorize... (popup อาจถูก block — อนุญาตใน browser)';
+
+  window._ga4AuthCheck = setInterval(()=>{
+    const h = window.location.hash;
+    if(h.includes('access_token')){
+      const t = new URLSearchParams(h.slice(1)).get('access_token');
+      if(t){ sessionStorage.setItem(GA4_TOKEN_KEY,t); ga4AccessToken=t; clearInterval(window._ga4AuthCheck); checkGA4Connected(); }
+    }
+  },1000);
+}
+function ga4Disconnect(){ sessionStorage.removeItem(GA4_TOKEN_KEY); ga4AccessToken=null; checkGA4Connected(); }
+
+async function ga4FetchData(){
+  const prop = localStorage.getItem('amethez_ga4_mid');
+  if(!ga4AccessToken||!prop){ return; }
+  try{
+    const body = {
+      dateRanges:[{startDate:'30daysAgo',endDate:'today'}],
+      metrics:[{name:'sessions'},{name:'screenPageViews'},{name:'newUsers'},{name:'bounceRate'}],
+      dimensions:[],
+    };
+    const r = await fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${prop}:runReport`,{
+      method:'POST', headers:{'Authorization':'Bearer '+ga4AccessToken,'Content-Type':'application/json'},
+      body:JSON.stringify(body)
+    });
+    if(r.status===401){ ga4Disconnect(); return; }
+    const d = await r.json();
+    const vals = d?.rows?.[0]?.metricValues||[];
+    const [sess,pv,users,bounce] = vals.map(v=>v.value||'0');
+
+    document.getElementById('ga4MetricsGrid').innerHTML=`
+      <div class="stat-card"><div class="stat-num c-blue">${Number(sess).toLocaleString()}</div><div class="stat-label">Sessions</div></div>
+      <div class="stat-card"><div class="stat-num c-purple">${Number(pv).toLocaleString()}</div><div class="stat-label">Pageviews</div></div>
+      <div class="stat-card"><div class="stat-num c-green">${Number(users).toLocaleString()}</div><div class="stat-label">New Users</div></div>
+      <div class="stat-card"><div class="stat-num c-gray">${Number(bounce).toFixed(1)}%</div><div class="stat-label">Bounce Rate</div></div>`;
+
+    // save to stats
+    const k=document.getElementById('statsMonthSel')?.value||curMonthKey();
+    const stats=getStats(); if(!stats[k]) stats[k]={};
+    stats[k].sessions=Number(sess); stats[k].pageviews=Number(pv);
+    stats[k].users=Number(users); stats[k].bounce=Number(Number(bounce).toFixed(1));
+    saveStats(stats); renderGoalCards();
+
+    // top pages
+    const body2={dateRanges:[{startDate:'30daysAgo',endDate:'today'}],
+      metrics:[{name:'screenPageViews'}],dimensions:[{name:'pagePath'}],orderBys:[{metric:{metricName:'screenPageViews'},desc:true}],limit:5};
+    const r2=await fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${prop}:runReport`,{
+      method:'POST',headers:{'Authorization':'Bearer '+ga4AccessToken,'Content-Type':'application/json'},body:JSON.stringify(body2)});
+    const d2=await r2.json();
+    document.getElementById('ga4TopPages').innerHTML=(d2?.rows||[]).map((row,i)=>`
+      <div style="display:flex;gap:.5rem;padding:.3rem 0;border-bottom:1px solid #f3f4f6;align-items:center">
+        <span style="font-size:.72rem;color:#9ca3af;width:1rem">${i+1}</span>
+        <span style="flex:1;font-size:.78rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#374151">${row.dimensionValues[0].value}</span>
+        <span style="font-size:.78rem;font-weight:700;color:#7c3aed">${Number(row.metricValues[0].value).toLocaleString()}</span>
+      </div>`).join('');
+  }catch(e){ console.error(e); }
+}
+
+function initStatsTab(){
+  initStatsMonths();
+  loadStatsMonth();
 }
 
 // ── SHOPEE AFF ────────────────────────────────
