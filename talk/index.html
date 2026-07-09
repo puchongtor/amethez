@@ -2,12 +2,198 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=/talk/read.html">
-  <link rel="canonical" href="https://amethez.com/talk/read.html">
-  <title>ห้องตั้งจิต | Amethez</title>
-  <script>window.location.replace('/talk/read.html');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ห้องตั้งจิต — บทตั้งจิตคุยกับหิน | Amethez</title>
+  <meta name="description" content="บทตั้งจิตคุยกับหินคริสตัล พร้อมคลื่นความถี่บำบัดและเสียงธรรมชาติ เลือกตามวัตถุประสงค์ที่ต้องการ">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    :root { --gold:#c9a84c; --purple:#7c3aed; }
+    body { font-family:'Sarabun',sans-serif; background:#0f0a1e; color:#fff; min-height:100vh; }
+
+    /* ── Hero ── */
+    .hero {
+      background:linear-gradient(160deg,#0f0a1e 0%,#1a1228 50%,#0d2010 100%);
+      padding:5rem 1.5rem 3rem; text-align:center; position:relative; overflow:hidden;
+    }
+    .hero::before {
+      content:''; position:absolute; top:-80px; left:50%; transform:translateX(-50%);
+      width:500px; height:500px;
+      background:radial-gradient(ellipse,rgba(201,168,76,.15) 0%,transparent 65%);
+      pointer-events:none;
+    }
+    .hero-kicker { font-size:.72rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:.875rem; position:relative; }
+    .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(1.75rem,5vw,2.75rem); color:#fff; margin-bottom:.75rem; position:relative; }
+    .hero p { color:rgba(255,255,255,.55); font-size:1rem; max-width:520px; margin:0 auto 2rem; position:relative; line-height:1.75; }
+    .hero-stats { display:flex; gap:2rem; justify-content:center; flex-wrap:wrap; position:relative; }
+    .hstat strong { display:block; font-family:'Playfair Display',serif; font-size:1.75rem; color:var(--gold); }
+    .hstat span { font-size:.75rem; color:rgba(255,255,255,.4); }
+
+    /* ── Filter Pills ── */
+    .filter-wrap { padding:1.5rem 1.5rem .5rem; max-width:900px; margin:0 auto; }
+    .filter-pills { display:flex; gap:.5rem; flex-wrap:wrap; align-items:center; }
+    .fp { padding:.4rem 1rem; border-radius:2rem; border:1.5px solid rgba(255,255,255,.15);
+      background:rgba(255,255,255,.05); color:rgba(255,255,255,.65);
+      font-size:.82rem; font-weight:600; cursor:pointer; transition:all .2s; font-family:'Sarabun',sans-serif; }
+    .fp:hover { border-color:var(--gold); color:var(--gold); }
+    .fp.on { background:rgba(201,168,76,.18); border-color:var(--gold); color:var(--gold); }
+    .filter-label { font-size:.8rem; color:rgba(255,255,255,.35); margin-right:.25rem; }
+
+    /* ── Card Grid ── */
+    .cards-wrap { max-width:900px; margin:0 auto; padding:1.25rem 1.5rem 5rem; }
+    .cards-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1.125rem; }
+    .card {
+      background:rgba(255,255,255,.04);
+      border:1.5px solid rgba(255,255,255,.1);
+      border-radius:1.25rem;
+      padding:1.5rem;
+      text-decoration:none;
+      color:#fff;
+      display:block;
+      transition:all .25s;
+      position:relative;
+      overflow:hidden;
+    }
+    .card::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:3px; border-radius:1.25rem 1.25rem 0 0;
+      opacity:0; transition:opacity .25s;
+    }
+    .card:hover { border-color:rgba(201,168,76,.4); transform:translateY(-4px); box-shadow:0 12px 36px rgba(0,0,0,.4); }
+    .card:hover::before { opacity:1; }
+    .card-purpose {
+      display:inline-flex; align-items:center; gap:.35rem;
+      font-size:.7rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+      margin-bottom:.875rem; padding:.2rem .65rem; border-radius:2rem;
+      background:rgba(255,255,255,.08);
+    }
+    .card-emoji { font-size:2.5rem; margin-bottom:.75rem; display:block; line-height:1; }
+    .card-title { font-family:'Playfair Display',serif; font-size:1.05rem; line-height:1.4; margin-bottom:.5rem; }
+    .card-sub { font-size:.82rem; color:rgba(255,255,255,.45); line-height:1.6; margin-bottom:1rem; }
+    .card-freq { font-size:.72rem; color:var(--gold); border:1px solid rgba(201,168,76,.3); border-radius:2rem; padding:.15rem .6rem; display:inline-block; }
+    .card-play {
+      position:absolute; bottom:1.25rem; right:1.25rem;
+      width:2.25rem; height:2.25rem; border-radius:50%;
+      background:rgba(201,168,76,.2); border:1px solid rgba(201,168,76,.4);
+      display:flex; align-items:center; justify-content:center;
+      font-size:.875rem; transition:all .2s;
+    }
+    .card:hover .card-play { background:var(--gold); color:#0f0a1e; }
+
+    .empty-msg { text-align:center; padding:3rem; color:rgba(255,255,255,.3); grid-column:1/-1; }
+
+    /* Loading */
+    .loading { text-align:center; padding:4rem; color:rgba(255,255,255,.4); }
+
+    /* Nav override for dark bg */
+    .site-header { --nav-bg: transparent; }
+
+    @keyframes spin { to { transform:rotate(360deg); } }
+    @media (max-width:600px) {
+      .cards-grid { grid-template-columns:1fr; }
+    }
+  </style>
 </head>
 <body>
-  <p>กำลังพาคุณไป <a href="/talk/read.html">ห้องตั้งจิต</a>...</p>
+<header class="site-header"></header>
+
+<main>
+  <div class="hero">
+    <div class="hero-kicker">🔮 Amethez Crystal Sessions</div>
+    <h1 id="hero-title">ห้องตั้งจิต</h1>
+    <p>บทตั้งจิตกับหินคริสตัล พร้อมคลื่นความถี่บำบัด<br>เลือกหินที่ใช่ ตั้งเจตนา แล้วปล่อยให้พลังงานทำงาน</p>
+    <div class="hero-stats">
+      <div class="hstat"><strong id="count-total">—</strong><span>บทตั้งจิต</span></div>
+      <div class="hstat"><strong id="count-stones">—</strong><span>หินคริสตัล</span></div>
+      <div class="hstat"><strong>6</strong><span>วัตถุประสงค์</span></div>
+    </div>
+  </div>
+
+  <div class="filter-wrap">
+    <div class="filter-pills" id="filters">
+      <span class="filter-label">กรอง:</span>
+      <button class="fp on" data-purpose="all" onclick="setFilter('all',this)">✨ ทั้งหมด</button>
+    </div>
+  </div>
+
+  <div class="cards-wrap">
+    <div class="cards-grid" id="grid">
+      <div class="loading">
+        <div style="width:2rem;height:2rem;border:2px solid rgba(255,255,255,.1);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 1rem"></div>
+        กำลังโหลด...
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer"></footer>
+<script src="/js/components.js"></script>
+<script>
+const FREQ_NAMES = {
+  wealth:528, success:741, health:528, love:639, protection:396, peace:432
+};
+
+let allItems = [], purposes = [], activeFilter = 'all';
+
+function setFilter(id, el){
+  activeFilter = id;
+  document.querySelectorAll('.fp').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  render();
+}
+
+function render(){
+  const grid = document.getElementById('grid');
+  const items = activeFilter === 'all' ? allItems : allItems.filter(a=>a.purpose===activeFilter);
+  if(!items.length){
+    grid.innerHTML='<div class="empty-msg">ยังไม่มีบทตั้งจิตในหมวดนี้</div>';
+    return;
+  }
+  grid.innerHTML = items.map(a => {
+    const p = purposes.find(x=>x.id===a.purpose)||{emoji:'✨',label:'',color:'#7c3aed'};
+    const hz = FREQ_NAMES[a.purpose] || 432;
+    const col = p.color||'#7c3aed';
+    return `<a href="/talk/read.html?id=${a.id}" class="card" style="--card-color:${col}">
+      <style>.card[style*="${col}"]::before{background:${col}}</style>
+      <span class="card-purpose" style="color:${col}">${p.emoji} ${p.label}</span>
+      <span class="card-emoji">${a.stone_emoji||'💎'}</span>
+      <div class="card-title">${a.title||''}</div>
+      <div class="card-sub">${a.subtitle||''}</div>
+      <span class="card-freq">🎵 ${hz}Hz</span>
+      <div class="card-play">▶</div>
+    </a>`;
+  }).join('');
+}
+
+fetch('/data/affirmations.json')
+  .then(r=>r.json())
+  .then(data=>{
+    allItems = (data.affirmations||[]).filter(a=>a.status==='active').sort((a,b)=>(a.sort_order||99)-(b.sort_order||99));
+    purposes = data.purposes||[];
+
+    // count
+    document.getElementById('count-total').textContent = allItems.length;
+    const stones = [...new Set(allItems.map(a=>a.stone))];
+    document.getElementById('count-stones').textContent = stones.length;
+
+    // build filter pills
+    const filtersEl = document.getElementById('filters');
+    purposes.forEach(p=>{
+      const count = allItems.filter(a=>a.purpose===p.id).length;
+      if(!count) return;
+      const btn = document.createElement('button');
+      btn.className = 'fp';
+      btn.dataset.purpose = p.id;
+      btn.textContent = `${p.emoji} ${p.label} (${count})`;
+      btn.onclick = function(){ setFilter(p.id, this); };
+      filtersEl.appendChild(btn);
+    });
+
+    render();
+  })
+  .catch(()=>{
+    document.getElementById('grid').innerHTML='<div class="empty-msg">โหลดข้อมูลไม่สำเร็จ — ลองรีเฟรชหน้า</div>';
+  });
+</script>
 </body>
 </html>
