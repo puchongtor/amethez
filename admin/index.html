@@ -104,6 +104,9 @@ body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--text);min
 .badge-sold{background:#f3f4f6;color:#6b7280;}
 .td-img{width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:#f5f0ff;border-radius:.4rem;font-size:1.3rem;}
 .td-img img{width:48px;height:48px;object-fit:cover;border-radius:.4rem;}
+.tag-chip{display:inline-flex;align-items:center;padding:.25rem .65rem;border-radius:2rem;font-size:.78rem;font-weight:600;background:#f3effa;color:#6b5e8a;border:1.5px solid #e9e0f8;cursor:pointer;transition:all .12s;user-select:none;font-family:'Sarabun',sans-serif;}
+.tag-chip:hover{border-color:#a78bfa;color:#7c3aed;}
+.tag-chip.on{background:#7c3aed;color:white;border-color:#7c3aed;}
 
 /* ── FORM ── */
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
@@ -190,6 +193,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
       <div class="nav-item" onclick="showTab('pages',this)"><span class="ic">🎨</span> แก้ไขหน้า</div>
       <div class="nav-item" onclick="showTab('prompts',this)"><span class="ic">✨</span> AI Prompts</div>
       <div class="nav-item" onclick="showTab('products',this)"><span class="ic">💎</span> สินค้า</div>
+      <div class="nav-item" onclick="showTab('shopee',this)"><span class="ic">🛒</span> Shopee Aff</div>
       <div class="nav-item" onclick="showTab('articles',this)"><span class="ic">📝</span> บทความ</div>
       <div class="nav-item" onclick="showTab('settings',this)"><span class="ic">⚙️</span> ตั้งค่า</div>
     </div>
@@ -425,6 +429,81 @@ textarea.form-input{resize:vertical;min-height:80px;}
               <table class="product-table">
                 <thead><tr><th>รูป</th><th>ชื่อ</th><th>น้ำหนัก</th><th>ราคา</th><th>สถานะ</th><th>จัดการ</th></tr></thead>
                 <tbody id="pTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- SHOPEE AFF -->
+        <div id="tab-shopee">
+          <div class="section-title">🛒 Shopee Affiliate Products</div>
+          <div class="section-sub">เพิ่มสินค้า Shopee Aff — AI แนะนำ Tag จากชื่อสินค้าอัตโนมัติ</div>
+
+          <div class="card">
+            <div class="card-title" id="affFormTitle">➕ เพิ่มสินค้าใหม่</div>
+            <input type="hidden" id="affEditId">
+            <div class="form-grid">
+              <div class="form-group full">
+                <label class="fl">ลิงค์ Shopee Affiliate *</label>
+                <input class="form-input" id="affUrl" placeholder="https://s.shopee.co.th/...">
+              </div>
+              <div class="form-group full">
+                <label class="fl">ชื่อสินค้า * <span style="color:#9ca3af;font-weight:400">(ใส่แล้วกด AI แนะนำ Tag)</span></label>
+                <div style="display:flex;gap:.5rem">
+                  <input class="form-input" id="affName" placeholder="เช่น สร้อยข้อมืออเมทิสต์ 8mm" style="flex:1" oninput="clearAffTags()">
+                  <button class="btn btn-gold" onclick="aiSuggestTags()" id="btnAiTag" style="white-space:nowrap;flex-shrink:0">✨ AI แนะนำ Tag</button>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="fl">ราคา (บาท)</label>
+                <input class="form-input" type="number" id="affPrice" placeholder="490">
+              </div>
+              <div class="form-group">
+                <label class="fl">หมวดหมู่</label>
+                <select class="form-input" id="affCat">
+                  <option value="เครื่องประดับ">💍 เครื่องประดับ</option>
+                  <option value="หินดิบ">🪨 หินดิบ</option>
+                  <option value="หินตกแต่ง">🏠 หินตกแต่ง</option>
+                  <option value="อุปกรณ์ดูแลหิน">✨ อุปกรณ์ดูแลหิน</option>
+                  <option value="DIY">🛠 DIY & Grid</option>
+                  <option value="ของมงคล">🙏 ของมงคล</option>
+                </select>
+              </div>
+              <div class="form-group full">
+                <label class="fl">URL รูปภาพ <span style="color:#9ca3af;font-weight:400">(คลิกขวาที่รูปใน Shopee → Copy image address)</span></label>
+                <input class="form-input" id="affImg" placeholder="https://down-th.img.susercontent.com/..." oninput="previewAffImg(this.value)">
+                <img id="affImgPreview" style="width:140px;height:140px;object-fit:cover;border-radius:.65rem;margin-top:.5rem;display:none;border:2px solid #e9e0f8">
+              </div>
+            </div>
+
+            <!-- TAG SECTION -->
+            <div id="affTagSection" style="margin-top:1.25rem">
+              <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem;flex-wrap:wrap">
+                <label class="fl" style="margin:0">🏷 Tags</label>
+                <span id="affTagStatus" style="font-size:.78rem;color:#9b89bb"></span>
+              </div>
+              <div id="affTagGroups" style="display:flex;flex-direction:column;gap:1rem"></div>
+            </div>
+
+            <div style="display:flex;gap:.75rem;margin-top:1.5rem;flex-wrap:wrap">
+              <button class="btn btn-primary" onclick="saveAff()">💾 บันทึกสินค้า</button>
+              <button class="btn btn-outline" onclick="clearAffForm()">✕ ล้าง</button>
+            </div>
+          </div>
+
+          <!-- LIST -->
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem">
+              <div class="card-title" style="margin:0">📦 รายการสินค้า Aff (<span id="affCount">0</span>)</div>
+              <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+                <input class="form-input" style="width:180px" id="affSearch" placeholder="🔍 ค้นหา..." oninput="renderAffTable()">
+                <button class="btn btn-outline btn-sm" onclick="exportAffJson()">⬇️ Export JSON</button>
+              </div>
+            </div>
+            <div style="overflow-x:auto">
+              <table class="product-table">
+                <thead><tr><th>รูป</th><th>ชื่อสินค้า</th><th>หมวด</th><th>ราคา</th><th>Tags</th><th>จัดการ</th></tr></thead>
+                <tbody id="affTableBody"></tbody>
               </table>
             </div>
           </div>
@@ -730,7 +809,7 @@ if(sessionStorage.getItem(AUTH_KEY)){
 }
 
 // ── TABS ──────────────────────────────────────
-const TAB_TITLES={dashboard:'📊 ภาพรวม',pages:'🎨 แก้ไขหน้า',prompts:'✨ AI Prompts',products:'💎 สินค้า',articles:'📝 บทความ',settings:'⚙️ ตั้งค่า'};
+const TAB_TITLES={dashboard:'📊 ภาพรวม',pages:'🎨 แก้ไขหน้า',prompts:'✨ AI Prompts',products:'💎 สินค้า',shopee:'🛒 Shopee Aff',articles:'📝 บทความ',settings:'⚙️ ตั้งค่า'};
 function showTab(name,el){
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   if(el) el.classList.add('active');
@@ -740,6 +819,7 @@ function showTab(name,el){
   if(name==='pages') renderPageGrid();
   if(name==='prompts') renderPrompts();
   if(name==='products'){ loadGeodes(); renderPTable(); }
+  if(name==='shopee'){ loadAff(); initAffTags(); renderAffTable(); }
   if(name==='articles') renderArticles();
   if(name==='dashboard') renderDash();
   if(name==='settings') loadSettingsTab();
@@ -1097,6 +1177,180 @@ function renderPTable(){
         <button class="btn btn-danger btn-sm" onclick="delProd('${p.id}')">🗑</button>
       </div></td></tr>`;
   }).join(''):`<tr><td colspan="6" style="text-align:center;padding:2rem;color:#9ca3af">ยังไม่มีสินค้า</td></tr>`;
+}
+
+// ── SHOPEE AFF ────────────────────────────────
+const AFF_KEY = 'amethez_aff_products';
+const AFF_TAG_GROUPS = [
+  { label:'💎 ชื่อหิน', tags:['อเมทิสต์','โมลดาไวท์','สะเก็ดดาวไทย','ซิทริน','ควอตซ์ใส','โรสควอตซ์','ทัวร์มาลีนดำ','ลาพิสลาซูลี','ลาบราโดไรต์','มูนสโตน','การ์เนต','ออบซิเดียน','หยก','อะความารีน','ลาริมาร์','เซเลไนต์','ไพไรต์','ซันสโตน','เพริดอต','โอปอล'] },
+  { label:'🎨 สี', tags:['ม่วง','ชมพู','เขียว','ดำ','ขาว','น้ำเงิน','แดง','ส้ม','เหลือง','ทอง','รุ้ง','เทา'] },
+  { label:'🔮 จักระ', tags:['มงกุฎ','Third Eye','คอ','หัวใจ','สุริยะ','ก้นกบ','ราก'] },
+  { label:'⭐ ราศี', tags:['เมษ','พฤษภ','เมถุน','กรกฎ','สิงห์','กันย์','ตุลย์','พิจิก','ธนู','มังกร','กุมภ์','มีน'] },
+  { label:'🎯 วัตถุประสงค์', tags:['ความสำเร็จ','การเงิน','ความรัก','สุขภาพ','ป้องกัน','สมาธิ','ความสงบ','พลังงาน','ดึงดูด','ฮวงจุ้ย','นอนหลับ'] },
+  { label:'📦 รูปแบบสินค้า', tags:['สร้อยข้อมือ','จี้','แหวน','ต่างหู','หินดิบ','โพรง','ทรงกลม','ทรงแหลม','ทรงไข่','แผ่น','ของตกแต่ง','Crystal Grid','Singing Bowl','ใบเสจ','เกลือหิมาลัย'] },
+];
+
+let affProducts = [];
+function loadAff(){ try{ affProducts = JSON.parse(localStorage.getItem(AFF_KEY)||'[]'); }catch{ affProducts=[]; } }
+function saveAffStore(){ localStorage.setItem(AFF_KEY, JSON.stringify(affProducts)); }
+function genAffId(){ return 'A'+(affProducts.length+1).toString().padStart(3,'0')+'_'+Date.now().toString(36).toUpperCase(); }
+
+function initAffTags(){
+  const el = document.getElementById('affTagGroups');
+  if(!el || el.children.length > 0) return;
+  el.innerHTML = AFF_TAG_GROUPS.map((g,gi) => `
+    <div>
+      <div style="font-size:.78rem;font-weight:700;color:#7c3aed;margin-bottom:.4rem">${g.label}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:.35rem">
+        ${g.tags.map(t => `<label class="tag-chip" id="chip_${gi}_${t.replace(/\s/g,'_')}">
+          <input type="checkbox" value="${t}" style="display:none" onchange="this.parentElement.classList.toggle('on',this.checked)">
+          ${t}
+        </label>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+function getCheckedTags(){
+  return [...document.querySelectorAll('#affTagGroups input[type=checkbox]:checked')].map(c=>c.value);
+}
+function setCheckedTags(tags){
+  document.querySelectorAll('#affTagGroups input[type=checkbox]').forEach(cb=>{
+    const on = tags.includes(cb.value);
+    cb.checked = on;
+    cb.parentElement.classList.toggle('on', on);
+  });
+}
+function clearAffTags(){
+  document.querySelectorAll('#affTagGroups input[type=checkbox]').forEach(cb=>{
+    cb.checked = false; cb.parentElement.classList.remove('on');
+  });
+  document.getElementById('affTagStatus').textContent = '';
+}
+
+async function aiSuggestTags(){
+  const name = document.getElementById('affName').value.trim();
+  if(!name){ toast('กรุณาใส่ชื่อสินค้าก่อน','err'); return; }
+  const key = localStorage.getItem(GEMINI_KEY_STORE);
+  if(!key){ toast('กรุณาใส่ Groq API Key ในหน้าตั้งค่าก่อน','err'); return; }
+
+  const btn = document.getElementById('btnAiTag');
+  btn.textContent = '⏳ กำลังวิเคราะห์...'; btn.disabled = true;
+  document.getElementById('affTagStatus').textContent = '';
+
+  const allTags = AFF_TAG_GROUPS.flatMap(g=>g.tags).join(', ');
+  const prompt = `คุณคือผู้เชี่ยวชาญหินคริสตัล วิเคราะห์ชื่อสินค้า: "${name}"
+แล้วเลือก tag ที่เหมาะสมจากรายการนี้เท่านั้น: ${allTags}
+ตอบเป็น JSON array เช่น ["อเมทิสต์","ม่วง","มงกุฎ","สร้อยข้อมือ"] ไม่ต้องอธิบายอะไรเพิ่ม`;
+
+  try{
+    const r = await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+      body: JSON.stringify({model:'llama-3.1-8b-instant',messages:[{role:'user',content:prompt}],max_tokens:200,temperature:0.2})
+    });
+    const d = await r.json();
+    if(!r.ok) throw new Error(d?.error?.message||r.statusText);
+    const raw = d?.choices?.[0]?.message?.content||'[]';
+    const match = raw.match(/\[[\s\S]*?\]/);
+    const suggested = match ? JSON.parse(match[0]) : [];
+    setCheckedTags(suggested);
+    const count = getCheckedTags().length;
+    document.getElementById('affTagStatus').textContent = `✅ AI แนะนำ ${count} tag — ปรับได้ตามต้องการ`;
+    document.getElementById('affTagStatus').style.color = '#059669';
+  }catch(e){
+    document.getElementById('affTagStatus').textContent = '❌ '+e.message;
+    document.getElementById('affTagStatus').style.color = '#dc2626';
+  }finally{
+    btn.textContent = '✨ AI แนะนำ Tag'; btn.disabled = false;
+  }
+}
+
+function previewAffImg(url){
+  const el = document.getElementById('affImgPreview');
+  if(url && url.startsWith('http')){ el.src=url; el.style.display='block'; el.onerror=()=>el.style.display='none'; }
+  else el.style.display='none';
+}
+
+function clearAffForm(){
+  ['affUrl','affName','affPrice','affImg'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+  document.getElementById('affCat').value = 'เครื่องประดับ';
+  document.getElementById('affEditId').value = '';
+  document.getElementById('affImgPreview').style.display = 'none';
+  document.getElementById('affFormTitle').textContent = '➕ เพิ่มสินค้าใหม่';
+  clearAffTags();
+}
+
+function saveAff(){
+  const name = document.getElementById('affName').value.trim();
+  const url  = document.getElementById('affUrl').value.trim();
+  if(!name){ toast('กรุณาใส่ชื่อสินค้า','err'); return; }
+  if(!url){ toast('กรุณาใส่ลิงค์ Shopee Aff','err'); return; }
+  const eid = document.getElementById('affEditId').value;
+  const p = {
+    id: eid || genAffId(),
+    name,
+    url,
+    price: Number(document.getElementById('affPrice').value)||0,
+    category: document.getElementById('affCat').value,
+    image_url: document.getElementById('affImg').value.trim(),
+    tags: getCheckedTags(),
+    status: 'available',
+    updated: new Date().toLocaleDateString('th-TH'),
+  };
+  if(eid){ const i=affProducts.findIndex(a=>a.id===eid); if(i>=0){ p.created=affProducts[i].created||p.updated; affProducts[i]=p; } }
+  else{ p.created=p.updated; affProducts.unshift(p); }
+  saveAffStore(); renderAffTable(); clearAffForm();
+  toast((eid?'แก้ไข':'เพิ่ม')+' "'+p.name+'" แล้ว ✓','ok');
+}
+
+function editAff(id){
+  const p = affProducts.find(a=>a.id===id); if(!p) return;
+  document.getElementById('affEditId').value = p.id;
+  document.getElementById('affName').value = p.name;
+  document.getElementById('affUrl').value = p.url;
+  document.getElementById('affPrice').value = p.price||'';
+  document.getElementById('affCat').value = p.category||'เครื่องประดับ';
+  document.getElementById('affImg').value = p.image_url||'';
+  document.getElementById('affFormTitle').textContent = '✏️ แก้ไข: '+p.name;
+  previewAffImg(p.image_url);
+  setCheckedTags(p.tags||[]);
+  document.getElementById('affTagStatus').textContent = `${(p.tags||[]).length} tag`;
+  document.getElementById('tab-shopee').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function delAff(id){
+  if(!confirm('ลบสินค้านี้?')) return;
+  affProducts = affProducts.filter(a=>a.id!==id); saveAffStore(); renderAffTable(); toast('ลบแล้ว','ok');
+}
+
+function renderAffTable(){
+  loadAff();
+  const kw = (document.getElementById('affSearch')?.value||'').toLowerCase();
+  const list = kw ? affProducts.filter(p=>p.name.toLowerCase().includes(kw)||p.tags.some(t=>t.includes(kw))) : affProducts;
+  document.getElementById('affCount').textContent = affProducts.length;
+  document.getElementById('affTableBody').innerHTML = list.length ? list.map(p=>{
+    const img = p.image_url ? `<div class="td-img"><img src="${x(p.image_url)}" onerror="this.parentElement.innerHTML='🛒'"></div>` : `<div class="td-img">🛒</div>`;
+    const tags = (p.tags||[]).slice(0,4).map(t=>`<span style="font-size:.65rem;background:#f3effa;color:#7c3aed;padding:.1rem .4rem;border-radius:.3rem">${x(t)}</span>`).join(' ');
+    return `<tr>
+      <td>${img}</td>
+      <td style="font-weight:600;max-width:180px"><a href="${x(p.url)}" target="_blank" style="color:#7c3aed;text-decoration:none">${x(p.name)}</a></td>
+      <td style="font-size:.8rem;color:#6b7280">${x(p.category)}</td>
+      <td>${p.price?'฿'+p.price.toLocaleString():'—'}</td>
+      <td><div style="display:flex;flex-wrap:wrap;gap:.2rem">${tags}${(p.tags||[]).length>4?`<span style="font-size:.65rem;color:#9ca3af">+${p.tags.length-4}</span>`:''}</div></td>
+      <td><div style="display:flex;gap:.35rem">
+        <button class="btn btn-outline btn-sm" onclick="editAff('${p.id}')">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="delAff('${p.id}')">🗑</button>
+      </div></td></tr>`;
+  }).join('') : `<tr><td colspan="6" style="text-align:center;padding:2rem;color:#9ca3af">ยังไม่มีสินค้า — เพิ่มด้านบน</td></tr>`;
+}
+
+function exportAffJson(){
+  loadAff();
+  const out = JSON.stringify({version:'1.0',updated:new Date().toISOString().slice(0,10),products:affProducts},null,2);
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([out],{type:'application/json'}));
+  a.download = 'products.json'; a.click();
+  toast('Export products.json สำเร็จ ✓','ok');
 }
 
 // ── ARTICLES ──────────────────────────────────
