@@ -2,6 +2,7 @@
   "images": {
     "logo": "/data/images/logo.jpg",
     "favicon": "/data/images/favicon.png",
-    "stone_moldavite_hero": "/data/images/stone_moldavite_hero.jpg"
+    "stone_moldavite_hero": "/data/images/stone_moldavite_hero.jpg",
+    "home_hero": "/data/images/home_hero.jpg"
   }
 }
