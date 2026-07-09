@@ -317,15 +317,52 @@ textarea.form-input{resize:vertical;min-height:80px;}
               <!-- Preview tab -->
               <div id="bodyTabPreview" style="display:none">
                 <div style="display:flex;gap:.5rem;align-items:center;margin:.75rem 0 .5rem;flex-wrap:wrap">
-                  <button class="btn btn-outline btn-sm" onclick="refreshPreview()">🔄 Refresh Preview</button>
-                  <label style="display:flex;align-items:center;gap:.4rem;font-size:.78rem;color:#6b7280;cursor:pointer">
-                    <input type="checkbox" id="previewAutoRefresh" checked style="cursor:pointer"> auto-refresh ทุกครั้งที่พิมพ์
-                  </label>
-                  <span style="font-size:.72rem;color:#9ca3af;margin-left:auto">รูปภาพจาก slot จะแสดงถ้าเผยแพร่แล้ว</span>
+                  <span style="font-size:.75rem;background:#e0f2fe;color:#0369a1;padding:.25rem .65rem;border-radius:20px;font-weight:600">✏️ คลิกข้อความ → แก้ได้เลย</span>
+                  <span style="font-size:.75rem;background:#fce7f3;color:#be185d;padding:.25rem .65rem;border-radius:20px;font-weight:600">🖼 คลิกรูป → ย่อ/ขยาย</span>
+                  <button class="btn btn-outline btn-sm" onclick="syncPreviewToHtml()" style="margin-left:auto">⇄ Sync → HTML</button>
                 </div>
-                <iframe id="bodyPreviewFrame"
-                  style="width:100%;height:700px;border:1.5px solid #e9e0f5;border-radius:.5rem;background:#faf8f4"
-                  sandbox="allow-same-origin allow-scripts"></iframe>
+
+                <!-- Resize handle overlay (absolute positioned) -->
+                <div id="imgResizeOverlay" style="display:none;position:fixed;pointer-events:none;z-index:9999;box-sizing:border-box;border:2px solid #7c3aed;border-radius:3px">
+                  <div id="imgResizeHandle" style="position:absolute;bottom:-6px;right:-6px;width:14px;height:14px;background:#7c3aed;border-radius:3px;cursor:se-resize;pointer-events:all"></div>
+                  <div id="imgSizeLabel" style="position:absolute;top:-22px;left:0;background:#7c3aed;color:#fff;font-size:.65rem;padding:1px 5px;border-radius:3px;white-space:nowrap"></div>
+                </div>
+
+                <!-- Live editable preview -->
+                <div id="bodyPreviewDiv"
+                  contenteditable="true"
+                  spellcheck="false"
+                  oninput="onPreviewEdit()"
+                  style="min-height:600px;border:1.5px solid #e9e0f5;border-radius:.5rem;background:#faf8f4;padding:2rem 2.5rem;outline:none;overflow-y:auto;position:relative">
+                </div>
+
+                <!-- Inject article CSS into this page for the preview div -->
+                <style id="previewStyleTag">
+                  #bodyPreviewDiv { font-family:'Sarabun',sans-serif; font-size:17px; line-height:1.75; color:#1a1228; }
+                  #bodyPreviewDiv h2 { font-family:'Playfair Display',serif; font-size:1.75rem; color:#7c3aed; margin:2rem 0 .75rem; }
+                  #bodyPreviewDiv h3 { font-size:1.2rem; font-weight:700; margin:1.5rem 0 .5rem; }
+                  #bodyPreviewDiv h4 { font-size:1rem; font-weight:700; margin:.75rem 0 .25rem; }
+                  #bodyPreviewDiv p  { margin-bottom:1rem; }
+                  #bodyPreviewDiv ul,#bodyPreviewDiv ol { margin:0 0 1rem 1.5rem; }
+                  #bodyPreviewDiv li { margin-bottom:.35rem; }
+                  #bodyPreviewDiv strong { font-weight:700; }
+                  #bodyPreviewDiv em { font-style:italic; }
+                  #bodyPreviewDiv a  { color:#7c3aed; }
+                  #bodyPreviewDiv .quick-facts { background:#f5f0ff; border-radius:.75rem; padding:1.25rem; margin:1.5rem 0; }
+                  #bodyPreviewDiv .quick-facts h3 { margin-top:0; color:#5b21b6; }
+                  #bodyPreviewDiv .facts-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:.75rem; }
+                  #bodyPreviewDiv .fact-label { font-size:.75rem; color:#6b7280; display:block; }
+                  #bodyPreviewDiv .fact-value { font-size:1rem; font-weight:700; color:#7c3aed; }
+                  #bodyPreviewDiv .benefits-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; margin:1.5rem 0; }
+                  #bodyPreviewDiv .benefit-item { background:#fff; border:1px solid #e9e0f5; border-radius:.75rem; padding:1rem; text-align:center; }
+                  #bodyPreviewDiv .benefit-icon { font-size:2rem; display:block; margin-bottom:.4rem; }
+                  #bodyPreviewDiv .faq-item { border-bottom:1px solid #e9e0f5; padding:1rem 0; }
+                  #bodyPreviewDiv .faq-question { font-weight:700; color:#5b21b6; margin-bottom:.4rem; }
+                  #bodyPreviewDiv .faq-answer { color:#6b7280; font-size:.92rem; }
+                  #bodyPreviewDiv img.cms-inline-img { width:100%; max-height:420px; object-fit:cover; border-radius:12px; margin:1.5rem 0; display:block; }
+                  #bodyPreviewDiv img { max-width:100%; cursor:pointer; }
+                  #bodyPreviewDiv img.img-selected { outline:2px solid #7c3aed; outline-offset:2px; }
+                </style>
               </div>
             </div>
           </div>
@@ -1528,49 +1565,112 @@ function switchBodyTab(tab){
   if(!isHtml) refreshPreview();
 }
 
+// ── Preview (contenteditable div) ──────────────────────
+let _selectedImg = null;
+let _resizing    = false;
+let _resizeStartX, _resizeStartW;
+
 function refreshPreview(){
   const html = document.getElementById('edBodyTA')?.value || '';
-  const p    = currentPage ? PAGES.find(pg=>pg.key===currentPage) : null;
   const imgs = getImgs();
 
-  // Build CSS urls relative to site root
-  const origin = location.origin;
+  // Inject real image URLs for uploaded slots
+  let rendered = html.replace(/data-cms-img="([^"]+)"/g, (_, key) => {
+    const url = imgs[key];
+    return url
+      ? `data-cms-img="${key}" src="${url}"`
+      : `data-cms-img="${key}"`;
+  });
 
-  // Replace data-cms-img placeholders with actual urls from localStorage
-  let previewHtml = html.replace(
-    /data-cms-img="([^"]+)"/g,
-    (match, key) => {
-      const url = imgs[key];
-      return url
-        ? `data-cms-img="${key}" src="${url}" style="display:block"`
-        : `data-cms-img="${key}"`;
-    }
-  );
+  const div = document.getElementById('bodyPreviewDiv');
+  div.innerHTML = rendered;
 
-  const srcdoc = `<!DOCTYPE html>
-<html lang="th">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="${origin}/css/main.css">
-  <link rel="stylesheet" href="${origin}/css/affiliate.css">
-  <style>
-    body { background:#faf8f4; padding:2rem 1.5rem; max-width:860px; margin:0 auto; }
-    img.cms-inline-img[src]{ display:block !important; }
-    img.cms-inline-img:not([src]){ display:none; }
-    /* highlight editable areas on hover */
-    [data-cms-img]:hover { outline:2px dashed #7c3aed44; outline-offset:2px; }
-  </style>
-</head>
-<body>
-${previewHtml}
-</body>
-</html>`;
+  // Make cms-inline-img visible when src present
+  div.querySelectorAll('img.cms-inline-img').forEach(img => {
+    img.style.display = img.src ? 'block' : 'none';
+  });
 
-  const frame = document.getElementById('bodyPreviewFrame');
-  frame.srcdoc = srcdoc;
+  // Attach image click → resize UI
+  div.querySelectorAll('img').forEach(attachImgResize);
+}
+
+function attachImgResize(img){
+  img.addEventListener('click', e => {
+    e.stopPropagation();
+    selectImg(img);
+  });
+}
+
+function selectImg(img){
+  // Deselect previous
+  if(_selectedImg) _selectedImg.classList.remove('img-selected');
+  _selectedImg = img;
+  img.classList.add('img-selected');
+
+  const overlay  = document.getElementById('imgResizeOverlay');
+  const handle   = document.getElementById('imgResizeHandle');
+  const sizeLabel= document.getElementById('imgSizeLabel');
+
+  function positionOverlay(){
+    const r = img.getBoundingClientRect();
+    overlay.style.display  = 'block';
+    overlay.style.left     = r.left   + 'px';
+    overlay.style.top      = r.top    + window.scrollY + 'px';
+    overlay.style.width    = r.width  + 'px';
+    overlay.style.height   = r.height + 'px';
+    sizeLabel.textContent  = Math.round(r.width) + ' × ' + Math.round(r.height) + 'px';
+  }
+  positionOverlay();
+
+  // Drag-to-resize
+  handle.onmousedown = e => {
+    e.preventDefault();
+    _resizing   = true;
+    _resizeStartX = e.clientX;
+    _resizeStartW = img.getBoundingClientRect().width;
+
+    document.onmousemove = ev => {
+      if(!_resizing) return;
+      const newW = Math.max(80, _resizeStartW + (ev.clientX - _resizeStartX));
+      img.style.width    = newW + 'px';
+      img.style.maxWidth = 'none';
+      positionOverlay();
+    };
+    document.onmouseup = () => {
+      _resizing = false;
+      document.onmousemove = null;
+      document.onmouseup   = null;
+      syncPreviewToHtml();
+    };
+  };
+}
+
+// Click outside image → deselect
+document.addEventListener('click', e => {
+  if(_selectedImg && !e.target.closest('#bodyPreviewDiv img')){
+    _selectedImg.classList.remove('img-selected');
+    _selectedImg = null;
+    document.getElementById('imgResizeOverlay').style.display = 'none';
+  }
+});
+
+// Preview div edited → sync back to HTML textarea
+function onPreviewEdit(){
+  if(!currentPage) return;
+  const div  = document.getElementById('bodyPreviewDiv');
+  const html = div.innerHTML;
+  document.getElementById('edBodyTA').value = html;
+  setTextVal(currentPage, 'body', html);
+  updateBodyLen(html);
+  const st = document.getElementById('edBodyStatus');
+  st.textContent = '● แก้ไขแล้ว (ยังไม่เผยแพร่)';
+  st.style.color  = '#f59e0b';
+}
+
+// Manual sync button (preview → html textarea)
+function syncPreviewToHtml(){
+  onPreviewEdit();
+  switchBodyTab('html');
 }
 
 function onBodyEdit(val){
