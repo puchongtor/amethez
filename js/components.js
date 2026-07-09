@@ -19,12 +19,12 @@ const NAV_HTML = `
       <ul class="dropdown">
         <li><a href="/stones/">🔤 หิน A–Z ทั้งหมด</a></li>
         <li><div class="drop-sep"></div></li>
-        <li><a href="/stones/#chakra">🧘 ค้นหาตามจักระ</a></li>
-        <li><a href="/stones/#zodiac">♈ ค้นหาตามราศี</a></li>
-        <li><a href="/stones/#planet">🪐 ค้นหาตามดาวเคราะห์</a></li>
-        <li><a href="/stones/#element">🔥 ค้นหาตามธาตุ</a></li>
-        <li><a href="/stones/#color">🎨 ค้นหาตามสี</a></li>
-        <li><a href="/stones/#purpose">✨ ค้นหาตามวัตถุประสงค์</a></li>
+        <li><a href="/categories/chakra.html">🧘 ค้นหาตามจักระ</a></li>
+        <li><a href="/categories/zodiac.html">♈ ค้นหาตามราศี</a></li>
+        <li><a href="/categories/planet.html">🪐 ค้นหาตามดาวเคราะห์</a></li>
+        <li><a href="/categories/element.html">🔥 ค้นหาตามธาตุ</a></li>
+        <li><a href="/categories/color.html">🎨 ค้นหาตามสี</a></li>
+        <li><a href="/categories/purpose.html">✨ ค้นหาตามวัตถุประสงค์</a></li>
       </ul>
     </li>
     <li class="has-drop"><a href="/blog/">📖 เรียนรู้</a>
