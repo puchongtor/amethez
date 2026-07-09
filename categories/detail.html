@@ -6,281 +6,168 @@
   <title id="page-title">สารานุกรมหิน | Amethez</title>
   <meta name="description" id="page-desc" content="ค้นหาหินคริสตัลตามหมวดหมู่ที่ต้องการ">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
   <style>
-    body { font-family: 'Sarabun', sans-serif; background: #faf8f4; color: #1a1228; }
+    :root { --purple:#7c3aed; --gold:#c9a84c; --bg:#faf8f4; }
+    body { font-family:'Sarabun',sans-serif; background:var(--bg); color:#1a1228; }
+    .container { max-width:1040px; margin:0 auto; padding:0 1.25rem; }
 
     /* ─── Hero ─── */
     .cat-hero {
-      background: linear-gradient(135deg, #2d1b69 0%, #1a1228 60%, #0f0a1e 100%);
-      color: #fff;
-      padding: 3.5rem 0 3rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+      background:linear-gradient(135deg,#2d1b69 0%,#1a1228 60%,#0f0a1e 100%);
+      color:#fff; padding:3.5rem 0 3rem; text-align:center; position:relative; overflow:hidden;
     }
     .cat-hero::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 50% 0%, rgba(124,58,237,.35) 0%, transparent 65%);
+      content:''; position:absolute; inset:0;
+      background:radial-gradient(ellipse at 50% 0%,rgba(124,58,237,.35) 0%,transparent 65%);
     }
-    .cat-hero-emoji {
-      font-size: 4rem;
-      display: block;
-      margin-bottom: 1rem;
-      position: relative;
-    }
+    .cat-hero-emoji { font-size:4rem; display:block; margin-bottom:1rem; position:relative; }
     .cat-hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.75rem, 4vw, 2.75rem);
-      margin: 0 0 .5rem;
-      position: relative;
+      font-family:'Playfair Display',serif;
+      font-size:clamp(1.75rem,4vw,2.75rem);
+      margin:0 0 .5rem; position:relative;
     }
-    .cat-hero .hero-sub {
-      font-size: 1rem;
-      opacity: .75;
-      position: relative;
-    }
-    .cat-hero .hero-pills {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: .5rem;
-      margin-top: 1.25rem;
-      position: relative;
-    }
-    .hero-pill {
-      background: rgba(255,255,255,.12);
-      border: 1px solid rgba(255,255,255,.2);
-      color: #fff;
-      padding: .3rem .85rem;
-      border-radius: 2rem;
-      font-size: .825rem;
-    }
+    .cat-hero .hero-sub { font-size:.95rem; opacity:.7; position:relative; }
+    .hero-pills { display:flex; justify-content:center; flex-wrap:wrap; gap:.5rem; margin-top:1.25rem; position:relative; }
+    .hero-pill { background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2); color:#fff; padding:.3rem .85rem; border-radius:2rem; font-size:.8rem; }
 
-    /* ─── Content ─── */
-    .container { max-width: 1080px; margin: 0 auto; padding: 0 1.25rem; }
-    .cat-content { padding: 2.5rem 0; }
+    /* ─── Breadcrumb ─── */
+    .breadcrumb { padding:.875rem 0; font-size:.85rem; color:#9ca3af; }
+    .breadcrumb a { color:var(--purple); text-decoration:none; }
+    .breadcrumb a:hover { text-decoration:underline; }
 
-    /* Info grid */
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 1rem;
-      margin-bottom: 2rem;
+    /* ─── Back button ─── */
+    .back-btn {
+      display:inline-flex; align-items:center; gap:.4rem;
+      padding:.45rem 1rem; border:1.5px solid var(--purple);
+      border-radius:2rem; color:var(--purple); text-decoration:none;
+      font-size:.875rem; font-weight:600; margin-bottom:1.5rem; transition:all .2s;
     }
-    .info-card {
-      background: #fff;
-      border: 1.5px solid #ede9fe;
-      border-radius: 1rem;
-      padding: 1.25rem;
-      text-align: center;
-    }
-    .info-card .ic-label { font-size: .75rem; color: #9ca3af; margin-bottom: .25rem; }
-    .info-card .ic-value { font-size: 1rem; font-weight: 700; color: #1a1228; }
+    .back-btn:hover { background:var(--purple); color:#fff; }
 
-    /* Description */
-    .cat-desc {
-      background: #fff;
-      border-left: 4px solid #7c3aed;
-      border-radius: 0 1rem 1rem 0;
-      padding: 1.25rem 1.5rem;
-      margin-bottom: 2rem;
-      font-size: 1.05rem;
-      line-height: 1.8;
-      color: #374151;
-    }
+    /* ─── Info cards ─── */
+    .info-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:.875rem; margin-bottom:2rem; }
+    .info-card { background:#fff; border:1.5px solid #ede9fe; border-radius:1rem; padding:1.25rem; text-align:center; }
+    .info-card .ic-label { font-size:.72rem; color:#9ca3af; margin-bottom:.25rem; text-transform:uppercase; letter-spacing:.04em; }
+    .info-card .ic-value { font-size:.975rem; font-weight:700; color:#1a1228; }
 
-    /* Stones section */
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      color: #1a1228;
-      margin: 0 0 1rem;
-      display: flex;
-      align-items: center;
-      gap: .5rem;
+    /* ─── Energy highlight ─── */
+    .energy-highlight {
+      background:linear-gradient(135deg,#7c3aed,#a855f7);
+      color:#fff; padding:1.25rem 1.75rem; border-radius:1rem;
+      font-size:1.05rem; font-style:italic; line-height:1.7;
+      margin:1.75rem 0; position:relative; overflow:hidden;
     }
-    .stones-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1rem;
-      margin-bottom: 3rem;
+    .energy-highlight::before {
+      content:'"'; position:absolute; top:-.5rem; left:.75rem;
+      font-size:5rem; opacity:.15; font-family:'Playfair Display',serif; line-height:1;
     }
-    .stone-card {
-      background: #fff;
-      border: 1.5px solid #ede9fe;
-      border-radius: 1rem;
-      padding: 1.25rem;
-      text-decoration: none;
-      color: #1a1228;
-      transition: all .2s;
-      display: flex;
-      align-items: center;
-      gap: .875rem;
+    .energy-highlight p { margin:0; position:relative; }
+
+    /* ─── Intro paragraphs ─── */
+    .intro-section { margin-bottom:2.5rem; }
+    .intro-section h2 { font-family:'Playfair Display',serif; font-size:1.4rem; color:#1a1228; margin:0 0 1rem; display:flex; align-items:center; gap:.5rem; }
+    .intro-section p { font-size:1.025rem; line-height:1.9; color:#374151; margin-bottom:1rem; }
+
+    /* ─── Stone detail cards ─── */
+    .stones-section { margin-bottom:3rem; }
+    .stones-section h2 { font-family:'Playfair Display',serif; font-size:1.4rem; color:#1a1228; margin:0 0 1.25rem; display:flex; align-items:center; gap:.5rem; }
+    .stone-detail-card {
+      background:#fff; border:1.5px solid #ede9fe; border-radius:1.25rem;
+      padding:0; margin-bottom:1.25rem; overflow:hidden; transition:box-shadow .2s;
     }
-    .stone-card:hover {
-      border-color: #7c3aed;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(124,58,237,.15);
+    .stone-detail-card:hover { box-shadow:0 6px 24px rgba(124,58,237,.12); }
+    .sdc-header {
+      display:flex; align-items:center; gap:1rem; padding:1.25rem 1.5rem;
+      border-bottom:1.5px solid #f3f0ff;
     }
-    .stone-icon {
-      width: 2.5rem; height: 2.5rem;
-      border-radius: .625rem;
-      background: linear-gradient(135deg, #ede9fe, #ddd6fe);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.25rem;
-      flex-shrink: 0;
+    .sdc-emoji-wrap {
+      width:3.5rem; height:3.5rem; border-radius:1rem; flex-shrink:0;
+      display:flex; align-items:center; justify-content:center; font-size:1.75rem;
     }
-    .stone-name { font-weight: 600; font-size: .95rem; }
-    .stone-name-en { font-size: .75rem; color: #9ca3af; }
+    .sdc-header-text {}
+    .sdc-name { font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; }
+    .sdc-name-en { font-size:.8rem; color:#9ca3af; }
+    .sdc-title { font-size:.875rem; color:var(--purple); font-weight:600; margin-top:.15rem; }
+    .sdc-body { padding:1.25rem 1.5rem; }
+    .sdc-meaning { font-size:1rem; line-height:1.85; color:#374151; margin-bottom:1.25rem; }
+    .sdc-meta { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .sdc-how, .sdc-best { background:var(--bg); border-radius:.75rem; padding:1rem; }
+    .sdc-how h4, .sdc-best h4 { font-size:.8rem; text-transform:uppercase; letter-spacing:.04em; color:#9ca3af; margin:0 0 .5rem; }
+    .sdc-how p { font-size:.9rem; color:#4b5563; line-height:1.7; margin:0; }
+    .sdc-best-tags { display:flex; flex-wrap:wrap; gap:.35rem; }
+    .sdc-best-tag { background:#ede9fe; color:var(--purple); padding:.2rem .65rem; border-radius:2rem; font-size:.775rem; font-weight:600; }
+
+    /* Simple stone list (fallback for zodiac/chakra without rich content) */
+    .stones-grid-simple { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:1rem; margin-bottom:2rem; }
+    .stone-card-simple {
+      background:#fff; border:1.5px solid #ede9fe; border-radius:1rem;
+      padding:1rem 1.125rem; text-decoration:none; color:#1a1228;
+      transition:all .2s; display:flex; align-items:center; gap:.875rem;
+    }
+    .stone-card-simple:hover { border-color:var(--purple); transform:translateY(-2px); box-shadow:0 4px 16px rgba(124,58,237,.12); }
+    .stone-card-simple .sc-icon { font-size:1.5rem; flex-shrink:0; }
+    .stone-card-simple .sc-name { font-weight:600; font-size:.95rem; }
+    .stone-card-simple .sc-en { font-size:.75rem; color:#9ca3af; }
+
+    /* ─── Tips section ─── */
+    .tips-section { margin-bottom:3rem; }
+    .tips-section h2 { font-family:'Playfair Display',serif; font-size:1.4rem; color:#1a1228; margin:0 0 1.25rem; display:flex; align-items:center; gap:.5rem; }
+    .tips-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:1rem; }
+    .tip-card { background:#fff; border:1.5px solid #ede9fe; border-radius:1.125rem; padding:1.5rem; }
+    .tip-icon { font-size:2rem; margin-bottom:.75rem; display:block; }
+    .tip-title { font-weight:700; font-size:.975rem; margin-bottom:.5rem; color:#1a1228; }
+    .tip-text { font-size:.9rem; line-height:1.75; color:#4b5563; }
+
+    /* ─── FAQ ─── */
+    .faq-section { margin-bottom:3rem; }
+    .faq-section h2 { font-family:'Playfair Display',serif; font-size:1.4rem; color:#1a1228; margin:0 0 1.25rem; display:flex; align-items:center; gap:.5rem; }
+    .faq-item { border:1.5px solid #ede9fe; border-radius:1rem; margin-bottom:.75rem; overflow:hidden; }
+    .faq-q {
+      padding:1rem 1.25rem; font-weight:700; font-size:.975rem; cursor:pointer;
+      display:flex; align-items:center; justify-content:space-between; gap:1rem;
+      background:#fff; transition:background .15s;
+    }
+    .faq-q:hover { background:#faf8f4; }
+    .faq-q .faq-arrow { color:var(--purple); font-size:1.1rem; transition:transform .25s; flex-shrink:0; }
+    .faq-a { padding:0 1.25rem; max-height:0; overflow:hidden; transition:max-height .3s ease,padding .3s; }
+    .faq-a p { margin:0; padding-bottom:1rem; font-size:.95rem; line-height:1.8; color:#4b5563; }
+    .faq-item.open .faq-a { max-height:400px; padding-top:.125rem; }
+    .faq-item.open .faq-arrow { transform:rotate(90deg); }
 
     /* ─── Shopee Aff Section ─── */
     .aff-section {
-      background: #fff;
-      border-radius: 1.5rem;
-      padding: 2rem;
-      margin-top: 2rem;
-      border: 1.5px solid #fde68a;
+      background:#fffdf5; border:1.5px solid #fde68a; border-radius:1.5rem;
+      padding:2rem; margin-top:1rem;
     }
-    .aff-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1.25rem;
-      flex-wrap: wrap;
-      gap: .75rem;
-    }
-    .aff-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
-      color: #1a1228;
-    }
-    .aff-badge {
-      background: linear-gradient(135deg, #ee4d2d, #f97316);
-      color: #fff;
-      padding: .3rem .875rem;
-      border-radius: 2rem;
-      font-size: .8rem;
-      font-weight: 700;
-    }
-    .aff-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1rem;
-    }
-    .aff-card {
-      border: 1.5px solid #fde68a;
-      border-radius: 1rem;
-      overflow: hidden;
-      transition: all .2s;
-      text-decoration: none;
-      color: #1a1228;
-      display: block;
-    }
-    .aff-card:hover {
-      border-color: #f97316;
-      box-shadow: 0 4px 16px rgba(249,115,22,.15);
-      transform: translateY(-2px);
-    }
-    .aff-img {
-      width: 100%; aspect-ratio: 1;
-      object-fit: cover;
-      background: #f3f4f6;
-    }
-    .aff-img-placeholder {
-      width: 100%; aspect-ratio: 1;
-      background: linear-gradient(135deg, #fef3c7, #fde68a);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 2.5rem;
-    }
-    .aff-info { padding: .875rem; }
-    .aff-name { font-weight: 600; font-size: .9rem; line-height: 1.4; margin-bottom: .375rem; }
-    .aff-price { color: #ee4d2d; font-weight: 700; font-size: 1.05rem; }
-    .aff-btn {
-      display: block;
-      margin: .625rem .875rem .875rem;
-      background: linear-gradient(135deg, #ee4d2d, #f97316);
-      color: #fff;
-      text-align: center;
-      padding: .5rem;
-      border-radius: .625rem;
-      font-size: .85rem;
-      font-weight: 700;
-      text-decoration: none;
-    }
-    .aff-btn:hover { opacity: .9; }
+    .aff-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.25rem; flex-wrap:wrap; gap:.75rem; }
+    .aff-title { font-family:'Playfair Display',serif; font-size:1.25rem; color:#1a1228; }
+    .aff-badge { background:linear-gradient(135deg,#ee4d2d,#f97316); color:#fff; padding:.3rem .875rem; border-radius:2rem; font-size:.8rem; font-weight:700; }
+    .aff-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:1rem; }
+    .aff-card { border:1.5px solid #fde68a; border-radius:1rem; overflow:hidden; transition:all .2s; text-decoration:none; color:#1a1228; display:block; }
+    .aff-card:hover { border-color:#f97316; box-shadow:0 4px 16px rgba(249,115,22,.15); transform:translateY(-2px); }
+    .aff-img { width:100%; aspect-ratio:1; object-fit:cover; background:#f3f4f6; display:block; }
+    .aff-img-placeholder { width:100%; aspect-ratio:1; background:linear-gradient(135deg,#fef3c7,#fde68a); display:flex; align-items:center; justify-content:center; font-size:2.5rem; }
+    .aff-info { padding:.875rem; }
+    .aff-name { font-weight:600; font-size:.875rem; line-height:1.4; margin-bottom:.35rem; }
+    .aff-price { color:#ee4d2d; font-weight:700; font-size:1rem; }
+    .aff-btn { display:block; margin:.5rem .875rem .875rem; background:linear-gradient(135deg,#ee4d2d,#f97316); color:#fff; text-align:center; padding:.5rem; border-radius:.625rem; font-size:.825rem; font-weight:700; }
+    .load-more-btn { display:block; width:100%; margin-top:1.25rem; padding:.875rem; background:#fff; border:2px solid #ee4d2d; color:#ee4d2d; border-radius:.875rem; font-size:.95rem; font-weight:700; cursor:pointer; transition:all .2s; font-family:'Sarabun',sans-serif; }
+    .load-more-btn:hover { background:#ee4d2d; color:#fff; }
+    .aff-empty { text-align:center; padding:2rem; color:#9ca3af; font-size:.9rem; }
 
-    .load-more-btn {
-      display: block;
-      width: 100%;
-      margin-top: 1.25rem;
-      padding: .875rem;
-      background: #fff;
-      border: 2px solid #ee4d2d;
-      color: #ee4d2d;
-      border-radius: .875rem;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all .2s;
-      font-family: 'Sarabun', sans-serif;
-    }
-    .load-more-btn:hover { background: #ee4d2d; color: #fff; }
+    /* divider */
+    .section-divider { border:none; border-top:1.5px solid #ede9fe; margin:2.5rem 0; }
 
-    .aff-empty {
-      text-align: center;
-      padding: 2rem;
-      color: #9ca3af;
-    }
+    /* Loading */
+    .loading-state { text-align:center; padding:4rem 2rem; color:#9ca3af; }
+    .loading-spinner { width:2.5rem; height:2.5rem; border:3px solid #ede9fe; border-top-color:var(--purple); border-radius:50%; animation:spin .8s linear infinite; margin:0 auto 1rem; }
+    @keyframes spin { to { transform:rotate(360deg); } }
 
-    /* Breadcrumb */
-    .breadcrumb {
-      padding: .875rem 0;
-      font-size: .85rem;
-      color: #9ca3af;
-    }
-    .breadcrumb a { color: #7c3aed; text-decoration: none; }
-    .breadcrumb a:hover { text-decoration: underline; }
-
-    /* Loading state */
-    .loading-state {
-      text-align: center;
-      padding: 4rem 2rem;
-      color: #9ca3af;
-    }
-    .loading-spinner {
-      width: 2.5rem; height: 2.5rem;
-      border: 3px solid #ede9fe;
-      border-top-color: #7c3aed;
-      border-radius: 50%;
-      animation: spin .8s linear infinite;
-      margin: 0 auto 1rem;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* Back button */
-    .back-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: .4rem;
-      padding: .5rem 1.125rem;
-      border: 1.5px solid #7c3aed;
-      border-radius: 2rem;
-      color: #7c3aed;
-      text-decoration: none;
-      font-size: .875rem;
-      font-weight: 600;
-      margin-bottom: 1.25rem;
-      transition: all .2s;
-    }
-    .back-btn:hover { background: #7c3aed; color: #fff; }
-
-    @media (max-width: 640px) {
-      .cat-hero { padding: 2.5rem 1rem 2rem; }
-      .aff-grid { grid-template-columns: repeat(2, 1fr); }
-      .stones-grid { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width:640px) {
+      .sdc-meta { grid-template-columns:1fr; }
+      .aff-grid { grid-template-columns:repeat(2,1fr); }
     }
   </style>
 </head>
@@ -297,9 +184,8 @@
     </div>
   </div>
 
-  <div class="container">
+  <div class="container" style="padding-top:1rem;padding-bottom:3rem">
     <nav class="breadcrumb" id="breadcrumb"></nav>
-
     <div id="main-content">
       <div class="loading-state">
         <div class="loading-spinner"></div>
@@ -314,253 +200,287 @@
 <script>
 (function(){
   const params = new URLSearchParams(location.search);
-  const catType = params.get('type');   // zodiac | chakra | planet | element | purpose
-  const itemId  = params.get('id');     // aries | root | sun | fire | love
+  const catType = params.get('type');
+  const itemId  = params.get('id');
 
   const TYPE_CONFIG = {
-    zodiac:  { label: 'ราศี',           back: '/categories/zodiac.html',   icon: '♈' },
-    chakra:  { label: 'จักระ',          back: '/categories/chakra.html',   icon: '🧘' },
-    planet:  { label: 'ดาวเคราะห์',     back: '/categories/planet.html',   icon: '🪐' },
-    element: { label: 'ธาตุ',           back: '/categories/element.html',  icon: '🔥' },
-    purpose: { label: 'วัตถุประสงค์',   back: '/categories/purpose.html',  icon: '✨' }
+    zodiac:  { label:'ราศี',          back:'/categories/zodiac.html',   icon:'♈', contentFile:null },
+    chakra:  { label:'จักระ',         back:'/categories/chakra.html',   icon:'🧘', contentFile:null },
+    planet:  { label:'ดาวเคราะห์',    back:'/categories/planet.html',   icon:'🪐', contentFile:null },
+    element: { label:'ธาตุ',          back:'/categories/element.html',  icon:'🔥', contentFile:null },
+    purpose: { label:'วัตถุประสงค์',  back:'/categories/purpose.html',  icon:'✨', contentFile:'/data/content-purpose.json' }
   };
 
   const STONE_EMOJI = {
-    amethyst: '💜', 'clear-quartz': '🔮', citrine: '💛', 'rose-quartz': '🌸',
-    moldavite: '💚', labradorite: '✨', moonstone: '🌙', obsidian: '⚫',
-    'black-tourmaline': '🖤', carnelian: '🧡', 'lapis-lazuli': '💙',
-    aquamarine: '💎', selenite: '🤍', malachite: '🍀', jade: '💚',
-    tektite: '🪨', pyrite: '🥇', sunstone: '☀️', labradorite: '🌈',
-    'green-aventurine': '🍃', 'blue-lace-agate': '🩵', bloodstone: '🩸'
+    amethyst:'💜','clear-quartz':'🔮',citrine:'💛','rose-quartz':'🌸',moldavite:'💚',
+    labradorite:'✨',moonstone:'🌙',obsidian:'⚫','black-tourmaline':'🖤',carnelian:'🧡',
+    'lapis-lazuli':'💙',aquamarine:'💎',selenite:'🤍',malachite:'🍀',jade:'💚',
+    tektite:'🪨',pyrite:'🥇',sunstone:'☀️','green-aventurine':'🍃','blue-lace-agate':'🩵',
+    bloodstone:'🩸',rhodonite:'💗'
   };
 
-  function getStoneEmoji(id) {
-    return STONE_EMOJI[id] || '💎';
+  function slug2name(id){ return id.replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase()); }
+  function emo(id){ return STONE_EMOJI[id]||'💎'; }
+
+  async function loadAll(){
+    const cfg = TYPE_CONFIG[catType] || {};
+    const fetches = [fetch('/data/categories.json'), fetch('/data/products.json')];
+    if(cfg.contentFile) fetches.push(fetch(cfg.contentFile));
+    const results = await Promise.all(fetches.map(f=>f.then(r=>r.json()).catch(()=>null)));
+    return { cats:results[0], products:(results[1]||{}).products||[], richContent:results[2]||null };
   }
 
-  function formatStoneName(id) {
-    return id.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-  }
-
-  async function loadData() {
-    const [catRes, prodRes] = await Promise.all([
-      fetch('/data/categories.json'),
-      fetch('/data/products.json')
-    ]);
-    const cats = await catRes.json();
-    const prods = await prodRes.json();
-    return { cats, products: prods.products || [] };
-  }
-
-  function renderDetail(item, type, products) {
-    const cfg = TYPE_CONFIG[type] || {};
-
-    // Update <head>
-    const titleEl = document.getElementById('page-title');
-    if (titleEl) titleEl.textContent = `${item.name} | สารานุกรมหิน | Amethez`;
-    const descEl = document.getElementById('page-desc');
-    if (descEl) descEl.setAttribute('content', item.description || '');
-
-    // Update hero
-    document.getElementById('hero-emoji').textContent = item.emoji || cfg.icon || '💎';
-    document.getElementById('hero-title').textContent = `${item.name} ${item.name_en ? '— ' + item.name_en : ''}`;
-    document.getElementById('hero-sub').textContent = buildHeroSub(item, type);
-
-    // Hero pills (traits)
+  function updateHero(item, type){
+    const cfg = TYPE_CONFIG[type]||{};
+    document.getElementById('page-title').textContent = `${item.name} | ${cfg.label||type} | Amethez`;
+    document.getElementById('page-desc').setAttribute('content', item.description||'');
+    document.getElementById('hero-emoji').textContent = item.emoji||cfg.icon||'💎';
+    document.getElementById('hero-title').textContent = item.name + (item.name_en ? ' — '+item.name_en : '');
+    document.getElementById('hero-sub').textContent = buildSub(item,type);
     const pillsEl = document.getElementById('hero-pills');
-    if (item.traits) {
-      pillsEl.innerHTML = item.traits.map(t => `<span class="hero-pill">${t}</span>`).join('');
+    if(item.traits) pillsEl.innerHTML = item.traits.map(t=>`<span class="hero-pill">${t}</span>`).join('');
+    if(item.color){
+      document.getElementById('hero').style.background =
+        `linear-gradient(135deg,#1a1228 0%,${item.color}33 50%,#0f0a1e 100%)`;
     }
-
-    // Hero bg accent color
-    const hero = document.getElementById('hero');
-    if (item.color) {
-      hero.style.background = `linear-gradient(135deg, #1a1228 0%, ${item.color}22 100%)`;
-    }
-
-    // Breadcrumb
-    document.getElementById('breadcrumb').innerHTML =
-      `<a href="/stones/">📖 สารานุกรมหิน</a> › <a href="${cfg.back || '#'}">${cfg.label || type}</a> › ${item.name}`;
-
-    // Build info cards
-    const infoItems = buildInfoItems(item, type);
-
-    // Build stones list
-    const stonesHTML = buildStonesHTML(item);
-
-    // Build Shopee Aff section
-    const affHTML = buildAffSection(item, products);
-
-    document.getElementById('main-content').innerHTML = `
-      <a href="${cfg.back || '#'}" class="back-btn">← กลับ${cfg.label ? 'หน้า' + cfg.label : ''}</a>
-
-      ${infoItems.length ? `<div class="info-grid">${infoItems.map(i =>
-        `<div class="info-card"><div class="ic-label">${i.label}</div><div class="ic-value">${i.value}</div></div>`
-      ).join('')}</div>` : ''}
-
-      <div class="cat-desc">${item.description || ''}</div>
-
-      ${stonesHTML}
-
-      ${affHTML}
-    `;
   }
 
-  function buildHeroSub(item, type) {
-    if (type === 'zodiac') return `${item.dates || ''} · ธาตุ${item.element || ''} · ${item.planet || ''}`;
-    if (type === 'chakra') return `${item.sanskrit || ''} · ${item.location || ''} · ${item.frequency || ''}`;
-    if (type === 'planet') return `ปกครอง ${item.rules || ''}`;
-    if (type === 'element') return item.description ? item.description.substring(0, 60) + '...' : '';
+  function buildSub(item,type){
+    if(type==='zodiac') return [item.dates,item.element?'ธาตุ'+item.element:'',item.planet].filter(Boolean).join(' · ');
+    if(type==='chakra') return [item.sanskrit,item.location,item.frequency].filter(Boolean).join(' · ');
+    if(type==='planet') return 'ปกครอง '+(item.rules||'');
+    if(type==='element') return item.name_en||'';
     return '';
   }
 
-  function buildInfoItems(item, type) {
-    const items = [];
-    if (type === 'zodiac') {
-      if (item.dates)   items.push({ label: '📅 ช่วงเวลา', value: item.dates });
-      if (item.element) items.push({ label: '🔥 ธาตุ', value: item.element });
-      if (item.planet)  items.push({ label: '🪐 ดาวเคราะห์', value: item.planet });
+  function buildInfoCards(item, type){
+    const items=[];
+    if(type==='zodiac'){
+      if(item.dates)   items.push({l:'📅 ช่วงเวลา',v:item.dates});
+      if(item.element) items.push({l:'🔥 ธาตุ',v:item.element});
+      if(item.planet)  items.push({l:'🪐 ดาวเคราะห์',v:item.planet});
     }
-    if (type === 'chakra') {
-      if (item.sanskrit)  items.push({ label: 'สันสกฤต', value: item.sanskrit });
-      if (item.location)  items.push({ label: '📍 ตำแหน่ง', value: item.location });
-      if (item.element)   items.push({ label: '🌿 ธาตุ', value: item.element });
-      if (item.frequency) items.push({ label: '🎵 ความถี่', value: item.frequency });
+    if(type==='chakra'){
+      if(item.sanskrit)  items.push({l:'สันสกฤต',v:item.sanskrit});
+      if(item.location)  items.push({l:'📍 ตำแหน่ง',v:item.location});
+      if(item.element)   items.push({l:'🌿 ธาตุ',v:item.element});
+      if(item.frequency) items.push({l:'🎵 ความถี่',v:item.frequency});
     }
-    if (type === 'planet') {
-      if (item.rules) items.push({ label: '♈ ปกครอง', value: item.rules });
-    }
-    return items;
+    if(type==='planet') if(item.rules) items.push({l:'♈ ปกครอง',v:item.rules});
+    if(!items.length) return '';
+    return `<div class="info-grid">${items.map(i=>`<div class="info-card"><div class="ic-label">${i.l}</div><div class="ic-value">${i.v}</div></div>`).join('')}</div>`;
   }
 
-  function buildStonesHTML(item) {
-    if (!item.stones || !item.stones.length) return '';
-    const stoneCards = item.stones.map((id, idx) => {
-      const name = (item.stone_names && item.stone_names[idx]) || formatStoneName(id);
-      const slug = `/stones/${id}.html`;
-      return `<a href="${slug}" class="stone-card">
-        <div class="stone-icon">${getStoneEmoji(id)}</div>
-        <div>
-          <div class="stone-name">${name}</div>
-          <div class="stone-name-en">${formatStoneName(id)}</div>
+  function buildRichContent(item, rich){
+    if(!rich) return buildSimpleContent(item);
+    let html = '';
+
+    // Intro paragraphs
+    if(rich.intro && rich.intro.length){
+      html += `<div class="intro-section">
+        <h2>✨ พลังงานและความหมาย</h2>
+        ${rich.intro.map(p=>`<p>${p}</p>`).join('')}
+      </div>`;
+    }
+
+    // Energy highlight quote
+    if(rich.energy_highlight){
+      html += `<div class="energy-highlight"><p>${rich.energy_highlight}</p></div>`;
+    }
+
+    // Stone details
+    if(rich.stone_details && rich.stone_details.length){
+      html += `<div class="stones-section">
+        <h2>💎 หินคริสตัลที่แนะนำ</h2>
+        ${rich.stone_details.map(s=>`
+          <div class="stone-detail-card">
+            <div class="sdc-header">
+              <div class="sdc-emoji-wrap" style="background:${s.color||'#ede9fe'}">${s.emoji||emo(s.id)}</div>
+              <div class="sdc-header-text">
+                <div class="sdc-name">${s.name}</div>
+                <div class="sdc-name-en">${s.name_en||''}</div>
+                <div class="sdc-title">✦ ${s.title||''}</div>
+              </div>
+            </div>
+            <div class="sdc-body">
+              <p class="sdc-meaning">${s.meaning||''}</p>
+              <div class="sdc-meta">
+                <div class="sdc-how">
+                  <h4>🙌 วิธีใช้</h4>
+                  <p>${s.how_to_use||''}</p>
+                </div>
+                <div class="sdc-best">
+                  <h4>⭐ เหมาะสำหรับ</h4>
+                  <div class="sdc-best-tags">${(s.best_for||[]).map(t=>`<span class="sdc-best-tag">${t}</span>`).join('')}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('')}
+      </div>`;
+    }
+
+    // Tips
+    if(rich.tips && rich.tips.length){
+      html += `<hr class="section-divider">
+      <div class="tips-section">
+        <h2>💡 เทคนิคและวิธีใช้</h2>
+        <div class="tips-grid">
+          ${rich.tips.map(t=>`
+            <div class="tip-card">
+              <span class="tip-icon">${t.icon||'💡'}</span>
+              <div class="tip-title">${t.title}</div>
+              <div class="tip-text">${t.text}</div>
+            </div>`).join('')}
         </div>
-      </a>`;
-    }).join('');
-    return `
-      <h2 class="section-title">💎 หินคริสตัลที่แนะนำ</h2>
-      <div class="stones-grid">${stoneCards}</div>
-    `;
+      </div>`;
+    }
+
+    // FAQ
+    if(rich.faq && rich.faq.length){
+      html += `<hr class="section-divider">
+      <div class="faq-section">
+        <h2>❓ คำถามที่พบบ่อย</h2>
+        ${rich.faq.map((f,i)=>`
+          <div class="faq-item" id="faq-${i}">
+            <div class="faq-q" onclick="toggleFaq(${i})">
+              <span>${f.q}</span>
+              <span class="faq-arrow">›</span>
+            </div>
+            <div class="faq-a"><p>${f.a}</p></div>
+          </div>`).join('')}
+      </div>`;
+    }
+
+    return html;
   }
 
-  function buildAffSection(item, allProducts) {
-    const tags = item.stone_tags || [];
-    const matched = allProducts.filter(p => {
-      if (!p.tags || p.status === 'unavailable') return false;
-      return tags.some(t => p.tags.includes(t));
+  function buildSimpleContent(item){
+    let html = '';
+    // Description
+    if(item.description){
+      html += `<div class="intro-section"><p>${item.description}</p></div>`;
+    }
+    // Simple stone cards
+    if(item.stones && item.stones.length){
+      html += `<div class="stones-section">
+        <h2>💎 หินที่แนะนำ</h2>
+        <div class="stones-grid-simple">
+          ${item.stones.map((id,idx)=>{
+            const name = (item.stone_names&&item.stone_names[idx])||slug2name(id);
+            return `<a href="/stones/${id}.html" class="stone-card-simple">
+              <span class="sc-icon">${emo(id)}</span>
+              <div><div class="sc-name">${name}</div><div class="sc-en">${slug2name(id)}</div></div>
+            </a>`;
+          }).join('')}
+        </div>
+      </div>`;
+    }
+    return html;
+  }
+
+  function buildAffSection(item, allProducts){
+    const tags = item.stone_tags||[];
+    const matched = allProducts.filter(p=>{
+      if(!p.tags||p.status==='unavailable') return false;
+      return tags.some(t=>p.tags.includes(t));
     });
 
-    if (!matched.length) {
-      return `<div class="aff-section">
-        <div class="aff-header">
-          <h2 class="aff-title">🛒 สินค้าแนะนำ</h2>
-          <span class="aff-badge">Shopee</span>
-        </div>
-        <div class="aff-empty">ยังไม่มีสินค้าในหมวดนี้ — กลับมาเร็วๆ นี้</div>
-      </div>`;
+    const header = `<div class="aff-header">
+      <div class="aff-title">🛒 สินค้าแนะนำจาก Shopee</div>
+      <span class="aff-badge">Shopee Affiliate</span>
+    </div>`;
+
+    if(!matched.length){
+      return `<div class="aff-section">${header}<div class="aff-empty">กำลังรวบรวมสินค้า — กลับมาเร็วๆ นี้<br><small>เพิ่มสินค้าผ่าน Admin Panel → Shopee Aff</small></div></div>`;
     }
 
-    const CHUNK = 4;
-    let shown = 0;
+    window._affAll = matched;
+    window._affShown = 4;
 
-    function productCard(p) {
+    function card(p){
       const img = p.image_url
-        ? `<img class="aff-img" src="${p.image_url}" alt="${p.name}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=aff-img-placeholder>🛒</div>'">`
-        : `<div class="aff-img-placeholder">🛒</div>`;
-      return `<div class="aff-card-wrap">
-        <a href="${p.url}" target="_blank" rel="noopener noreferrer nofollow" class="aff-card">
-          ${img}
-          <div class="aff-info">
-            <div class="aff-name">${p.name}</div>
-            <div class="aff-price">฿${p.price.toLocaleString()}</div>
-          </div>
-          <div class="aff-btn">ดูบน Shopee →</div>
-        </a>
-      </div>`;
-    }
-
-    window._affProducts = matched;
-    window._affShown = CHUNK;
-
-    const initialCards = matched.slice(0, CHUNK).map(productCard).join('');
-    const hasMore = matched.length > CHUNK;
-
-    return `
-      <div class="aff-section">
-        <div class="aff-header">
-          <h2 class="aff-title">🛒 สินค้าแนะนำ</h2>
-          <span class="aff-badge">Shopee Affiliate</span>
-        </div>
-        <div class="aff-grid" id="aff-grid">${initialCards}</div>
-        ${hasMore ? `<button class="load-more-btn" onclick="loadMoreAff(this)">
-          ดูเพิ่มเติม (${matched.length - CHUNK} รายการ) ↓
-        </button>` : ''}
-      </div>
-    `;
-  }
-
-  window.loadMoreAff = function(btn) {
-    const grid = document.getElementById('aff-grid');
-    const products = window._affProducts || [];
-    const start = window._affShown;
-    const CHUNK = 4;
-    const next = products.slice(start, start + CHUNK);
-    const STONE_EMJ = {};
-
-    next.forEach(p => {
-      const img = p.image_url
-        ? `<img class="aff-img" src="${p.image_url}" alt="${p.name}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=aff-img-placeholder>🛒</div>'">`
-        : `<div class="aff-img-placeholder">🛒</div>`;
-      const card = document.createElement('div');
-      card.className = 'aff-card-wrap';
-      card.innerHTML = `<a href="${p.url}" target="_blank" rel="noopener noreferrer nofollow" class="aff-card">
-        ${img}
+        ? `<img class="aff-img" src="${p.image_url}" alt="${p.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+        : '';
+      const placeholder = `<div class="aff-img-placeholder" ${p.image_url?'style="display:none"':''}>🛒</div>`;
+      return `<a href="${p.url}" target="_blank" rel="noopener noreferrer nofollow" class="aff-card">
+        ${img}${placeholder}
         <div class="aff-info">
           <div class="aff-name">${p.name}</div>
-          <div class="aff-price">฿${p.price.toLocaleString()}</div>
+          <div class="aff-price">฿${Number(p.price).toLocaleString()}</div>
         </div>
         <div class="aff-btn">ดูบน Shopee →</div>
       </a>`;
-      grid.appendChild(card);
-    });
-
-    window._affShown += next.length;
-    const remaining = products.length - window._affShown;
-    if (remaining <= 0) {
-      btn.remove();
-    } else {
-      btn.textContent = `ดูเพิ่มเติม (${remaining} รายการ) ↓`;
     }
+
+    const initialHTML = matched.slice(0,4).map(card).join('');
+    const remaining = matched.length - 4;
+
+    return `<div class="aff-section">${header}
+      <div class="aff-grid" id="aff-grid">${initialHTML}</div>
+      ${remaining>0?`<button class="load-more-btn" id="aff-more-btn" onclick="loadMoreAff()">ดูเพิ่มเติม (${remaining} รายการ) ↓</button>`:''}
+    </div>`;
+  }
+
+  window.loadMoreAff = function(){
+    const grid = document.getElementById('aff-grid');
+    const btn  = document.getElementById('aff-more-btn');
+    const products = window._affAll||[];
+    const start = window._affShown;
+    products.slice(start, start+4).forEach(p=>{
+      const div = document.createElement('div');
+      div.innerHTML = (() => {
+        const img = p.image_url ? `<img class="aff-img" src="${p.image_url}" alt="${p.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">` : '';
+        const ph = `<div class="aff-img-placeholder" ${p.image_url?'style="display:none"':''}>🛒</div>`;
+        return `<a href="${p.url}" target="_blank" rel="noopener noreferrer nofollow" class="aff-card">${img}${ph}<div class="aff-info"><div class="aff-name">${p.name}</div><div class="aff-price">฿${Number(p.price).toLocaleString()}</div></div><div class="aff-btn">ดูบน Shopee →</div></a>`;
+      })();
+      grid.appendChild(div.firstChild);
+    });
+    window._affShown += 4;
+    const rem = products.length - window._affShown;
+    if(rem<=0) btn.remove();
+    else btn.textContent = `ดูเพิ่มเติม (${rem} รายการ) ↓`;
+  };
+
+  window.toggleFaq = function(i){
+    const el = document.getElementById('faq-'+i);
+    el.classList.toggle('open');
   };
 
   // ── Main ──
-  loadData().then(({ cats, products }) => {
-    if (!catType || !itemId) {
-      document.getElementById('main-content').innerHTML = `<p style="text-align:center;padding:3rem;color:#9ca3af">ไม่พบข้อมูล กรุณาระบุ type และ id ใน URL</p>`;
+  loadAll().then(({cats,products,richContent})=>{
+    if(!catType||!itemId){
+      document.getElementById('main-content').innerHTML='<p style="text-align:center;padding:3rem;color:#9ca3af">ไม่พบข้อมูล — กรุณาระบุ type และ id</p>';
       return;
     }
-    const list = cats[catType];
-    if (!list) {
-      document.getElementById('main-content').innerHTML = `<p style="text-align:center;padding:3rem;color:#9ca3af">ไม่พบหมวดหมู่ "${catType}"</p>`;
+    const list = cats[catType]||[];
+    const item = list.find(i=>i.id===itemId);
+    if(!item){
+      document.getElementById('main-content').innerHTML=`<p style="text-align:center;padding:3rem;color:#9ca3af">ไม่พบข้อมูลสำหรับ "${itemId}"</p>`;
       return;
     }
-    const item = list.find(i => i.id === itemId);
-    if (!item) {
-      document.getElementById('main-content').innerHTML = `<p style="text-align:center;padding:3rem;color:#9ca3af">ไม่พบข้อมูลสำหรับ "${itemId}"</p>`;
-      return;
-    }
-    renderDetail(item, catType, products);
-  }).catch(err => {
-    document.getElementById('main-content').innerHTML = `<p style="text-align:center;padding:3rem;color:#ef4444">เกิดข้อผิดพลาด: ${err.message}</p>`;
+
+    const cfg = TYPE_CONFIG[catType]||{};
+    const rich = richContent && richContent[itemId] || null;
+
+    updateHero(item, catType);
+
+    const infoCards = buildInfoCards(item, catType);
+    const mainContent = rich ? buildRichContent(item, rich) : buildSimpleContent(item);
+    const affSection = buildAffSection(item, products);
+
+    document.getElementById('breadcrumb').innerHTML =
+      `<a href="/stones/">📖 สารานุกรมหิน</a> › <a href="${cfg.back||'#'}">${cfg.label||catType}</a> › ${item.name}`;
+
+    document.getElementById('main-content').innerHTML = `
+      <a href="${cfg.back||'#'}" class="back-btn">← กลับ${cfg.label?'หน้า'+cfg.label:''}</a>
+      ${infoCards}
+      ${mainContent}
+      <hr class="section-divider">
+      ${affSection}
+    `;
+  }).catch(err=>{
+    document.getElementById('main-content').innerHTML=`<p style="text-align:center;padding:3rem;color:#ef4444">เกิดข้อผิดพลาด: ${err.message}</p>`;
   });
 })();
 </script>
