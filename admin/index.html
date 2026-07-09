@@ -243,9 +243,10 @@ textarea.form-input{resize:vertical;min-height:80px;}
       <div class="nav-item active" onclick="showTab('dashboard',this)"><span class="ic">📊</span> ภาพรวม</div>
       <div class="nav-item" onclick="showTab('stats',this)"><span class="ic">📈</span> สถิติ & เป้าหมาย</div>
       <div class="nav-item" onclick="showTab('pages',this)"><span class="ic">🎨</span> แก้ไขหน้า</div>
-      <div class="nav-item" onclick="showTab('products',this)"><span class="ic">💎</span> สินค้า</div>
+      <div class="nav-item" onclick="showTab('stones',this)"><span class="ic">💎</span> สารานุกรมหิน</div>
+      <div class="nav-item" onclick="showTab('blog',this)"><span class="ic">📝</span> Blog & Schedule</div>
+      <div class="nav-item" onclick="showTab('products',this)"><span class="ic">🪨</span> สินค้าโพรง</div>
       <div class="nav-item" onclick="showTab('shopee',this)"><span class="ic">🛒</span> Shopee Aff</div>
-      <div class="nav-item" onclick="showTab('articles',this)"><span class="ic">📝</span> บทความ</div>
       <div class="nav-item" onclick="showTab('settings',this)"><span class="ic">⚙️</span> ตั้งค่า</div>
     </div>
     <div class="sidebar-footer">
@@ -678,7 +679,142 @@ textarea.form-input{resize:vertical;min-height:80px;}
           </div>
         </div>
 
-        <!-- ARTICLES -->
+        <!-- STONES -->
+        <div id="tab-stones">
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:.75rem;margin-bottom:1.25rem">
+            <div>
+              <div class="section-title">💎 สารานุกรมหิน</div>
+              <div class="section-sub">จัดการบทความหินทั้งหมด — ค้นหา เรียงตัวอักษร ดูสถานะรูป</div>
+            </div>
+            <button class="btn btn-primary" onclick="openAddStone()">➕ เพิ่มหินใหม่</button>
+          </div>
+
+          <!-- stats row -->
+          <div class="stats-grid" id="stoneStats" style="margin-bottom:1.25rem"></div>
+
+          <!-- search + filter -->
+          <div style="display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem">
+            <div style="position:relative;flex:1;min-width:200px;max-width:320px">
+              <span style="position:absolute;left:.85rem;top:50%;transform:translateY(-50%);font-size:1rem;pointer-events:none">🔍</span>
+              <input class="form-input" id="stoneSearch" placeholder="ค้นหาชื่อหิน..." style="padding-left:2.5rem" oninput="renderStones()">
+            </div>
+            <div id="stoneAlpha" style="display:flex;gap:.3rem;flex-wrap:wrap"></div>
+            <select class="form-input" id="stoneStatusFilter" style="width:auto" onchange="renderStones()">
+              <option value="all">ทุกสถานะ</option>
+              <option value="has_img">✅ มีรูปแล้ว</option>
+              <option value="no_img">⚠️ ยังไม่มีรูป</option>
+              <option value="custom">🆕 เพิ่มเอง</option>
+            </select>
+          </div>
+
+          <!-- A-Z list -->
+          <div id="stoneList"></div>
+
+          <!-- add/edit stone modal -->
+          <div class="modal-overlay" id="stoneModal">
+            <div class="modal" style="max-width:560px">
+              <h3 id="stoneModalTitle">➕ เพิ่มหินใหม่</h3>
+              <input type="hidden" id="stoneEditKey">
+              <div class="form-grid" style="margin-top:1rem">
+                <div class="form-group"><label class="fl">ชื่อหิน (ไทย) *</label>
+                  <input class="form-input" id="stoneNameTh" placeholder="อเมทิสต์"></div>
+                <div class="form-group"><label class="fl">ชื่อหิน (อังกฤษ) *</label>
+                  <input class="form-input" id="stoneNameEn" placeholder="Amethyst"></div>
+                <div class="form-group"><label class="fl">Emoji</label>
+                  <input class="form-input" id="stoneEmoji" placeholder="💜" style="width:80px"></div>
+                <div class="form-group"><label class="fl">URL หน้า</label>
+                  <input class="form-input" id="stonePath" placeholder="/stones/amethyst.html"></div>
+                <div class="form-group full"><label class="fl">URL รูป Hero</label>
+                  <input class="form-input" id="stoneImgUrl" placeholder="https://..." oninput="previewStoneImg(this.value)">
+                  <img id="stoneImgPreview" style="width:100%;height:100px;object-fit:cover;border-radius:.5rem;margin-top:.4rem;display:none"></div>
+                <div class="form-group full"><label class="fl">คำสำคัญ (คั่นด้วยจุลภาค)</label>
+                  <input class="form-input" id="stoneKeywords" placeholder="ปัญญา, สมาธิ, จิตวิญญาณ, มงกุฎ"></div>
+                <div class="form-group"><label class="fl">สถานะ</label>
+                  <select class="form-input" id="stoneStatus">
+                    <option value="published">🟢 เผยแพร่แล้ว</option>
+                    <option value="draft">⚫ Draft</option>
+                  </select></div>
+              </div>
+              <div class="modal-actions">
+                <button class="btn btn-outline" onclick="closeStoneModal()">ยกเลิก</button>
+                <button class="btn btn-danger btn-sm" id="stoneDelBtn" onclick="delStone()" style="display:none">🗑 ลบ</button>
+                <button class="btn btn-primary" onclick="saveStone()">💾 บันทึก</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BLOG -->
+        <div id="tab-blog">
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:.75rem;margin-bottom:1.25rem">
+            <div>
+              <div class="section-title">📝 Blog & Schedule</div>
+              <div class="section-sub">บทความ, ดวงรายวัน, คอนเทนต์ — ตั้ง publish date ล่วงหน้าได้</div>
+            </div>
+            <button class="btn btn-primary" onclick="openAddPost()">➕ เพิ่มบทความ</button>
+          </div>
+
+          <!-- filter tabs -->
+          <div style="display:flex;gap:.4rem;margin-bottom:1.25rem;flex-wrap:wrap">
+            <button class="filter-chip active" id="blogTab-all" onclick="setBlogFilter('all',this)">✨ ทั้งหมด</button>
+            <button class="filter-chip" id="blogTab-published" onclick="setBlogFilter('published',this)">🟢 เผยแพร่</button>
+            <button class="filter-chip" id="blogTab-scheduled" onclick="setBlogFilter('scheduled',this)">⏰ ตั้งเวลา</button>
+            <button class="filter-chip" id="blogTab-draft" onclick="setBlogFilter('draft',this)">⚫ Draft</button>
+          </div>
+
+          <div id="blogList"></div>
+
+          <!-- blog post modal -->
+          <div class="modal-overlay" id="blogModal">
+            <div class="modal" style="max-width:640px">
+              <h3 id="blogModalTitle">➕ เพิ่มบทความ</h3>
+              <input type="hidden" id="blogEditId">
+              <div class="form-grid" style="margin-top:1rem">
+                <div class="form-group full"><label class="fl">หัวข้อบทความ *</label>
+                  <input class="form-input" id="blogTitle" placeholder="เช่น 5 หินสำหรับดึงดูดความรัก"></div>
+                <div class="form-group"><label class="fl">ผู้เขียน / Avatar</label>
+                  <select class="form-input" id="blogAuthor">
+                    <option value="atlas">🌐 Crystal Atlas</option>
+                    <option value="wuchong">🧙 Master Wuchong</option>
+                    <option value="metha">🌙 อาจารย์เมธา</option>
+                    <option value="gemma">💃 Gemma</option>
+                  </select></div>
+                <div class="form-group"><label class="fl">หมวดหมู่</label>
+                  <select class="form-input" id="blogCategory">
+                    <option value="stone">💎 บทความหิน</option>
+                    <option value="energy">⚡ พลังงาน</option>
+                    <option value="horoscope">🌟 ดวง/ราศี</option>
+                    <option value="guide">📖 คู่มือ</option>
+                    <option value="news">📢 ข่าวสาร</option>
+                  </select></div>
+                <div class="form-group"><label class="fl">สถานะ</label>
+                  <select class="form-input" id="blogStatus" onchange="toggleScheduleField()">
+                    <option value="published">🟢 เผยแพร่เลย</option>
+                    <option value="scheduled">⏰ ตั้งเวลา</option>
+                    <option value="draft">⚫ Draft</option>
+                  </select></div>
+                <div class="form-group" id="scheduleDateGroup" style="display:none">
+                  <label class="fl">วัน/เวลาที่จะเผยแพร่</label>
+                  <input class="form-input" id="blogPublishDate" type="datetime-local"></div>
+                <div class="form-group full"><label class="fl">URL Slug (ชื่อไฟล์)</label>
+                  <input class="form-input" id="blogSlug" placeholder="5-stones-for-love"></div>
+                <div class="form-group full"><label class="fl">สรุปสั้น (Excerpt)</label>
+                  <textarea class="form-input" id="blogExcerpt" rows="2" placeholder="สรุป 1-2 ประโยค..."></textarea></div>
+                <div class="form-group full"><label class="fl">แท็ก (คั่นด้วยจุลภาค)</label>
+                  <input class="form-input" id="blogTags" placeholder="โรสควอตซ์, ความรัก, จักระหัวใจ"></div>
+                <div class="form-group full"><label class="fl">URL รูป Thumbnail</label>
+                  <input class="form-input" id="blogThumb" placeholder="https://..."></div>
+              </div>
+              <div class="modal-actions">
+                <button class="btn btn-outline" onclick="closeBlogModal()">ยกเลิก</button>
+                <button class="btn btn-danger btn-sm" id="blogDelBtn" onclick="delPost()" style="display:none">🗑 ลบ</button>
+                <button class="btn btn-primary" onclick="savePost()">💾 บันทึก</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ARTICLES (renamed to pages overview, hidden — kept for goEditPage compatibility) -->
         <div id="tab-articles">
           <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:.75rem;margin-bottom:1.25rem">
             <div>
@@ -1072,7 +1208,7 @@ if(sessionStorage.getItem(AUTH_KEY)){
 }
 
 // ── TABS ──────────────────────────────────────
-const TAB_TITLES={dashboard:'📊 ภาพรวม',stats:'📈 สถิติ & เป้าหมาย',pages:'🎨 แก้ไขหน้า',products:'💎 สินค้า',shopee:'🛒 Shopee Aff',articles:'📝 บทความ',settings:'⚙️ ตั้งค่า'};
+const TAB_TITLES={dashboard:'📊 ภาพรวม',stats:'📈 สถิติ & เป้าหมาย',pages:'🎨 แก้ไขหน้า',stones:'💎 สารานุกรมหิน',blog:'📝 Blog & Schedule',products:'🪨 สินค้าโพรง',shopee:'🛒 Shopee Aff',articles:'📋 หน้าทั้งหมด',settings:'⚙️ ตั้งค่า'};
 function showTab(name,el){
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   if(el) el.classList.add('active');
@@ -1080,6 +1216,8 @@ function showTab(name,el){
   document.getElementById('tab-'+name).classList.add('active');
   document.getElementById('topbarTitle').textContent=TAB_TITLES[name]||name;
   if(name==='pages') renderPageGrid();
+  if(name==='stones') renderStones();
+  if(name==='blog') renderBlog();
   if(name==='products'){ loadGeodes(); renderPTable(); }
   if(name==='stats') initStatsTab();
   if(name==='shopee'){ loadAff(); initAffTags(); renderAffTable(); }
@@ -2073,7 +2211,7 @@ function toast(msg,type=''){
 }
 
 // ── PAGES DATA ────────────────────────────────
-const PAGE_GROUPS={g:'🌐 Global',m:'🏠 หน้าหลัก',s:'💎 บทความหิน',c:'🔮 หมวดหมู่',sp:'⭐ พิเศษ',guides:'🌿 คู่มือ'};
+const PAGE_GROUPS={g:'🌐 Global',m:'🏠 หน้าหลัก',c:'🔮 หมวดหมู่',sp:'⭐ พิเศษ',guides:'🌿 คู่มือ'};
 const PAGES=[
   {key:'global',label:'🌐 ทั่วไป (ทุกหน้า)',group:'g',path:null,
    text:[
@@ -2293,6 +2431,279 @@ const PAGES=[
      {id:'intro',label:'บทนำ (HTML)',type:'t',ph:''},
    ],imgs:['guide_shape_hero']},
 ];
+
+// ── STONES DATA + CRUD ────────────────────────
+const STONES_DEFAULT=[
+  {key:'amethyst',   nameTh:'อเมทิสต์',     nameEn:'Amethyst',        emoji:'💜',path:'/stones/amethyst.html',    imgSlot:'stone_amethyst_hero'},
+  {key:'moldavite',  nameTh:'โมลดาไวท์',    nameEn:'Moldavite',       emoji:'🌿',path:'/stones/moldavite.html',   imgSlot:'stone_moldavite_hero'},
+  {key:'tektite',    nameTh:'สะเก็ดดาวไทย', nameEn:'Tektite',         emoji:'🌑',path:'/stones/tektite.html',    imgSlot:'stone_tektite_hero'},
+  {key:'citrine',    nameTh:'ซิทริน',        nameEn:'Citrine',         emoji:'🌟',path:'/stones/citrine.html',    imgSlot:'stone_citrine_hero'},
+  {key:'clear-quartz',nameTh:'คริสตัลใส',   nameEn:'Clear Quartz',    emoji:'🔮',path:'/stones/clear-quartz.html',imgSlot:'stone_clear_quartz_hero'},
+  {key:'rose-quartz',nameTh:'โรสควอตซ์',   nameEn:'Rose Quartz',     emoji:'🩷',path:'/stones/rose-quartz.html',imgSlot:'stone_rose_quartz_hero'},
+  {key:'black-tourmaline',nameTh:'ทัวร์มาลีนดำ',nameEn:'Black Tourmaline',emoji:'🖤',path:'/stones/black-tourmaline.html',imgSlot:'stone_black_tourmaline_hero'},
+  {key:'labradorite',nameTh:'แลบราดอไรต์',  nameEn:'Labradorite',     emoji:'🌊',path:'/stones/labradorite.html',imgSlot:'stone_labradorite_hero'},
+  {key:'lapis-lazuli',nameTh:'ลาพิสลาซูลี', nameEn:'Lapis Lazuli',    emoji:'💙',path:'/stones/lapis-lazuli.html',imgSlot:'stone_lapis_hero'},
+  {key:'carnelian',  nameTh:'คาร์เนเลียน',  nameEn:'Carnelian',       emoji:'🔴',path:'/stones/carnelian.html', imgSlot:'stone_carnelian_hero'},
+  {key:'selenite',   nameTh:'เซเลไนต์',     nameEn:'Selenite',        emoji:'🤍',path:'/stones/selenite.html',  imgSlot:'stone_selenite_hero'},
+  {key:'rudraksha',  nameTh:'รุทรากษะ',     nameEn:'Rudraksha',       emoji:'📿',path:'/stones/rudraksha.html', imgSlot:'stone_rudraksha_hero'},
+];
+const STONES_EXTRA_KEY='amethez_stones_extra';
+function getExtraStones(){ try{ return JSON.parse(localStorage.getItem(STONES_EXTRA_KEY)||'[]'); }catch{ return []; } }
+function saveExtraStones(arr){ localStorage.setItem(STONES_EXTRA_KEY,JSON.stringify(arr)); }
+function getAllStones(){ return [...STONES_DEFAULT,...getExtraStones()]; }
+
+let stoneAlphaFilter='all';
+function renderStones(){
+  const imgs=getImgs();
+  const all=getAllStones();
+  const kw=(document.getElementById('stoneSearch')?.value||'').toLowerCase();
+  const sf=document.getElementById('stoneStatusFilter')?.value||'all';
+  const extra=getExtraStones().map(s=>s.key);
+
+  // stats
+  const hasImg=all.filter(s=>imgs[s.imgSlot]).length;
+  document.getElementById('stoneStats').innerHTML=`
+    <div class="stat-card"><div class="stat-num c-purple">${all.length}</div><div class="stat-label">หินทั้งหมด</div></div>
+    <div class="stat-card"><div class="stat-num c-green">${hasImg}</div><div class="stat-label">มีรูปแล้ว</div></div>
+    <div class="stat-card"><div class="stat-num c-gold">${all.length-hasImg}</div><div class="stat-label">ยังไม่มีรูป</div></div>
+    <div class="stat-card"><div class="stat-num c-blue">${extra.length}</div><div class="stat-label">เพิ่มเอง</div></div>`;
+
+  // A-Z index pills
+  const letters=[...'กขคงจฉชซณดตถทนบปผพฟภมยรลวศสหอฮ'].concat([...'ABCDEFGHIJKLMNOPQRSTUVWXYZ']);
+  const usedLetters=new Set(all.map(s=>(s.nameEn||s.nameTh||'')[0]?.toUpperCase()));
+  const alphaBar=document.getElementById('stoneAlpha');
+  alphaBar.innerHTML=`<button class="filter-chip${stoneAlphaFilter==='all'?' active':''}" onclick="stoneAlphaFilter='all';renderStones()">ทั้งหมด</button>`
+    +letters.filter(l=>usedLetters.has(l)).map(l=>
+      `<button class="filter-chip${stoneAlphaFilter===l?' active':''}" onclick="stoneAlphaFilter='${l}';renderStones()">${l}</button>`
+    ).join('');
+
+  // filter
+  let list=all.filter(s=>{
+    if(kw && !s.nameTh.includes(kw) && !(s.nameEn||'').toLowerCase().includes(kw)) return false;
+    if(sf==='has_img' && !imgs[s.imgSlot]) return false;
+    if(sf==='no_img' && imgs[s.imgSlot]) return false;
+    if(sf==='custom' && !extra.includes(s.key)) return false;
+    if(stoneAlphaFilter!=='all'){
+      const first=(s.nameEn||s.nameTh||'')[0]?.toUpperCase();
+      if(first!==stoneAlphaFilter) return false;
+    }
+    return true;
+  });
+  list=list.sort((a,b)=>(a.nameEn||a.nameTh).localeCompare(b.nameEn||b.nameTh,'en'));
+
+  if(!list.length){
+    document.getElementById('stoneList').innerHTML='<div style="text-align:center;padding:3rem;color:#9ca3af">ไม่พบหิน</div>';
+    return;
+  }
+
+  const isExtra=k=>extra.includes(k);
+  document.getElementById('stoneList').innerHTML=`<div class="article-list">${list.map(s=>{
+    const hasI=!!imgs[s.imgSlot];
+    const dot=hasI?'#059669':'#e5e7eb';
+    const badge=isExtra(s.key)?'<span style="font-size:.68rem;background:#ede9fe;color:#7c3aed;padding:.12rem .4rem;border-radius:2rem;margin-left:.3rem">เพิ่มเอง</span>':'';
+    const imgPreview=imgs[s.imgSlot]?`<img src="${imgs[s.imgSlot]}" style="width:40px;height:40px;object-fit:cover;border-radius:.4rem;flex-shrink:0">`
+      :`<div style="width:40px;height:40px;background:#f5f0ff;border-radius:.4rem;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">${s.emoji}</div>`;
+    return `<div class="article-item" style="border-left:3px solid ${dot}">
+      ${imgPreview}
+      <div class="article-info" style="flex:1;min-width:0">
+        <div class="article-name">${s.nameTh}${badge} <span style="font-size:.78rem;color:#9ca3af;font-weight:400">${s.nameEn||''}</span></div>
+        <div class="article-path">${s.path||''}</div>
+      </div>
+      <div style="display:flex;gap:.4rem;align-items:center;flex-wrap:wrap">
+        <span style="font-size:.72rem;color:${hasI?'#059669':'#d97706'};background:${hasI?'#d1fae5':'#fef3c7'};padding:.15rem .5rem;border-radius:2rem">${hasI?'✅ มีรูป':'⚠️ ยังไม่มีรูป'}</span>
+        ${isExtra(s.key)?`<button class="btn btn-outline btn-sm" onclick="openEditStone('${s.key}')">✏️</button>`
+          :`<button class="btn btn-primary btn-sm" onclick="goEditPage('${s.key}')">✏️ แก้ไข</button>`}
+        ${s.path?`<a href="${s.path}" target="_blank" class="btn btn-outline btn-sm">👁</a>`:''}
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function openAddStone(){
+  document.getElementById('stoneModalTitle').textContent='➕ เพิ่มหินใหม่';
+  document.getElementById('stoneEditKey').value='';
+  document.getElementById('stoneNameTh').value='';
+  document.getElementById('stoneNameEn').value='';
+  document.getElementById('stoneEmoji').value='💎';
+  document.getElementById('stonePath').value='';
+  document.getElementById('stoneImgUrl').value='';
+  document.getElementById('stoneKeywords').value='';
+  document.getElementById('stoneStatus').value='published';
+  document.getElementById('stoneImgPreview').style.display='none';
+  document.getElementById('stoneDelBtn').style.display='none';
+  document.getElementById('stoneModal').classList.add('open');
+}
+function openEditStone(key){
+  const extra=getExtraStones();
+  const s=extra.find(e=>e.key===key); if(!s) return;
+  document.getElementById('stoneModalTitle').textContent='✏️ แก้ไข: '+s.nameTh;
+  document.getElementById('stoneEditKey').value=key;
+  document.getElementById('stoneNameTh').value=s.nameTh||'';
+  document.getElementById('stoneNameEn').value=s.nameEn||'';
+  document.getElementById('stoneEmoji').value=s.emoji||'💎';
+  document.getElementById('stonePath').value=s.path||'';
+  document.getElementById('stoneImgUrl').value=s.imgUrl||'';
+  document.getElementById('stoneKeywords').value=(s.keywords||[]).join(', ');
+  document.getElementById('stoneStatus').value=s.status||'published';
+  previewStoneImg(s.imgUrl);
+  document.getElementById('stoneDelBtn').style.display='';
+  document.getElementById('stoneModal').classList.add('open');
+}
+function closeStoneModal(){ document.getElementById('stoneModal').classList.remove('open'); }
+function previewStoneImg(url){
+  const el=document.getElementById('stoneImgPreview');
+  if(url){ el.src=url; el.style.display='block'; } else { el.style.display='none'; }
+}
+function saveStone(){
+  const nameTh=document.getElementById('stoneNameTh').value.trim();
+  const nameEn=document.getElementById('stoneNameEn').value.trim();
+  if(!nameTh){ toast('กรุณาใส่ชื่อหิน','err'); return; }
+  const editKey=document.getElementById('stoneEditKey').value;
+  const key=editKey||(nameEn?nameEn.toLowerCase().replace(/\s+/g,'-'):nameTh.replace(/\s+/g,'-')+'-'+Date.now());
+  const s={
+    key, nameTh, nameEn,
+    emoji:document.getElementById('stoneEmoji').value||'💎',
+    path:document.getElementById('stonePath').value.trim()||`/stones/${key}.html`,
+    imgUrl:document.getElementById('stoneImgUrl').value.trim(),
+    imgSlot:`stone_${key.replace(/-/g,'_')}_hero`,
+    keywords:document.getElementById('stoneKeywords').value.split(',').map(t=>t.trim()).filter(Boolean),
+    status:document.getElementById('stoneStatus').value,
+  };
+  const extra=getExtraStones();
+  if(editKey){ const i=extra.findIndex(e=>e.key===editKey); if(i>=0) extra[i]=s; else extra.push(s); }
+  else extra.push(s);
+  saveExtraStones(extra);
+  closeStoneModal(); renderStones();
+  toast((editKey?'แก้ไข':'เพิ่ม')+' "'+nameTh+'" แล้ว ✓','ok');
+}
+function delStone(){
+  const key=document.getElementById('stoneEditKey').value;
+  if(!key||!confirm('ลบหินนี้?')) return;
+  saveExtraStones(getExtraStones().filter(s=>s.key!==key));
+  closeStoneModal(); renderStones(); toast('ลบแล้ว','ok');
+}
+
+// ── BLOG CRUD ─────────────────────────────────
+const BLOG_KEY='amethez_blog';
+let blogFilter='all';
+function getBlogPosts(){ try{ return JSON.parse(localStorage.getItem(BLOG_KEY)||'[]'); }catch{ return []; } }
+function saveBlogPosts(arr){ localStorage.setItem(BLOG_KEY,JSON.stringify(arr)); }
+function setBlogFilter(f,el){
+  blogFilter=f;
+  document.querySelectorAll('[id^=blogTab-]').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  renderBlog();
+}
+function renderBlog(){
+  const all=getBlogPosts();
+  const now=new Date().toISOString();
+  const list=blogFilter==='all'?all:all.filter(p=>{
+    if(blogFilter==='published') return p.status==='published'||(p.status==='scheduled'&&p.publishDate<=now);
+    return p.status===blogFilter;
+  });
+
+  const AUTHOR={atlas:'🌐 Crystal Atlas',wuchong:'🧙 Master Wuchong',metha:'🌙 อาจารย์เมธา',gemma:'💃 Gemma'};
+  const CAT={stone:'💎',energy:'⚡',horoscope:'🌟',guide:'📖',news:'📢'};
+  const STATUS_LABEL={published:'🟢 เผยแพร่',scheduled:'⏰ ตั้งเวลา',draft:'⚫ Draft'};
+  const STATUS_COLOR={published:'#059669',scheduled:'#d97706',draft:'#9ca3af'};
+
+  if(!list.length){
+    document.getElementById('blogList').innerHTML=`<div style="text-align:center;padding:4rem;color:#9ca3af">
+      ${blogFilter==='all'?'ยังไม่มีบทความ — กด ➕ เพิ่มบทความ':'ไม่มีบทความในหมวดนี้'}</div>`;
+    return;
+  }
+
+  document.getElementById('blogList').innerHTML=`<div class="article-list">${list.sort((a,b)=>
+    (b.created||'').localeCompare(a.created||'')).map(p=>{
+    const col=STATUS_COLOR[p.status]||'#9ca3af';
+    const thumb=p.thumb?`<img src="${x(p.thumb)}" style="width:56px;height:56px;object-fit:cover;border-radius:.5rem;flex-shrink:0">`
+      :`<div style="width:56px;height:56px;background:#f5f0ff;border-radius:.5rem;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0">${CAT[p.category]||'📝'}</div>`;
+    const dateStr=p.publishDate?new Date(p.publishDate).toLocaleDateString('th-TH',{day:'numeric',month:'short',year:'2-digit',hour:'2-digit',minute:'2-digit'}):'—';
+    return `<div class="article-item" style="border-left:3px solid ${col}">
+      ${thumb}
+      <div class="article-info" style="flex:1;min-width:0">
+        <div class="article-name">${x(p.title)}</div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.2rem">
+          <span style="font-size:.72rem;color:#6b7280">${AUTHOR[p.author]||p.author}</span>
+          <span style="font-size:.72rem;color:#9ca3af">·</span>
+          <span style="font-size:.72rem;color:#9ca3af">${p.status==='scheduled'?'⏰ '+dateStr:dateStr}</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:.4rem;align-items:center;flex-wrap:wrap">
+        <span style="font-size:.72rem;color:${col};background:${col}22;padding:.15rem .55rem;border-radius:2rem">${STATUS_LABEL[p.status]||p.status}</span>
+        <button class="btn btn-outline btn-sm" onclick="openEditPost('${x(p.id)}')">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="delPost('${x(p.id)}')">🗑</button>
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function openAddPost(){
+  document.getElementById('blogModalTitle').textContent='➕ เพิ่มบทความ';
+  document.getElementById('blogEditId').value='';
+  ['blogTitle','blogSlug','blogExcerpt','blogTags','blogThumb'].forEach(id=>{ document.getElementById(id).value=''; });
+  document.getElementById('blogAuthor').value='atlas';
+  document.getElementById('blogCategory').value='stone';
+  document.getElementById('blogStatus').value='published';
+  document.getElementById('blogPublishDate').value='';
+  document.getElementById('scheduleDateGroup').style.display='none';
+  document.getElementById('blogDelBtn').style.display='none';
+  document.getElementById('blogModal').classList.add('open');
+}
+function openEditPost(id){
+  const p=getBlogPosts().find(b=>b.id===id); if(!p) return;
+  document.getElementById('blogModalTitle').textContent='✏️ แก้ไข: '+p.title;
+  document.getElementById('blogEditId').value=p.id;
+  document.getElementById('blogTitle').value=p.title||'';
+  document.getElementById('blogSlug').value=p.slug||'';
+  document.getElementById('blogExcerpt').value=p.excerpt||'';
+  document.getElementById('blogTags').value=(p.tags||[]).join(', ');
+  document.getElementById('blogThumb').value=p.thumb||'';
+  document.getElementById('blogAuthor').value=p.author||'atlas';
+  document.getElementById('blogCategory').value=p.category||'stone';
+  document.getElementById('blogStatus').value=p.status||'published';
+  document.getElementById('blogPublishDate').value=p.publishDate||'';
+  toggleScheduleField();
+  document.getElementById('blogDelBtn').style.display='';
+  document.getElementById('blogModal').classList.add('open');
+}
+function closeBlogModal(){ document.getElementById('blogModal').classList.remove('open'); }
+function toggleScheduleField(){
+  const show=document.getElementById('blogStatus').value==='scheduled';
+  document.getElementById('scheduleDateGroup').style.display=show?'':'none';
+}
+function savePost(){
+  const title=document.getElementById('blogTitle').value.trim();
+  if(!title){ toast('กรุณาใส่หัวข้อบทความ','err'); return; }
+  const eid=document.getElementById('blogEditId').value;
+  const posts=getBlogPosts();
+  const p={
+    id: eid||'blog_'+Date.now(),
+    title,
+    slug: document.getElementById('blogSlug').value.trim()||title.toLowerCase().replace(/\s+/g,'-'),
+    excerpt: document.getElementById('blogExcerpt').value.trim(),
+    tags: document.getElementById('blogTags').value.split(',').map(t=>t.trim()).filter(Boolean),
+    thumb: document.getElementById('blogThumb').value.trim(),
+    author: document.getElementById('blogAuthor').value,
+    category: document.getElementById('blogCategory').value,
+    status: document.getElementById('blogStatus').value,
+    publishDate: document.getElementById('blogPublishDate').value||new Date().toISOString(),
+    created: eid ? (posts.find(b=>b.id===eid)?.created||new Date().toISOString()) : new Date().toISOString(),
+    updated: new Date().toISOString(),
+  };
+  if(eid){ const i=posts.findIndex(b=>b.id===eid); if(i>=0) posts[i]=p; else posts.push(p); }
+  else posts.unshift(p);
+  saveBlogPosts(posts);
+  closeBlogModal(); renderBlog();
+  toast((eid?'แก้ไข':'เพิ่ม')+' "'+title+'" แล้ว ✓','ok');
+}
+function delPost(id){
+  const eid=id||document.getElementById('blogEditId').value;
+  if(!eid||!confirm('ลบบทความนี้?')) return;
+  saveBlogPosts(getBlogPosts().filter(b=>b.id!==eid));
+  if(!id) closeBlogModal();
+  renderBlog(); toast('ลบแล้ว','ok');
+}
 
 // ── TEXT STORAGE ───────────────────────────────
 const TEXT_KEY='amethez_text';
