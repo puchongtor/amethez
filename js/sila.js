@@ -188,12 +188,13 @@
   function buildUI() {
     const style = document.createElement('style');
     style.textContent = `
-      #sila-fab{position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;width:52px;height:52px;
+      #sila-fab{position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;width:56px;height:56px;
         border-radius:50%;background:linear-gradient(135deg,#7c3aed,#5b21b6);
         border:none;cursor:pointer;box-shadow:0 4px 20px rgba(124,58,237,.45);
         display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:white;
-        transition:transform .2s;}
-      #sila-fab:hover{transform:scale(1.1);}
+        transition:transform .2s;touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+        -webkit-appearance:none;user-select:none;}
+      #sila-fab:hover,#sila-fab:active{transform:scale(1.1);}
       #sila-notif{position:absolute;top:-3px;right:-3px;width:12px;height:12px;
         background:#ef4444;border-radius:50%;border:2px solid white;display:none;}
       #sila-notif.show{display:block;}
@@ -279,6 +280,7 @@
     fab.setAttribute('aria-label', 'เปิดแชทศิลา');
     fab.innerHTML = `💎<span id="sila-notif"></span>`;
     fab.addEventListener('click', togglePanel);
+    fab.addEventListener('touchend', e => { e.preventDefault(); togglePanel(); });
     document.body.appendChild(fab);
 
     // Tip bubble
