@@ -15,7 +15,7 @@ const NAV_HTML = `
     <span></span><span></span><span></span>
   </button>
   <nav><ul class="nav-links">
-    <li><a href="/stones/">💎 คลังหิน</a></li>
+    <li><a href="/stones/">📖 สารานุกรมหิน</a></li>
     <li class="has-drop"><a href="/blog/">📖 เรียนรู้</a>
       <ul class="dropdown">
         <li><a href="/blog/">บทความ</a></li>
@@ -62,7 +62,7 @@ const FOOTER_HTML = `
     <div class="footer-col">
       <h4>สำรวจ</h4>
       <ul>
-        <li><a href="/stones/">💎 คลังหิน A–Z</a></li>
+        <li><a href="/stones/">📖 สารานุกรมหิน A–Z</a></li>
         <li><a href="/blog/">📖 บทความ</a></li>
         <li><a href="/video/">🎬 Crystal Talks</a></li>
         <li><a href="/stories/">📚 เรื่องเล่าหินทั่วโลก</a></li>

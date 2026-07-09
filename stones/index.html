@@ -33,17 +33,20 @@
     .hero-stat span { font-size:.78rem; color:rgba(255,255,255,.5); }
 
     /* ── Browse Hub Tiles ── */
-    .hub { background:#f3effa; padding:3rem 1.5rem; }
-    .hub-title { text-align:center; font-family:'Playfair Display',serif; font-size:1.6rem; color:#1a1228; margin-bottom:.4rem; }
-    .hub-sub { text-align:center; color:#6b5e8a; font-size:.9rem; margin-bottom:2rem; }
-    .hub-grid { max-width:1000px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:1rem; }
-    .hub-tile { background:white; border:1.5px solid #e0d4f7; border-radius:1rem; padding:1.4rem 1rem;
-      text-align:center; text-decoration:none; color:#1a1228; transition:all .2s; cursor:pointer; display:block; }
-    .hub-tile:hover { border-color:#7c3aed; box-shadow:0 8px 28px rgba(124,58,237,.12); transform:translateY(-3px); }
-    .hub-tile-icon { font-size:2.2rem; display:block; margin-bottom:.5rem; }
-    .hub-tile-th { font-weight:700; font-size:.95rem; display:block; }
-    .hub-tile-en { font-size:.72rem; color:#9b89bb; display:block; margin-top:.15rem; }
+    .hub { background:white; padding:3.5rem 1.5rem; border-bottom:1px solid #f0e8ff; }
+    .hub-title { text-align:center; font-family:'Playfair Display',serif; font-size:1.75rem; color:#1a1228; margin-bottom:.4rem; }
+    .hub-sub { text-align:center; color:#9b89bb; font-size:.88rem; margin-bottom:2.5rem; }
+    .hub-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; }
+    @media(max-width:700px){ .hub-grid{ grid-template-columns:repeat(2,1fr); } }
+    @media(max-width:420px){ .hub-grid{ grid-template-columns:1fr; } }
+    .hub-tile { background:#faf8f4; border:2px solid #ede9fe; border-radius:1.25rem; padding:2rem 1.25rem 1.5rem;
+      text-align:center; text-decoration:none; color:#1a1228; transition:all .2s; display:block; }
+    .hub-tile:hover { border-color:#7c3aed; background:white; box-shadow:0 12px 36px rgba(124,58,237,.13); transform:translateY(-4px); }
+    .hub-tile-icon { font-size:3rem; display:block; margin-bottom:.875rem; line-height:1; }
+    .hub-tile-th { font-weight:700; font-size:1rem; display:block; color:#1a1228; }
+    .hub-tile-en { font-size:.75rem; color:#9b89bb; display:block; margin-top:.3rem; letter-spacing:.02em; }
     .hub-tile.gold { border-color:#c9a84c; background:linear-gradient(135deg,#fffdf5,#fef9e7); }
+    .hub-tile.gold:hover { border-color:#b8922e; box-shadow:0 12px 36px rgba(201,168,76,.18); }
 
     /* ── Sticky Alphabet Bar ── */
     .alpha-bar { background:white; border-bottom:1px solid #f0e8ff; padding:.6rem 1rem;
@@ -227,7 +230,7 @@
 <!-- ── HERO ── -->
 <section class="hero">
   <div class="hero-inner">
-    <h1>💎 Crystal Atlas</h1>
+    <h1>📖 สารานุกรมหินคริสตัล</h1>
     <p>สารานุกรมหินคริสตัลและพลอยที่ครบที่สุดในไทย<br>ค้นหาได้ทุกมิติ — A-Z · จักระ · ราศี · ดาวเคราะห์ · ธาตุ</p>
     <div class="hero-stats">
       <div class="hero-stat"><strong>300+</strong><span>ชนิดหิน</span></div>
@@ -240,54 +243,56 @@
 
 <!-- ── BROWSE HUB ── -->
 <section class="hub">
-  <h2 class="hub-title">เลือกวิธีค้นหาของคุณ</h2>
-  <p class="hub-sub">Browse crystals the way that speaks to you</p>
-  <div class="hub-grid">
-    <a href="#az" class="hub-tile gold" onclick="scrollTo('#az')">
-      <span class="hub-tile-icon">🔤</span>
-      <span class="hub-tile-th">A ถึง Z</span>
-      <span class="hub-tile-en">All Crystals</span>
-    </a>
-    <a href="#chakra" class="hub-tile">
-      <span class="hub-tile-icon">🔮</span>
-      <span class="hub-tile-th">จักระ</span>
-      <span class="hub-tile-en">By Chakra</span>
-    </a>
-    <a href="#zodiac" class="hub-tile">
-      <span class="hub-tile-icon">♈</span>
-      <span class="hub-tile-th">ราศี</span>
-      <span class="hub-tile-en">By Zodiac</span>
-    </a>
-    <a href="#planet" class="hub-tile">
-      <span class="hub-tile-icon">🪐</span>
-      <span class="hub-tile-th">ดาวเคราะห์</span>
-      <span class="hub-tile-en">By Planet</span>
-    </a>
-    <a href="#element" class="hub-tile">
-      <span class="hub-tile-icon">🔥</span>
-      <span class="hub-tile-th">ธาตุ</span>
-      <span class="hub-tile-en">By Element</span>
-    </a>
-    <a href="#color" class="hub-tile">
-      <span class="hub-tile-icon">🎨</span>
-      <span class="hub-tile-th">สี</span>
-      <span class="hub-tile-en">By Color</span>
-    </a>
-    <a href="#purpose" class="hub-tile">
-      <span class="hub-tile-icon">✨</span>
-      <span class="hub-tile-th">วัตถุประสงค์</span>
-      <span class="hub-tile-en">By Purpose</span>
-    </a>
-    <a href="#number" class="hub-tile">
-      <span class="hub-tile-icon">🔢</span>
-      <span class="hub-tile-th">เลขศาสตร์</span>
-      <span class="hub-tile-en">By Number</span>
-    </a>
-    <a href="#purpose" class="hub-tile">
-      <span class="hub-tile-icon">💪</span>
-      <span class="hub-tile-th">สุขภาพ</span>
-      <span class="hub-tile-en">By Health</span>
-    </a>
+  <div style="max-width:1060px;margin:0 auto">
+    <h2 class="hub-title">ต้องการค้นหาหินคริสตัลแบบไหน?</h2>
+    <p class="hub-sub">Looking to Explore Crystal Meanings? — เลือกวิธีที่ใช่สำหรับคุณ</p>
+    <div class="hub-grid">
+      <a href="#az" class="hub-tile gold">
+        <span class="hub-tile-icon">🔤</span>
+        <span class="hub-tile-th">หิน A ถึง Z</span>
+        <span class="hub-tile-en">Crystals A to Z</span>
+      </a>
+      <a href="#purpose" class="hub-tile">
+        <span class="hub-tile-icon">😊</span>
+        <span class="hub-tile-th">อารมณ์ & ความรู้สึก</span>
+        <span class="hub-tile-en">Search by Emotions</span>
+      </a>
+      <a href="#zodiac" class="hub-tile">
+        <span class="hub-tile-icon">♈</span>
+        <span class="hub-tile-th">ราศีเกิด</span>
+        <span class="hub-tile-en">Search by Zodiac</span>
+      </a>
+      <a href="#planet" class="hub-tile">
+        <span class="hub-tile-icon">🪐</span>
+        <span class="hub-tile-th">ดาวเคราะห์</span>
+        <span class="hub-tile-en">Search by Planet</span>
+      </a>
+      <a href="#element" class="hub-tile">
+        <span class="hub-tile-icon">🔥</span>
+        <span class="hub-tile-th">ธาตุทั้ง 5</span>
+        <span class="hub-tile-en">Search by Element</span>
+      </a>
+      <a href="#chakra" class="hub-tile">
+        <span class="hub-tile-icon">🧘</span>
+        <span class="hub-tile-th">จักระ 7 ชั้น</span>
+        <span class="hub-tile-en">Search by Chakra</span>
+      </a>
+      <a href="#color" class="hub-tile">
+        <span class="hub-tile-icon">🎨</span>
+        <span class="hub-tile-th">สีของหิน</span>
+        <span class="hub-tile-en">Search by Color</span>
+      </a>
+      <a href="#number" class="hub-tile">
+        <span class="hub-tile-icon">🔢</span>
+        <span class="hub-tile-th">เลขศาสตร์</span>
+        <span class="hub-tile-en">Search by Number</span>
+      </a>
+      <a href="/categories/birth-month.html" class="hub-tile">
+        <span class="hub-tile-icon">🎂</span>
+        <span class="hub-tile-th">เดือนเกิด</span>
+        <span class="hub-tile-en">Birth Month Stone</span>
+      </a>
+    </div>
   </div>
 </section>
 
