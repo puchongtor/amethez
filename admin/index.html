@@ -2120,7 +2120,8 @@ function renderArticles(){
     <button class="filter-chip${artActiveGroup===k?' active':''}"
       onclick="artActiveGroup='${k}';renderArticles()">${v}</button>`).join('');
 
-  const list = artActiveGroup==='all' ? PAGES : PAGES.filter(p=>p.group===artActiveGroup);
+  const NON_STONE = PAGES.filter(p=>p.group!=='s');
+  const list = artActiveGroup==='all' ? NON_STONE : NON_STONE.filter(p=>p.group===artActiveGroup);
   const byGroup={};
   list.forEach(p=>{
     const g=p.group; if(!byGroup[g]) byGroup[g]=[];
