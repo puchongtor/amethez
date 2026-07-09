@@ -174,11 +174,14 @@
 
       /* Chat panel */
       #sila-panel{position:fixed;bottom:5rem;right:1.5rem;z-index:9997;
-        width:340px;max-height:520px;background:white;border-radius:1.25rem;
+        width:340px;max-height:520px;background:#ffffff !important;border-radius:1.25rem;
         box-shadow:0 20px 60px rgba(0,0,0,.2);flex-direction:column;
         overflow:hidden;border:1px solid #ede8ff;font-family:'Sarabun',sans-serif;
-        display:none;transition:opacity .2s;}
+        display:none;transition:opacity .2s;color:#1a1228 !important;}
       #sila-panel.open{display:flex;}
+      #sila-panel *{box-sizing:border-box;}
+      #sila-msgs{background:#ffffff !important;}
+      #sila-input-row{background:#ffffff !important;}
 
       .s-head{background:linear-gradient(135deg,#4c1d95,#7c3aed);padding:.75rem 1rem;
         display:flex;align-items:center;gap:.65rem;flex-shrink:0;}
