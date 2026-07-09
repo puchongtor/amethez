@@ -216,7 +216,8 @@
       #sila-input-row{display:flex;gap:.45rem;padding:.6rem .7rem;border-top:1px solid #f0ebff;flex-shrink:0;}
       #sila-inp{flex:1;border:1.5px solid #e5e7eb;border-radius:.65rem;padding:.45rem .75rem;
         font-size:.855rem;font-family:'Sarabun',sans-serif;outline:none;resize:none;
-        max-height:72px;transition:border-color .2s;line-height:1.4;}
+        max-height:72px;transition:border-color .2s;line-height:1.4;
+        -webkit-appearance:none;appearance:none;overflow:hidden;}
       #sila-inp:focus{border-color:#a78bfa;}
       #sila-send{width:34px;height:34px;background:#7c3aed;border:none;border-radius:.65rem;
         cursor:pointer;display:flex;align-items:center;justify-content:center;
@@ -246,9 +247,10 @@
     tip.addEventListener('click', () => { hideTip(); openPanel(); });
     document.body.appendChild(tip);
 
-    // Panel
+    // Panel — hidden via inline style by default
     const panel = document.createElement('div');
     panel.id = 'sila-panel';
+    panel.style.cssText = 'display:none';
     panel.innerHTML = `
       <div class="s-head">
         <div class="s-avatar">🔮</div>
@@ -258,7 +260,7 @@
         </div>
         <div class="s-head-btns">
           <button class="s-hbtn" id="sila-clear-btn" title="ล้างแชท">🗑</button>
-          <button class="s-hbtn" id="sila-min-btn" title="ปิด" style="font-size:1.1rem;font-weight:700">−</button>
+          <button class="s-hbtn" id="sila-min-btn" title="ปิด" style="font-size:1.3rem;font-weight:900;line-height:1;padding:.2rem .5rem">−</button>
         </div>
       </div>
       <div id="sila-msgs"></div>
@@ -270,7 +272,12 @@
       </div>`;
     document.body.appendChild(panel);
 
-    panel.querySelector('#sila-min-btn').addEventListener('click', closePanel);
+    // ปิด panel ด้วย inline style โดยตรง (ไม่ใช้ CSS class)
+    panel.querySelector('#sila-min-btn').addEventListener('click', () => {
+      panel.style.display = 'none';
+      panelOpen = false;
+      saveOpenState(false);
+    });
     panel.querySelector('#sila-clear-btn').addEventListener('click', () => {
       if (!confirm('ล้างประวัติแชทกับศิลาทั้งหมด?')) return;
       messages = [];
@@ -293,9 +300,11 @@
 
   function openPanel() {
     panelOpen = true;
-    document.getElementById('sila-panel').classList.add('open');
+    const panel = document.getElementById('sila-panel');
+    panel.style.display = 'flex';
     document.getElementById('sila-notif').classList.remove('show');
     saveOpenState(true);
+    hideTip();
     const msgs = document.getElementById('sila-msgs');
     msgs.scrollTop = msgs.scrollHeight;
     setTimeout(() => document.getElementById('sila-inp')?.focus(), 150);
@@ -303,13 +312,13 @@
 
   function closePanel() {
     panelOpen = false;
-    document.getElementById('sila-panel').classList.remove('open');
+    document.getElementById('sila-panel').style.display = 'none';
     saveOpenState(false);
   }
 
   function togglePanel() {
     if (panelOpen) closePanel();
-    else { hideTip(); openPanel(); }
+    else openPanel();
   }
 
   // ── TIP BUBBLE ───────────────────────────────────────────────────
