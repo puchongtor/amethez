@@ -58,7 +58,8 @@
 - ตอบสั้นกระชับ 2-4 ประโยค ไม่ยาวเกิน
 - ถามกลับ 1 คำถามต่อตอบ เพื่อให้บทสนทนาไหลต่อ
 - ใช้ emoji เบาๆ 1-2 ตัว
-- หน้าเว็บ: /stones/amethyst.html | /stones/rose-quartz.html | /stones/black-tourmaline.html | /stones/moldavite.html | /categories/chakra.html | /geode/ | /consign.html
+- หน้าเว็บ (ใช้รูปแบบ markdown เสมอ): [อเมทิสต์](/stones/amethyst.html) | [โรสควอตซ์](/stones/rose-quartz.html) | [ทัวร์มาลีนดำ](/stones/black-tourmaline.html) | [โมลดาไวท์](/stones/moldavite.html) | [จักระ](/categories/chakra.html) | [โพรง](/geode/) | [ฝากขาย](/consign.html)
+- ลิงก์ต้องเขียนแบบ [ชื่อที่อ่านได้](url) เสมอ ห้ามวาง path เปลือยๆ
 - ห้ามแต่งลิงก์ที่ไม่มีในรายการ`;
 
   // ── TIP MESSAGES (สั้น 1 ประโยค แสดงเหนือ FAB ชั่วคราว) ────────
@@ -162,7 +163,12 @@
   function renderMd(text) {
     return text
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color:#a78bfa;text-decoration:underline">$1</a>')
+      // markdown links [text](url)
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" style="color:#a78bfa;text-decoration:underline">$1</a>')
+      // bare https:// URLs
+      .replace(/(^|[\s>])(https?:\/\/[^\s<]+)/g, '$1<a href="$2" target="_blank" style="color:#a78bfa;text-decoration:underline">$2</a>')
+      // bare internal paths like /stones/moldavite.html
+      .replace(/(^|[\s>])(\/[a-zA-Z0-9/_-]+\.html)/g, '$1<a href="$2" target="_blank" style="color:#a78bfa;text-decoration:underline">$2</a>')
       .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
       .replace(/\n/g, '<br>');
   }
