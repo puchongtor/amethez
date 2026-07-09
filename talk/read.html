@@ -66,6 +66,11 @@
     .popt input[type=range] { width:84px; accent-color:var(--gold); }
     .player-status { text-align:center; font-size:.78rem; color:rgba(255,255,255,.45); margin-bottom:.75rem; min-height:1rem; }
     .tts-warn { text-align:center; font-size:.78rem; color:#fbbf24; margin-bottom:.5rem; display:none; }
+    .voice-row { display:flex; align-items:center; justify-content:center; gap:.6rem; margin-bottom:.6rem; flex-wrap:wrap; }
+    .voice-select { background:rgba(255,255,255,.08); border:1px solid rgba(201,168,76,.3); color:white; border-radius:.5rem; padding:.3rem .6rem; font-size:.78rem; font-family:Sarabun,sans-serif; cursor:pointer; }
+    .voice-select option { background:#1a1228; color:white; }
+    .gtts-btn { background:rgba(201,168,76,.15); border:1px solid rgba(201,168,76,.4); color:var(--gold); border-radius:.5rem; padding:.3rem .7rem; font-size:.72rem; cursor:pointer; font-family:Sarabun,sans-serif; }
+    .gtts-btn:hover { background:rgba(201,168,76,.25); }
 
     .loading { position:relative; z-index:10; text-align:center; padding:8rem 1.5rem; color:rgba(255,255,255,.5); }
     .headphone-hint { position:relative; z-index:10; text-align:center; font-size:.78rem; color:rgba(255,255,255,.35); margin:-2.5rem auto 0; }
@@ -87,7 +92,17 @@
 <!-- Player -->
 <div class="player" id="player" style="display:none">
   <div class="player-inner">
-    <div class="tts-warn" id="ttsWarn">⚠️ อุปกรณ์นี้อาจไม่รองรับเสียงพูดภาษาไทย — คลื่นความถี่และภาพยังใช้ได้ปกติ</div>
+    <div class="tts-warn" id="ttsWarn">⚠️ ใส่ Google TTS API key ที่ปุ่ม "ตั้งค่าเสียง" เพื่อเปิดเสียงพูดธรรมชาติ</div>
+    <div class="voice-row">
+      <select class="voice-select" id="voiceSelect">
+        <option value="th-TH-Neural2-C">🧙 อาจารย์ (ชาย · นุ่มลึก)</option>
+        <option value="th-TH-Neural2-D">🌸 ผู้หญิง · อบอุ่น</option>
+        <option value="th-TH-Wavenet-B">🎙 ผู้ชาย · ชัดเจน</option>
+        <option value="th-TH-Wavenet-A">✨ ผู้หญิง · สดใส</option>
+      </select>
+      <button class="gtts-btn" onclick="setupApiKey()">⚙️ ตั้งค่าเสียง</button>
+      <span id="gttsStatus" style="font-size:.7rem;color:rgba(255,255,255,.4)"></span>
+    </div>
     <div class="player-status" id="status">พร้อมเริ่ม — กดปุ่มเล่น ▶ (แนะนำใส่หูฟัง 🎧)</div>
     <div class="player-controls">
       <button class="pbtn" id="repeatBtn" title="เล่นวนซ้ำ" onclick="toggleRepeat()">🔁</button>
@@ -96,14 +111,14 @@
     </div>
     <div class="player-options">
       <label class="popt">🗣️ เสียงพูด <input type="range" id="vol" min="0" max="1" step="0.1" value="1"></label>
-      <label class="popt">🎶 คลื่นความถี่ <input type="range" id="ambient" min="0" max="0.1" step="0.005" value="0.02"></label>
-      <label class="popt">🐢 จังหวะ <input type="range" id="rate" min="0.6" max="1.1" step="0.05" value="0.88"></label>
+      <label class="popt">🎶 คลื่นความถี่ <input type="range" id="ambient" min="0" max="0.08" step="0.005" value="0.018"></label>
+      <label class="popt">🐢 จังหวะ <input type="range" id="rate" min="0.6" max="1.1" step="0.05" value="0.82"></label>
     </div>
   </div>
 </div>
 
 <script>
-let DATA = null, voices = [], thVoice = null;
+let DATA = null;
 let verseEls = [], queue = [], qIndex = 0, playing = false, repeat = false;
 
 /* คลื่นความถี่บำบัด (Solfeggio) ตามด้าน */
@@ -176,7 +191,7 @@ function render() {
   queue.push({ vi: -1, text: d.closing });
 
   document.getElementById('player').style.display = 'block';
-  if (!('speechSynthesis' in window)) document.getElementById('ttsWarn').style.display = 'block';
+  updateGttsStatus();
 
   setupColors(d);
   startViz();
@@ -197,24 +212,30 @@ function initAudio() {
   freqData = new Uint8Array(analyser.frequencyBinCount);
 
   // โทนหลัก + อ็อกเทฟล่าง + เสียงประสาน (fifth) ให้ฟังนุ่ม
-  oscMain  = audioCtx.createOscillator(); oscMain.type = 'sine';  oscMain.frequency.value = hz;
-  oscSub   = audioCtx.createOscillator(); oscSub.type  = 'sine';  oscSub.frequency.value = hz/2;
-  oscFifth = audioCtx.createOscillator(); oscFifth.type= 'sine';  oscFifth.frequency.value = hz*1.5;
-  // ลด mix ของ sub/fifth ให้เสียงความถี่เป็นแค่ "ใต้" เสียงพูด
-  const subGain = audioCtx.createGain(); subGain.gain.value = 0.35;
-  const fifthGain = audioCtx.createGain(); fifthGain.gain.value = 0.1;
+  // ── Binaural Beats จริง ──────────────────────────────────────────
+  // หูซ้าย: hz แน่นอน | หูขวา: hz + beatHz → สมองได้ยินคลื่น beatHz Hz
+  // beatHz ~10Hz = alpha wave (ผ่อนคลาย+focus) มีงานวิจัยรองรับ ต้องใส่หูฟัง
+  const beatHz = 10;
+  const merger = audioCtx.createChannelMerger(2);
+  const panL   = audioCtx.createStereoPanner(); panL.pan.value  = -1;
+  const panR   = audioCtx.createStereoPanner(); panR.pan.value  =  1;
 
-  // LFO หายใจช้ามาก (~8 วินาที/รอบ) ไม่รบกวนเสียงพูด
-  lfo = audioCtx.createOscillator(); lfo.type = 'sine'; lfo.frequency.value = 0.08;
-  lfoGain = audioCtx.createGain(); lfoGain.gain.value = 0.15;
+  oscMain = audioCtx.createOscillator(); oscMain.type = 'sine'; oscMain.frequency.value = hz;
+  oscSub  = audioCtx.createOscillator(); oscSub.type  = 'sine'; oscSub.frequency.value  = hz + beatHz;
+  // เสียงประสาน sub-bass ฝังใต้ ไม่รบกวนเสียงพูด
+  oscFifth = audioCtx.createOscillator(); oscFifth.type = 'sine'; oscFifth.frequency.value = hz / 2;
+  const fifthGain = audioCtx.createGain(); fifthGain.gain.value = 0.18;
+
+  // LFO หายใจช้า ~12 วิ/รอบ
+  lfo = audioCtx.createOscillator(); lfo.type = 'sine'; lfo.frequency.value = 0.083;
+  lfoGain = audioCtx.createGain(); lfoGain.gain.value = 0.12;
   lfo.connect(lfoGain);
 
-  // lowpass ต่ำลงมาก → เสียงความถี่ฝังเป็น "sub-bass" ใต้เสียงพูด
-  lowpass.frequency.value = 320;
-  lowpass.Q.value = 0.5;
+  lowpass.frequency.value = 280; lowpass.Q.value = 0.4;
 
-  oscMain.connect(ambGain);
-  oscSub.connect(subGain).connect(ambGain);
+  // binaural routing: oscMain → หูซ้าย, oscSub → หูขวา
+  oscMain.connect(panL).connect(ambGain);
+  oscSub.connect(panR).connect(ambGain);
   oscFifth.connect(fifthGain).connect(ambGain);
   lfoGain.connect(ambGain.gain);
   ambGain.connect(lowpass).connect(analyser).connect(audioCtx.destination);
@@ -338,48 +359,102 @@ function hexA(hex, a) {
   return `rgba(${r},${g},${b},${Math.max(0,Math.min(1,a))})`;
 }
 
-/* ═══════════════ VOICE ═══════════════ */
-function loadVoices() {
-  voices = speechSynthesis.getVoices();
-  // เรียงลำดับความสำคัญ: Google Thai (ธรรมชาติที่สุด) → Microsoft Thai → อื่นๆ
-  const priority = [
-    v => v.lang === 'th-TH' && v.name.toLowerCase().includes('google'),
-    v => v.lang === 'th-TH' && v.name.toLowerCase().includes('microsoft'),
-    v => v.lang === 'th-TH' && v.name.toLowerCase().includes('natural'),
-    v => v.lang === 'th-TH',
-    v => v.lang.startsWith('th'),
-  ];
-  thVoice = null;
-  for (const test of priority) {
-    thVoice = voices.find(test);
-    if (thVoice) break;
-  }
-  if (!thVoice && voices.length) document.getElementById('ttsWarn').style.display = 'block';
-}
-if ('speechSynthesis' in window) { loadVoices(); speechSynthesis.onvoiceschanged = loadVoices; }
+/* ═══════════════ GOOGLE CLOUD TTS ═══════════════ */
+const GTTS_KEY_STORE = 'amethez_gtts_key';
+let currentSrc = null; // AudioBufferSourceNode กำลังเล่นอยู่
 
-function speakNext() {
+function getGttsKey() { return localStorage.getItem(GTTS_KEY_STORE) || ''; }
+
+function setupApiKey() {
+  const cur = getGttsKey();
+  const k = prompt('ใส่ Google Cloud TTS API Key:\n(ดูได้ที่ console.cloud.google.com → APIs → Text-to-Speech)', cur ? '••••' + cur.slice(-4) : '');
+  if (k === null) return;
+  if (k && k !== '••••' + (cur || '').slice(-4)) {
+    localStorage.setItem(GTTS_KEY_STORE, k.trim());
+    updateGttsStatus();
+  }
+}
+
+function updateGttsStatus() {
+  const el = document.getElementById('gttsStatus');
+  const warn = document.getElementById('ttsWarn');
+  if (getGttsKey()) {
+    el.textContent = '✅ พร้อมใช้งาน';
+    el.style.color = '#4ade80';
+    warn.style.display = 'none';
+  } else {
+    el.textContent = '⚠️ ยังไม่มี key';
+    el.style.color = '#fbbf24';
+    warn.style.display = 'block';
+  }
+}
+
+async function callGtts(text) {
+  const key = getGttsKey();
+  if (!key) return null;
+  const voice = document.getElementById('voiceSelect').value;
+  const rate = parseFloat(document.getElementById('rate').value);
+  const res = await fetch(`https://texttospeech.googleapis.com/v1/text:synthesize?key=${key}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      input: { text },
+      voice: { languageCode: 'th-TH', name: voice },
+      audioConfig: { audioEncoding: 'MP3', speakingRate: rate, pitch: -1.0, volumeGainDb: 1.0 }
+    })
+  });
+  if (!res.ok) {
+    const e = await res.json().catch(() => ({}));
+    console.warn('Google TTS error:', e?.error?.message);
+    return null;
+  }
+  const data = await res.json();
+  // base64 MP3 → ArrayBuffer → AudioBuffer → เล่นผ่าน analyser (visualizer react ได้)
+  const b64 = data.audioContent;
+  const bin = atob(b64);
+  const buf = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
+  return buf.buffer;
+}
+
+async function speakNext() {
+  if (!playing) return;
   if (qIndex >= queue.length) {
     if (repeat) { qIndex = 0; speakNext(); return; }
     finish(); return;
   }
   const item = queue[qIndex];
   highlight(item.vi);
-  speakPulse = 1;                                    // pulse ภาพทุกครั้งที่ขึ้นประโยคใหม่
-  if (!('speechSynthesis' in window) || !thVoice) {
-    // ไม่มีเสียงไทย — เลื่อนอัตโนมัติตามจังหวะ ให้ภาพ+คลื่นยังทำงาน
-    document.getElementById('status').textContent = `กำลังภาวนา… (${qIndex+1}/${queue.length})`;
+  speakPulse = 1;
+  document.getElementById('status').textContent = `กำลังอ่าน… (${qIndex+1}/${queue.length})`;
+
+  const key = getGttsKey();
+  if (!key) {
+    // ไม่มี key — เลื่อนอัตโนมัติให้ภาพ+คลื่นยังทำงาน
     qIndex++; if (playing) setTimeout(speakNext, 3200); return;
   }
-  const u = new SpeechSynthesisUtterance(item.text);
-  u.lang = 'th-TH'; u.voice = thVoice;
-  u.rate = parseFloat(document.getElementById('rate').value);
-  u.volume = parseFloat(document.getElementById('vol').value);
-  u.pitch = 1.02;   // เล็กน้อยกว่า 1 ทำให้เสียงดูธรรมชาติขึ้นในหลาย engine
-  u.onend   = () => { qIndex++; if (playing) setTimeout(speakNext, 900); };  // หยุดหายใจระหว่างประโยค
-  u.onerror = () => { qIndex++; if (playing) setTimeout(speakNext, 400); };
-  speechSynthesis.speak(u);
-  document.getElementById('status').textContent = `กำลังอ่าน… (${qIndex+1}/${queue.length})`;
+
+  try {
+    const arrayBuf = await callGtts(item.text);
+    if (!arrayBuf || !playing) return;
+    const audioBuf = await audioCtx.decodeAudioData(arrayBuf);
+    currentSrc = audioCtx.createBufferSource();
+    currentSrc.buffer = audioBuf;
+    const vol = parseFloat(document.getElementById('vol').value);
+    const gainNode = audioCtx.createGain();
+    gainNode.gain.value = vol;
+    // เส้นทาง: TTS → gain → analyser → destination (visualizer react กับเสียงพูดด้วย!)
+    currentSrc.connect(gainNode).connect(analyser).connect(audioCtx.destination);
+    currentSrc.onended = () => {
+      currentSrc = null;
+      qIndex++;
+      if (playing) setTimeout(speakNext, 700);
+    };
+    currentSrc.start();
+  } catch(e) {
+    console.warn('TTS playback error:', e);
+    qIndex++; if (playing) setTimeout(speakNext, 500);
+  }
 }
 
 function highlight(vi) {
@@ -391,6 +466,10 @@ function highlight(vi) {
 }
 
 /* ═══════════════ CONTROLS ═══════════════ */
+function stopCurrentSrc() {
+  if (currentSrc) { try { currentSrc.onended = null; currentSrc.stop(); } catch(e){} currentSrc = null; }
+}
+
 function togglePlay() {
   initAudio();
   if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -398,24 +477,19 @@ function togglePlay() {
 
   if (playing) {
     playing = false;
+    stopCurrentSrc();
     document.getElementById('playBtn').textContent = '▶';
     document.getElementById('status').textContent = 'หยุดชั่วคราว';
-    if ('speechSynthesis' in window) speechSynthesis.pause();
   } else {
     playing = true;
     document.getElementById('playBtn').textContent = '⏸';
-    if ('speechSynthesis' in window && speechSynthesis.paused && speechSynthesis.speaking) {
-      speechSynthesis.resume();
-    } else {
-      if ('speechSynthesis' in window) speechSynthesis.cancel();
-      speakNext();
-    }
+    speakNext();
   }
 }
 
 function stopAll() {
   playing = false; qIndex = 0;
-  if ('speechSynthesis' in window) speechSynthesis.cancel();
+  stopCurrentSrc();
   setAmbient(0);
   document.getElementById('playBtn').textContent = '▶';
   document.getElementById('status').textContent = 'พร้อมเริ่ม — กดปุ่มเล่น ▶ (แนะนำใส่หูฟัง 🎧)';
@@ -442,7 +516,7 @@ function toggleRepeat() {
 document.addEventListener('input', e => {
   if (e.target.id === 'ambient' && audioCtx) setAmbient(parseFloat(e.target.value));
 });
-window.addEventListener('beforeunload', () => { if ('speechSynthesis' in window) speechSynthesis.cancel(); });
+window.addEventListener('beforeunload', () => { stopCurrentSrc(); });
 load();
 </script>
 <link rel="stylesheet" href="/css/sila.css">
