@@ -1,6 +1,13 @@
 /**
  * ศิลา — Amethez Crystal AI Chat
  * Powered by Groq (llama-3.1-8b-instant)
+ *
+ * พฤติกรรม:
+ *  - โหลดหน้า → แสดงแค่ 💎 FAB
+ *  - greeting สั้นๆ ลอยเหนือ 💎 ชั่วคราว (5 วิ) ไม่เข้า chat
+ *  - กด 💎 → เปิด panel, บันทึก sessionStorage
+ *  - กด − → ปิด, บันทึก sessionStorage ว่าปิดแล้ว
+ *  - เปลี่ยนหน้าระหว่างคุย → panel ยังเปิดอยู่ (ถ้าไม่ได้กด −)
  */
 (function () {
   'use strict';
@@ -10,6 +17,7 @@
     maxTokens: 600,
     keyStore: 'amethez_gemini_key',
     historyStore: 'sila_history',
+    stateStore: 'sila_open',   // sessionStorage — 'true' | 'false'
     maxHistory: 60,
   };
 
@@ -23,45 +31,28 @@
 หน้าเว็บ: / | /stones/amethyst.html | /stones/rose-quartz.html | /stones/black-tourmaline.html | /stones/moldavite.html | /categories/chakra.html | /categories/zodiac.html | /geode/ | /consign.html
 ห้ามแต่งลิงก์ที่ไม่มีในรายการ`;
 
-  // ── PAGE GREETINGS ──────────────────────────────────────────────
-  const PAGE_GREETINGS = [
-    { test: p => p.includes('amethyst'),
-      msgs: ['💜 อ่านเรื่องอเมทิสต์กันอยู่เหรอคะ? หินนี้ดีมากเลยนะ ช่วยเรื่องสมาธิและการนอนหลับได้ดีค่ะ',
-             '✨ อเมทิสต์หน้านี้ครบมากเลยค่ะ มีอะไรอยากถามเพิ่มไหมคะ?'] },
-    { test: p => p.includes('rose-quartz'),
-      msgs: ['🩷 โรสควอตซ์หินแห่งความรักค่ะ กำลังมองหาเพื่อตัวเองหรือให้คนพิเศษอยู่คะ?',
-             '💗 อ่านเรื่องโรสควอตซ์อยู่ใช่ไหมคะ? มีอะไรสงสัยถามได้เลยนะคะ'] },
-    { test: p => p.includes('black-tourmaline'),
-      msgs: ['🖤 ทัวร์มาลีนดำปกป้องพลังงานลบได้ดีมากเลยค่ะ กำลังมองหาหินปกป้องอยู่ใช่ไหมคะ?',
-             '🛡️ หน้านี้มีข้อมูลทัวร์มาลีนดำครบเลยนะคะ ถามเพิ่มได้เลยค่ะ'] },
-    { test: p => p.includes('moldavite'),
-      msgs: ['🌿 โมลดาไวท์มาจากอวกาศค่ะ พลังงานแรงมากๆ เลย พร้อมรับการเปลี่ยนแปลงแล้วใช่ไหมคะ?',
-             '☄️ สนใจโมลดาไวท์เหรอคะ? หินนี้เร่งพลังงานชีวิตได้มากเลยนะคะ'] },
-    { test: p => p.includes('chakra'),
-      msgs: ['🔮 กำลังเรียนรู้เรื่องจักระอยู่เหรอคะ? แต่ละจักระมีหินที่เหมาะกันต่างกันไปเลยค่ะ',
-             '✨ หน้าจักระนี้ครบมากเลยนะคะ อยากรู้เรื่องจักระไหนเป็นพิเศษไหมคะ?'] },
-    { test: p => p.includes('zodiac'),
-      msgs: ['⭐ กำลังดูหินตามราศีอยู่เหรอคะ? บอกราศีมาได้เลย ศิลาแนะนำให้ค่ะ',
-             '🌙 แต่ละราศีมีหินเสริมดวงต่างกันเลยนะคะ ราศีอะไรอยู่คะ?'] },
-    { test: p => p.includes('geode'),
-      msgs: ['💎 โพรงอเมทิสต์ที่นี่สวยมากเลยนะคะ มีคำถามเรื่องขนาดหรือการวางในบ้านไหมคะ?',
-             '🏠 กำลังเลือกโพรงอเมทิสต์อยู่ใช่ไหมคะ? ให้ศิลาช่วยแนะนำได้เลยค่ะ'] },
-    { test: p => p.includes('consign'),
-      msgs: ['🤝 อยากฝากขายหินกับ Amethez เหรอคะ? มีข้อสงสัยอะไรถามได้เลยนะคะ',
-             '💼 เรารับฝากขายหินหลายประเภทเลยค่ะ มีอะไรอยากรู้เพิ่มไหมคะ?'] },
+  // ── TIP MESSAGES (สั้น 1 ประโยค แสดงเหนือ FAB ชั่วคราว) ────────
+  const PAGE_TIPS = [
+    { test: p => p.includes('amethyst'),       tip: '💜 สงสัยเรื่องอเมทิสต์? ถามได้เลยค่ะ' },
+    { test: p => p.includes('rose-quartz'),    tip: '🩷 โรสควอตซ์ — ถามเรื่องความรักได้นะคะ' },
+    { test: p => p.includes('black-tourmaline'),tip: '🖤 ทัวร์มาลีนดำ ปกป้องพลังงานค่ะ' },
+    { test: p => p.includes('moldavite'),      tip: '☄️ โมลดาไวท์มาจากอวกาศ อยากรู้ไหมคะ?' },
+    { test: p => p.includes('chakra'),         tip: '🔮 อยากรู้จักระไหนเป็นพิเศษไหมคะ?' },
+    { test: p => p.includes('zodiac'),         tip: '⭐ บอกราศีมาได้เลยค่ะ' },
+    { test: p => p.includes('geode'),          tip: '💎 ช่วยเลือกโพรงอเมทิสต์ได้ค่ะ' },
+    { test: p => p.includes('consign'),        tip: '🤝 อยากฝากขายหิน? ถามได้เลยค่ะ' },
+  ];
+  const DEFAULT_TIPS = [
+    'สวัสดีค่ะ 💜 มีอะไรให้ศิลาช่วยไหมคะ?',
+    '✨ มีหินที่สนใจไหมคะ? ถามได้เลย',
+    '🔮 ศิลาพร้อมช่วยเรื่องหินทุกอย่างค่ะ',
   ];
 
-  const DEFAULT_GREETINGS = [
-    'สวัสดีค่ะ 💜 ศิลาอยู่ตรงนี้เสมอเลยนะคะ มีอะไรอยากรู้เรื่องหินคริสตัลถามได้เลยค่ะ',
-    'ยินดีต้อนรับสู่ Amethez ค่ะ ✨ มีหินที่สนใจตัวไหนไหมคะ?',
-    'สวัสดีค่ะ 🔮 วันนี้กำลังมองหาหินเพื่ออะไรอยู่คะ?',
-  ];
-
-  function getPageGreeting() {
+  function getPageTip() {
     const p = location.pathname;
-    const match = PAGE_GREETINGS.find(pg => pg.test(p));
-    const pool = match ? match.msgs : DEFAULT_GREETINGS;
-    return pool[Math.floor(Math.random() * pool.length)];
+    const match = PAGE_TIPS.find(pg => pg.test(p));
+    if (match) return match.tip;
+    return DEFAULT_TIPS[Math.floor(Math.random() * DEFAULT_TIPS.length)];
   }
 
   // ── HISTORY ──────────────────────────────────────────────────────
@@ -76,6 +67,14 @@
       const raw = localStorage.getItem(CONFIG.historyStore);
       if (raw) messages = JSON.parse(raw);
     } catch { messages = []; }
+  }
+
+  // ── SESSION STATE ─────────────────────────────────────────────────
+  function isOpenState() {
+    return sessionStorage.getItem(CONFIG.stateStore) === 'true';
+  }
+  function saveOpenState(val) {
+    sessionStorage.setItem(CONFIG.stateStore, val ? 'true' : 'false');
   }
 
   // ── API ──────────────────────────────────────────────────────────
@@ -146,72 +145,86 @@
 
   // ── UI ───────────────────────────────────────────────────────────
   let panelOpen = false;
+  let tipTimer  = null;
 
   function buildUI() {
     const style = document.createElement('style');
     style.textContent = `
-      #sila-fab{position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;width:56px;height:56px;
+      #sila-fab{position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;width:52px;height:52px;
         border-radius:50%;background:linear-gradient(135deg,#7c3aed,#5b21b6);
         border:none;cursor:pointer;box-shadow:0 4px 20px rgba(124,58,237,.45);
-        display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:white;}
-      #sila-fab:hover{transform:scale(1.08);}
-      #sila-notif{position:absolute;top:-3px;right:-3px;width:14px;height:14px;
+        display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:white;
+        transition:transform .2s;}
+      #sila-fab:hover{transform:scale(1.1);}
+      #sila-notif{position:absolute;top:-3px;right:-3px;width:12px;height:12px;
         background:#ef4444;border-radius:50%;border:2px solid white;display:none;}
       #sila-notif.show{display:block;}
 
-      #sila-panel{position:fixed;bottom:5rem;right:1.5rem;z-index:9998;
-        width:350px;max-height:560px;background:white;border-radius:1.25rem;
+      /* Floating tip bubble above FAB */
+      #sila-tip{position:fixed;bottom:4.75rem;right:1.5rem;z-index:9998;
+        background:white;border:1px solid #ede8ff;border-radius:.85rem .85rem .85rem .2rem;
+        padding:.5rem .9rem;font-size:.8rem;color:#1a1228;line-height:1.45;
+        font-family:'Sarabun',sans-serif;box-shadow:0 4px 16px rgba(0,0,0,.12);
+        max-width:210px;cursor:pointer;white-space:nowrap;
+        animation:tip-in .25s ease;display:none;}
+      #sila-tip.show{display:block;}
+      @keyframes tip-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+      #sila-tip::after{content:'';position:absolute;bottom:-6px;left:14px;
+        border:6px solid transparent;border-top-color:white;border-bottom:none;}
+
+      /* Chat panel */
+      #sila-panel{position:fixed;bottom:5rem;right:1.5rem;z-index:9997;
+        width:340px;max-height:520px;background:white;border-radius:1.25rem;
         box-shadow:0 20px 60px rgba(0,0,0,.2);flex-direction:column;
         overflow:hidden;border:1px solid #ede8ff;font-family:'Sarabun',sans-serif;
-        display:none;}
+        display:none;transition:opacity .2s;}
       #sila-panel.open{display:flex;}
 
-      .s-head{background:linear-gradient(135deg,#4c1d95,#7c3aed);padding:.85rem 1.1rem;
-        display:flex;align-items:center;gap:.7rem;flex-shrink:0;}
-      .s-avatar{width:38px;height:38px;background:rgba(255,255,255,.2);border-radius:50%;
-        display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+      .s-head{background:linear-gradient(135deg,#4c1d95,#7c3aed);padding:.75rem 1rem;
+        display:flex;align-items:center;gap:.65rem;flex-shrink:0;}
+      .s-avatar{width:34px;height:34px;background:rgba(255,255,255,.2);border-radius:50%;
+        display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
       .s-info{flex:1;min-width:0;}
-      .s-name{color:white;font-weight:700;font-size:.9rem;}
-      .s-status{color:rgba(255,255,255,.75);font-size:.72rem;display:flex;align-items:center;gap:.3rem;margin-top:1px;}
+      .s-name{color:white;font-weight:700;font-size:.88rem;}
+      .s-status{color:rgba(255,255,255,.75);font-size:.7rem;display:flex;align-items:center;gap:.3rem;margin-top:1px;}
       .s-dot{width:6px;height:6px;background:#4ade80;border-radius:50%;flex-shrink:0;animation:s-pulse 2s infinite;}
       @keyframes s-pulse{0%,100%{opacity:1}50%{opacity:.4}}
-      .s-head-btns{display:flex;gap:.2rem;}
+      .s-head-btns{display:flex;gap:.15rem;}
       .s-hbtn{background:none;border:none;color:rgba(255,255,255,.65);cursor:pointer;
-        font-size:.9rem;padding:.3rem .45rem;border-radius:.35rem;line-height:1;transition:all .15s;font-family:sans-serif;}
+        font-size:.9rem;padding:.3rem .4rem;border-radius:.3rem;line-height:1;transition:all .15s;font-family:sans-serif;}
       .s-hbtn:hover{color:white;background:rgba(255,255,255,.15);}
 
-      #sila-msgs{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;
-        gap:.7rem;scroll-behavior:smooth;}
-      #sila-msgs::-webkit-scrollbar{width:4px;}
+      #sila-msgs{flex:1;overflow-y:auto;padding:.85rem;display:flex;flex-direction:column;
+        gap:.65rem;scroll-behavior:smooth;}
+      #sila-msgs::-webkit-scrollbar{width:3px;}
       #sila-msgs::-webkit-scrollbar-thumb{background:#d8b4fe;border-radius:2px;}
 
-      .s-bubble{max-width:86%;padding:.6rem .85rem;border-radius:1rem;font-size:.875rem;line-height:1.65;word-break:break-word;}
+      .s-bubble{max-width:86%;padding:.55rem .8rem;border-radius:1rem;font-size:.855rem;line-height:1.6;word-break:break-word;}
       .s-bubble.bot{background:#f5f0ff;color:#1a1228;border-radius:1rem 1rem 1rem .2rem;}
       .s-bubble.usr{background:#7c3aed;color:white;margin-left:auto;border-radius:1rem 1rem .2rem 1rem;}
-      .s-bubble.page-greet{background:#f0fdf4;border-left:3px solid #4ade80;border-radius:.5rem;
-        font-size:.82rem;color:#166534;max-width:100%;}
       .s-bubble.typing{background:#f5f0ff;}
       .s-dots{display:flex;gap:4px;align-items:center;padding:.15rem 0;}
-      .s-dots span{width:7px;height:7px;background:#a78bfa;border-radius:50%;
+      .s-dots span{width:6px;height:6px;background:#a78bfa;border-radius:50%;
         animation:s-td .9s infinite ease-in-out both;}
       .s-dots span:nth-child(2){animation-delay:.15s;}
       .s-dots span:nth-child(3){animation-delay:.3s;}
       @keyframes s-td{0%,80%,100%{transform:scale(.7);opacity:.4}40%{transform:scale(1);opacity:1}}
 
-      #sila-input-row{display:flex;gap:.5rem;padding:.65rem .75rem;border-top:1px solid #f0ebff;flex-shrink:0;}
-      #sila-inp{flex:1;border:1.5px solid #e5e7eb;border-radius:.7rem;padding:.5rem .8rem;
-        font-size:.875rem;font-family:'Sarabun',sans-serif;outline:none;resize:none;
-        max-height:80px;transition:border-color .2s;line-height:1.4;}
+      #sila-input-row{display:flex;gap:.45rem;padding:.6rem .7rem;border-top:1px solid #f0ebff;flex-shrink:0;}
+      #sila-inp{flex:1;border:1.5px solid #e5e7eb;border-radius:.65rem;padding:.45rem .75rem;
+        font-size:.855rem;font-family:'Sarabun',sans-serif;outline:none;resize:none;
+        max-height:72px;transition:border-color .2s;line-height:1.4;}
       #sila-inp:focus{border-color:#a78bfa;}
-      #sila-send{width:36px;height:36px;background:#7c3aed;border:none;border-radius:.7rem;
+      #sila-send{width:34px;height:34px;background:#7c3aed;border:none;border-radius:.65rem;
         cursor:pointer;display:flex;align-items:center;justify-content:center;
         flex-shrink:0;transition:opacity .2s;align-self:flex-end;}
       #sila-send:hover{opacity:.85;}
       #sila-send:disabled{opacity:.35;cursor:not-allowed;}
-      #sila-send svg{width:15px;height:15px;fill:white;}
+      #sila-send svg{width:14px;height:14px;fill:white;}
 
       @media(max-width:480px){
-        #sila-panel{width:calc(100vw - 2rem);right:1rem;max-height:70vh;}
+        #sila-panel{width:calc(100vw - 2rem);right:1rem;max-height:65vh;}
+        #sila-tip{max-width:170px;font-size:.75rem;}
       }
     `;
     document.head.appendChild(style);
@@ -223,6 +236,12 @@
     fab.innerHTML = `💎<span id="sila-notif"></span>`;
     fab.addEventListener('click', togglePanel);
     document.body.appendChild(fab);
+
+    // Tip bubble
+    const tip = document.createElement('div');
+    tip.id = 'sila-tip';
+    tip.addEventListener('click', () => { hideTip(); openPanel(); });
+    document.body.appendChild(tip);
 
     // Panel
     const panel = document.createElement('div');
@@ -236,7 +255,7 @@
         </div>
         <div class="s-head-btns">
           <button class="s-hbtn" id="sila-clear-btn" title="ล้างแชท">🗑</button>
-          <button class="s-hbtn" id="sila-min-btn" title="ย่อ">&#8722;</button>
+          <button class="s-hbtn" id="sila-min-btn" title="ปิด" style="font-size:1.1rem;font-weight:700">−</button>
         </div>
       </div>
       <div id="sila-msgs"></div>
@@ -245,15 +264,10 @@
         <button id="sila-send" aria-label="ส่ง">
           <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg>
         </button>
-    </div>`;
+      </div>`;
     document.body.appendChild(panel);
 
-    // ใช้ addEventListener แทน onclick inline
-    panel.querySelector('#sila-min-btn').addEventListener('click', () => {
-      panelOpen = false;
-      panel.classList.remove('open');
-    });
-
+    panel.querySelector('#sila-min-btn').addEventListener('click', closePanel);
     panel.querySelector('#sila-clear-btn').addEventListener('click', () => {
       if (!confirm('ล้างประวัติแชทกับศิลาทั้งหมด?')) return;
       messages = [];
@@ -267,24 +281,46 @@
     const inp = panel.querySelector('#sila-inp');
     inp.addEventListener('input', () => {
       inp.style.height = 'auto';
-      inp.style.height = Math.min(inp.scrollHeight, 80) + 'px';
+      inp.style.height = Math.min(inp.scrollHeight, 72) + 'px';
     });
     inp.addEventListener('keydown', e => {
       if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); silaSend(); }
     });
   }
 
-  function togglePanel() {
-    panelOpen = !panelOpen;
-    const panel = document.getElementById('sila-panel');
-    panel.classList.toggle('open', panelOpen);
+  function openPanel() {
+    panelOpen = true;
+    document.getElementById('sila-panel').classList.add('open');
     document.getElementById('sila-notif').classList.remove('show');
+    saveOpenState(true);
+    const msgs = document.getElementById('sila-msgs');
+    msgs.scrollTop = msgs.scrollHeight;
+    setTimeout(() => document.getElementById('sila-inp')?.focus(), 150);
+  }
 
-    if (panelOpen) {
-      const msgs = document.getElementById('sila-msgs');
-      msgs.scrollTop = msgs.scrollHeight;
-      setTimeout(() => document.getElementById('sila-inp')?.focus(), 150);
-    }
+  function closePanel() {
+    panelOpen = false;
+    document.getElementById('sila-panel').classList.remove('open');
+    saveOpenState(false);
+  }
+
+  function togglePanel() {
+    if (panelOpen) closePanel();
+    else { hideTip(); openPanel(); }
+  }
+
+  // ── TIP BUBBLE ───────────────────────────────────────────────────
+  function showTip(text) {
+    const el = document.getElementById('sila-tip');
+    el.textContent = text;
+    el.classList.add('show');
+    tipTimer = setTimeout(hideTip, 5000);
+  }
+
+  function hideTip() {
+    clearTimeout(tipTimer);
+    const el = document.getElementById('sila-tip');
+    if (el) el.classList.remove('show');
   }
 
   // ── SEND ─────────────────────────────────────────────────────────
@@ -334,29 +370,30 @@
     buildUI();
     loadProducts();
 
-    // Restore previous messages
+    // Restore previous chat messages (ไม่มี greeting ใน chat)
     if (messages.length > 0) {
       messages.forEach(m => addBubble(m.role === 'user' ? 'usr' : 'bot', m.content));
+    } else {
+      // ครั้งแรกที่เปิด — ทักทายใน chat เบาๆ
+      addBubble('bot', 'สวัสดีค่ะ 💜 ศิลาพร้อมช่วยเรื่องหินคริสตัลค่ะ ถามได้เลยนะคะ');
     }
 
-    // Page greeting — ทักทายทุกหน้า เหมือนเพื่อนเดินด้วยกัน
-    const greeting = getPageGreeting();
-    const greetEl = addBubble('page-greet', greeting);
-    // เก็บ greeting ไว้ใน messages ด้วยเพื่อให้ AI มี context
-    messages.push({ role: 'sila', content: greeting });
-    saveHistory();
+    // Restore panel state from sessionStorage
+    if (isOpenState()) {
+      openPanel();
+    } else {
+      // แสดง tip สั้นๆ เหนือ FAB หลัง 2.5 วิ (ถ้าไม่ได้ปิดไว้)
+      if (sessionStorage.getItem(CONFIG.stateStore) !== 'false') {
+        setTimeout(() => {
+          if (!panelOpen) showTip(getPageTip());
+        }, 2500);
+      }
+    }
 
-    // Notif dot หลัง 20s ถ้าไม่ได้เปิด
+    // Notif dot หลัง 25s ถ้าไม่ได้เปิด
     setTimeout(() => {
       if (!panelOpen) document.getElementById('sila-notif')?.classList.add('show');
-    }, 20000);
-
-    let scrollDone = false;
-    window.addEventListener('scroll', () => {
-      if (scrollDone || panelOpen) return;
-      const ratio = window.scrollY / (document.body.scrollHeight - window.innerHeight || 1);
-      if (ratio > 0.35) { scrollDone = true; document.getElementById('sila-notif')?.classList.add('show'); }
-    }, { passive: true });
+    }, 25000);
   }
 
   if (document.readyState === 'loading') {
