@@ -47,7 +47,7 @@ const NAV_HTML = `
         <li><a href="/shop/academy.html">✦ Crystal Academy</a></li>
       </ul>
     </li>
-    <li><a href="/talk/read.html" class="nav-ritual">🔮 ห้องตั้งจิต</a></li>
+    <li><a href="/talk/" class="nav-ritual">🔮 ห้องคลื่น Manifest</a></li>
   </ul></nav>
 </div>`;
 
