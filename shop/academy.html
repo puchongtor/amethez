@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crystal Academy — คอร์สเรียนและ E-Book คริสตัล | Amethez</title>
+  <meta name="description" content="เรียนรู้เรื่องหินคริสตัลอย่างเป็นระบบ คอร์สออนไลน์ E-Book และ PDF Guide โดย Master Wuchong และ Crystal Atlas">
+  <link rel="canonical" href="https://amethez.com/shop/academy.html">
+  <meta property="og:title" content="Crystal Academy — คอร์สเรียนและ E-Book คริสตัล">
+  <meta property="og:url" content="https://amethez.com/shop/academy.html">
+  <meta property="og:image" content="https://amethez.com/images/og-default.jpg">
+  <meta property="og:locale" content="th_TH">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    :root { --purple:#7c3aed; --gold:#c9a84c; }
+
+    .acad-hero { background:linear-gradient(160deg,#0f0820,#1a1228,#0a1628); padding:4rem 1.5rem 3rem; text-align:center; position:relative; overflow:hidden; }
+    .acad-hero::before { content:'📚'; position:absolute; font-size:18rem; opacity:.04; top:50%; left:50%; transform:translate(-50%,-50%); pointer-events:none; }
+    .acad-hero .badge { display:inline-block; background:linear-gradient(135deg,#7c3aed,#a78bfa); color:white; font-size:.72rem; font-weight:800; padding:.3rem .9rem; border-radius:2rem; letter-spacing:.08em; text-transform:uppercase; margin-bottom:1rem; }
+    .acad-hero h1 { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,4vw,2.8rem); color:#f3effa; margin-bottom:.75rem; position:relative; }
+    .acad-hero p { color:rgba(255,255,255,.65); font-size:.95rem; line-height:1.8; max-width:520px; margin:0 auto; position:relative; }
+
+    .shop-subnav { display:flex; justify-content:center; gap:.5rem; padding:1.25rem; background:#f3effa; flex-wrap:wrap; }
+    .shop-subnav a { padding:.45rem 1.1rem; border-radius:2rem; font-size:.82rem; font-weight:700; text-decoration:none; color:#6b5e8a; border:1.5px solid #d8cef5; transition:all .15s; font-family:Sarabun,sans-serif; }
+    .shop-subnav a.on, .shop-subnav a:hover { background:#7c3aed; color:white; border-color:#7c3aed; }
+
+    .wrap { max-width:980px; margin:0 auto; padding:3rem 1.5rem; }
+
+    /* Section heading */
+    .sec-head { text-align:center; margin-bottom:2rem; }
+    .sec-head h2 { font-family:'Playfair Display',serif; font-size:1.5rem; color:#1a1228; margin-bottom:.4rem; }
+    .sec-head p { font-size:.88rem; color:#6b5e8a; }
+
+    /* Course cards */
+    .courses-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.5rem; margin-bottom:3.5rem; }
+    .course-card { background:white; border:1px solid #e9e0f8; border-radius:1.25rem; overflow:hidden; display:flex; flex-direction:column; }
+    .course-banner { height:130px; display:flex; align-items:center; justify-content:center; font-size:3.5rem; position:relative; }
+    .course-type { position:absolute; top:.75rem; right:.75rem; font-size:.65rem; font-weight:800; padding:.2rem .6rem; border-radius:2rem; text-transform:uppercase; letter-spacing:.05em; }
+    .type-course { background:#7c3aed; color:white; }
+    .type-ebook { background:#c9a84c; color:#1a1228; }
+    .type-pdf { background:#0891b2; color:white; }
+    .type-soon { background:#e5e7eb; color:#6b7280; }
+    .course-body { padding:1.25rem; flex:1; display:flex; flex-direction:column; }
+    .course-author { font-size:.72rem; color:#9b89bb; margin-bottom:.4rem; font-weight:600; }
+    .course-title { font-family:'Playfair Display',serif; font-size:1.05rem; color:#1a1228; margin-bottom:.5rem; line-height:1.45; }
+    .course-desc { font-size:.82rem; color:#6b5e8a; line-height:1.7; flex:1; margin-bottom:1rem; }
+    .course-includes { list-style:none; margin:0 0 1.1rem; padding:0; }
+    .course-includes li { font-size:.78rem; color:#5a4e72; padding:.2rem 0; display:flex; align-items:center; gap:.4rem; }
+    .course-includes li::before { content:'✓'; color:#7c3aed; font-weight:700; flex-shrink:0; }
+    .course-footer { display:flex; align-items:center; justify-content:space-between; margin-top:auto; padding-top:1rem; border-top:1px solid #f0e8ff; }
+    .course-price { font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:700; color:#7c3aed; }
+    .course-price small { font-size:.75rem; font-weight:400; color:#9b89bb; display:block; font-family:Sarabun,sans-serif; }
+    .course-btn { background:#7c3aed; color:white; padding:.5rem 1rem; border-radius:.65rem; font-size:.8rem; font-weight:700; text-decoration:none; transition:background .15s; white-space:nowrap; }
+    .course-btn:hover { background:#6d28d9; }
+    .course-btn.soon { background:#e5e7eb; color:#9b89bb; cursor:not-allowed; pointer-events:none; }
+
+    /* Coming soon note */
+    .coming-note { background:linear-gradient(135deg,#f3effa,#e8deff); border-radius:1rem; padding:1.5rem; text-align:center; margin-bottom:3rem; border:1px solid #d8cef5; }
+    .coming-note p { font-size:.88rem; color:#6b5e8a; margin:0; }
+    .coming-note strong { color:#7c3aed; }
+
+    /* FAQ */
+    .faq-list { margin-bottom:3rem; }
+    .faq-item { border-bottom:1px solid #f0e8ff; }
+    .faq-q { width:100%; text-align:left; padding:1rem 0; background:none; border:none; font-family:Sarabun,sans-serif; font-size:.92rem; font-weight:600; color:#1a1228; cursor:pointer; display:flex; justify-content:space-between; align-items:center; }
+    .faq-q::after { content:'＋'; font-size:1.1rem; color:#7c3aed; flex-shrink:0; }
+    .faq-q.open::after { content:'－'; }
+    .faq-a { display:none; padding:0 0 1rem; font-size:.85rem; color:#5a4e72; line-height:1.8; }
+    .faq-a.open { display:block; }
+
+    /* Notify form */
+    .notify-box { background:linear-gradient(160deg,#1a1228,#0f0820); border-radius:1.5rem; padding:2.5rem; text-align:center; }
+    .notify-box h3 { font-family:'Playfair Display',serif; font-size:1.5rem; color:#f3effa; margin-bottom:.5rem; }
+    .notify-box p { color:rgba(255,255,255,.6); font-size:.88rem; margin-bottom:1.5rem; }
+    .notify-form { display:flex; gap:.75rem; max-width:420px; margin:0 auto; flex-wrap:wrap; }
+    .notify-form input { flex:1; min-width:200px; padding:.75rem 1rem; border-radius:.75rem; border:1px solid rgba(255,255,255,.15); background:rgba(255,255,255,.08); color:white; font-family:Sarabun,sans-serif; font-size:.88rem; }
+    .notify-form input::placeholder { color:rgba(255,255,255,.35); }
+    .notify-form button { background:#7c3aed; color:white; border:none; padding:.75rem 1.4rem; border-radius:.75rem; font-weight:700; font-size:.88rem; cursor:pointer; font-family:Sarabun,sans-serif; white-space:nowrap; }
+    .notify-form button:hover { background:#6d28d9; }
+    .notify-thanks { display:none; color:#a78bfa; font-size:.9rem; margin-top:.75rem; }
+  </style>
+</head>
+<body>
+
+<header class="site-header"></header>
+
+<section class="acad-hero">
+  <div class="badge">🎓 Crystal Academy</div>
+  <h1>เรียนรู้เรื่องหินอย่างเป็นระบบ</h1>
+  <p>คอร์สออนไลน์ E-Book และ PDF Guide โดยผู้เชี่ยวชาญ<br>ตั้งแต่มือใหม่ถึงผู้ที่ต้องการลึกขึ้น</p>
+</section>
+
+<div class="shop-subnav">
+  <a href="/shop/">✦ Crystal Market</a>
+  <a href="/shop/collection.html">✦ Private Collection</a>
+  <a href="/shop/academy.html" class="on">✦ Crystal Academy</a>
+</div>
+
+<div class="wrap">
+
+  <div class="sec-head">
+    <h2>คอร์สและสื่อการเรียนรู้</h2>
+    <p>เลือกเรียนตามความสนใจ เปิดดูได้ตลอดชีพ</p>
+  </div>
+
+  <div class="courses-grid">
+
+    <!-- E-Book 1 -->
+    <div class="course-card">
+      <div class="course-banner" style="background:linear-gradient(135deg,#f3effa,#ddd6fe);">
+        📖
+        <span class="course-type type-ebook">E-Book</span>
+      </div>
+      <div class="course-body">
+        <div class="course-author">โดย Crystal Atlas</div>
+        <div class="course-title">คู่มือหินคริสตัลฉบับสมบูรณ์ — 100 ชนิดที่ควรรู้จัก</div>
+        <div class="course-desc">รวบรวมข้อมูลหิน 100 ชนิด คุณสมบัติ พลังงาน จักระ ราศีที่เหมาะ และวิธีใช้งาน เหมาะสำหรับมือใหม่และผู้ที่ต้องการอ้างอิงอย่างรวดเร็ว</div>
+        <ul class="course-includes">
+          <li>PDF 120+ หน้า ภาษาไทย</li>
+          <li>ตาราง Quick Reference ทุกหิน</li>
+          <li>ดาวน์โหลดได้ทันที</li>
+          <li>อัปเดตตลอดชีพ</li>
+        </ul>
+        <div class="course-footer">
+          <div class="course-price">฿290 <small>ดาวน์โหลด PDF</small></div>
+          <a href="https://line.me/R/ti/p/@masterpuch" class="course-btn" target="_blank">สั่งซื้อ</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PDF Guide -->
+    <div class="course-card">
+      <div class="course-banner" style="background:linear-gradient(135deg,#e0f2fe,#bae6fd);">
+        🌙
+        <span class="course-type type-pdf">PDF Guide</span>
+      </div>
+      <div class="course-body">
+        <div class="course-author">โดย อาจารย์เมธา</div>
+        <div class="course-title">หินตามราศีและดาว — เลือกหินที่ใช่สำหรับคุณ</div>
+        <div class="course-desc">คู่มือเลือกหินตามราศีเกิด ดาวประจำตัว และทิศทางดวงดาวประจำปี ผสมผสานโหราศาสตร์ไทยเข้ากับพลังงานคริสตัล</div>
+        <ul class="course-includes">
+          <li>PDF 60 หน้า ภาษาไทย</li>
+          <li>ครบทุก 12 ราศี</li>
+          <li>รวมดาว Rahu & Ketu</li>
+          <li>ดาวน์โหลดได้ทันที</li>
+        </ul>
+        <div class="course-footer">
+          <div class="course-price">฿190 <small>ดาวน์โหลด PDF</small></div>
+          <a href="https://line.me/R/ti/p/@masterpuch" class="course-btn" target="_blank">สั่งซื้อ</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Course coming soon -->
+    <div class="course-card">
+      <div class="course-banner" style="background:linear-gradient(135deg,#fdf4ff,#f0e8ff);">
+        🧙
+        <span class="course-type type-soon">เร็วๆ นี้</span>
+      </div>
+      <div class="course-body">
+        <div class="course-author">โดย Master Wuchong</div>
+        <div class="course-title">Crystal Energy Mastery — คอร์สพลังงานหินขั้นสูง</div>
+        <div class="course-desc">คอร์สเต็มรูปแบบ 8 โมดูล ตั้งแต่พื้นฐานพลังงาน จักระ การทำ Grid การ Manifest ไปจนถึงการใช้หินในชีวิตประจำวัน</div>
+        <ul class="course-includes">
+          <li>8 โมดูล วิดีโอ + PDF</li>
+          <li>กลุ่ม LINE Support</li>
+          <li>Certificate of Completion</li>
+          <li>Access ตลอดชีพ</li>
+        </ul>
+        <div class="course-footer">
+          <div class="course-price">฿1,990 <small>เปิดรับเร็วๆ นี้</small></div>
+          <span class="course-btn soon">เร็วๆ นี้</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PDF Free -->
+    <div class="course-card">
+      <div class="course-banner" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);">
+        🆓
+        <span class="course-type type-pdf">ฟรี</span>
+      </div>
+      <div class="course-body">
+        <div class="course-author">โดย Crystal Atlas</div>
+        <div class="course-title">Starter Pack — เริ่มต้นกับหิน 5 ชนิดแรก</div>
+        <div class="course-desc">คู่มือฟรีสำหรับมือใหม่ แนะนำหิน 5 ชนิดที่ควรเริ่มต้น วิธีล้าง วิธีชาร์จ และวิธีใช้งานเบื้องต้น</div>
+        <ul class="course-includes">
+          <li>PDF 20 หน้า ภาษาไทย</li>
+          <li>Checklist มือใหม่</li>
+          <li>ดาวน์โหลดฟรีทันที</li>
+        </ul>
+        <div class="course-footer">
+          <div class="course-price">ฟรี <small>ดาวน์โหลด PDF</small></div>
+          <a href="https://line.me/R/ti/p/@masterpuch" class="course-btn" target="_blank">รับฟรี</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="coming-note">
+    <p>💡 สินค้าดิจิทัลส่งผ่าน <strong>LINE @masterpuch</strong> หลังชำระเงิน · รับไฟล์ภายใน 5 นาที (ในเวลาทำการ)</p>
+  </div>
+
+  <!-- FAQ -->
+  <div class="sec-head">
+    <h2>คำถามที่พบบ่อย</h2>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">ซื้อแล้วได้รับไฟล์อย่างไร?</button>
+      <div class="faq-a">หลังชำระเงินผ่าน LINE @masterpuch เราจะส่งลิงค์ดาวน์โหลดไฟล์ PDF ให้ทาง LINE ภายใน 5 นาที (ในเวลาทำการ 9.00–21.00 น.)</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">สามารถอ่านบนมือถือได้ไหม?</button>
+      <div class="faq-a">ได้ทุกรูปแบบ อ่านบน iPhone, Android, iPad, Computer ผ่าน PDF Reader หรือ Google Drive ได้เลย</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">มีการอัปเดตเนื้อหาหลังซื้อไหม?</button>
+      <div class="faq-a">E-Book และ PDF Guide มีการอัปเดตเนื้อหาฟรีตลอดชีพ เมื่อมีเวอร์ชันใหม่จะแจ้งทาง LINE ให้ดาวน์โหลดใหม่</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">ชำระเงินได้ด้วยวิธีใด?</button>
+      <div class="faq-a">โอนเงินผ่านพร้อมเพย์ / PromptPay, QR Code ธนาคาร, หรือ TrueMoney Wallet ขึ้นอยู่กับที่ตกลงกันใน LINE</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">คอร์ส Crystal Energy Mastery จะเปิดเมื่อไหร่?</button>
+      <div class="faq-a">คาดว่าจะเปิดรับนักเรียนกลุ่มแรกภายในปี 2025 กรอกอีเมลด้านล่างเพื่อรับแจ้งก่อนใครและราคา Early Bird</div>
+    </div>
+  </div>
+
+  <!-- Notify -->
+  <div class="notify-box">
+    <h3>🔔 รับแจ้งก่อนใคร</h3>
+    <p>กรอกอีเมลเพื่อรับข่าวสารคอร์สใหม่และราคา Early Bird</p>
+    <form class="notify-form" onsubmit="submitNotify(event)">
+      <input type="email" placeholder="อีเมลของคุณ" required>
+      <button type="submit">แจ้งฉันด้วย</button>
+    </form>
+    <div class="notify-thanks" id="notify-thanks">✅ บันทึกแล้ว! เราจะแจ้งคุณเมื่อมีคอร์สใหม่</div>
+  </div>
+
+</div>
+
+<footer class="site-footer"></footer>
+
+<script>
+function toggleFaq(btn) {
+  btn.classList.toggle('open');
+  btn.nextElementSibling.classList.toggle('open');
+}
+function submitNotify(e) {
+  e.preventDefault();
+  document.getElementById('notify-thanks').style.display = 'block';
+  e.target.style.display = 'none';
+}
+</script>
+<script src="/js/components.js"></script>
+<script src="/js/sila.js"></script>
+</body>
+</html>

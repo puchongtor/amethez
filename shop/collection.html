@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Private Collection — หินคุณภาพสูงคัดพิเศษ | Amethez</title>
+  <meta name="description" content="Private Collection คอลเลคชันหินคริสตัลคุณภาพสูงที่คัดสรรพิเศษโดย masterpuch ติดต่อผ่าน LINE เพื่อดูสต็อกและราคา">
+  <link rel="canonical" href="https://amethez.com/shop/collection.html">
+  <meta property="og:title" content="Private Collection — หินคุณภาพสูงคัดพิเศษ">
+  <meta property="og:url" content="https://amethez.com/shop/collection.html">
+  <meta property="og:image" content="https://amethez.com/images/og-default.jpg">
+  <meta property="og:locale" content="th_TH">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    :root { --purple:#7c3aed; --gold:#c9a84c; }
+
+    .col-hero { background:linear-gradient(160deg,#0a0615,#1a1228,#130a23); padding:4rem 1.5rem 3rem; text-align:center; position:relative; overflow:hidden; }
+    .col-hero::before { content:'💎'; position:absolute; font-size:20rem; opacity:.04; top:50%; left:50%; transform:translate(-50%,-50%); pointer-events:none; }
+    .col-hero .badge { display:inline-block; background:linear-gradient(135deg,#c9a84c,#e8c96b); color:#1a1228; font-size:.72rem; font-weight:800; padding:.3rem .9rem; border-radius:2rem; letter-spacing:.08em; text-transform:uppercase; margin-bottom:1rem; }
+    .col-hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2rem,5vw,3rem); color:#f3effa; margin-bottom:.75rem; position:relative; }
+    .col-hero p { color:rgba(255,255,255,.65); font-size:.95rem; line-height:1.8; max-width:520px; margin:0 auto; position:relative; }
+
+    .shop-subnav { display:flex; justify-content:center; gap:.5rem; padding:1.25rem; background:#f3effa; flex-wrap:wrap; }
+    .shop-subnav a { padding:.45rem 1.1rem; border-radius:2rem; font-size:.82rem; font-weight:700; text-decoration:none; color:#6b5e8a; border:1.5px solid #d8cef5; transition:all .15s; font-family:Sarabun,sans-serif; }
+    .shop-subnav a.on, .shop-subnav a:hover { background:#7c3aed; color:white; border-color:#7c3aed; }
+
+    .wrap { max-width:960px; margin:0 auto; padding:3rem 1.5rem; }
+
+    /* How it works */
+    .how-steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1.25rem; margin-bottom:3rem; }
+    .step { background:white; border:1px solid #e9e0f8; border-radius:1rem; padding:1.5rem; text-align:center; }
+    .step-num { width:2.5rem; height:2.5rem; background:linear-gradient(135deg,#7c3aed,#a78bfa); color:white; font-weight:800; font-size:.9rem; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto .75rem; }
+    .step h4 { font-size:.9rem; color:#1a1228; margin-bottom:.4rem; }
+    .step p { font-size:.8rem; color:#6b5e8a; line-height:1.6; }
+
+    /* Collection cards */
+    .collection-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:1.5rem; margin-bottom:3rem; }
+    .ccard { background:white; border:1px solid #e9e0f8; border-radius:1.25rem; overflow:hidden; }
+    .ccard-img { aspect-ratio:4/3; background:linear-gradient(135deg,#f3effa,#e8deff); display:flex; align-items:center; justify-content:center; font-size:4rem; position:relative; }
+    .ccard-tag { position:absolute; top:.75rem; left:.75rem; background:linear-gradient(135deg,#c9a84c,#e8c96b); color:#1a1228; font-size:.65rem; font-weight:800; padding:.2rem .6rem; border-radius:2rem; letter-spacing:.05em; text-transform:uppercase; }
+    .ccard-body { padding:1.25rem; }
+    .ccard-title { font-family:'Playfair Display',serif; font-size:1rem; color:#1a1228; margin-bottom:.4rem; }
+    .ccard-desc { font-size:.8rem; color:#6b5e8a; line-height:1.65; margin-bottom:.85rem; }
+    .ccard-footer { display:flex; align-items:center; justify-content:space-between; }
+    .ccard-price { font-size:.8rem; color:#9b89bb; }
+    .ccard-price strong { font-size:1rem; color:#7c3aed; }
+    .ccard-line { background:#06C755; color:white; font-size:.78rem; font-weight:700; padding:.4rem .9rem; border-radius:.5rem; text-decoration:none; display:inline-flex; align-items:center; gap:.3rem; }
+
+    /* CTA */
+    .line-cta { background:linear-gradient(135deg,#023020,#064e3b); border-radius:1.5rem; padding:3rem 2rem; text-align:center; }
+    .line-cta h2 { font-family:'Playfair Display',serif; font-size:1.75rem; color:#f3effa; margin-bottom:.75rem; }
+    .line-cta p { color:rgba(255,255,255,.65); font-size:.9rem; line-height:1.8; margin-bottom:1.75rem; max-width:480px; margin-left:auto; margin-right:auto; }
+    .line-btn-big { display:inline-flex; align-items:center; gap:.75rem; background:#06C755; color:white; padding:1rem 2rem; border-radius:1rem; font-size:1rem; font-weight:800; text-decoration:none; transition:transform .15s,box-shadow .15s; }
+    .line-btn-big:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(6,199,85,.3); }
+    .line-id { font-size:.8rem; color:rgba(255,255,255,.6); margin-top:.75rem; }
+  </style>
+</head>
+<body>
+
+<header class="site-header"></header>
+
+<section class="col-hero">
+  <div class="badge">✦ Exclusive Collection</div>
+  <h1>Private Collection</h1>
+  <p>หินคริสตัลคุณภาพสูงที่คัดสรรเป็นพิเศษ<br>ไม่มีในตลาดทั่วไป — ติดต่อโดยตรงเพื่อดูสต็อก</p>
+</section>
+
+<div class="shop-subnav">
+  <a href="/shop/">✦ Crystal Market</a>
+  <a href="/shop/collection.html" class="on">✦ Private Collection</a>
+  <a href="/shop/academy.html">✦ Crystal Academy</a>
+</div>
+
+<div class="wrap">
+
+  <div class="how-steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h4>เลือกหินที่สนใจ</h4>
+      <p>ดูตัวอย่างคอลเลคชันด้านล่าง หรือบอกประเภทหินที่ต้องการ</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h4>ทักมาที่ LINE</h4>
+      <p>ส่งข้อความหา @masterpuch เพื่อขอดูสต็อกจริงและราคา</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h4>รับคำแนะนำส่วนตัว</h4>
+      <p>ผู้เชี่ยวชาญช่วยเลือกหินที่เหมาะกับคุณโดยเฉพาะ</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h4>จัดส่งถึงบ้าน</h4>
+      <p>แพ็คเกจพิเศษ ห่ออย่างดี พร้อมใบรับรองความแท้</p>
+    </div>
+  </div>
+
+  <div class="collection-grid">
+
+    <div class="ccard">
+      <div class="ccard-img">
+        🟢
+        <div class="ccard-tag">Rare</div>
+      </div>
+      <div class="ccard-body">
+        <div class="ccard-title">Moldavite แท้ สาธารณรัฐเช็ก</div>
+        <div class="ccard-desc">โมลดาไวท์แท้จากแหล่งต้นกำเนิด สาธารณรัฐเช็ก มีใบรับรองความแท้ เปลี่ยนแปลงพลังงานอย่างรวดเร็ว</div>
+        <div class="ccard-footer">
+          <div class="ccard-price">ราคาเริ่มต้น <strong>฿3,500</strong></div>
+          <a href="https://line.me/R/ti/p/@masterpuch" class="ccard-line" target="_blank">LINE →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="ccard">
+      <div class="ccard-img">
+        💜
+        <div class="ccard-tag">Premium</div>
+      </div>
+      <div class="ccard-body">
+        <div class="ccard-title">โพรงอเมทิสต์บราซิล AAA Grade</div>
+        <div class="ccard-desc">โพรงอเมทิสต์เกรด AAA สีม่วงเข้มสม่ำเสมอ ขนาด 3-8 kg เหมาะสำหรับตั้งบ้านหรือออฟฟิศ</div>
+        <div class="ccard-footer">
+          <div class="ccard-price">ราคาเริ่มต้น <strong>฿4,500</strong></div>
+          <a href="https://line.me/R/ti/p/@masterpuch" class="ccard-line" target="_blank">LINE →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="ccard">
+      <div class="ccard-img">
+        ⚫
+        <div class="ccard-tag">Thai Origin</div>
+      </div>
+      <div class="ccard-body">
+        <div class="ccard-title">สะเก็ดดาวไทย Premium Grade</div>
+        <div class="ccard-desc">สะเก็ดดาวไทย (Tektite) เกรดสูง คัดพิเศษจากแหล่งในไทย รูปทรงสวย ผิวเรียบ พลังงานเข้มข้น</div>
+        <div class="ccard-footer">
+          <div class="ccard-price">ราคาเริ่มต้น <strong>฿800</strong></div>
+          <a href="https://line.me/R/ti/p/@masterpuch" class="ccard-line" target="_blank">LINE →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="ccard">
+      <div class="ccard-img">
+        🔵
+        <div class="ccard-tag">Rare</div>
+      </div>
+      <div class="ccard-body">
+        <div class="ccard-title">Larimar จากโดมินิกัน</div>
+        <div class="ccard-desc">ลาริมาร์หินสีฟ้าน้ำทะเลจากโดมินิกันเพียงแห่งเดียวในโลก หินแห่งการสื่อสารและความสงบ</div>
+        <div class="ccard-footer">
+          <div class="ccard-price">ราคาเริ่มต้น <strong>฿1,200</strong></div>
+          <a href="https://line.me/R/ti/p/@masterpuch" class="ccard-line" target="_blank">LINE →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="ccard">
+      <div class="ccard-img">
+        🔵
+        <div class="ccard-tag">Premium</div>
+      </div>
+      <div class="ccard-body">
+        <div class="ccard-title">Aquamarine ดิบ ขนาดใหญ่</div>
+        <div class="ccard-desc">อะความารีนดิบสีฟ้าใสแบบ Natural มีการก่อตัวของผลึกสวยงาม หินแห่งความกล้าและความชัดเจน</div>
+        <div class="ccard-footer">
+          <div class="ccard-price">ราคาเริ่มต้น <strong>฿2,200</strong></div>
+          <a href="https://line.me/R/ti/p/@masterpuch" class="ccard-line" target="_blank">LINE →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="ccard">
+      <div class="ccard-img">
+        🟣
+        <div class="ccard-tag">Custom</div>
+      </div>
+      <div class="ccard-body">
+        <div class="ccard-title">Custom Order — หินตามความต้องการ</div>
+        <div class="ccard-desc">บอกวัตถุประสงค์ ราศี หรือหินที่ต้องการ ผู้เชี่ยวชาญจะคัดหินที่เหมาะที่สุดให้โดยเฉพาะ</div>
+        <div class="ccard-footer">
+          <div class="ccard-price">ราคา <strong>ตามตกลง</strong></div>
+          <a href="https://line.me/R/ti/p/@masterpuch" class="ccard-line" target="_blank">LINE →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="line-cta">
+    <h2>พร้อมเลือกหินของคุณ?</h2>
+    <p>ทักมาที่ LINE เพื่อดูสต็อกจริง รูปถ่ายหิน และรับคำแนะนำส่วนตัวจากผู้เชี่ยวชาญ ตอบเร็ว 9.00 – 21.00 น.</p>
+    <a href="https://line.me/R/ti/p/@masterpuch" class="line-btn-big" target="_blank">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+      LINE @masterpuch
+    </a>
+    <div class="line-id">หรือค้นหา @masterpuch ใน LINE App</div>
+  </div>
+
+</div>
+
+<footer class="site-footer"></footer>
+<script src="/js/components.js"></script>
+<script src="/js/sila.js"></script>
+</body>
+</html>

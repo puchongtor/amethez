@@ -66,9 +66,55 @@ a:hover { color: var(--purple-dark); }
 .logo svg { width: 36px; height: 36px; }
 .logo-tagline { font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.15em; display: block; }
 
-.nav-links { display: flex; gap: 2rem; list-style: none; }
-.nav-links a { color: var(--text); font-size: 0.95rem; font-weight: 500; transition: color 0.2s; }
-.nav-links a:hover { color: var(--purple); }
+.nav-links { display: flex; gap: 0; list-style: none; align-items: center; }
+.nav-links > li { position: relative; }
+.nav-links > li > a {
+  display: block; padding: .5rem .85rem;
+  color: var(--text); font-size: 0.9rem; font-weight: 500; transition: color 0.2s;
+  white-space: nowrap;
+}
+.nav-links > li > a:hover { color: var(--purple); }
+.nav-links > li.has-drop > a::after { content: ' ▾'; font-size: .65rem; opacity: .6; }
+
+/* Dropdown */
+.nav-links .dropdown {
+  display: none; position: absolute; top: calc(100% + 4px); left: 0;
+  background: white; border: 1px solid #e9e0f8; border-radius: .65rem;
+  box-shadow: 0 8px 28px rgba(124,58,237,.12); list-style: none;
+  min-width: 180px; z-index: 200; padding: .4rem 0;
+}
+.nav-links li.has-drop:hover .dropdown { display: block; }
+.nav-links .dropdown li a {
+  display: block; padding: .55rem 1.1rem;
+  color: #1a1228; font-size: .85rem; font-weight: 500;
+  transition: background .15s, color .15s; white-space: nowrap;
+}
+.nav-links .dropdown li a:hover { background: #f3effa; color: #7c3aed; }
+.nav-links .dropdown .drop-sep {
+  height: 1px; background: #f0e8ff; margin: .3rem .75rem;
+}
+
+/* Mobile hamburger */
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: .5rem; }
+.nav-toggle span { display: block; width: 22px; height: 2px; background: var(--text); margin: 4px 0; border-radius: 2px; transition: all .25s; }
+
+@media (max-width: 900px) {
+  .nav-toggle { display: block; }
+  .nav-links {
+    display: none; position: fixed; top: 64px; left: 0; right: 0;
+    background: white; border-bottom: 2px solid #e9e0f8;
+    flex-direction: column; align-items: stretch; z-index: 190;
+    padding: .75rem 0; box-shadow: 0 8px 24px rgba(0,0,0,.08);
+  }
+  .nav-links.open { display: flex; }
+  .nav-links > li > a { padding: .7rem 1.5rem; font-size: .95rem; }
+  .nav-links .dropdown {
+    display: block; position: static; box-shadow: none; border: none;
+    background: #f8f5ff; border-radius: 0; padding: 0;
+  }
+  .nav-links .dropdown li a { padding: .55rem 2.25rem; font-size: .85rem; }
+  .nav-links li.has-drop > a::after { content: ' ▾'; }
+}
 
 /* ── Hero ── */
 .hero {
