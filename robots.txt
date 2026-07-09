@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /geode/admin.html
+
+Sitemap: https://amethez.com/sitemap.xml
