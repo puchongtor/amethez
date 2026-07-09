@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>บทความคริสตัล — คู่มือ ฮวงจุ้ย การเยียวยา Sound Healing | Amethez</title>
+  <meta name="description" content="คลังบทความหินคริสตัลภาษาไทยที่ครบที่สุด — คู่มือมือใหม่, ฮวงจุ้ย, การเยียวยา, DIY Crystal Grid, Sound Healing โดย Crystal Atlas แห่ง Amethez">
+  <link rel="canonical" href="https://amethez.com/blog/">
+  <meta property="og:site_name" content="Amethez">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="บทความคริสตัล — คู่มือ ฮวงจุ้ย การเยียวยา | Amethez">
+  <meta property="og:description" content="คลังบทความหินคริสตัลภาษาไทยที่ครบที่สุด คู่มือมือใหม่ ฮวงจุ้ย การเยียวยา DIY Sound Healing">
+  <meta property="og:url" content="https://amethez.com/blog/">
+  <meta property="og:image" content="https://amethez.com/images/og-default.jpg">
+  <meta property="og:locale" content="th_TH">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    :root { --purple:#7c3aed; --gold:#c9a84c; }
+
+    .blog-hero { background:linear-gradient(160deg,#1a1228 0%,#2d1b69 60%,#1a1228 100%);
+      padding:4rem 1.5rem 3rem; text-align:center; }
+    .blog-hero h1 { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,5vw,2.8rem);
+      color:white; margin-bottom:.5rem; }
+    .blog-hero p { color:rgba(255,255,255,.65); font-size:1rem; }
+
+    .blog-wrap { max-width:1100px; margin:0 auto; padding:2.5rem 1.5rem; }
+
+    /* Category Nav */
+    .cat-nav { display:flex; gap:.5rem; flex-wrap:wrap; margin-bottom:2rem;
+      padding-bottom:1.25rem; border-bottom:1px solid #e9e0f8; }
+    .cnav { padding:.45rem 1.1rem; border-radius:2rem; font-size:.85rem; font-weight:600;
+      border:1.5px solid #e9e0f8; background:white; color:#6b5e8a;
+      cursor:pointer; transition:all .15s; font-family:Sarabun,sans-serif; text-decoration:none; display:inline-flex; align-items:center; gap:.3rem; }
+    .cnav:hover,.cnav.on { background:#7c3aed; border-color:#7c3aed; color:white; }
+    .cnav-count { background:rgba(0,0,0,.08); border-radius:999px; font-size:.68rem;
+      padding:.1rem .45rem; font-weight:400; }
+    .cnav.on .cnav-count { background:rgba(255,255,255,.2); }
+
+    /* Search */
+    .blog-search-wrap { position:relative; margin-bottom:2rem; }
+    .blog-search { width:100%; padding:.75rem 1rem .75rem 2.75rem; border:2px solid #e9e0f8;
+      border-radius:.75rem; font-family:Sarabun,sans-serif; font-size:1rem; box-sizing:border-box;
+      color:#1a1228; background:white; }
+    .blog-search:focus { outline:none; border-color:#7c3aed; }
+    .blog-search-icon { position:absolute; left:.9rem; top:50%; transform:translateY(-50%);
+      color:#9b89bb; pointer-events:none; font-size:1rem; }
+
+    /* Featured */
+    .blog-featured { margin-bottom:2.5rem; }
+    .feat-card { display:grid; grid-template-columns:1.1fr 1fr; border-radius:1.25rem;
+      overflow:hidden; border:1px solid #e9e0f8; text-decoration:none; color:#1a1228;
+      transition:all .25s; background:white; }
+    .feat-card:hover { box-shadow:0 16px 48px rgba(124,58,237,.12); transform:translateY(-3px); }
+    .feat-img { background:#f3effa; display:flex; align-items:center; justify-content:center;
+      font-size:6rem; min-height:260px; position:relative; overflow:hidden; }
+    .feat-img img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+    .feat-body { padding:2.25rem; display:flex; flex-direction:column; justify-content:center; }
+    .feat-label { font-size:.72rem; font-weight:700; color:#7c3aed; text-transform:uppercase;
+      letter-spacing:.06em; margin-bottom:.75rem; display:flex; align-items:center; gap:.4rem; }
+    .feat-label-dot { width:6px; height:6px; border-radius:50%; background:#7c3aed; }
+    .feat-title { font-family:'Playfair Display',serif; font-size:1.5rem; line-height:1.4;
+      margin-bottom:.85rem; }
+    .feat-desc { font-size:.9rem; color:#6b5e8a; line-height:1.75; margin-bottom:1.25rem; }
+    .feat-tags { display:flex; gap:.4rem; flex-wrap:wrap; margin-bottom:1.25rem; }
+    .feat-tag { font-size:.72rem; background:#f3effa; color:#7c3aed; border-radius:2rem;
+      padding:.2rem .6rem; }
+    .feat-cta { font-weight:700; color:#7c3aed; font-size:.88rem; }
+    .feat-soon { background:#f3effa; color:#9b89bb; border-radius:.5rem;
+      padding:.4rem .85rem; font-size:.8rem; display:inline-block; }
+
+    /* Grid */
+    .blog-section-title { font-family:'Playfair Display',serif; font-size:1.2rem; color:#1a1228;
+      margin-bottom:1.25rem; display:flex; align-items:center; gap:.6rem; }
+    .blog-section-title::after { content:''; flex:1; height:1px; background:#e9e0f8; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:1.25rem; margin-bottom:3rem; }
+    .card { background:white; border:1px solid #e9e0f8; border-radius:1rem; overflow:hidden;
+      text-decoration:none; color:#1a1228; transition:all .2s; display:flex; flex-direction:column; }
+    .card:hover { border-color:#7c3aed; transform:translateY(-3px); box-shadow:0 8px 28px rgba(124,58,237,.08); }
+    .card-img { height:160px; background:#f3effa; display:flex; align-items:center;
+      justify-content:center; font-size:3.5rem; flex-shrink:0; position:relative; overflow:hidden; }
+    .card-img img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+    .card-body { padding:1.25rem; flex:1; display:flex; flex-direction:column; }
+    .card-cat { font-size:.7rem; font-weight:700; color:#7c3aed; text-transform:uppercase;
+      letter-spacing:.05em; margin-bottom:.4rem; }
+    .card-title { font-weight:700; font-size:.95rem; line-height:1.5; flex:1; margin-bottom:.5rem; }
+    .card-desc { font-size:.8rem; color:#6b5e8a; line-height:1.65; }
+    .card-foot { padding:.7rem 1.25rem; border-top:1px solid #f3effa;
+      display:flex; justify-content:space-between; align-items:center;
+      font-size:.72rem; color:#9b89bb; }
+    .card-foot .read { color:#7c3aed; font-weight:700; }
+    .card.soon { opacity:.72; }
+    .soon-badge { background:#f3effa; color:#9b89bb; font-size:.68rem; padding:.15rem .5rem;
+      border-radius:999px; }
+    .card.hidden { display:none; }
+
+    /* Tag Cloud */
+    .tag-section { background:#f3effa; border-radius:1.25rem; padding:2rem; margin-bottom:3rem; }
+    .tag-section h3 { font-family:'Playfair Display',serif; font-size:1.1rem; color:#1a1228;
+      margin-bottom:1.1rem; }
+    .tag-cloud { display:flex; flex-wrap:wrap; gap:.5rem; }
+    .tag-pill { padding:.35rem .9rem; border-radius:2rem; font-size:.8rem; border:1px solid #d1c4f0;
+      background:white; color:#5a4e72; cursor:pointer; transition:all .15s;
+      font-family:Sarabun,sans-serif; }
+    .tag-pill:hover,.tag-pill.on { background:#7c3aed; border-color:#7c3aed; color:white; }
+    .tag-pill.lg { font-size:.88rem; font-weight:700; }
+    .tag-pill.sm { font-size:.72rem; opacity:.8; }
+
+    /* Empty state */
+    .empty { text-align:center; padding:4rem 1rem; color:#9b89bb; }
+    .empty-icon { font-size:3rem; margin-bottom:1rem; }
+
+    @media(max-width:700px) {
+      .feat-card { grid-template-columns:1fr; }
+      .feat-img { min-height:180px; font-size:4rem; }
+      .feat-body { padding:1.5rem; }
+    }
+    @media(max-width:480px) {
+      .grid { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav-inner">
+    <a href="/" class="logo">
+      <svg viewBox="0 0 36 36" fill="none"><polygon points="18,2 30,12 26,30 10,30 6,12" fill="#7c3aed" opacity="0.9"/><polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity="0.95"/><polygon points="18,8 30,12 18,28" fill="#a78bfa"/><polygon points="18,8 6,12 18,28" fill="#7c3aed"/></svg>
+      <span>AMETHEZ <small class="logo-tagline">Stones · Stories · Soul</small></span>
+    </a>
+    <nav><ul class="nav-links">
+      <li><a href="/stones/">คลังหิน</a></li>
+      <li><a href="/categories/chakra.html">จักระ</a></li>
+      <li><a href="/categories/zodiac.html">ราศี</a></li>
+      <li><a href="/wuchong/">Master Wuchong</a></li>
+      <li><a href="/metha/">อาจารย์เมธา</a></li>
+      <li><a href="/blog/" style="color:var(--purple)">📖 บทความ</a></li>
+      <li><a href="/sale.html" style="color:var(--gold)">🛒 ร้านค้า</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<section class="blog-hero">
+  <h1>📖 บทความและความรู้</h1>
+  <p>คลังความรู้หินคริสตัลภาษาไทยที่ครบที่สุด — เขียนโดย Crystal Atlas แห่ง Amethez</p>
+</section>
+
+<div class="blog-wrap">
+
+  <!-- Search -->
+  <div class="blog-search-wrap">
+    <span class="blog-search-icon">🔍</span>
+    <input class="blog-search" id="blogSearch" type="text"
+      placeholder="ค้นหาบทความ เช่น ฮวงจุ้ย, มือใหม่, Sound Healing…"
+      oninput="renderAll()">
+  </div>
+
+  <!-- Category Nav -->
+  <div class="cat-nav" id="catNav"></div>
+
+  <!-- Featured -->
+  <div class="blog-featured" id="blogFeatured"></div>
+
+  <!-- Grid -->
+  <div id="blogSections"></div>
+
+  <!-- Tag Cloud -->
+  <div class="tag-section">
+    <h3>🏷 Browse by Tag</h3>
+    <div class="tag-cloud" id="tagCloud"></div>
+  </div>
+
+</div>
+
+<section style="background:linear-gradient(135deg,#1a1228,#2d1b69);padding:3rem 1.5rem">
+  <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+    <a href="/stones/" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:1.25rem;padding:1.75rem;text-decoration:none;color:white;transition:all .2s;display:block">
+      <div style="font-size:2.5rem;margin-bottom:.75rem">💎</div>
+      <div style="font-family:'Playfair Display',serif;font-size:1.15rem;color:#c9a84c;margin-bottom:.4rem">Crystal Atlas</div>
+      <div style="font-size:.85rem;color:rgba(255,255,255,.65)">สารานุกรมหิน 300+ ชนิด ค้นหาตาม A-Z จักระ ราศี ดาวเคราะห์ ธาตุ</div>
+    </a>
+    <a href="/wuchong/" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:1.25rem;padding:1.75rem;text-decoration:none;color:white;transition:all .2s;display:block">
+      <div style="font-size:2.5rem;margin-bottom:.75rem">🧙‍♂️</div>
+      <div style="font-family:'Playfair Display',serif;font-size:1.15rem;color:#c9a84c;margin-bottom:.4rem">Master Wuchong</div>
+      <div style="font-size:.85rem;color:rgba(255,255,255,.65)">พลังงาน ความสำเร็จ ฮวงจุ้ย การเงิน บทความเชิงลึก</div>
+    </a>
+  </div>
+</section>
+
+<script>
+const CATS = [
+  {id:'guide',  th:'คู่มือมือใหม่',   icon:'🔰'},
+  {id:'healing',th:'การเยียวยา',       icon:'💚'},
+  {id:'fengshui',th:'ฮวงจุ้ย',        icon:'🏠'},
+  {id:'care',   th:'ดูแลหิน',         icon:'✨'},
+  {id:'diy',    th:'DIY & Crystal Grid',icon:'🛠'},
+  {id:'collect',th:'การสะสม',         icon:'💎'},
+  {id:'science',th:'วิทยาศาสตร์',     icon:'🔬'},
+  {id:'sound',  th:'Sound Healing',    icon:'🎵'},
+];
+
+const ARTICLES = [
+  {cat:'guide',emoji:'📚',
+   title:'หินคริสตัลคืออะไร? เริ่มต้นอย่างไรดี สำหรับมือใหม่',
+   desc:'ตอบทุกคำถามพื้นฐาน — หินทำงานอย่างไร เริ่มซื้อชิ้นแรกอย่างไร และข้อผิดพลาดที่ควรหลีกเลี่ยง',
+   url:'/stones/amethyst.html', tags:['มือใหม่','คริสตัล','เริ่มต้น'], featured:true},
+  {cat:'guide',emoji:'💎',
+   title:'5 หินที่มือใหม่ควรมีก่อน และเหตุผลว่าทำไม',
+   desc:'เลือกให้ถูกตั้งแต่แรก ไม่ต้องเสียเงินลองผิดลองถูก',
+   url:'', tags:['มือใหม่','เลือกหิน']},
+  {cat:'guide',emoji:'🛒',
+   title:'วิธีซื้อหินออนไลน์ไม่ให้โดนของปลอม',
+   desc:'เช็คอย่างไร เชื่อใคร ราคาที่เหมาะสมคือเท่าไร',
+   url:'', tags:['ซื้อหิน','ของแท้','ออนไลน์']},
+  {cat:'guide',emoji:'🤔',
+   title:'ความเชื่อเรื่องหินที่ถูกและผิด — ล้างความเข้าใจผิด 10 ข้อ',
+   desc:'ซื้อแพงกว่า = ดีกว่าจริงไหม? หินต้องสัมผัสตัวไหม? ตอบทุกข้อ',
+   url:'', tags:['มือใหม่','ความเชื่อ']},
+
+  {cat:'healing',emoji:'🌿',
+   title:'Crystal Healing คืออะไร ทำงานอย่างไรในเชิงวิทยาศาสตร์',
+   desc:'อธิบายกลไก piezoelectric effect, vibration theory และสิ่งที่งานวิจัยบอก',
+   url:'', tags:['Crystal Healing','พลังงาน','วิทยาศาสตร์'], featured:true},
+  {cat:'healing',emoji:'💆',
+   title:'หินเยียวยาอารมณ์ — เลือกตามความรู้สึกที่คุณต้องการเปลี่ยน',
+   desc:'เศร้า กังวล โกรธ ท้อ — แต่ละอารมณ์มีหินที่ช่วยได้ต่างกัน',
+   url:'', tags:['อารมณ์','เยียวยา','จิตใจ']},
+  {cat:'healing',emoji:'🤲',
+   title:'วิธีนั่งสมาธิกับหินคริสตัล ขั้นตอน step-by-step',
+   desc:'เทคนิคจับหิน ตำแหน่งวาง และ script บทสมาธิ 10 นาที',
+   url:'', tags:['สมาธิ','เมดิเตชั่น','Meditation']},
+  {cat:'healing',emoji:'🛏',
+   title:'หินวางข้างเตียง ช่วยนอนหลับได้จริงไหม',
+   desc:'อเมทิสต์ เลพิโดไลต์ ฮาวไลต์ — ทดสอบและสรุปจากประสบการณ์จริง',
+   url:'', tags:['นอนหลับ','เตียง','เยียวยา']},
+
+  {cat:'fengshui',emoji:'🏡',
+   title:'วางหินในบ้านตรงไหน ให้พลังงานดีที่สุด — แผนที่ Bagua',
+   desc:'ทิศ 8 ทิศ + ห้องต่างๆ ควรวางหินชนิดไหน ทำไม',
+   url:'', tags:['ฮวงจุ้ย','บ้าน','Bagua'], featured:true},
+  {cat:'fengshui',emoji:'💰',
+   title:'หินเรียกเงินในบ้าน — 7 ชนิดและตำแหน่งที่ถูกต้อง',
+   desc:'ซิทริน ไพไรต์ โพรงอเมทิสต์ — วางผิดที่พลังงานก็ไม่ทำงาน',
+   url:'', tags:['เงิน','ฮวงจุ้ย','ซิทริน']},
+  {cat:'fengshui',emoji:'🛡',
+   title:'หินปกป้องบ้าน — ไล่พลังงานลบออกจากพื้นที่',
+   desc:'ทัวร์มาลีนดำ ชังไกต์ ออบซิเดียน — วางที่ทางเข้าและมุมบ้าน',
+   url:'', tags:['ปกป้อง','ฮวงจุ้ย','ทัวร์มาลีนดำ']},
+  {cat:'fengshui',emoji:'🚪',
+   title:'ทางเข้าบ้าน ควรวางหินอะไร เสริมโชคและต้อนรับพลังงานดี',
+   desc:'ตำแหน่งหน้าประตู ทิศหน้าบ้าน และหินที่เหมาะกับธาตุบ้าน',
+   url:'', tags:['ฮวงจุ้ย','ทางเข้า','บ้าน']},
+
+  {cat:'care',emoji:'🌙',
+   title:'วิธีชาร์จพลังงานหิน — แสงจันทร์ แสงอาทิตย์ เสียง ดิน',
+   desc:'แต่ละวิธีต่างกันอย่างไร หินชนิดไหนห้ามใช้วิธีไหน',
+   url:'', tags:['ชาร์จหิน','แสงจันทร์','ล้างหิน'], featured:true},
+  {cat:'care',emoji:'🧂',
+   title:'ล้างหิน — วิธีไหนดี วิธีไหนทำลายหิน',
+   desc:'เกลือ น้ำ ควันเสจ — มีหลายชนิดที่ห้ามโดนน้ำหรือเกลือ รู้ก่อนทำ',
+   url:'', tags:['ล้างหิน','ดูแลหิน','เสจ']},
+  {cat:'care',emoji:'📦',
+   title:'เก็บรักษาหินคริสตัล ให้พลังงานคงทน ไม่ซีด ไม่แตก',
+   desc:'วิธีเก็บ วิธีจัด และสิ่งที่ควรหลีกเลี่ยง',
+   url:'', tags:['เก็บหิน','ดูแล']},
+
+  {cat:'diy',emoji:'⬡',
+   title:'Crystal Grid คืออะไร ทำเองได้ไหม ใช้หินอะไรบ้าง',
+   desc:'รูปแบบ Grid ยอดนิยม 5 แบบ พร้อม template download ฟรี',
+   url:'', tags:['Crystal Grid','DIY','Sacred Geometry'], featured:true},
+  {cat:'diy',emoji:'📿',
+   title:'ทำสร้อยหินด้วยตัวเอง — วัสดุ เทคนิค และการเลือกหิน',
+   desc:'เริ่มต้นจาก 0 ไม่ต้องมีประสบการณ์ก็ทำได้',
+   url:'', tags:['DIY','สร้อยหิน','เครื่องประดับ']},
+  {cat:'diy',emoji:'🕯',
+   title:'พิธีกรรมตั้งความตั้งใจกับหิน — Setting Intention ทำอย่างไร',
+   desc:'ขั้นตอนที่ถูกต้อง พร้อม script และเวลาที่เหมาะสม',
+   url:'', tags:['Intention','พิธีกรรม']},
+
+  {cat:'collect',emoji:'🏆',
+   title:'หินที่แพงที่สุดในโลก — Painite, Red Beryl, Grandidierite',
+   desc:'ราคา ที่มา และเหตุผลว่าทำไมถึงหายากจนแทบหาซื้อไม่ได้',
+   url:'', tags:['สะสม','หินหายาก','ราคาหิน'], featured:true},
+  {cat:'collect',emoji:'🔍',
+   title:'เช็คหินแท้ vs ของปลอม — 6 วิธีที่ใช้ได้จริงโดยไม่ต้องใช้เครื่องมือ',
+   desc:'สี น้ำหนัก ความเย็น ฟองอากาศ การหักเหแสง — เช็คได้เองที่บ้าน',
+   url:'', tags:['ของแท้','ตรวจสอบ','ของปลอม']},
+  {cat:'collect',emoji:'🌍',
+   title:'แหล่งหินที่ดีที่สุดในโลก — บราซิล มาดากัสการ์ เมียนมาร์',
+   desc:'แต่ละประเทศมีชื่อเสียงเรื่องหินชนิดไหน และทำไมที่มาถึงสำคัญ',
+   url:'', tags:['แหล่งหิน','ที่มา']},
+
+  {cat:'science',emoji:'⚛️',
+   title:'หินคริสตัลเกิดขึ้นได้อย่างไร — ธรณีวิทยาฉบับเข้าใจง่าย',
+   desc:'แรงดัน ความร้อน เวลา — กระบวนการล้านปีที่สร้างอเมทิสต์',
+   url:'', tags:['ธรณีวิทยา','วิทยาศาสตร์'], featured:true},
+  {cat:'science',emoji:'📐',
+   title:'โครงสร้างผลึก — ทำไมหินถึงมีรูปร่างซ้ำๆ สม่ำเสมอ',
+   desc:'ระบบผลึก 7 ระบบ และสิ่งที่โครงสร้างบอกเกี่ยวกับพลังงาน',
+   url:'', tags:['ผลึก','โครงสร้าง']},
+  {cat:'science',emoji:'💡',
+   title:'Mohs Scale ความแข็งหิน — ทำไมถึงสำคัญสำหรับนักสะสม',
+   desc:'ตารางเปรียบเทียบหิน 50 ชนิด ตาม Mohs Scale ฉบับไทย',
+   url:'', tags:['ความแข็ง','Mohs']},
+
+  {cat:'sound',emoji:'🎶',
+   title:'Singing Bowl + คริสตัล ทำงานร่วมกันอย่างไร',
+   desc:'ความถี่เสียงกับการสั่นสะเทือนของหิน — ทำไมคนใช้คู่กัน',
+   url:'', tags:['Singing Bowl','Sound Healing'], featured:true},
+  {cat:'sound',emoji:'🔔',
+   title:'Solfeggio Frequencies — 432 Hz 528 Hz คืออะไร ทำงานอย่างไร',
+   desc:'ตำนานและหลักฐานที่มีจริง บทสรุปที่ซื่อสัตย์',
+   url:'', tags:['432Hz','528Hz','Solfeggio']},
+  {cat:'sound',emoji:'🧘',
+   title:'เพลงและเสียงธรรมชาติที่ใช้คู่กับหินได้ดีที่สุด',
+   desc:'Binaural Beats, OM, ฝนตก — เลือกตามจักระที่ต้องการกระตุ้น',
+   url:'', tags:['Binaural','Sound Healing','สมาธิ']},
+];
+
+const TAGS = [
+  {t:'มือใหม่',s:'lg'},{t:'คริสตัล',s:'lg'},{t:'ฮวงจุ้ย',s:'lg'},{t:'ล้างหิน',s:'lg'},
+  {t:'ชาร์จหิน',s:'lg'},{t:'สมาธิ',s:'lg'},{t:'ของแท้',s:'lg'},{t:'Crystal Grid',s:'lg'},
+  {t:'เลือกหิน',s:'md'},{t:'DIY',s:'md'},{t:'Sound Healing',s:'md'},{t:'พลังงาน',s:'md'},
+  {t:'สะสม',s:'md'},{t:'บ้าน',s:'md'},{t:'Bagua',s:'md'},{t:'อเมทิสต์',s:'md'},
+  {t:'ซิทริน',s:'md'},{t:'โรสควอตซ์',s:'md'},{t:'ทัวร์มาลีนดำ',s:'md'},{t:'ไพไรต์',s:'md'},
+  {t:'เสจ',s:'sm'},{t:'Singing Bowl',s:'sm'},{t:'432Hz',s:'sm'},{t:'ผลึก',s:'sm'},
+  {t:'Mohs',s:'sm'},{t:'Intention',s:'sm'},{t:'แหล่งหิน',s:'sm'},{t:'ของปลอม',s:'sm'},
+  {t:'เครื่องประดับ',s:'sm'},{t:'ธรณีวิทยา',s:'sm'},{t:'Sacred Geometry',s:'sm'},
+  {t:'นอนหลับ',s:'sm'},{t:'ราคาหิน',s:'sm'},{t:'Meditation',s:'sm'},
+];
+
+let curCat = 'all', curTag = '';
+
+function counts() {
+  const c = {};
+  CATS.forEach(cat => c[cat.id] = ARTICLES.filter(a => a.cat === cat.id).length);
+  return c;
+}
+
+function buildCatNav() {
+  const c = counts();
+  const total = ARTICLES.length;
+  document.getElementById('catNav').innerHTML =
+    `<button class="cnav on" onclick="setCat('all',this)">ทั้งหมด <span class="cnav-count">${total}</span></button>` +
+    CATS.map(cat =>
+      `<button class="cnav" onclick="setCat('${cat.id}',this)">${cat.icon} ${cat.th} <span class="cnav-count">${c[cat.id]}</span></button>`
+    ).join('');
+}
+
+function setCat(id, btn) {
+  curCat = id; curTag = '';
+  document.querySelectorAll('.cnav').forEach(b => b.classList.remove('on'));
+  btn?.classList.add('on');
+  document.querySelectorAll('.tag-pill').forEach(p => p.classList.remove('on'));
+  renderAll();
+}
+
+function setTag(t, el) {
+  curTag = curTag === t ? '' : t;
+  curCat = 'all';
+  document.querySelectorAll('.cnav').forEach(b => b.classList.remove('on'));
+  document.querySelector('.cnav')?.classList.add('on');
+  document.querySelectorAll('.tag-pill').forEach(p => p.classList.remove('on'));
+  if (curTag) el.classList.add('on');
+  renderAll();
+}
+
+function filtered() {
+  const q = document.getElementById('blogSearch').value.toLowerCase();
+  return ARTICLES.filter(a => {
+    const matchCat = curCat === 'all' || a.cat === curCat;
+    const matchTag = !curTag || a.tags.includes(curTag);
+    const matchQ   = !q || a.title.toLowerCase().includes(q) || a.desc.toLowerCase().includes(q) || a.tags.some(t => t.toLowerCase().includes(q));
+    return matchCat && matchTag && matchQ;
+  });
+}
+
+function renderAll() {
+  const list = filtered();
+  if (!list.length) {
+    document.getElementById('blogFeatured').innerHTML = '';
+    document.getElementById('blogSections').innerHTML =
+      '<div class="empty"><div class="empty-icon">🔍</div><div>ไม่พบบทความที่ตรงกับการค้นหา</div></div>';
+    return;
+  }
+
+  // Featured (first article with featured:true, or just first)
+  const feat = list.find(a => a.featured) || list[0];
+  const catInfo = CATS.find(c => c.id === feat.cat);
+  document.getElementById('blogFeatured').innerHTML = `
+    <a href="${feat.url || '#'}" class="feat-card" ${!feat.url ? 'onclick="return false"' : ''}>
+      <div class="feat-img">${feat.emoji}</div>
+      <div class="feat-body">
+        <div class="feat-label"><span class="feat-label-dot"></span>${catInfo?.icon} ${catInfo?.th}</div>
+        <div class="feat-title">${feat.title}</div>
+        <div class="feat-desc">${feat.desc}</div>
+        <div class="feat-tags">${feat.tags.map(t=>`<span class="feat-tag">#${t}</span>`).join('')}</div>
+        ${feat.url ? '<div class="feat-cta">อ่านบทความ →</div>' : '<span class="feat-soon">🔜 เร็วๆ นี้</span>'}
+      </div>
+    </a>`;
+
+  // If showing all cats, group by category; else flat grid
+  const rest = list.filter(a => a !== feat);
+  let html = '';
+  if (curCat === 'all' && !curTag) {
+    const groups = {};
+    rest.forEach(a => { if (!groups[a.cat]) groups[a.cat] = []; groups[a.cat].push(a); });
+    CATS.forEach(cat => {
+      if (!groups[cat.id]?.length) return;
+      html += `<div class="blog-section-title">${cat.icon} ${cat.th}</div>
+               <div class="grid">${groups[cat.id].map(cardHTML).join('')}</div>`;
+    });
+  } else {
+    html = `<div class="grid">${rest.map(cardHTML).join('')}</div>`;
+  }
+  document.getElementById('blogSections').innerHTML = html;
+}
+
+function cardHTML(a) {
+  const cat = CATS.find(c => c.id === a.cat);
+  return `<a href="${a.url || '#'}" class="card${a.url ? '' : ' soon'}" ${!a.url ? 'onclick="return false"' : ''}>
+    <div class="card-img">${a.emoji}</div>
+    <div class="card-body">
+      <div class="card-cat">${cat?.icon} ${cat?.th}</div>
+      <div class="card-title">${a.title}</div>
+      <div class="card-desc">${a.desc}</div>
+    </div>
+    <div class="card-foot">
+      <span>${a.tags.slice(0,2).map(t=>'#'+t).join(' ')}</span>
+      ${a.url ? '<span class="read">อ่าน →</span>' : '<span class="soon-badge">เร็วๆ นี้</span>'}
+    </div>
+  </a>`;
+}
+
+function renderTags() {
+  document.getElementById('tagCloud').innerHTML = TAGS.map(t =>
+    `<button class="tag-pill ${t.s}" onclick="setTag('${t.t}',this)">#${t.t}</button>`
+  ).join('');
+}
+
+buildCatNav();
+renderAll();
+renderTags();
+</script>
+
+<script src="/js/sila.js"></script>
+</body>
+</html>
