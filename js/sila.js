@@ -217,8 +217,10 @@
       #sila-inp{flex:1;border:1.5px solid #e5e7eb;border-radius:.65rem;padding:.45rem .75rem;
         font-size:.855rem;font-family:'Sarabun',sans-serif;outline:none;resize:none;
         max-height:72px;transition:border-color .2s;line-height:1.4;
-        -webkit-appearance:none;appearance:none;overflow:hidden;}
+        -webkit-appearance:none;appearance:none;overflow:hidden;
+        color:#1a1228 !important;background:#ffffff !important;}
       #sila-inp:focus{border-color:#a78bfa;}
+      #sila-inp::placeholder{color:#9ca3af !important;}
       #sila-send{width:34px;height:34px;background:#7c3aed;border:none;border-radius:.65rem;
         cursor:pointer;display:flex;align-items:center;justify-content:center;
         flex-shrink:0;transition:opacity .2s;align-self:flex-end;}
@@ -390,16 +392,15 @@
       addBubble('bot', 'สวัสดีค่ะ 💜 ศิลาพร้อมช่วยเรื่องหินคริสตัลค่ะ ถามได้เลยนะคะ');
     }
 
-    // Restore panel state from sessionStorage
-    if (isOpenState()) {
+    // เปิด panel เฉพาะถ้า user กำลังคุยอยู่ (มีประวัติ) และเปิดค้างไว้
+    // ถ้าเพิ่งเปิดหน้าใหม่โดยไม่เคยกด 💎 — ซ่อนไว้เสมอ
+    if (isOpenState() && messages.length > 0) {
       openPanel();
     } else {
-      // แสดง tip สั้นๆ เหนือ FAB หลัง 2.5 วิ (ถ้าไม่ได้ปิดไว้)
-      if (sessionStorage.getItem(CONFIG.stateStore) !== 'false') {
-        setTimeout(() => {
-          if (!panelOpen) showTip(getPageTip());
-        }, 2500);
-      }
+      // แสดง tip สั้นๆ เหนือ FAB หลัง 3 วิ
+      setTimeout(() => {
+        if (!panelOpen) showTip(getPageTip());
+      }, 3000);
     }
 
     // Notif dot หลัง 25s ถ้าไม่ได้เปิด
