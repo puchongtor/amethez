@@ -101,6 +101,19 @@ const FOOTER_HTML = `
   </div>
 </div>`;
 
+/* ─── Google Analytics 4 ─── */
+(function(){
+  const s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=G-TBQ8F1GZ3B';
+  document.head.appendChild(s);
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag('js', new Date());
+  gtag('config', 'G-TBQ8F1GZ3B');
+})();
+
 /* ─── Inject on load ─── */
 document.addEventListener('DOMContentLoaded', () => {
   // Nav
