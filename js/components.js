@@ -15,7 +15,18 @@ const NAV_HTML = `
     <span></span><span></span><span></span>
   </button>
   <nav><ul class="nav-links">
-    <li><a href="/stones/">📖 สารานุกรมหิน</a></li>
+    <li class="has-drop"><a href="/stones/">📖 สารานุกรมหิน</a>
+      <ul class="dropdown">
+        <li><a href="/stones/">🔤 หิน A–Z ทั้งหมด</a></li>
+        <li><div class="drop-sep"></div></li>
+        <li><a href="/stones/#chakra">🧘 ค้นหาตามจักระ</a></li>
+        <li><a href="/stones/#zodiac">♈ ค้นหาตามราศี</a></li>
+        <li><a href="/stones/#planet">🪐 ค้นหาตามดาวเคราะห์</a></li>
+        <li><a href="/stones/#element">🔥 ค้นหาตามธาตุ</a></li>
+        <li><a href="/stones/#color">🎨 ค้นหาตามสี</a></li>
+        <li><a href="/stones/#purpose">✨ ค้นหาตามวัตถุประสงค์</a></li>
+      </ul>
+    </li>
     <li class="has-drop"><a href="/blog/">📖 เรียนรู้</a>
       <ul class="dropdown">
         <li><a href="/blog/">บทความ</a></li>
