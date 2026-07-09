@@ -115,7 +115,7 @@
 
   async function callGroq(userMsg) {
     const key = getKey();
-    if (!key) return '⚙️ ยังไม่ได้ตั้งค่า API key ค่ะ ไปที่ [Admin Panel](/admin/) แท็บ "ตั้งค่า" นะคะ';
+    if (!key) return 'ขอโทษค่ะ ตอนนี้ระบบกำลังปรับปรุงอยู่ค่ะ ลองถามใหม่อีกสักครู่นะคะ 🙏';
 
     let productCtx = '';
     if (products.length) {
@@ -430,16 +430,16 @@
       addBubble('bot', 'สวัสดีค่ะ 💜 ศิลาพร้อมช่วยเรื่องหินคริสตัลค่ะ ถามได้เลยนะคะ');
     }
 
-    // เปิด panel เฉพาะถ้า user กำลังคุยอยู่ (มีประวัติ) และเปิดค้างไว้
-    // ถ้าเพิ่งเปิดหน้าใหม่โดยไม่เคยกด 💎 — ซ่อนไว้เสมอ
-    if (isOpenState() && messages.length > 0) {
+    // Panel ซ่อนเสมอจนกว่าจะกด 💎
+    // (Option B: ถ้าเปิดค้างไว้แล้วเปลี่ยนหน้า ให้เปิดต่อ)
+    if (isOpenState()) {
       openPanel();
-    } else {
-      // แสดง tip สั้นๆ เหนือ FAB หลัง 3 วิ
-      setTimeout(() => {
-        if (!panelOpen) showTip(getPageTip());
-      }, 3000);
     }
+
+    // แสดง tip สั้นๆ เหนือ FAB หลัง 3 วิ (เฉพาะถ้าไม่ได้เปิด panel)
+    setTimeout(() => {
+      if (!panelOpen) showTip(getPageTip());
+    }, 3000);
 
     // Notif dot หลัง 25s ถ้าไม่ได้เปิด
     setTimeout(() => {
