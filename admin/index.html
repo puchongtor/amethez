@@ -202,6 +202,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
     <div class="topbar">
       <h1 id="topbarTitle">📊 ภาพรวม</h1>
       <div class="topbar-right">
+        <button class="btn btn-gold btn-sm" onclick="publishToGitHub()" id="publishBtn">🚀 เผยแพร่</button>
         <a href="/" target="_blank" class="btn btn-outline btn-sm">👁 ดูเว็บ</a>
         <a href="/geode/" target="_blank" class="btn btn-outline btn-sm">💎 สินค้า</a>
       </div>
@@ -364,9 +365,40 @@ textarea.form-input{resize:vertical;min-height:80px;}
           </div>
 
           <div class="card" style="max-width:560px;margin-top:1rem">
-            <div style="font-weight:700;margin-bottom:.75rem">🧪 ทดสอบ Gemini</div>
+            <div style="font-weight:700;margin-bottom:.75rem">🧪 ทดสอบ Groq API</div>
             <button class="btn btn-outline" onclick="testGemini()">ส่ง ping ทดสอบ</button>
             <div id="geminiTestResult" style="margin-top:.75rem;font-size:.85rem;display:none"></div>
+          </div>
+
+          <div class="card" style="max-width:560px;margin-top:1rem">
+            <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem">
+              <span style="font-size:1.8rem">🐙</span>
+              <div>
+                <div style="font-weight:700;font-size:1rem">GitHub — เผยแพร่รูปให้ทุกคนเห็น</div>
+                <div style="font-size:.8rem;color:#9ca3af">ใส่ครั้งเดียว กด 🚀 เผยแพร่ → รูปขึ้นเว็บใน ~3 นาที</div>
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom:.875rem">
+              <label class="fl">GitHub Repo (เจ้าของ/ชื่อ repo)</label>
+              <input class="form-input" id="ghRepoInput" placeholder="เช่น puchongtor/amethez"
+                style="margin-top:.35rem" oninput="saveGhSettings()">
+            </div>
+            <div class="form-group">
+              <label class="fl">GitHub Personal Access Token</label>
+              <div style="display:flex;gap:.5rem;margin-top:.35rem">
+                <input class="form-input" id="ghTokenInput" type="password"
+                  placeholder="ghp_..." style="flex:1" oninput="saveGhSettings()">
+                <button class="btn btn-outline btn-sm" onclick="toggleGhVis()" id="ghToggleBtn" style="flex-shrink:0">👁</button>
+              </div>
+            </div>
+            <div id="ghStatus" style="font-size:.8rem;margin-top:.6rem;color:#9ca3af">— ยังไม่ได้ตั้งค่า</div>
+            <div style="margin-top:1rem;padding:1rem;background:#f0fdf4;border-radius:.6rem;font-size:.82rem;color:#14532d;line-height:1.7">
+              <strong>วิธีสร้าง GitHub Token:</strong><br>
+              1. github.com → Settings → Developer settings → Personal access tokens → Tokens (classic)<br>
+              2. Generate new token → เลือก <strong>repo</strong> (full control)<br>
+              3. Copy token (ขึ้นต้น <code>ghp_</code>) → วางด้านบน<br>
+              4. กด <strong>🚀 เผยแพร่</strong> ในแถบบนทุกครั้งที่ใส่รูปใหม่
+            </div>
           </div>
         </div>
 
@@ -443,6 +475,48 @@ const SLOTS=[
   {id:'home_hero',label:'Hero Banner — หน้าหลัก',page:'index.html',group:'homepage',size:'1920×800',
    en:'Dramatic large amethyst geode cave, deep violet purple crystals glistening with golden light from above, cinematic wide angle shot, 8K ultra detailed luxury photography, dark background',
    th:'โพรงอเมทิสต์ขนาดใหญ่ แสงทองจากด้านบน บรรยากาศลึกลับ ถ่ายมุมกว้าง 8K'},
+  {id:'home_feat_main',label:'Featured ใหญ่ — อเมทิสต์',page:'index.html',group:'homepage',size:'800×480',
+   en:'Large raw amethyst crystal cluster macro photography, deep violet purple translucent crystals, dramatic side lighting, dark background, 8K',
+   th:'คลัสเตอร์อเมทิสต์ดิบขนาดใหญ่ สีม่วงเข้มโปร่งแสง แสงด้านข้าง พื้นหลังดำ มาโคร'},
+  {id:'home_feat_side1',label:'Featured ซ้าย — โมลดาไวท์',page:'index.html',group:'homepage',size:'600×360',
+   en:'Authentic moldavite tektite specimen deep forest green translucent, backlit emerald glow, dark background, macro photography',
+   th:'โมลดาไวท์แท้ สีเขียวป่าโปร่งแสง แสงส่องผ่านด้านหลัง พื้นหลังดำ'},
+  {id:'home_feat_side2',label:'Featured ขวา — ชาร์จหิน',page:'index.html',group:'homepage',size:'600×360',
+   en:'Crystal cleansing ritual with moonlight, various healing crystals on wooden tray with sage and salt, mystical blue moonlight, 4K',
+   th:'พิธีชาร์จหินแสงจันทร์ หินบนถาดไม้มีใบเสจและเกลือ แสงจันทร์สีน้ำเงิน'},
+  {id:'home_art1',label:'การ์ดบทความ — อเมทิสต์',page:'index.html',group:'homepage',size:'400×220',
+   en:'Raw amethyst crystal point glowing purple light, dark studio background, luxury gemstone photography, 4K',
+   th:'อเมทิสต์ทรงแหลม แสงม่วงเรืองแสง พื้นหลังดำ ภาพถ่ายสินค้าหรู'},
+  {id:'home_art2',label:'การ์ดบทความ — โมลดาไวท์',page:'index.html',group:'homepage',size:'400×220',
+   en:'Moldavite tektite piece on dark surface, emerald green translucent, natural texture, backlit, macro 4K',
+   th:'โมลดาไวท์บนพื้นดำ สีเขียวมรกต พื้นผิวธรรมชาติ แสงผ่าน มาโคร'},
+  {id:'home_art3',label:'การ์ดบทความ — ซิทริน',page:'index.html',group:'homepage',size:'400×220',
+   en:'Natural citrine crystal cluster golden yellow, warm sunlight, white marble background, luxury gemstone photography 4K',
+   th:'ซิทรินธรรมชาติสีทองเหลือง แสงอาทิตย์อบอุ่น พื้นหินอ่อนขาว'},
+  {id:'home_art4',label:'การ์ดบทความ — สะเก็ดดาว',page:'index.html',group:'homepage',size:'400×220',
+   en:'Black tektite meteorite fragment on white surface, dramatic side lighting showing glassy texture, macro photography 4K',
+   th:'สะเก็ดดาวดำบนพื้นขาว แสงด้านข้าง เนื้อกระจกชัดเจน มาโคร'},
+  {id:'home_art5',label:'การ์ดบทความ — จักระ',page:'index.html',group:'homepage',size:'400×220',
+   en:'Seven chakra crystals aligned in a row, each glowing their corresponding color, dark mystical background, 4K',
+   th:'หินจักระ 7 ชนิดเรียงกัน แต่ละดวงเปล่งแสงสีของตัวเอง พื้นหลังลึกลับ'},
+  {id:'home_art6',label:'การ์ดบทความ — คุยกับหิน',page:'index.html',group:'homepage',size:'400×220',
+   en:'Hands holding glowing crystal ball, purple mystical energy, dark background, spiritual meditation photography 4K',
+   th:'มือถือลูกแก้วคริสตัลเรืองแสง พลังงานม่วงลึกลับ พื้นหลังดำ สมาธิ'},
+  {id:'home_dp_wall',label:'Digital — Wallpaper Phone',page:'index.html',group:'homepage',size:'400×700',
+   en:'Amethyst crystal phone wallpaper vertical 9:16, deep purple geode interior, glowing crystals, luxury dark aesthetic, 4K',
+   th:'วอลเปเปอร์โทรศัพท์อเมทิสต์ แนวตั้ง 9:16 ภายในโพรงม่วงเรืองแสง สไตล์หรู'},
+  {id:'home_dp_ebook',label:'Digital — E-book Cover',page:'index.html',group:'homepage',size:'400×320',
+   en:'Crystal guide ebook cover design, beginner\'s guide to healing crystals, purple gold elegant book design, dark background',
+   th:'ปกหนังสือ Crystal Guide สีม่วงทอง สไตล์หรูหรา พื้นหลังดำ'},
+  {id:'home_dp_cards',label:'Digital — Affirmation Cards',page:'index.html',group:'homepage',size:'400×320',
+   en:'Affirmation cards spread on dark surface, crystal and gold aesthetics, spiritual wellness product photography, 4K',
+   th:'ไพ่ Affirmation Cards กระจาย สไตล์คริสตัลทองหรู การถ่ายภาพสินค้า'},
+  {id:'home_dp_bible',label:'Digital — Crystal Bible',page:'index.html',group:'homepage',size:'400×320',
+   en:'Premium crystal encyclopedia book mockup, purple gemstone themed hardcover, gold typography, dark luxury background',
+   th:'หนังสือสารานุกรมหินพรีเมียม ปกสีม่วงอัญมณี ตัวหนังสือทอง พื้นหลังหรู'},
+  {id:'home_dp_course',label:'Digital — คอร์สเรียน',page:'index.html',group:'homepage',size:'400×320',
+   en:'Online crystal healing course preview, man meditating with crystals arranged in circle, peaceful nature setting, 4K',
+   th:'หน้าตัวอย่างคอร์สเรียน ชายนั่งสมาธิกับหินเป็นวงกลม บรรยากาศธรรมชาติ'},
   {id:'home_cat_chakra',label:'Category — จักระ',page:'index.html',group:'homepage',size:'600×400',
    en:'Seven chakra crystals arranged vertically each glowing corresponding color red to violet, dramatic studio lighting, black background, 4K',
    th:'หินจักระ 7 ดวงเรียงกัน แต่ละดวงเปล่งแสงสีของตัวเอง พื้นหลังดำ'},
@@ -558,6 +632,7 @@ function loadSettingsTab(){
   const key=localStorage.getItem(GEMINI_KEY_STORE)||'';
   document.getElementById('geminiKeyInput').value=key;
   updateKeyStatus();
+  loadGhSettings();
 }
 function updateKeyStatus(){
   const val=document.getElementById('geminiKeyInput').value.trim();
@@ -949,10 +1024,134 @@ function toast(msg,type=''){
   clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('show'),2800);
 }
 
+// ── GITHUB SETTINGS ───────────────────────────
+const GH_TOKEN_KEY='amethez_github_token';
+const GH_REPO_KEY='amethez_github_repo';
+
+function saveGhSettings(){
+  const token=document.getElementById('ghTokenInput')?.value.trim()||'';
+  const repo=document.getElementById('ghRepoInput')?.value.trim()||'';
+  if(token) localStorage.setItem(GH_TOKEN_KEY,token);
+  else localStorage.removeItem(GH_TOKEN_KEY);
+  if(repo) localStorage.setItem(GH_REPO_KEY,repo);
+  else localStorage.removeItem(GH_REPO_KEY);
+  updateGhStatus();
+}
+function loadGhSettings(){
+  const token=localStorage.getItem(GH_TOKEN_KEY)||'';
+  const repo=localStorage.getItem(GH_REPO_KEY)||'';
+  const ti=document.getElementById('ghTokenInput');
+  const ri=document.getElementById('ghRepoInput');
+  if(ti) ti.value=token;
+  if(ri) ri.value=repo;
+  updateGhStatus();
+}
+function updateGhStatus(){
+  const token=localStorage.getItem(GH_TOKEN_KEY)||'';
+  const repo=localStorage.getItem(GH_REPO_KEY)||'';
+  const el=document.getElementById('ghStatus'); if(!el) return;
+  if(token && repo){
+    el.textContent='✅ พร้อมเผยแพร่: '+repo;
+    el.style.color='#059669';
+  } else {
+    el.textContent='— ยังไม่ได้ตั้งค่า (ต้องใส่ทั้ง Repo และ Token)';
+    el.style.color='#9ca3af';
+  }
+}
+function toggleGhVis(){
+  const inp=document.getElementById('ghTokenInput');
+  const btn=document.getElementById('ghToggleBtn');
+  if(!inp) return;
+  if(inp.type==='password'){ inp.type='text'; btn.textContent='🙈'; }
+  else { inp.type='password'; btn.textContent='👁'; }
+}
+
+// ── GITHUB PUBLISH ─────────────────────────────
+async function publishToGitHub(){
+  const token=localStorage.getItem(GH_TOKEN_KEY);
+  const repo=localStorage.getItem(GH_REPO_KEY);
+  if(!token||!repo){
+    toast('❌ ตั้งค่า GitHub Token และ Repo ในแท็บ ตั้งค่า ก่อนนะคะ','err');
+    showTab('settings',document.querySelectorAll('.nav-item')[5]);
+    return;
+  }
+  const btn=document.getElementById('publishBtn');
+  btn.textContent='⏳ กำลังเผยแพร่...'; btn.disabled=true;
+
+  try {
+    const imgs=getImgs();
+    const published={};
+
+    // Upload base64 images as files to GitHub
+    for(const [key,val] of Object.entries(imgs)){
+      if(!val) continue;
+      if(val.startsWith('data:')){
+        const match=val.match(/^data:image\/([a-zA-Z+]+);base64,(.+)$/);
+        if(!match){ published[key]=val; continue; }
+        const ext=match[1]==='jpeg'?'jpg':match[1]==='svg+xml'?'svg':match[1];
+        const b64=match[2];
+        const filename=`${key}.${ext}`;
+        const path=`data/images/${filename}`;
+        // Get existing SHA if any
+        let sha='';
+        try{
+          const cr=await fetch(`https://api.github.com/repos/${repo}/contents/${path}`,
+            {headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}});
+          if(cr.ok){ const cd=await cr.json(); sha=cd.sha; }
+        }catch{}
+        // Upload image
+        const ur=await fetch(`https://api.github.com/repos/${repo}/contents/${path}`,{
+          method:'PUT',
+          headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},
+          body:JSON.stringify({message:`cms: upload ${filename}`,content:b64,...(sha?{sha}:{})})
+        });
+        if(ur.ok){
+          published[key]='/'+path;
+          imgs[key]='/'+path; // replace base64 with path in localStorage
+        } else {
+          published[key]=val; // keep as-is if upload failed
+          toast('⚠️ อัปโหลด '+key+' ไม่สำเร็จ','err');
+        }
+      } else {
+        published[key]=val;
+      }
+    }
+
+    // Build content.json
+    const content={images:published};
+    const contentStr=JSON.stringify(content,null,2);
+    const contentB64=btoa(unescape(encodeURIComponent(contentStr)));
+    // Get existing SHA of content.json
+    let cSha='';
+    try{
+      const cr=await fetch(`https://api.github.com/repos/${repo}/contents/data/content.json`,
+        {headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}});
+      if(cr.ok){ const cd=await cr.json(); cSha=cd.sha; }
+    }catch{}
+    // Commit content.json
+    const cr=await fetch(`https://api.github.com/repos/${repo}/contents/data/content.json`,{
+      method:'PUT',
+      headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},
+      body:JSON.stringify({message:'cms: update content.json via Admin Panel',content:contentB64,...(cSha?{sha:cSha}:{})})
+    });
+    if(cr.ok){
+      setImgs(imgs); // save updated (paths, not base64)
+      renderSlots(); renderDash();
+      toast('🚀 เผยแพร่สำเร็จ! รูปขึ้นเว็บใน ~3 นาที','ok');
+    } else {
+      const e=await cr.json();
+      toast('❌ เผยแพร่ไม่สำเร็จ: '+(e.message||cr.status),'err');
+    }
+  } catch(e){
+    toast('❌ Error: '+e.message,'err');
+  }
+  btn.textContent='🚀 เผยแพร่'; btn.disabled=false;
+}
+
 // ── INIT ──────────────────────────────────────
 function init(){
   loadGeodes(); renderDash(); renderPTable();
-  initImgModal();
+  initImgModal(); loadGhSettings();
   document.getElementById('imgModal').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeImgModal(); });
   document.getElementById('importModal').addEventListener('click',e=>{ if(e.target===e.currentTarget) e.currentTarget.classList.remove('open'); });
 }
