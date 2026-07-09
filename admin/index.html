@@ -262,18 +262,40 @@ textarea.form-input{resize:vertical;min-height:80px;}
               </div>
               <a id="edPageLink" href="#" target="_blank" class="btn btn-outline btn-sm">👁 ดูหน้า</a>
             </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+
+            <!-- Row 1: Meta text fields + Image slots -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem" id="edMetaRow">
               <div class="card" style="margin-bottom:0">
-                <div class="card-title">📝 ข้อความ</div>
+                <div class="card-title">📝 ข้อความย่อ (Meta)</div>
                 <div id="edTextFields"></div>
-                <div style="margin-top:.875rem;padding:.65rem .85rem;background:#f5f0ff;border-radius:.5rem;font-size:.78rem;color:#5b21b6;line-height:1.6">
-                  💡 รองรับ HTML: &lt;strong&gt; &lt;em&gt; &lt;br&gt;<br>บันทึกอัตโนมัติทันที — กด 🚀 เผยแพร่เมื่อพร้อม
+                <div style="margin-top:.75rem;padding:.6rem .85rem;background:#f5f0ff;border-radius:.5rem;font-size:.75rem;color:#5b21b6;line-height:1.6">
+                  💡 รองรับ HTML: &lt;strong&gt; &lt;em&gt; &lt;br&gt; — บันทึกอัตโนมัติทันที
                 </div>
               </div>
               <div class="card" style="margin-bottom:0">
                 <div class="card-title">🖼️ รูปภาพ</div>
                 <div id="edImgSlots"></div>
               </div>
+            </div>
+
+            <!-- Row 2: Full body editor -->
+            <div class="card" id="edBodyCard" style="margin-bottom:0;display:none">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem">
+                <div class="card-title" style="margin:0">📄 เนื้อหาบทความทั้งหมด</div>
+                <div style="display:flex;gap:.5rem;align-items:center">
+                  <span id="edBodyStatus" style="font-size:.75rem;color:#9ca3af"></span>
+                  <button class="btn btn-outline btn-sm" onclick="resetBodyToOriginal()">↺ โหลดต้นฉบับ</button>
+                </div>
+              </div>
+              <div style="font-size:.78rem;color:#6b7280;margin-bottom:.75rem;line-height:1.6;background:#fffbeb;padding:.6rem .85rem;border-radius:.5rem;border-left:3px solid #f59e0b">
+                ✏️ แก้ไข HTML ได้เลย — รองรับ &lt;h2&gt; &lt;p&gt; &lt;ul&gt; &lt;strong&gt; &lt;img&gt; &lt;div class="..."&gt; ครบทุก tag<br>
+                รูปที่ใส่จาก slot ด้านบนจะแสดงโดยอัตโนมัติ ไม่ต้องระบุ src ในนี้
+              </div>
+              <textarea id="edBodyTA" rows="30"
+                style="width:100%;font-family:monospace;font-size:.8rem;line-height:1.7;border:1.5px solid #e9e0f5;border-radius:.5rem;padding:.85rem 1rem;resize:vertical;background:#fdfcff;color:#1a1228;tab-size:2"
+                placeholder="กำลังโหลดเนื้อหา..."
+                oninput="onBodyEdit(this.value)"></textarea>
+              <div style="margin-top:.5rem;font-size:.72rem;color:#9ca3af;text-align:right" id="edBodyLen"></div>
             </div>
           </div>
         </div>
@@ -1319,10 +1341,12 @@ function openPageEditor(key){
   const lnk=document.getElementById('edPageLink');
   if(p.path){ lnk.href=p.path; lnk.style.display=''; } else lnk.style.display='none';
 
-  // Text fields
+  // Meta text fields
   const texts=getTexts();
-  document.getElementById('edTextFields').innerHTML=p.text?.length
-    ?p.text.map(f=>{
+  const metaFields=p.text?.filter(f=>f.id!=='body')||[];
+  const metaRow=document.getElementById('edMetaRow');
+  document.getElementById('edTextFields').innerHTML=metaFields.length
+    ?metaFields.map(f=>{
         const val=texts[`${p.key}.${f.id}`]||'';
         return `<div class="form-group" style="margin-bottom:.875rem">
           <label class="fl">${x(f.label)}</label>
@@ -1336,7 +1360,7 @@ function openPageEditor(key){
           }
         </div>`;
       }).join('')
-    :'<div style="color:#9ca3af;font-size:.875rem;padding:1rem 0">ไม่มีข้อความที่แก้ได้ในหน้านี้</div>';
+    :'<div style="color:#9ca3af;font-size:.875rem;padding:1rem 0">ไม่มีข้อความ meta ในหน้านี้</div>';
 
   // Image slots
   const imgs=getImgs();
@@ -1357,6 +1381,105 @@ function openPageEditor(key){
         </div>`;
       }).join('')
     :'<div style="color:#9ca3af;font-size:.875rem;padding:1rem 0">ไม่มี slot รูปในหน้านี้</div>';
+
+  // Body editor — show if page has a path
+  const bodyCard=document.getElementById('edBodyCard');
+  if(p.path){
+    bodyCard.style.display='';
+    loadBodyEditor(p);
+  } else {
+    bodyCard.style.display='none';
+  }
+}
+
+// ── Body editor ──────────────────────────────────────
+let _origBody=''; // cache original HTML from page file
+
+async function loadBodyEditor(p){
+  const ta=document.getElementById('edBodyTA');
+  const st=document.getElementById('edBodyStatus');
+  const texts=getTexts();
+  const saved=texts[`${p.key}.body`];
+
+  if(saved){
+    // Already edited before — show saved version
+    ta.value=saved;
+    updateBodyLen(saved);
+    st.textContent='(เวอร์ชันที่แก้ไขแล้ว)';
+    st.style.color='#7c3aed';
+    // Also fetch original for reset button
+    fetchOrigBody(p.path).then(h=>{ _origBody=h; });
+  } else {
+    // First time — fetch from actual page file
+    st.textContent='กำลังโหลด...';
+    st.style.color='#9ca3af';
+    ta.value='';
+    ta.placeholder='กำลังโหลดเนื้อหา...';
+    const html=await fetchOrigBody(p.path);
+    _origBody=html;
+    if(html){
+      ta.value=html;
+      ta.placeholder='';
+      updateBodyLen(html);
+      st.textContent='(ต้นฉบับจากไฟล์)';
+      st.style.color='#6b7280';
+    } else {
+      ta.placeholder='ไม่สามารถโหลดเนื้อหาได้';
+      st.textContent='โหลดไม่ได้';
+      st.style.color='#ef4444';
+    }
+  }
+}
+
+async function fetchOrigBody(path){
+  try {
+    const r=await fetch(path+'?v='+Date.now());
+    if(!r.ok) return '';
+    const html=await r.text();
+    const parser=new DOMParser();
+    const doc=parser.parseFromString(html,'text/html');
+    // Try common content containers in order
+    const el=doc.querySelector('[data-cms-text="body"]')
+            ||doc.querySelector('.article-body')
+            ||doc.querySelector('.ep-content')
+            ||doc.querySelector('main');
+    if(!el) return '';
+    // Remove the data-cms-text attr from the extracted HTML (clean)
+    el.removeAttribute('data-cms-text');
+    return el.innerHTML.trim();
+  } catch(e){ return ''; }
+}
+
+function onBodyEdit(val){
+  if(!currentPage) return;
+  setTextVal(currentPage,'body',val);
+  updateBodyLen(val);
+  const st=document.getElementById('edBodyStatus');
+  st.textContent='● แก้ไขแล้ว (ยังไม่เผยแพร่)';
+  st.style.color='#f59e0b';
+}
+
+function updateBodyLen(val){
+  const el=document.getElementById('edBodyLen');
+  if(el) el.textContent=val.length.toLocaleString()+' ตัวอักษร · '+
+    (val.match(/<h[1-6]/gi)||[]).length+' หัวข้อ · '+
+    (val.match(/<p[> ]/gi)||[]).length+' ย่อหน้า';
+}
+
+async function resetBodyToOriginal(){
+  if(!currentPage) return;
+  const p=PAGES.find(pg=>pg.key===currentPage); if(!p?.path) return;
+  if(!confirm('โหลดต้นฉบับจากไฟล์? การแก้ไขที่ยังไม่เผยแพร่จะหายไป')) return;
+  const st=document.getElementById('edBodyStatus');
+  st.textContent='กำลังโหลด...'; st.style.color='#9ca3af';
+  const html=await fetchOrigBody(p.path);
+  _origBody=html;
+  if(html){
+    document.getElementById('edBodyTA').value=html;
+    setTextVal(currentPage,'body',html);
+    updateBodyLen(html);
+    st.textContent='(โหลดต้นฉบับแล้ว)'; st.style.color='#6b7280';
+  }
 }
 
 function closePageEditor(){

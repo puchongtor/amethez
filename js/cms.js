@@ -1,10 +1,9 @@
 /* cms.js — CMS loader for Amethez
  * Reads /data/content.json and fills:
+ *   [data-cms-text="key"]  → innerHTML (run first so injected HTML is then scanned)
  *   [data-cms-img="key"]   → background-image or <img> src
- *   [data-cms-text="key"]  → innerHTML
  *   [data-cms-logo]        → replaces SVG with logo image
  *   [data-cms-href="key"]  → href attribute
- * Falls back gracefully if JSON missing or slot empty.
  */
 (async () => {
   try {
@@ -14,10 +13,25 @@
     const imgs  = d.images || {};
     const texts = d.text   || {};
 
-    // Detect current page key from body[data-cms-page] or URL
     const pageKey = document.body.dataset.cmsPage || detectPage();
 
-    // ── IMAGES ──
+    // ── TEXT (first — body injection may add new [data-cms-img] nodes) ──
+    document.querySelectorAll('[data-cms-text]').forEach(el => {
+      const key = el.dataset.cmsText;
+      const val = texts[key]
+               || texts[`${pageKey}.${key}`]
+               || texts[`global.${key}`];
+      if (val !== undefined && val !== '') el.innerHTML = val;
+    });
+
+    // ── HREF ──
+    document.querySelectorAll('[data-cms-href]').forEach(el => {
+      const key = el.dataset.cmsHref;
+      const val = texts[key] || texts[`global.${key}`];
+      if (val) el.href = val;
+    });
+
+    // ── IMAGES (after text — catches images injected by body replacement) ──
     document.querySelectorAll('[data-cms-img]').forEach(el => {
       const key = el.dataset.cmsImg;
       const url = imgs[key];
@@ -32,21 +46,6 @@
         const ph = el.querySelector('.cms-placeholder');
         if (ph) ph.style.display = 'none';
       }
-    });
-
-    // ── TEXT ──
-    document.querySelectorAll('[data-cms-text]').forEach(el => {
-      const key = el.dataset.cmsText;
-      // Support both "global.key" and shorthand "key" (prefixed with page)
-      const val = texts[key] || texts[`${pageKey}.${key}`] || texts[`global.${key}`];
-      if (val !== undefined && val !== '') el.innerHTML = val;
-    });
-
-    // ── HREF ──
-    document.querySelectorAll('[data-cms-href]').forEach(el => {
-      const key = el.dataset.cmsHref;
-      const val = texts[key] || texts[`global.${key}`];
-      if (val) el.href = val;
     });
 
     // ── LOGO ──
@@ -78,7 +77,6 @@
   function detectPage() {
     const p = location.pathname.replace(/\/$/, '') || '/index';
     const parts = p.split('/');
-    const last = parts[parts.length - 1].replace('.html', '') || 'index';
-    return last;
+    return parts[parts.length - 1].replace('.html', '') || 'index';
   }
 })();
