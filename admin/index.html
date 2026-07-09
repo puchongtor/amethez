@@ -680,9 +680,23 @@ textarea.form-input{resize:vertical;min-height:80px;}
 
         <!-- ARTICLES -->
         <div id="tab-articles">
-          <div class="section-title">📝 บทความและหน้าทั้งหมด</div>
-          <div class="section-sub">ลิงก์ไปแต่ละหน้า — คลิก 🖼️ เพื่อจัดการรูปของหน้านั้น</div>
-          <div class="article-list" id="articleList"></div>
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:.75rem;margin-bottom:1.25rem">
+            <div>
+              <div class="section-title">📝 หน้าทั้งหมด</div>
+              <div class="section-sub">จัดกลุ่มตามหมวด — ดูสถานะรูปและข้อความ กดแก้ไขตรงได้เลย</div>
+            </div>
+            <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">
+              <div style="font-size:.8rem;color:#6b7280">กรอง:</div>
+              <div id="artFilterBar" style="display:flex;gap:.35rem;flex-wrap:wrap"></div>
+            </div>
+          </div>
+          <!-- legend -->
+          <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.25rem;font-size:.78rem;color:#6b7280">
+            <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#059669;margin-right:.3rem"></span>ครบแล้ว</span>
+            <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#d97706;margin-right:.3rem"></span>ยังขาดบางส่วน</span>
+            <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#e5e7eb;margin-right:.3rem"></span>ยังไม่เริ่ม</span>
+          </div>
+          <div id="articleList"></div>
         </div>
 
         <!-- SETTINGS -->
@@ -1957,18 +1971,76 @@ function exportAffJson(){
 }
 
 // ── ARTICLES ──────────────────────────────────
+let artActiveGroup='all';
 function renderArticles(){
-  document.getElementById('articleList').innerHTML=ARTICLES.map(a=>`
-    <div class="article-item">
-      <div class="article-emoji">${a.e}</div>
-      <div class="article-info">
-        <div class="article-name">${a.n}</div>
-        <div class="article-path">${a.p}</div>
-      </div>
-      <div style="display:flex;gap:.5rem">
-        <a href="${a.p}" target="_blank" class="btn btn-outline btn-sm">👁 ดู</a>
-      </div>
-    </div>`).join('');
+  const imgs=getImgs(), texts=getTexts();
+
+  // build filter bar
+  const bar=document.getElementById('artFilterBar');
+  const groups=[{k:'all',v:'ทั้งหมด'},...Object.entries(PAGE_GROUPS).map(([k,v])=>({k,v}))];
+  bar.innerHTML=groups.map(({k,v})=>`
+    <button class="filter-chip${artActiveGroup===k?' active':''}"
+      onclick="artActiveGroup='${k}';renderArticles()">${v}</button>`).join('');
+
+  const list = artActiveGroup==='all' ? PAGES : PAGES.filter(p=>p.group===artActiveGroup);
+  const byGroup={};
+  list.forEach(p=>{
+    const g=p.group; if(!byGroup[g]) byGroup[g]=[];
+    byGroup[g].push(p);
+  });
+
+  const html=Object.entries(byGroup).map(([gk,pages])=>{
+    const gLabel=PAGE_GROUPS[gk]||gk;
+    const rows=pages.map(p=>{
+      const ic=p.imgs?p.imgs.filter(i=>imgs[i]).length:0;
+      const it=p.imgs?p.imgs.length:0;
+      const tc=p.text?p.text.filter(f=>texts[`${p.key}.${f.id}`]).length:0;
+      const tt=p.text?p.text.length:0;
+      const total=it+tt, done=ic+tc;
+      const pct=total?Math.round(done/total*100):0;
+
+      let dotColor='#e5e7eb', dotTitle='ยังไม่ได้แก้ไข';
+      if(total===0){ dotColor='#c4b5fd'; dotTitle='ไม่มี slot'; }
+      else if(pct===100){ dotColor='#059669'; dotTitle='ครบแล้ว'; }
+      else if(pct>0){ dotColor='#d97706'; dotTitle=`แก้แล้ว ${done}/${total}`; }
+
+      const bar=total>0?`<div style="flex:1;max-width:80px;height:6px;background:#f3f4f6;border-radius:3px;overflow:hidden">
+        <div style="width:${pct}%;height:100%;background:${dotColor};border-radius:3px;transition:width .3s"></div>
+      </div>`:'';
+
+      const imgBadge=it>0?`<span style="font-size:.72rem;color:${ic<it?'#d97706':'#059669'};background:${ic<it?'#fef3c7':'#d1fae5'};padding:.15rem .5rem;border-radius:2rem">🖼️ ${ic}/${it}</span>`:'';
+      const txtBadge=tt>0?`<span style="font-size:.72rem;color:${tc<tt?'#d97706':'#059669'};background:${tc<tt?'#fef3c7':'#d1fae5'};padding:.15rem .5rem;border-radius:2rem">📝 ${tc}/${tt}</span>`:'';
+
+      const navIdx=document.querySelectorAll('.nav-item');
+      return `<div class="article-item" style="border-left:3px solid ${dotColor}">
+        <div style="width:10px;height:10px;border-radius:50%;background:${dotColor};flex-shrink:0" title="${dotTitle}"></div>
+        <div class="article-emoji" style="font-size:1.5rem">${p.label.split(' ')[0]}</div>
+        <div class="article-info" style="flex:1;min-width:0">
+          <div class="article-name">${p.label.replace(/^\S+ /,'')}</div>
+          <div class="article-path" style="margin-top:.2rem">${p.path||'ทุกหน้า'}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">
+          ${imgBadge}${txtBadge}${bar}
+          <button class="btn btn-primary btn-sm" onclick="goEditPage('${p.key}')">✏️ แก้ไข</button>
+          ${p.path?`<a href="${p.path}" target="_blank" class="btn btn-outline btn-sm">👁</a>`:''}
+        </div>
+      </div>`;
+    }).join('');
+
+    return `<div style="margin-bottom:1.75rem">
+      <div style="font-size:.78rem;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.625rem;padding-bottom:.4rem;border-bottom:2px solid var(--border)">${gLabel} <span style="color:#c4b5fd;font-weight:400">(${pages.length} หน้า)</span></div>
+      <div class="article-list">${rows}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('articleList').innerHTML=html||'<div style="color:#9ca3af;text-align:center;padding:2rem">ไม่มีหน้า</div>';
+}
+
+function goEditPage(key){
+  // switch to pages tab then open editor
+  const navEl=document.querySelector('.nav-item:nth-child(3)');
+  showTab('pages',navEl);
+  setTimeout(()=>openPageEditor(key),120);
 }
 
 // ── DASHBOARD ─────────────────────────────────
