@@ -211,6 +211,65 @@
     .master-name { font-family:'Playfair Display',serif; font-size:1.15rem; color:#c9a84c; margin-bottom:.4rem; }
     .master-desc { font-size:.85rem; color:rgba(255,255,255,.65); line-height:1.7; }
 
+    /* ── Blog Section ── */
+    .blog-tabs { display:flex; gap:.5rem; flex-wrap:wrap; margin-bottom:1.75rem; }
+    .btab { padding:.45rem 1rem; border-radius:2rem; font-size:.82rem; border:1.5px solid #e9e0f8;
+      background:white; color:#6b5e8a; cursor:pointer; transition:all .15s; font-family:Sarabun,sans-serif; }
+    .btab:hover,.btab.on { background:#7c3aed; border-color:#7c3aed; color:white; }
+
+    /* Featured */
+    .blog-featured { margin-bottom:2rem; }
+    .blog-feat-card { display:grid; grid-template-columns:1fr 1fr; gap:2rem; background:white;
+      border:1px solid #e9e0f8; border-radius:1.25rem; overflow:hidden; text-decoration:none; color:#1a1228; transition:all .2s; }
+    .blog-feat-card:hover { box-shadow:0 12px 40px rgba(124,58,237,.1); transform:translateY(-2px); }
+    .blog-feat-img { background:#f3effa; min-height:220px; display:flex; align-items:center;
+      justify-content:center; font-size:5rem; }
+    .blog-feat-img img { width:100%; height:100%; object-fit:cover; }
+    .blog-feat-body { padding:2rem; display:flex; flex-direction:column; justify-content:center; }
+    .blog-cat-badge { font-size:.72rem; font-weight:700; color:#7c3aed; text-transform:uppercase;
+      letter-spacing:.05em; margin-bottom:.6rem; }
+    .blog-feat-title { font-family:'Playfair Display',serif; font-size:1.4rem; line-height:1.4;
+      margin-bottom:.75rem; color:#1a1228; }
+    .blog-feat-desc { font-size:.88rem; color:#6b5e8a; line-height:1.7; margin-bottom:1rem; }
+    .blog-read { font-size:.82rem; color:#7c3aed; font-weight:700; }
+
+    /* Grid */
+    .blog-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+      gap:1.25rem; margin-bottom:2.5rem; }
+    .blog-card { background:white; border:1px solid #e9e0f8; border-radius:1rem;
+      text-decoration:none; color:#1a1228; transition:all .2s; overflow:hidden; display:flex; flex-direction:column; }
+    .blog-card:hover { border-color:#7c3aed; transform:translateY(-3px); box-shadow:0 8px 28px rgba(124,58,237,.08); }
+    .blog-card-img { background:#f3effa; height:150px; display:flex; align-items:center;
+      justify-content:center; font-size:3rem; flex-shrink:0; }
+    .blog-card-img img { width:100%; height:100%; object-fit:cover; }
+    .blog-card-body { padding:1.1rem; flex:1; display:flex; flex-direction:column; }
+    .blog-card-cat { font-size:.68rem; font-weight:700; color:#7c3aed; text-transform:uppercase;
+      letter-spacing:.05em; margin-bottom:.4rem; }
+    .blog-card-title { font-weight:700; font-size:.92rem; line-height:1.45; flex:1; margin-bottom:.5rem; }
+    .blog-card-desc { font-size:.78rem; color:#6b5e8a; line-height:1.6; }
+    .blog-card-footer { display:flex; align-items:center; justify-content:space-between;
+      padding:.65rem 1.1rem; border-top:1px solid #f3effa; font-size:.72rem; color:#9b89bb; }
+
+    .blog-card.hidden { display:none; }
+
+    /* Tag Cloud */
+    .tag-cloud-wrap { background:#f3effa; border-radius:1.25rem; padding:1.75rem; margin-top:.5rem; }
+    .tag-cloud-title { font-family:'Playfair Display',serif; font-size:1.05rem; color:#1a1228;
+      margin-bottom:1rem; }
+    .tag-cloud { display:flex; flex-wrap:wrap; gap:.5rem; }
+    .tag-pill { padding:.35rem .85rem; border-radius:2rem; font-size:.78rem; border:1px solid #d1c4f0;
+      background:white; color:#5a4e72; cursor:pointer; transition:all .15s; font-family:Sarabun,sans-serif; }
+    .tag-pill:hover { background:#7c3aed; border-color:#7c3aed; color:white; }
+    .tag-pill.active { background:#7c3aed; border-color:#7c3aed; color:white; }
+    .tag-pill.lg { font-size:.86rem; font-weight:600; }
+    .tag-pill.md { font-size:.78rem; }
+    .tag-pill.sm { font-size:.72rem; opacity:.8; }
+
+    @media(max-width:700px) {
+      .blog-feat-card { grid-template-columns:1fr; }
+      .blog-feat-img { min-height:160px; }
+    }
+
     @media(max-width:600px) {
       .stone-grid { grid-template-columns:repeat(3,1fr); gap:.65rem; }
       .masters-inner { grid-template-columns:1fr; }
@@ -804,6 +863,39 @@
   </div>
 </section>
 
+<!-- ── BLOG / ARTICLES ── -->
+<section class="cat-section" id="blog">
+  <div class="cat-inner">
+    <h2 class="cat-h2">📖 บทความและความรู้</h2>
+    <p class="cat-lead">คลังความรู้เกี่ยวกับคริสตัล — เลือกตามหมวดหมู่ที่สนใจ</p>
+
+    <!-- Blog Category Tabs -->
+    <div class="blog-tabs" id="blogTabs">
+      <button class="btab on" onclick="setBlogCat('all',this)">ทั้งหมด</button>
+      <button class="btab" onclick="setBlogCat('guide',this)">🔰 คู่มือมือใหม่</button>
+      <button class="btab" onclick="setBlogCat('healing',this)">💚 การเยียวยา</button>
+      <button class="btab" onclick="setBlogCat('fengshui',this)">🏠 ฮวงจุ้ย</button>
+      <button class="btab" onclick="setBlogCat('care',this)">✨ ดูแลหิน</button>
+      <button class="btab" onclick="setBlogCat('diy',this)">🛠 DIY & Grid</button>
+      <button class="btab" onclick="setBlogCat('collect',this)">💎 สะสม</button>
+      <button class="btab" onclick="setBlogCat('science',this)">🔬 วิทยาศาสตร์</button>
+      <button class="btab" onclick="setBlogCat('sound',this)">🎵 Sound Healing</button>
+    </div>
+
+    <!-- Featured Article -->
+    <div class="blog-featured" id="blogFeatured"></div>
+
+    <!-- Article Grid -->
+    <div class="blog-grid" id="blogGrid"></div>
+
+    <!-- Tag Cloud -->
+    <div class="tag-cloud-wrap">
+      <h3 class="tag-cloud-title">🏷 ค้นหาตาม Tag</h3>
+      <div class="tag-cloud" id="tagCloud"></div>
+    </div>
+  </div>
+</section>
+
 <!-- ── MASTERS ── -->
 <section class="masters">
   <div class="masters-inner">
@@ -1005,8 +1097,205 @@ function calcElement() {
   document.getElementById('calcResult').style.display = 'block';
 }
 
+/* ═══ BLOG DATA ═══ */
+const ARTICLES = [
+  // คู่มือมือใหม่
+  {cat:'guide', catTh:'คู่มือมือใหม่', icon:'🔰', emoji:'📚',
+   title:'หินคริสตัลคืออะไร? เริ่มต้นอย่างไรดี สำหรับมือใหม่',
+   desc:'ตอบทุกคำถามพื้นฐาน — หินทำงานอย่างไร เริ่มซื้อชิ้นแรกอย่างไร และข้อผิดพลาดที่ควรหลีกเลี่ยง',
+   url:'/stones/amethyst.html', tags:['มือใหม่','คริสตัล','เริ่มต้น'], featured:true},
+  {cat:'guide', catTh:'คู่มือมือใหม่', icon:'🔰', emoji:'💎',
+   title:'5 หินที่มือใหม่ควรมีก่อน และเหตุผลว่าทำไม',
+   desc:'เลือกให้ถูกตั้งแต่แรก ไม่ต้องเสียเงินลองผิดลองถูก',
+   url:'', tags:['มือใหม่','เลือกหิน']},
+  {cat:'guide', catTh:'คู่มือมือใหม่', icon:'🔰', emoji:'🛒',
+   title:'วิธีซื้อหินออนไลน์ไม่ให้โดนของปลอม',
+   desc:'เช็คอย่างไร เชื่อใคร ราคาที่เหมาะสมคือเท่าไร',
+   url:'', tags:['ซื้อหิน','ของแท้','ออนไลน์']},
+
+  // การเยียวยา
+  {cat:'healing', catTh:'การเยียวยา', icon:'💚', emoji:'🌿',
+   title:'Crystal Healing คืออะไร ทำงานอย่างไรในเชิงวิทยาศาสตร์',
+   desc:'อธิบายกลไก piezoelectric effect, vibration theory และสิ่งที่งานวิจัยบอก',
+   url:'', tags:['Crystal Healing','พลังงาน','วิทยาศาสตร์']},
+  {cat:'healing', catTh:'การเยียวยา', icon:'💚', emoji:'💆',
+   title:'หินเยียวยาอารมณ์ — เลือกตามความรู้สึกที่คุณต้องการเปลี่ยน',
+   desc:'เศร้า กังวล โกรธ ท้อ — แต่ละอารมณ์มีหินที่ช่วยได้ต่างกัน',
+   url:'', tags:['อารมณ์','เยียวยา','จิตใจ']},
+  {cat:'healing', catTh:'การเยียวยา', icon:'💚', emoji:'🤲',
+   title:'วิธีนั่งสมาธิกับหินคริสตัล ขั้นตอน step-by-step',
+   desc:'เทคนิคจับหิน ตำแหน่งวาง และ script บทสมาธิ 10 นาที',
+   url:'', tags:['สมาธิ','เมดิเตชั่น','Meditation']},
+
+  // ฮวงจุ้ย
+  {cat:'fengshui', catTh:'ฮวงจุ้ย', icon:'🏠', emoji:'🏡',
+   title:'วางหินในบ้านตรงไหน ให้พลังงานดีที่สุด — แผนที่ Bagua',
+   desc:'ทิศ 8 ทิศ + ห้องต่างๆ ควรวางหินชนิดไหน ทำไม',
+   url:'', tags:['ฮวงจุ้ย','บ้าน','Bagua']},
+  {cat:'fengshui', catTh:'ฮวงจุ้ย', icon:'🏠', emoji:'💰',
+   title:'หินเรียกเงินในบ้าน — 7 ชนิดและตำแหน่งที่ถูกต้อง',
+   desc:'ซิทริน ไพไรต์ โพรงอเมทิสต์ — วางผิดที่พลังงานก็ไม่ทำงาน',
+   url:'', tags:['เงิน','ฮวงจุ้ย','ซิทริน','ไพไรต์']},
+  {cat:'fengshui', catTh:'ฮวงจุ้ย', icon:'🏠', emoji:'🛡',
+   title:'หินปกป้องบ้าน — ไล่พลังงานลบออกจากพื้นที่',
+   desc:'ทัวร์มาลีนดำ ชังไกต์ ออบซิเดียน — วางที่ทางเข้าและมุมบ้าน',
+   url:'', tags:['ปกป้อง','ฮวงจุ้ย','ทัวร์มาลีนดำ']},
+
+  // ดูแลหิน
+  {cat:'care', catTh:'ดูแลหิน', icon:'✨', emoji:'🌙',
+   title:'วิธีชาร์จพลังงานหิน — แสงจันทร์ แสงอาทิตย์ เสียง ดิน',
+   desc:'แต่ละวิธีต่างกันอย่างไร หินชนิดไหนห้ามใช้วิธีไหน',
+   url:'', tags:['ชาร์จหิน','แสงจันทร์','ล้างหิน']},
+  {cat:'care', catTh:'ดูแลหิน', icon:'✨', emoji:'🧂',
+   title:'ล้างหิน — วิธีไหนดี วิธีไหนทำลายหิน',
+   desc:'เกลือ น้ำ ควันเสจ — มีหลายชนิดที่ห้ามโดนน้ำหรือเกลือ รู้ก่อนทำ',
+   url:'', tags:['ล้างหิน','ดูแลหิน','เสจ']},
+  {cat:'care', catTh:'ดูแลหิน', icon:'✨', emoji:'📦',
+   title:'เก็บรักษาหินคริสตัล ให้พลังงานคงทน ไม่ซีด ไม่แตก',
+   desc:'วิธีเก็บ วิธีจัด และสิ่งที่ควรหลีกเลี่ยง',
+   url:'', tags:['เก็บหิน','ดูแล','คลังหิน']},
+
+  // DIY & Grid
+  {cat:'diy', catTh:'DIY & Crystal Grid', icon:'🛠', emoji:'⬡',
+   title:'Crystal Grid คืออะไร ทำเองได้ไหม ใช้หินอะไรบ้าง',
+   desc:'รูปแบบ Grid ยอดนิยม 5 แบบ พร้อม template download ฟรี',
+   url:'', tags:['Crystal Grid','DIY','Sacred Geometry']},
+  {cat:'diy', catTh:'DIY & Crystal Grid', icon:'🛠', emoji:'📿',
+   title:'ทำสร้อยหินด้วยตัวเอง — วัสดุ เทคนิค และการเลือกหิน',
+   desc:'เริ่มต้นจาก 0 ไม่ต้องมีประสบการณ์ก็ทำได้',
+   url:'', tags:['DIY','สร้อยหิน','เครื่องประดับ']},
+  {cat:'diy', catTh:'DIY & Crystal Grid', icon:'🛠', emoji:'🕯',
+   title:'พิธีกรรมตั้งความตั้งใจกับหิน — Setting Intention ทำอย่างไร',
+   desc:'ขั้นตอนที่ถูกต้อง พร้อม script และเวลาที่เหมาะสม',
+   url:'', tags:['Intention','พิธีกรรม','Setting']},
+
+  // สะสม
+  {cat:'collect', catTh:'การสะสม', icon:'💎', emoji:'🏆',
+   title:'หินที่แพงที่สุดในโลก — Painite, Red Beryl, Grandidierite',
+   desc:'ราคา ที่มา และเหตุผลว่าทำไมถึงหายากจนแทบหาซื้อไม่ได้',
+   url:'', tags:['สะสม','หินหายาก','ราคาหิน']},
+  {cat:'collect', catTh:'การสะสม', icon:'💎', emoji:'🔍',
+   title:'เช็คหินแท้ vs ของปลอม — 6 วิธีที่ใช้ได้จริงโดยไม่ต้องใช้เครื่องมือ',
+   desc:'สี น้ำหนัก ความเย็น ฟองอากาศ การหักเหแสง — เช็คได้เองที่บ้าน',
+   url:'', tags:['ของแท้','ตรวจสอบ','ของปลอม']},
+  {cat:'collect', catTh:'การสะสม', icon:'💎', emoji:'🌍',
+   title:'แหล่งหินที่ดีที่สุดในโลก — บราซิล มาดากัสการ์ เมียนมาร์',
+   desc:'แต่ละประเทศมีชื่อเสียงเรื่องหินชนิดไหน และทำไมที่มาถึงสำคัญ',
+   url:'', tags:['แหล่งหิน','ที่มา','Brazil']},
+
+  // วิทยาศาสตร์
+  {cat:'science', catTh:'วิทยาศาสตร์', icon:'🔬', emoji:'⚛️',
+   title:'หินคริสตัลเกิดขึ้นได้อย่างไร — ธรณีวิทยาฉบับเข้าใจง่าย',
+   desc:'แรงดัน ความร้อน เวลา — กระบวนการล้านปีที่สร้างอเมทิสต์',
+   url:'', tags:['ธรณีวิทยา','วิทยาศาสตร์','การก่อตัว']},
+  {cat:'science', catTh:'วิทยาศาสตร์', icon:'🔬', emoji:'📐',
+   title:'โครงสร้างผลึก — ทำไมหินถึงมีรูปร่างซ้ำๆ สม่ำเสมอ',
+   desc:'ระบบผลึก 7 ระบบ และสิ่งที่โครงสร้างบอกเกี่ยวกับพลังงาน',
+   url:'', tags:['ผลึก','โครงสร้าง','Crystallography']},
+  {cat:'science', catTh:'วิทยาศาสตร์', icon:'🔬', emoji:'💡',
+   title:'Mohs Scale ความแข็งหิน — ทำไมถึงสำคัญสำหรับนักสะสม',
+   desc:'ตารางเปรียบเทียบหิน 50 ชนิด ตาม Mohs Scale ฉบับไทย',
+   url:'', tags:['ความแข็ง','Mohs','คุณสมบัติหิน']},
+
+  // Sound Healing
+  {cat:'sound', catTh:'Sound Healing', icon:'🎵', emoji:'🎶',
+   title:'Singing Bowl + คริสตัล ทำงานร่วมกันอย่างไร',
+   desc:'ความถี่เสียงกับการสั่นสะเทือนของหิน — ทำไมคนใช้คู่กัน',
+   url:'', tags:['Singing Bowl','Sound Healing','ความถี่']},
+  {cat:'sound', catTh:'Sound Healing', icon:'🎵', emoji:'🔔',
+   title:'Solfeggio Frequencies — 432 Hz 528 Hz คืออะไร ทำงานอย่างไร',
+   desc:'ตำนานและหลักฐานที่มีจริง บทสรุปที่ซื่อสัตย์',
+   url:'', tags:['Solfeggio','432Hz','528Hz']},
+];
+
+const ALL_TAGS = [
+  {tag:'มือใหม่',size:'lg'},{tag:'คริสตัล',size:'lg'},{tag:'เลือกหิน',size:'lg'},
+  {tag:'ล้างหิน',size:'lg'},{tag:'ชาร์จหิน',size:'lg'},{tag:'ฮวงจุ้ย',size:'lg'},
+  {tag:'สมาธิ',size:'lg'},{tag:'ของแท้',size:'lg'},{tag:'Crystal Grid',size:'md'},
+  {tag:'DIY',size:'md'},{tag:'พลังงาน',size:'md'},{tag:'Sound Healing',size:'md'},
+  {tag:'สะสม',size:'md'},{tag:'บ้าน',size:'md'},{tag:'Bagua',size:'md'},
+  {tag:'อเมทิสต์',size:'md'},{tag:'ซิทริน',size:'md'},{tag:'โรสควอตซ์',size:'md'},
+  {tag:'ออบซิเดียน',size:'md'},{tag:'ไพไรต์',size:'md'},{tag:'ทัวร์มาลีนดำ',size:'md'},
+  {tag:'เสจ',size:'sm'},{tag:'Singing Bowl',size:'sm'},{tag:'432Hz',size:'sm'},
+  {tag:'ผลึก',size:'sm'},{tag:'Mohs',size:'sm'},{tag:'Brazil',size:'sm'},
+  {tag:'Intention',size:'sm'},{tag:'แหล่งหิน',size:'sm'},{tag:'ราคาหิน',size:'sm'},
+  {tag:'เครื่องประดับ',size:'sm'},{tag:'ธรณีวิทยา',size:'sm'},{tag:'ของปลอม',size:'sm'},
+];
+
+let curBlogCat = 'all', curTag = '';
+
+function setBlogCat(cat, btn) {
+  curBlogCat = cat; curTag = '';
+  document.querySelectorAll('.btab').forEach(b => b.classList.remove('on'));
+  if (btn) btn.classList.add('on');
+  document.querySelectorAll('.tag-pill').forEach(p => p.classList.remove('active'));
+  renderBlog();
+}
+
+function setTag(tag, el) {
+  curTag = curTag === tag ? '' : tag;
+  curBlogCat = 'all';
+  document.querySelectorAll('.btab').forEach(b => b.classList.remove('on'));
+  document.querySelector('.btab')?.classList.add('on');
+  document.querySelectorAll('.tag-pill').forEach(p => p.classList.remove('active'));
+  if (curTag) el.classList.add('active');
+  renderBlog();
+}
+
+function renderBlog() {
+  const list = ARTICLES.filter(a => {
+    const matchCat = curBlogCat === 'all' || a.cat === curBlogCat;
+    const matchTag = !curTag || a.tags.includes(curTag);
+    return matchCat && matchTag;
+  });
+
+  // Featured
+  const feat = list[0];
+  const featEl = document.getElementById('blogFeatured');
+  if (feat) {
+    featEl.innerHTML = `
+      <a href="${feat.url || '#'}" class="blog-feat-card" ${!feat.url ? 'onclick="return false"' : ''}>
+        <div class="blog-feat-img">${feat.emoji}</div>
+        <div class="blog-feat-body">
+          <div class="blog-cat-badge">${feat.icon} ${feat.catTh}</div>
+          <div class="blog-feat-title">${feat.title}</div>
+          <div class="blog-feat-desc">${feat.desc}</div>
+          <div class="blog-read">${feat.url ? 'อ่านบทความ →' : '🔜 เร็วๆ นี้'}</div>
+        </div>
+      </a>`;
+    featEl.style.display = 'block';
+  } else {
+    featEl.innerHTML = '';
+  }
+
+  // Grid (skip first / featured)
+  const rest = list.slice(1);
+  const grid = document.getElementById('blogGrid');
+  grid.innerHTML = rest.map(a => `
+    <a href="${a.url || '#'}" class="blog-card" ${!a.url ? 'onclick="return false" style="opacity:.75"' : ''}>
+      <div class="blog-card-img">${a.emoji}</div>
+      <div class="blog-card-body">
+        <div class="blog-card-cat">${a.icon} ${a.catTh}</div>
+        <div class="blog-card-title">${a.title}</div>
+        <div class="blog-card-desc">${a.desc}</div>
+      </div>
+      <div class="blog-card-footer">
+        <span>${a.tags.slice(0,2).map(t=>'#'+t).join(' ')}</span>
+        <span>${a.url ? 'อ่าน →' : '🔜 เร็วๆ นี้'}</span>
+      </div>
+    </a>`).join('');
+}
+
+function renderTags() {
+  document.getElementById('tagCloud').innerHTML = ALL_TAGS.map(t =>
+    `<button class="tag-pill ${t.size}" onclick="setTag('${t.tag}',this)">#${t.tag}</button>`
+  ).join('');
+}
+
 // Init
 renderStones();
+renderBlog();
+renderTags();
 
 // Load CMS images
 (async () => {
