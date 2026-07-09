@@ -1,0 +1,351 @@
+﻿<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ตอนที่ 5 — ประตูที่สาม | อเมทิสต์ซีรีส์ | Amethez</title>
+  <meta name="description" content="ตอนสุดท้าย: จักระ Third Eye และ Crown — วิธีใช้อเมทิสต์ในการทำสมาธิ และสิ่งที่นาวาค้นพบในตอนท้าย">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --gold:#c9a84c; --purple:#7c3aed; --dark:#0f0a1e; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:Sarabun,sans-serif; background:var(--dark); color:#d4cce8; }
+    .topbar { background:linear-gradient(90deg,#1a0936,#2d1b5e,#1a0936); padding:.55rem 1.5rem; display:flex; align-items:center; justify-content:center; }
+    .topbar span { color:rgba(255,255,255,.65); font-size:.78rem; } .topbar strong { color:var(--gold); }
+    .nav { position:sticky; top:0; z-index:100; background:rgba(15,10,30,.95); backdrop-filter:blur(12px); border-bottom:1px solid rgba(124,58,237,.2); }
+    .nav-inner { max-width:1160px; margin:0 auto; padding:.875rem 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+    .logo { display:flex; align-items:center; gap:.6rem; text-decoration:none; flex-shrink:0; }
+    .logo svg { width:32px; height:32px; }
+    .logo-text { font-family:'Playfair Display',serif; font-size:1.2rem; color:white; font-weight:700; letter-spacing:.04em; }
+    .logo-sub { font-size:.65rem; color:rgba(255,255,255,.5); display:block; letter-spacing:.08em; }
+    .nav-links { display:flex; align-items:center; gap:.25rem; list-style:none; }
+    .nav-links a { font-size:.875rem; font-weight:600; color:rgba(255,255,255,.8); text-decoration:none; padding:.4rem .75rem; border-radius:.5rem; transition:all .15s; white-space:nowrap; }
+    .nav-links a:hover { background:rgba(124,58,237,.2); color:white; }
+    .nav-links .nav-shop { background:linear-gradient(135deg,#c9a84c,#b8922e); color:#0f0a1e !important; border-radius:2rem; padding:.4rem 1rem !important; }
+    .nav-links .nav-digital { color:#a78bfa !important; } .nav-links .nav-stories { color:var(--gold) !important; }
+    .hamburger { display:none; background:none; border:none; font-size:1.5rem; cursor:pointer; color:white; }
+    @media(max-width:860px){ .nav-links{display:none}.nav-links.open{display:flex;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:rgba(15,10,30,.98);padding:1rem 1.5rem;gap:.25rem}.hamburger{display:block} }
+
+    .ep-header { max-width:720px; margin:0 auto; padding:4rem 1.5rem 2rem; }
+    .breadcrumb { font-size:.78rem; color:rgba(255,255,255,.35); margin-bottom:1.5rem; }
+    .breadcrumb a { color:rgba(255,255,255,.4); text-decoration:none; } .breadcrumb a:hover { color:var(--gold); }
+    .ep-type-badge { display:inline-flex; align-items:center; gap:.4rem; background:rgba(155,89,182,.12); border:1px solid rgba(155,89,182,.25); color:#d8b4fe; padding:.3rem .85rem; border-radius:2rem; font-size:.72rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; margin-bottom:1.25rem; }
+    .ep-series-badge { display:inline-flex; align-items:center; gap:.4rem; background:rgba(201,168,76,.08); border:1px solid rgba(201,168,76,.2); color:var(--gold); padding:.3rem .85rem; border-radius:2rem; font-size:.72rem; font-weight:700; margin-bottom:1.25rem; margin-left:.4rem; }
+    .ep-num { font-size:.85rem; color:rgba(255,255,255,.35); margin-bottom:.5rem; }
+    h1.ep-title { font-family:'Playfair Display',serif; font-size:clamp(2rem,5vw,3rem); color:white; line-height:1.25; margin-bottom:1rem; }
+    .ep-tagline { font-size:1rem; color:rgba(255,255,255,.5); font-style:italic; line-height:1.7; margin-bottom:2rem; }
+    .ep-meta { display:flex; gap:1.5rem; flex-wrap:wrap; font-size:.78rem; color:rgba(255,255,255,.35); padding-bottom:2rem; border-bottom:1px solid rgba(255,255,255,.07); }
+
+    .ep-content { max-width:720px; margin:0 auto; padding:2.5rem 1.5rem 4rem; }
+    .ep-content p { font-size:1.05rem; line-height:2; color:rgba(255,255,255,.78); margin-bottom:1.75rem; }
+    .ep-content p.scene-break { text-align:center; color:rgba(255,255,255,.2); font-size:1.2rem; letter-spacing:.3em; margin:2.5rem 0; }
+    .ep-content h2 { font-family:'Playfair Display',serif; font-size:1.4rem; color:white; margin:3rem 0 1.25rem; }
+
+    /* SYSTEM BOX */
+    .system-box { background:linear-gradient(135deg,rgba(155,89,182,.08),rgba(124,58,237,.05)); border:1px solid rgba(155,89,182,.2); border-radius:.875rem; padding:1.75rem 2rem; margin:2.5rem 0; }
+    .system-label { font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#c4b5fd; margin-bottom:.75rem; }
+    .system-title { font-family:'Playfair Display',serif; font-size:1.15rem; color:#d8b4fe; margin-bottom:.75rem; }
+    .system-box p { font-size:.9rem; color:rgba(200,185,240,.6); line-height:1.9; margin-bottom:.6rem; }
+    .system-box p:last-child { margin-bottom:0; }
+    .system-data { display:grid; grid-template-columns:1fr 1fr; gap:.5rem; margin-top:1rem; }
+    .data-row { background:rgba(255,255,255,.03); border-radius:.4rem; padding:.6rem .85rem; }
+    .data-row .label { font-size:.7rem; color:rgba(200,185,240,.4); margin-bottom:.2rem; }
+    .data-row .value { font-size:.88rem; color:#86efac; font-weight:600; }
+    .data-row .value.mid { color:#fde68a; }
+    .data-row .value.bad { color:#f87171; }
+    @media(max-width:480px){ .system-data{grid-template-columns:1fr} }
+
+    /* CHAKRA INFO */
+    .chakra-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:2rem 0; }
+    @media(max-width:520px){ .chakra-grid{grid-template-columns:1fr} }
+    .chakra-card { background:rgba(255,255,255,.03); border-radius:.875rem; padding:1.5rem; border:1px solid; text-align:center; }
+    .chakra-card.six { border-color:rgba(99,102,241,.3); }
+    .chakra-card.seven { border-color:rgba(155,89,182,.3); }
+    .chakra-num { font-size:2rem; margin-bottom:.5rem; }
+    .chakra-name-th { font-family:'Playfair Display',serif; font-size:1.1rem; color:white; margin-bottom:.2rem; }
+    .chakra-name-en { font-size:.75rem; color:rgba(255,255,255,.35); margin-bottom:.75rem; letter-spacing:.06em; }
+    .chakra-card.six .chakra-color { color:#818cf8; }
+    .chakra-card.seven .chakra-color { color:#d8b4fe; }
+    .chakra-color { font-size:.78rem; font-weight:700; margin-bottom:.6rem; }
+    .chakra-card p { font-size:.82rem; color:rgba(255,255,255,.5); line-height:1.75; }
+
+    /* MEDITATION GUIDE */
+    .meditation-box { background:linear-gradient(135deg,rgba(88,28,135,.12),rgba(49,10,101,.08)); border:1px solid rgba(155,89,182,.2); border-radius:.875rem; padding:1.75rem 2rem; margin:2rem 0; }
+    .meditation-label { font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(216,180,254,.5); margin-bottom:1rem; }
+    .meditation-step { display:flex; gap:1rem; margin-bottom:1.25rem; align-items:flex-start; }
+    .meditation-step:last-child { margin-bottom:0; }
+    .step-num { flex-shrink:0; width:32px; height:32px; background:rgba(155,89,182,.2); border:1px solid rgba(155,89,182,.3); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.85rem; font-weight:700; color:#d8b4fe; }
+    .step-body { flex:1; }
+    .step-title { font-size:.88rem; font-weight:700; color:#d8b4fe; margin-bottom:.3rem; }
+    .step-desc { font-size:.85rem; color:rgba(216,180,254,.55); line-height:1.75; }
+
+    /* WORLDWIDE REPORTS */
+    .world-reports { display:flex; flex-direction:column; gap:.85rem; margin:2rem 0; }
+    .world-report { background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07); border-radius:.75rem; padding:1.1rem 1.4rem; }
+    .wr-header { display:flex; align-items:center; gap:.65rem; margin-bottom:.5rem; }
+    .wr-flag { font-size:1.1rem; }
+    .wr-from { font-size:.72rem; font-weight:700; color:rgba(255,255,255,.35); }
+    .world-report p { font-size:.88rem; color:rgba(255,255,255,.55); line-height:1.75; margin:0; }
+
+    /* NAVA FINAL */
+    .nava-final { background:rgba(0,0,0,.3); border:1px solid rgba(155,89,182,.2); border-radius:.875rem; padding:2rem 2.25rem; margin:3rem 0; position:relative; }
+    .nava-final::before { content:'💜'; position:absolute; top:-14px; left:24px; background:var(--dark); padding:0 8px; font-size:1.1rem; }
+    .nava-label { font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(216,180,254,.5); margin-bottom:1rem; }
+    .nava-final p { font-size:1.05rem; color:rgba(255,255,255,.82); line-height:2; font-style:italic; margin-bottom:.85rem; }
+    .nava-final p:last-child { margin-bottom:0; }
+    .nava-final p.key { color:white; font-size:1.1rem; border-left:2px solid rgba(155,89,182,.4); padding-left:1rem; font-style:normal; }
+
+    /* TEAM SIGN-OFF */
+    .team-signoff { background:linear-gradient(135deg,rgba(201,168,76,.05),rgba(155,89,182,.04)); border:1px solid rgba(201,168,76,.12); border-radius:1rem; padding:2rem 2.25rem; margin:2.5rem 0; }
+    .signoff-title { font-family:'Playfair Display',serif; font-size:1.15rem; color:white; margin-bottom:1.5rem; }
+    .signoff-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; }
+    .signoff-card { background:rgba(255,255,255,.03); border-radius:.625rem; padding:1rem 1.25rem; }
+    .sc-name { font-size:.88rem; font-weight:700; color:rgba(255,255,255,.7); margin-bottom:.25rem; }
+    .sc-msg { font-size:.8rem; color:rgba(255,255,255,.4); line-height:1.7; font-style:italic; }
+
+    /* NEXT STONE */
+    .next-stone { background:linear-gradient(135deg,rgba(245,158,11,.06),rgba(217,119,6,.04)); border:1px solid rgba(245,158,11,.2); border-radius:1rem; padding:1.75rem 2rem; margin:2rem 0; }
+    .next-stone h3 { font-family:'Playfair Display',serif; font-size:1.1rem; color:white; margin-bottom:.5rem; }
+    .next-stone p { font-size:.88rem; color:rgba(255,255,255,.5); line-height:1.7; margin-bottom:1rem; }
+    .next-stone-options { display:flex; gap:.6rem; flex-wrap:wrap; }
+    .next-opt { display:inline-flex; align-items:center; gap:.4rem; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:2rem; padding:.4rem 1rem; font-size:.82rem; color:rgba(255,255,255,.5); cursor:default; }
+
+    .ep-nav { max-width:720px; margin:0 auto; padding:0 1.5rem 5rem; display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap; }
+    .ep-nav-btn { display:inline-flex; align-items:center; gap:.5rem; padding:.75rem 1.25rem; border-radius:.5rem; font-family:Sarabun,sans-serif; font-size:.9rem; font-weight:600; text-decoration:none; transition:all .2s; }
+    .ep-nav-prev { background:rgba(255,255,255,.05); color:rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.1); }
+    .ep-nav-prev:hover { background:rgba(255,255,255,.08); color:white; }
+    .ep-nav-series { background:linear-gradient(135deg,#7c3aed,#6d28d9); color:white; box-shadow:0 4px 16px rgba(124,58,237,.3); }
+    .ep-nav-series:hover { transform:translateY(-2px); }
+    .ep-nav-index { font-size:.8rem; color:rgba(255,255,255,.3); text-decoration:none; }
+    .ep-nav-index:hover { color:var(--gold); }
+    .amethyst-cta { max-width:720px; margin:0 auto 2rem; padding:0 1.5rem; }
+    .cta-box { background:linear-gradient(135deg,rgba(88,28,135,.15),rgba(109,40,217,.08)); border:1px solid rgba(155,89,182,.25); border-radius:1rem; padding:1.75rem 2rem; }
+    .cta-box h3 { font-family:'Playfair Display',serif; font-size:1.1rem; color:white; margin-bottom:.5rem; }
+    .cta-box p { font-size:.85rem; color:rgba(255,255,255,.5); line-height:1.7; margin-bottom:1rem; }
+    .cta-btn { display:inline-flex; align-items:center; gap:.4rem; background:linear-gradient(135deg,#6d28d9,#5b21b6); color:white; padding:.65rem 1.25rem; border-radius:.5rem; font-family:Sarabun,sans-serif; font-size:.85rem; font-weight:700; text-decoration:none; }
+    .footer { border-top:1px solid rgba(255,255,255,.06); padding:2rem 1.5rem; text-align:center; color:rgba(255,255,255,.3); font-size:.8rem; }
+    .footer a { color:rgba(255,255,255,.4); text-decoration:none; } .footer a:hover { color:var(--gold); }
+  </style>
+</head>
+<body data-cms-page="story-amethyst-05">
+<div class="topbar"><span>💜 อเมทิสต์ซีรีส์ · <strong>ตอนสุดท้าย</strong> · อ่านฟรี</span></div>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="logo"><svg viewBox="0 0 36 36" fill="none"><polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity=".95"/><polygon points="18,8 30,12 18,28" fill="#a78bfa"/><polygon points="18,8 6,12 18,28" fill="#7c3aed"/></svg><div><div class="logo-text">AMETHEZ</div><small class="logo-sub">Stones · Stories · Soul</small></div></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/stones/">💎 คลังหิน</a></li><li><a href="/guides/">🌿 พลังบำบัด</a></li><li><a href="/talk/">🔮 คุยกับหิน</a></li><li><a href="/videos/">🎬 วิดีโอ</a></li><li><a href="/stories/" class="nav-stories">📖 นิยาย</a></li><li><a href="/digital/" class="nav-digital">📥 Digital</a></li><li><a href="/sale.html" class="nav-shop">🛒 ร้านค้า</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+  </div>
+</nav>
+
+<div class="ep-header">
+  <div class="breadcrumb"><a href="/">Amethez</a> › <a href="/stories/">นิยาย</a> › <a href="/stories/amethyst/">อเมทิสต์ซีรีส์</a> › ตอนที่ 5</div>
+  <div class="ep-type-badge">🌀 ตอนคี่ · พลังงาน + บทสรุป</div>
+  <div class="ep-series-badge">💜 ตอนสุดท้าย</div>
+  <div class="ep-num">ตอนที่ 5 จาก 5</div>
+  <h1 class="ep-title">ประตู<br>ที่สาม</h1>
+  <p class="ep-tagline">"จักระที่หกไม่ใช่ประตูสู่โลกอื่น<br>มันคือทางกลับมาหาตัวเอง"</p>
+  <div class="ep-meta">
+    <span>⏱ อ่านประมาณ 22 นาที</span>
+    <span>💜 จักระ Ajna + Sahasrara</span>
+    <span>🌍 ประสบการณ์จาก 6 ประเทศ</span>
+    <span>🆓 อ่านฟรี</span>
+  </div>
+</div>
+
+<div class="ep-content">
+
+  <!-- SYSTEM BOX: นาวาเดือนที่สาม -->
+  <div class="system-box">
+    <div class="system-label">🌀 ภาพในหัวนาวา — เดือนที่สามหลังได้รับหิน</div>
+    <div class="system-title">ยังไม่เชื่อเรื่องพลังงาน — แต่บางอย่างเปลี่ยนไป</div>
+    <p>นาวายังเป็นนักออกแบบ freelance เหมือนเดิม ยังมีหลายโปรเจคพร้อมกัน ยังเหนื่อยเป็นครั้งคราว แต่มีบางอย่างที่เธอสังเกตเห็นแล้วอธิบายไม่ถูก</p>
+    <div class="system-data">
+      <div class="data-row"><div class="label">ชั่วโมงนอน / คืน (เฉลี่ย)</div><div class="value">6.8 ชม. (จาก 4.2)</div></div>
+      <div class="data-row"><div class="label">จำนวนครั้งที่หยิบหินถือ/สัปดาห์</div><div class="value mid">3–4 ครั้ง</div></div>
+      <div class="data-row"><div class="label">ความรู้สึกก่อนนอน</div><div class="value">สงบกว่าเดิม</div></div>
+      <div class="data-row"><div class="label">เชื่อเรื่องพลังงานหิน</div><div class="value mid">ยังไม่แน่ใจ</div></div>
+    </div>
+    <p style="margin-top:1rem;">เธอไม่รู้ว่าที่เปลี่ยนเพราะหิน หรือเพราะเธอเริ่มหยุดนิ่งมากขึ้น หรือเพราะเวลาผ่านไปแล้วทุกอย่างก็ดีขึ้นเอง — และเธอก็ไม่แน่ใจว่าต้องรู้ไหม</p>
+  </div>
+
+  <h2>อเมทิสต์กับจักระ — ข้อมูลจากทีมวิจัย</h2>
+
+  <p>จิน เหม่ยหลิง ส่งรายงานฉบับที่สองมาจาก Bodleian Library ก่อนบินกลับกรุงเทพฯ พร้อมกับข้อมูลเพิ่มเติมจากดร.เวกาที่รวบรวมจากนักใช้คริสตัลในหลายประเทศ</p>
+
+  <div class="chakra-grid">
+    <div class="chakra-card six">
+      <div class="chakra-num">👁️</div>
+      <div class="chakra-name-th">จักระที่ 6 — อาชณะ</div>
+      <div class="chakra-name-en">AJNA · Third Eye Chakra</div>
+      <div class="chakra-color" style="color:#818cf8;">สีคราม-ม่วง · กลางหน้าผาก</div>
+      <p>เชื่อมโยงกับสัญชาตญาณ ความชัดเจนในความคิด ความสามารถในการมองเห็นภาพรวม และการรับรู้เกินกว่าประสาทสัมผัสทั่วไป อเมทิสต์ถูกใช้วางที่กลางหน้าผากในการทำสมาธิมาหลายพันปี ทั้งในอินเดียและทิเบต</p>
+    </div>
+    <div class="chakra-card seven">
+      <div class="chakra-num">👑</div>
+      <div class="chakra-name-th">จักระที่ 7 — สหัสราร</div>
+      <div class="chakra-name-en">SAHASRARA · Crown Chakra</div>
+      <div class="chakra-color">สีม่วง-ขาว · ยอดศีรษะ</div>
+      <p>เชื่อมโยงกับจิตสำนึกระดับสูง การเชื่อมต่อกับบางสิ่งที่ใหญ่กว่าตัวเอง ความสงบภายใน และสติปัญญาที่ไม่ถูกครอบงำโดยอารมณ์ สีม่วงของอเมทิสต์ตรงกับสีของจักระนี้พอดี</p>
+    </div>
+  </div>
+
+  <p>ระบบจักระมาจากประเพณีฮินดูและพุทธในอินเดีย เขียนครั้งแรกในตำราอุปนิษัท (ราว 1500–500 BC) ไม่มีหลักฐานทางกายวิภาคว่าจักระ "มีอยู่จริง" ในแง่ฟิสิกส์ แต่เป็นกรอบความคิดที่ใช้งานได้สำหรับการทำสมาธิและการตระหนักรู้ตัวเองมาสามพันปีแล้ว</p>
+
+  <p class="scene-break">· · ·</p>
+
+  <h2>วิธีใช้อเมทิสต์ในการทำสมาธิ — คำแนะนำจากผู้ปฏิบัติจริง</h2>
+
+  <div class="meditation-box">
+    <div class="meditation-label">🧘 คู่มือเริ่มต้น — สำหรับคนที่ไม่เคยทำสมาธิมาก่อน</div>
+
+    <div class="meditation-step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">เตรียมพื้นที่และหิน</div>
+        <div class="step-desc">นั่งหรือนอนในท่าที่สบาย วางอเมทิสต์ไว้ในมือหรือใกล้ตัว ปิดไฟให้หรี่ลง ไม่จำเป็นต้องมีเทียนหรือธูป แค่ความเงียบและอากาศดี</div>
+      </div>
+    </div>
+
+    <div class="meditation-step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">หายใจ 4-4-4</div>
+        <div class="step-desc">หายใจเข้านับ 4 กลั้น 4 หายใจออก 4 ทำซ้ำ 4–5 รอบ วิธีนี้มีหลักฐานทางวิทยาศาสตร์ว่าช่วยลด cortisol และเปิดใช้ระบบประสาท parasympathetic (ส่วนที่ทำให้ผ่อนคลาย)</div>
+      </div>
+    </div>
+
+    <div class="meditation-step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">สังเกตความรู้สึกของหิน</div>
+        <div class="step-desc">ถือหินในมือ สังเกตอุณหภูมิ น้ำหนัก พื้นผิว ไม่ต้องคาดหวังว่าจะรู้สึกอะไรพิเศษ แค่สังเกต นี่คือการฝึก "Present Moment Awareness" — การอยู่กับปัจจุบัน</div>
+      </div>
+    </div>
+
+    <div class="meditation-step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">ตั้งคำถาม (ถ้าอยากลอง)</div>
+        <div class="step-desc">ผู้ปฏิบัติหลายคนแนะนำให้ตั้ง "intention" หรือคำถามในใจก่อนทำสมาธิ เช่น "อะไรที่ฉันหลีกเลี่ยงอยู่?" หรือ "ฉันต้องการอะไรจริงๆ?" แล้วนั่งเงียบ ไม่บังคับให้มีคำตอบ</div>
+      </div>
+    </div>
+
+    <div class="meditation-step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <div class="step-title">10–20 นาที แล้วค่อยๆ กลับมา</div>
+        <div class="step-desc">ไม่จำเป็นต้องนานกว่านี้สำหรับมือใหม่ เปิดตาช้าๆ รอสักครู่ก่อนลุก บันทึกสิ่งที่ผุดขึ้นมาในหัวถ้าอยาก ไม่จำเป็นต้องตีความ</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="scene-break">· · ·</p>
+
+  <h2>เสียงจากผู้ใช้จริงทั่วโลก — รายงานจากดร.เวกาและจิน</h2>
+
+  <p>ระหว่างเดินทาง ดร.เวกาและจินสัมภาษณ์นักใช้คริสตัลจากหลายประเทศ นี่คือสิ่งที่พวกเขาบอก</p>
+
+  <div class="world-reports">
+    <div class="world-report">
+      <div class="wr-header"><div class="wr-flag">🇮🇳</div><div class="wr-from">ปูเน่, อินเดีย · ครูสอนโยคะ อายุ 54 ปี</div></div>
+      <p>"อเมทิสต์ไม่ได้ทำอะไรให้คุณ มันแค่ช่วยให้คุณหยุดนิ่งพอที่จะได้ยินตัวเอง คนส่วนใหญ่กลัวความเงียบ หินก้อนนี้ทำให้ความเงียบน่ากลัวน้อยลง"</p>
+    </div>
+    <div class="world-report">
+      <div class="wr-header"><div class="wr-flag">🇯🇵</div><div class="wr-from">โตเกียว, ญี่ปุ่น · นักออกแบบ อายุ 31 ปี</div></div>
+      <p>"ผมไม่เชื่อเรื่องพลังงาน แต่วางอเมทิสต์ไว้บนโต๊ะทำงานมาสองปีแล้ว มันเตือนให้หยุดหายใจทุกครั้งที่มองเห็น บางทีสัญลักษณ์สำคัญกว่าพลังงานจริงๆ"</p>
+    </div>
+    <div class="world-report">
+      <div class="wr-header"><div class="wr-flag">🇧🇷</div><div class="wr-from">เซาเปาโล, บราซิล · จิตแพทย์ อายุ 47 ปี</div></div>
+      <p>"ในแง่คลินิก ผมบอกผู้ป่วยได้ว่าการถือหินและนั่งนิ่งสิบนาทีต่อวันมีผลต่อ anxiety ที่วัดได้ ไม่ใช่เพราะหิน แต่เพราะการหยุดนิ่ง ถ้าหินช่วยให้คุณทำสิ่งนั้นได้ มันก็มีคุณค่าจริง"</p>
+    </div>
+    <div class="world-report">
+      <div class="wr-header"><div class="wr-flag">🇬🇧</div><div class="wr-from">ลอนดอน, อังกฤษ · นักศึกษา อายุ 23 ปี</div></div>
+      <p>"แม่ให้อเมทิสต์ตอนสอบ A-Level มันอยู่ในกระเป๋าตลอด ไม่รู้ว่ามันช่วยจริงไหม แต่ทุกครั้งที่แตะมัน ก็นึกถึงแม่ที่อยากให้ผ่าน แล้วก็สงบลงนิดหนึ่ง"</p>
+    </div>
+    <div class="world-report">
+      <div class="wr-header"><div class="wr-flag">🇰🇷</div><div class="wr-from">โซล, เกาหลีใต้ · เจ้าของร้านคริสตัล อายุ 38 ปี</div></div>
+      <p>"ลูกค้าที่ฉันเชื่อถือที่สุดไม่ใช่คนที่เชื่อ 100% และไม่ใช่คนที่ไม่เชื่อ 100% มันคือคนที่อยู่ตรงกลาง เปิดใจแต่ยังคิด พวกเขาใช้หินได้ดีที่สุด"</p>
+    </div>
+    <div class="world-report">
+      <div class="wr-header"><div class="wr-flag">🇿🇲</div><div class="wr-from">ลูซากา, แซมเบีย · ช่างอัญมณี อายุ 44 ปี</div></div>
+      <p>"ผมขุดหินมาสิบห้าปี ไม่เคยรู้สึกอะไรพิเศษจากมัน แต่เห็นคนนับพันที่หินก้อนนี้ช่วยเปลี่ยนชีวิตได้ สรุปแล้วก็ยังไม่รู้ว่าอะไรเป็นอะไร แต่ก็ยังขุดต่อไป"</p>
+    </div>
+  </div>
+
+  <p class="scene-break">· · ·</p>
+
+  <h2>นาวาทำสมาธิครั้งแรกในชีวิต</h2>
+
+  <div class="nava-final">
+    <div class="nava-label">💜 นาวา — คืนวันเสาร์ · เดือนที่สามหลังได้รับหิน</div>
+    <p>เพ็ญโทรมาถามว่าของขวัญที่ให้ไปเป็นยังไงบ้าง นาวาตอบว่า "ยังใช้งานอยู่" ซึ่งเป็นคำตอบที่ไม่เคยคิดว่าจะพูดตอนรับมันครั้งแรก</p>
+    <p>คืนนั้นเธอลองทำตามขั้นตอนที่จินส่งมา นั่งบนพื้นห้องนอน หลังพิงเตียง ก้อนหินในมือ ตั้งใจจะทำแค่สิบนาที</p>
+    <p>มันไม่ได้สวยงามแบบในหนัง ความคิดวนเวียนตลอด เธอคิดถึง deadline คิดถึงว่าตอนนี้ทำหน้าตาแปลกไหม คิดถึงว่าจะกินข้าวเย็นอะไร</p>
+    <p>แต่มีบางช่วงสั้นๆ ที่ความคิดหยุด แค่หายใจเข้า ผิวหินในมือ น้ำหนักของมัน อุณหภูมิที่ค่อยๆ อุ่นขึ้นตามมือ</p>
+    <p class="key">"ไม่มีเสียงจากหิน ไม่มีนิมิต ไม่มีอะไรพิเศษ — แค่เงียบ ซึ่งเธอไม่เคยรู้ว่าต้องการมันมากขนาดนี้"</p>
+    <p>เธอนั่งอยู่นานยี่สิบห้านาที ก่อนจะสังเกตว่าตั้งใจจะทำแค่สิบนาที</p>
+    <p>นั่นคือครั้งแรกในรอบนาน ที่เธอทำอะไรบางอย่างนานกว่าที่ตั้งใจ โดยไม่รู้ตัว</p>
+  </div>
+
+  <p class="scene-break">· · ·</p>
+
+  <h2>บทสรุปจากทีม Amethez</h2>
+
+  <div class="team-signoff">
+    <div class="signoff-title">ห้าตอนที่ผ่านมา เราพาคุณไปที่ไหนบ้าง</div>
+    <div class="signoff-grid">
+      <div class="signoff-card">
+        <div class="sc-name">รดา · บรรณาธิการ</div>
+        <div class="sc-msg">"นิยายที่ดีไม่ให้คำตอบ มันให้คำถามที่ดีกว่า ถ้าตอนจบแล้วยังไม่แน่ใจว่าเชื่อหรือไม่เชื่อ — นั่นแปลว่าคุณคิดอยู่จริงๆ"</div>
+      </div>
+      <div class="signoff-card">
+        <div class="sc-name">ดร.เวกา · นักธรณีวิทยา</div>
+        <div class="sc-msg">"ผมยังวัดพลังงานอเมทิสต์ไม่ได้ด้วยเครื่องมือที่มี แต่ผมวัดได้ว่ามันแข็งแกร่ง สวยงาม และเกิดจากกระบวนการที่น่าอัศจรรย์อย่างแท้จริง"</div>
+      </div>
+      <div class="signoff-card">
+        <div class="sc-name">จิน · นักวิจัยประวัติศาสตร์</div>
+        <div class="sc-msg">"2,000 ปีของมนุษย์ที่ใช้หินนี้คือข้อมูล ไม่ใช่หลักฐานว่ามันทำงาน แต่เป็นหลักฐานว่ามนุษย์ต้องการบางอย่างที่มันเป็นสัญลักษณ์ของมัน"</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="next-stone">
+    <h3>🔜 ซีรีส์ถัดไป — คุณอยากรู้จักหินอะไร?</h3>
+    <p>ทีมกำลังเตรียมซีรีส์ถัดไป แต่ละหินมีเรื่องราว ประวัติศาสตร์ และวิทยาศาสตร์ที่แตกต่างกัน</p>
+    <div class="next-stone-options">
+      <div class="next-opt">🌑 โมลดาไวท์</div>
+      <div class="next-opt">💛 ซิทริน</div>
+      <div class="next-opt">🖤 Black Tourmaline</div>
+      <div class="next-opt">🌹 Rose Quartz</div>
+      <div class="next-opt">🤍 Clear Quartz</div>
+    </div>
+    <p style="margin-top:1rem;font-size:.82rem;">ติดตามได้ที่ <a href="/stories/" style="color:#d8b4fe;">หมวดนิยาย</a> หรือ Line OA @amethez</p>
+  </div>
+
+</div>
+
+<div class="amethyst-cta">
+  <div class="cta-box">
+    <h3>💜 อ่านสารานุกรมอเมทิสต์ฉบับเต็ม</h3>
+    <p>ข้อมูลทุกอย่างที่ทีมรวบรวมมา — ธรณีวิทยา ประวัติศาสตร์ การใช้ การล้าง จักระ — ในบทความเดียวครบจบ</p>
+    <a href="/stones/amethyst.html" class="cta-btn">💜 อ่านสารานุกรมอเมทิสต์</a>
+  </div>
+</div>
+
+<div class="ep-nav">
+  <a href="/stories/amethyst/episode-04.html" class="ep-nav-btn ep-nav-prev">← ตอนที่ 4</a>
+  <a href="/stories/amethyst/" class="ep-nav-index">ดูทุกตอน</a>
+  <a href="/stories/amethyst/" class="ep-nav-btn ep-nav-series">📖 กลับหน้าซีรีส์</a>
+</div>
+
+<div class="footer">
+  <p><a href="/">Amethez</a> · <a href="/stories/">นิยาย</a> · <a href="/stories/amethyst/">อเมทิสต์ซีรีส์</a> · <a href="/stones/amethyst.html">สารานุกรม</a></p>
+  <p style="margin-top:.5rem">© 2025 Amethez · Stones · Stories · Soul</p>
+</div>
+<script>document.querySelector('.hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('open'))</script>
+<script src="/js/cms.js"></script>
+</body>
+</html>

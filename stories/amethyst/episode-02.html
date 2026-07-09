@@ -1,0 +1,244 @@
+﻿<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ตอนที่ 2 — ใต้ดินล้านปี | อเมทิสต์ซีรีส์ | Amethez</title>
+  <meta name="description" content="ตอนที่ 2: ดร.เวกาส่งรายงานธรณีวิทยาฉบับเต็ม — อเมทิสต์เกิดได้อย่างไร ทำไมถึงม่วง และแยกของจริงจากของปลอมอย่างไร">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --gold:#c9a84c; --purple:#7c3aed; --dark:#0f0a1e; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:Sarabun,sans-serif; background:var(--dark); color:#d4cce8; }
+    .topbar { background:linear-gradient(90deg,#1a0936,#2d1b5e,#1a0936); padding:.55rem 1.5rem; display:flex; align-items:center; justify-content:center; }
+    .topbar span { color:rgba(255,255,255,.65); font-size:.78rem; } .topbar strong { color:var(--gold); }
+    .nav { position:sticky; top:0; z-index:100; background:rgba(15,10,30,.95); backdrop-filter:blur(12px); border-bottom:1px solid rgba(201,168,76,.15); }
+    .nav-inner { max-width:1160px; margin:0 auto; padding:.875rem 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+    .logo { display:flex; align-items:center; gap:.6rem; text-decoration:none; flex-shrink:0; }
+    .logo svg { width:32px; height:32px; }
+    .logo-text { font-family:'Playfair Display',serif; font-size:1.2rem; color:white; font-weight:700; letter-spacing:.04em; }
+    .logo-sub { font-size:.65rem; color:rgba(255,255,255,.5); display:block; letter-spacing:.08em; }
+    .nav-links { display:flex; align-items:center; gap:.25rem; list-style:none; }
+    .nav-links a { font-size:.875rem; font-weight:600; color:rgba(255,255,255,.8); text-decoration:none; padding:.4rem .75rem; border-radius:.5rem; transition:all .15s; white-space:nowrap; }
+    .nav-links a:hover { background:rgba(201,168,76,.1); color:white; }
+    .nav-links .nav-shop { background:linear-gradient(135deg,#c9a84c,#b8922e); color:#0f0a1e !important; border-radius:2rem; padding:.4rem 1rem !important; }
+    .nav-links .nav-digital { color:#a78bfa !important; } .nav-links .nav-stories { color:var(--gold) !important; }
+    .hamburger { display:none; background:none; border:none; font-size:1.5rem; cursor:pointer; color:white; }
+    @media(max-width:860px){ .nav-links{display:none}.nav-links.open{display:flex;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:rgba(15,10,30,.98);padding:1rem 1.5rem;gap:.25rem}.hamburger{display:block} }
+
+    .ep-header { max-width:720px; margin:0 auto; padding:4rem 1.5rem 2rem; }
+    .breadcrumb { font-size:.78rem; color:rgba(255,255,255,.35); margin-bottom:1.5rem; }
+    .breadcrumb a { color:rgba(255,255,255,.4); text-decoration:none; } .breadcrumb a:hover { color:var(--gold); }
+    .ep-type-badge { display:inline-flex; align-items:center; gap:.4rem; background:rgba(201,168,76,.1); border:1px solid rgba(201,168,76,.25); color:var(--gold); padding:.3rem .85rem; border-radius:2rem; font-size:.72rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; margin-bottom:1.25rem; }
+    .ep-series-badge { display:inline-flex; align-items:center; gap:.4rem; background:rgba(155,89,182,.08); border:1px solid rgba(155,89,182,.2); color:#d8b4fe; padding:.3rem .85rem; border-radius:2rem; font-size:.72rem; font-weight:700; letter-spacing:.06em; margin-bottom:1.25rem; margin-left:.4rem; }
+    .ep-num { font-size:.85rem; color:rgba(255,255,255,.35); margin-bottom:.5rem; }
+    h1.ep-title { font-family:'Playfair Display',serif; font-size:clamp(2rem,5vw,3rem); color:white; line-height:1.25; margin-bottom:1rem; }
+    .ep-tagline { font-size:1rem; color:rgba(255,255,255,.5); font-style:italic; line-height:1.7; margin-bottom:2rem; }
+    .ep-meta { display:flex; gap:1.5rem; flex-wrap:wrap; font-size:.78rem; color:rgba(255,255,255,.35); padding-bottom:2rem; border-bottom:1px solid rgba(255,255,255,.07); }
+
+    .ep-content { max-width:720px; margin:0 auto; padding:2.5rem 1.5rem 4rem; }
+    .ep-content p { font-size:1.05rem; line-height:2; color:rgba(255,255,255,.78); margin-bottom:1.75rem; }
+    .ep-content p.scene-break { text-align:center; color:rgba(255,255,255,.2); font-size:1.2rem; letter-spacing:.3em; margin:2.5rem 0; }
+    .ep-content h2 { font-family:'Playfair Display',serif; font-size:1.4rem; color:white; margin:3rem 0 1.25rem; }
+
+    /* EDITOR NOTE */
+    .editor-note { background:rgba(201,168,76,.05); border:1px solid rgba(201,168,76,.18); border-radius:.875rem; padding:1.5rem 1.75rem; margin:0 0 2.5rem; }
+    .editor-note p { font-size:.9rem; color:rgba(220,200,160,.7); line-height:1.9; margin-bottom:.5rem; }
+    .editor-note p:last-child { margin-bottom:0; }
+
+    /* VEGA REPORT — main content */
+    .report-box { background:rgba(0,80,40,.12); border:1px solid rgba(149,213,178,.2); border-radius:.875rem; padding:1.75rem 2rem; margin:2rem 0; }
+    .report-from { font-size:.68rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(149,213,178,.6); margin-bottom:.25rem; }
+    .report-name { font-size:.95rem; color:#95d5b2; font-weight:700; margin-bottom:.4rem; }
+    .report-location { font-size:.75rem; color:rgba(149,213,178,.5); margin-bottom:1rem; }
+    .report-box p { font-size:.92rem; color:rgba(200,240,220,.65); line-height:2; margin-bottom:.85rem; }
+    .report-box p:last-child { margin-bottom:0; }
+    .report-box h3 { font-family:'Playfair Display',serif; font-size:1.05rem; color:#95d5b2; margin:1.75rem 0 .75rem; }
+    .report-highlight { background:rgba(149,213,178,.07); border-left:2px solid rgba(149,213,178,.4); padding:.85rem 1.1rem; border-radius:0 .4rem .4rem 0; margin:1rem 0; font-size:.9rem; color:#86efac; line-height:1.85; }
+    .report-fact { display:inline-block; background:rgba(149,213,178,.08); border:1px solid rgba(149,213,178,.15); border-radius:2rem; padding:.2rem .75rem; font-size:.75rem; color:rgba(149,213,178,.7); margin:.25rem .25rem 0 0; }
+
+    /* GEO TABLE */
+    .geo-table { width:100%; border-collapse:collapse; margin:1.5rem 0; font-size:.88rem; }
+    .geo-table th { text-align:left; padding:.6rem 1rem; background:rgba(149,213,178,.07); color:#86efac; font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; border-bottom:1px solid rgba(149,213,178,.15); }
+    .geo-table td { padding:.75rem 1rem; color:rgba(200,240,220,.65); border-bottom:1px solid rgba(255,255,255,.04); }
+    .geo-table td:first-child { color:#95d5b2; font-weight:600; }
+    .geo-table tr:last-child td { border-bottom:none; }
+
+    /* NAVA SECTION */
+    .nava-box { background:rgba(155,89,182,.06); border:1px solid rgba(155,89,182,.18); border-radius:.875rem; padding:1.5rem 1.75rem; margin:2.5rem 0; }
+    .nava-label { font-size:.7rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(216,180,254,.5); margin-bottom:.75rem; }
+    .nava-box p { font-size:.92rem; color:rgba(216,180,254,.65); line-height:1.9; margin-bottom:.6rem; }
+    .nava-box p:last-child { margin-bottom:0; }
+    .nava-data { display:grid; grid-template-columns:1fr 1fr; gap:.5rem; margin-top:1rem; }
+    .nd-row { background:rgba(255,255,255,.03); border-radius:.4rem; padding:.6rem .85rem; }
+    .nd-row .label { font-size:.7rem; color:rgba(216,180,254,.4); margin-bottom:.2rem; }
+    .nd-row .value { font-size:.88rem; color:#f87171; font-weight:600; }
+    .nd-row .value.ok { color:#86efac; }
+    @media(max-width:480px){ .nava-data{grid-template-columns:1fr} }
+
+    .ep-nav { max-width:720px; margin:0 auto; padding:0 1.5rem 5rem; display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap; }
+    .ep-nav-btn { display:inline-flex; align-items:center; gap:.5rem; padding:.75rem 1.25rem; border-radius:.5rem; font-family:Sarabun,sans-serif; font-size:.9rem; font-weight:600; text-decoration:none; transition:all .2s; }
+    .ep-nav-prev { background:rgba(255,255,255,.05); color:rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.1); }
+    .ep-nav-prev:hover { background:rgba(255,255,255,.08); color:white; }
+    .ep-nav-next { background:linear-gradient(135deg,#7c3aed,#6d28d9); color:white; box-shadow:0 4px 16px rgba(124,58,237,.3); }
+    .ep-nav-next:hover { transform:translateY(-2px); }
+    .ep-nav-index { font-size:.8rem; color:rgba(255,255,255,.3); text-decoration:none; }
+    .ep-nav-index:hover { color:var(--gold); }
+    .amethyst-cta { max-width:720px; margin:0 auto 2rem; padding:0 1.5rem; }
+    .cta-box { background:linear-gradient(135deg,rgba(88,28,135,.15),rgba(109,40,217,.08)); border:1px solid rgba(155,89,182,.25); border-radius:1rem; padding:1.75rem 2rem; }
+    .cta-box h3 { font-family:'Playfair Display',serif; font-size:1.1rem; color:white; margin-bottom:.5rem; }
+    .cta-box p { font-size:.85rem; color:rgba(255,255,255,.5); line-height:1.7; margin-bottom:1rem; }
+    .cta-btn { display:inline-flex; align-items:center; gap:.4rem; background:linear-gradient(135deg,#6d28d9,#5b21b6); color:white; padding:.65rem 1.25rem; border-radius:.5rem; font-family:Sarabun,sans-serif; font-size:.85rem; font-weight:700; text-decoration:none; }
+    .footer { border-top:1px solid rgba(255,255,255,.06); padding:2rem 1.5rem; text-align:center; color:rgba(255,255,255,.3); font-size:.8rem; }
+    .footer a { color:rgba(255,255,255,.4); text-decoration:none; } .footer a:hover { color:var(--gold); }
+  </style>
+</head>
+<body data-cms-page="story-amethyst-02">
+
+<div class="topbar">
+  <span>💜 อเมทิสต์ซีรีส์ · <strong>อ่านฟรี 5 ตอน</strong></span>
+</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="logo">
+      <svg viewBox="0 0 36 36" fill="none"><polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity=".95"/><polygon points="18,8 30,12 18,28" fill="#a78bfa"/><polygon points="18,8 6,12 18,28" fill="#7c3aed"/></svg>
+      <div><div class="logo-text">AMETHEZ</div><small class="logo-sub">Stones · Stories · Soul</small></div>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/stones/">💎 คลังหิน</a></li>
+      <li><a href="/guides/">🌿 พลังบำบัด</a></li>
+      <li><a href="/talk/">🔮 คุยกับหิน</a></li>
+      <li><a href="/videos/">🎬 วิดีโอ</a></li>
+      <li><a href="/stories/" class="nav-stories">📖 นิยาย</a></li>
+      <li><a href="/digital/" class="nav-digital">📥 Digital</a></li>
+      <li><a href="/sale.html" class="nav-shop">🛒 ร้านค้า</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+  </div>
+</nav>
+
+<div class="ep-header">
+  <div class="breadcrumb"><a href="/">Amethez</a> › <a href="/stories/">นิยาย</a> › <a href="/stories/amethyst/">อเมทิสต์ซีรีส์</a> › ตอนที่ 2</div>
+  <div class="ep-type-badge">🪙 ตอนคู่ · ธรณีวิทยาดิบ</div>
+  <div class="ep-series-badge">💜 อเมทิสต์ซีรีส์</div>
+  <div class="ep-num">ตอนที่ 2 จาก 5</div>
+  <h1 class="ep-title">ใต้ดิน<br>ล้านปี</h1>
+  <p class="ep-tagline">"ก่อนจะรู้ว่ามันทำอะไรได้ ต้องรู้ก่อนว่ามันคืออะไร"</p>
+  <div class="ep-meta">
+    <span>⏱ อ่านประมาณ 18 นาที</span>
+    <span>🌍 รายงานจาก Brazil · Uruguay · Zambia · Russia</span>
+    <span>🆓 อ่านฟรี</span>
+  </div>
+</div>
+
+<div class="ep-content">
+
+  <div class="editor-note">
+    <p>ตอนคู่ของซีรีส์นี้คือรายงานภาคสนามและข้อมูลดิบจากทีมนักวิจัย ไม่มีการตีความ ไม่มีการเสริมแต่ง อ่านแล้วตัดสินเอง</p>
+    <p style="font-size:.82rem;color:rgba(220,200,160,.5);margin-top:.5rem;">— รดา บรรณาธิการ</p>
+  </div>
+
+  <!-- VEGA FULL REPORT -->
+  <div class="report-box">
+    <div class="report-from">📡 รายงานภาคสนาม — ฉบับที่ 2 (ฉบับสมบูรณ์)</div>
+    <div class="report-name">🌿 ดร.เวกา วีระกานต์ — นักธรณีวิทยาและผู้เชี่ยวชาญคริสตัล</div>
+    <div class="report-location">📍 Minas Gerais, Brazil → Artigas, Uruguay → Lusaka, Zambia (3 สัปดาห์, 3 ประเทศ)</div>
+
+    <h3>อเมทิสต์คืออะไรกันแน่</h3>
+    <p>อเมทิสต์คือควอตซ์ (Quartz) ชนิดหนึ่ง สูตรเคมีคือ SiO₂ หรือ Silicon Dioxide สิ่งเดียวกับทรายในหาด สิ่งเดียวกับกระจกหน้าต่าง แต่ที่ทำให้มันเป็นสีม่วงคือธาตุเหล็ก (Fe³⁺) ที่แทรกอยู่ในโครงสร้างผลึก รวมกับรังสีธรรมชาติจากหินข้างเคียงในช่วงเวลาล้านปีที่ผ่านมา</p>
+
+    <div class="report-highlight">สรุปสั้น: อเมทิสต์ = ทราย + เหล็ก + รังสี + เวลาล้านปี = สีม่วง<br>ถ้าไม่มีธาตุเหล็กหรือรังสีที่เพียงพอ มันจะใสเหมือน Clear Quartz ธรรมดา</div>
+
+    <h3>เกิดขึ้นได้อย่างไร</h3>
+    <p>อเมทิสต์ส่วนใหญ่ในโลกเกิดในโพรงหินภูเขาไฟที่เรียกว่า geode หินเหลวร้อน (magma) เมื่อเย็นตัวลงจะหดตัว ทิ้งโพรงกลวงไว้ข้างใน จากนั้นน้ำใต้ดินที่มีซิลิก้าและแร่ธาตุละลายปนอยู่จะซึมเข้าไปในโพรงนั้น และค่อยๆ ตกผลึกตลอดเวลานับล้านปี</p>
+    <p>ยิ่งโพรงเล็ก กระบวนการยิ่งนาน ผลึกยิ่งเรียวแหลมและสีเข้ม ยิ่งโพรงใหญ่และน้ำไหลเร็ว ผลึกจะใหญ่กว่าแต่สีอาจอ่อนกว่า</p>
+
+    <h3>แหล่งสำคัญของโลก</h3>
+    <table class="geo-table">
+      <tr><th>แหล่ง</th><th>ลักษณะเด่น</th><th>% ตลาดโลก</th></tr>
+      <tr><td>Artigas, Uruguay</td><td>สีม่วงเข้มที่สุด ผลึกแน่น</td><td>~30%</td></tr>
+      <tr><td>Minas Gerais, Brazil</td><td>โพรงขนาดใหญ่ สีอ่อน-กลาง</td><td>~35%</td></tr>
+      <tr><td>Rio Grande do Sul, Brazil</td><td>ผลึกขนาดใหญ่ เหมาะทำเครื่องประดับ</td><td>~15%</td></tr>
+      <tr><td>Zambia, Africa</td><td>สีม่วงแดง (reddish-purple) หายาก</td><td>~8%</td></tr>
+      <tr><td>Russia (Ural Mountains)</td><td>ผลึกใหญ่พิเศษ ใสมาก สีอ่อน</td><td>~5%</td></tr>
+      <tr><td>South Korea</td><td>ขนาดกลาง ราคาสมเหตุสมผล</td><td>~4%</td></tr>
+      <tr><td>อื่นๆ (USA, Mexico, India)</td><td>หลากหลาย</td><td>~3%</td></tr>
+    </table>
+
+    <h3>ทำไมแต่ละแหล่งถึงสีต่างกัน</h3>
+    <p>ปริมาณธาตุเหล็กในน้ำใต้ดินที่ซึมเข้าโพรงต่างกัน + ปริมาณรังสีธรรมชาติจากหินฐานต่างกัน = สีม่วงต่างกัน อุรุกวัยมีหินฐานชนิดที่ให้รังสีสูงกว่าบราซิลภาคกลาง จึงได้สีเข้มกว่า ส่วน Zambia มีธาตุเหล็กบางชนิดเพิ่มเติมที่ทำให้สีออกม่วงอมแดง</p>
+
+    <h3>วิธีแยกของจริงจากของปลอม</h3>
+    <p>ตลาดคริสตัลมีอเมทิสต์ปลอมอยู่ 3 ประเภทหลัก และวิธีตรวจเบื้องต้นที่ไม่ต้องใช้เครื่องมือ:</p>
+    <div class="report-highlight">
+      <strong>1. แก้วสีย้อม (Dyed Glass)</strong> — สีเด่นเกินธรรมชาติ สม่ำเสมอเกินไปทุกจุด ไม่มีสีอ่อน-เข้มสลับกัน ถ้ามีฟองอากาศภายในคือแก้วแน่นอน<br><br>
+      <strong>2. ควอตซ์ย้อมสี (Dyed Quartz)</strong> — มักสีสด ไม่มี zoning ธรรมชาติ ขูดกับพื้นผิวแข็งแล้วสีหลุดออกมาได้<br><br>
+      <strong>3. ซิทรินที่ถูกให้ความร้อน (Heat-treated Citrine)</strong> — อเมทิสต์ที่ให้ความร้อนสูงจะกลายเป็นสีเหลืองส้ม แต่บางเจ้าเอาซิทรินมาขายในราคาอเมทิสต์<br><br>
+      <strong>ของจริง:</strong> มีสีซีดจางสลับกันเป็นโซน (color zoning) ยิ่งลึกยิ่งเข้ม เย็นมือกว่าแก้วในเวลาเดียวกัน ความแข็ง Mohs 7 (ขูดเหล็กไม่เป็นรอย)
+    </div>
+
+    <h3>เรื่องที่คนในอุตสาหกรรมรู้ แต่ไม่ค่อยพูด</h3>
+    <p>อเมทิสต์ที่ขายตาม Instagram และตลาดนัดส่วนใหญ่ผ่านกระบวนการ "เพิ่มสี" ด้วยการฉายรังสีเพิ่มเติม (irradiation treatment) หรือให้ความร้อนควบคุม ซึ่งไม่ผิดกฎหมาย และหินธรรมชาติก็เกิดจากกระบวนการเดียวกัน แต่เวลาต่างกัน คือธรรมชาติใช้ล้านปี มนุษย์ใช้ไม่กี่ชั่วโมง</p>
+    <p>ประเด็นคือ: ถ้าคุณซื้อเพื่อสะสมหรือนำมาประดับ ไม่ใช่เรื่องใหญ่ แต่ถ้าคุณซื้อเพราะเชื่อเรื่องพลังงาน และผู้ขายอ้างว่า "สีธรรมชาติ 100%" — ควรถามหาใบรับรองจากแหล่งที่มา</p>
+    <p>ผมเองในฐานะนักธรณีวิทยา ยังไม่สามารถตอบได้ว่าการ treat หินด้วยกระบวนการเร่งนั้นส่งผลต่อ "พลังงาน" หรือไม่ เพราะมันอยู่นอกขอบเขตที่วัดได้ด้วยเครื่องมือทางวิทยาศาสตร์ที่มีอยู่ในปัจจุบัน</p>
+    <div style="margin-top:1rem">
+      <span class="report-fact">🔬 SiO₂ + Fe³⁺ + radiation</span>
+      <span class="report-fact">💎 Mohs 7</span>
+      <span class="report-fact">🌍 แหล่งหลัก Brazil + Uruguay</span>
+      <span class="report-fact">⚠️ 3 ประเภทของปลอม</span>
+    </div>
+  </div>
+
+  <p class="scene-break">· · ·</p>
+
+  <h2>นาวา — วันที่สาม</h2>
+
+  <div class="nava-box">
+    <div class="nava-label">⚠️ สถานะความจริงของนาวา — วันที่ 3 หลังได้รับหิน</div>
+    <p>ไม่มีระบบมโน ไม่มีการตีความ มีแค่สิ่งที่เกิดขึ้นจริง</p>
+    <div class="nava-data">
+      <div class="nd-row"><div class="label">งานที่ส่งได้ตามกำหนด</div><div class="value ok">Client A ✓ ผ่าน</div></div>
+      <div class="nd-row"><div class="label">งานที่ยังค้างอยู่</div><div class="value">Client B + C</div></div>
+      <div class="nd-row"><div class="label">ชั่วโมงนอนคืนก่อน</div><div class="value">5.5 ชม. (ดีขึ้น)</div></div>
+      <div class="nd-row"><div class="label">ก้อนอเมทิสต์</div><div class="value ok">ยังอยู่มุมโต๊ะ</div></div>
+    </div>
+  </div>
+
+  <p>นาวาส่งงาน Client A ได้ตอนเจ็ดโมงเช้า สามสิบนาทีก่อน deadline</p>
+
+  <p>ระหว่างรอ feedback เธอเปิด Google แล้วพิมพ์ว่า <em>"อเมทิสต์คืออะไร"</em></p>
+
+  <p>มันเป็นครั้งแรกที่เธอค้นหาข้อมูลเกี่ยวกับหินก้อนนั้น นับตั้งแต่ได้มา</p>
+
+  <p>เธออ่านอยู่นานสิบห้านาที แล้วปิดแท็บ เปิดไฟล์ Client B ขึ้นมาต่อ</p>
+
+  <p>แต่ก่อนเปิด เธอขยับก้อนหินจากมุมโต๊ะมาวางตรงหน้า</p>
+
+  <p>ไม่มีเหตุผล แค่รู้สึกว่าอยากให้มันอยู่ใกล้กว่าเดิม</p>
+
+</div>
+
+<div class="amethyst-cta">
+  <div class="cta-box">
+    <h3>💜 ดูอเมทิสต์จากแหล่งที่มาที่เชื่อถือได้</h3>
+    <p>เมื่อรู้แล้วว่าอเมทิสต์มาจากไหนและเกิดได้อย่างไร การเลือกซื้อจะฉลาดขึ้นมาก อ่านบทความเต็มในสารานุกรมหิน</p>
+    <a href="/stones/amethyst.html" class="cta-btn">💜 อ่านสารานุกรมอเมทิสต์</a>
+  </div>
+</div>
+
+<div class="ep-nav">
+  <a href="/stories/amethyst/episode-01.html" class="ep-nav-btn ep-nav-prev">← ตอนที่ 1</a>
+  <a href="/stories/amethyst/" class="ep-nav-index">ดูทุกตอน</a>
+  <a href="/stories/amethyst/episode-03.html" class="ep-nav-btn ep-nav-next">ตอนที่ 3 →</a>
+</div>
+
+<div class="footer">
+  <p><a href="/">Amethez</a> · <a href="/stories/">นิยาย</a> · <a href="/stories/amethyst/">อเมทิสต์ซีรีส์</a></p>
+  <p style="margin-top:.5rem">© 2025 Amethez · Stones · Stories · Soul</p>
+</div>
+<script>document.querySelector('.hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('open'))</script>
+<script src="/js/cms.js"></script>
+</body>
+</html>

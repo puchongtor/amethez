@@ -1,9 +1,27 @@
 {
   "permissions": {
     "allow": [
+      "Read(D:\\หนังสือพี่ปอ\\**)",
       "mcp__Claude_Preview__preview_start",
       "mcp__visualize__show_widget",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "PowerShell(gh run list --limit 5 --repo puchongtor/amethez)",
+      "PowerShell(node --version)",
+      "PowerShell(npm --version)",
+      "Bash(pdftotext -layout \"D:/หนังสือพี่ปอ/Crystal Chakra Healing/pdf24_converted/001-003.pdf\" -)",
+      "Bash(tesseract --version)",
+      "Bash(wsl which *)",
+      "Bash(wsl pdftoppm *)",
+      "PowerShell(winget search poppler 2>$null)",
+      "PowerShell(Get-Command choco -ErrorAction SilentlyContinue)",
+      "WebFetch(domain:docs.google.com)",
+      "Bash(git stash *)",
+      "Bash(git pull *)"
+    ],
+    "additionalDirectories": [
+      "D:\\หนังสือพี่ปอ"
     ]
   }
 }

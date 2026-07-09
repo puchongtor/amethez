@@ -1,0 +1,296 @@
+﻿<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ตอนที่ 4 — ล้างด้วยแสงจันทร์ | อเมทิสต์ซีรีส์ | Amethez</title>
+  <meta name="description" content="ตอนที่ 4: วิธีล้างอเมทิสต์จากทั่วโลก — moonlight, singing bowl, sage, selenite และสิ่งที่ไม่ควรทำ เพราะหินจะซีด">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --gold:#c9a84c; --purple:#7c3aed; --dark:#0f0a1e; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:Sarabun,sans-serif; background:var(--dark); color:#d4cce8; }
+    .topbar { background:linear-gradient(90deg,#1a0936,#2d1b5e,#1a0936); padding:.55rem 1.5rem; display:flex; align-items:center; justify-content:center; }
+    .topbar span { color:rgba(255,255,255,.65); font-size:.78rem; } .topbar strong { color:var(--gold); }
+    .nav { position:sticky; top:0; z-index:100; background:rgba(15,10,30,.95); backdrop-filter:blur(12px); border-bottom:1px solid rgba(201,168,76,.15); }
+    .nav-inner { max-width:1160px; margin:0 auto; padding:.875rem 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+    .logo { display:flex; align-items:center; gap:.6rem; text-decoration:none; flex-shrink:0; }
+    .logo svg { width:32px; height:32px; }
+    .logo-text { font-family:'Playfair Display',serif; font-size:1.2rem; color:white; font-weight:700; letter-spacing:.04em; }
+    .logo-sub { font-size:.65rem; color:rgba(255,255,255,.5); display:block; letter-spacing:.08em; }
+    .nav-links { display:flex; align-items:center; gap:.25rem; list-style:none; }
+    .nav-links a { font-size:.875rem; font-weight:600; color:rgba(255,255,255,.8); text-decoration:none; padding:.4rem .75rem; border-radius:.5rem; transition:all .15s; white-space:nowrap; }
+    .nav-links a:hover { background:rgba(201,168,76,.1); color:white; }
+    .nav-links .nav-shop { background:linear-gradient(135deg,#c9a84c,#b8922e); color:#0f0a1e !important; border-radius:2rem; padding:.4rem 1rem !important; }
+    .nav-links .nav-digital { color:#a78bfa !important; } .nav-links .nav-stories { color:var(--gold) !important; }
+    .hamburger { display:none; background:none; border:none; font-size:1.5rem; cursor:pointer; color:white; }
+    @media(max-width:860px){ .nav-links{display:none}.nav-links.open{display:flex;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:rgba(15,10,30,.98);padding:1rem 1.5rem;gap:.25rem}.hamburger{display:block} }
+
+    .ep-header { max-width:720px; margin:0 auto; padding:4rem 1.5rem 2rem; }
+    .breadcrumb { font-size:.78rem; color:rgba(255,255,255,.35); margin-bottom:1.5rem; }
+    .breadcrumb a { color:rgba(255,255,255,.4); text-decoration:none; } .breadcrumb a:hover { color:var(--gold); }
+    .ep-type-badge { display:inline-flex; align-items:center; gap:.4rem; background:rgba(201,168,76,.1); border:1px solid rgba(201,168,76,.25); color:var(--gold); padding:.3rem .85rem; border-radius:2rem; font-size:.72rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; margin-bottom:1.25rem; }
+    .ep-series-badge { display:inline-flex; align-items:center; gap:.4rem; background:rgba(155,89,182,.08); border:1px solid rgba(155,89,182,.2); color:#d8b4fe; padding:.3rem .85rem; border-radius:2rem; font-size:.72rem; font-weight:700; margin-bottom:1.25rem; margin-left:.4rem; }
+    .ep-num { font-size:.85rem; color:rgba(255,255,255,.35); margin-bottom:.5rem; }
+    h1.ep-title { font-family:'Playfair Display',serif; font-size:clamp(2rem,5vw,3rem); color:white; line-height:1.25; margin-bottom:1rem; }
+    .ep-tagline { font-size:1rem; color:rgba(255,255,255,.5); font-style:italic; line-height:1.7; margin-bottom:2rem; }
+    .ep-meta { display:flex; gap:1.5rem; flex-wrap:wrap; font-size:.78rem; color:rgba(255,255,255,.35); padding-bottom:2rem; border-bottom:1px solid rgba(255,255,255,.07); }
+
+    .ep-content { max-width:720px; margin:0 auto; padding:2.5rem 1.5rem 4rem; }
+    .ep-content p { font-size:1.05rem; line-height:2; color:rgba(255,255,255,.78); margin-bottom:1.75rem; }
+    .ep-content p.scene-break { text-align:center; color:rgba(255,255,255,.2); font-size:1.2rem; letter-spacing:.3em; margin:2.5rem 0; }
+    .ep-content h2 { font-family:'Playfair Display',serif; font-size:1.4rem; color:white; margin:3rem 0 1.25rem; }
+
+    .editor-note { background:rgba(201,168,76,.05); border:1px solid rgba(201,168,76,.18); border-radius:.875rem; padding:1.5rem 1.75rem; margin:0 0 2.5rem; }
+    .editor-note p { font-size:.9rem; color:rgba(220,200,160,.7); line-height:1.9; margin-bottom:.5rem; }
+    .editor-note p:last-child { margin-bottom:0; }
+
+    /* METHOD CARDS */
+    .method-grid { display:flex; flex-direction:column; gap:1.25rem; margin:2rem 0; }
+    .method-card { border-radius:.875rem; padding:1.5rem 1.75rem; border:1px solid; }
+    .method-card.moonlight { background:rgba(147,112,219,.07); border-color:rgba(147,112,219,.2); }
+    .method-card.sound { background:rgba(251,191,36,.05); border-color:rgba(251,191,36,.18); }
+    .method-card.sage { background:rgba(74,222,128,.05); border-color:rgba(74,222,128,.15); }
+    .method-card.selenite { background:rgba(226,232,240,.04); border-color:rgba(226,232,240,.12); }
+    .method-card.water { background:rgba(96,165,250,.05); border-color:rgba(96,165,250,.15); }
+    .method-header { display:flex; align-items:center; gap:.75rem; margin-bottom:.85rem; }
+    .method-icon { font-size:1.5rem; }
+    .method-name { font-family:'Playfair Display',serif; font-size:1.05rem; color:white; }
+    .method-origin { font-size:.72rem; color:rgba(255,255,255,.35); margin-top:.1rem; }
+    .method-card p { font-size:.9rem; color:rgba(255,255,255,.6); line-height:1.85; margin-bottom:.65rem; }
+    .method-card p:last-child { margin-bottom:0; }
+    .method-steps { list-style:none; margin:.75rem 0; }
+    .method-steps li { font-size:.88rem; color:rgba(255,255,255,.6); line-height:1.7; padding:.3rem 0 .3rem 1.25rem; position:relative; }
+    .method-steps li::before { content:"→"; position:absolute; left:0; color:rgba(255,255,255,.25); }
+    .method-badge { display:inline-block; font-size:.7rem; font-weight:700; border-radius:2rem; padding:.2rem .65rem; margin-top:.5rem; }
+    .method-card.moonlight .method-badge { background:rgba(147,112,219,.12); color:rgba(200,170,255,.7); }
+    .method-card.sound .method-badge { background:rgba(251,191,36,.1); color:rgba(251,191,36,.7); }
+    .method-card.sage .method-badge { background:rgba(74,222,128,.08); color:rgba(134,239,172,.7); }
+    .method-card.selenite .method-badge { background:rgba(226,232,240,.07); color:rgba(226,232,240,.6); }
+    .method-card.water .method-badge { background:rgba(96,165,250,.08); color:rgba(147,197,253,.6); }
+
+    /* WARNING BOX */
+    .warning-box { background:rgba(239,68,68,.06); border:1px solid rgba(239,68,68,.2); border-radius:.875rem; padding:1.5rem 1.75rem; margin:2rem 0; }
+    .warning-title { font-size:.78rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(252,165,165,.7); margin-bottom:1rem; }
+    .warning-box p { font-size:.9rem; color:rgba(252,165,165,.6); line-height:1.85; margin-bottom:.6rem; }
+    .warning-box p:last-child { margin-bottom:0; }
+    .warning-item { display:flex; gap:.75rem; align-items:flex-start; margin:.5rem 0; }
+    .warning-item .w-icon { font-size:1rem; flex-shrink:0; margin-top:.1rem; }
+    .warning-item p { margin-bottom:0; }
+
+    /* NAVA */
+    .nava-scene { background:rgba(0,0,0,.25); border-left:3px solid rgba(155,89,182,.4); border-radius:0 .75rem .75rem 0; padding:1.5rem 1.75rem; margin:2.5rem 0; }
+    .nava-scene p { font-size:1rem; color:rgba(255,255,255,.78); line-height:2; margin-bottom:.75rem; }
+    .nava-scene p:last-child { margin-bottom:0; }
+
+    .ep-nav { max-width:720px; margin:0 auto; padding:0 1.5rem 5rem; display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap; }
+    .ep-nav-btn { display:inline-flex; align-items:center; gap:.5rem; padding:.75rem 1.25rem; border-radius:.5rem; font-family:Sarabun,sans-serif; font-size:.9rem; font-weight:600; text-decoration:none; transition:all .2s; }
+    .ep-nav-prev { background:rgba(255,255,255,.05); color:rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.1); }
+    .ep-nav-prev:hover { background:rgba(255,255,255,.08); color:white; }
+    .ep-nav-next { background:linear-gradient(135deg,rgba(201,168,76,.85),rgba(184,146,46,.85)); color:#0f0a1e; font-weight:700; }
+    .ep-nav-next:hover { transform:translateY(-2px); opacity:.9; }
+    .ep-nav-index { font-size:.8rem; color:rgba(255,255,255,.3); text-decoration:none; }
+    .ep-nav-index:hover { color:var(--gold); }
+    .amethyst-cta { max-width:720px; margin:0 auto 2rem; padding:0 1.5rem; }
+    .cta-box { background:linear-gradient(135deg,rgba(88,28,135,.15),rgba(109,40,217,.08)); border:1px solid rgba(155,89,182,.25); border-radius:1rem; padding:1.75rem 2rem; }
+    .cta-box h3 { font-family:'Playfair Display',serif; font-size:1.1rem; color:white; margin-bottom:.5rem; }
+    .cta-box p { font-size:.85rem; color:rgba(255,255,255,.5); line-height:1.7; margin-bottom:1rem; }
+    .cta-btn { display:inline-flex; align-items:center; gap:.4rem; background:linear-gradient(135deg,#6d28d9,#5b21b6); color:white; padding:.65rem 1.25rem; border-radius:.5rem; font-family:Sarabun,sans-serif; font-size:.85rem; font-weight:700; text-decoration:none; }
+    .footer { border-top:1px solid rgba(255,255,255,.06); padding:2rem 1.5rem; text-align:center; color:rgba(255,255,255,.3); font-size:.8rem; }
+    .footer a { color:rgba(255,255,255,.4); text-decoration:none; } .footer a:hover { color:var(--gold); }
+  </style>
+</head>
+<body data-cms-page="story-amethyst-04">
+<div class="topbar"><span>💜 อเมทิสต์ซีรีส์ · <strong>อ่านฟรี 5 ตอน</strong></span></div>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="logo"><svg viewBox="0 0 36 36" fill="none"><polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity=".95"/><polygon points="18,8 30,12 18,28" fill="#a78bfa"/><polygon points="18,8 6,12 18,28" fill="#7c3aed"/></svg><div><div class="logo-text">AMETHEZ</div><small class="logo-sub">Stones · Stories · Soul</small></div></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/stones/">💎 คลังหิน</a></li><li><a href="/guides/">🌿 พลังบำบัด</a></li><li><a href="/talk/">🔮 คุยกับหิน</a></li><li><a href="/videos/">🎬 วิดีโอ</a></li><li><a href="/stories/" class="nav-stories">📖 นิยาย</a></li><li><a href="/digital/" class="nav-digital">📥 Digital</a></li><li><a href="/sale.html" class="nav-shop">🛒 ร้านค้า</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+  </div>
+</nav>
+
+<div class="ep-header">
+  <div class="breadcrumb"><a href="/">Amethez</a> › <a href="/stories/">นิยาย</a> › <a href="/stories/amethyst/">อเมทิสต์ซีรีส์</a> › ตอนที่ 4</div>
+  <div class="ep-type-badge">🪙 ตอนคู่ · วิธีล้างและดูแลรักษา</div>
+  <div class="ep-series-badge">💜 อเมทิสต์ซีรีส์</div>
+  <div class="ep-num">ตอนที่ 4 จาก 5</div>
+  <h1 class="ep-title">ล้างด้วย<br>แสงจันทร์</h1>
+  <p class="ep-tagline">"ถ้าเชื่อว่าหินรับพลังงาน ก็ต้องรู้วิธีล้างมัน<br>ถ้าไม่เชื่อ ก็ยังควรดูแลหินให้ถูกวิธี — เพราะมันจะซีดจริงๆ ถ้าทำผิด"</p>
+  <div class="ep-meta">
+    <span>⏱ อ่านประมาณ 18 นาที</span>
+    <span>🌕 วิธีล้างจาก 5 วัฒนธรรม</span>
+    <span>🆓 อ่านฟรี</span>
+  </div>
+</div>
+
+<div class="ep-content">
+
+  <div class="editor-note">
+    <p>ตอนนี้มีทั้งข้อมูลจริงเรื่องการดูแลอเมทิสต์ และบางอย่างที่เป็น "ความเชื่อ" ผมพยายามระบุให้ชัดว่าอันไหนคืออันไหน คุณตัดสินใจเองว่าจะใช้วิธีไหน</p>
+    <p style="font-size:.82rem;color:rgba(220,200,160,.5);margin-top:.5rem;">— ดร.เวกา (ผู้รวบรวมวิธีจากภาคสนาม)</p>
+  </div>
+
+  <h2>ทำไมต้องล้างหิน</h2>
+
+  <p>คำอธิบายมีสองแบบ แล้วแต่คุณจะเลือกเชื่อแบบไหน</p>
+
+  <p><strong>แบบที่หนึ่ง (สายพลังงาน):</strong> อเมทิสต์เป็นหินที่ดูดซับพลังงานจากสิ่งแวดล้อมและผู้ที่สัมผัส เมื่อเวลาผ่านไป พลังงานที่สะสมจะเต็ม ต้องล้างออกก่อนใช้ต่อ เหมือนแบตเตอรี่ที่ต้องชาร์จใหม่</p>
+
+  <p><strong>แบบที่สอง (สายวิทยาศาสตร์):</strong> อเมทิสต์ไม่ได้ดูดซับพลังงาน แต่สะสมฝุ่น ไขมันจากผิวหนัง และสิ่งสกปรก การ "ล้าง" ในที่นี้จึงเป็นการทำความสะอาดตามปกติ บวกกับพิธีกรรมที่ช่วยให้เรา <em>เชื่อมโยง</em> กับวัตถุนั้นใหม่</p>
+
+  <p>วิธีที่จะนำเสนอต่อไปนี้มีหลักการทางวัฒนธรรมและวิทยาศาสตร์รองรับ แต่ระดับที่ต่างกัน</p>
+
+  <p class="scene-break">· · ·</p>
+
+  <h2>5 วิธีล้างอเมทิสต์จากทั่วโลก</h2>
+
+  <div class="method-grid">
+
+    <div class="method-card moonlight">
+      <div class="method-header">
+        <div class="method-icon">🌕</div>
+        <div><div class="method-name">Moonlight Cleansing — แสงจันทร์</div><div class="method-origin">ต้นกำเนิด: ยุโรป · อินเดีย · ชนพื้นเมืองอเมริกา</div></div>
+      </div>
+      <p>วิธีที่ได้รับความนิยมมากที่สุดทั่วโลก และปลอดภัยที่สุดสำหรับอเมทิสต์ เพราะไม่มีความร้อนหรือสารเคมีเข้ามาเกี่ยวข้อง</p>
+      <ul class="method-steps">
+        <li>วางอเมทิสต์ไว้กลางแจ้งหรือบนขอบหน้าต่างที่แสงจันทร์ส่องถึง</li>
+        <li>คืนพระจันทร์เต็มดวง (Full Moon) ถือเป็นช่วงที่ดีที่สุด แต่คืนอื่นก็ใช้ได้</li>
+        <li>ทิ้งไว้ข้ามคืน 4–8 ชั่วโมง</li>
+        <li>เช้าวันรุ่งขึ้นเก็บเข้าก่อนแสงแดดจัด</li>
+      </ul>
+      <p><strong>ทำไมถึงใช้ได้:</strong> แสงจันทร์เย็นและอ่อนโยน ไม่ทำลายสีของอเมทิสต์ อากาศกลางคืนที่สะอาดกว่าช่วยระบายฝุ่นและความชื้นออกจากผิวหิน ส่วนเรื่อง "พลังงาน" นั้นแล้วแต่ความเชื่อ</p>
+      <span class="method-badge">✓ ปลอดภัย 100% · แนะนำสำหรับมือใหม่</span>
+    </div>
+
+    <div class="method-card sound">
+      <div class="method-header">
+        <div class="method-icon">🔔</div>
+        <div><div class="method-name">Sound Cleansing — คลื่นเสียง</div><div class="method-origin">ต้นกำเนิด: ทิเบต · เนปาล · ญี่ปุ่น</div></div>
+      </div>
+      <p>ใช้เสียงความถี่สูงล้อมรอบหิน เป็นวิธีที่พระในทิเบตและเนปาลใช้มาหลายร้อยปี โดยเฉพาะกับ Tibetan Singing Bowl</p>
+      <ul class="method-steps">
+        <li>วาง singing bowl ไว้ข้างๆ หรือรอบๆ อเมทิสต์</li>
+        <li>ตีหรือลูบขอบ bowl ให้เกิดเสียง 10–15 นาที</li>
+        <li>อีกวิธีคือวางหินใกล้ลำโพงที่เปิดเพลง 432 Hz หรือ 528 Hz</li>
+      </ul>
+      <p><strong>มีหลักฐานรองรับไหม:</strong> การวิจัยพบว่าคลื่นเสียงช่วย dislodge ฝุ่นและอนุภาคขนาดเล็กออกจากพื้นผิวผลึก (ใช้ในอุตสาหกรรมทำความสะอาดเครื่องประดับ) เรื่อง "พลังงาน" ยังไม่มีข้อพิสูจน์</p>
+      <span class="method-badge">✓ ปลอดภัย · ดีสำหรับหินที่ล้างน้ำไม่ได้</span>
+    </div>
+
+    <div class="method-card sage">
+      <div class="method-header">
+        <div class="method-icon">🌿</div>
+        <div><div class="method-name">Sage Smudging — ควันเสจ</div><div class="method-origin">ต้นกำเนิด: ชนพื้นเมืองอเมริกาเหนือ</div></div>
+      </div>
+      <p>การเผาใบเสจ (White Sage หรือ Palo Santo) แล้วผ่านหินในควัน เป็นพิธีกรรมศักดิ์สิทธิ์ของชนพื้นเมืองอเมริกาที่ถูกนำมาใช้ในวงการคริสตัลทั่วโลก</p>
+      <ul class="method-steps">
+        <li>จุดใบเสจหรือ Palo Santo ให้ติดไฟ แล้วเป่าไฟออกให้เหลือแต่ควัน</li>
+        <li>ผ่านอเมทิสต์ในควันช้าๆ 30–60 วินาที</li>
+        <li>ตั้งใจ (intention) ว่าต้องการ "รีเซ็ต" หินนี้</li>
+      </ul>
+      <p><strong>หมายเหตุทางวัฒนธรรม:</strong> ควรใช้ด้วยความเคารพต่อที่มาของพิธีกรรม ไม่ใช่แค่เทรนด์ นอกจากนี้ควันเสจช่วยฆ่าเชื้อแบคทีเรียในอากาศได้จริง (มีงานวิจัยรองรับ) แต่ไม่แน่ชัดว่าส่งผลต่อหินอย่างไร</p>
+      <span class="method-badge">⚠️ ระวังควันในห้องปิด · ใช้ด้วยความระมัดระวัง</span>
+    </div>
+
+    <div class="method-card selenite">
+      <div class="method-header">
+        <div class="method-icon">🤍</div>
+        <div><div class="method-name">Selenite Charging — แผ่นเซเลไนต์</div><div class="method-origin">ต้นกำเนิด: ชุมชนคริสตัลสมัยใหม่</div></div>
+      </div>
+      <p>วางอเมทิสต์บนแผ่น Selenite หรือชาม Selenite ทิ้งไว้ข้ามคืน เซเลไนต์เป็นหินที่เชื่อกันว่า "ล้างตัวเองได้" จึงนิยมใช้ล้างหินอื่น</p>
+      <ul class="method-steps">
+        <li>วางอเมทิสต์บนแผ่น Selenite โดยตรง</li>
+        <li>ทิ้งไว้อย่างน้อย 6 ชั่วโมง (ข้ามคืนดีที่สุด)</li>
+        <li>ไม่ต้องทำอะไรเพิ่ม</li>
+      </ul>
+      <p><strong>ข้อดีทางปฏิบัติ:</strong> เซเลไนต์มีพื้นผิวที่เป็น piezoelectric อ่อนๆ ซึ่งอาจช่วยในระดับโมเลกุล แต่ยังไม่มีการศึกษาจริงจัง วิธีนี้สะดวก ปลอดภัย และไม่ต้องจำวันพระจันทร์</p>
+      <span class="method-badge">✓ สะดวกที่สุด · ใช้ได้ทุกวัน</span>
+    </div>
+
+    <div class="method-card water">
+      <div class="method-header">
+        <div class="method-icon">💧</div>
+        <div><div class="method-name">Running Water — น้ำไหล</div><div class="method-origin">วิธีพื้นฐาน · ทุกวัฒนธรรม</div></div>
+      </div>
+      <p>ล้างใต้น้ำไหลสะอาด 1–2 นาที เป็นวิธีทำความสะอาดทางกายภาพที่ดีที่สุด แต่ต้องระวังบางอย่าง</p>
+      <ul class="method-steps">
+        <li>ใช้น้ำเย็นถึงอุ่น ไม่ใช้น้ำร้อน</li>
+        <li>ถูเบาๆ ด้วยนิ้วหรือแปรงขนนุ่ม</li>
+        <li>เช็ดให้แห้งสนิทก่อนเก็บ</li>
+      </ul>
+      <span class="method-badge">⚠️ ดูข้อควรระวังด้านล่างก่อน</span>
+    </div>
+
+  </div>
+
+  <p class="scene-break">· · ·</p>
+
+  <h2>สิ่งที่ห้ามทำกับอเมทิสต์ — เพราะมันจะซีดจริงๆ</h2>
+
+  <div class="warning-box">
+    <div class="warning-title">⚠️ ข้อควรระวัง — วิทยาศาสตร์ยืนยัน</div>
+
+    <div class="warning-item">
+      <div class="w-icon">☀️</div>
+      <p><strong>อย่าโดนแสงแดดโดยตรงนานเกิน 2–3 ชั่วโมง</strong> — สีม่วงของอเมทิสต์มาจากธาตุเหล็กที่ไวต่อ UV มาก แสงแดดโดยตรงเป็นเวลานานจะทำให้สีซีดลงอย่างถาวร ไม่สามารถคืนสภาพได้ นี่คือสาเหตุที่ร้านขายหินมักวางอเมทิสต์ในตู้ที่มีฝาปิด</p>
+    </div>
+
+    <div class="warning-item">
+      <div class="w-icon">🧂</div>
+      <p><strong>อย่าแช่น้ำเกลือนาน</strong> — น้ำเกลือทำลายผิวผลึกและอาจทำให้หินร้าวตามรอยธรรมชาติที่มีอยู่ ถ้าจะใช้น้ำเกลือล้าง ให้ล้างใต้น้ำเกลือเจือจางไม่เกิน 30 วินาทีแล้วล้างน้ำเปล่าตาม</p>
+    </div>
+
+    <div class="warning-item">
+      <div class="w-icon">🔥</div>
+      <p><strong>อย่าให้ความร้อนสูง</strong> — อเมทิสต์เปลี่ยนสีเมื่อถูกความร้อนสูงกว่า 300–400°C กลายเป็นสีเหลือง (ซิทริน) หรือสีส้ม นี่คือวิธีที่โรงงานสร้าง "ซิทริน" ราคาถูก</p>
+    </div>
+
+    <div class="warning-item">
+      <div class="w-icon">🧴</div>
+      <p><strong>อย่าใช้น้ำยาเคมีหรือน้ำยาเช็ดเครื่องประดับ</strong> — สารเคมีจะทำลายผิวผลึกและอาจทำให้สีเปลี่ยน ใช้แค่น้ำสะอาดกับแปรงขนนุ่มเท่านั้น</p>
+    </div>
+  </div>
+
+  <p class="scene-break">· · ·</p>
+
+  <h2>นาวาลองล้างหินครั้งแรก — คืนพระจันทร์เต็มดวง</h2>
+
+  <div class="nava-scene">
+    <p>มันเป็นคืนพระจันทร์เต็มดวงโดยบังเอิญ นาวาเปิด Calendar ขึ้นมาแล้วก็เห็น</p>
+    <p>เธอไม่ได้วางแผนไว้ก่อน แต่หลังจากอ่านข้อมูลจากทีม เธอตัดสินใจลองวางก้อนหินไว้บนขอบหน้าต่างห้องนอน</p>
+    <p>กรุงเทพฯ กลางคืนไม่เงียบ มีเสียงรถ เสียงแอร์บ้านข้างๆ แสงจันทร์ก็ถูกแสงไฟเมืองข่มไว้มาก</p>
+    <p>แต่นาวาวางมันไว้ที่นั่นตอนสี่ทุ่ม แล้วก็เข้านอน</p>
+    <p>เช้าตื่นมาเธอไปหยิบก้อนหินกลับ มันยังเย็นอยู่จากอากาศกลางคืน</p>
+    <p>เธอไม่รู้ว่ามันต่างจากเดิมไหม</p>
+    <p>แต่เธอรู้สึกว่าตัวเองทำอะไรบางอย่างโดยตั้งใจ แทนที่จะแค่วางมันไว้บนโต๊ะโดยไม่มีเหตุผล</p>
+    <p>และนั่นรู้สึกต่างออกไปนิดหนึ่ง</p>
+  </div>
+
+</div>
+
+<div class="amethyst-cta">
+  <div class="cta-box">
+    <h3>💜 คู่มือดูแลอเมทิสต์ฉบับสมบูรณ์</h3>
+    <p>วิธีล้าง วิธีเก็บ วิธีใช้ และคำถามที่พบบ่อย — อ่านทั้งหมดในหน้าสารานุกรมอเมทิสต์</p>
+    <a href="/stones/amethyst.html" class="cta-btn">💜 อ่านสารานุกรมอเมทิสต์</a>
+  </div>
+</div>
+
+<div class="ep-nav">
+  <a href="/stories/amethyst/episode-03.html" class="ep-nav-btn ep-nav-prev">← ตอนที่ 3</a>
+  <a href="/stories/amethyst/" class="ep-nav-index">ดูทุกตอน</a>
+  <a href="/stories/amethyst/episode-05.html" class="ep-nav-btn ep-nav-next">ตอนสุดท้าย →</a>
+</div>
+
+<div class="footer">
+  <p><a href="/">Amethez</a> · <a href="/stories/">นิยาย</a> · <a href="/stories/amethyst/">อเมทิสต์ซีรีส์</a></p>
+  <p style="margin-top:.5rem">© 2025 Amethez · Stones · Stories · Soul</p>
+</div>
+<script>document.querySelector('.hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('open'))</script>
+<script src="/js/cms.js"></script>
+</body>
+</html>

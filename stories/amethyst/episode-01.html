@@ -1,0 +1,274 @@
+﻿<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ตอนที่ 1 — หินที่ไม่ได้ขอ | อเมทิสต์ซีรีส์ | Amethez</title>
+  <meta name="description" content="ตอนที่ 1: นาวาได้รับอเมทิสต์เป็นของขวัญที่ไม่ได้ขอ พร้อมรายงานแรกของดร.เวกาจากแหล่งขุดใหญ่สุดในโลกที่อุรุกวัย">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --gold:#c9a84c; --purple:#7c3aed; --amethyst:#9b59b6; --dark:#0f0a1e; --ba:rgba(155,89,182,.2); }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:Sarabun,sans-serif; background:var(--dark); color:#d4cce8; }
+    .topbar { background:linear-gradient(90deg,#1a0936,#2d1b5e,#1a0936); padding:.55rem 1.5rem; display:flex; align-items:center; justify-content:center; }
+    .topbar span { color:rgba(255,255,255,.65); font-size:.78rem; }
+    .topbar strong { color:var(--gold); }
+    .nav { position:sticky; top:0; z-index:100; background:rgba(15,10,30,.95); backdrop-filter:blur(12px); border-bottom:1px solid rgba(124,58,237,.2); }
+    .nav-inner { max-width:1160px; margin:0 auto; padding:.875rem 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+    .logo { display:flex; align-items:center; gap:.6rem; text-decoration:none; flex-shrink:0; }
+    .logo svg { width:32px; height:32px; }
+    .logo-text { font-family:'Playfair Display',serif; font-size:1.2rem; color:white; font-weight:700; letter-spacing:.04em; }
+    .logo-sub { font-size:.65rem; color:rgba(255,255,255,.5); display:block; letter-spacing:.08em; }
+    .nav-links { display:flex; align-items:center; gap:.25rem; list-style:none; }
+    .nav-links a { font-size:.875rem; font-weight:600; color:rgba(255,255,255,.8); text-decoration:none; padding:.4rem .75rem; border-radius:.5rem; transition:all .15s; white-space:nowrap; }
+    .nav-links a:hover { background:rgba(124,58,237,.2); color:white; }
+    .nav-links .nav-shop { background:linear-gradient(135deg,#c9a84c,#b8922e); color:#0f0a1e !important; border-radius:2rem; padding:.4rem 1rem !important; }
+    .nav-links .nav-digital { color:#a78bfa !important; }
+    .nav-links .nav-stories { color:var(--gold) !important; }
+    .hamburger { display:none; background:none; border:none; font-size:1.5rem; cursor:pointer; color:white; }
+    @media(max-width:860px){ .nav-links{display:none}.nav-links.open{display:flex;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:rgba(15,10,30,.98);padding:1rem 1.5rem;gap:.25rem;border-bottom:1px solid rgba(124,58,237,.2)}.hamburger{display:block} }
+
+    .ep-header { max-width:720px; margin:0 auto; padding:4rem 1.5rem 2rem; }
+    .breadcrumb { font-size:.78rem; color:rgba(255,255,255,.35); margin-bottom:1.5rem; }
+    .breadcrumb a { color:rgba(255,255,255,.4); text-decoration:none; }
+    .breadcrumb a:hover { color:var(--gold); }
+    .ep-type-badge { display:inline-flex; align-items:center; gap:.4rem; background:rgba(155,89,182,.12); border:1px solid var(--ba); color:#d8b4fe; padding:.3rem .85rem; border-radius:2rem; font-size:.72rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; margin-bottom:1.25rem; }
+    .ep-series-badge { display:inline-flex; align-items:center; gap:.4rem; background:rgba(201,168,76,.08); border:1px solid rgba(201,168,76,.2); color:var(--gold); padding:.3rem .85rem; border-radius:2rem; font-size:.72rem; font-weight:700; letter-spacing:.06em; margin-bottom:1.25rem; margin-left:.4rem; }
+    .ep-num { font-size:.85rem; color:rgba(255,255,255,.35); margin-bottom:.5rem; letter-spacing:.06em; }
+    h1.ep-title { font-family:'Playfair Display',serif; font-size:clamp(2rem,5vw,3rem); color:white; line-height:1.25; margin-bottom:1rem; }
+    .ep-tagline { font-size:1rem; color:rgba(255,255,255,.5); font-style:italic; line-height:1.7; margin-bottom:2rem; }
+    .ep-meta { display:flex; gap:1.5rem; flex-wrap:wrap; font-size:.78rem; color:rgba(255,255,255,.35); padding-bottom:2rem; border-bottom:1px solid rgba(255,255,255,.07); }
+
+    .ep-content { max-width:720px; margin:0 auto; padding:2.5rem 1.5rem 4rem; }
+    .ep-content p { font-size:1.05rem; line-height:2; color:rgba(255,255,255,.78); margin-bottom:1.75rem; }
+    .ep-content p.scene-break { text-align:center; color:rgba(255,255,255,.2); font-size:1.2rem; letter-spacing:.3em; margin:2.5rem 0; }
+    .ep-content h2 { font-family:'Playfair Display',serif; font-size:1.4rem; color:white; margin:3rem 0 1.25rem; line-height:1.4; }
+    .ep-content h3 { font-family:'Playfair Display',serif; font-size:1.05rem; color:#d8b4fe; margin:2rem 0 .75rem; }
+
+    /* SYSTEM BOX — ความวุ่นวายในหัวนาวา */
+    .system-box { background:linear-gradient(135deg,rgba(155,89,182,.08),rgba(124,58,237,.05)); border:1px solid var(--ba); border-radius:.875rem; padding:1.75rem 2rem; margin:2.5rem 0; }
+    .system-label { font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#c4b5fd; margin-bottom:.75rem; display:flex; align-items:center; gap:.4rem; }
+    .system-title { font-family:'Playfair Display',serif; font-size:1.15rem; color:#d8b4fe; margin-bottom:.75rem; }
+    .system-box p { font-size:.9rem; color:rgba(200,185,240,.6); line-height:1.9; margin-bottom:.6rem; }
+    .system-box p:last-child { margin-bottom:0; }
+    .system-data { display:grid; grid-template-columns:1fr 1fr; gap:.5rem; margin-top:1rem; }
+    .data-row { background:rgba(255,255,255,.03); border-radius:.4rem; padding:.6rem .85rem; }
+    .data-row .label { font-size:.7rem; color:rgba(200,185,240,.4); margin-bottom:.2rem; }
+    .data-row .value { font-size:.88rem; color:#f87171; font-weight:600; }
+    .data-row .value.ok { color:#86efac; }
+    @media(max-width:480px){ .system-data{grid-template-columns:1fr} }
+
+    /* VEGA REPORT */
+    .report-box { background:rgba(0,80,40,.12); border:1px solid rgba(149,213,178,.2); border-radius:.875rem; padding:1.75rem 2rem; margin:2.5rem 0; position:relative; }
+    .report-from { font-size:.68rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(149,213,178,.6); margin-bottom:.25rem; }
+    .report-name { font-size:.95rem; color:#95d5b2; font-weight:700; margin-bottom:.5rem; display:flex; align-items:center; gap:.5rem; }
+    .report-location { font-size:.75rem; color:rgba(149,213,178,.5); margin-bottom:1rem; }
+    .report-box p { font-size:.92rem; color:rgba(200,240,220,.65); line-height:1.9; margin-bottom:.75rem; }
+    .report-box p:last-child { margin-bottom:0; }
+    .report-highlight { background:rgba(149,213,178,.07); border-left:2px solid rgba(149,213,178,.4); padding:.75rem 1rem; border-radius:0 .4rem .4rem 0; margin:1rem 0; font-size:.88rem; color:#95d5b2; line-height:1.8; font-style:italic; }
+    .report-fact { display:inline-block; background:rgba(149,213,178,.08); border:1px solid rgba(149,213,178,.15); border-radius:2rem; padding:.2rem .75rem; font-size:.75rem; color:rgba(149,213,178,.7); margin:.25rem .25rem 0 0; }
+
+    /* FOOTER NAV */
+    .ep-nav { max-width:720px; margin:0 auto; padding:0 1.5rem 5rem; display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap; }
+    .ep-nav-btn { display:inline-flex; align-items:center; gap:.5rem; padding:.75rem 1.25rem; border-radius:.5rem; font-family:Sarabun,sans-serif; font-size:.9rem; font-weight:600; text-decoration:none; transition:all .2s; }
+    .ep-nav-prev { background:rgba(255,255,255,.05); color:rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.1); }
+    .ep-nav-prev:hover { background:rgba(255,255,255,.08); color:white; }
+    .ep-nav-next { background:linear-gradient(135deg,#7c3aed,#6d28d9); color:white; box-shadow:0 4px 16px rgba(124,58,237,.3); }
+    .ep-nav-next:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(124,58,237,.45); }
+    .ep-nav-index { font-size:.8rem; color:rgba(255,255,255,.3); text-decoration:none; }
+    .ep-nav-index:hover { color:var(--gold); }
+
+    .amethyst-cta { max-width:720px; margin:0 auto 2rem; padding:0 1.5rem; }
+    .cta-box { background:linear-gradient(135deg,rgba(88,28,135,.15),rgba(109,40,217,.08)); border:1px solid rgba(155,89,182,.25); border-radius:1rem; padding:1.75rem 2rem; }
+    .cta-box h3 { font-family:'Playfair Display',serif; font-size:1.1rem; color:white; margin-bottom:.5rem; }
+    .cta-box p { font-size:.85rem; color:rgba(255,255,255,.5); line-height:1.7; margin-bottom:1rem; }
+    .cta-btn { display:inline-flex; align-items:center; gap:.4rem; background:linear-gradient(135deg,#6d28d9,#5b21b6); color:white; padding:.65rem 1.25rem; border-radius:.5rem; font-family:Sarabun,sans-serif; font-size:.85rem; font-weight:700; text-decoration:none; }
+    .footer { border-top:1px solid rgba(255,255,255,.06); padding:2rem 1.5rem; text-align:center; color:rgba(255,255,255,.3); font-size:.8rem; }
+    .footer a { color:rgba(255,255,255,.4); text-decoration:none; }
+    .footer a:hover { color:var(--gold); }
+  </style>
+</head>
+<body data-cms-page="story-amethyst-01">
+
+<div class="topbar">
+  <span>💜 อเมทิสต์ซีรีส์ · <strong>อ่านฟรี 5 ตอน</strong> · ทีมนักวิจัย 3 คน</span>
+</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="logo">
+      <svg viewBox="0 0 36 36" fill="none"><polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity=".95"/><polygon points="18,8 30,12 18,28" fill="#a78bfa"/><polygon points="18,8 6,12 18,28" fill="#7c3aed"/></svg>
+      <div><div class="logo-text">AMETHEZ</div><small class="logo-sub">Stones · Stories · Soul</small></div>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/stones/">💎 คลังหิน</a></li>
+      <li><a href="/guides/">🌿 พลังบำบัด</a></li>
+      <li><a href="/talk/">🔮 คุยกับหิน</a></li>
+      <li><a href="/videos/">🎬 วิดีโอ</a></li>
+      <li><a href="/stories/" class="nav-stories">📖 นิยาย</a></li>
+      <li><a href="/digital/" class="nav-digital">📥 Digital</a></li>
+      <li><a href="/sale.html" class="nav-shop">🛒 ร้านค้า</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+  </div>
+</nav>
+
+<div class="ep-header">
+  <div class="breadcrumb">
+    <a href="/">Amethez</a> › <a href="/stories/">นิยาย</a> › <a href="/stories/amethyst/">อเมทิสต์ซีรีส์</a> › ตอนที่ 1
+  </div>
+  <div class="ep-type-badge">🌀 ตอนคี่ · เรื่องราว + ภาคสนาม</div>
+  <div class="ep-series-badge">💜 อเมทิสต์ซีรีส์</div>
+  <div class="ep-num">ตอนที่ 1 จาก 5</div>
+  <h1 class="ep-title">หินที่ไม่ได้ขอ</h1>
+  <p class="ep-tagline">"บางอย่างเข้ามาในชีวิตตอนที่คุณยุ่งเกินกว่าจะสังเกต — แต่มันรอ"</p>
+  <div class="ep-meta">
+    <span>⏱ อ่านประมาณ 20 นาที</span>
+    <span>🌍 รายงานจาก Artigas, Uruguay</span>
+    <span>🆓 อ่านฟรี</span>
+  </div>
+</div>
+
+<div class="ep-content">
+
+  <!-- SYSTEM BOX: ความวุ่นวายในหัวนาวา -->
+  <div class="system-box">
+    <div class="system-label">🌀 ภาพในหัวนาวา — ณ วันเกิดปีที่ 27</div>
+    <div class="system-title">ชีวิต Freelance ที่ออกแบบมาดีเกินไป</div>
+    <p>นาวาบอกตัวเองเสมอว่าเธอ "จัดการได้" สามโปรเจคพร้อมกันไม่ใช่เรื่องใหญ่ ถ้าวางแผนดีพอ ถ้าตื่นเร็วพอ ถ้านอนน้อยพอ</p>
+    <div class="system-data">
+      <div class="data-row"><div class="label">Client A — Logo redesign</div><div class="value">Deadline พรุ่งนี้ 09:00</div></div>
+      <div class="data-row"><div class="label">Client B — Social pack 30 ชิ้น</div><div class="value">Deadline ศุกร์นี้</div></div>
+      <div class="data-row"><div class="label">Client C — Annual report 80 หน้า</div><div class="value">แก้รอบที่ 7 แล้ว</div></div>
+      <div class="data-row"><div class="label">ชั่วโมงนอน / คืน (7 วันล่าสุด)</div><div class="value">เฉลี่ย 4.2 ชม.</div></div>
+      <div class="data-row"><div class="label">กาแฟวันนี้</div><div class="value">4 แก้ว (ยังไม่พอ)</div></div>
+      <div class="data-row"><div class="label">ความคิดสร้างสรรค์</div><div class="value">ว่างเปล่า</div></div>
+    </div>
+  </div>
+
+  <h2>วันเกิดในร้านอาหารที่ไม่มีเวลา</h2>
+
+  <p>นาวา สุทธิพร เข้าร้านชาบูที่เพื่อนนัดมาตอนเจ็ดโมงครึ่ง ช้ากว่านัดสามสิบนาที เพราะเธอนั่งทำ logo อยู่จนลืมออกจากบ้าน</p>
+
+  <p>มีเพื่อน 3 คนรอ ทุกคนสวมใส่ชุดสวย เพื่อนคนหนึ่งนำเค้กมา มีเทียน "27" ปักอยู่ตรงกลาง นาวายิ้ม แต่หัวยังอยู่ที่ฟอนต์ที่ยังไม่ลงตัวบนจอโน้ตบุ๊คที่บ้าน</p>
+
+  <p>"ได้ของขวัญด้วยนะ" เพ็ญ เพื่อนที่รู้จักกันตั้งแต่มัธยม วางกล่องสีดำเล็กๆ ลงบนโต๊ะ "ซื้อมาจากตลาดนัดสุขุมวิท เขาบอกว่าช่วยเรื่อง anxiety นะ"</p>
+
+  <p>นาวาเปิดกล่องออกมา ข้างในมีก้อนหินสีม่วงขนาดพอดีฝ่ามือ ผิวมันอมเงา มีสีเข้มจางสลับกันเป็นชั้นๆ</p>
+
+  <p>"อเมทิสต์" เพ็ญบอก "ของ February birthstone ของแก ซื้อมาตั้งนานแล้ว ลืมว่าแกเกิดเดือนกุมภา"</p>
+
+  <p>นาวาถือมันขึ้นมา หนักกว่าที่คิด เย็นกว่าที่คิด สีม่วงเข้มในแสงร้านอาหารดูเหมือนมีความลึกอยู่ข้างใน</p>
+
+  <p>"ขอบคุณนะ" เธอพูด แล้ววางลงในกระเป๋า</p>
+
+  <p>เพ็ญมองเธออยู่ครู่หนึ่ง "แกโอเคไหม?"</p>
+
+  <p>"โอเค แค่ยุ่ง" นาวาตอบ ซึ่งเป็นคำตอบที่เธอใช้มาสองปีแล้ว</p>
+
+  <p class="scene-break">· · ·</p>
+
+  <h2>กลับถึงบ้านตอนสี่ทุ่ม</h2>
+
+  <p>เธอเปิดโน้ตบุ๊คก่อนวางกระเป๋า คอนเซปต์ logo ที่ค้างอยู่ยังไม่ดีพอ Client A จะตรวจงานตอนเก้าโมงเช้า แปลว่ามีเวลาอีกประมาณสิบสองชั่วโมง</p>
+
+  <p>นาวาล้วงกระเป๋า หยิบก้อนอเมทิสต์ออกมา วางไว้มุมโต๊ะงาน ไม่มีเหตุผลเฉพาะ แค่รู้สึกว่าไม่อยากทิ้งไว้ในกระเป๋า</p>
+
+  <p>เธอเริ่มทำงาน</p>
+
+  <p class="scene-break">· · ·</p>
+
+  <!-- VEGA REPORT #1 -->
+  <div class="report-box">
+    <div class="report-from">📡 รายงานภาคสนาม — ฉบับที่ 1</div>
+    <div class="report-name">🌿 ดร.เวกา วีระกานต์</div>
+    <div class="report-location">📍 Artigas, Uruguay · ระดับความสูง 112 เมตร · อุณหภูมิ 17°C</div>
+    <p>ถึงรดาและทีม,</p>
+    <p>มาถึง Artigas เมื่อสองวันก่อน เมืองเล็กทางตอนเหนือของอุรุกวัย ติดชายแดนบราซิล ถ้าไม่รู้ล่วงหน้า คงไม่เชื่อว่าที่นี่คือแหล่งผลิตอเมทิสต์ที่ใหญ่ที่สุดในโลก</p>
+    <div class="report-highlight">Artigas และพื้นที่โดยรอบผลิตอเมทิสต์มากกว่า 60% ของปริมาณที่ซื้อขายในตลาดโลก — ทุกก้อนที่คุณเห็นในร้านขายคริสตัลทั่วโลก มีโอกาสสูงมากที่มาจากที่นี่</div>
+    <p>เหมืองส่วนใหญ่เป็นของครอบครัว ขนาดเล็กถึงกลาง พวกเขาขุดลงไปลึกหลายสิบเมตรเพื่อหาโพรงหิน (geode) ที่ข้างในมีผลึกอเมทิสต์งอกอยู่ บางโพรงเล็กเท่าหัวเข่า บางโพรงใหญ่เท่าตู้เย็น</p>
+    <p>สิ่งที่น่าสนใจคืออเมทิสต์จาก Artigas มีสีม่วงเข้มกว่าจากบราซิลมาก เพราะปริมาณเหล็กในหินฐานที่แตกต่างกัน ผมจะอธิบายเรื่องธรณีวิทยาในรายงานฉบับต่อไป</p>
+    <p>ปล. ถ่ายรูปเหมืองได้บางส่วน แต่เจ้าของไม่ให้ถ่ายในจุดที่ลึกที่สุด บอกว่า "เป็นความลับของครอบครัว" ซึ่งผมเคารพ</p>
+    <div style="margin-top:1rem">
+      <span class="report-fact">🌍 แหล่งผลิต 60%+ ของตลาดโลก</span>
+      <span class="report-fact">⛏️ เหมืองครอบครัว</span>
+      <span class="report-fact">🟣 สีเข้มสุดในโลก</span>
+    </div>
+  </div>
+
+  <h2>ตีหนึ่ง — หัวว่างแล้ว</h2>
+
+  <p>งานไม่ออก</p>
+
+  <p>นาวาเปิดไฟล์ Illustrator มาสองชั่วโมง สร้าง variation ได้สิบเอ็ดแบบ ลบทิ้งเก้าแบบ แบบที่เหลือสองแบบก็ยังไม่โอเค มีบางอย่างที่ขาด แต่หาไม่ได้ว่าคืออะไร</p>
+
+  <p>ความรู้สึกนี้เธอรู้จักดี มันไม่ใช่ว่าเธอไม่เก่ง มันคือตอนที่ถังสร้างสรรค์มันหมดแล้ว แต่กำหนดส่งยังไม่หมด</p>
+
+  <p>เธอพิงพนักเก้าอี้ มองเพดาน</p>
+
+  <p>ห้องเงียบมาก</p>
+
+  <p>มือเธอเลื่อนไปตามโต๊ะโดยไม่ตั้งใจ ปลายนิ้วแตะก้อนหินที่วางอยู่มุมโต๊ะ</p>
+
+  <p>เย็น</p>
+
+  <p>เธอหยิบมันขึ้นมาถือ ไม่รู้ว่าทำไม ก้อนหินนั้นพอดีฝ่ามือ น้ำหนักกำลังพอ ผิวมันเรียบแต่มีรายละเอียดเล็กๆ ของผลึกที่จับได้ใต้ปลายนิ้ว</p>
+
+  <p>นาวานั่งถือมันอยู่นานสิบห้านาที</p>
+
+  <p>ไม่ได้ทำสมาธิ ไม่ได้อธิษฐาน ไม่ได้ทำอะไรเลย แค่นั่งเฉยๆ ในความมืดกับก้อนหินในมือ</p>
+
+  <p>มันเป็นสิบห้านาทีแรกในรอบสองสัปดาห์ที่เธอไม่ได้ทำอะไรแล้วไม่รู้สึกผิด</p>
+
+  <p class="scene-break">· · ·</p>
+
+  <h2>ตีหนึ่งครึ่ง — แบบที่สิบสอง</h2>
+
+  <p>เธอวางก้อนหินลง เปิดโน้ตบุ๊คขึ้นมาใหม่</p>
+
+  <p>แล้วก็สร้าง logo แบบที่สิบสอง</p>
+
+  <p>ครั้งนี้มันออกมาดีกว่าสิบเอ็ดแบบก่อน</p>
+
+  <p>เธอไม่รู้ว่าเพราะก้อนหิน หรือเพราะแค่นั่งเฉยๆ สิบห้านาที หรือเพราะสมองมันเหนื่อยจนปล่อยวาง แล้วความคิดที่ขาดหายก็กลับมาเอง</p>
+
+  <p>เธอบันทึกไฟล์ในชื่อ <em>"v12_final.ai"</em></p>
+
+  <p>ก้อนอเมทิสต์ยังอยู่มุมโต๊ะ</p>
+
+  <p>เธอไม่ได้ย้ายมันไปไหน</p>
+
+  <p class="scene-break">· · ·</p>
+
+  <h2>หมายเหตุจากรดา — บรรณาธิการ</h2>
+
+  <p style="color:rgba(255,255,255,.5);font-size:.9rem;line-height:1.9;font-style:italic;">นาวาไม่ได้ "เชื่อ" เรื่องพลังงานหิน เธอแค่วางมันไว้บนโต๊ะ แล้วมันก็อยู่ที่นั่น นั่นคือจุดเริ่มต้นที่ซื่อสัตย์ที่สุดที่มีได้</p>
+  <p style="color:rgba(255,255,255,.5);font-size:.9rem;line-height:1.9;font-style:italic;">ดร.เวกาอยู่ที่ Artigas เพิ่งส่งรายงานฉบับแรก ตอนต่อไปเขาจะส่งข้อมูลธรณีวิทยาฉบับเต็ม — ว่าอเมทิสต์เกิดขึ้นได้อย่างไร และทำไมมันถึงเป็นสีม่วง</p>
+  <p style="color:rgba(201,168,76,.7);font-size:.82rem;margin-top:.5rem;">— รดา บรรณาธิการ</p>
+
+</div>
+
+<div class="amethyst-cta">
+  <div class="cta-box">
+    <h3>💜 อเมทิสต์ — หิน February Birthstone</h3>
+    <p>ก้อนหินที่นาวาวางอยู่มุมโต๊ะนั้น มีประวัติยาวนานกว่า 2,000 ปี ตั้งแต่กรีกโบราณ อียิปต์ จนถึงราชสำนักยุคกลาง อ่านสารานุกรมฉบับเต็มได้ที่นี่</p>
+    <a href="/stones/amethyst.html" class="cta-btn">💜 อ่านสารานุกรมอเมทิสต์</a>
+  </div>
+</div>
+
+<div class="ep-nav">
+  <a href="/stories/amethyst/" class="ep-nav-btn ep-nav-prev">← รายการตอน</a>
+  <a href="/stories/amethyst/" class="ep-nav-index">ดูทุกตอน</a>
+  <a href="/stories/amethyst/episode-02.html" class="ep-nav-btn ep-nav-next">ตอนที่ 2 →</a>
+</div>
+
+<div class="footer">
+  <p><a href="/">Amethez</a> · <a href="/stories/">นิยาย</a> · <a href="/stories/amethyst/">อเมทิสต์ซีรีส์</a> · <a href="/stones/amethyst.html">สารานุกรม</a></p>
+  <p style="margin-top:.5rem">© 2025 Amethez · Stones · Stories · Soul</p>
+</div>
+
+<script>document.querySelector('.hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('open'))</script>
+<script src="/js/cms.js"></script>
+</body>
+</html>

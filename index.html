@@ -181,14 +181,14 @@
     .divider { width:100%; height:1px; background:linear-gradient(90deg,transparent,var(--border),transparent); margin:0; border:none; }
   </style>
 </head>
-<body>
+<body data-cms-page="index">
 
 <!-- Top Announcement -->
 <div class="topbar">
-  <span>💎 <strong>300+</strong> บทความหิน</span>
-  <span>📥 <strong>คู่มือฟรี</strong> ดาวน์โหลดได้เลย</span>
-  <span>🎬 <strong>วิดีโอ</strong> พร้อมสรุปโดย AI</span>
-  <span>🔍 ข้อมูล <strong>วิทยาศาสตร์ + สายมู</strong></span>
+  <span data-cms-text="global.ann_1">💎 <strong>300+</strong> บทความหิน</span>
+  <span data-cms-text="global.ann_2">📥 <strong>คู่มือฟรี</strong> ดาวน์โหลดได้เลย</span>
+  <span data-cms-text="global.ann_3">🎬 <strong>วิดีโอ</strong> พร้อมสรุปโดย AI</span>
+  <span data-cms-text="global.ann_4">🔍 ข้อมูล <strong>วิทยาศาสตร์ + สายมู</strong></span>
 </div>
 
 <!-- Nav -->
@@ -220,9 +220,9 @@
 <section class="hero">
   <div class="wrap" style="max-width:700px;position:relative">
     <div data-cms-img="home_hero" style="position:absolute;inset:0;background-size:cover;background-position:center;opacity:.35;pointer-events:none"></div>
-    <div class="hero-badge">✨ Thailand's Crystal Knowledge Hub</div>
-    <h1>ความรู้<em>คริสตัล</em><br>ครบ ลึก ถูกต้อง<br>ที่สุดในไทย</h1>
-    <p class="hero-sub">หิน 300+ ชนิด ทั้งวิทยาศาสตร์ พลังงาน และสายมู<br>จาก 3 ผู้เชี่ยวชาญในบรรยากาศเดียวกัน</p>
+    <div class="hero-badge" data-cms-text="index.hero_badge">✨ Thailand's Crystal Knowledge Hub</div>
+    <h1 data-cms-text="index.hero_title">ความรู้<em>คริสตัล</em><br>ครบ ลึก ถูกต้อง<br>ที่สุดในไทย</h1>
+    <p class="hero-sub" data-cms-text="index.hero_sub">หิน 300+ ชนิด ทั้งวิทยาศาสตร์ พลังงาน และสายมู<br>จาก 3 ผู้เชี่ยวชาญในบรรยากาศเดียวกัน</p>
     <div class="hero-actions">
       <a href="/stones/encyclopedia.html" class="btn-primary">💎 เปิดสารานุกรมหิน</a>
       <a href="/digital/" class="btn-ghost">📥 คู่มือฟรี</a>
@@ -741,7 +741,7 @@ function updateFinderLink() {
     <div style="font-size:2.5rem;margin-bottom:.875rem">💬</div>
     <h2>ไม่รู้จะเริ่มจากไหน?</h2>
     <p>แอดไลน์ฟรี บอกวัตถุประสงค์ — เราแนะนำหินที่ใช่ให้คุณทันที</p>
-    <a href="https://line.me/R/ti/p/@amethez" target="_blank" rel="noopener" class="btn-line">
+    <a data-cms-href="global.line_url" href="https://line.me/R/ti/p/@amethez" target="_blank" rel="noopener" class="btn-line">
       ➕ Add Line @amethez — ฟรี ไม่มีค่าใช้จ่าย
     </a>
     <div style="margin-top:.875rem;font-size:.78rem;color:#166534;opacity:.7">ตอบไวภายใน 1 ชม. · รับโปรโมชั่นก่อนใคร</div>

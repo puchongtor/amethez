@@ -1,0 +1,231 @@
+﻿<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ตอนที่ 3 — เทพเจ้าและไวน์ | อเมทิสต์ซีรีส์ | Amethez</title>
+  <meta name="description" content="ตอนที่ 3: จินส่งรายงานจาก British Museum — ตำนานกรีก อียิปต์ ยุคกลาง ทิเบต มนุษย์ทุกยุคหาอะไรจากหินสีม่วงนี้">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --gold:#c9a84c; --purple:#7c3aed; --dark:#0f0a1e; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:Sarabun,sans-serif; background:var(--dark); color:#d4cce8; }
+    .topbar { background:linear-gradient(90deg,#1a0936,#2d1b5e,#1a0936); padding:.55rem 1.5rem; display:flex; align-items:center; justify-content:center; }
+    .topbar span { color:rgba(255,255,255,.65); font-size:.78rem; } .topbar strong { color:var(--gold); }
+    .nav { position:sticky; top:0; z-index:100; background:rgba(15,10,30,.95); backdrop-filter:blur(12px); border-bottom:1px solid rgba(124,58,237,.2); }
+    .nav-inner { max-width:1160px; margin:0 auto; padding:.875rem 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+    .logo { display:flex; align-items:center; gap:.6rem; text-decoration:none; flex-shrink:0; }
+    .logo svg { width:32px; height:32px; }
+    .logo-text { font-family:'Playfair Display',serif; font-size:1.2rem; color:white; font-weight:700; letter-spacing:.04em; }
+    .logo-sub { font-size:.65rem; color:rgba(255,255,255,.5); display:block; letter-spacing:.08em; }
+    .nav-links { display:flex; align-items:center; gap:.25rem; list-style:none; }
+    .nav-links a { font-size:.875rem; font-weight:600; color:rgba(255,255,255,.8); text-decoration:none; padding:.4rem .75rem; border-radius:.5rem; transition:all .15s; white-space:nowrap; }
+    .nav-links a:hover { background:rgba(124,58,237,.2); color:white; }
+    .nav-links .nav-shop { background:linear-gradient(135deg,#c9a84c,#b8922e); color:#0f0a1e !important; border-radius:2rem; padding:.4rem 1rem !important; }
+    .nav-links .nav-digital { color:#a78bfa !important; } .nav-links .nav-stories { color:var(--gold) !important; }
+    .hamburger { display:none; background:none; border:none; font-size:1.5rem; cursor:pointer; color:white; }
+    @media(max-width:860px){ .nav-links{display:none}.nav-links.open{display:flex;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:rgba(15,10,30,.98);padding:1rem 1.5rem;gap:.25rem}.hamburger{display:block} }
+
+    .ep-header { max-width:720px; margin:0 auto; padding:4rem 1.5rem 2rem; }
+    .breadcrumb { font-size:.78rem; color:rgba(255,255,255,.35); margin-bottom:1.5rem; }
+    .breadcrumb a { color:rgba(255,255,255,.4); text-decoration:none; } .breadcrumb a:hover { color:var(--gold); }
+    .ep-type-badge { display:inline-flex; align-items:center; gap:.4rem; background:rgba(155,89,182,.12); border:1px solid rgba(155,89,182,.25); color:#d8b4fe; padding:.3rem .85rem; border-radius:2rem; font-size:.72rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; margin-bottom:1.25rem; }
+    .ep-series-badge { display:inline-flex; align-items:center; gap:.4rem; background:rgba(201,168,76,.08); border:1px solid rgba(201,168,76,.2); color:var(--gold); padding:.3rem .85rem; border-radius:2rem; font-size:.72rem; font-weight:700; margin-bottom:1.25rem; margin-left:.4rem; }
+    .ep-num { font-size:.85rem; color:rgba(255,255,255,.35); margin-bottom:.5rem; }
+    h1.ep-title { font-family:'Playfair Display',serif; font-size:clamp(2rem,5vw,3rem); color:white; line-height:1.25; margin-bottom:1rem; }
+    .ep-tagline { font-size:1rem; color:rgba(255,255,255,.5); font-style:italic; line-height:1.7; margin-bottom:2rem; }
+    .ep-meta { display:flex; gap:1.5rem; flex-wrap:wrap; font-size:.78rem; color:rgba(255,255,255,.35); padding-bottom:2rem; border-bottom:1px solid rgba(255,255,255,.07); }
+
+    .ep-content { max-width:720px; margin:0 auto; padding:2.5rem 1.5rem 4rem; }
+    .ep-content p { font-size:1.05rem; line-height:2; color:rgba(255,255,255,.78); margin-bottom:1.75rem; }
+    .ep-content p.scene-break { text-align:center; color:rgba(255,255,255,.2); font-size:1.2rem; letter-spacing:.3em; margin:2.5rem 0; }
+    .ep-content h2 { font-family:'Playfair Display',serif; font-size:1.4rem; color:white; margin:3rem 0 1.25rem; }
+
+    /* SYSTEM BOX */
+    .system-box { background:linear-gradient(135deg,rgba(155,89,182,.08),rgba(124,58,237,.05)); border:1px solid rgba(155,89,182,.2); border-radius:.875rem; padding:1.75rem 2rem; margin:2.5rem 0; }
+    .system-label { font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#c4b5fd; margin-bottom:.75rem; }
+    .system-title { font-family:'Playfair Display',serif; font-size:1.15rem; color:#d8b4fe; margin-bottom:.75rem; }
+    .system-box p { font-size:.9rem; color:rgba(200,185,240,.6); line-height:1.9; margin-bottom:.6rem; }
+    .system-box p:last-child { margin-bottom:0; }
+    .system-crack { text-align:center; font-size:.8rem; color:rgba(155,89,182,.35); letter-spacing:.15em; margin-top:1rem; }
+
+    /* JIN REPORT */
+    .jin-report { background:rgba(50,30,90,.2); border:1px solid rgba(167,139,250,.2); border-radius:.875rem; padding:1.75rem 2rem; margin:2rem 0; }
+    .jin-from { font-size:.68rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(167,139,250,.6); margin-bottom:.25rem; }
+    .jin-name { font-size:.95rem; color:#c4b5fd; font-weight:700; margin-bottom:.4rem; }
+    .jin-location { font-size:.75rem; color:rgba(167,139,250,.5); margin-bottom:1rem; }
+    .jin-report p { font-size:.92rem; color:rgba(210,195,255,.65); line-height:2; margin-bottom:.85rem; }
+    .jin-report p:last-child { margin-bottom:0; }
+    .jin-report h3 { font-family:'Playfair Display',serif; font-size:1.05rem; color:#c4b5fd; margin:1.75rem 0 .75rem; }
+    .jin-highlight { background:rgba(167,139,250,.07); border-left:2px solid rgba(167,139,250,.4); padding:.85rem 1.1rem; border-radius:0 .4rem .4rem 0; margin:1rem 0; font-size:.9rem; color:#c4b5fd; line-height:1.85; font-style:italic; }
+    .era-card { background:rgba(255,255,255,.03); border:1px solid rgba(167,139,250,.12); border-radius:.625rem; padding:1rem 1.25rem; margin:.75rem 0; }
+    .era-title { font-size:.8rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:rgba(167,139,250,.6); margin-bottom:.4rem; }
+    .era-card p { font-size:.88rem; color:rgba(210,195,255,.6); line-height:1.8; margin-bottom:0; }
+    .jin-fact { display:inline-block; background:rgba(167,139,250,.08); border:1px solid rgba(167,139,250,.15); border-radius:2rem; padding:.2rem .75rem; font-size:.75rem; color:rgba(167,139,250,.7); margin:.25rem .25rem 0 0; }
+
+    /* NAVA */
+    .nava-speaks { background:rgba(0,0,0,.3); border-left:3px solid rgba(155,89,182,.5); border-radius:0 .75rem .75rem 0; padding:1.5rem 1.75rem; margin:2.5rem 0; }
+    .nava-name { font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(216,180,254,.6); margin-bottom:.75rem; }
+    .nava-speaks p { font-size:1rem; color:rgba(255,255,255,.78); line-height:2; margin-bottom:.5rem; }
+    .nava-speaks p:last-child { margin-bottom:0; }
+
+    .ep-nav { max-width:720px; margin:0 auto; padding:0 1.5rem 5rem; display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap; }
+    .ep-nav-btn { display:inline-flex; align-items:center; gap:.5rem; padding:.75rem 1.25rem; border-radius:.5rem; font-family:Sarabun,sans-serif; font-size:.9rem; font-weight:600; text-decoration:none; transition:all .2s; }
+    .ep-nav-prev { background:rgba(255,255,255,.05); color:rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.1); }
+    .ep-nav-prev:hover { background:rgba(255,255,255,.08); color:white; }
+    .ep-nav-next { background:linear-gradient(135deg,#7c3aed,#6d28d9); color:white; box-shadow:0 4px 16px rgba(124,58,237,.3); }
+    .ep-nav-next:hover { transform:translateY(-2px); }
+    .ep-nav-index { font-size:.8rem; color:rgba(255,255,255,.3); text-decoration:none; }
+    .ep-nav-index:hover { color:var(--gold); }
+    .amethyst-cta { max-width:720px; margin:0 auto 2rem; padding:0 1.5rem; }
+    .cta-box { background:linear-gradient(135deg,rgba(88,28,135,.15),rgba(109,40,217,.08)); border:1px solid rgba(155,89,182,.25); border-radius:1rem; padding:1.75rem 2rem; }
+    .cta-box h3 { font-family:'Playfair Display',serif; font-size:1.1rem; color:white; margin-bottom:.5rem; }
+    .cta-box p { font-size:.85rem; color:rgba(255,255,255,.5); line-height:1.7; margin-bottom:1rem; }
+    .cta-btn { display:inline-flex; align-items:center; gap:.4rem; background:linear-gradient(135deg,#6d28d9,#5b21b6); color:white; padding:.65rem 1.25rem; border-radius:.5rem; font-family:Sarabun,sans-serif; font-size:.85rem; font-weight:700; text-decoration:none; }
+    .footer { border-top:1px solid rgba(255,255,255,.06); padding:2rem 1.5rem; text-align:center; color:rgba(255,255,255,.3); font-size:.8rem; }
+    .footer a { color:rgba(255,255,255,.4); text-decoration:none; } .footer a:hover { color:var(--gold); }
+  </style>
+</head>
+<body data-cms-page="story-amethyst-03">
+<div class="topbar"><span>💜 อเมทิสต์ซีรีส์ · <strong>อ่านฟรี 5 ตอน</strong></span></div>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="logo"><svg viewBox="0 0 36 36" fill="none"><polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity=".95"/><polygon points="18,8 30,12 18,28" fill="#a78bfa"/><polygon points="18,8 6,12 18,28" fill="#7c3aed"/></svg><div><div class="logo-text">AMETHEZ</div><small class="logo-sub">Stones · Stories · Soul</small></div></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/stones/">💎 คลังหิน</a></li><li><a href="/guides/">🌿 พลังบำบัด</a></li><li><a href="/talk/">🔮 คุยกับหิน</a></li><li><a href="/videos/">🎬 วิดีโอ</a></li><li><a href="/stories/" class="nav-stories">📖 นิยาย</a></li><li><a href="/digital/" class="nav-digital">📥 Digital</a></li><li><a href="/sale.html" class="nav-shop">🛒 ร้านค้า</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+  </div>
+</nav>
+
+<div class="ep-header">
+  <div class="breadcrumb"><a href="/">Amethez</a> › <a href="/stories/">นิยาย</a> › <a href="/stories/amethyst/">อเมทิสต์ซีรีส์</a> › ตอนที่ 3</div>
+  <div class="ep-type-badge">🌀 ตอนคี่ · ตำนานและประวัติศาสตร์</div>
+  <div class="ep-series-badge">💜 อเมทิสต์ซีรีส์</div>
+  <div class="ep-num">ตอนที่ 3 จาก 5</div>
+  <h1 class="ep-title">เทพเจ้า<br>และไวน์</h1>
+  <p class="ep-tagline">"ทุกยุคที่มนุษย์หาของที่ช่วยให้จิตใจสงบ — หินสีม่วงก้อนนี้มักอยู่ในมือพวกเขา"</p>
+  <div class="ep-meta">
+    <span>⏱ อ่านประมาณ 22 นาที</span>
+    <span>🏛️ รายงานจาก British Museum, London</span>
+    <span>🆓 อ่านฟรี</span>
+  </div>
+</div>
+
+<div class="ep-content">
+
+  <div class="system-box">
+    <div class="system-label">🌀 ภาพในหัวนาวา — สัปดาห์ที่สอง</div>
+    <div class="system-title">ยังไม่เชื่อ แต่เริ่มอยากรู้</div>
+    <p>นาวาไม่ได้เป็นคนสายมู ไม่เคยซื้อหินมาก่อน ไม่รู้ว่าจักระคืออะไร เธอเรียนจบสายออกแบบ คิดเชิงตรรกะ ไม่เชื่อสิ่งที่พิสูจน์ไม่ได้</p>
+    <p>แต่ก้อนหินยังอยู่บนโต๊ะงาน เธอยังไม่ย้ายมัน และตอนกลางดึกที่ไม่มีแรงพิมพ์ต่อ เธอก็ยังหยิบมันมาถืออยู่เป็นครั้งคราว</p>
+    <p>คืนหนึ่งเธอคิดว่า — <em>"ถ้าคนใช้หินนี้มาสองพันปีแล้ว มันต้องมีอะไรบางอย่างที่ทำให้คนหันมาหามัน"</em></p>
+    <div class="system-crack">— — — คำถามนั้นทำให้เธอโทรหาจิน — — —</div>
+  </div>
+
+  <h2>อีเมลถึงจิน — 23:14 น.</h2>
+
+  <p>นาวาไม่รู้จักจินเป็นการส่วนตัว รดาแนะนำให้รู้จักผ่านอีเมลเมื่อสามวันก่อน บอกว่า "จินรู้เรื่องประวัติหินดีที่สุดในทีม เขาอยู่ที่ลอนดอนตอนนี้"</p>
+
+  <p>นาวาพิมพ์: <em>"สวัสดีจิน ฉันชื่อนาวา ได้รับอเมทิสต์มาเป็นของขวัญวันเกิด อยากรู้ว่ามนุษย์ใช้หินนี้ทำอะไรมาตลอดประวัติศาสตร์ มีข้อมูลไหม?"</em></p>
+
+  <p>จินตอบกลับมาในเช้าวันถัดไป — แนบรายงาน 12 หน้า</p>
+
+  <p class="scene-break">· · ·</p>
+
+  <!-- JIN REPORT -->
+  <div class="jin-report">
+    <div class="jin-from">🏛️ รายงานประวัติศาสตร์และตำนาน — ฉบับที่ 1</div>
+    <div class="jin-name">📚 จิน เหม่ยหลิง — นักวิจัยประวัติศาสตร์และตำนาน</div>
+    <div class="jin-location">📍 British Museum, London · Petrie Museum of Egyptian Archaeology · Bodleian Library, Oxford</div>
+
+    <p>สวัสดีนาวา และทีม Amethez,</p>
+    <p>ใช้เวลาสองสัปดาห์ค้นเอกสารที่ British Museum และ Bodleian Library ขอสรุปสิ่งที่น่าสนใจที่สุดตามลำดับยุค</p>
+
+    <h3>1. กรีกโบราณ — ต้นกำเนิดชื่อ "Amethyst"</h3>
+    <p>ชื่อ Amethyst มาจากภาษากรีก <em>amethystos</em> (ἀμέθυστος) แปลว่า "ไม่เมา" มาจาก <em>a-</em> (ไม่) + <em>methyskein</em> (ทำให้เมา) ซึ่งมาจากตำนานที่เล่าขานกันอย่างกว้างขวางในกรีซ</p>
+
+    <div class="jin-highlight">
+      ตำนาน: เทพ Dionysus (เทพแห่งไวน์) โกรธมนุษย์และส่งเสือออกล่า สาวงามชื่อ Amethystos วิ่งหนีเข้าวิหารเทพี Artemis ก่อนเสือจะทัน เทพีจึงแปลงร่างเธอเป็นหินใสขาวบริสุทธิ์เพื่อปกป้อง Dionysus สำนึกผิด ริน น้ำองุ่นลงบนหิน หินจึงเปลี่ยนเป็นสีม่วง
+    </div>
+
+    <p>ตำนานนี้ไม่ได้มีในบันทึกกรีกโบราณที่เก่าที่สุด แต่ปรากฏครั้งแรกในบทกวีของ Nonus นักกวีชาวอียิปต์-กรีก ราวคริสต์ศตวรรษที่ 5 อย่างไรก็ตาม ชาวกรีกและโรมันเชื่อกันจริงๆ ว่าอเมทิสต์ป้องกันการเมา นิยมแกะสลักถ้วยไวน์จากอเมทิสต์ หรือวางหินลงในถ้วยไวน์ก่อนดื่ม</p>
+
+    <div class="era-card">
+      <div class="era-title">🏺 หลักฐาน — British Museum Collection</div>
+      <p>พิพิธภัณฑ์มีถ้วยดื่มไวน์จากอเมทิสต์แท้สมัยกรีกโบราณ (ประมาณ 300 BC) ที่ยังสภาพสมบูรณ์ ถ้วยเหล่านี้มีค่าสูงมากในยุคนั้น เทียบได้กับทองคำ</p>
+    </div>
+
+    <h3>2. อียิปต์โบราณ — หินแห่งการปกป้อง</h3>
+    <p>อเมทิสต์พบในสุสานฟาโรห์หลายแห่ง รวมถึงสุสานของ Tutankhamun พบสร้อยและจี้รูปสัตว์ศักดิ์สิทธิ์แกะสลักจากอเมทิสต์ ชาวอียิปต์เชื่อว่าหินสีม่วงนี้ให้พลังในการเดินทางผ่านปรโลก</p>
+    <p>ที่น่าสนใจคือชาวอียิปต์ใช้อเมทิสต์ทำ scarab (แมลงปีกแข็งศักดิ์สิทธิ์) ซึ่งเป็นสัญลักษณ์แห่งการฟื้นคืนชีพ พบตัวอย่างที่ Petrie Museum ที่ผมไปดูมา เนื้อหินยังคงสีม่วงสดอยู่แม้ผ่านมา 3,000 ปีแล้ว</p>
+
+    <div class="era-card">
+      <div class="era-title">⚖️ ราคาในอียิปต์โบราณ</div>
+      <p>บันทึกพ่อค้าสมัย New Kingdom (1550–1070 BC) ระบุว่าอเมทิสต์คุณภาพสูงมีมูลค่าเท่ากับทองคำต่อหน่วยน้ำหนัก ปัจจุบันราคาต่างกันหลายร้อยเท่า เพราะค้นพบแหล่งขุดขนาดใหญ่ในบราซิล</p>
+    </div>
+
+    <h3>3. ยุคกลางยุโรป — แหวนพระสันตปาปา</h3>
+    <p>ในยุคกลาง อเมทิสต์กลายเป็น "หินของคริสตจักร" นักบวชระดับสูงและบิชอปสวมแหวนอเมทิสต์ เรียกว่า "Bishop's Ring" สีม่วงเป็นสีแห่งความบริสุทธิ์ ความยับยั้งชั่งใจ และสติปัญญา ซึ่งตรงกับคุณธรรมที่คริสตจักรต้องการส่งเสริม</p>
+    <p>นอกจากนี้ยังมีความเชื่อว่าอเมทิสต์ช่วยรักษาโรค ตำราการแพทย์ยุคกลางหลายเล่มระบุว่า "วางอเมทิสต์ไว้บนหน้าผากเพื่อรักษาอาการปวดหัว" และ "แช่ในน้ำแล้วดื่มเพื่อรักษาโรคกระเพาะ"</p>
+
+    <div class="jin-highlight">
+      หมายเหตุจากผม: ไม่มีหลักฐานทางการแพทย์สมัยใหม่ว่าการแช่หินในน้ำรักษาโรคได้ แต่ที่น่าสนใจคือมนุษย์หลายวัฒนธรรมที่ไม่เคยติดต่อกันมาถึงข้อสรุปเดียวกันว่าหินนี้ "ช่วยเรื่องจิตใจ" — นั่นเป็นข้อมูลที่น่าคิด
+    </div>
+
+    <h3>4. Leonardo da Vinci — บันทึกส่วนตัว</h3>
+    <p>ใน Codex Atlanticus ของ da Vinci (ปัจจุบันเก็บรักษาที่ Biblioteca Ambrosiana เมืองมิลาน) มีบันทึกที่แปลความได้ว่า อเมทิสต์ช่วยให้ความคิดปลอดโปร่งและไล่ความคิดชั่วร้ายออก da Vinci เป็นที่รู้กันว่ามีก้อนอเมทิสต์วางอยู่ในที่ทำงานของเขา</p>
+
+    <h3>5. ทิเบต — หินของพระพุทธเจ้า</h3>
+    <p>ในประเพณีพุทธแบบทิเบต อเมทิสต์ถูกเรียกว่าเป็น "หินของพระพุทธเจ้า" ลูกประคำทิเบตดั้งเดิมหลายสายทำจากอเมทิสต์ โดยเฉพาะในนิกายที่เน้นการทำสมาธิ เชื่อว่าสีม่วงเชื่อมโยงกับพลังงานแห่งสติและปัญญา</p>
+    <p>ผมพบบันทึกเก่าจากวัดในลาซาที่ระบุว่าพระอาจารย์บางรูปถืออเมทิสต์ขณะสอนธรรม เพื่อ "ช่วยให้ผู้ฟังรับรู้ธรรมได้ชัดเจนขึ้น" — ซึ่งไม่ว่าจะเป็นความเชื่อหรือความเป็นจริง มันสะท้อนว่ามนุษย์เชื่อมโยงหินนี้เข้ากับสติและความชัดเจนมานานหลายพันปี</p>
+
+    <h3>สรุปจากจิน</h3>
+    <p>สิ่งที่น่าสนใจที่สุดจากการวิจัยครั้งนี้ไม่ใช่ตำนานใดตำนานหนึ่ง แต่คือ <em>pattern</em> ที่เกิดซ้ำข้ามวัฒนธรรม — กรีก อียิปต์ โรมัน ยุโรปยุคกลาง จีน ทิเบต ชนพื้นเมืองอเมริกา — ทุกที่ที่มีอเมทิสต์ มนุษย์มักเชื่อมโยงมันกับ 3 สิ่ง: การควบคุมตัวเอง ความชัดเจนของจิตใจ และการปกป้อง</p>
+    <p>ไม่มีวิทยาศาสตร์ยืนยันว่าหินสีม่วงทำสิ่งเหล่านั้นได้ แต่มีหลักฐานยืนยันว่ามนุษย์นับล้านคน ในทุกทวีป ในทุกยุค เชื่อเรื่องนี้อย่างจริงจัง — และนั่นเป็นข้อมูลที่น่าสนใจในตัวเอง</p>
+    <div style="margin-top:1rem">
+      <span class="jin-fact">🏺 2,000+ ปี</span>
+      <span class="jin-fact">🌍 6 ทวีป</span>
+      <span class="jin-fact">🔮 3 ธีมร่วม: สติ ควบคุม ปกป้อง</span>
+      <span class="jin-fact">📚 British Museum Collection</span>
+    </div>
+  </div>
+
+  <p class="scene-break">· · ·</p>
+
+  <h2>นาวาอ่านรายงานจนจบ — ตีสอง</h2>
+
+  <div class="nava-speaks">
+    <div class="nava-name">💜 นาวา — ความคิดหลังอ่านรายงานของจิน</div>
+    <p>เธออ่านจนจบ วางโทรศัพท์ลง มองก้อนอเมทิสต์บนโต๊ะ</p>
+    <p>da Vinci มีก้อนหินนี้ไว้บนโต๊ะทำงาน</p>
+    <p>นาวาไม่ได้คิดว่าตัวเองเหมือน da Vinci แต่เธอสังเกตว่า — เธอก็วางมันไว้บนโต๊ะทำงานเหมือนกัน โดยไม่ได้วางแผน</p>
+    <p>เธอหยิบก้อนหินขึ้นมาถือ เย็นเหมือนเดิม หนักเหมือนเดิม</p>
+    <p>แต่รู้สึกต่างออกไปนิดหนึ่ง เมื่อรู้ว่ามันผ่านมือมนุษย์มากี่พันปีแล้ว</p>
+  </div>
+
+</div>
+
+<div class="amethyst-cta">
+  <div class="cta-box">
+    <h3>💜 ตำนานและประวัติศาสตร์อเมทิสต์ฉบับสมบูรณ์</h3>
+    <p>รายงานของจินเป็นเพียงส่วนหนึ่ง — อ่านประวัติศาสตร์อเมทิสต์ฉบับเต็มในสารานุกรมหินของ Amethez</p>
+    <a href="/stones/amethyst.html" class="cta-btn">💜 อ่านสารานุกรมอเมทิสต์</a>
+  </div>
+</div>
+
+<div class="ep-nav">
+  <a href="/stories/amethyst/episode-02.html" class="ep-nav-btn ep-nav-prev">← ตอนที่ 2</a>
+  <a href="/stories/amethyst/" class="ep-nav-index">ดูทุกตอน</a>
+  <a href="/stories/amethyst/episode-04.html" class="ep-nav-btn ep-nav-next">ตอนที่ 4 →</a>
+</div>
+
+<div class="footer">
+  <p><a href="/">Amethez</a> · <a href="/stories/">นิยาย</a> · <a href="/stories/amethyst/">อเมทิสต์ซีรีส์</a></p>
+  <p style="margin-top:.5rem">© 2025 Amethez · Stones · Stories · Soul</p>
+</div>
+<script>document.querySelector('.hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('open'))</script>
+<script src="/js/cms.js"></script>
+</body>
+</html>

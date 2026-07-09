@@ -1,5 +1,9 @@
-/* cms.js — CMS image loader for Amethez
- * Reads /data/content.json and fills [data-cms-img] slots on every page.
+/* cms.js — CMS loader for Amethez
+ * Reads /data/content.json and fills:
+ *   [data-cms-img="key"]   → background-image or <img> src
+ *   [data-cms-text="key"]  → innerHTML
+ *   [data-cms-logo]        → replaces SVG with logo image
+ *   [data-cms-href="key"]  → href attribute
  * Falls back gracefully if JSON missing or slot empty.
  */
 (async () => {
@@ -7,49 +11,74 @@
     const r = await fetch('/data/content.json?v=' + Date.now());
     if (!r.ok) return;
     const d = await r.json();
-    const imgs = d.images || {};
+    const imgs  = d.images || {};
+    const texts = d.text   || {};
 
+    // Detect current page key from body[data-cms-page] or URL
+    const pageKey = document.body.dataset.cmsPage || detectPage();
+
+    // ── IMAGES ──
     document.querySelectorAll('[data-cms-img]').forEach(el => {
       const key = el.dataset.cmsImg;
       const url = imgs[key];
       if (!url) return;
-
       if (el.tagName === 'IMG') {
         el.src = url;
         el.style.display = '';
       } else {
-        // For div containers: overlay image on top of existing gradient/emoji
-        el.style.backgroundImage = `url('${CSS.escape ? url : url}')`;
+        el.style.backgroundImage = `url('${url}')`;
         el.style.backgroundSize = 'cover';
         el.style.backgroundPosition = 'center';
-        // Hide the emoji placeholder if present
-        const emoji = el.querySelector('.cms-placeholder');
-        if (emoji) emoji.style.display = 'none';
+        const ph = el.querySelector('.cms-placeholder');
+        if (ph) ph.style.display = 'none';
       }
     });
 
-    // Logo image
-    const logoImg = imgs['logo'];
-    if (logoImg) {
+    // ── TEXT ──
+    document.querySelectorAll('[data-cms-text]').forEach(el => {
+      const key = el.dataset.cmsText;
+      // Support both "global.key" and shorthand "key" (prefixed with page)
+      const val = texts[key] || texts[`${pageKey}.${key}`] || texts[`global.${key}`];
+      if (val !== undefined && val !== '') el.innerHTML = val;
+    });
+
+    // ── HREF ──
+    document.querySelectorAll('[data-cms-href]').forEach(el => {
+      const key = el.dataset.cmsHref;
+      const val = texts[key] || texts[`global.${key}`];
+      if (val) el.href = val;
+    });
+
+    // ── LOGO ──
+    const logoUrl = imgs['logo'];
+    if (logoUrl) {
       document.querySelectorAll('[data-cms-logo]').forEach(el => {
-        if (el.tagName === 'IMG') { el.src = logoImg; el.style.display = ''; }
-        else {
-          const img = document.createElement('img');
-          img.src = logoImg;
-          img.style.cssText = 'height:32px;width:auto;object-fit:contain';
-          el.innerHTML = '';
-          el.appendChild(img);
-        }
+        const img = document.createElement('img');
+        img.src = logoUrl;
+        img.alt = 'AMETHEZ';
+        img.style.cssText = 'height:32px;width:auto;object-fit:contain';
+        el.replaceWith(img);
       });
     }
 
-    // Favicon
+    // ── FAVICON ──
     const fav = imgs['favicon'];
     if (fav) {
       let link = document.querySelector("link[rel~='icon']");
-      if (!link) { link = document.createElement('link'); link.rel = 'icon'; document.head.appendChild(link); }
+      if (!link) {
+        link = document.createElement('link');
+        link.rel = 'icon';
+        document.head.appendChild(link);
+      }
       link.href = fav;
     }
 
-  } catch (e) { /* silent fail — site works without CMS data */ }
+  } catch (e) { /* silent fail */ }
+
+  function detectPage() {
+    const p = location.pathname.replace(/\/$/, '') || '/index';
+    const parts = p.split('/');
+    const last = parts[parts.length - 1].replace('.html', '') || 'index';
+    return last;
+  }
 })();

@@ -187,7 +187,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
     </div>
     <div style="padding:.75rem 0;">
       <div class="nav-item active" onclick="showTab('dashboard',this)"><span class="ic">📊</span> ภาพรวม</div>
-      <div class="nav-item" onclick="showTab('images',this)"><span class="ic">🖼️</span> รูปภาพ</div>
+      <div class="nav-item" onclick="showTab('pages',this)"><span class="ic">🎨</span> แก้ไขหน้า</div>
       <div class="nav-item" onclick="showTab('prompts',this)"><span class="ic">✨</span> AI Prompts</div>
       <div class="nav-item" onclick="showTab('products',this)"><span class="ic">💎</span> สินค้า</div>
       <div class="nav-item" onclick="showTab('articles',this)"><span class="ic">📝</span> บทความ</div>
@@ -245,17 +245,37 @@ textarea.form-input{resize:vertical;min-height:80px;}
           </div>
         </div>
 
-        <!-- IMAGES -->
-        <div id="tab-images">
-          <div class="section-title">🖼️ จัดการรูปภาพ</div>
-          <div class="section-sub">วาง URL จาก Google Drive, cPanel File Manager หรือ Cloudinary</div>
-          <div class="img-filter-bar" id="imgFilterBar"></div>
-          <div style="display:flex;gap:.75rem;margin-bottom:1.25rem;flex-wrap:wrap;">
-            <button class="btn btn-outline btn-sm" onclick="exportImages()">📤 Export URLs</button>
-            <button class="btn btn-outline btn-sm" onclick="document.getElementById('importModal').classList.add('open')">📥 Import URLs</button>
-            <button class="btn btn-danger btn-sm" onclick="if(confirm('ล้างรูปทั้งหมด?')){setImgs({});renderImgSlots();renderDashboard();toast('ล้างแล้ว')}">🗑 ล้างทั้งหมด</button>
+        <!-- PAGE EDITOR -->
+        <div id="tab-pages">
+          <div id="pageListView">
+            <div class="section-title">🎨 แก้ไขเนื้อหาทุกหน้า</div>
+            <div class="section-sub">เลือกหน้าเพื่อแก้ไขข้อความและรูปภาพ — กด 🚀 เผยแพร่ที่แถบบนเพื่อให้ทุกคนเห็น</div>
+            <div class="img-filter-bar" id="pageFilterBar"></div>
+            <div class="quick-grid" id="pageGrid"></div>
           </div>
-          <div class="img-slots-grid" id="imgSlotsGrid"></div>
+          <div id="pageEditorView" style="display:none">
+            <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap">
+              <button class="btn btn-outline btn-sm" onclick="closePageEditor()">← กลับ</button>
+              <div style="flex:1">
+                <div id="edPageLabel" style="font-size:1.1rem;font-weight:700"></div>
+                <div id="edPagePath" style="font-size:.8rem;color:#9ca3af"></div>
+              </div>
+              <a id="edPageLink" href="#" target="_blank" class="btn btn-outline btn-sm">👁 ดูหน้า</a>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+              <div class="card" style="margin-bottom:0">
+                <div class="card-title">📝 ข้อความ</div>
+                <div id="edTextFields"></div>
+                <div style="margin-top:.875rem;padding:.65rem .85rem;background:#f5f0ff;border-radius:.5rem;font-size:.78rem;color:#5b21b6;line-height:1.6">
+                  💡 รองรับ HTML: &lt;strong&gt; &lt;em&gt; &lt;br&gt;<br>บันทึกอัตโนมัติทันที — กด 🚀 เผยแพร่เมื่อพร้อม
+                </div>
+              </div>
+              <div class="card" style="margin-bottom:0">
+                <div class="card-title">🖼️ รูปภาพ</div>
+                <div id="edImgSlots"></div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- PROMPTS -->
@@ -611,14 +631,14 @@ if(sessionStorage.getItem(AUTH_KEY)){
 }
 
 // ── TABS ──────────────────────────────────────
-const TAB_TITLES={dashboard:'📊 ภาพรวม',images:'🖼️ รูปภาพ',prompts:'✨ AI Prompts',products:'💎 สินค้า',articles:'📝 บทความ',settings:'⚙️ ตั้งค่า'};
+const TAB_TITLES={dashboard:'📊 ภาพรวม',pages:'🎨 แก้ไขหน้า',prompts:'✨ AI Prompts',products:'💎 สินค้า',articles:'📝 บทความ',settings:'⚙️ ตั้งค่า'};
 function showTab(name,el){
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   if(el) el.classList.add('active');
   document.querySelectorAll('.tab-panels>div').forEach(p=>p.classList.remove('active'));
   document.getElementById('tab-'+name).classList.add('active');
   document.getElementById('topbarTitle').textContent=TAB_TITLES[name]||name;
-  if(name==='images') renderSlots();
+  if(name==='pages') renderPageGrid();
   if(name==='prompts') renderPrompts();
   if(name==='products'){ loadGeodes(); renderPTable(); }
   if(name==='articles') renderArticles();
@@ -1024,6 +1044,319 @@ function toast(msg,type=''){
   clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('show'),2800);
 }
 
+// ── PAGES DATA ────────────────────────────────
+const PAGE_GROUPS={g:'🌐 Global',m:'🏠 หน้าหลัก',s:'💎 บทความหิน',c:'🔮 หมวดหมู่',sp:'⭐ พิเศษ',guides:'🌿 คู่มือ'};
+const PAGES=[
+  {key:'global',label:'🌐 ทั่วไป (ทุกหน้า)',group:'g',path:null,
+   text:[
+     {id:'logo_text',label:'ชื่อแบรนด์',type:'i',ph:'AMETHEZ'},
+     {id:'tagline',label:'Tagline',type:'i',ph:'Stones · Stories · Soul'},
+     {id:'line_url',label:'Line OA URL',type:'i',ph:'https://line.me/R/ti/p/@amethez'},
+     {id:'ann_1',label:'แถบประกาศ 1',type:'i',ph:'💎 300+ บทความหิน'},
+     {id:'ann_2',label:'แถบประกาศ 2',type:'i',ph:'📥 คู่มือฟรี ดาวน์โหลดได้เลย'},
+     {id:'ann_3',label:'แถบประกาศ 3',type:'i',ph:'🎬 วิดีโอ พร้อมสรุปโดย AI'},
+     {id:'ann_4',label:'แถบประกาศ 4',type:'i',ph:'🔍 วิทยาศาสตร์ + สายมู'},
+   ],imgs:['logo','favicon']},
+
+  {key:'index',label:'🏠 หน้าหลัก',group:'m',path:'/',
+   text:[
+     {id:'hero_badge',label:'Hero Badge',type:'i',ph:"✨ Thailand's Crystal Knowledge Hub"},
+     {id:'hero_title',label:'หัวข้อ Hero (HTML)',type:'t',ph:'ความรู้<em>คริสตัล</em><br>ครบ ลึก ถูกต้อง<br>ที่สุดในไทย'},
+     {id:'hero_sub',label:'คำบรรยาย Hero (HTML)',type:'t',ph:'หิน 300+ ชนิด...'},
+   ],
+   imgs:['home_hero','home_feat_main','home_feat_side1','home_feat_side2',
+         'home_art1','home_art2','home_art3','home_art4','home_art5','home_art6',
+         'home_dp_wall','home_dp_ebook','home_dp_cards','home_dp_bible','home_dp_course',
+         'home_cat_chakra','home_cat_zodiac','home_cat_color','home_cat_purpose']},
+
+  {key:'amethyst',label:'💜 อเมทิสต์',group:'s',path:'/stones/amethyst.html',
+   text:[
+     {id:'title',label:'ชื่อบทความ',type:'i',ph:'อเมทิสต์ — หินแห่งปัญญาและจิตวิญญาณ'},
+     {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:'ประวัติ 2,000 ปี...'},
+     {id:'intro',label:'บทนำ (HTML)',type:'t',ph:''},
+   ],imgs:['stone_amethyst_hero','stone_amethyst_healing']},
+
+  {key:'moldavite',label:'🌿 โมลดาไวท์',group:'s',path:'/stones/moldavite.html',
+   text:[
+     {id:'title',label:'ชื่อบทความ',type:'i',ph:'โมลดาไวท์ — หินจากนอกโลก'},
+     {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'intro',label:'บทนำ (HTML)',type:'t',ph:''},
+   ],imgs:['stone_moldavite_hero']},
+
+  {key:'tektite',label:'🌑 สะเก็ดดาวไทย',group:'s',path:'/stones/tektite.html',
+   text:[
+     {id:'title',label:'ชื่อบทความ',type:'i',ph:'สะเก็ดดาวไทย — อุกกาบาตหายาก'},
+     {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'intro',label:'บทนำ (HTML)',type:'t',ph:''},
+   ],imgs:['stone_tektite_hero']},
+
+  {key:'citrine',label:'🌟 ซิทริน',group:'s',path:'/stones/citrine.html',
+   text:[
+     {id:'title',label:'ชื่อบทความ',type:'i',ph:'ซิทริน — หินแห่งโชคลาภ'},
+     {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'intro',label:'บทนำ (HTML)',type:'t',ph:''},
+   ],imgs:['stone_citrine_hero']},
+
+  {key:'clear-quartz',label:'🔮 คริสตัลใส',group:'s',path:'/stones/clear-quartz.html',
+   text:[
+     {id:'title',label:'ชื่อบทความ',type:'i',ph:'คริสตัลใส — หินแม่'},
+     {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'intro',label:'บทนำ (HTML)',type:'t',ph:''},
+   ],imgs:['stone_clear_quartz_hero']},
+
+  {key:'rose-quartz',label:'🩷 โรสควอตซ์',group:'s',path:'/stones/rose-quartz.html',
+   text:[
+     {id:'title',label:'ชื่อบทความ',type:'i',ph:'โรสควอตซ์ — หินแห่งความรัก'},
+     {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'intro',label:'บทนำ (HTML)',type:'t',ph:''},
+   ],imgs:['stone_rose_quartz_hero']},
+
+  {key:'black-tourmaline',label:'🖤 ทัวร์มาลีนดำ',group:'s',path:'/stones/black-tourmaline.html',
+   text:[
+     {id:'title',label:'ชื่อบทความ',type:'i',ph:'ทัวร์มาลีนดำ — โล่ป้องกัน'},
+     {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'intro',label:'บทนำ (HTML)',type:'t',ph:''},
+   ],imgs:['stone_black_tourmaline_hero']},
+
+  {key:'labradorite',label:'🌊 แลบราดอไรต์',group:'s',path:'/stones/labradorite.html',
+   text:[
+     {id:'title',label:'ชื่อบทความ',type:'i',ph:'แลบราดอไรต์'},
+     {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+   ],imgs:['stone_labradorite_hero']},
+
+  {key:'lapis-lazuli',label:'💙 ลาพิสลาซูลี',group:'s',path:'/stones/lapis-lazuli.html',
+   text:[
+     {id:'title',label:'ชื่อบทความ',type:'i',ph:'ลาพิสลาซูลี'},
+     {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+   ],imgs:['stone_lapis_hero']},
+
+  {key:'carnelian',label:'🔴 คาร์เนเลียน',group:'s',path:'/stones/carnelian.html',
+   text:[
+     {id:'title',label:'ชื่อบทความ',type:'i',ph:'คาร์เนเลียน'},
+     {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+   ],imgs:['stone_carnelian_hero']},
+
+  {key:'selenite',label:'🤍 เซเลไนต์',group:'s',path:'/stones/selenite.html',
+   text:[
+     {id:'title',label:'ชื่อบทความ',type:'i',ph:'เซเลไนต์'},
+     {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+   ],imgs:['stone_selenite_hero']},
+
+  {key:'rudraksha',label:'📿 รุทรากษะ',group:'s',path:'/stones/rudraksha.html',
+   text:[
+     {id:'title',label:'ชื่อบทความ',type:'i',ph:'รุทรากษะ'},
+     {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+   ],imgs:['stone_rudraksha_hero']},
+
+  {key:'chakra',label:'☯️ จักระ',group:'c',path:'/categories/chakra.html',
+   text:[
+     {id:'title',label:'หัวข้อหน้า',type:'i',ph:'หินตามจักระ 7 ศูนย์พลังงาน'},
+     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
+     {id:'intro',label:'บทนำ',type:'t',ph:''},
+   ],imgs:['chakra_crown','chakra_third_eye','chakra_throat','chakra_heart','chakra_solar','chakra_sacral','chakra_root']},
+
+  {key:'zodiac',label:'♈ ราศี',group:'c',path:'/categories/zodiac.html',
+   text:[
+     {id:'title',label:'หัวข้อหน้า',type:'i',ph:'หินตามราศี 12 ราศี'},
+     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
+   ],imgs:['cat_zodiac_hero']},
+
+  {key:'color',label:'🎨 สีหิน',group:'c',path:'/categories/color.html',
+   text:[
+     {id:'title',label:'หัวข้อหน้า',type:'i',ph:'หินตามสีพลังงาน'},
+     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
+   ],imgs:['cat_color_hero']},
+
+  {key:'purpose',label:'🎯 วัตถุประสงค์',group:'c',path:'/categories/purpose.html',
+   text:[
+     {id:'title',label:'หัวข้อหน้า',type:'i',ph:'เลือกหินตามวัตถุประสงค์'},
+     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
+   ],imgs:['cat_purpose_hero']},
+
+  {key:'birthday-stone',label:'🎂 หินวันเกิด',group:'c',path:'/categories/birthday-stone.html',
+   text:[{id:'title',label:'หัวข้อหน้า',type:'i',ph:'หินตามวันเกิด'}],
+   imgs:['cat_birthday_hero']},
+
+  {key:'birth-month',label:'🗓️ หินเดือนเกิด',group:'c',path:'/categories/birth-month.html',
+   text:[{id:'title',label:'หัวข้อหน้า',type:'i',ph:'Birthstone หินประจำเดือน'}],
+   imgs:['cat_birthmonth_hero']},
+
+  {key:'master-crystal',label:'💎 Master Crystal',group:'c',path:'/categories/master-crystal.html',
+   text:[{id:'title',label:'หัวข้อหน้า',type:'i',ph:'Master Crystal Healers'}],
+   imgs:['cat_master_hero']},
+
+  {key:'chinese-zodiac',label:'🐉 นักษัตรจีน',group:'c',path:'/categories/chinese-zodiac.html',
+   text:[{id:'title',label:'หัวข้อหน้า',type:'i',ph:'อัญมณีตามนักษัตร 12 ปีเกิด'}],
+   imgs:['cat_chinese_hero']},
+
+  {key:'geode',label:'🪨 โพรงอเมทิสต์',group:'sp',path:'/geode/',
+   text:[
+     {id:'title',label:'หัวข้อ',type:'i',ph:'โพรงอเมทิสต์ Premium'},
+     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
+     {id:'promo',label:'ข้อความโปรโมชัน',type:'t',ph:''},
+   ],imgs:['geode_hero','geode_interior']},
+
+  {key:'consign',label:'🤝 รับฝากขาย',group:'sp',path:'/consign.html',
+   text:[
+     {id:'title',label:'หัวข้อหลัก',type:'i',ph:'รับฝากขายคริสตัล'},
+     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
+     {id:'conditions',label:'เงื่อนไขการฝาก',type:'t',ph:''},
+     {id:'contact',label:'ข้อมูลติดต่อ',type:'i',ph:'Line: @masterpuch'},
+   ],imgs:['consign_hero']},
+
+  {key:'sale',label:'🛒 ร้านค้า',group:'sp',path:'/sale.html',
+   text:[
+     {id:'title',label:'หัวข้อ',type:'i',ph:'สินค้าแนะนำ'},
+     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
+   ],imgs:['sale_hero']},
+
+  {key:'about',label:'ℹ️ เกี่ยวกับเรา',group:'sp',path:'/about.html',
+   text:[
+     {id:'title',label:'หัวข้อ',type:'i',ph:'เกี่ยวกับ Amethez'},
+     {id:'body',label:'เนื้อหา (HTML)',type:'t',ph:''},
+   ],imgs:['about_hero']},
+
+  {key:'partner',label:'🤝 สมัคร Partner',group:'sp',path:'/partner.html',
+   text:[
+     {id:'title',label:'หัวข้อ',type:'i',ph:'สมัครเป็น Partner'},
+     {id:'body',label:'เนื้อหา (HTML)',type:'t',ph:''},
+   ],imgs:['partner_hero']},
+
+  {key:'wuchong',label:'🧘 Master Wuchong',group:'sp',path:'/wuchong/',
+   text:[
+     {id:'title',label:'หัวข้อ',type:'i',ph:'Master Wuchong'},
+     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
+   ],imgs:['wuchong_hero']},
+
+  {key:'metha',label:'🌙 อาจารย์เมธา',group:'sp',path:'/metha/',
+   text:[
+     {id:'title',label:'หัวข้อ',type:'i',ph:'อาจารย์เมธา — ดวงรายวัน'},
+     {id:'today_title',label:'ชื่อดวงวันนี้',type:'i',ph:''},
+     {id:'today_body',label:'เนื้อหาดวงวันนี้ (HTML)',type:'t',ph:''},
+   ],imgs:['metha_hero']},
+
+  {key:'guides',label:'🌿 คู่มือ (หน้าหลัก)',group:'guides',path:'/guides/',
+   text:[
+     {id:'title',label:'หัวข้อ',type:'i',ph:'คู่มือพลังบำบัด'},
+     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
+   ],imgs:['guides_hero']},
+
+  {key:'guide-cleanse',label:'🌊 ชาร์จล้างหิน',group:'guides',path:'/guides/cleanse.html',
+   text:[
+     {id:'title',label:'หัวข้อ',type:'i',ph:'7 วิธีชาร์จและล้างหิน'},
+     {id:'intro',label:'บทนำ (HTML)',type:'t',ph:''},
+   ],imgs:['guide_cleanse_hero']},
+
+  {key:'guide-how-to-wear',label:'📿 วิธีใส่กำไล',group:'guides',path:'/guides/how-to-wear.html',
+   text:[
+     {id:'title',label:'หัวข้อ',type:'i',ph:'วิธีใส่กำไลหิน'},
+     {id:'intro',label:'บทนำ (HTML)',type:'t',ph:''},
+   ],imgs:['guide_wear_hero']},
+
+  {key:'guide-healing-color',label:'🌈 สีพลังงาน',group:'guides',path:'/guides/healing-color.html',
+   text:[
+     {id:'title',label:'หัวข้อ',type:'i',ph:'หินตามสีพลังงาน'},
+     {id:'intro',label:'บทนำ (HTML)',type:'t',ph:''},
+   ],imgs:['guide_color_hero']},
+
+  {key:'guide-stone-shape',label:'🔷 รูปทรงหิน',group:'guides',path:'/guides/stone-shape.html',
+   text:[
+     {id:'title',label:'หัวข้อ',type:'i',ph:'รูปทรงหิน — ความหมายต่างกัน'},
+     {id:'intro',label:'บทนำ (HTML)',type:'t',ph:''},
+   ],imgs:['guide_shape_hero']},
+];
+
+// ── TEXT STORAGE ───────────────────────────────
+const TEXT_KEY='amethez_text';
+function getTexts(){ try{ return JSON.parse(localStorage.getItem(TEXT_KEY)||'{}'); }catch{ return {}; } }
+function setTexts(d){ localStorage.setItem(TEXT_KEY,JSON.stringify(d)); }
+function setTextVal(pageKey,fieldId,val){
+  const t=getTexts(); t[`${pageKey}.${fieldId}`]=val; setTexts(t);
+}
+
+// ── PAGE GRID ──────────────────────────────────
+let pgActiveGroup='all', currentPage=null;
+function renderPageGrid(){
+  const bar=document.getElementById('pageFilterBar');
+  bar.innerHTML='<span style="font-size:.82rem;color:#6b7280">กรอง:</span>';
+  [{k:'all',v:'ทั้งหมด'},...Object.entries(PAGE_GROUPS).map(([k,v])=>({k,v}))].forEach(({k,v})=>{
+    const c=document.createElement('button');
+    c.className='filter-chip'+(pgActiveGroup===k?' active':'');
+    c.textContent=v; c.onclick=()=>{ pgActiveGroup=k; renderPageGrid(); };
+    bar.appendChild(c);
+  });
+  const list=pgActiveGroup==='all'?PAGES:PAGES.filter(p=>p.group===pgActiveGroup);
+  const imgs=getImgs(); const texts=getTexts();
+  document.getElementById('pageGrid').innerHTML=list.map(p=>{
+    const ic=p.imgs?p.imgs.filter(i=>imgs[i]).length:0;
+    const tc=p.text?p.text.filter(f=>texts[`${p.key}.${f.id}`]).length:0;
+    const done=ic===0&&tc===0?'':'has-img';
+    return `<div class="quick-card ${done}" onclick="openPageEditor('${p.key}')">
+      <div class="qic">${p.label.split(' ')[0]}</div>
+      <div class="qt" style="font-size:.82rem">${p.label.replace(/^\S+ /,'')}</div>
+      <div class="qs">📝 ${tc}/${p.text?.length||0} · 🖼️ ${ic}/${p.imgs?.length||0}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── PAGE EDITOR ────────────────────────────────
+function openPageEditor(key){
+  currentPage=key;
+  const p=PAGES.find(pg=>pg.key===key); if(!p) return;
+  document.getElementById('pageListView').style.display='none';
+  document.getElementById('pageEditorView').style.display='block';
+  document.getElementById('edPageLabel').textContent=p.label;
+  document.getElementById('edPagePath').textContent=p.path||'ใช้กับทุกหน้า';
+  const lnk=document.getElementById('edPageLink');
+  if(p.path){ lnk.href=p.path; lnk.style.display=''; } else lnk.style.display='none';
+
+  // Text fields
+  const texts=getTexts();
+  document.getElementById('edTextFields').innerHTML=p.text?.length
+    ?p.text.map(f=>{
+        const val=texts[`${p.key}.${f.id}`]||'';
+        return `<div class="form-group" style="margin-bottom:.875rem">
+          <label class="fl">${x(f.label)}</label>
+          ${f.type==='t'
+            ?`<textarea class="form-input" rows="3" placeholder="${x(f.ph||'')}"
+                oninput="setTextVal('${p.key}','${f.id}',this.value)"
+                style="margin-top:.3rem;font-size:.85rem">${x(val)}</textarea>`
+            :`<input class="form-input" type="text" placeholder="${x(f.ph||'')}" value="${x(val)}"
+                oninput="setTextVal('${p.key}','${f.id}',this.value)"
+                style="margin-top:.3rem;font-size:.85rem">`
+          }
+        </div>`;
+      }).join('')
+    :'<div style="color:#9ca3af;font-size:.875rem;padding:1rem 0">ไม่มีข้อความที่แก้ได้ในหน้านี้</div>';
+
+  // Image slots
+  const imgs=getImgs();
+  document.getElementById('edImgSlots').innerHTML=p.imgs?.length
+    ?p.imgs.map(id=>{
+        const s=SLOTS.find(z=>z.id===id);
+        const url=imgs[id]||'';
+        return `<div style="display:flex;align-items:center;gap:.75rem;padding:.625rem 0;border-bottom:1px solid #f3f4f6">
+          <div style="width:64px;height:48px;flex-shrink:0;border-radius:.4rem;overflow:hidden;border:1.5px solid ${url?'#a78bfa':'var(--border)'};background:${url?'#000':'#f5f0ff'}">
+            ${url?`<img src="${x(url)}" style="width:100%;height:100%;object-fit:cover">`
+                 :`<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:1.4rem">📷</div>`}
+          </div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:.82rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${x(s?s.label:id)}</div>
+            <div style="font-size:.72rem;color:#9ca3af">${s?s.size:''}</div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="openImgModal('${id}')">✏️ ใส่รูป</button>
+        </div>`;
+      }).join('')
+    :'<div style="color:#9ca3af;font-size:.875rem;padding:1rem 0">ไม่มี slot รูปในหน้านี้</div>';
+}
+
+function closePageEditor(){
+  currentPage=null;
+  document.getElementById('pageEditorView').style.display='none';
+  document.getElementById('pageListView').style.display='';
+  renderPageGrid();
+}
+
 // ── GITHUB SETTINGS ───────────────────────────
 const GH_TOKEN_KEY='amethez_github_token';
 const GH_REPO_KEY='amethez_github_repo';
@@ -1118,7 +1451,7 @@ async function publishToGitHub(){
     }
 
     // Build content.json
-    const content={images:published};
+    const content={images:published,text:getTexts()};
     const contentStr=JSON.stringify(content,null,2);
     const contentB64=btoa(unescape(encodeURIComponent(contentStr)));
     // Get existing SHA of content.json

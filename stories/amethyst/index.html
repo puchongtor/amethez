@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>อเมทิสต์ — หินที่จิตใจเลือก | ซีรีส์นิยายคริสตัล | Amethez</title>
+  <meta name="description" content="ซีรีส์นิยาย 5 ตอน เจาะลึกอเมทิสต์จากทุกมุมโลก — ตำนาน วิทยาศาสตร์ พลังงาน การล้าง และการใช้ชีวิตจริง ผ่านเรื่องราวของนาวาและทีมนักวิจัย">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --gold:#c9a84c; --purple:#7c3aed; --amethyst:#9b59b6; --dark:#0f0a1e; --border-a:rgba(155,89,182,.25); }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:Sarabun,sans-serif; background:var(--dark); color:#e8e0f0; }
+
+    .topbar { background:linear-gradient(90deg,#1a0936,#2d1b5e,#1a0936); padding:.55rem 1.5rem; display:flex; align-items:center; justify-content:center; }
+    .topbar span { color:rgba(255,255,255,.65); font-size:.78rem; }
+    .topbar strong { color:var(--gold); }
+    .nav { position:sticky; top:0; z-index:100; background:rgba(15,10,30,.95); backdrop-filter:blur(12px); border-bottom:1px solid rgba(124,58,237,.2); }
+    .nav-inner { max-width:1160px; margin:0 auto; padding:.875rem 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+    .logo { display:flex; align-items:center; gap:.6rem; text-decoration:none; flex-shrink:0; }
+    .logo svg { width:32px; height:32px; }
+    .logo-text { font-family:'Playfair Display',serif; font-size:1.2rem; color:white; font-weight:700; letter-spacing:.04em; }
+    .logo-sub { font-size:.65rem; color:rgba(255,255,255,.5); display:block; letter-spacing:.08em; }
+    .nav-links { display:flex; align-items:center; gap:.25rem; list-style:none; }
+    .nav-links a { font-size:.875rem; font-weight:600; color:rgba(255,255,255,.8); text-decoration:none; padding:.4rem .75rem; border-radius:.5rem; transition:all .15s; white-space:nowrap; }
+    .nav-links a:hover { background:rgba(124,58,237,.2); color:white; }
+    .nav-links .nav-shop { background:linear-gradient(135deg,#c9a84c,#b8922e); color:#0f0a1e !important; border-radius:2rem; padding:.4rem 1rem !important; }
+    .nav-links .nav-digital { color:#a78bfa !important; }
+    .nav-links .nav-stories { color:var(--gold) !important; }
+    .hamburger { display:none; background:none; border:none; font-size:1.5rem; cursor:pointer; color:white; }
+    @media(max-width:860px){ .nav-links{display:none}.nav-links.open{display:flex;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:rgba(15,10,30,.98);padding:1rem 1.5rem;gap:.25rem;border-bottom:1px solid rgba(124,58,237,.2)}.hamburger{display:block} }
+
+    /* HERO */
+    .hero { position:relative; padding:5rem 1.5rem 4rem; text-align:center; background:radial-gradient(ellipse at center top, rgba(155,89,182,.18) 0%, rgba(15,10,30,0) 65%), linear-gradient(180deg,#0f0a1e,#1a0936 50%,#0f0a1e); overflow:hidden; }
+    .hero-series-badge { display:inline-flex; align-items:center; gap:.45rem; background:rgba(201,168,76,.1); border:1px solid rgba(201,168,76,.3); color:var(--gold); padding:.35rem 1rem; border-radius:2rem; font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin-bottom:.75rem; }
+    .hero-stone-badge { display:inline-flex; align-items:center; gap:.45rem; background:rgba(155,89,182,.15); border:1px solid var(--border-a); color:#d8b4fe; padding:.35rem 1rem; border-radius:2rem; font-size:.8rem; font-weight:700; letter-spacing:.06em; margin-bottom:1.5rem; margin-left:.5rem; }
+    .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.2rem,6vw,3.8rem); color:white; line-height:1.2; margin-bottom:1rem; }
+    .hero h1 em { font-style:italic; color:#d8b4fe; }
+    .hero-subtitle { font-size:1rem; color:rgba(255,255,255,.55); line-height:1.9; max-width:580px; margin:0 auto 1.5rem; }
+    .hero-meta { display:flex; gap:1.5rem; justify-content:center; flex-wrap:wrap; margin-bottom:2rem; }
+    .hero-meta-item { font-size:.82rem; color:rgba(255,255,255,.4); display:flex; align-items:center; gap:.35rem; }
+    .hero-meta-item strong { color:#d8b4fe; }
+    .crystal-deco { position:absolute; right:-60px; top:-40px; width:320px; opacity:.05; pointer-events:none; }
+    .btn-start { display:inline-flex; align-items:center; gap:.5rem; background:linear-gradient(135deg,#7c3aed,#6d28d9); color:white; padding:.9rem 2rem; border-radius:.625rem; font-family:Sarabun,sans-serif; font-size:1rem; font-weight:700; text-decoration:none; box-shadow:0 4px 20px rgba(124,58,237,.35); transition:all .2s; }
+    .btn-start:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(124,58,237,.5); }
+
+    /* TEAM */
+    .team-section { background:linear-gradient(135deg,rgba(201,168,76,.05),rgba(155,89,182,.04)); border-bottom:1px solid rgba(201,168,76,.1); padding:2.5rem 1.5rem; }
+    .team-wrap { max-width:920px; margin:0 auto; }
+    .team-label { font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(201,168,76,.6); margin-bottom:1.25rem; }
+    .team-title { font-family:'Playfair Display',serif; font-size:1.25rem; color:white; margin-bottom:1.75rem; }
+    .team-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1rem; }
+    .team-card { background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08); border-radius:.875rem; padding:1.25rem 1.5rem; display:flex; gap:1rem; align-items:flex-start; }
+    .team-avatar { flex-shrink:0; width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; }
+    .team-card.rada .team-avatar { background:linear-gradient(135deg,var(--gold),#b8922e); color:#0f0a1e; }
+    .team-card.vega .team-avatar { background:linear-gradient(135deg,#2d6a4f,#1b4332); color:#95d5b2; border:1px solid rgba(149,213,178,.3); }
+    .team-card.jin .team-avatar { background:linear-gradient(135deg,#7c3aed,#5b21b6); color:#ddd6fe; border:1px solid rgba(221,214,254,.2); }
+    .team-info { flex:1; min-width:0; }
+    .team-role { font-size:.68rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; margin-bottom:.25rem; }
+    .team-card.rada .team-role { color:rgba(201,168,76,.7); }
+    .team-card.vega .team-role { color:rgba(149,213,178,.7); }
+    .team-card.jin .team-role { color:rgba(167,139,250,.7); }
+    .team-name { font-family:'Playfair Display',serif; font-size:1rem; color:white; margin-bottom:.35rem; }
+    .team-desc { font-size:.8rem; color:rgba(255,255,255,.45); line-height:1.7; }
+    .team-tag { display:inline-block; margin-top:.5rem; font-size:.68rem; background:rgba(255,255,255,.06); border-radius:2rem; padding:.15rem .6rem; color:rgba(255,255,255,.4); }
+    .team-card.vega .team-tag { color:rgba(149,213,178,.6); background:rgba(149,213,178,.07); }
+    .team-card.jin .team-tag { color:rgba(167,139,250,.6); background:rgba(167,139,250,.07); }
+    .team-card.rada .team-tag { color:rgba(201,168,76,.6); background:rgba(201,168,76,.07); }
+
+    /* STONE INFO */
+    .stone-info { max-width:920px; margin:3rem auto; padding:0 1.5rem; }
+    .info-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:.75rem; }
+    .info-item { background:rgba(155,89,182,.06); border:1px solid var(--border-a); border-radius:.75rem; padding:1rem 1.25rem; text-align:center; }
+    .info-item .info-label { font-size:.68rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:rgba(216,180,254,.5); margin-bottom:.4rem; }
+    .info-item .info-value { font-size:.9rem; color:#d8b4fe; font-weight:600; line-height:1.4; }
+
+    /* EPISODES */
+    .episodes-section { max-width:860px; margin:0 auto; padding:3rem 1.5rem 5rem; }
+    .sec-label { font-size:.75rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin-bottom:.75rem; }
+    .sec-title { font-family:'Playfair Display',serif; font-size:clamp(1.5rem,3vw,2rem); color:white; margin-bottom:2.5rem; }
+    .episode-grid { display:flex; flex-direction:column; gap:1rem; }
+    .ep-card { display:flex; align-items:flex-start; gap:1.25rem; padding:1.25rem 1.5rem; background:rgba(255,255,255,.04); border:1px solid rgba(155,89,182,.15); border-radius:.875rem; text-decoration:none; color:inherit; transition:all .2s; }
+    .ep-card:hover { background:rgba(155,89,182,.1); border-color:rgba(155,89,182,.4); transform:translateX(4px); }
+    .ep-card.coming { opacity:.4; cursor:default; pointer-events:none; }
+    .ep-number { flex-shrink:0; width:48px; height:48px; background:linear-gradient(135deg,rgba(155,89,182,.3),rgba(126,58,174,.3)); border:1px solid var(--border-a); border-radius:.625rem; display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; color:#d8b4fe; }
+    .ep-card.even .ep-number { background:linear-gradient(135deg,rgba(201,168,76,.15),rgba(184,146,46,.15)); border-color:rgba(201,168,76,.3); color:var(--gold); }
+    .ep-info { flex:1; min-width:0; }
+    .ep-tag { font-size:.7rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.35rem; }
+    .ep-tag.odd { color:#c4b5fd; }
+    .ep-tag.even { color:var(--gold); }
+    .ep-tag.coming-soon { color:rgba(255,255,255,.25); }
+    .ep-title { font-family:'Playfair Display',serif; font-size:1.05rem; color:white; margin-bottom:.35rem; line-height:1.4; }
+    .ep-desc { font-size:.84rem; color:rgba(255,255,255,.5); line-height:1.7; }
+    .ep-arrow { flex-shrink:0; color:rgba(155,89,182,.5); font-size:1.1rem; align-self:center; }
+    .ep-card:hover .ep-arrow { color:#d8b4fe; }
+
+    /* STONE CTA */
+    .stone-cta { max-width:860px; margin:0 auto 4rem; padding:0 1.5rem; }
+    .stone-cta-box { background:linear-gradient(135deg,rgba(88,28,135,.15),rgba(124,58,237,.08)); border:1px solid rgba(155,89,182,.25); border-radius:1rem; padding:2rem 2.5rem; display:flex; align-items:center; gap:2rem; flex-wrap:wrap; }
+    .stone-cta-text h3 { font-family:'Playfair Display',serif; font-size:1.25rem; color:white; margin-bottom:.5rem; }
+    .stone-cta-text p { font-size:.88rem; color:rgba(255,255,255,.5); line-height:1.7; }
+    .stone-cta-btn { flex-shrink:0; display:inline-flex; align-items:center; gap:.4rem; background:linear-gradient(135deg,#7c3aed,#6d28d9); color:white; padding:.75rem 1.5rem; border-radius:.5rem; font-family:Sarabun,sans-serif; font-size:.9rem; font-weight:700; text-decoration:none; white-space:nowrap; transition:all .2s; }
+    .stone-cta-btn:hover { opacity:.88; transform:translateY(-1px); }
+
+    .footer { border-top:1px solid rgba(255,255,255,.06); padding:2rem 1.5rem; text-align:center; color:rgba(255,255,255,.3); font-size:.8rem; }
+    .footer a { color:rgba(255,255,255,.4); text-decoration:none; }
+    .footer a:hover { color:var(--gold); }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <span>💜 ซีรีส์นิยายคริสตัล — <strong>อเมทิสต์</strong> · อ่านฟรี 5 ตอน</span>
+</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="logo">
+      <svg viewBox="0 0 36 36" fill="none"><polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity=".95"/><polygon points="18,8 30,12 18,28" fill="#a78bfa"/><polygon points="18,8 6,12 18,28" fill="#7c3aed"/></svg>
+      <div><div class="logo-text">AMETHEZ</div><small class="logo-sub">Stones · Stories · Soul</small></div>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/stones/">💎 คลังหิน</a></li>
+      <li><a href="/guides/">🌿 พลังบำบัด</a></li>
+      <li><a href="/talk/">🔮 คุยกับหิน</a></li>
+      <li><a href="/videos/">🎬 วิดีโอ</a></li>
+      <li><a href="/stories/" class="nav-stories">📖 นิยาย</a></li>
+      <li><a href="/digital/" class="nav-digital">📥 Digital</a></li>
+      <li><a href="/sale.html" class="nav-shop">🛒 ร้านค้า</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+  </div>
+</nav>
+
+<!-- TEAM INTRO -->
+<section class="team-section">
+  <div class="team-wrap">
+    <div class="team-label">ทีมผู้สร้างซีรีส์นี้</div>
+    <div class="team-title">สี่คนหนึ่งทีม — แต่ละคนทำหน้าที่คนละมุมโลก</div>
+    <div class="team-grid">
+
+      <div class="team-card rada">
+        <div class="team-avatar">รดา</div>
+        <div class="team-info">
+          <div class="team-role">บรรณาธิการ</div>
+          <div class="team-name">คุณรดา</div>
+          <div class="team-desc">คัดกรองเรื่องราว กลั่นข้อมูล และเย็บทุกชิ้นส่วนเข้าด้วยกัน เชื่อว่า "ความรู้ที่ดีต้องเจ็บปวดได้"</div>
+          <span class="team-tag">กรุงเทพฯ</span>
+        </div>
+      </div>
+
+      <div class="team-card vega">
+        <div class="team-avatar">เวกา</div>
+        <div class="team-info">
+          <div class="team-role">นักธรณีวิทยา · ผู้เชี่ยวชาญคริสตัล</div>
+          <div class="team-name">ดร.เวกา วีระกานต์</div>
+          <div class="team-desc">เดินทางไปแหล่งขุดทั่วโลก ส่งรายงานภาคสนามและข้อมูลวิทยาศาสตร์เข้มข้น ปัจจุบันอยู่ที่ Artigas ประเทศอุรุกวัย</div>
+          <span class="team-tag">🌍 Field Researcher · ใหม่</span>
+        </div>
+      </div>
+
+      <div class="team-card jin">
+        <div class="team-avatar">จิน</div>
+        <div class="team-info">
+          <div class="team-role">นักวิจัยประวัติศาสตร์และตำนาน</div>
+          <div class="team-name">จิน เหม่ยหลิง</div>
+          <div class="team-desc">ค้นข้อมูลจากห้องสมุดและพิพิธภัณฑ์ทั่วโลก เชี่ยวชาญตำนานกรีก อียิปต์ ทิเบต และเอเชีย ปัจจุบันอยู่ที่ British Museum</div>
+          <span class="team-tag">🏛️ History Researcher · ใหม่</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-series-badge">📖 ซีรีส์นิยายคริสตัล</div>
+  <div class="hero-stone-badge">💜 อเมทิสต์ — Amethyst</div>
+  <h1>หินที่<em>จิตใจ</em>เลือก</h1>
+  <p class="hero-subtitle">ห้าตอนที่ไม่ได้สอนให้เชื่อเรื่องพลังงาน<br>แต่พาไปดูว่ามนุษย์ทุกยุคหาอะไรจากก้อนหินสีม่วงนี้</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">📚 <strong>5 ตอน</strong> ครบซีรีส์</div>
+    <div class="hero-meta-item">🌍 <strong>ข้อมูลจาก 8 ประเทศ</strong></div>
+    <div class="hero-meta-item">🆓 <strong>อ่านฟรี</strong></div>
+  </div>
+  <a href="/stories/amethyst/episode-01.html" class="btn-start">💜 เริ่มอ่านตอนที่ 1</a>
+</section>
+
+<!-- STONE QUICK FACTS -->
+<div class="stone-info">
+  <div class="info-grid">
+    <div class="info-item"><div class="info-label">ชื่อวิทยาศาสตร์</div><div class="info-value">SiO₂ + Fe³⁺</div></div>
+    <div class="info-item"><div class="info-label">ความแข็ง (Mohs)</div><div class="info-value">7</div></div>
+    <div class="info-item"><div class="info-label">สี</div><div class="info-value">ม่วงอ่อน — ม่วงเข้ม</div></div>
+    <div class="info-item"><div class="info-label">แหล่งหลัก</div><div class="info-value">บราซิล · อุรุกวัย · แซมเบีย</div></div>
+    <div class="info-item"><div class="info-label">จักระ</div><div class="info-value">Third Eye · Crown</div></div>
+    <div class="info-item"><div class="info-label">เดือนเกิด</div><div class="info-value">กุมภาพันธ์</div></div>
+  </div>
+</div>
+
+<!-- EPISODES -->
+<div class="episodes-section">
+  <div class="sec-label">5 ตอน — นิยาย + ความรู้</div>
+  <div class="sec-title">เดินทางกับนาวาและทีมนักวิจัย</div>
+
+  <div class="episode-grid">
+
+    <a href="/stories/amethyst/episode-01.html" class="ep-card">
+      <div class="ep-number">1</div>
+      <div class="ep-info">
+        <div class="ep-tag odd">ตอนคี่ · เรื่องราว + ทีมภาคสนาม</div>
+        <div class="ep-title">หินที่ไม่ได้ขอ</div>
+        <div class="ep-desc">นาวาได้รับอเมทิสต์เป็นของขวัญที่ไม่ได้ขอ — พร้อมกับรายงานแรกของดร.เวกา จากแหล่งขุดใหญ่สุดในโลกที่อุรุกวัย</div>
+      </div>
+      <div class="ep-arrow">→</div>
+    </a>
+
+    <a href="/stories/amethyst/episode-02.html" class="ep-card even">
+      <div class="ep-number">2</div>
+      <div class="ep-info">
+        <div class="ep-tag even">ตอนคู่ · ธรณีวิทยาดิบ</div>
+        <div class="ep-title">ใต้ดินล้านปี</div>
+        <div class="ep-desc">ดร.เวกาส่งรายงานฉบับเต็มจากเหมือง — อเมทิสต์เกิดขึ้นได้อย่างไร ทำไมถึงม่วง และแยกของจริงจากของปลอมอย่างไร</div>
+      </div>
+      <div class="ep-arrow">→</div>
+    </a>
+
+    <a href="/stories/amethyst/episode-03.html" class="ep-card">
+      <div class="ep-number">3</div>
+      <div class="ep-info">
+        <div class="ep-tag odd">ตอนคี่ · ตำนานและประวัติศาสตร์</div>
+        <div class="ep-title">เทพเจ้าและไวน์</div>
+        <div class="ep-desc">จินส่งรายงานจาก British Museum — ตำนานกรีก อียิปต์ ยุคกลาง ทิเบต มนุษย์ทุกยุคหาอะไรจากหินนี้</div>
+      </div>
+      <div class="ep-arrow">→</div>
+    </a>
+
+    <a href="/stories/amethyst/episode-04.html" class="ep-card even">
+      <div class="ep-number">4</div>
+      <div class="ep-info">
+        <div class="ep-tag even">ตอนคู่ · ล้าง + ดูแล</div>
+        <div class="ep-title">ล้างด้วยแสงจันทร์</div>
+        <div class="ep-desc">วิธีล้างอเมทิสต์จากทั่วโลก — moonlight, singing bowl, sage, selenite และสิ่งที่ไม่ควรทำ (เพราะหินจะซีด)</div>
+      </div>
+      <div class="ep-arrow">→</div>
+    </a>
+
+    <a href="/stories/amethyst/episode-05.html" class="ep-card">
+      <div class="ep-number">5</div>
+      <div class="ep-info">
+        <div class="ep-tag odd">ตอนคี่ · พลังงาน + บทสรุป</div>
+        <div class="ep-title">ประตูที่สาม</div>
+        <div class="ep-desc">จักระ Third Eye และ Crown — วิธีใช้อเมทิสต์ในการทำสมาธิ และสิ่งที่นาวาค้นพบในตอนท้าย</div>
+      </div>
+      <div class="ep-arrow">→</div>
+    </a>
+
+  </div>
+</div>
+
+<!-- STONE CTA -->
+<div class="stone-cta">
+  <div class="stone-cta-box">
+    <div class="stone-cta-text">
+      <h3>💜 อ่านข้อมูลอเมทิสต์ฉบับสารานุกรม</h3>
+      <p>บทความฉบับเต็มในหมวดคลังหิน — ข้อมูลครบทุกด้านสำหรับคนที่อยากรู้ลึกกว่าในนิยาย</p>
+    </div>
+    <a href="/stones/amethyst.html" class="stone-cta-btn">💜 อ่านสารานุกรมอเมทิสต์</a>
+  </div>
+</div>
+
+<div class="footer">
+  <p><a href="/">Amethez</a> · <a href="/stories/">นิยาย</a> · <a href="/stories/amethyst/">อเมทิสต์ซีรีส์</a> · <a href="/stones/amethyst.html">สารานุกรม</a></p>
+  <p style="margin-top:.5rem">© 2025 Amethez · Stones · Stories · Soul</p>
+</div>
+
+<script>document.querySelector('.hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('open'))</script>
+</body>
+</html>
