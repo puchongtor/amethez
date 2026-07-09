@@ -218,3 +218,21 @@ a:hover { color: var(--purple-dark); }
 
 /* ── Admin ── */
 .admin-body { background: #0f0a1e; color: #e2d9f3; min-height: 100vh; }
+
+/* ── Inline CMS Images (article body) ── */
+.cms-inline-img {
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin: 2rem 0;
+  display: none;
+}
+.cms-inline-img[src] { display: block; }
+.cms-inline-caption {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: -1.5rem;
+  margin-bottom: 2rem;
+}
