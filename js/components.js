@@ -47,7 +47,7 @@ const NAV_HTML = `
         <li><a href="/shop/academy.html">✦ Crystal Academy</a></li>
       </ul>
     </li>
-    <li><a href="/talk/" class="nav-ritual">🔮 ห้องคลื่น Manifest</a></li>
+    <li><a href="/talk/" class="nav-ritual">🔮 ห้องคลื่นเสียง Manifest</a></li>
   </ul></nav>
 </div>`;
 
@@ -84,7 +84,7 @@ const FOOTER_HTML = `
       <ul>
         <li><a href="/wuchong/">🧙 Master Wuchong</a></li>
         <li><a href="/metha/">🌟 อาจารย์เมธา</a></li>
-        <li><a href="/talk/">🔮 ห้องคลื่น Manifest</a></li>
+        <li><a href="/talk/">🔮 ห้องคลื่นเสียง Manifest</a></li>
       </ul>
     </div>
     <div class="footer-col">
