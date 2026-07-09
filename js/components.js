@@ -84,7 +84,7 @@ const FOOTER_HTML = `
       <ul>
         <li><a href="/wuchong/">🧙 Master Wuchong</a></li>
         <li><a href="/metha/">🌟 อาจารย์เมธา</a></li>
-        <li><a href="/talk/read.html">🔮 ห้องตั้งจิต</a></li>
+        <li><a href="/talk/">🔮 ห้องคลื่น Manifest</a></li>
       </ul>
     </div>
     <div class="footer-col">
