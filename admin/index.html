@@ -243,7 +243,6 @@ textarea.form-input{resize:vertical;min-height:80px;}
       <div class="nav-item active" onclick="showTab('dashboard',this)"><span class="ic">📊</span> ภาพรวม</div>
       <div class="nav-item" onclick="showTab('stats',this)"><span class="ic">📈</span> สถิติ & เป้าหมาย</div>
       <div class="nav-item" onclick="showTab('pages',this)"><span class="ic">🎨</span> แก้ไขหน้า</div>
-      <div class="nav-item" onclick="showTab('prompts',this)"><span class="ic">✨</span> AI Prompts</div>
       <div class="nav-item" onclick="showTab('products',this)"><span class="ic">💎</span> สินค้า</div>
       <div class="nav-item" onclick="showTab('shopee',this)"><span class="ic">🛒</span> Shopee Aff</div>
       <div class="nav-item" onclick="showTab('articles',this)"><span class="ic">📝</span> บทความ</div>
@@ -275,23 +274,23 @@ textarea.form-input{resize:vertical;min-height:80px;}
           <div class="card">
             <div class="card-title">⚡ Quick Actions</div>
             <div class="quick-grid">
-              <div class="quick-card" onclick="showTab('images',document.querySelectorAll('.nav-item')[1])">
-                <div class="qic">🖼️</div><div class="qt">จัดการรูป</div><div class="qs">ใส่ URL ทุกหน้า</div>
+              <div class="quick-card" onclick="showTab('pages',document.querySelectorAll('.nav-item')[2])">
+                <div class="qic">🎨</div><div class="qt">แก้ไขหน้า</div><div class="qs">รูป + ข้อความทุกหน้า</div>
               </div>
-              <div class="quick-card" onclick="showTab('prompts',document.querySelectorAll('.nav-item')[2])">
-                <div class="qic">✨</div><div class="qt">AI Prompts</div><div class="qs">Copy → Google Flow</div>
+              <div class="quick-card" onclick="showTab('shopee',document.querySelectorAll('.nav-item')[4])">
+                <div class="qic">🛒</div><div class="qt">Shopee Aff</div><div class="qs">เพิ่มสินค้า Affiliate</div>
               </div>
               <div class="quick-card" onclick="showTab('products',document.querySelectorAll('.nav-item')[3])">
-                <div class="qic">💎</div><div class="qt">เพิ่มสินค้า</div><div class="qs">โพรงอเมทิสต์</div>
+                <div class="qic">💎</div><div class="qt">จัดการสินค้า</div><div class="qs">โพรงอเมทิสต์</div>
               </div>
-              <a href="/consign.html" target="_blank" class="quick-card">
-                <div class="qic">🤝</div><div class="qt">ฝากขาย</div><div class="qs">ดูหน้า consign</div>
+              <div class="quick-card" onclick="showTab('articles',document.querySelectorAll('.nav-item')[5])">
+                <div class="qic">📝</div><div class="qt">บทความ</div><div class="qs">ดูหน้าทั้งหมด</div>
+              </div>
+              <a href="/talk/" target="_blank" class="quick-card">
+                <div class="qic">🔮</div><div class="qt">ห้องคลื่นเสียง</div><div class="qs">Manifest Sessions</div>
               </a>
-              <a href="/stones/amethyst.html" target="_blank" class="quick-card">
-                <div class="qic">💜</div><div class="qt">อเมทิสต์</div><div class="qs">บทความหลัก</div>
-              </a>
-              <a href="/categories/chakra.html" target="_blank" class="quick-card">
-                <div class="qic">🔮</div><div class="qt">จักระ</div><div class="qs">หมวดจักระ</div>
+              <a href="/stones/" target="_blank" class="quick-card">
+                <div class="qic">📖</div><div class="qt">สารานุกรมหิน</div><div class="qs">ดูหน้าหลัก</div>
               </a>
             </div>
           </div>
@@ -422,17 +421,6 @@ textarea.form-input{resize:vertical;min-height:80px;}
               </div>
             </div>
           </div>
-        </div>
-
-        <!-- PROMPTS -->
-        <div id="tab-prompts">
-          <div class="section-title">✨ AI Image Prompts</div>
-          <div class="section-sub">Copy prompt → วางใน Google Flow / Veo 3 / Midjourney → Generate → เอา URL มาใส่ที่แท็บรูปภาพ</div>
-          <div style="display:flex;gap:.75rem;margin-bottom:1.25rem;flex-wrap:wrap;">
-            <button class="btn btn-gold btn-sm" onclick="copyAllPrompts()">📋 Copy ทุก Prompt</button>
-            <button class="btn btn-outline btn-sm" onclick="exportPrompts()">📤 Export .txt</button>
-          </div>
-          <div class="prompt-list" id="promptList"></div>
         </div>
 
         <!-- STATS -->
@@ -700,9 +688,79 @@ textarea.form-input{resize:vertical;min-height:80px;}
         <!-- SETTINGS -->
         <div id="tab-settings">
           <div class="section-title">⚙️ ตั้งค่าระบบ</div>
-          <div class="section-sub">API keys และการตั้งค่าต่างๆ — เก็บใน browser เท่านั้น ไม่ขึ้น GitHub</div>
+          <div class="section-sub">ข้อมูลร้าน, ช่องทางติดต่อ, และ API keys — บันทึกใน browser ไม่ขึ้น GitHub</div>
 
-          <div class="card" style="max-width:560px;margin-top:1.5rem">
+          <!-- ── ข้อมูลร้าน ── -->
+          <div class="card" style="max-width:720px;margin-top:1.5rem">
+            <div class="card-title">🏪 ข้อมูลร้านและช่องทางติดต่อ</div>
+            <div class="form-grid">
+              <div class="form-group full">
+                <label class="fl">ชื่อเว็บไซต์ / แบรนด์</label>
+                <input class="form-input" id="storeNameInput" placeholder="Amethez" oninput="saveStoreSettings()">
+              </div>
+              <div class="form-group full">
+                <label class="fl">Tagline</label>
+                <input class="form-input" id="storeTaglineInput" placeholder="Stones · Stories · Soul" oninput="saveStoreSettings()">
+              </div>
+              <div class="form-group full">
+                <label class="fl">คำอธิบาย (Meta Description)</label>
+                <textarea class="form-input" id="storeDescInput" rows="2" placeholder="ศูนย์กลางข้อมูลคริสตัลและพลอยที่ใหญ่ที่สุดในไทย..." oninput="saveStoreSettings()"></textarea>
+              </div>
+            </div>
+            <div style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border)">
+              <div style="font-size:.82rem;font-weight:700;color:#6b7280;margin-bottom:.875rem;text-transform:uppercase;letter-spacing:.06em">📞 ช่องทางติดต่อ</div>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="fl">📱 Line OA (ID หรือ @amethez)</label>
+                  <input class="form-input" id="storeLineInput" placeholder="@amethez" oninput="saveStoreSettings()">
+                </div>
+                <div class="form-group">
+                  <label class="fl">💚 Line OA Partner (@masterpuch)</label>
+                  <input class="form-input" id="storeLinePartnerInput" placeholder="@masterpuch" oninput="saveStoreSettings()">
+                </div>
+                <div class="form-group">
+                  <label class="fl">📘 Facebook Page URL</label>
+                  <input class="form-input" id="storeFbInput" placeholder="https://facebook.com/amethez" oninput="saveStoreSettings()">
+                </div>
+                <div class="form-group">
+                  <label class="fl">▶️ YouTube Channel URL</label>
+                  <input class="form-input" id="storeYtInput" placeholder="https://youtube.com/@amethez" oninput="saveStoreSettings()">
+                </div>
+                <div class="form-group">
+                  <label class="fl">📸 Instagram URL</label>
+                  <input class="form-input" id="storeIgInput" placeholder="https://instagram.com/amethez" oninput="saveStoreSettings()">
+                </div>
+                <div class="form-group">
+                  <label class="fl">📞 เบอร์โทรศัพท์</label>
+                  <input class="form-input" id="storePhoneInput" placeholder="08x-xxx-xxxx" oninput="saveStoreSettings()">
+                </div>
+                <div class="form-group full">
+                  <label class="fl">📍 ที่อยู่ (แสดงใน footer / หน้าติดต่อ)</label>
+                  <textarea class="form-input" id="storeAddressInput" rows="2" placeholder="กรุงเทพมหานคร ประเทศไทย" oninput="saveStoreSettings()"></textarea>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border)">
+              <div style="font-size:.82rem;font-weight:700;color:#6b7280;margin-bottom:.875rem;text-transform:uppercase;letter-spacing:.06em">🛒 Shopee Affiliate</div>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="fl">Shopee Affiliate ID / Username</label>
+                  <input class="form-input" id="storeShopeeAffInput" placeholder="เช่น amethez_aff" oninput="saveStoreSettings()">
+                </div>
+                <div class="form-group">
+                  <label class="fl">Shopee Shop URL (Partner)</label>
+                  <input class="form-input" id="storeShopeeShopInput" placeholder="https://shopee.co.th/masterpuch" oninput="saveStoreSettings()">
+                </div>
+              </div>
+            </div>
+            <div style="margin-top:1rem;display:flex;gap:.75rem;flex-wrap:wrap">
+              <button class="btn btn-primary" onclick="saveStoreSettingsManual()">💾 บันทึกข้อมูลร้าน</button>
+              <span id="storeSettingsStatus" style="font-size:.82rem;color:#9ca3af;align-self:center"></span>
+            </div>
+          </div>
+
+          <!-- ── Groq API Key ── -->
+          <div class="card" style="max-width:720px;margin-top:1rem">
             <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem">
               <span style="font-size:1.8rem">🤖</span>
               <div>
@@ -712,9 +770,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
             </div>
             <label class="fl">Groq API Key (จาก console.groq.com)</label>
             <div style="display:flex;gap:.5rem;margin-top:.4rem">
-              <input class="form-input" id="geminiKeyInput" type="password"
-                placeholder="gsk_..." style="flex:1"
-                oninput="updateKeyStatus()">
+              <input class="form-input" id="geminiKeyInput" type="password" placeholder="gsk_..." style="flex:1" oninput="updateKeyStatus()">
               <button class="btn btn-outline btn-sm" onclick="toggleKeyVis()" id="keyToggleBtn" style="flex-shrink:0">👁</button>
             </div>
             <div id="keyStatus" style="font-size:.8rem;margin-top:.6rem;color:#9ca3af">— ยังไม่ได้ใส่ key</div>
@@ -722,78 +778,64 @@ textarea.form-input{resize:vertical;min-height:80px;}
               <button class="btn btn-primary" onclick="saveGeminiKey()">💾 บันทึก Key</button>
               <button class="btn btn-danger btn-sm" onclick="clearGeminiKey()">🗑 ลบ Key</button>
               <a href="https://console.groq.com/keys" target="_blank" class="btn btn-outline btn-sm">🔗 console.groq.com</a>
+              <button class="btn btn-outline btn-sm" onclick="testGemini()">🧪 ทดสอบ</button>
             </div>
-            <div style="margin-top:1.25rem;padding:1rem;background:#f5f0ff;border-radius:.6rem;font-size:.82rem;color:#5b21b6;line-height:1.7">
-              <strong>วิธีสร้าง Groq API Key:</strong><br>
-              1. ไปที่ <strong>console.groq.com</strong> → Login ด้วย Google<br>
-              2. เมนูซ้าย → <strong>"API Keys"</strong><br>
-              3. กด <strong>"Create API key"</strong> → ตั้งชื่อ "Amethez"<br>
-              4. Copy key (ขึ้นต้นด้วย <code>gsk_</code>) → วางด้านบน → บันทึก<br>
-              <br>
-              ⚠️ <strong>ห้าม</strong> ส่ง key ในแชท หรือใส่ในโค้ด GitHub
+            <div id="geminiTestResult" style="margin-top:.6rem;font-size:.85rem;display:none"></div>
+            <div style="margin-top:1rem;padding:.85rem;background:#f5f0ff;border-radius:.6rem;font-size:.78rem;color:#5b21b6;line-height:1.7">
+              console.groq.com → Login → API Keys → Create → ตั้งชื่อ "Amethez" → Copy key (gsk_...)<br>
+              ⚠️ ห้ามส่ง key ในแชท หรือใส่ในโค้ด GitHub
             </div>
           </div>
 
-          <div class="card" style="max-width:560px;margin-top:1rem">
-            <div style="font-weight:700;margin-bottom:.75rem">🧪 ทดสอบ Groq API</div>
-            <button class="btn btn-outline" onclick="testGemini()">ส่ง ping ทดสอบ</button>
-            <div id="geminiTestResult" style="margin-top:.75rem;font-size:.85rem;display:none"></div>
-          </div>
-
-          <div class="card" style="max-width:560px;margin-top:1rem">
+          <!-- ── GA4 ── -->
+          <div class="card" style="max-width:720px;margin-top:1rem">
             <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem">
               <span style="font-size:1.8rem">📊</span>
               <div>
                 <div style="font-weight:700;font-size:1rem">Google Analytics 4</div>
-                <div style="font-size:.8rem;color:#9ca3af">ใส่ครั้งเดียว — ดูข้อมูล traffic จริงในหน้า Stats</div>
+                <div style="font-size:.8rem;color:#9ca3af">ดูข้อมูล traffic จริงในหน้า Stats</div>
               </div>
             </div>
-            <div class="form-group" style="margin-bottom:.875rem">
-              <label class="fl">GA4 Property ID (ตัวเลข เช่น 123456789)</label>
-              <input class="form-input" id="ga4MidInput" placeholder="เช่น 123456789" style="margin-top:.35rem"
-                oninput="saveGA4Settings()">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="fl">GA4 Property ID (ตัวเลข)</label>
+                <input class="form-input" id="ga4MidInput" placeholder="เช่น 123456789" oninput="saveGA4Settings()">
+              </div>
+              <div class="form-group">
+                <label class="fl">OAuth Client ID</label>
+                <input class="form-input" id="ga4ClientInput" placeholder="xxx.apps.googleusercontent.com" oninput="saveGA4Settings()">
+              </div>
             </div>
-            <div class="form-group" style="margin-bottom:.875rem">
-              <label class="fl">OAuth Client ID (จาก Google Cloud Console)</label>
-              <input class="form-input" id="ga4ClientInput" placeholder="xxx.apps.googleusercontent.com" style="margin-top:.35rem"
-                oninput="saveGA4Settings()">
-            </div>
-            <div style="background:#f0f9ff;border-radius:.6rem;padding:.85rem;font-size:.78rem;color:#0369a1;line-height:1.8">
-              <strong>วิธีหา GA4 Property ID:</strong><br>
-              analytics.google.com → Admin → Property Settings → Property ID (ตัวเลขด้านบนขวา)<br><br>
-              <strong>วิธีสร้าง OAuth Client ID (ถ้าต้องการดึง API):</strong><br>
-              console.cloud.google.com → APIs → OAuth 2.0 → Web App → Authorized origins: <code>${window.location.origin}</code>
+            <div style="margin-top:.75rem;padding:.75rem;background:#f0f9ff;border-radius:.6rem;font-size:.78rem;color:#0369a1;line-height:1.8">
+              analytics.google.com → Admin → Property Settings → Property ID (ตัวเลขด้านบนขวา)
             </div>
           </div>
 
-          <div class="card" style="max-width:560px;margin-top:1rem">
+          <!-- ── GitHub ── -->
+          <div class="card" style="max-width:720px;margin-top:1rem">
             <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem">
               <span style="font-size:1.8rem">🐙</span>
               <div>
-                <div style="font-weight:700;font-size:1rem">GitHub — เผยแพร่รูปให้ทุกคนเห็น</div>
-                <div style="font-size:.8rem;color:#9ca3af">ใส่ครั้งเดียว กด 🚀 เผยแพร่ → รูปขึ้นเว็บใน ~3 นาที</div>
+                <div style="font-weight:700;font-size:1rem">GitHub — เผยแพร่ให้ทุกคนเห็น</div>
+                <div style="font-size:.8rem;color:#9ca3af">กด 🚀 เผยแพร่ → ขึ้นเว็บใน ~3 นาที</div>
               </div>
             </div>
-            <div class="form-group" style="margin-bottom:.875rem">
-              <label class="fl">GitHub Repo (เจ้าของ/ชื่อ repo)</label>
-              <input class="form-input" id="ghRepoInput" placeholder="เช่น puchongtor/amethez"
-                style="margin-top:.35rem" oninput="saveGhSettings()">
-            </div>
-            <div class="form-group">
-              <label class="fl">GitHub Personal Access Token</label>
-              <div style="display:flex;gap:.5rem;margin-top:.35rem">
-                <input class="form-input" id="ghTokenInput" type="password"
-                  placeholder="ghp_..." style="flex:1" oninput="saveGhSettings()">
-                <button class="btn btn-outline btn-sm" onclick="toggleGhVis()" id="ghToggleBtn" style="flex-shrink:0">👁</button>
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="fl">GitHub Repo</label>
+                <input class="form-input" id="ghRepoInput" placeholder="เช่น puchongtor/amethez" oninput="saveGhSettings()">
+              </div>
+              <div class="form-group">
+                <label class="fl">Personal Access Token</label>
+                <div style="display:flex;gap:.5rem">
+                  <input class="form-input" id="ghTokenInput" type="password" placeholder="ghp_..." style="flex:1" oninput="saveGhSettings()">
+                  <button class="btn btn-outline btn-sm" onclick="toggleGhVis()" id="ghToggleBtn" style="flex-shrink:0">👁</button>
+                </div>
               </div>
             </div>
             <div id="ghStatus" style="font-size:.8rem;margin-top:.6rem;color:#9ca3af">— ยังไม่ได้ตั้งค่า</div>
-            <div style="margin-top:1rem;padding:1rem;background:#f0fdf4;border-radius:.6rem;font-size:.82rem;color:#14532d;line-height:1.7">
-              <strong>วิธีสร้าง GitHub Token:</strong><br>
-              1. github.com → Settings → Developer settings → Personal access tokens → Tokens (classic)<br>
-              2. Generate new token → เลือก <strong>repo</strong> (full control)<br>
-              3. Copy token (ขึ้นต้น <code>ghp_</code>) → วางด้านบน<br>
-              4. กด <strong>🚀 เผยแพร่</strong> ในแถบบนทุกครั้งที่ใส่รูปใหม่
+            <div style="margin-top:.75rem;padding:.75rem;background:#f0fdf4;border-radius:.6rem;font-size:.78rem;color:#14532d;line-height:1.7">
+              github.com → Settings → Developer settings → Personal access tokens → Tokens (classic) → Generate → เลือก <strong>repo</strong> → Copy (ghp_...)
             </div>
           </div>
         </div>
@@ -1016,7 +1058,7 @@ if(sessionStorage.getItem(AUTH_KEY)){
 }
 
 // ── TABS ──────────────────────────────────────
-const TAB_TITLES={dashboard:'📊 ภาพรวม',stats:'📈 สถิติ & เป้าหมาย',pages:'🎨 แก้ไขหน้า',prompts:'✨ AI Prompts',products:'💎 สินค้า',shopee:'🛒 Shopee Aff',articles:'📝 บทความ',settings:'⚙️ ตั้งค่า'};
+const TAB_TITLES={dashboard:'📊 ภาพรวม',stats:'📈 สถิติ & เป้าหมาย',pages:'🎨 แก้ไขหน้า',products:'💎 สินค้า',shopee:'🛒 Shopee Aff',articles:'📝 บทความ',settings:'⚙️ ตั้งค่า'};
 function showTab(name,el){
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   if(el) el.classList.add('active');
@@ -1024,7 +1066,6 @@ function showTab(name,el){
   document.getElementById('tab-'+name).classList.add('active');
   document.getElementById('topbarTitle').textContent=TAB_TITLES[name]||name;
   if(name==='pages') renderPageGrid();
-  if(name==='prompts') renderPrompts();
   if(name==='products'){ loadGeodes(); renderPTable(); }
   if(name==='stats') initStatsTab();
   if(name==='shopee'){ loadAff(); initAffTags(); renderAffTable(); }
@@ -1033,14 +1074,58 @@ function showTab(name,el){
   if(name==='settings') loadSettingsTab();
 }
 
+// ── SETTINGS / STORE INFO ──────────────────────────────────────
+const STORE_KEY='amethez_store_settings';
+function loadStoreSettings(){
+  const s=JSON.parse(localStorage.getItem(STORE_KEY)||'{}');
+  const f=(id,val)=>{ const el=document.getElementById(id); if(el) el.value=val||''; };
+  f('storeNameInput',     s.name);
+  f('storeTaglineInput',  s.tagline);
+  f('storeDescInput',     s.description);
+  f('storeLineInput',     s.line_oa);
+  f('storeLinePartnerInput', s.line_partner);
+  f('storeFbInput',       s.facebook);
+  f('storeYtInput',       s.youtube);
+  f('storeIgInput',       s.instagram);
+  f('storePhoneInput',    s.phone);
+  f('storeAddressInput',  s.address);
+  f('storeShopeeAffInput',s.shopee_aff_id);
+  f('storeShopeeShopInput',s.shopee_shop_url);
+}
+function saveStoreSettings(){
+  const g=(id)=>document.getElementById(id)?.value.trim()||'';
+  const s={
+    name:         g('storeNameInput'),
+    tagline:      g('storeTaglineInput'),
+    description:  g('storeDescInput'),
+    line_oa:      g('storeLineInput'),
+    line_partner: g('storeLinePartnerInput'),
+    facebook:     g('storeFbInput'),
+    youtube:      g('storeYtInput'),
+    instagram:    g('storeIgInput'),
+    phone:        g('storePhoneInput'),
+    address:      g('storeAddressInput'),
+    shopee_aff_id:  g('storeShopeeAffInput'),
+    shopee_shop_url:g('storeShopeeShopInput'),
+  };
+  localStorage.setItem(STORE_KEY,JSON.stringify(s));
+}
+function saveStoreSettingsManual(){
+  saveStoreSettings();
+  const el=document.getElementById('storeSettingsStatus');
+  el.textContent='✅ บันทึกแล้ว';
+  el.style.color='#059669';
+  setTimeout(()=>{ el.textContent=''; },2500);
+}
+
 // ── SETTINGS / GEMINI KEY ──────────────────────────────────────
 const GEMINI_KEY_STORE='amethez_gemini_key';
 function loadSettingsTab(){
+  loadStoreSettings();
   const key=localStorage.getItem(GEMINI_KEY_STORE)||'';
   document.getElementById('geminiKeyInput').value=key;
   updateKeyStatus();
   loadGhSettings();
-  // GA4
   const mid=document.getElementById('ga4MidInput');
   if(mid) mid.value=localStorage.getItem('amethez_ga4_mid')||'';
   const cid=document.getElementById('ga4ClientInput');
