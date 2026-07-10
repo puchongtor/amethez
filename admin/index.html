@@ -247,6 +247,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
       <div class="nav-item" onclick="showTab('blog',this)"><span class="ic">📝</span> Blog & Schedule</div>
       <div class="nav-item" onclick="showTab('products',this)"><span class="ic">🪨</span> สินค้าโพรง</div>
       <div class="nav-item" onclick="showTab('shopee',this)"><span class="ic">🛒</span> Shopee Aff</div>
+      <div class="nav-item" onclick="showTab('roadmap',this)"><span class="ic">🗺️</span> แผน 6 เดือน</div>
       <div class="nav-item" onclick="showTab('settings',this)"><span class="ic">⚙️</span> ตั้งค่า</div>
     </div>
     <div class="sidebar-footer">
@@ -907,6 +908,55 @@ textarea.form-input{resize:vertical;min-height:80px;}
           <div id="articleList"></div>
         </div>
 
+        <!-- ROADMAP -->
+        <div id="tab-roadmap">
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem">
+            <div>
+              <div class="section-title">🗺️ แผน 6 เดือน · Battle Plan</div>
+              <div class="section-sub">กรกฎาคม — ธันวาคม 2569 · ติ๊กงานที่ทำเสร็จได้เลย</div>
+            </div>
+            <div style="display:flex;gap:.5rem;align-items:center">
+              <div id="rmProgressChip" style="font-size:.8rem;background:#ede9fe;color:#5b21b6;padding:.3rem .85rem;border-radius:2rem;font-weight:700"></div>
+              <button class="btn btn-outline btn-sm" onclick="resetRoadmapTasks()" style="font-size:.72rem">↺ รีเซ็ต</button>
+            </div>
+          </div>
+
+          <!-- WARNING BOX -->
+          <div style="background:#fff7ed;border:1.5px solid #fed7aa;border-radius:12px;padding:.85rem 1.1rem;margin-bottom:1.5rem;display:flex;gap:.75rem;align-items:flex-start">
+            <span style="font-size:1.1rem;flex-shrink:0">⚠️</span>
+            <div style="font-size:.82rem;color:#9a3412;line-height:1.6">
+              <strong>ความจริงเนื้อๆ:</strong> Shopee Affiliate อย่างเดียวไม่มีทางได้หลักแสนใน 3-4 เดือน
+              หลักแสนในเดือน 4 ต้องการ <strong>3 ขาพร้อมกัน</strong> — Shopee Aff + E-book + Line OA
+              ถ้าขาใดขาหนึ่งไม่ทำ เลื่อน timeline ออกไป 1-2 เดือนอัตโนมัติ
+            </div>
+          </div>
+
+          <!-- REVENUE SOURCES -->
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:1.75rem">
+            <div style="background:white;border:1.5px solid #d1fae5;border-radius:10px;padding:.85rem 1rem">
+              <div style="font-size:1.25rem;margin-bottom:.3rem">🛒</div>
+              <div style="font-size:.72rem;color:#9ca3af">รายได้ทาง 1</div>
+              <div style="font-size:.9rem;font-weight:700;color:#1a1228">Shopee Affiliate</div>
+              <div style="font-size:.72rem;color:#059669">≈5-7% / ออเดอร์ · slow start</div>
+            </div>
+            <div style="background:white;border:1.5px solid #ede9fe;border-radius:10px;padding:.85rem 1rem">
+              <div style="font-size:1.25rem;margin-bottom:.3rem">📘</div>
+              <div style="font-size:.72rem;color:#9ca3af">รายได้ทาง 2 — สำคัญที่สุด</div>
+              <div style="font-size:.9rem;font-weight:700;color:#1a1228">E-book / Digital</div>
+              <div style="font-size:.72rem;color:#7c3aed">500-990 บาท · margin 90%+</div>
+            </div>
+            <div style="background:white;border:1.5px solid #dbeafe;border-radius:10px;padding:.85rem 1rem">
+              <div style="font-size:1.25rem;margin-bottom:.3rem">💬</div>
+              <div style="font-size:.72rem;color:#9ca3af">รายได้ทาง 3</div>
+              <div style="font-size:.9rem;font-weight:700;color:#1a1228">Line OA · Partner</div>
+              <div style="font-size:.72rem;color:#0891b2">ค่าลิงก์ + คอมแนะนำ</div>
+            </div>
+          </div>
+
+          <!-- MONTH CARDS -->
+          <div id="rmCards" style="display:flex;flex-direction:column;gap:1.25rem"></div>
+        </div>
+
         <!-- SETTINGS -->
         <div id="tab-settings">
           <div class="section-title">⚙️ ตั้งค่าระบบ</div>
@@ -1280,7 +1330,7 @@ if(sessionStorage.getItem(AUTH_KEY)){
 }
 
 // ── TABS ──────────────────────────────────────
-const TAB_TITLES={dashboard:'📊 ภาพรวม',stats:'📈 สถิติ & เป้าหมาย',pages:'🎨 แก้ไขหน้า',stones:'💎 สารานุกรมหิน',blog:'📝 Blog & Schedule',products:'🪨 สินค้าโพรง',shopee:'🛒 Shopee Aff',articles:'📋 หน้าทั้งหมด',settings:'⚙️ ตั้งค่า'};
+const TAB_TITLES={dashboard:'📊 ภาพรวม',stats:'📈 สถิติ & เป้าหมาย',pages:'🎨 แก้ไขหน้า',stones:'💎 สารานุกรมหิน',blog:'📝 Blog & Schedule',products:'🪨 สินค้าโพรง',shopee:'🛒 Shopee Aff',roadmap:'🗺️ แผน 6 เดือน',articles:'📋 หน้าทั้งหมด',settings:'⚙️ ตั้งค่า'};
 function showTab(name,el){
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   if(el) el.classList.add('active');
@@ -1295,6 +1345,7 @@ function showTab(name,el){
   if(name==='shopee'){ loadAff(); initAffTags(); renderAffTable(); }
   if(name==='articles') renderArticles();
   if(name==='dashboard') renderDash();
+  if(name==='roadmap') renderRoadmap();
   if(name==='settings') loadSettingsTab();
 }
 
@@ -3780,6 +3831,188 @@ function init(){
   document.getElementById('importModal').addEventListener('click',e=>{ if(e.target===e.currentTarget) e.currentTarget.classList.remove('open'); });
 }
 if(sessionStorage.getItem(AUTH_KEY)) init();
+
+// ── ROADMAP ────────────────────────────────────────────────────
+const RM_KEY = 'amethez_roadmap_tasks';
+
+const RM_MONTHS = [
+  {
+    num:'07', label:'กรกฎาคม 2569', theme:'วางรากฐาน · ถมระบบให้ครบ',
+    sub:'เดือนลงทุน — Google ยังไม่รู้จักเรา',
+    rev:'฿0 – 5,000', revColor:'#7c3aed',
+    kpis:[{k:'หน้าเว็บ',v:'115 → 150'},{k:'Google Index',v:'>80%'},{k:'Traffic',v:'100–500 คน'},{k:'Social Post',v:'12+ คลิป'}],
+    tasks:[
+      {id:'m1t1', hot:true,  text:'ใส่รูป thumbnail ครบทุก 115 หน้า (hero + blog)'},
+      {id:'m1t2', hot:true,  text:'ส่ง sitemap.xml ให้ Google Search Console'},
+      {id:'m1t3', hot:true,  text:'TikTok / Reels 3 คลิป/สัปดาห์ ลิงก์กลับเว็บ'},
+      {id:'m1t4', hot:false, text:'เพิ่มหินสายหลัก 30+ หน้า (/stones/)'},
+      {id:'m1t5', hot:false, text:'Line OA @amethez — ตั้ง welcome message + ลิงก์เว็บ'},
+      {id:'m1t6', hot:false, text:'ตั้งค่า Google Analytics + Search Console'},
+    ]
+  },
+  {
+    num:'08', label:'สิงหาคม 2569', theme:'Long-tail ขึ้น · รายได้แรก',
+    sub:'Google เริ่มส่ง traffic · e-book ตัวแรก',
+    rev:'฿5,000 – 25,000', revColor:'#0891b2',
+    kpis:[{k:'หน้าเว็บ',v:'150 → 200'},{k:'Traffic',v:'500–3,000 คน'},{k:'Shopee Click',v:'>200 คลิก'},{k:'E-book',v:'launch เดือนนี้'}],
+    tasks:[
+      {id:'m2t1', hot:true,  text:'ปล่อย E-book เล่มแรก "คู่มือโมลดาไวท์ฉบับสมบูรณ์" ราคา 690 บาท'},
+      {id:'m2t2', hot:true,  text:'Community seeding — ตอบกระทู้ Pantip / Facebook กลุ่มสายมูแปะลิงก์'},
+      {id:'m2t3', hot:false, text:'หน้า /stones/ ครบ 50 ชนิด'},
+      {id:'m2t4', hot:false, text:'แต่ละหน้าหินมี Shopee section ≥ 3 สินค้า'},
+      {id:'m2t5', hot:false, text:'วาง backlink จากเพจ Facebook กลุ่มหินดัง 3–5 เพจ'},
+    ],
+    warn:'⚡ ถ้าไม่มี e-book เดือนนี้ รายได้อยู่ที่ ฿2,000-5,000 เท่านั้น'
+  },
+  {
+    num:'09', label:'กันยายน 2569', theme:'ขึ้น Google หน้าแรก · partner เริ่มสนใจ',
+    sub:'keyword หางยาวติดหน้า 1 · ทราฟฟิก exponential',
+    rev:'฿25,000 – 60,000', revColor:'#059669',
+    kpis:[{k:'หน้าเว็บ',v:'200 → 280'},{k:'Traffic',v:'3,000–12,000 คน'},{k:'E-book ขาย',v:'30–80 เล่ม'},{k:'Partner',v:'1–2 ร้าน'}],
+    tasks:[
+      {id:'m3t1', hot:true,  text:'เปิด Partner Program — ค่าวางลิงก์ ฿3,000-8,000/เดือน'},
+      {id:'m3t2', hot:true,  text:'E-book เล่ม 2 "7 หินดูดเงิน วางถูกที่" ราคา 490 บาท'},
+      {id:'m3t3', hot:false, text:'หน้า /stones/ ครบ 100 ชนิด — ถึงเกณฑ์ SEO แข็งแกร่ง'},
+      {id:'m3t4', hot:false, text:'Dr. Cosmos section ครบ (เพิ่ม 10 หน้า)'},
+      {id:'m3t5', hot:false, text:'Guest post ในเพจหินดัง 3–5 เพจ'},
+    ]
+  },
+  {
+    num:'10', label:'ตุลาคม 2569', theme:'หลักแสนแรก · Hub เริ่มชัด',
+    sub:'keyword กลางติด · partner วิ่งหาเรา',
+    rev:'฿60,000 – 120,000', revColor:'#d97706',
+    kpis:[{k:'หน้าเว็บ',v:'>300'},{k:'Traffic',v:'12,000–30,000 คน'},{k:'E-book',v:'80–200 เล่ม/เดือน'},{k:'Partner',v:'3–5 ร้าน'}],
+    tasks:[
+      {id:'m4t1', hot:true,  text:'300 หน้า = เกณฑ์ SEO สู้ keyword กลางได้'},
+      {id:'m4t2', hot:true,  text:'ค่า partner ลิงก์ + featured placement = passive income'},
+      {id:'m4t3', hot:false, text:'Shopee Open API สมัครได้ (ถ้า traffic ถึงเกณฑ์)'},
+      {id:'m4t4', hot:false, text:'Master Wuchong section ครบ — คอร์ส + e-book รวม'},
+      {id:'m4t5', hot:false, text:'คู่แข่งเริ่มสูญเสีย keyword หางยาว'},
+    ],
+    warn:'⚡ หลักแสนจริงได้เฉพาะถ้า e-book + partner ขึ้นพร้อมกัน'
+  },
+  {
+    num:'11', label:'พฤศจิกายน 2569', theme:'ขึ้นแท่น Hub · ระบบ passive เต็ม',
+    sub:'partner ขอลง sale page · Domain Authority แข็ง',
+    rev:'฿120,000 – 250,000', revColor:'#ea580c',
+    kpis:[{k:'หน้าเว็บ',v:'>400'},{k:'Traffic',v:'30,000–60,000 คน'},{k:'E-book/คอร์ส',v:'200+/เดือน'},{k:'Partner revenue',v:'>฿30,000'}],
+    tasks:[
+      {id:'m5t1', hot:true,  text:'Sale Page premium — เปิดรับร้านค้าจ่ายค่าพื้นที่'},
+      {id:'m5t2', hot:false, text:'keyword หลัก "หินมงคล" "คริสตัลแท้" ติดหน้า 1-2'},
+      {id:'m5t3', hot:false, text:'รายได้ passive 40%+ (ไม่ต้องออกแรงทุกวัน)'},
+      {id:'m5t4', hot:false, text:'อาจารย์เมธา section ดวงรายวัน — ดึง Line OA subscriber'},
+    ]
+  },
+  {
+    num:'12', label:'ธันวาคม 2569', theme:'Peak Season · ชนะขาด',
+    sub:'เทศกาลปีใหม่ · คนซื้อหินของขวัญ · กระแสสูงสุด',
+    rev:'฿250,000+', revColor:'#c9a84c',
+    kpis:[{k:'หน้าเว็บ',v:'>500'},{k:'Traffic',v:'60,000–120,000 คน'},{k:'Domain Authority',v:'แข็งกว่าคู่แข่ง'},{k:'passive',v:'>60%'}],
+    tasks:[
+      {id:'m6t1', hot:true,  text:'ปีใหม่ = peak buying season — Shopee aff พุ่ง 3–5x'},
+      {id:'m6t2', hot:true,  text:'คู่แข่งสูญเสีย keyword หลักให้เรา'},
+      {id:'m6t3', hot:false, text:'Hub สมบูรณ์ — ร้านต้องวิ่งหาเรา ไม่ใช่เราวิ่งหาร้าน'},
+      {id:'m6t4', hot:false, text:'ระบบออโต้ทำงาน 80% — ออกแรงน้อยลงมาก'},
+    ]
+  }
+];
+
+function getRMTasks(){ try{ return JSON.parse(localStorage.getItem(RM_KEY)||'{}'); }catch{ return {}; } }
+function saveRMTasks(obj){ localStorage.setItem(RM_KEY,JSON.stringify(obj)); }
+
+function toggleRMTask(id){
+  const t=getRMTasks();
+  t[id]=!t[id];
+  saveRMTasks(t);
+  renderRoadmap();
+}
+
+function resetRoadmapTasks(){
+  if(!confirm('รีเซ็ตงานที่ติ๊กไว้ทั้งหมด?')) return;
+  localStorage.removeItem(RM_KEY);
+  renderRoadmap();
+  toast('รีเซ็ตแล้ว','ok');
+}
+
+function renderRoadmap(){
+  const done=getRMTasks();
+  const allTasks=RM_MONTHS.flatMap(m=>m.tasks);
+  const totalDone=allTasks.filter(t=>done[t.id]).length;
+  const pct=Math.round(totalDone/allTasks.length*100);
+
+  const chip=document.getElementById('rmProgressChip');
+  if(chip) chip.textContent=`✅ ${totalDone}/${allTasks.length} งาน · ${pct}%`;
+
+  const MONTH_COLORS=['#7c3aed','#0891b2','#059669','#d97706','#ea580c','#c9a84c'];
+
+  const el=document.getElementById('rmCards'); if(!el) return;
+  el.innerHTML = RM_MONTHS.map((m,mi)=>{
+    const mc=MONTH_COLORS[mi];
+    const mDone=m.tasks.filter(t=>done[t.id]).length;
+    const mPct=Math.round(mDone/m.tasks.length*100);
+    const allMonthDone=mDone===m.tasks.length;
+
+    return `<div style="display:flex;gap:1rem;align-items:flex-start">
+      <!-- dot -->
+      <div style="flex-shrink:0;width:52px;height:52px;border-radius:50%;background:${allMonthDone?mc+'22':'white'};border:2px solid ${mc};display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;z-index:1">
+        <span style="font-size:.95rem;font-weight:800;color:${mc};line-height:1">${allMonthDone?'✅':m.num}</span>
+        <span style="font-size:.55rem;color:${mc};opacity:.8">${['ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'][mi]}</span>
+      </div>
+      <!-- card -->
+      <div style="flex:1;background:white;border:1.5px solid ${allMonthDone?mc+'55':'#e5e7eb'};border-radius:14px;padding:1rem 1.25rem;${allMonthDone?'opacity:.8':''}">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.5rem;margin-bottom:.6rem">
+          <div>
+            <div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:#1a1228">${m.theme}</div>
+            <div style="font-size:.75rem;color:#9ca3af;margin-top:.1rem">${m.label} · ${m.sub}</div>
+          </div>
+          <div style="background:${mc}18;border:1px solid ${mc}55;border-radius:8px;padding:.25rem .75rem;font-size:.82rem;font-weight:700;color:${mc};white-space:nowrap">${m.rev}</div>
+        </div>
+
+        <!-- KPIs -->
+        <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.75rem">
+          ${m.kpis.map(k=>`<div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:6px;padding:.2rem .55rem;font-size:.72rem;color:#6b7280"><span style="color:#1a1228;font-weight:600">${k.v}</span> ${k.k}</div>`).join('')}
+        </div>
+
+        <!-- Progress bar -->
+        <div style="margin-bottom:.65rem">
+          <div style="display:flex;justify-content:space-between;font-size:.7rem;color:#9ca3af;margin-bottom:.25rem">
+            <span>ความคืบหน้า</span><span style="color:${mc};font-weight:700">${mPct}%</span>
+          </div>
+          <div style="background:#f3f4f6;border-radius:4px;height:6px">
+            <div style="background:${mc};height:6px;border-radius:4px;width:${mPct}%;transition:width .3s"></div>
+          </div>
+        </div>
+
+        <!-- Tasks -->
+        <div style="display:flex;flex-direction:column;gap:.3rem">
+          ${m.tasks.map(t=>{
+            const isDone=!!done[t.id];
+            return `<label style="display:flex;align-items:flex-start;gap:.5rem;cursor:pointer;padding:.3rem .4rem;border-radius:6px;${isDone?'opacity:.5':''}hover:background:#f9fafb">
+              <input type="checkbox" ${isDone?'checked':''} onchange="toggleRMTask('${t.id}')"
+                style="width:15px;height:15px;margin-top:.1rem;flex-shrink:0;accent-color:${mc}">
+              <span style="font-size:.8rem;color:${isDone?'#9ca3af':'#374151'};${isDone?'text-decoration:line-through':''}${t.hot&&!isDone?';font-weight:600;color:#1a1228':''}">${t.hot&&!isDone?'⚡ ':''}${t.text}</span>
+            </label>`;
+          }).join('')}
+        </div>
+
+        ${m.warn?`<div style="margin-top:.6rem;font-size:.75rem;color:#b45309;background:#fffbeb;border:1px solid #fde68a;border-radius:6px;padding:.35rem .65rem">${m.warn}</div>`:''}
+      </div>
+    </div>`;
+  }).join(`<div style="margin-left:25px;width:2px;height:1rem;background:#e5e7eb"></div>`);
+
+  // total summary card
+  el.innerHTML += `<div style="background:linear-gradient(135deg,#1a0f2e,#2d1060);border:1.5px solid #c9a84c;border-radius:14px;padding:1.25rem 1.5rem;text-align:center;margin-top:.5rem">
+    <div style="font-size:.75rem;letter-spacing:.1em;color:#c9a84c;text-transform:uppercase;margin-bottom:.25rem">เป้าหมายรวม 6 เดือน</div>
+    <div style="font-family:'Playfair Display',serif;font-size:2.25rem;font-weight:700;color:#e8c870">฿465,000 – 960,000+</div>
+    <div style="font-size:.8rem;color:#a08cc0;margin-top:.3rem">รายได้สะสม · ขึ้นอยู่กับว่าทำครบ 3 ขาหรือไม่</div>
+    <div style="display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-top:.75rem">
+      <span style="background:rgba(255,255,255,.08);border-radius:6px;padding:.3rem .75rem;font-size:.75rem;color:#f59e0b;border:1px solid rgba(245,158,11,.3)">⚡ ต้องมี E-book ก่อนเดือน 2</span>
+      <span style="background:rgba(255,255,255,.08);border-radius:6px;padding:.3rem .75rem;font-size:.75rem;color:#f59e0b;border:1px solid rgba(245,158,11,.3)">⚡ TikTok/Reels ต่อเนื่องทุกสัปดาห์</span>
+      <span style="background:rgba(255,255,255,.08);border-radius:6px;padding:.3rem .75rem;font-size:.75rem;color:#f59e0b;border:1px solid rgba(245,158,11,.3)">⚡ Partner Program เดือน 3</span>
+      <span style="background:rgba(255,255,255,.06);border-radius:6px;padding:.3rem .75rem;font-size:.75rem;color:#a08cc0">📌 ถ้าทำแค่ Shopee อย่างเดียว → หารด้วย 5</span>
+    </div>
+  </div>`;
+}
 </script>
 </body>
 </html>
