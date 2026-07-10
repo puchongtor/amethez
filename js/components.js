@@ -37,6 +37,7 @@ const NAV_HTML = `
       <ul class="dropdown">
         <li><a href="/wuchong/">Master Wuchong</a></li>
         <li><a href="/metha/">อาจารย์เมธา</a></li>
+        <li><a href="/cosmos/">☄️ Dr. Cosmos</a></li>
       </ul>
     </li>
     <li class="has-drop"><a href="/shop/" class="nav-shop">🛒 ร้านค้า</a>
@@ -84,6 +85,7 @@ const FOOTER_HTML = `
       <ul>
         <li><a href="/wuchong/">🧙 Master Wuchong</a></li>
         <li><a href="/metha/">🌟 อาจารย์เมธา</a></li>
+        <li><a href="/cosmos/">☄️ Dr. Cosmos</a></li>
         <li><a href="/talk/">🔮 ห้องคลื่นเสียง Manifest</a></li>
       </ul>
     </div>

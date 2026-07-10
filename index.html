@@ -159,7 +159,8 @@
     @media(max-width:700px) { .journal-row, .journal-row.rev { grid-template-columns:1fr; } .journal-row.rev .j-img, .journal-row.rev .j-txt { order:unset; } }
 
     /* ── EXPERTS ── */
-    .expert-strip { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
+    .expert-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
+    @media(max-width:900px){ .expert-strip { grid-template-columns:repeat(2,1fr); } }
     .ex-card { background:white; border:1.5px solid var(--border); border-radius:1.125rem; padding:1.375rem; text-decoration:none; display:block; transition:all .2s; }
     .ex-card:hover { border-color:var(--purple); box-shadow:0 6px 24px rgba(124,58,237,.1); transform:translateY(-2px); }
     .ex-icon { width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.4rem; margin-bottom:.875rem; }
@@ -547,8 +548,8 @@
   <div class="wrap">
     <div style="margin-bottom:1.75rem">
       <div class="sec-label">ผู้เชี่ยวชาญ</div>
-      <div class="sec-title">3 มุมมอง · ครบทุกมิติ</div>
-      <div class="sec-sub">วิทยาศาสตร์ · พลังงาน · สายมู — รู้จริงทุกด้านในที่เดียว</div>
+      <div class="sec-title">4 มุมมอง · ครบทุกมิติ</div>
+      <div class="sec-sub">วิทยาศาสตร์ · พลังงาน · สายมู · จักรวาล — รู้จริงทุกด้านในที่เดียว</div>
     </div>
     <div class="expert-strip">
       <a href="/stones/" class="ex-card">
@@ -571,6 +572,13 @@
         <div class="ex-role">ดวง · โหราศาสตร์ · ดูดวงรายวัน</div>
         <div class="ex-desc">เลือกหินตามราศีและวันเกิด ดูดวงประจำวัน ดวงรายเดือน อัปเดตทุกวัน</div>
         <div class="ex-tags"><span class="ex-tag">ราศี</span><span class="ex-tag">ดวงรายวัน</span><span class="ex-tag">เทพ</span></div>
+      </a>
+      <a href="/cosmos/" class="ex-card" style="border-color:#2d1b5e;background:linear-gradient(135deg,#faf8f4,#f5f0ff)">
+        <div class="ex-icon" style="background:linear-gradient(135deg,#0f0a1e,#1a0936)">☄️</div>
+        <div class="ex-name">Dr. Cosmos</div>
+        <div class="ex-role" style="color:#7c3aed">หินจักรวาล · สะเก็ดดาว · สสารปริศนา</div>
+        <div class="ex-desc">อุกกาบาต Tektite แก้วอวกาศ และหินที่มาจากนอกโลก วิทยาศาสตร์เชิงลึกผสมตำนานจักรวาล</div>
+        <div class="ex-tags"><span class="ex-tag">สะเก็ดดาว</span><span class="ex-tag">อุกกาบาต</span><span class="ex-tag">จักรวาล</span></div>
       </a>
     </div>
   </div>
