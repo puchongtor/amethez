@@ -908,7 +908,13 @@ textarea.form-input{resize:vertical;min-height:80px;}
             <div class="card" style="margin-bottom:0">
               <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem">
                 <div class="card-title" style="margin:0">📄 เนื้อหาบทความ (Body)</div>
-                <span id="beBodyLen" style="font-size:.72rem;color:#9ca3af"></span>
+                <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
+                  <label style="cursor:pointer" onmousedown="saveBEInsertRange()">
+                    <span class="btn btn-outline btn-sm" style="display:inline-flex;align-items:center;gap:.3rem">🖼️ แทรกรูปในเนื้อหา</span>
+                    <input type="file" id="beInsertImgFile" accept="image/*" style="display:none" onchange="insertBEBodyImage(this)">
+                  </label>
+                  <span id="beBodyLen" style="font-size:.72rem;color:#9ca3af"></span>
+                </div>
               </div>
               <!-- Tab bar -->
               <div style="display:flex;gap:0;margin-bottom:0;border-bottom:2px solid #e9e0f5">
@@ -3439,14 +3445,76 @@ function uploadBEThumb(input){
 function updateBEBodyLen(v){
   document.getElementById('beBodyLen').textContent=(v||'').length.toLocaleString()+' ตัวอักษร · '+(v||'').replace(/<[^>]*>/g,'').trim().split(/\s+/).filter(Boolean).length+' คำ';
 }
+let _dirtyBodyPostIds=new Set();
+function markBEBodyDirty(){
+  const eid=document.getElementById('beEditId').value;
+  if(eid) _dirtyBodyPostIds.add(String(eid));
+}
 function onBEBodyEdit(v){
   updateBEBodyLen(v);
+  markBEBodyDirty();
   if(document.getElementById('beTabPreview').style.display!=='none') document.getElementById('beBodyPreview').innerHTML=v;
 }
 function onBEPreviewEdit(){
   const html=document.getElementById('beBodyPreview').innerHTML;
   document.getElementById('beBodyTA').value=html;
   updateBEBodyLen(html);
+  markBEBodyDirty();
+}
+
+// ── Insert image into body content ──────────────────────
+let _beInsertRange=null;
+function saveBEInsertRange(){
+  const preview=document.getElementById('beBodyPreview');
+  const sel=window.getSelection();
+  if(sel && sel.rangeCount>0 && preview.contains(sel.anchorNode)){
+    _beInsertRange=sel.getRangeAt(0).cloneRange();
+  } else {
+    _beInsertRange=null;
+  }
+}
+function insertBEBodyImage(input){
+  const f=input.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=e=>{
+    const dataUrl=e.target.result;
+    const imgHTML=`<img src="${dataUrl}" alt="" style="max-width:100%;border-radius:.75rem;margin:1.25rem 0">`;
+    const isHtmlTab=document.getElementById('beTabHtml').style.display!=='none';
+    if(isHtmlTab){
+      const ta=document.getElementById('beBodyTA');
+      const start=ta.selectionStart!=null?ta.selectionStart:ta.value.length;
+      const end=ta.selectionEnd!=null?ta.selectionEnd:ta.value.length;
+      ta.value=ta.value.slice(0,start)+'\n'+imgHTML+'\n'+ta.value.slice(end);
+      onBEBodyEdit(ta.value);
+      const pos=start+imgHTML.length+2;
+      ta.focus(); ta.setSelectionRange(pos,pos);
+    } else {
+      const preview=document.getElementById('beBodyPreview');
+      preview.focus();
+      const sel=window.getSelection();
+      if(_beInsertRange){ sel.removeAllRanges(); sel.addRange(_beInsertRange); }
+      let range=sel.rangeCount?sel.getRangeAt(0):null;
+      if(!range || !preview.contains(range.commonAncestorContainer)){
+        range=document.createRange();
+        range.selectNodeContents(preview);
+        range.collapse(false);
+      }
+      const imgEl=document.createElement('img');
+      imgEl.src=dataUrl;
+      imgEl.alt='';
+      imgEl.style.cssText='max-width:100%;border-radius:.75rem;margin:1.25rem 0';
+      range.deleteContents();
+      range.insertNode(imgEl);
+      range.setStartAfter(imgEl);
+      range.collapse(true);
+      sel.removeAllRanges();
+      sel.addRange(range);
+      onBEPreviewEdit();
+    }
+    input.value='';
+    toast('แทรกรูปแล้ว — กด บันทึก แล้ว 🚀 เผยแพร่ เพื่อขึ้นเว็บจริง','ok');
+  };
+  r.readAsDataURL(f);
 }
 function switchBETab(t){
   const isHtml=t==='html';
@@ -4008,6 +4076,48 @@ async function publishToGitHub(){
             }
           }
         }
+
+        // Push edited body content (incl. any inserted images) back into the live page HTML
+        for(const bp of blogPosts){
+          if(!_dirtyBodyPostIds.has(String(bp.id))||!bp.body) continue;
+          // Upload any base64 images embedded in the body as real files first
+          const bodyImgs=[...bp.body.matchAll(/src="(data:image\/([a-zA-Z0-9.+-]+);base64,([^"]+))"/g)];
+          let n=0;
+          for(const mm of bodyImgs){
+            n++;
+            const ext=mm[2]==='jpeg'?'jpg':mm[2]==='svg+xml'?'svg':mm[2];
+            const bpath=`data/images/blog_${bp.id}_body${n}.${ext}`;
+            let bsha='';
+            try{ const br=await fetch(`https://api.github.com/repos/${repo}/contents/${bpath}`,{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}}); if(br.ok){ const bd=await br.json(); bsha=bd.sha; } }catch{}
+            const bur=await fetch(`https://api.github.com/repos/${repo}/contents/${bpath}`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:`cms: blog body image ${bp.id}-${n}`,content:mm[3],...(bsha?{sha:bsha}:{})})});
+            if(bur.ok){ bp.body=bp.body.replace(mm[1],'/'+bpath); }
+            else toast('⚠️ อัปโหลดรูปในเนื้อหา "'+bp.title+'" ไม่สำเร็จ','err');
+          }
+          // Splice the updated body into the live page's .post-body element
+          const pagePath=(bp.url||'/blog/'+bp.slug+'.html').replace(/^\//,'');
+          try{
+            const pr=await fetch(`https://api.github.com/repos/${repo}/contents/${pagePath}`,{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}});
+            if(pr.ok){
+              const pd=await pr.json();
+              const pageHtml=decodeURIComponent(escape(atob(pd.content.replace(/\n/g,''))));
+              const doc=new DOMParser().parseFromString(pageHtml,'text/html');
+              const bodyEl=doc.querySelector('.post-body');
+              if(bodyEl){
+                bodyEl.innerHTML=bp.body;
+                const updatedHtml='<!DOCTYPE html>\n'+doc.documentElement.outerHTML;
+                const newB64=btoa(unescape(encodeURIComponent(updatedHtml)));
+                const pur=await fetch(`https://api.github.com/repos/${repo}/contents/${pagePath}`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:`cms: update body — ${bp.title}`,content:newB64,sha:pd.sha})});
+                if(!pur.ok) toast('⚠️ อัปเดตเนื้อหาหน้า "'+bp.title+'" ไม่สำเร็จ','err');
+              } else {
+                toast('⚠️ ไม่พบ .post-body ในหน้า "'+bp.title+'" — ข้ามการอัปเดตเนื้อหา','err');
+              }
+            } else {
+              toast('⚠️ ยังไม่มีไฟล์หน้าเว็บของ "'+bp.title+'" — ต้องสร้างหน้าก่อนถึงจะแทรกเนื้อหาได้','err');
+            }
+          }catch(e){ toast('⚠️ อัปเดตเนื้อหาหน้า "'+bp.title+'" ผิดพลาด: '+e.message,'err'); }
+        }
+        _dirtyBodyPostIds.clear();
+
         saveBlogPosts(blogPosts);
         const blogJson={articles:blogPosts.map(bp=>({
           id:isNaN(bp.id)?bp.id:Number(bp.id),
