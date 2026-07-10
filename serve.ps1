@@ -19,8 +19,9 @@ Write-Host "Serving $root on http://localhost:$port/"
 while ($listener.IsListening) {
   $ctx  = $listener.GetContext()
   $path = $ctx.Request.Url.AbsolutePath
-  if ($path -eq '/') { $path = '/index.html' }
+  if ($path -eq '/' -or $path -eq '') { $path = '/index.html' }
   $file = Join-Path $root ($path.TrimStart('/').Replace('/', '\'))
+  if (Test-Path $file -PathType Container) { $file = Join-Path $file 'index.html' }
   if (Test-Path $file -PathType Leaf) {
     $ext  = [IO.Path]::GetExtension($file).ToLower()
     $type = if ($mime[$ext]) { $mime[$ext] } else { 'application/octet-stream' }

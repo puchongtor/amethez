@@ -609,6 +609,44 @@ textarea.form-input{resize:vertical;min-height:80px;}
           <div class="section-title">🛒 Shopee Affiliate Products</div>
           <div class="section-sub">เพิ่มสินค้า Shopee Aff — AI แนะนำ Tag จากชื่อสินค้าอัตโนมัติ</div>
 
+          <!-- BULK IMPORT CARD -->
+          <div class="card" id="bulkImportCard">
+            <div class="card-title">📥 นำเข้าสินค้าจาก Excel (Bulk Import)</div>
+            <div style="background:#fef9ec;border:1px solid #f0d580;border-radius:.65rem;padding:.85rem 1rem;margin-bottom:1.25rem;font-size:.82rem;line-height:1.7;color:#92620a">
+              <strong>วิธีใช้:</strong> Copy จาก Excel หลายบรรทัด (Ctrl+A → Ctrl+C) แล้ววางในช่องด้านล่าง<br>
+              คอลัมน์ที่ใช้: <strong>B</strong>=ชื่อสินค้า &nbsp;·&nbsp; <strong>C</strong>=ราคา &nbsp;·&nbsp; <strong>E</strong>=ร้านค้า &nbsp;·&nbsp; <strong>F</strong>=commission% &nbsp;·&nbsp; <strong>H</strong>=URL รูปภาพ (แทนที่ลิงค์สินค้า) &nbsp;·&nbsp; <strong>I</strong>=ลิงค์ Affiliate
+            </div>
+            <textarea id="bulkPasteArea" style="width:100%;height:160px;font-family:monospace;font-size:.78rem;border:1.5px solid var(--border);border-radius:.6rem;padding:.75rem;resize:vertical;outline:none" placeholder="วางข้อมูลจาก Excel ที่นี่...&#10;(tab-separated, หลายบรรทัด)"></textarea>
+            <div style="display:flex;gap:.75rem;margin-top:.75rem;align-items:center;flex-wrap:wrap">
+              <button class="btn btn-primary" onclick="parseBulkPreview()">🔍 ดูตัวอย่างก่อน import</button>
+              <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer">
+                <input type="checkbox" id="bulkAutoTag" checked style="width:15px;height:15px"> ✨ Auto-tag หลัง import (ใช้ AI)
+              </label>
+              <span id="bulkParseStatus" style="font-size:.82rem;color:#6b7280"></span>
+            </div>
+
+            <!-- PREVIEW TABLE -->
+            <div id="bulkPreviewWrap" style="display:none;margin-top:1.25rem">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem;flex-wrap:wrap;gap:.5rem">
+                <div style="font-weight:700;font-size:.9rem">พบ <span id="bulkCount">0</span> รายการ — ตรวจสอบก่อนกดยืนยัน</div>
+                <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+                  <button class="btn btn-success" onclick="confirmBulkImport()">✅ นำเข้าทั้งหมด</button>
+                  <button class="btn btn-outline btn-sm" onclick="clearBulk()">✕ ยกเลิก</button>
+                </div>
+              </div>
+              <div style="overflow-x:auto;max-height:420px;overflow-y:auto">
+                <table class="product-table" id="bulkPreviewTable">
+                  <thead><tr>
+                    <th><input type="checkbox" id="bulkCheckAll" onchange="toggleAllBulk(this.checked)" title="เลือกทั้งหมด" style="width:16px;height:16px;cursor:pointer"></th>
+                    <th>รูป</th><th>ชื่อสินค้า</th><th>ร้าน</th><th>ราคา</th><th>Commission</th><th>Affiliate Link</th>
+                  </tr></thead>
+                  <tbody id="bulkPreviewBody"></tbody>
+                </table>
+              </div>
+              <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:.5rem;padding:.65rem .85rem;margin-top:.75rem;font-size:.8rem;color:#166534" id="bulkSkipNote" style="display:none"></div>
+            </div>
+          </div>
+
           <div class="card">
             <div class="card-title" id="affFormTitle">➕ เพิ่มสินค้าใหม่</div>
             <input type="hidden" id="affEditId">
@@ -2006,9 +2044,11 @@ async function aiSuggestTags(){
   document.getElementById('affTagStatus').textContent = '';
 
   const allTags = AFF_TAG_GROUPS.flatMap(g=>g.tags).join(', ');
+  const cats = 'เครื่องประดับ,หินดิบ,หินตกแต่ง,อุปกรณ์ดูแลหิน,DIY,ของมงคล';
   const prompt = `คุณคือผู้เชี่ยวชาญหินคริสตัล วิเคราะห์ชื่อสินค้า: "${name}"
-แล้วเลือก tag ที่เหมาะสมจากรายการนี้เท่านั้น: ${allTags}
-ตอบเป็น JSON array เช่น ["อเมทิสต์","ม่วง","มงกุฎ","สร้อยข้อมือ"] ไม่ต้องอธิบายอะไรเพิ่ม`;
+1) เลือก tag จาก: ${allTags}
+2) เลือกหมวด 1 อย่างจาก: ${cats}
+ตอบ JSON object: {"tags":["อเมทิสต์","ม่วง","สร้อยข้อมือ"],"category":"เครื่องประดับ"} ไม่ต้องอธิบายเพิ่ม`;
 
   try{
     const r = await fetch('https://api.groq.com/openai/v1/chat/completions',{
@@ -2018,12 +2058,18 @@ async function aiSuggestTags(){
     });
     const d = await r.json();
     if(!r.ok) throw new Error(d?.error?.message||r.statusText);
-    const raw = d?.choices?.[0]?.message?.content||'[]';
-    const match = raw.match(/\[[\s\S]*?\]/);
-    const suggested = match ? JSON.parse(match[0]) : [];
+    const raw = d?.choices?.[0]?.message?.content||'{}';
+    const match = raw.match(/\{[\s\S]*?\}/);
+    const obj = match ? JSON.parse(match[0]) : {};
+    const suggested = Array.isArray(obj.tags) ? obj.tags : [];
     setCheckedTags(suggested);
+    if(obj.category){
+      const catEl = document.getElementById('affCat');
+      const opt = [...catEl.options].find(o=>o.value===obj.category);
+      if(opt) catEl.value = obj.category;
+    }
     const count = getCheckedTags().length;
-    document.getElementById('affTagStatus').textContent = `✅ AI แนะนำ ${count} tag — ปรับได้ตามต้องการ`;
+    document.getElementById('affTagStatus').textContent = `✅ AI แนะนำ ${count} tag · หมวด: ${obj.category||'-'} — ปรับได้ตามต้องการ`;
     document.getElementById('affTagStatus').style.color = '#059669';
   }catch(e){
     document.getElementById('affTagStatus').textContent = '❌ '+e.message;
@@ -2037,6 +2083,153 @@ function previewAffImg(url){
   const el = document.getElementById('affImgPreview');
   if(url && url.startsWith('http')){ el.src=url; el.style.display='block'; el.onerror=()=>el.style.display='none'; }
   else el.style.display='none';
+}
+
+// ── BULK IMPORT ──────────────────────────────
+let _bulkParsed = [];
+
+function parseBulkPreview(){
+  const raw = document.getElementById('bulkPasteArea').value;
+  const statusEl = document.getElementById('bulkParseStatus');
+  if(!raw.trim()){ statusEl.textContent = '⚠️ ไม่มีข้อมูล'; return; }
+
+  const lines = raw.trim().split('\n').filter(l => l.trim());
+  _bulkParsed = [];
+  let skipped = 0;
+
+  lines.forEach((line, idx) => {
+    const cols = line.split('\t');
+    // ต้องมีอย่างน้อย 9 columns (A-I)
+    if(cols.length < 9){ skipped++; return; }
+    const name    = (cols[1]||'').trim();
+    const price   = parseFloat((cols[2]||'0').replace(/[^\d.]/g,''))||0;
+    const store   = (cols[4]||'').trim();
+    const commPct = (cols[5]||'').trim();
+    const imgUrl  = (cols[7]||'').trim();
+    const affUrl  = (cols[8]||'').trim();
+    if(!name || !affUrl){ skipped++; return; }
+    _bulkParsed.push({ name, price, store, commPct, imgUrl, affUrl });
+  });
+
+  if(!_bulkParsed.length){
+    statusEl.textContent = `❌ ไม่พบข้อมูลที่ถูกต้อง (ข้าม ${skipped} บรรทัด)`;
+    document.getElementById('bulkPreviewWrap').style.display = 'none';
+    return;
+  }
+
+  document.getElementById('bulkCount').textContent = _bulkParsed.length;
+  statusEl.textContent = `✅ พบ ${_bulkParsed.length} รายการ${skipped ? ` (ข้าม ${skipped} บรรทัด)` : ''}`;
+
+  const tbody = document.getElementById('bulkPreviewBody');
+  tbody.innerHTML = _bulkParsed.map((p,i) => `
+    <tr id="bulkRow_${i}">
+      <td><input type="checkbox" class="bulk-chk" data-idx="${i}" checked style="width:16px;height:16px;cursor:pointer" onchange="updateBulkCount()"></td>
+      <td>${p.imgUrl ? `<img src="${p.imgUrl}" style="width:52px;height:52px;object-fit:cover;border-radius:.4rem" onerror="this.style.display='none'">` : '<span style="color:#9ca3af;font-size:.75rem">ไม่มีรูป</span>'}</td>
+      <td style="font-size:.82rem;max-width:240px">${p.name}</td>
+      <td style="font-size:.78rem;color:#6b7280">${p.store}</td>
+      <td style="font-weight:700">฿${p.price.toLocaleString()}</td>
+      <td style="color:var(--green);font-size:.82rem">${p.commPct}</td>
+      <td style="font-size:.72rem;color:#7c3aed;max-width:140px;word-break:break-all">${p.affUrl.replace('https://s.shopee.co.th/','s.shopee…/')}</td>
+    </tr>`).join('');
+  document.getElementById('bulkCheckAll').checked = true;
+
+  const skipNote = document.getElementById('bulkSkipNote');
+  if(skipped){ skipNote.textContent = `ข้าม ${skipped} บรรทัดที่ไม่มีชื่อหรือลิงค์ Aff`; skipNote.style.display='block'; }
+  else skipNote.style.display = 'none';
+
+  document.getElementById('bulkPreviewWrap').style.display = 'block';
+}
+
+function toggleAllBulk(checked){
+  document.querySelectorAll('.bulk-chk').forEach(cb => cb.checked = checked);
+  updateBulkCount();
+}
+
+function updateBulkCount(){
+  const selected = document.querySelectorAll('.bulk-chk:checked').length;
+  const total = _bulkParsed.length;
+  document.getElementById('bulkCount').textContent = `${selected} / ${total}`;
+  const allChk = document.getElementById('bulkCheckAll');
+  if(allChk) allChk.checked = selected === total;
+}
+
+function confirmBulkImport(){
+  const checkedIdxs = [...document.querySelectorAll('.bulk-chk:checked')].map(cb => Number(cb.dataset.idx));
+  if(!checkedIdxs.length){ toast('กรุณาเลือกอย่างน้อย 1 รายการ','err'); return; }
+  const selected = checkedIdxs.map(i => _bulkParsed[i]);
+  const today = new Date().toLocaleDateString('th-TH');
+  const added = [];
+  selected.forEach(p => {
+    const existing = affProducts.find(a => a.url === p.affUrl);
+    if(existing){ existing.price = p.price; existing.image_url = p.imgUrl||existing.image_url; existing.updated = today; return; }
+    affProducts.unshift({
+      id: genAffId(),
+      name: p.name,
+      url: p.affUrl,
+      price: p.price,
+      category: 'เครื่องประดับ',
+      image_url: p.imgUrl,
+      store: p.store,
+      commission_pct: p.commPct,
+      tags: [],
+      status: 'available',
+      created: today,
+      updated: today,
+    });
+    added.push(p.name);
+  });
+  saveAffStore();
+  clearBulk();
+  renderAffTable();
+  const doAutoTag = document.getElementById('bulkAutoTag').checked;
+  if(doAutoTag && added.length){
+    const key = localStorage.getItem(GEMINI_KEY_STORE);
+    if(!key){ toast(`✅ นำเข้า ${added.length} รายการ — ไม่มี Groq Key จึงข้าม Auto-tag`, 'ok'); return; }
+    toast(`✅ นำเข้า ${added.length} รายการ — กำลัง Auto-tag...`, 'ok');
+    batchAutoTag(added, key);
+  } else {
+    toast(`✅ นำเข้าสำเร็จ ${added.length} รายการ (อัปเดต ${selected.length-added.length} รายการ)`, 'ok');
+  }
+}
+
+async function batchAutoTag(productNames, groqKey){
+  const allTags = AFF_TAG_GROUPS.flatMap(g=>g.tags).join(', ');
+  let done = 0;
+  for(const name of productNames){
+    const p = affProducts.find(a=>a.name===name);
+    if(!p || p.tags.length) { done++; continue; }
+    try{
+      const cats = 'เครื่องประดับ,หินดิบ,หินตกแต่ง,อุปกรณ์ดูแลหิน,DIY,ของมงคล';
+      const prompt = `คุณคือผู้เชี่ยวชาญหินคริสตัล วิเคราะห์ชื่อสินค้า: "${name}"\n1) เลือก tag จาก: ${allTags}\n2) เลือกหมวด 1 อย่างจาก: ${cats}\nตอบ JSON object: {"tags":["..."],"category":"..."} ไม่ต้องอธิบายเพิ่ม`;
+      const r = await fetch('https://api.groq.com/openai/v1/chat/completions',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Authorization':'Bearer '+groqKey},
+        body: JSON.stringify({model:'llama-3.1-8b-instant',messages:[{role:'user',content:prompt}],max_tokens:200,temperature:0.2})
+      });
+      const d = await r.json();
+      const raw = d?.choices?.[0]?.message?.content||'{}';
+      const match = raw.match(/\{[\s\S]*?\}/);
+      if(match){
+        const obj = JSON.parse(match[0]);
+        if(Array.isArray(obj.tags)) p.tags = obj.tags;
+        if(obj.category) p.category = obj.category;
+      }
+    }catch(e){ /* ข้ามถ้า error */ }
+    done++;
+    if(done % 5 === 0){ saveAffStore(); renderAffTable(); }
+    await new Promise(res=>setTimeout(res, 300));
+  }
+  saveAffStore();
+  renderAffTable();
+  toast(`🏷 Auto-tag เสร็จ ${done} รายการ`, 'ok');
+}
+
+function clearBulk(){
+  _bulkParsed = [];
+  document.getElementById('bulkPasteArea').value = '';
+  document.getElementById('bulkParseStatus').textContent = '';
+  document.getElementById('bulkPreviewWrap').style.display = 'none';
+  document.getElementById('bulkPreviewBody').innerHTML = '';
 }
 
 function clearAffForm(){
