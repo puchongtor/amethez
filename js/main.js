@@ -5,10 +5,16 @@ async function loadShopeeProducts(tags = [], limit = 40) {
   try {
     const res = await fetch('/data/products.json');
     const { products } = await res.json();
-    const matched = products.filter(p =>
-      p.status === 'available' &&
-      tags.some(t => p.name.includes(t) || (p.tags||[]).includes(t))
-    );
+    const nameLower = p => (p.name||'').toLowerCase();
+    const tagsLower = p => (p.tags||[]).map(t => t.toLowerCase());
+    const matched = products.filter(p => {
+      if(p.status !== 'available') return false;
+      const nl = nameLower(p), tl = tagsLower(p);
+      return tags.some(t => {
+        const tl2 = t.toLowerCase();
+        return nl.includes(tl2) || tl.some(pt => pt.includes(tl2) || tl2.includes(pt));
+      });
+    });
     return (matched.length ? matched : products.filter(p => p.status === 'available')).slice(0, limit);
   } catch { return []; }
 }
