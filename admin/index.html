@@ -509,6 +509,26 @@ textarea.form-input{resize:vertical;min-height:80px;}
               <div class="card-title" style="margin:0">💰 Revenue Tracker</div>
               <span style="font-size:.78rem;color:#9ca3af">กรอกจากพอร์ทัล Shopee / ยอดขาย E-Book</span>
             </div>
+
+            <!-- AI REVENUE INPUT -->
+            <div style="background:#faf8ff;border:1.5px solid #ede9fe;border-radius:12px;padding:1rem;margin-bottom:1.25rem">
+              <div style="font-size:.82rem;font-weight:700;color:#5b21b6;margin-bottom:.5rem">💬 บอก AI ว่าได้อะไรมาบ้าง</div>
+              <div style="font-size:.75rem;color:#9ca3af;margin-bottom:.6rem">พิมพ์หรือวางข้อความ เช่น "ได้จาก Shopee 3,450 บาท ขาย e-book 2 เล่ม 1380 บาท masterpuch โอนค่า aff 5000"</div>
+              <div style="display:flex;gap:.5rem;align-items:flex-start">
+                <textarea id="revAiInput" rows="2" placeholder="วางข้อความรายได้ที่นี่..." style="flex:1;border:1px solid #e5e7eb;border-radius:8px;padding:.55rem .75rem;font-size:.82rem;font-family:inherit;resize:vertical;min-height:52px;line-height:1.5"></textarea>
+                <button class="btn btn-primary btn-sm" onclick="parseRevByAI()" id="btnRevAI" style="flex-shrink:0;white-space:nowrap">✨ วิเคราะห์</button>
+              </div>
+              <div id="revAiResult" style="display:none;margin-top:.75rem;background:white;border:1px solid #ede9fe;border-radius:8px;padding:.75rem">
+                <div style="font-size:.75rem;font-weight:700;color:#5b21b6;margin-bottom:.4rem">ผลการวิเคราะห์ — กด "ยืนยัน" เพื่อบันทึกเดือนนี้</div>
+                <div id="revAiBreakdown" style="display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:.6rem"></div>
+                <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+                  <button class="btn btn-primary btn-sm" onclick="confirmRevAI()">✅ ยืนยันบันทึก</button>
+                  <button class="btn btn-outline btn-sm" onclick="document.getElementById('revAiResult').style.display='none'">ยกเลิก</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- TABLE -->
             <div style="overflow-x:auto">
               <table class="rev-table">
                 <thead>
@@ -520,7 +540,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
                     <th>เป้า E-Book</th>
                     <th>LINE/Partner (฿)</th>
                     <th>รวม</th>
-                    <th></th>
+                    <th>สรุป</th>
                   </tr>
                 </thead>
                 <tbody id="revTableBody"></tbody>
@@ -538,6 +558,9 @@ textarea.form-input{resize:vertical;min-height:80px;}
                 </tfoot>
               </table>
             </div>
+
+            <!-- MONTHLY SUMMARY -->
+            <div id="monthlySummary" style="margin-top:1.25rem;display:none"></div>
           </div>
 
           <!-- GOAL EDITOR MODAL -->
@@ -1849,9 +1872,14 @@ function renderRevTable(){
   }
 
   const isCur = k => k === curMonthKey();
-  document.getElementById('revTableBody').innerHTML = rows.map(r=>`
-    <tr ${isCur(r.k)?'style="background:#fdfcff;font-weight:600"':''}>
-      <td>${r.label}${isCur(r.k)?' <span style="font-size:.65rem;background:#7c3aed;color:white;padding:.1rem .4rem;border-radius:2rem">เดือนนี้</span>':''}</td>
+  document.getElementById('revTableBody').innerHTML = rows.map(r=>{
+    const total=(r.shopee||0)+(r.ebook||0)+(r.line||0);
+    const tgt=(goals.shopee?.target||0)+(goals.ebook?.target||0);
+    const pct=tgt>0?Math.round(total/tgt*100):0;
+    const chip=pct>=100?`<span style="font-size:.65rem;background:#059669;color:white;padding:.1rem .4rem;border-radius:2rem">✅ ${pct}%</span>`
+      :pct>0?`<span style="font-size:.65rem;background:#7c3aed22;color:#7c3aed;padding:.1rem .4rem;border-radius:2rem">${pct}%</span>`:'';
+    return `<tr ${isCur(r.k)?'style="background:#fdfcff;font-weight:600"':''}>
+      <td style="white-space:nowrap">${r.label}${isCur(r.k)?' <span style="font-size:.65rem;background:#7c3aed;color:white;padding:.1rem .4rem;border-radius:2rem">เดือนนี้</span>':''}</td>
       <td><input class="rev-input" type="number" value="${r.shopee||''}" placeholder="0"
         onchange="updateRevCell('${r.k}','shopee',this.value)"></td>
       <td style="color:#9ca3af;font-size:.8rem">฿${(goals.shopee?.target||1000).toLocaleString()}</td>
@@ -1860,9 +1888,10 @@ function renderRevTable(){
       <td style="color:#9ca3af;font-size:.8rem">฿${(goals.ebook?.target||500).toLocaleString()}</td>
       <td><input class="rev-input" type="number" value="${r.line||''}" placeholder="0"
         onchange="updateRevCell('${r.k}','line',this.value)"></td>
-      <td style="font-weight:700;color:var(--purple)">฿${((r.shopee||0)+(r.ebook||0)+(r.line||0)).toLocaleString()}</td>
-      <td></td>
-    </tr>`).join('');
+      <td style="font-weight:700;color:var(--purple)">฿${total.toLocaleString()}</td>
+      <td>${chip} ${total>0?`<button class="btn btn-outline btn-sm" onclick="showMonthlySummary('${r.k}')" style="font-size:.65rem;padding:.1rem .45rem">📊</button>`:''}</td>
+    </tr>`;
+  }).join('');
 
   let ts=0,te=0,tl=0;
   rows.forEach(r=>{ ts+=r.shopee||0; te+=r.ebook||0; tl+=r.line||0; });
@@ -1870,12 +1899,188 @@ function renderRevTable(){
   document.getElementById('revTotalEbook').textContent='฿'+te.toLocaleString();
   document.getElementById('revTotalLine').textContent='฿'+tl.toLocaleString();
   document.getElementById('revTotalAll').textContent='฿'+(ts+te+tl).toLocaleString();
+
+  // auto show summary for current month if has data
+  const cur=rows.find(r=>isCur(r.k));
+  if(cur&&((cur.shopee||0)+(cur.ebook||0)+(cur.line||0))>0) showMonthlySummary(curMonthKey());
+  else document.getElementById('monthlySummary').style.display='none';
 }
 
 function updateRevCell(k,field,val){
   const stats=getStats(); if(!stats[k]) stats[k]={};
   stats[k][field]=Number(val)||0; saveStats(stats); renderRevTable(); renderGoalCards();
   toast('บันทึกแล้ว ✓','ok');
+}
+
+// ── AI REVENUE PARSER ──
+let _revAiParsed = {shopee:0,ebook:0,line:0,notes:''};
+
+async function parseRevByAI(){
+  const txt = document.getElementById('revAiInput').value.trim();
+  if(!txt){ toast('กรุณาพิมพ์ข้อมูลรายได้ก่อน','err'); return; }
+  const key = localStorage.getItem(GEMINI_KEY_STORE);
+
+  // fallback: simple regex parse if no API key
+  if(!key){
+    const parsed = simpleRevParse(txt);
+    _revAiParsed = parsed;
+    showRevAiResult(parsed);
+    return;
+  }
+
+  const btn=document.getElementById('btnRevAI');
+  btn.textContent='⏳...'; btn.disabled=true;
+
+  const prompt=`วิเคราะห์ข้อความรายได้ต่อไปนี้แล้วแยกเป็น 3 ประเภท:
+1) shopee = รายได้จาก Shopee Affiliate (ค่าคอมมิชชัน)
+2) ebook = รายได้จากขาย E-book หนังสือดิจิทัล คอร์สเรียน
+3) line = รายได้จาก LINE OA, Partner shop, ค่าลิงก์, ค่า placement
+
+ข้อความ: "${txt}"
+
+ตอบ JSON เท่านั้น: {"shopee":0,"ebook":0,"line":0,"notes":"สรุปสั้นๆ ว่าได้อะไรบ้าง"}`;
+
+  try{
+    const r=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+      body:JSON.stringify({model:'llama-3.1-8b-instant',messages:[{role:'user',content:prompt}],max_tokens:200,temperature:0.1})
+    });
+    const d=await r.json();
+    const raw=d?.choices?.[0]?.message?.content||'{}';
+    const m=raw.match(/\{[\s\S]*?\}/);
+    const obj=m?JSON.parse(m[0]):{};
+    const parsed={shopee:Number(obj.shopee)||0,ebook:Number(obj.ebook)||0,line:Number(obj.line)||0,notes:obj.notes||''};
+    // if AI got nothing, try regex fallback
+    if(!parsed.shopee&&!parsed.ebook&&!parsed.line){
+      const fb=simpleRevParse(txt); parsed.shopee=fb.shopee; parsed.ebook=fb.ebook; parsed.line=fb.line;
+    }
+    _revAiParsed=parsed;
+    showRevAiResult(parsed);
+  }catch(e){
+    const fb=simpleRevParse(txt); _revAiParsed=fb; showRevAiResult(fb);
+  }finally{
+    btn.textContent='✨ วิเคราะห์'; btn.disabled=false;
+  }
+}
+
+function simpleRevParse(txt){
+  const num=s=>{const m=s.match(/[\d,]+/);return m?parseInt(m[0].replace(/,/g,''),10):0;};
+  let shopee=0,ebook=0,line=0;
+  // split by common delimiters
+  const parts=txt.split(/[,\n]+/);
+  parts.forEach(p=>{
+    const lp=p.toLowerCase();
+    const v=num(p);
+    if(!v) return;
+    if(/shopee|ชอปปี้|คอม|affiliate|aff/.test(lp)) shopee+=v;
+    else if(/ebook|e-book|หนังสือ|คอร์ส|digital|ดิจิตอล/.test(lp)) ebook+=v;
+    else if(/line|ไลน์|partner|พาร์ทเนอร์|โอน|ค่าลิงก์|masterpuch/.test(lp)) line+=v;
+    else shopee+=v; // default to shopee
+  });
+  return {shopee,ebook,line,notes:''};
+}
+
+function showRevAiResult(parsed){
+  const total=parsed.shopee+parsed.ebook+parsed.line;
+  const items=[
+    {label:'🛒 Shopee Aff',val:parsed.shopee,color:'#059669'},
+    {label:'📘 E-Book',val:parsed.ebook,color:'#7c3aed'},
+    {label:'💬 LINE/Partner',val:parsed.line,color:'#0891b2'},
+  ];
+  document.getElementById('revAiBreakdown').innerHTML=items.map(it=>`
+    <div style="background:#f9f7ff;border:1px solid #ede9fe;border-radius:8px;padding:.4rem .75rem;min-width:120px">
+      <div style="font-size:.72rem;color:#6b7280">${it.label}</div>
+      <div style="font-size:1rem;font-weight:700;color:${it.color}">฿${it.val.toLocaleString()}</div>
+    </div>`).join('')+
+    `<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:.4rem .75rem;min-width:120px">
+      <div style="font-size:.72rem;color:#6b7280">รวมทั้งหมด</div>
+      <div style="font-size:1rem;font-weight:700;color:#059669">฿${total.toLocaleString()}</div>
+    </div>`+
+    (parsed.notes?`<div style="width:100%;font-size:.75rem;color:#6b7280;padding-top:.2rem">${parsed.notes}</div>`:'');
+  document.getElementById('revAiResult').style.display='';
+}
+
+function confirmRevAI(){
+  const k=document.getElementById('statsMonthSel')?.value||curMonthKey();
+  const stats=getStats();
+  if(!stats[k]) stats[k]={};
+  // ADD to existing (not replace)
+  stats[k].shopee=(stats[k].shopee||0)+_revAiParsed.shopee;
+  stats[k].ebook=(stats[k].ebook||0)+_revAiParsed.ebook;
+  stats[k].line=(stats[k].line||0)+_revAiParsed.line;
+  saveStats(stats);
+  document.getElementById('revAiResult').style.display='none';
+  document.getElementById('revAiInput').value='';
+  renderRevTable(); renderGoalCards();
+  toast(`✅ บันทึก ฿${(_revAiParsed.shopee+_revAiParsed.ebook+_revAiParsed.line).toLocaleString()} เข้าเดือนนี้แล้ว`,'ok');
+}
+
+// ── MONTHLY SUMMARY ──
+function showMonthlySummary(k){
+  const stats=getStats(); const goals=getGoals();
+  const data=stats[k]||{};
+  const shopee=data.shopee||0,ebook=data.ebook||0,line=data.line||0;
+  const total=shopee+ebook+line;
+  if(!total){ document.getElementById('monthlySummary').style.display='none'; return; }
+
+  // prev month
+  const [yr,mo]=k.split('-').map(Number);
+  const prevD=new Date(yr,mo-2,1);
+  const prevK=`${prevD.getFullYear()}-${String(prevD.getMonth()+1).padStart(2,'0')}`;
+  const prev=stats[prevK]||{};
+  const prevTotal=(prev.shopee||0)+(prev.ebook||0)+(prev.line||0);
+  const delta=prevTotal>0?Math.round((total-prevTotal)/prevTotal*100):null;
+
+  // vs target
+  const tgtShopee=goals.shopee?.target||5000;
+  const tgtEbook=goals.ebook?.target||5000;
+  const tgtTotal=tgtShopee+tgtEbook;
+  const pctTotal=tgtTotal>0?Math.round(total/tgtTotal*100):0;
+
+  // insights (rule-based)
+  const insights=[];
+  if(ebook>shopee&&ebook>line) insights.push('📘 E-Book เป็นรายได้หลักเดือนนี้ — ดีมาก margin สูง');
+  if(shopee>ebook&&shopee>line) insights.push('🛒 Shopee Aff นำโด่ง — traffic กำลังแปลงเป็นเงิน');
+  if(line>shopee&&line>ebook) insights.push('💬 Partner/LINE ทำรายได้สูงสุด — ขยาย partner เพิ่ม');
+  if(delta!==null&&delta>20) insights.push(`📈 โตขึ้น ${delta}% จากเดือนก่อน — momentum ดี`);
+  if(delta!==null&&delta<-10) insights.push(`📉 ลดลง ${Math.abs(delta)}% จากเดือนก่อน — ตรวจ traffic`);
+  if(pctTotal>=100) insights.push('🎯 ถึงเป้าแล้ว! พิจารณาขึ้นเป้าหมายเดือนหน้า');
+  else if(pctTotal>=70) insights.push(`⚡ ${100-pctTotal}% อีกก้าวถึงเป้า — push ช่วงท้ายเดือน`);
+  if(!insights.length) insights.push('📊 ข้อมูลกำลังสะสม — กรอกให้ครบทุกเดือนเพื่อดู trend');
+
+  // bar widths
+  const maxVal=Math.max(shopee,ebook,line,1);
+  const bar=(v,c)=>`<div style="background:${c};height:8px;border-radius:4px;width:${Math.round(v/maxVal*100)}%;min-width:${v>0?'4px':'0'}"></div>`;
+
+  const el=document.getElementById('monthlySummary');
+  el.style.display='';
+  el.innerHTML=`<div style="background:linear-gradient(135deg,#faf8ff,#f0ebff);border:1.5px solid #ede9fe;border-radius:14px;padding:1.1rem 1.25rem">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem">
+      <div style="font-weight:700;font-size:.95rem;color:#3b0764">📊 สรุป ${monthLabel(k)}</div>
+      <div style="font-size:1.25rem;font-weight:800;color:#5b21b6">฿${total.toLocaleString()}</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem;margin-bottom:1rem">
+      ${[['🛒 Shopee Aff',shopee,'#059669'],['📘 E-Book',ebook,'#7c3aed'],['💬 LINE/Partner',line,'#0891b2']].map(([l,v,c])=>`
+      <div>
+        <div style="font-size:.72rem;color:#6b7280;margin-bottom:.3rem">${l}</div>
+        ${bar(v,c)}
+        <div style="font-size:.9rem;font-weight:700;color:${c};margin-top:.25rem">฿${v.toLocaleString()}</div>
+        <div style="font-size:.68rem;color:#9ca3af">${total>0?Math.round(v/total*100):0}%</div>
+      </div>`).join('')}
+    </div>
+    <div style="background:white;border-radius:8px;padding:.6rem .85rem;margin-bottom:.75rem">
+      <div style="display:flex;justify-content:space-between;font-size:.78rem;margin-bottom:.3rem">
+        <span style="color:#6b7280">vs เป้าหมายเดือน</span>
+        <span style="font-weight:700;color:${pctTotal>=100?'#059669':pctTotal>=60?'#7c3aed':'#f97316'}">${pctTotal}%</span>
+      </div>
+      <div style="background:#f3f4f6;border-radius:4px;height:8px"><div style="background:${pctTotal>=100?'#059669':pctTotal>=60?'#7c3aed':'#f97316'};height:8px;border-radius:4px;width:${Math.min(100,pctTotal)}%"></div></div>
+      ${delta!==null?`<div style="font-size:.72rem;color:${delta>=0?'#059669':'#ef4444'};margin-top:.3rem">${delta>=0?'▲':'▼'} ${Math.abs(delta)}% จากเดือนก่อน (฿${prevTotal.toLocaleString()})</div>`:''}
+    </div>
+    <div style="display:flex;flex-direction:column;gap:.3rem">
+      ${insights.map(i=>`<div style="font-size:.78rem;color:#4c1d95;background:white;border-radius:6px;padding:.35rem .6rem">${i}</div>`).join('')}
+    </div>
+  </div>`;
 }
 
 // ── GOAL EDITOR ──
