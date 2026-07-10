@@ -153,4 +153,21 @@ document.addEventListener('DOMContentLoaded', () => {
   // Footer
   const ftr = document.querySelector('.site-footer');
   if (ftr) ftr.innerHTML = FOOTER_HTML;
+
+  // Blog Article Hero Image — inject thumbnail from blog.json
+  const heroDiv = document.querySelector('.hero-img');
+  if (heroDiv) {
+    (async () => {
+      try {
+        const r = await fetch('/data/blog.json?v='+Date.now());
+        const d = await r.json();
+        const path = location.pathname;
+        const art = d.articles.find(a => a.url && (a.url === path || a.url === path.replace(/\/$/, '')));
+        if (art && art.thumb) {
+          heroDiv.style.padding = '0';
+          heroDiv.innerHTML = `<img src="${art.thumb}" alt="${(art.title||'').replace(/"/g,'')}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit" onerror="this.parentElement.innerHTML='💎'">`;
+        }
+      } catch(e) {}
+    })();
+  }
 });
