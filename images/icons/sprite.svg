@@ -244,4 +244,76 @@
     <circle cx="24" cy="24" r="2.5" fill="#dc2626"/>
   </symbol>
 
+
+  <!-- ═══════════════════════════════════════════
+       STONE ICONS  60×60  decorative / hero use
+       ═══════════════════════════════════════════ -->
+
+  <!-- ic-amethyst: crystal cluster 3 points, purple gradient -->
+  <symbol id="ic-amethyst" viewBox="0 0 60 60">
+    <defs>
+      <linearGradient id="amethyst-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#c4b5fd"/>
+        <stop offset="50%" stop-color="#7c3aed"/>
+        <stop offset="100%" stop-color="#4c1d95"/>
+      </linearGradient>
+    </defs>
+    <!-- left crystal point -->
+    <polygon points="14,50 8,50 16,12 22,50" fill="url(#amethyst-grad)" opacity="0.75"/>
+    <!-- center crystal point (tallest) -->
+    <polygon points="26,50 20,50 30,4 40,50 34,50" fill="url(#amethyst-grad)"/>
+    <!-- right crystal point -->
+    <polygon points="46,50 38,50 44,16 52,50" fill="url(#amethyst-grad)" opacity="0.75"/>
+    <!-- base rock -->
+    <rect x="6" y="48" width="48" height="6" rx="3" fill="#4c1d95" opacity="0.6"/>
+    <!-- glint on center crystal -->
+    <line x1="29" y1="10" x2="33" y2="22" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round"/>
+  </symbol>
+
+  <!-- ic-clear-quartz: transparent crystal point, gray outline -->
+  <symbol id="ic-clear-quartz" viewBox="0 0 60 60">
+    <defs>
+      <linearGradient id="quartz-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#e0e7ff"/>
+        <stop offset="100%" stop-color="#c7d2fe"/>
+      </linearGradient>
+    </defs>
+    <!-- main crystal body -->
+    <polygon points="30,4 42,18 42,52 18,52 18,18" fill="url(#quartz-grad)" stroke="#818cf8" stroke-width="1.5" stroke-linejoin="round"/>
+    <!-- tip facet line -->
+    <polyline points="30,4 24,18 36,18" fill="none" stroke="#818cf8" stroke-width="1.2"/>
+    <!-- vertical center line -->
+    <line x1="30" y1="18" x2="30" y2="52" stroke="rgba(129,140,248,0.4)" stroke-width="1" stroke-dasharray="3 3"/>
+    <!-- glint -->
+    <line x1="27" y1="10" x2="31" y2="24" stroke="rgba(255,255,255,0.8)" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- base -->
+    <rect x="16" y="50" width="28" height="5" rx="2.5" fill="#c7d2fe" opacity="0.7"/>
+  </symbol>
+
+  <!-- ic-wuchong: sun/radiant energy circle (for Master Wuchong) -->
+  <symbol id="ic-wuchong" viewBox="0 0 60 60">
+    <defs>
+      <linearGradient id="wuchong-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#fef3c7"/>
+        <stop offset="100%" stop-color="#f59e0b"/>
+      </linearGradient>
+    </defs>
+    <!-- outer rays (8 lines) -->
+    <g stroke="#d97706" stroke-width="2" stroke-linecap="round">
+      <line x1="30" y1="4"  x2="30" y2="12" transform="rotate(0   30 30)"/>
+      <line x1="30" y1="4"  x2="30" y2="12" transform="rotate(45  30 30)"/>
+      <line x1="30" y1="4"  x2="30" y2="12" transform="rotate(90  30 30)"/>
+      <line x1="30" y1="4"  x2="30" y2="12" transform="rotate(135 30 30)"/>
+      <line x1="30" y1="4"  x2="30" y2="12" transform="rotate(180 30 30)"/>
+      <line x1="30" y1="4"  x2="30" y2="12" transform="rotate(225 30 30)"/>
+      <line x1="30" y1="4"  x2="30" y2="12" transform="rotate(270 30 30)"/>
+      <line x1="30" y1="4"  x2="30" y2="12" transform="rotate(315 30 30)"/>
+    </g>
+    <!-- main circle -->
+    <circle cx="30" cy="30" r="14" fill="url(#wuchong-grad)" stroke="#d97706" stroke-width="1.5"/>
+    <!-- inner dot -->
+    <circle cx="30" cy="30" r="4" fill="#d97706"/>
+  </symbol>
+
 </svg>
+
