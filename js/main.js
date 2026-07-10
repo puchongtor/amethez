@@ -15,7 +15,7 @@ async function loadShopeeProducts(tags = [], limit = 40) {
         return nl.includes(tl2) || tl.some(pt => pt.includes(tl2) || tl2.includes(pt));
       });
     });
-    return (matched.length ? matched : products.filter(p => p.status === 'available')).slice(0, limit);
+    return matched.slice(0, limit);
   } catch { return []; }
 }
 

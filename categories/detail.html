@@ -152,7 +152,7 @@
     .aff-info { padding:.875rem; }
     .aff-name { font-weight:600; font-size:.875rem; line-height:1.4; margin-bottom:.35rem; }
     .aff-price { color:#ee4d2d; font-weight:700; font-size:1rem; }
-    .aff-btn { display:block; margin:.5rem .875rem .875rem; background:linear-gradient(135deg,#ee4d2d,#f97316); color:#fff; text-align:center; padding:.5rem; border-radius:.625rem; font-size:.825rem; font-weight:700; }
+    .aff-btn { display:block; margin:.25rem .875rem .75rem; color:#ee4d2d; font-size:.72rem; font-weight:600; }
     .load-more-btn { display:block; width:100%; margin-top:1.25rem; padding:.875rem; background:#fff; border:2px solid #ee4d2d; color:#ee4d2d; border-radius:.875rem; font-size:.95rem; font-weight:700; cursor:pointer; transition:all .2s; font-family:'Sarabun',sans-serif; }
     .load-more-btn:hover { background:#ee4d2d; color:#fff; }
     .aff-empty { text-align:center; padding:2rem; color:#9ca3af; font-size:.9rem; }
@@ -382,13 +382,17 @@
   function buildAffSection(item, allProducts){
     const tags = item.stone_tags||[];
     const matched = allProducts.filter(p=>{
-      if(!p.tags||p.status==='unavailable') return false;
-      return tags.some(t=>p.tags.includes(t));
+      if(p.status==='unavailable') return false;
+      const nl = (p.name||'').toLowerCase();
+      const tl = (p.tags||[]).map(t=>t.toLowerCase());
+      return tags.some(t=>{
+        const tl2 = t.toLowerCase();
+        return nl.includes(tl2) || tl.some(pt=>pt.includes(tl2)||tl2.includes(pt));
+      });
     });
 
     const header = `<div class="aff-header">
-      <div class="aff-title">🛒 สินค้าแนะนำจาก Shopee</div>
-      <span class="aff-badge">Shopee Affiliate</span>
+      <div class="aff-title">✨ สินค้าแนะนำ</div>
     </div>`;
 
     if(!matched.length){
@@ -409,7 +413,7 @@
           <div class="aff-name">${p.name}</div>
           <div class="aff-price">฿${Number(p.price).toLocaleString()}</div>
         </div>
-        <div class="aff-btn">ดูบน Shopee →</div>
+        <div class="aff-btn">&raquo; สั่งซื้อผ่านทาง Shopee</div>
       </a>`;
     }
 
