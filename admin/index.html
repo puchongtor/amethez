@@ -842,8 +842,17 @@ textarea.form-input{resize:vertical;min-height:80px;}
                   <textarea class="form-input" id="blogExcerpt" rows="2" placeholder="สรุป 1-2 ประโยค..."></textarea></div>
                 <div class="form-group full"><label class="fl">แท็ก (คั่นด้วยจุลภาค)</label>
                   <input class="form-input" id="blogTags" placeholder="โรสควอตซ์, ความรัก, จักระหัวใจ"></div>
-                <div class="form-group full"><label class="fl">URL รูป Thumbnail</label>
-                  <input class="form-input" id="blogThumb" placeholder="https://..."></div>
+                <div class="form-group full"><label class="fl">รูป Thumbnail</label>
+                  <div style="display:flex;gap:.5rem;align-items:flex-start">
+                    <input class="form-input" id="blogThumb" placeholder="https://... หรืออัปโหลดรูปด้านขวา" style="flex:1">
+                    <label style="cursor:pointer;flex-shrink:0">
+                      <span class="btn btn-outline btn-sm" style="display:inline-flex;align-items:center;gap:.3rem">📁 เลือกรูป</span>
+                      <input type="file" id="blogThumbFile" accept="image/*" style="display:none" onchange="previewBlogThumb(this)">
+                    </label>
+                  </div>
+                  <div id="blogThumbPreview" style="margin-top:.5rem;display:none">
+                    <img id="blogThumbImg" style="max-width:200px;max-height:120px;border-radius:.5rem;object-fit:cover;border:1px solid #e5e7eb">
+                  </div></div>
               </div>
               <div class="modal-actions">
                 <button class="btn btn-outline" onclick="closeBlogModal()">ยกเลิก</button>
@@ -1257,7 +1266,7 @@ function showTab(name,el){
   document.getElementById('topbarTitle').textContent=TAB_TITLES[name]||name;
   if(name==='pages') renderPageGrid();
   if(name==='stones') renderStones();
-  if(name==='blog') renderBlog();
+  if(name==='blog'){ seedBlogFromJson().then(()=>renderBlog()); }
   if(name==='products'){ loadGeodes(); renderPTable(); }
   if(name==='stats') initStatsTab();
   if(name==='shopee'){ loadAff(); initAffTags(); renderAffTable(); }
@@ -2882,6 +2891,49 @@ const BLOG_KEY='amethez_blog';
 let blogFilter='all';
 function getBlogPosts(){ try{ return JSON.parse(localStorage.getItem(BLOG_KEY)||'[]'); }catch{ return []; } }
 function saveBlogPosts(arr){ localStorage.setItem(BLOG_KEY,JSON.stringify(arr)); }
+
+async function seedBlogFromJson(){
+  if(localStorage.getItem('amethez_blog_seeded')) return;
+  try{
+    const r=await fetch('/data/blog.json?v='+Date.now());
+    if(!r.ok) return;
+    const d=await r.json();
+    const existing=getBlogPosts();
+    const existIds=new Set(existing.map(p=>String(p.id)));
+    const AUTHOR_MAP={'Crystal Atlas':'atlas','Master Wuchong':'wuchong','อาจารย์เมธา':'metha'};
+    const seeded=d.articles.filter(a=>!existIds.has(String(a.id))).map(a=>({
+      id: String(a.id),
+      title: a.title||'',
+      slug: (a.url||'').split('/').pop().replace('.html',''),
+      excerpt: a.desc||'',
+      tags: [],
+      thumb: a.thumb||'',
+      author: AUTHOR_MAP[a.author]||'atlas',
+      category: 'stone',
+      status: 'published',
+      publishDate: a.date?a.date+'T08:00':new Date().toISOString(),
+      created: a.date||new Date().toISOString(),
+      updated: new Date().toISOString(),
+      badge: a.badge||'',
+      featured: a.featured||false,
+      url: a.url||'',
+    }));
+    saveBlogPosts([...existing,...seeded]);
+    localStorage.setItem('amethez_blog_seeded','1');
+  }catch(e){ console.warn('seedBlog:',e); }
+}
+
+function previewBlogThumb(input){
+  const file=input.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const data=e.target.result;
+    document.getElementById('blogThumb').value=data;
+    document.getElementById('blogThumbImg').src=data;
+    document.getElementById('blogThumbPreview').style.display='';
+  };
+  reader.readAsDataURL(file);
+}
 function setBlogFilter(f,el){
   blogFilter=f;
   document.querySelectorAll('[id^=blogTab-]').forEach(b=>b.classList.remove('active'));
@@ -2942,6 +2994,8 @@ function openAddPost(){
   document.getElementById('blogPublishDate').value='';
   document.getElementById('scheduleDateGroup').style.display='none';
   document.getElementById('blogDelBtn').style.display='none';
+  document.getElementById('blogThumbPreview').style.display='none';
+  document.getElementById('blogThumbFile').value='';
   document.getElementById('blogModal').classList.add('open');
 }
 function openEditPost(id){
@@ -2959,6 +3013,10 @@ function openEditPost(id){
   document.getElementById('blogPublishDate').value=p.publishDate||'';
   toggleScheduleField();
   document.getElementById('blogDelBtn').style.display='';
+  document.getElementById('blogThumbFile').value='';
+  const thumb=p.thumb||'';
+  if(thumb){ document.getElementById('blogThumbImg').src=thumb; document.getElementById('blogThumbPreview').style.display=''; }
+  else { document.getElementById('blogThumbPreview').style.display='none'; }
   document.getElementById('blogModal').classList.add('open');
 }
 function closeBlogModal(){ document.getElementById('blogModal').classList.remove('open'); }
@@ -3460,6 +3518,42 @@ async function publishToGitHub(){
           headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},
           body:JSON.stringify({message:'cms: update products.json ('+affProducts.length+' items)',content:prodB64,...(pSha?{sha:pSha}:{})})
         });
+      }
+
+      // Push blog.json with updated thumbs
+      const blogPosts=getBlogPosts();
+      if(blogPosts.length){
+        const AUTHOR_REV={atlas:'Crystal Atlas',wuchong:'Master Wuchong',metha:'อาจารย์เมธา',gemma:'Gemma'};
+        // upload base64 thumbs in blog posts first
+        for(const bp of blogPosts){
+          if(bp.thumb&&bp.thumb.startsWith('data:')){
+            const m=bp.thumb.match(/^data:image\/([a-zA-Z+]+);base64,(.+)$/);
+            if(m){
+              const ext=m[1]==='jpeg'?'jpg':m[1]==='svg+xml'?'svg':m[1];
+              const bpath=`data/images/blog_${bp.id}.${ext}`;
+              let bsha='';
+              try{ const br=await fetch(`https://api.github.com/repos/${repo}/contents/${bpath}`,{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}}); if(br.ok){ const bd=await br.json(); bsha=bd.sha; } }catch{}
+              const bur=await fetch(`https://api.github.com/repos/${repo}/contents/${bpath}`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:`cms: blog thumb ${bp.id}`,content:m[2],...(bsha?{sha:bsha}:{})})});
+              if(bur.ok){ bp.thumb='/'+bpath; }
+            }
+          }
+        }
+        saveBlogPosts(blogPosts);
+        const blogJson={articles:blogPosts.map(bp=>({
+          id:isNaN(bp.id)?bp.id:Number(bp.id),
+          title:bp.title,url:bp.url||'/blog/'+bp.slug+'.html',
+          category:bp.category,emoji:'📖',desc:bp.excerpt,
+          author:AUTHOR_REV[bp.author]||bp.author,
+          date:(bp.publishDate||'').slice(0,10),
+          ...(bp.featured?{featured:true}:{}),
+          ...(bp.badge?{badge:bp.badge}:{}),
+          ...(bp.thumb?{thumb:bp.thumb}:{}),
+        }))};
+        const blogStr=JSON.stringify(blogJson,null,2);
+        const blogB64=btoa(unescape(encodeURIComponent(blogStr)));
+        let bSha='';
+        try{ const bgr=await fetch(`https://api.github.com/repos/${repo}/contents/data/blog.json`,{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}}); if(bgr.ok){ const bgd=await bgr.json(); bSha=bgd.sha; } }catch{}
+        await fetch(`https://api.github.com/repos/${repo}/contents/data/blog.json`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:'cms: update blog.json ('+blogPosts.length+' articles)',content:blogB64,...(bSha?{sha:bSha}:{})})});
       }
 
       toast('🚀 เผยแพร่สำเร็จ! สินค้า '+affProducts.length+' ชิ้น ขึ้นเว็บใน ~3 นาที','ok');
