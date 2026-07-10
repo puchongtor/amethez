@@ -3560,6 +3560,15 @@ function saveBEInsertRange(){
 }
 function insertBEBodyImage(input){
   const f=input.files[0]; if(!f) return;
+  insertImageFileIntoBEBody(f);
+  input.value='';
+}
+// opts.range (contenteditable) / opts.taStart+opts.taEnd (textarea) override the
+// saved cursor position — used by the paste handlers below, which have the live
+// selection at paste time and don't need saveBEInsertRange's snapshot trick.
+function insertImageFileIntoBEBody(file, opts){
+  opts=opts||{};
+  if(!file || !file.type || !file.type.startsWith('image/')) return;
   const r=new FileReader();
   r.onload=e=>{
     const dataUrl=e.target.result;
@@ -3567,8 +3576,8 @@ function insertBEBodyImage(input){
     const isHtmlTab=document.getElementById('beTabHtml').style.display!=='none';
     if(isHtmlTab){
       const ta=document.getElementById('beBodyTA');
-      const start=ta.selectionStart!=null?ta.selectionStart:ta.value.length;
-      const end=ta.selectionEnd!=null?ta.selectionEnd:ta.value.length;
+      const start=opts.taStart!=null?opts.taStart:(ta.selectionStart!=null?ta.selectionStart:ta.value.length);
+      const end=opts.taEnd!=null?opts.taEnd:(ta.selectionEnd!=null?ta.selectionEnd:ta.value.length);
       ta.value=ta.value.slice(0,start)+'\n'+imgHTML+'\n'+ta.value.slice(end);
       onBEBodyEdit(ta.value);
       const pos=start+imgHTML.length+2;
@@ -3577,7 +3586,8 @@ function insertBEBodyImage(input){
       const preview=document.getElementById('beBodyPreview');
       preview.focus();
       const sel=window.getSelection();
-      if(_beInsertRange){ sel.removeAllRanges(); sel.addRange(_beInsertRange); }
+      const savedRange=opts.range||_beInsertRange;
+      if(savedRange){ sel.removeAllRanges(); sel.addRange(savedRange); }
       let range=sel.rangeCount?sel.getRangeAt(0):null;
       if(!range || !preview.contains(range.commonAncestorContainer)){
         range=document.createRange();
@@ -3597,11 +3607,34 @@ function insertBEBodyImage(input){
       attachImgResize(imgEl, onBEPreviewEdit);
       onBEPreviewEdit();
     }
-    input.value='';
-    toast('แทรกรูปแล้ว — กด บันทึก แล้ว 🚀 เผยแพร่ เพื่อขึ้นเว็บจริง','ok');
+    toast('แทรกรูปแล้ว — บันทึกอัตโนมัติแล้ว กด 🚀 เผยแพร่ ได้เลย','ok');
   };
-  r.readAsDataURL(f);
+  r.readAsDataURL(file);
 }
+// Paste an image directly (Ctrl+V) at the cursor — no need to open the file picker
+document.getElementById('beBodyTA').addEventListener('paste', e=>{
+  const items=e.clipboardData&&e.clipboardData.items; if(!items) return;
+  for(const item of items){
+    if(item.type&&item.type.startsWith('image/')){
+      e.preventDefault();
+      const ta=e.target;
+      insertImageFileIntoBEBody(item.getAsFile(),{taStart:ta.selectionStart,taEnd:ta.selectionEnd});
+      return;
+    }
+  }
+});
+document.getElementById('beBodyPreview').addEventListener('paste', e=>{
+  const items=e.clipboardData&&e.clipboardData.items; if(!items) return;
+  for(const item of items){
+    if(item.type&&item.type.startsWith('image/')){
+      e.preventDefault();
+      const sel=window.getSelection();
+      const range=sel.rangeCount?sel.getRangeAt(0).cloneRange():null;
+      insertImageFileIntoBEBody(item.getAsFile(),{range});
+      return;
+    }
+  }
+});
 function switchBETab(t){
   const isHtml=t==='html';
   document.getElementById('beTabHtml').style.display=isHtml?'':'none';
