@@ -1,5 +1,20 @@
 /* Amethez — Main JS */
 
+// ── Blog Article Hero Image Injector ──
+(async function injectBlogHeroImage(){
+  const heroDiv = document.querySelector('.hero-img');
+  if(!heroDiv) return;
+  try{
+    const r = await fetch('/data/blog.json?v='+Date.now());
+    const d = await r.json();
+    const path = location.pathname;
+    const art = d.articles.find(a => a.url && (a.url === path || a.url === path.replace(/\/$/,'')));
+    if(!art || !art.thumb) return;
+    heroDiv.innerHTML = `<img src="${art.thumb}" alt="${art.title||''}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit" onerror="this.parentElement.innerHTML='💎'">`;
+    heroDiv.style.padding = '0';
+  }catch(e){}
+})();
+
 // ── Shopee Product Loader ──
 async function loadShopeeProducts(tags = [], limit = 40) {
   try {

@@ -3395,12 +3395,21 @@ function openEditPost(id){
   toggleBESchedule();
   document.getElementById('beThumbFile').value='';
   updateBEThumbPreview(p.thumb||'');
-  // body
-  const body=p.body||'';
-  document.getElementById('beBodyTA').value=body;
-  document.getElementById('beBodyPreview').innerHTML=body;
-  updateBEBodyLen(body);
+  // body — load from localStorage first, else fetch actual HTML file
+  const localBody=p.body||'';
+  document.getElementById('beBodyTA').value=localBody||'(กำลังโหลด...)';
+  document.getElementById('beBodyPreview').innerHTML=localBody;
+  updateBEBodyLen(localBody);
   switchBETab('html');
+  if(!localBody && p.url){
+    fetch(p.url+'?v='+Date.now()).then(r=>r.text()).then(html=>{
+      const m=html.match(/<div class="post-body">([\s\S]*?)<\/div>\s*(?:<div class="tag-list|<div class="author-box|<div class="faq|<div class="related|<\/main)/);
+      const body2=m ? m[1].trim() : '';
+      document.getElementById('beBodyTA').value=body2;
+      document.getElementById('beBodyPreview').innerHTML=body2;
+      updateBEBodyLen(body2);
+    }).catch(()=>{ document.getElementById('beBodyTA').value=''; });
+  }
   // show editor view
   document.getElementById('blogListView').style.display='none';
   document.getElementById('blogEditorView').style.display='';
