@@ -1366,9 +1366,9 @@ function renderSlots(){
   const list=activeGroup==='all'?SLOTS:SLOTS.filter(s=>s.group===activeGroup);
   document.getElementById('imgSlotsGrid').innerHTML=list.map(s=>{
     const url=imgs[s.id]||''; const has=!!url;
-    return `<div class="img-slot${has?' has-img':''}">
+    return `<div class="img-slot${has?' has-img':''}" data-slot-id="${s.id}">
       <div class="slot-preview">
-        ${has?`<img src="${x(url)}" loading="lazy" onerror="this.style.display='none'">`:''}
+        ${has?`<img src="${x(url)}" onerror="this.style.display='none'">`:''}
         ${!has?`<div style="text-align:center"><div style="font-size:2rem">📷</div><div style="font-size:.72rem;color:#9ca3af;margin-top:.3rem">ยังไม่มีรูป</div></div>`:''}
       </div>
       <div class="slot-body">
@@ -1495,7 +1495,20 @@ function saveSlot(){
   if(!curSlot) return;
   const data=_pendingImgData || document.getElementById('imgModalUrl').value.trim();
   const d=getImgs(); if(data) d[curSlot]=data; else delete d[curSlot];
-  setImgs(d); closeImgModal(); renderSlots(); renderDash(); toast('บันทึกรูปแล้ว ✓','ok');
+  try{ setImgs(d); } catch(e){ toast('❌ พื้นที่ browser เต็ม ลองใช้ URL แทนการอัปโหลดไฟล์','err'); return; }
+  const savedId=curSlot;
+  closeImgModal();
+  // อัปเดต thumbnail ทันทีโดยไม่ต้อง rebuild ทั้ง grid
+  const slotEl=document.querySelector(`[data-slot-id="${savedId}"]`);
+  if(slotEl && data){
+    slotEl.classList.add('has-img');
+    let img=slotEl.querySelector('.slot-preview img');
+    if(!img){ img=document.createElement('img'); slotEl.querySelector('.slot-preview').innerHTML=''; slotEl.querySelector('.slot-preview').appendChild(img); }
+    img.src=data;
+    img.onerror=function(){ this.style.display='none'; };
+  }
+  try{ renderDash(); }catch(_){}
+  toast('บันทึกรูปแล้ว ✓','ok');
 }
 
 function clearSlot(){
