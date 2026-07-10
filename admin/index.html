@@ -831,8 +831,10 @@ textarea.form-input{resize:vertical;min-height:80px;}
               <button class="btn btn-outline btn-sm" onclick="closeBlogEditor()">← กลับ</button>
               <div style="flex:1">
                 <div id="beTitle" style="font-size:1.1rem;font-weight:700"></div>
-                <div id="bePath" style="font-size:.8rem;color:#9ca3af"></div>
+                <a id="bePath" href="#" target="_blank" style="font-size:.8rem;color:#9ca3af;text-decoration:none"></a>
               </div>
+              <a class="btn btn-outline btn-sm" id="beViewBtn" href="#" target="_blank" style="text-decoration:none">👁 ดูหน้า</a>
+              <button class="btn btn-outline btn-sm" onclick="resetBEBodyToOriginal()">↺ โหลดต้นฉบับ</button>
               <button class="btn btn-danger btn-sm" id="beDelBtn" onclick="deleteBlogFromEditor()">🗑 ลบ</button>
               <button class="btn btn-primary" onclick="saveBlogEditor()">💾 บันทึก</button>
             </div>
@@ -3409,12 +3411,43 @@ function openAddPost(){
   document.getElementById('blogThumbFile').value='';
   document.getElementById('blogModal').classList.add('open');
 }
+// Fetch the current live .post-body content for a page — uses DOMParser
+// (not a terminator regex) so nested elements like .faq-item/.related-links
+// can't fool it into truncating the body early.
+async function fetchLivePostBody(url){
+  const r=await fetch(url+'?v='+Date.now());
+  if(!r.ok) return '';
+  const html=await r.text();
+  const doc=new DOMParser().parseFromString(html,'text/html');
+  const el=doc.querySelector('.post-body');
+  return el?el.innerHTML.trim():'';
+}
+async function resetBEBodyToOriginal(){
+  const eid=document.getElementById('beEditId').value;
+  const p=getBlogPosts().find(b=>b.id===eid);
+  const url=p?.url||document.getElementById('bePath').textContent;
+  if(!url){ toast('ยังไม่มีลิงก์หน้าเว็บของบทความนี้','err'); return; }
+  if(!confirm('โหลดเนื้อหาจากหน้าเว็บจริงทับของที่แก้ไว้? การแก้ไขที่ยังไม่เผยแพร่จะหายไป')) return;
+  try{
+    const body=await fetchLivePostBody(url);
+    document.getElementById('beBodyTA').value=body;
+    document.getElementById('beBodyPreview').innerHTML=body;
+    updateBEBodyLen(body);
+    if(document.getElementById('beTabPreview').style.display!=='none') attachBEImgResize();
+    if(p){ p.body=body; saveBlogPosts(getBlogPosts().map(b=>b.id===eid?p:b)); }
+    _dirtyBodyPostIds.delete(String(eid));
+    toast('โหลดต้นฉบับจากเว็บจริงแล้ว','ok');
+  }catch(e){ toast('โหลดต้นฉบับไม่สำเร็จ: '+e.message,'err'); }
+}
 function openEditPost(id){
   const p=getBlogPosts().find(b=>b.id===id); if(!p) return;
   // fill editor view
   document.getElementById('beEditId').value=p.id;
   document.getElementById('beTitle').textContent='✏️ '+p.title;
-  document.getElementById('bePath').textContent=(p.url||('/blog/'+p.slug+'.html'));
+  const pagePath=(p.url||('/blog/'+p.slug+'.html'));
+  document.getElementById('bePath').textContent=pagePath;
+  document.getElementById('bePath').href=pagePath;
+  document.getElementById('beViewBtn').href=pagePath;
   document.getElementById('beTitle2').value=p.title||'';
   document.getElementById('beSlug').value=p.slug||'';
   document.getElementById('beExcerpt').value=p.excerpt||'';
@@ -3434,9 +3467,7 @@ function openEditPost(id){
   updateBEBodyLen(localBody);
   switchBETab('html');
   if(!localBody && p.url){
-    fetch(p.url+'?v='+Date.now()).then(r=>r.text()).then(html=>{
-      const m=html.match(/<div class="post-body">([\s\S]*?)<\/div>\s*(?:<div class="tag-list|<div class="author-box|<div class="faq|<div class="related|<\/main)/);
-      const body2=m ? m[1].trim() : '';
+    fetchLivePostBody(p.url).then(body2=>{
       document.getElementById('beBodyTA').value=body2;
       document.getElementById('beBodyPreview').innerHTML=body2;
       updateBEBodyLen(body2);
@@ -4140,11 +4171,19 @@ async function publishToGitHub(){
               const doc=new DOMParser().parseFromString(pageHtml,'text/html');
               const bodyEl=doc.querySelector('.post-body');
               if(bodyEl){
-                bodyEl.innerHTML=bp.body;
-                const updatedHtml='<!DOCTYPE html>\n'+doc.documentElement.outerHTML;
-                const newB64=btoa(unescape(encodeURIComponent(updatedHtml)));
-                const pur=await fetch(`https://api.github.com/repos/${repo}/contents/${pagePath}`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:`cms: update body — ${bp.title}`,content:newB64,sha:pd.sha})});
-                if(!pur.ok) toast('⚠️ อัปเดตเนื้อหาหน้า "'+bp.title+'" ไม่สำเร็จ','err');
+                // Safety net: refuse to overwrite with a suspiciously smaller body —
+                // guards against a stale/truncated cached body wiping out live content.
+                const liveLen=bodyEl.textContent.trim().length;
+                const newLen=new DOMParser().parseFromString(bp.body,'text/html').body.textContent.trim().length;
+                if(liveLen>200 && newLen < liveLen*0.6){
+                  toast('⚠️ ข้ามการอัปเดต "'+bp.title+'" — เนื้อหาที่จะเผยแพร่สั้นกว่าหน้าเว็บจริงมาก (อาจโหลดมาไม่ครบ) กด "↺ โหลดต้นฉบับ" ในหน้าแก้ไขก่อน','err');
+                } else {
+                  bodyEl.innerHTML=bp.body;
+                  const updatedHtml='<!DOCTYPE html>\n'+doc.documentElement.outerHTML;
+                  const newB64=btoa(unescape(encodeURIComponent(updatedHtml)));
+                  const pur=await fetch(`https://api.github.com/repos/${repo}/contents/${pagePath}`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:`cms: update body — ${bp.title}`,content:newB64,sha:pd.sha})});
+                  if(!pur.ok) toast('⚠️ อัปเดตเนื้อหาหน้า "'+bp.title+'" ไม่สำเร็จ','err');
+                }
               } else {
                 toast('⚠️ ไม่พบ .post-body ในหน้า "'+bp.title+'" — ข้ามการอัปเดตเนื้อหา','err');
               }
