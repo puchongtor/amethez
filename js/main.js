@@ -5,7 +5,10 @@ async function loadShopeeProducts(tags = [], limit = 40) {
   try {
     const res = await fetch('/data/products.json');
     const { products } = await res.json();
-    const matched = products.filter(p => p.status === 'available' && tags.some(t => p.tags.includes(t)));
+    const matched = products.filter(p =>
+      p.status === 'available' &&
+      tags.some(t => p.name.includes(t) || (p.tags||[]).includes(t))
+    );
     return (matched.length ? matched : products.filter(p => p.status === 'available')).slice(0, limit);
   } catch { return []; }
 }
