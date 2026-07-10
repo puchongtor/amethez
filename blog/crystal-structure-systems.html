@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>โครงสร้างผลึก — ทำไมหินถึงมีรูปร่างซ้ำๆ สม่ำเสมอ | Amethez</title>
+  <meta name="description" content="ระบบผลึก 7 ระบบ Cubic Tetragonal Hexagonal และอื่นๆ อธิบายว่าทำไมหินถึงมีรูปร่างเรขาคณิตสม่ำเสมอ พร้อมตัวอย่างหินแต่ละระบบ">
+  <link rel="canonical" href="https://amethez.com/blog/crystal-structure-systems.html">
+  <meta property="og:title" content="โครงสร้างผลึก — ทำไมหินถึงมีรูปร่างซ้ำๆ สม่ำเสมอ">
+  <meta property="og:description" content="ระบบผลึก 7 ระบบ Cubic Tetragonal Hexagonal อธิบายว่าทำไมหินถึงมีรูปร่างเรขาคณิตสม่ำเสมอ">
+  <meta property="og:url" content="https://amethez.com/blog/crystal-structure-systems.html">
+  <meta property="og:type" content="article">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    :root{--purple:#7c3aed;--gold:#c9a84c;}
+    body{font-family:'Sarabun',sans-serif;background:#faf8f4;color:#1a1228;}
+    .blog-wrap{max-width:760px;margin:0 auto;padding:2rem 1.5rem 5rem;}
+    .breadcrumb{font-size:.8rem;color:#9ca3af;margin-bottom:1.5rem;}
+    .breadcrumb a{color:#7c3aed;text-decoration:none;}
+    .post-header{margin-bottom:2rem;}
+    .post-cat{display:inline-block;background:#dbeafe;color:#1d4ed8;font-size:.75rem;font-weight:700;padding:.25rem .75rem;border-radius:2rem;margin-bottom:.75rem;text-decoration:none;}
+    .post-title{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.25rem);line-height:1.3;color:#1a1228;margin-bottom:.75rem;}
+    .post-meta{font-size:.82rem;color:#9ca3af;display:flex;gap:1rem;flex-wrap:wrap;}
+    .hero-img{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-radius:1rem;display:flex;align-items:center;justify-content:center;font-size:5rem;margin-bottom:2rem;}
+    .post-body h2{font-family:'Playfair Display',serif;font-size:1.4rem;color:#1a1228;margin:2.5rem 0 1rem;border-left:4px solid #7c3aed;padding-left:.875rem;}
+    .post-body h3{font-size:1.1rem;font-weight:700;color:#4c1d95;margin:1.75rem 0 .5rem;}
+    .post-body p{line-height:1.9;margin-bottom:1.25rem;font-size:1rem;}
+    .post-body ul,ol{padding-left:1.5rem;margin-bottom:1.25rem;}
+    .post-body li{line-height:1.8;margin-bottom:.25rem;}
+    .highlight-box{background:linear-gradient(135deg,#ede9fe,#f5f3ff);border-left:4px solid #7c3aed;border-radius:0 .75rem .75rem 0;padding:1.25rem 1.5rem;margin:1.5rem 0;}
+    .highlight-box strong{color:#5b21b6;}
+    .warn-box{background:#fffbeb;border-left:4px solid #f59e0b;border-radius:0 .75rem .75rem 0;padding:1.25rem 1.5rem;margin:1.5rem 0;}
+    .warn-box strong{color:#92400e;}
+    table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:.9rem;}
+    th{background:#7c3aed;color:white;padding:.65rem 1rem;text-align:left;}
+    td{padding:.6rem 1rem;border-bottom:1px solid #e9e0f8;}
+    tr:hover td{background:#faf8ff;}
+    .faq{margin-top:3rem;}
+    .faq-item{border:1px solid #e9e0f8;border-radius:.75rem;margin-bottom:.75rem;overflow:hidden;}
+    .faq-q{padding:1rem 1.25rem;font-weight:700;cursor:pointer;background:white;color:#1a1228;display:flex;justify-content:space-between;align-items:center;}
+    .faq-q::after{content:'▾';color:#7c3aed;transition:transform .2s;}
+    .faq-a{padding:0 1.25rem;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;background:white;}
+    .faq-item.open .faq-q::after{transform:rotate(180deg);}
+    .faq-item.open .faq-a{padding:0 1.25rem 1rem;max-height:1000px;}
+    .related-links{background:white;border:1px solid #e9e0f8;border-radius:.875rem;padding:1.5rem;margin:2.5rem 0;}
+    .related-links h3{color:#7c3aed;margin-bottom:1rem;}
+    .related-links a{display:flex;align-items:center;gap:.5rem;padding:.5rem 0;color:#1a1228;text-decoration:none;border-bottom:1px solid #f3f0ff;font-size:.9rem;}
+    .related-links a:hover{color:#7c3aed;}
+    .tag-list{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.5rem;}
+    .tag{background:#ede9fe;color:#7c3aed;padding:.25rem .75rem;border-radius:2rem;font-size:.78rem;text-decoration:none;}
+    .author-box{background:white;border:1px solid #e9e0f8;border-radius:.875rem;padding:1.5rem;margin-top:2.5rem;display:flex;gap:1rem;align-items:flex-start;}
+    .author-avatar{font-size:2.5rem;flex-shrink:0;}
+    .author-name{font-weight:700;color:#1a1228;margin-bottom:.25rem;}
+    .author-bio{font-size:.85rem;color:#6b7280;line-height:1.6;}
+    .system-cards{display:grid;gap:1rem;margin:1.5rem 0;}
+    .sys-card{background:white;border:1px solid #e9e0f8;border-radius:.75rem;padding:1.25rem;}
+    .sys-name{font-weight:700;color:#5b21b6;font-size:1rem;margin-bottom:.25rem;}
+    .sys-shape{font-size:.85rem;color:#6b7280;margin-bottom:.5rem;}
+    .sys-examples{font-size:.85rem;color:#1a1228;}
+  </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"โครงสร้างผลึก — ทำไมหินถึงมีรูปร่างซ้ำๆ สม่ำเสมอ","description":"ระบบผลึก 7 ระบบ Cubic Tetragonal Hexagonal อธิบายว่าทำไมหินถึงมีรูปร่างเรขาคณิตสม่ำเสมอ","author":{"@type":"Organization","name":"Crystal Atlas — Amethez"},"publisher":{"@type":"Organization","name":"Amethez","url":"https://amethez.com"},"url":"https://amethez.com/blog/crystal-structure-systems.html","inLanguage":"th"}
+  </script>
+</head>
+<body>
+<header class="site-header"></header>
+<main>
+<div class="blog-wrap">
+  <div class="breadcrumb"><a href="/">Amethez</a> › <a href="/blog/">บทความ</a> › วิทยาศาสตร์</div>
+  <article>
+    <header class="post-header">
+      <a href="/blog/" class="post-cat">🔬 วิทยาศาสตร์</a>
+      <h1 class="post-title">โครงสร้างผลึก — ทำไมหินถึงมีรูปร่างซ้ำๆ สม่ำเสมอ</h1>
+      <div class="post-meta"><span>🌐 Crystal Atlas</span><span>📅 กรกฎาคม 2025</span><span>⏱ อ่าน 8 นาที</span></div>
+    </header>
+    <div class="hero-img">📐</div>
+    <div class="post-body">
+
+      <p>หากคุณเคยสังเกต ผลึกควอตซ์ทุกก้อนบนโลกล้วนมียอดหกหน้า (Hexagonal Prism) เพชรธรรมชาติมักพบในรูปแปดหน้า (Octahedron) และการ์เนตมักเป็นทรงสิบสองหน้า (Dodecahedron) ความสม่ำเสมอที่น่าทึ่งนี้ไม่ใช่เรื่องบังเอิญ — มันถูกกำหนดมาตั้งแต่ระดับอะตอม</p>
+
+      <p>นักแร่วิทยาได้จำแนกโครงสร้างผลึกทั้งหมดในธรรมชาติออกเป็น <strong>7 ระบบหลัก</strong> (Crystal Systems) โดยแต่ละระบบมีรูปแบบการจัดเรียงอะตอมที่เป็นเอกลักษณ์ บทความนี้จะอธิบายทั้ง 7 ระบบด้วยภาษาที่เข้าใจง่าย</p>
+
+      <div class="highlight-box">
+        <strong>หน่วยพื้นฐาน — Unit Cell:</strong> ทุกผลึกสร้างขึ้นจาก "หน่วยพื้นฐาน" (Unit Cell) ที่ซ้ำกันในสามมิติ ลองนึกภาพการต่อบล็อค LEGO — Unit Cell คือบล็อคชิ้นเดียว และผลึกคือตึกที่ได้จากการต่อบล็อคนับล้านชิ้นซ้อนกัน
+      </div>
+
+      <h2>ระบบผลึก 7 ระบบ</h2>
+
+      <div class="system-cards">
+
+        <div class="sys-card">
+          <div class="sys-name">1. Cubic (Isometric) — ระบบลูกบาศก์</div>
+          <div class="sys-shape">แกนสามแกนยาวเท่ากันและตั้งฉากกัน | รูปร่างทั่วไป: ลูกบาศก์, แปดหน้า, สิบสองหน้า</div>
+          <div class="sys-examples">ตัวอย่าง: เพชร, เกลือหิน (Halite), ฟลูออไรต์, ไพไรต์, การ์เนต, Spinel</div>
+        </div>
+
+        <div class="sys-card">
+          <div class="sys-name">2. Tetragonal — ระบบสี่เหลี่ยมจัตุรัส</div>
+          <div class="sys-shape">แกนสองแกนเท่ากัน หนึ่งแกนสั้น/ยาวกว่า ตั้งฉากกัน | รูปร่าง: ปริซึมสี่เหลี่ยม, พีระมิดคู่</div>
+          <div class="sys-examples">ตัวอย่าง: Zircon, Rutile, Apophyllite, Vesuvianite, Wulfenite</div>
+        </div>
+
+        <div class="sys-card">
+          <div class="sys-name">3. Orthorhombic — ระบบสามแกนตั้งฉาก</div>
+          <div class="sys-shape">แกนสามแกนตั้งฉากกันแต่ยาวต่างกันทั้งสาม | รูปร่าง: ปริซึมสี่เหลี่ยมผืนผ้า</div>
+          <div class="sys-examples">ตัวอย่าง: Topaz, Peridot (Olivine), Aragonite, Sulfur, Tanzanite</div>
+        </div>
+
+        <div class="sys-card">
+          <div class="sys-name">4. Hexagonal — ระบบหกเหลี่ยม</div>
+          <div class="sys-shape">มี 4 แกน: สามแกนในระนาบเดียวกัน 120° + หนึ่งแกนตั้งฉาก | รูปร่าง: ปริซึมหกเหลี่ยม</div>
+          <div class="sys-examples">ตัวอย่าง: Beryl (มรกต, Aquamarine), Apatite, Molybdenite</div>
+        </div>
+
+        <div class="sys-card">
+          <div class="sys-name">5. Trigonal (Rhombohedral) — ระบบสามเหลี่ยม</div>
+          <div class="sys-shape">คล้าย Hexagonal แต่มีสมมาตรสามเท่า | รูปร่าง: ปริซึมสามเหลี่ยม, Rhombohedron</div>
+          <div class="sys-examples">ตัวอย่าง: Quartz (ทุกชนิด รวมอเมทิสต์), Calcite, Tourmaline, Ruby, Sapphire, Hematite</div>
+        </div>
+
+        <div class="sys-card">
+          <div class="sys-name">6. Monoclinic — ระบบหนึ่งแกนเอียง</div>
+          <div class="sys-shape">แกนสองแกนตั้งฉากกัน หนึ่งแกนเอียง | รูปร่าง: Prism ที่เอียง</div>
+          <div class="sys-examples">ตัวอย่าง: Selenite (Gypsum), Moonstone (Orthoclase), Malachite, Azurite, Jade (Nephrite), Kunzite</div>
+        </div>
+
+        <div class="sys-card">
+          <div class="sys-name">7. Triclinic — ระบบสามแกนเอียง</div>
+          <div class="sys-shape">ทุกแกนยาวต่างกันและเอียงต่างกันหมด | รูปร่าง: ซับซ้อน ไม่มีสมมาตรสูง</div>
+          <div class="sys-examples">ตัวอย่าง: Labradorite, Turquoise, Kyanite, Rhodonite, Amazonite</div>
+        </div>
+
+      </div>
+
+      <h2>ทำไมรูปร่างถึงสม่ำเสมอ — พันธะอะตอม</h2>
+
+      <p>คำตอบอยู่ที่ระดับอะตอม ในผลึกแต่ละชนิด อะตอมยึดกันด้วย <strong>พันธะเคมี</strong> (Chemical Bonds) ที่มีความยาวและมุมที่ตายตัว ไม่ว่าผลึกจะก่อตัวที่ไหนในโลก อะตอม Si และ O ในควอตซ์ก็จะจัดเรียงแบบ Trigonal เสมอ เพราะพันธะ Si-O มีมุมที่กำหนดโดยกฎฟิสิกส์</p>
+
+      <p>เมื่อผลึกเติบโต ชั้นอะตอมใหม่จะเพิ่มตัวบนระนาบที่มีอยู่แล้ว ทำให้รูปร่างมหภาค (Macroscopic) สะท้อนโครงสร้างระดับนาโนเมตรออกมา นี่คือปรากฏการณ์ที่นักฟิสิกส์เรียกว่า <strong>Self-similarity across scales</strong></p>
+
+      <table>
+        <thead>
+          <tr><th>ระบบผลึก</th><th>รูปร่างทั่วไป</th><th>หินตัวอย่าง</th><th>สมมาตร</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Cubic</td><td>ลูกบาศก์, แปดหน้า</td><td>เพชร, ฟลูออไรต์, การ์เนต</td><td>สูงที่สุด</td></tr>
+          <tr><td>Tetragonal</td><td>ปริซึมสี่เหลี่ยม</td><td>Zircon, Rutile</td><td>สูง</td></tr>
+          <tr><td>Orthorhombic</td><td>กล่องสี่เหลี่ยม</td><td>Topaz, Peridot</td><td>กลาง</td></tr>
+          <tr><td>Hexagonal</td><td>หกเหลี่ยม</td><td>Beryl, Apatite</td><td>กลาง-สูง</td></tr>
+          <tr><td>Trigonal</td><td>สามเหลี่ยม, หกเหลี่ยม</td><td>ควอตซ์, ทับทิม, Tourmaline</td><td>กลาง</td></tr>
+          <tr><td>Monoclinic</td><td>Prism เอียง</td><td>Selenite, Malachite, Moonstone</td><td>ต่ำ</td></tr>
+          <tr><td>Triclinic</td><td>ซับซ้อน</td><td>Labradorite, Turquoise</td><td>ต่ำที่สุด</td></tr>
+        </tbody>
+      </table>
+
+      <h2>ระบบผลึกกับพลังงานจิตวิญญาณ</h2>
+
+      <p>ในแวดวงคริสตัลฮีลลิง มีแนวคิดที่น่าสนใจว่าโครงสร้างผลึกส่งผลต่อ "วิธีที่หินส่งพลังงาน" แม้ยังไม่มีการพิสูจน์ทางวิทยาศาสตร์ แต่แนวคิดนี้มีเหตุผลในเชิงอุปมา:</p>
+
+      <ul>
+        <li><strong>Cubic</strong> — สมมาตรสูง เสถียร → เชื่อว่าให้พลังงานที่มั่นคง สม่ำเสมอ (เพชร, ไพไรต์)</li>
+        <li><strong>Hexagonal/Trigonal</strong> — 6 แฉก มีทิศทาง → เชื่อว่าส่งพลังงานแบบโฟกัส มีทิศทาง (ควอตซ์ Point)</li>
+        <li><strong>Monoclinic</strong> — เอียง ซับซ้อน → เชื่อว่าช่วยในเรื่องการเปลี่ยนแปลงและการเปิดรับ (Selenite, Malachite)</li>
+        <li><strong>Triclinic</strong> — สมมาตรน้อยที่สุด → เชื่อว่าทำงานลึก ซับซ้อน ทำงานกับพลังงานหลายมิติ (Labradorite, Turquoise)</li>
+      </ul>
+
+      <div class="warn-box">
+        <strong>สิ่งที่วิทยาศาสตร์พูดได้จริง:</strong> คุณสมบัติทางกายภาพของหินอย่าง Piezoelectricity (ไฟฟ้าจากแรงกด) และ Pyroelectricity (ไฟฟ้าจากความร้อน) เกี่ยวข้องโดยตรงกับโครงสร้างผลึก เช่น ควอตซ์มี Piezoelectric เพราะโครงสร้าง Trigonal ไม่มีจุดกึ่งกลางสมมาตร ซึ่งนำไปใช้ในนาฬิกาและเซ็นเซอร์จริงๆ
+      </div>
+
+      <div class="faq">
+        <h2>คำถามที่พบบ่อย</h2>
+
+        <div class="faq-item">
+          <div class="faq-q">ควอตซ์ทุกชนิด (อเมทิสต์ ซิทริน โรสควอตซ์) อยู่ในระบบเดียวกันไหม?</div>
+          <div class="faq-a"><p>ใช่ ควอตซ์ทุกชนิดอยู่ในระบบ Trigonal เหมือนกันหมด สีที่ต่างกันเกิดจากธาตุเจือปนปริมาณน้อยในโครงสร้าง ไม่ใช่โครงสร้างที่ต่างกัน (อเมทิสต์ = Fe³⁺, ซิทริน = Fe⁴⁺ หรือ Heat-treated Amethyst, โรสควอตซ์ = Ti, ไทเทเนียม)</p></div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">ระบบผลึกของหินมีผลต่อความแข็งอย่างไร?</div>
+          <div class="faq-a"><p>ระบบผลึกส่งผลต่อทิศทางความแข็ง (ไม่ใช่ค่าความแข็งโดยรวม) หินบางชนิดมีความแข็งต่างกันตามทิศทาง เช่น Kyanite มีความแข็ง 4.5 ตามแนวยาวและ 6.5 ตามแนวขวาง เพราะโครงสร้าง Triclinic ทำให้พันธะอะตอมแข็งแรงไม่เท่ากันทุกทิศ</p></div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">หินที่ไม่ใช่ผลึก (Amorphous) เช่น Obsidian ต่างจากผลึกอย่างไร?</div>
+          <div class="faq-a"><p>Obsidian เป็นแก้วภูเขาไฟ อะตอมจัดเรียงแบบสุ่ม ไม่มี Lattice Structure จึงไม่จัดอยู่ในระบบผลึกใด นักแร่วิทยาเรียกว่า Amorphous Solid หินแบบนี้แตกแบบ Conchoidal Fracture (รอยแตกโค้งคล้ายเปลือกหอย) ต่างจากผลึกที่มักแตกตามระนาบ Cleavage ที่กำหนดโดยโครงสร้าง</p></div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">เราสามารถดูระบบผลึกด้วยตาเปล่าได้ไหม?</div>
+          <div class="faq-a"><p>ได้ในหลายกรณี ผลึก Quartz Point แสดงรูป Hexagonal/Trigonal ชัดเจน การ์เนตมักมีรูปทรง 12 หน้าที่เห็นได้ชัด Pyrite มักพบเป็นก้อนลูกบาศก์สมบูรณ์ แต่บ่อยครั้งผลึกเติบโตในพื้นที่จำกัดจนรูปร่างไม่สมบูรณ์ ต้องใช้ X-ray Diffraction ในการยืนยันระบบผลึก</p></div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">ระบบผลึกสำคัญสำหรับนักสะสมธรรมดาไหม?</div>
+          <div class="faq-a"><p>รู้ไว้ก็ดีเพราะช่วยในการระบุชนิดหิน เข้าใจเรื่องการแตก (Cleavage vs Fracture) และการดูแลรักษา เช่น หินระบบ Monoclinic อย่าง Selenite มักแตกตามแนวระนาบง่ายกว่าหิน Cubic ความรู้นี้ช่วยให้เก็บรักษาหินได้อย่างถูกต้อง</p></div>
+        </div>
+      </div>
+
+      <div class="related-links">
+        <h3>บทความที่เกี่ยวข้อง</h3>
+        <a href="/blog/how-crystals-form.html">⚛️ หินคริสตัลเกิดขึ้นได้อย่างไร — ธรณีวิทยาฉบับเข้าใจง่าย</a>
+        <a href="/blog/mohs-hardness-scale.html">💡 Mohs Scale ความแข็งหิน — ทำไมนักสะสมต้องรู้</a>
+        <a href="/stones/clear-quartz.html">🔮 Clear Quartz — สารานุกรมฉบับสมบูรณ์</a>
+        <a href="/stones/labradorite.html">🌈 Labradorite — สารานุกรมฉบับสมบูรณ์</a>
+      </div>
+    </div>
+
+    <div class="tag-list">
+      <a href="/blog/" class="tag">วิทยาศาสตร์</a>
+      <a href="/blog/" class="tag">โครงสร้างผลึก</a>
+      <a href="/blog/" class="tag">แร่วิทยา</a>
+      <a href="/blog/" class="tag">Crystal System</a>
+      <a href="/blog/" class="tag">ธรณีวิทยา</a>
+    </div>
+    <div class="author-box">
+      <div class="author-avatar">🌐</div>
+      <div>
+        <div class="author-name">Crystal Atlas</div>
+        <div class="author-bio">สารานุกรมคริสตัลและอัญมณีจาก Amethez — รวบรวมความรู้จากธรณีวิทยา อัญมณีศาสตร์ และประเพณีความเชื่อทั่วโลก</div>
+      </div>
+    </div>
+  </article>
+</div>
+</main>
+<footer class="site-footer"></footer>
+<script src="/js/components.js"></script>
+<script>document.querySelectorAll('.faq-q').forEach(q=>{q.addEventListener('click',()=>q.parentElement.classList.toggle('open'));});</script>
+</body>
+</html>
