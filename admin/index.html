@@ -379,12 +379,6 @@ textarea.form-input{resize:vertical;min-height:80px;}
                   <button class="btn btn-outline btn-sm" onclick="syncPreviewToHtml()" style="margin-left:auto">⇄ Sync → HTML</button>
                 </div>
 
-                <!-- Resize handle overlay -->
-                <div id="imgResizeOverlay" style="display:none;position:fixed;pointer-events:none;z-index:9999;box-sizing:border-box;border:2px solid #7c3aed;border-radius:3px">
-                  <div id="imgResizeHandle" title="ลากเพื่อย่อ/ขยาย" style="position:absolute;bottom:-10px;right:-10px;width:22px;height:22px;background:#7c3aed;border-radius:4px;cursor:se-resize;pointer-events:all;display:flex;align-items:center;justify-content:center;color:white;font-size:12px;user-select:none">⤡</div>
-                  <div id="imgSizeLabel" style="position:absolute;top:-24px;left:0;background:#7c3aed;color:#fff;font-size:.65rem;padding:2px 6px;border-radius:3px;white-space:nowrap"></div>
-                </div>
-
                 <!-- Live editable preview -->
                 <div id="bodyPreviewDiv"
                   contenteditable="true"
@@ -939,14 +933,40 @@ textarea.form-input{resize:vertical;min-height:80px;}
               </div>
               <!-- Preview tab -->
               <div id="beTabPreview" style="display:none">
-                <div style="margin:.75rem 0 .5rem">
+                <div style="margin:.75rem 0 .5rem;display:flex;gap:.5rem;flex-wrap:wrap">
                   <span style="font-size:.75rem;background:#e0f2fe;color:#0369a1;padding:.25rem .65rem;border-radius:20px;font-weight:600">✏️ คลิกข้อความ → แก้ได้เลย</span>
+                  <span style="font-size:.75rem;background:#fce7f3;color:#be185d;padding:.25rem .65rem;border-radius:20px;font-weight:600">🖼 คลิกรูป → ย่อ/ขยาย</span>
                 </div>
                 <div id="beBodyPreview"
                   contenteditable="true"
                   spellcheck="false"
                   oninput="onBEPreviewEdit()"
-                  style="min-height:500px;border:1.5px solid #e9e0f5;border-radius:.5rem;background:#faf8f4;padding:2rem 2.5rem;outline:none;overflow-y:auto;font-family:'Sarabun',sans-serif;font-size:17px;line-height:1.75;color:#1a1228"></div>
+                  style="min-height:500px;border:1.5px solid #e9e0f5;border-radius:.5rem;background:#faf8f4;padding:2rem 2.5rem;outline:none;overflow-y:auto;position:relative"></div>
+                <style id="beBodyPreviewStyleTag">
+                  #beBodyPreview { font-family:'Sarabun',sans-serif; font-size:17px; line-height:1.75; color:#1a1228; }
+                  #beBodyPreview h2 { font-family:'Playfair Display',serif; font-size:1.75rem; color:#7c3aed; margin:2rem 0 .75rem; }
+                  #beBodyPreview h3 { font-size:1.2rem; font-weight:700; margin:1.5rem 0 .5rem; }
+                  #beBodyPreview h4 { font-size:1rem; font-weight:700; margin:.75rem 0 .25rem; }
+                  #beBodyPreview p  { margin-bottom:1rem; }
+                  #beBodyPreview ul,#beBodyPreview ol { margin:0 0 1rem 1.5rem; }
+                  #beBodyPreview li { margin-bottom:.35rem; }
+                  #beBodyPreview strong { font-weight:700; }
+                  #beBodyPreview em { font-style:italic; }
+                  #beBodyPreview a  { color:#7c3aed; }
+                  #beBodyPreview .quick-facts { background:#f5f0ff; border-radius:.75rem; padding:1.25rem; margin:1.5rem 0; }
+                  #beBodyPreview .quick-facts h3 { margin-top:0; color:#5b21b6; }
+                  #beBodyPreview .facts-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:.75rem; }
+                  #beBodyPreview .fact-label { font-size:.75rem; color:#6b7280; display:block; }
+                  #beBodyPreview .fact-value { font-size:1rem; font-weight:700; color:#7c3aed; }
+                  #beBodyPreview .benefits-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; margin:1.5rem 0; }
+                  #beBodyPreview .benefit-item { background:#fff; border:1px solid #e9e0f5; border-radius:.75rem; padding:1rem; text-align:center; }
+                  #beBodyPreview .benefit-icon { font-size:2rem; display:block; margin-bottom:.4rem; }
+                  #beBodyPreview .faq-item { border-bottom:1px solid #e9e0f5; padding:1rem 0; }
+                  #beBodyPreview .faq-question { font-weight:700; color:#5b21b6; margin-bottom:.4rem; }
+                  #beBodyPreview .faq-answer { color:#6b7280; font-size:.92rem; }
+                  #beBodyPreview img { max-width:100%; cursor:pointer; border-radius:.5rem; }
+                  #beBodyPreview img.img-selected { outline:2px solid #7c3aed; outline-offset:2px; }
+                </style>
               </div>
             </div>
           </div><!-- /blogEditorView -->
@@ -1296,6 +1316,12 @@ textarea.form-input{resize:vertical;min-height:80px;}
 </div>
 
 <div class="toast" id="toast"></div>
+
+<!-- Image resize overlay — shared by every body/preview editor, kept outside .tab-panels so it stays reachable regardless of the active tab -->
+<div id="imgResizeOverlay" style="display:none;position:fixed;pointer-events:none;z-index:9999;box-sizing:border-box;border:2px solid #7c3aed;border-radius:3px">
+  <div id="imgResizeHandle" title="ลากเพื่อย่อ/ขยาย" style="position:absolute;bottom:-10px;right:-10px;width:22px;height:22px;background:#7c3aed;border-radius:4px;cursor:se-resize;pointer-events:all;display:flex;align-items:center;justify-content:center;color:white;font-size:12px;user-select:none">⤡</div>
+  <div id="imgSizeLabel" style="position:absolute;top:-24px;left:0;background:#7c3aed;color:#fff;font-size:.65rem;padding:2px 6px;border-radius:3px;white-space:nowrap"></div>
+</div>
 
 <script>
 const PASSWORD='amethez2026';
@@ -3450,10 +3476,16 @@ function markBEBodyDirty(){
   const eid=document.getElementById('beEditId').value;
   if(eid) _dirtyBodyPostIds.add(String(eid));
 }
+function attachBEImgResize(){
+  document.getElementById('beBodyPreview').querySelectorAll('img').forEach(img => attachImgResize(img, onBEPreviewEdit));
+}
 function onBEBodyEdit(v){
   updateBEBodyLen(v);
   markBEBodyDirty();
-  if(document.getElementById('beTabPreview').style.display!=='none') document.getElementById('beBodyPreview').innerHTML=v;
+  if(document.getElementById('beTabPreview').style.display!=='none'){
+    document.getElementById('beBodyPreview').innerHTML=v;
+    attachBEImgResize();
+  }
 }
 function onBEPreviewEdit(){
   const html=document.getElementById('beBodyPreview').innerHTML;
@@ -3509,6 +3541,7 @@ function insertBEBodyImage(input){
       range.collapse(true);
       sel.removeAllRanges();
       sel.addRange(range);
+      attachImgResize(imgEl, onBEPreviewEdit);
       onBEPreviewEdit();
     }
     input.value='';
@@ -3522,7 +3555,10 @@ function switchBETab(t){
   document.getElementById('beTabPreview').style.display=isHtml?'none':'';
   document.getElementById('beTabBtnHtml').style.cssText='padding:.5rem 1.25rem;border:none;border-bottom:2px solid '+(isHtml?'#7c3aed':'transparent')+';margin-bottom:-2px;background:none;font-size:.85rem;font-weight:'+(isHtml?'700':'600')+';color:'+(isHtml?'#7c3aed':'#9ca3af')+';cursor:pointer';
   document.getElementById('beTabBtnPreview').style.cssText='padding:.5rem 1.25rem;border:none;border-bottom:2px solid '+(isHtml?'transparent':'#7c3aed')+';margin-bottom:-2px;background:none;font-size:.85rem;font-weight:'+(isHtml?'600':'700')+';color:'+(isHtml?'#9ca3af':'#7c3aed')+';cursor:pointer';
-  if(!isHtml) document.getElementById('beBodyPreview').innerHTML=document.getElementById('beBodyTA').value;
+  if(!isHtml){
+    document.getElementById('beBodyPreview').innerHTML=document.getElementById('beBodyTA').value;
+    attachBEImgResize();
+  }
 }
 function saveBlogEditor(){
   const title=document.getElementById('beTitle2').value.trim();
@@ -3821,17 +3857,18 @@ function refreshPreview(){
   });
 
   // Attach image click → resize UI
-  div.querySelectorAll('img').forEach(attachImgResize);
+  div.querySelectorAll('img').forEach(img => attachImgResize(img, onPreviewEdit));
 }
 
-function attachImgResize(img){
+function attachImgResize(img, onSync){
   img.addEventListener('click', e => {
     e.stopPropagation();
-    selectImg(img);
+    selectImg(img, onSync);
   });
 }
 
-function selectImg(img){
+function selectImg(img, onSync){
+  onSync = onSync || onPreviewEdit;
   // Deselect previous
   if(_selectedImg) _selectedImg.classList.remove('img-selected');
   _selectedImg = img;
@@ -3870,7 +3907,7 @@ function selectImg(img){
       _resizing = false;
       document.onmousemove = null;
       document.onmouseup   = null;
-      onPreviewEdit(); // save ค่าไม่เปลี่ยน tab
+      onSync(); // save ค่าไม่เปลี่ยน tab
       positionOverlay(); // snap overlay กลับให้ตรง
     };
   };
@@ -3878,7 +3915,7 @@ function selectImg(img){
 
 // Click outside image → deselect
 document.addEventListener('click', e => {
-  if(_selectedImg && !e.target.closest('#bodyPreviewDiv img')){
+  if(_selectedImg && !e.target.closest('#bodyPreviewDiv img, #beBodyPreview img')){
     _selectedImg.classList.remove('img-selected');
     _selectedImg = null;
     document.getElementById('imgResizeOverlay').style.display = 'none';
