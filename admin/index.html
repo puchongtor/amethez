@@ -2212,7 +2212,7 @@ function toast(msg,type=''){
 }
 
 // ── PAGES DATA ────────────────────────────────
-const PAGE_GROUPS={g:'🌐 Global',m:'🏠 หน้าหลัก',c:'🔮 หมวดหมู่',sp:'⭐ พิเศษ',guides:'🌿 คู่มือ'};
+const PAGE_GROUPS={g:'🌐 Global',m:'🏠 หน้าหลัก',c:'🔮 หมวดหมู่',sp:'⭐ พิเศษ',guides:'🌿 คู่มือ',dc:'☄️ Dr. Cosmos'};
 const PAGES=[
   {key:'global',label:'🌐 ทั่วไป (ทุกหน้า)',group:'g',path:null,
    text:[
@@ -2431,6 +2431,65 @@ const PAGES=[
      {id:'title',label:'หัวข้อ',type:'i',ph:'รูปทรงหิน — ความหมายต่างกัน'},
      {id:'intro',label:'บทนำ (HTML)',type:'t',ph:''},
    ],imgs:['guide_shape_hero']},
+
+  // ── DR. COSMOS ──
+  {key:'cosmos-hub',label:'☄️ Dr. Cosmos Hub',group:'dc',path:'/cosmos/',
+   text:[
+     {id:'title',label:'หัวข้อหน้า',type:'i',ph:'หินจากนอกโลก — วิทยาศาสตร์พบพลังงาน'},
+     {id:'subtitle',label:'Subtitle',type:'i',ph:'Dr. Cosmos · สารานุกรมหินจักรวาล'},
+   ],imgs:['cosmos_hero']},
+
+  {key:'cosmos-thai-tektite',label:'🌑 สะเก็ดดาวไทย',group:'dc',path:'/cosmos/thai-tektite.html',
+   text:[
+     {id:'title',label:'หัวข้อหน้า',type:'i',ph:'สะเก็ดดาวไทย — Indochinite Tektite'},
+     {id:'hero_sub',label:'Hero Subtitle',type:'t',ph:'หินอุกกาบาตที่เกิดขึ้นในไทยเมื่อ 0.78 ล้านปีก่อน'},
+   ],imgs:['cosmos_tektite_hero','cosmos_tektite_close']},
+
+  {key:'cosmos-moldavite',label:'🌿 โมลดาไวท์',group:'dc',path:'/cosmos/moldavite.html',
+   text:[
+     {id:'title',label:'หัวข้อหน้า',type:'i',ph:'โมลดาไวท์ — หินสีเขียวจากนอกโลก'},
+     {id:'hero_sub',label:'Hero Subtitle',type:'t',ph:'หินแก้วอุกกาบาตจากสาธารณรัฐเช็ก อายุ 14.7 ล้านปี'},
+   ],imgs:['cosmos_moldavite_hero','cosmos_moldavite_close']},
+
+  {key:'cosmos-australite',label:'🔵 ออสตราไลท์',group:'dc',path:'/cosmos/australite.html',
+   text:[
+     {id:'title',label:'หัวข้อหน้า',type:'i',ph:'ออสตราไลท์ — สะเก็ดดาวแห่งออสเตรเลีย'},
+   ],imgs:['cosmos_australite_hero']},
+
+  {key:'cosmos-libyan-glass',label:'✨ แก้วทะเลทรายลิเบียน',group:'dc',path:'/cosmos/libyan-desert-glass.html',
+   text:[
+     {id:'title',label:'หัวข้อหน้า',type:'i',ph:'แก้วทะเลทรายลิเบียน — สมบัติฟาโรห์'},
+     {id:'hero_sub',label:'Hero Subtitle',type:'t',ph:'แก้วอุกกาบาตโบราณ อายุ 28 ล้านปี หายากที่สุดในโลก'},
+   ],imgs:['cosmos_ldg_hero']},
+
+  {key:'cosmos-meteorite',label:'☄️ อุกกาบาต',group:'dc',path:'/cosmos/meteorite.html',
+   text:[
+     {id:'title',label:'หัวข้อหน้า',type:'i',ph:'อุกกาบาต — สสารจากห้วงจักรวาล'},
+   ],imgs:['cosmos_meteorite_hero']},
+
+  {key:'cosmos-pallasite',label:'💛 พัลลาไซต์',group:'dc',path:'/cosmos/pallasite.html',
+   text:[
+     {id:'title',label:'หัวข้อหน้า',type:'i',ph:'พัลลาไซต์ — อุกกาบาตงามที่สุดในจักรวาล'},
+     {id:'hero_sub',label:'Hero Subtitle',type:'t',ph:'คริสตัลโอลีวีนในแผ่นเหล็กนิกเกิล จากขอบแก่นดาวเคราะห์น้อย'},
+   ],imgs:['cosmos_pallasite_hero','cosmos_pallasite_slice']},
+
+  {key:'cosmos-shungite',label:'⚫ ชุงไกต์',group:'dc',path:'/cosmos/shungite.html',
+   text:[
+     {id:'title',label:'หัวข้อหน้า',type:'i',ph:'ชุงไกต์ — คาร์บอนโบราณอายุ 2 พันล้านปี'},
+     {id:'hero_sub',label:'Hero Subtitle',type:'t',ph:'แร่ธาตุลึกลับจากรัสเซีย กับ Fullerene C60 ที่โลกยังค้นหาความจริง'},
+   ],imgs:['cosmos_shungite_hero','cosmos_shungite_elite']},
+
+  {key:'cosmos-nuummite',label:'🔮 นูมมิต',group:'dc',path:'/cosmos/nuummite.html',
+   text:[
+     {id:'title',label:'หัวข้อหน้า',type:'i',ph:'นูมมิต — แร่โบราณสุดในโลก จากกรีนแลนด์'},
+     {id:'hero_sub',label:'Hero Subtitle',type:'t',ph:'อายุ 3.8 พันล้านปี หายากที่สุด มีแหล่งเดียวบนโลก'},
+   ],imgs:['cosmos_nuummite_hero']},
+
+  {key:'cosmos-fulgurite',label:'⚡ ฟัลกิวไรต์',group:'dc',path:'/cosmos/fulgurite.html',
+   text:[
+     {id:'title',label:'หัวข้อหน้า',type:'i',ph:'ฟัลกิวไรต์ — สายฟ้าที่กลายเป็นหิน'},
+     {id:'hero_sub',label:'Hero Subtitle',type:'t',ph:'เมื่อสายฟ้า 1,800°C ฟาดพื้นทราย เกิดแก้วธรรมชาติในรูปหลอด'},
+   ],imgs:['cosmos_fulgurite_hero']},
 ];
 
 // ── STONES DATA + CRUD ────────────────────────

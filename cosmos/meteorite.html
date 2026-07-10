@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>อุกกาบาต (Meteorite) คู่มือครบถ้วน — ประเภท วิธีดูของแท้ และพลังงาน | Amethez</title>
+<meta name="description" content="ทุกอย่างที่ต้องรู้เกี่ยวกับอุกกาบาต ตั้งแต่อุกกาบาตเหล็ก คอนไดรต์ พัลลาไซต์ ไปจนถึงคาร์บอนาเซียสคอนไดรต์ที่มีกรดอะมิโนจากอวกาศ วิธีดูของแท้ และพลังงานของแต่ละประเภท">
+<meta property="og:title" content="อุกกาบาต (Meteorite) — คู่มือครบถ้วนทุกประเภท">
+<meta property="og:description" content="อุกกาบาตเหล็ก คอนไดรต์ พัลลาไซต์ — วิทยาศาสตร์ลึก พลังงาน วิธีดูของแท้ โดย Dr. Cosmos">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/main.css">
+<style>
+:root{--purple:#7c3aed;--gold:#c9a84c;--dark:#0f0a1e;--text:#1a1228;--muted:#6b7280;--bg:#faf8f4;--border:#ede9fe;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--text);}
+.topbar{background:linear-gradient(90deg,#1a0936,#2d1b5e,#1a0936);padding:.55rem 1.5rem;display:flex;align-items:center;justify-content:center;gap:2rem;flex-wrap:wrap;}
+.topbar span{color:rgba(255,255,255,.65);font-size:.78rem;}
+.topbar strong{color:#c9a84c;}
+.stone-hero{background:linear-gradient(155deg,#0f0a1e,#1a0936,#0c1a3a);padding:4rem 1.5rem;position:relative;overflow:hidden;}
+.stone-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 30%,rgba(124,58,237,.2),transparent 70%);pointer-events:none;}
+.hero-inner{max-width:800px;margin:0 auto;position:relative;}
+.hero-eyebrow{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:rgba(201,168,76,.75);display:block;margin-bottom:.75rem;}
+.hero-h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3rem);color:white;line-height:1.22;margin-bottom:.75rem;}
+.hero-h1 em{font-style:italic;color:#c4b5fd;}
+.hero-sub{color:rgba(255,255,255,.55);font-size:.95rem;line-height:1.8;margin-bottom:1.5rem;}
+.hero-badges{display:flex;gap:.5rem;flex-wrap:wrap;}
+.hero-badge{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.75);padding:.3rem .875rem;border-radius:2rem;font-size:.78rem;font-weight:600;}
+.content-wrap{max-width:800px;margin:0 auto;padding:0 1.5rem;}
+.quick-facts{background:#fff;border:1.5px solid #ede9fe;border-radius:1rem;overflow:hidden;margin:2.5rem 0;}
+.quick-facts-head{background:linear-gradient(135deg,#7c3aed,#6d28d9);color:white;padding:.875rem 1.25rem;font-weight:700;font-size:.9rem;letter-spacing:.06em;}
+.quick-facts table{width:100%;border-collapse:collapse;}
+.quick-facts td{padding:.7rem 1.25rem;border-bottom:1px solid #ede9fe;font-size:.88rem;line-height:1.6;}
+.quick-facts td:first-child{font-weight:700;color:#7c3aed;width:38%;}
+.quick-facts tr:last-child td{border-bottom:none;}
+.content-section{padding:2.5rem 0;}
+.section-h2{font-family:'Playfair Display',serif;font-size:1.5rem;color:#1a1228;margin-bottom:1rem;padding-bottom:.5rem;border-bottom:2px solid #ede9fe;}
+.section-h3{font-size:1.05rem;font-weight:700;color:#1a1228;margin:1.25rem 0 .625rem;}
+p{font-size:.95rem;line-height:1.85;color:#374151;margin-bottom:1rem;}
+.highlight-box{background:#f5f0ff;border-left:4px solid #7c3aed;padding:1rem 1.25rem;border-radius:0 .75rem .75rem 0;margin:1.5rem 0;font-size:.9rem;line-height:1.75;}
+.warn-box{background:#fff7ed;border-left:4px solid #f59e0b;padding:1rem 1.25rem;border-radius:0 .75rem .75rem 0;margin:1.5rem 0;font-size:.9rem;line-height:1.75;}
+.science-box{background:#0f0a1e;color:rgba(255,255,255,.8);border-radius:.875rem;padding:1.5rem;margin:1.5rem 0;font-size:.88rem;line-height:1.8;}
+.science-box strong{color:#c9a84c;}
+.faq{margin:2rem 0;}
+.faq details{border:1.5px solid #ede9fe;border-radius:.75rem;margin-bottom:.75rem;overflow:hidden;}
+.faq summary{padding:1rem 1.25rem;font-weight:700;cursor:pointer;list-style:none;font-size:.9rem;}
+.faq details[open] summary{color:#7c3aed;background:#f5f0ff;}
+.faq details p{padding:.75rem 1.25rem 1.25rem;margin:0;}
+.author-box{background:linear-gradient(135deg,#0f0a1e,#1a0936);border-radius:1rem;padding:1.5rem;display:flex;gap:1.25rem;align-items:center;margin:2.5rem 0;}
+.author-avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#c9a84c,#b8922e);display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;}
+.author-name{font-family:'Playfair Display',serif;font-size:1rem;color:white;margin-bottom:.2rem;}
+.author-role{font-size:.75rem;color:rgba(201,168,76,.75);margin-bottom:.4rem;}
+.author-bio{font-size:.8rem;color:rgba(255,255,255,.5);line-height:1.6;}
+.shopee-section{background:#fff8ed;border-top:3px solid #f59e0b;padding:3rem 1.5rem;}
+.shopee-wrap{max-width:800px;margin:0 auto;}
+.shopee-title{font-family:'Playfair Display',serif;font-size:1.35rem;color:#1a1228;margin-bottom:.5rem;}
+.shopee-sub{font-size:.85rem;color:#6b7280;margin-bottom:1.5rem;line-height:1.7;}
+.shopee-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;margin-top:1.5rem;}
+.shopee-card{background:white;border:1.5px solid #fed7aa;border-radius:.875rem;padding:1.25rem;text-align:center;}
+.shopee-card-img{height:100px;display:flex;align-items:center;justify-content:center;font-size:3rem;margin-bottom:.75rem;}
+.shopee-card-name{font-size:.85rem;font-weight:700;color:#1a1228;margin-bottom:.25rem;}
+.shopee-card-price{font-size:.78rem;color:#f59e0b;font-weight:700;margin-bottom:.75rem;}
+.shopee-btn{display:inline-block;background:#f59e0b;color:white;padding:.45rem 1.25rem;border-radius:2rem;font-size:.8rem;font-weight:700;text-decoration:none;}
+.breadcrumb{font-size:.78rem;color:#9ca3af;padding:.75rem 0;margin-bottom:1rem;}
+.breadcrumb a{color:#7c3aed;text-decoration:none;}
+.divider{border:none;height:1px;background:linear-gradient(90deg,transparent,#ede9fe,transparent);margin:0;}
+.type-card{background:#fff;border:1.5px solid var(--border);border-radius:1rem;padding:1.5rem;margin-bottom:1.5rem;position:relative;overflow:hidden;}
+.type-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;}
+.type-card.iron::before{background:linear-gradient(180deg,#78716c,#44403c);}
+.type-card.chondrite::before{background:linear-gradient(180deg,#a78bfa,#7c3aed);}
+.type-card.pallasite::before{background:linear-gradient(180deg,#c9a84c,#f59e0b);}
+.type-card.carbonaceous::before{background:linear-gradient(180deg,#374151,#111827);}
+.type-tag{display:inline-block;padding:.2rem .75rem;border-radius:2rem;font-size:.72rem;font-weight:700;margin-bottom:.75rem;}
+.type-tag.iron{background:#f5f5f4;color:#44403c;}
+.type-tag.chondrite{background:#f5f0ff;color:#7c3aed;}
+.type-tag.pallasite{background:#fff7ed;color:#b45309;}
+.type-tag.carbonaceous{background:#f9fafb;color:#374151;}
+.type-h3{font-family:'Playfair Display',serif;font-size:1.15rem;color:#1a1228;margin-bottom:.5rem;}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem;margin:1.5rem 0;}
+.stat-card{background:#fff;border:1.5px solid var(--border);border-radius:.875rem;padding:1.25rem;text-align:center;}
+.stat-num{font-family:'Playfair Display',serif;font-size:1.75rem;color:var(--purple);font-weight:700;}
+.stat-label{font-size:.75rem;color:var(--muted);margin-top:.25rem;}
+.check-list{list-style:none;padding:0;margin:1rem 0;}
+.check-list li{padding:.5rem 0;border-bottom:1px solid var(--border);font-size:.88rem;color:#374151;display:flex;gap:.75rem;align-items:flex-start;}
+.check-list li:last-child{border-bottom:none;}
+.check-list .icon{flex-shrink:0;width:1.5rem;text-align:center;}
+.related-link{display:inline-flex;align-items:center;gap:.5rem;background:linear-gradient(135deg,#7c3aed,#6d28d9);color:white;padding:.625rem 1.25rem;border-radius:.75rem;font-size:.88rem;font-weight:700;text-decoration:none;margin-top:1rem;}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "อุกกาบาต (Meteorite) คู่มือครบถ้วน — ประเภท วิธีดูของแท้ และพลังงาน",
+  "description": "ทุกอย่างที่ต้องรู้เกี่ยวกับอุกกาบาต ตั้งแต่อุกกาบาตเหล็ก คอนไดรต์ พัลลาไซต์ ไปจนถึงคาร์บอนาเซียสคอนไดรต์",
+  "author": {
+    "@type": "Person",
+    "name": "Dr. Cosmos",
+    "description": "นักวิทยาศาสตร์ด้านหินอวกาศและพลังงานจักรวาล"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Amethez",
+    "url": "https://amethez.com"
+  },
+  "datePublished": "2026-07-10",
+  "dateModified": "2026-07-10",
+  "mainEntityOfPage": "https://amethez.com/cosmos/meteorite.html",
+  "keywords": "อุกกาบาต,meteorite,อุกกาบาตเหล็ก,คอนไดรต์,พัลลาไซต์,หินอวกาศ,Widmanstätten"
+}
+</script>
+</head>
+<body>
+
+<header class="site-header"></header>
+
+<div class="topbar">
+  <span>🔭 Dr. Cosmos — <strong>หินอวกาศและแก้วอุกกาบาต</strong></span>
+  <span>วิทยาศาสตร์ลึก · พลังงานจักรวาล · ข้อมูลแท้</span>
+</div>
+
+<section class="stone-hero">
+  <div class="hero-inner">
+    <span class="hero-eyebrow">🌌 Dr. Cosmos — Extraterrestrial Stones</span>
+    <h1 class="hero-h1">อุกกาบาต<br><em>Meteorite — คู่มือฉบับสมบูรณ์</em></h1>
+    <p class="hero-sub">จากหินที่เก่าแก่กว่าโลกเราหลายร้อยล้านปี เดินทางข้ามระบบสุริยะนับพันล้านกิโลเมตร มาลงจอดบนพื้นโลก — อุกกาบาตคือสมบัติจักรวาลที่ไม่มีอะไรเทียบได้</p>
+    <div class="hero-badges">
+      <span class="hero-badge">⚙️ Iron Meteorite</span>
+      <span class="hero-badge">🌑 Chondrite</span>
+      <span class="hero-badge">✨ Pallasite</span>
+      <span class="hero-badge">🧬 Carbonaceous</span>
+      <span class="hero-badge">4.5B ปีอายุ</span>
+    </div>
+  </div>
+</section>
+
+<main>
+  <div class="content-wrap">
+    <div class="breadcrumb">
+      <a href="/">Amethez</a> › <a href="/cosmos/">Dr. Cosmos</a> › อุกกาบาต
+    </div>
+
+    <div class="quick-facts">
+      <div class="quick-facts-head">⚗️ Quick Facts — อุกกาบาต (Meteorite)</div>
+      <table>
+        <tr><td>คำนิยาม</td><td>วัตถุจากอวกาศที่เดินทางผ่านชั้นบรรยากาศและตกถึงพื้นโลก</td></tr>
+        <tr><td>อายุเฉลี่ย</td><td>4.4–4.56 พันล้านปี (เก่าเท่าระบบสุริยะ)</td></tr>
+        <tr><td>ประเภทหลัก</td><td>Iron / Stony (Chondrite + Achondrite) / Stony-Iron</td></tr>
+        <tr><td>ที่มาส่วนใหญ่</td><td>แถบดาวเคราะห์น้อย (Asteroid Belt) ระหว่างดาวอังคาร-ดาวพฤหัส</td></tr>
+        <tr><td>พบบ่อยที่สุด</td><td>ทวีปแอนตาร์กติกาและทะเลทรายซาฮาร่า</td></tr>
+        <tr><td>จำนวนที่รู้จัก</td><td>มากกว่า 65,000 ตัวอย่างทั่วโลก</td></tr>
+        <tr><td>น้ำหนักมากที่สุด</td><td>Hoba meteorite (นามิเบีย) 60 ตัน</td></tr>
+        <tr><td>ราคาเริ่มต้น</td><td>$1–50/กรัม (แตกต่างตามประเภทและความหายาก)</td></tr>
+        <tr><td>ลักษณะเฉพาะ</td><td>Fusion crust (เปลือกดำ), Regmaglypts (รอยนิ้วมือ), แม่เหล็ก</td></tr>
+      </table>
+    </div>
+
+    <section class="content-section">
+      <h2 class="section-h2">☄️ อุกกาบาตคืออะไร — การเดินทางข้ามระบบสุริยะ</h2>
+
+      <p>ก่อนจะเป็นอุกกาบาต (Meteorite) วัตถุเหล่านี้มีชีวิตอยู่ในอวกาศในชื่อ <strong>Meteoroid</strong> — ก้อนหินหรือเหล็กขนาดตั้งแต่เม็ดทรายไปจนถึงหลายร้อยเมตร ล่องลอยอยู่ในระบบสุริยะของเรา บางชิ้นเป็นซากจากการชนกันของดาวเคราะห์น้อยในแถบ Asteroid Belt บางชิ้นเป็นเศษหักที่กระเด็นออกมาจากดาวอังคารหรือดวงจันทร์เมื่อถูกชน</p>
+
+      <p>เมื่อ Meteoroid พุ่งเข้าสู่ชั้นบรรยากาศโลกด้วยความเร็ว 11–72 กิโลเมตรต่อวินาที แรงต้านอากาศทำให้เกิดความร้อนมหาศาล พื้นผิวหลอมเหลวและลุกไหม้ เกิดแสงวาบสว่างที่เราเรียกว่า <strong>Meteor</strong> หรือ "ดาวตก" ถ้าวัตถุนั้นใหญ่พอที่จะไม่หมดไปในชั้นบรรยากาศและตกถึงพื้นดิน สิ่งที่เหลืออยู่คือ <strong>Meteorite</strong></p>
+
+      <div class="science-box">
+        <strong>วงจรชีวิตของอุกกาบาต:</strong><br><br>
+        <strong>1. Asteroid/Comet</strong> → แหล่งต้นกำเนิดในอวกาศ<br>
+        <strong>2. Meteoroid</strong> → ก้อนหินในอวกาศ (ก่อนเข้าบรรยากาศ)<br>
+        <strong>3. Meteor / Fireball</strong> → แสงวาบขณะพุ่งผ่านบรรยากาศ<br>
+        <strong>4. Meteorite</strong> → ชิ้นส่วนที่ตกถึงพื้นโลก<br><br>
+        <strong>หมายเหตุ:</strong> อุกกาบาตที่ตกใหม่ๆ มักมี <em>Fusion Crust</em> — เปลือกดำบางๆ จากการหลอมเหลวของพื้นผิว และ <em>Regmaglypts</em> — รอยบุ๋มคล้ายนิ้วกดบนดินเหนียว จากการที่วัสดุละลายไหลออกขณะเคลื่อนที่
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-num">4.56B</div>
+          <div class="stat-label">ปีอายุสูงสุด</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">65,000+</div>
+          <div class="stat-label">ตัวอย่างที่รู้จัก</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">500+</div>
+          <div class="stat-label">ตก/ปี ทั่วโลก</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">86%</div>
+          <div class="stat-label">เป็น Chondrite</div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section class="content-section">
+      <h2 class="section-h2">🗂️ ประเภทของอุกกาบาต — 4 ชนิดหลัก</h2>
+
+      <!-- Iron Meteorite -->
+      <div class="type-card iron">
+        <span class="type-tag iron">⚙️ ประเภท 1</span>
+        <h3 class="type-h3">อุกกาบาตเหล็ก (Iron Meteorite)</h3>
+        <p>อุกกาบาตเหล็กเป็นของสะสมที่น่าประทับใจที่สุดในสายตาของนักสะสมทั่วไป เพราะมีน้ำหนักผิดปกติมากเมื่อเทียบกับขนาด และมีลายเฉพาะตัวที่งดงามอย่างไม่น่าเชื่อเมื่อตัดและขัดผิว</p>
+
+        <p>อุกกาบาตเหล็กเป็นซากของแกนกลาง (core) ของดาวเคราะห์น้อยในยุคแรกของระบบสุริยะ เมื่อดาวเคราะห์น้อยขนาดพอเหมาะก่อตัวขึ้น แรงโน้มถ่วงทำให้ธาตุหนักอย่างเหล็กและนิกเกิลจมลงสู่แกนกลาง เกิดเป็น metallic core ขนาดเล็กคล้ายกับแกนโลกของเรา เมื่อดาวเคราะห์น้อยนั้นถูกชนและแตกออก แกนเหล็กนั้นก็กลายเป็นอุกกาบาตเหล็กที่เราเห็นในวันนี้</p>
+
+        <div class="highlight-box">
+          <strong>🔬 Widmanstätten Pattern — ลายพิมพ์จักรวาล:</strong><br>
+          เมื่อตัดอุกกาบาตเหล็กและขัดผิวแล้วใช้กรด Nital (กรดไนตริก 3% ในแอลกอฮอล์) จะปรากฏลายตาข่ายหรือแถบข้าวหลามตัดสวยงามที่เรียกว่า <strong>Widmanstätten Pattern</strong> ลายนี้เกิดจากผลึก Kamacite และ Taenite (โลหะผสม Fe-Ni ชนิดต่างๆ) ที่ตกผลึกร่วมกันอย่างช้าๆ หลายล้านปี ในสภาวะไร้แรงโน้มถ่วงในอวกาศ ไม่มีทางปลอมแปลงได้ในห้องแล็บบนโลก
+        </div>
+
+        <p><strong>องค์ประกอบ:</strong> Fe (เหล็ก) 90–95% + Ni (นิกเกิล) 5–10% ส่วนน้อยเป็น Co, P, S, C</p>
+        <p><strong>พลังงาน:</strong> ให้พลังงาน grounding ที่หนักแน่น ช่วยให้รู้สึกมั่นคง ต่อเชื่อมกับแกนโลก เหมาะสำหรับจักระ Root (Muladhara) ผู้ที่รู้สึกฟุ้งซ่านหรือ ungrounded มักรู้สึกสงบทันทีเมื่อถืออุกกาบาตเหล็ก</p>
+        <p><strong>ราคา:</strong> $1–10/กรัม สำหรับชิ้นทั่วไป ชิ้นที่มีลาย Widmanstätten สวยงามหรือมาจากแหล่งที่รู้จักดี (เช่น Canyon Diablo, Gibeon) อาจสูงกว่ามาก</p>
+      </div>
+
+      <!-- Chondrite -->
+      <div class="type-card chondrite">
+        <span class="type-tag chondrite">🌑 ประเภท 2</span>
+        <h3 class="type-h3">คอนไดรต์ (Chondrite / Stony Meteorite)</h3>
+        <p>คอนไดรต์คืออุกกาบาตที่พบมากที่สุด คิดเป็นประมาณ 86% ของอุกกาบาตทั้งหมดที่เคยค้นพบ ชื่อ "คอนไดรต์" มาจากคำภาษากรีก "chondros" แปลว่า เม็ดทราย เพราะลักษณะเฉพาะของหินชนิดนี้คือมี <strong>Chondrules</strong> — เม็ดกลมขนาดจิ๋ว (0.1–1 มม.) กระจายอยู่ทั่วเนื้อหิน</p>
+
+        <p>Chondrules เหล่านี้เป็นหนึ่งในวัตถุที่เก่าแก่ที่สุดในระบบสุริยะ มีอายุ 4.56 พันล้านปี เก่าแก่กว่าโลก ดาวอังคาร หรือดาวพฤหัสบดี พวกมันเกิดจากการหลอมเหลวและแข็งตัวของฝุ่นอวกาศในช่วงแรกสุดของระบบสุริยะ ก่อนที่ดาวเคราะห์ใดๆ จะก่อตัวขึ้น</p>
+
+        <div class="science-box">
+          <strong>ทำไม Chondrule ถึงสำคัญมาก:</strong><br><br>
+          นักวิทยาศาสตร์ศึกษา Chondrule เพื่อทำความเข้าใจว่าระบบสุริยะก่อตัวขึ้นได้อย่างไร เพราะนี่คือ "ฝุ่นดาว" ดั้งเดิมที่รวมตัวกันสร้างโลก ดาวเคราะห์ และทุกสิ่ง ใน <strong>Chondrite แต่ละก้อนคือห้องเก็บข้อมูลประวัติศาสตร์ของระบบสุริยะที่สมบูรณ์ที่สุด</strong> เก่าแก่กว่าหินบนโลกใบนี้ทุกก้อน
+        </div>
+
+        <p><strong>องค์ประกอบ:</strong> Olivine, Pyroxene, Plagioclase, Fe-Ni metal และ Troilite (FeS)</p>
+        <p><strong>พลังงาน:</strong> Chondrite เป็นหินแห่ง "ความสมดุลของจักรวาล" เพราะมีธาตุครบถ้วนตั้งแต่แรกเริ่มสร้างโลก ช่วยรีเซ็ตพลังงาน ดึงดูดความสมดุล เหมาะกับผู้ที่รู้สึกว่าชีวิตไม่สมดุล หรือต้องการ "เริ่มต้นใหม่"</p>
+        <p><strong>ราคา:</strong> $1–5/กรัม สำหรับ Common Chondrite ราคาถูกที่สุดในบรรดาอุกกาบาตทั้งหมด แต่คุณค่าทางวิทยาศาสตร์และพลังงานไม่ได้น้อยกว่าเลย</p>
+      </div>
+
+      <!-- Pallasite -->
+      <div class="type-card pallasite">
+        <span class="type-tag pallasite">✨ ประเภท 3</span>
+        <h3 class="type-h3">พัลลาไซต์ (Pallasite / Stony-Iron)</h3>
+        <p>พัลลาไซต์คืออุกกาบาตที่สวยงามที่สุดในจักรวาล — ผลึกโอลิวีนสีทองเขียวโปร่งแสงฝังตัวอยู่ในโครงข่ายโลหะเหล็ก-นิกเกิล เมื่อตัดบางและส่องแสงผ่าน มันดูเหมือนกระจกสีหน้าต่างโบสถ์ที่มาจากอวกาศ</p>
+        <p>พัลลาไซต์หายากมาก คิดเป็นไม่ถึง 1% ของอุกกาบาตทั้งหมด มันมาจากบริเวณรอยต่อระหว่างแกนกลางและชั้นแมนเทิลของดาวเคราะห์น้อยที่ถูกทำลาย</p>
+        <a href="/cosmos/pallasite.html" class="related-link">อ่านบทความพัลลาไซต์ฉบับสมบูรณ์ →</a>
+      </div>
+
+      <!-- Carbonaceous Chondrite -->
+      <div class="type-card carbonaceous">
+        <span class="type-tag carbonaceous">🧬 ประเภท 4</span>
+        <h3 class="type-h3">คาร์บอนาเซียสคอนไดรต์ (Carbonaceous Chondrite / CC)</h3>
+        <p>คาร์บอนาเซียสคอนไดรต์คือประเภทที่หายากและลึกลับที่สุด คิดเป็นเพียง 4–5% ของ Chondrite ทั้งหมด แต่มีความสำคัญทางวิทยาศาสตร์สูงสุด เพราะภายในพวกมัน ซ่อนหลักฐานว่า <strong>กรดอะมิโน — องค์ประกอบของสิ่งมีชีวิต — มีอยู่ในอวกาศก่อนโลกจะถือกำเนิด</strong></p>
+
+        <p>ในปี ค.ศ. 1969 อุกกาบาต <strong>Murchison Meteorite</strong> ตกลงที่ออสเตรเลีย นักวิทยาศาสตร์วิเคราะห์พบ <strong>กรดอะมิโนมากกว่า 70 ชนิด</strong> รวมถึงบางชนิดที่ไม่เคยพบในสิ่งมีชีวิตบนโลก นอกจากนี้ยังพบ nucleobase (ส่วนประกอบของ DNA/RNA) อีกด้วย</p>
+
+        <div class="science-box">
+          <strong>Panspermia Hypothesis:</strong><br><br>
+          การค้นพบกรดอะมิโนและสารอินทรีย์ในอุกกาบาตสนับสนุน <strong>ทฤษฎี Panspermia</strong> ที่เสนอว่าสิ่งมีชีวิตหรือสารตั้งต้นของสิ่งมีชีวิตอาจแพร่กระจายไปทั่วจักรวาลโดยอุกกาบาตและดาวหาง เป็นไปได้ว่าชีวิตบนโลกอาจมีรากเหง้ามาจากอวกาศ — <em>"เราอาจเป็นลูกหลานของดวงดาว"</em> ในความหมายที่แท้จริง<br><br>
+          งานวิจัยปี 2022 จาก Japan Astrobiology Center พบ <strong>Uracil</strong> (nucleobase ใน RNA) ในอุกกาบาต Ryugu จากตัวอย่างที่ยานอวกาศ Hayabusa2 นำกลับมา ยืนยันว่าสารเหล่านี้มีต้นกำเนิดจากอวกาศจริงๆ ไม่ใช่การปนเปื้อนจากโลก
+        </div>
+
+        <p><strong>ตัวอย่างที่มีชื่อเสียง:</strong> Allende (เม็กซิโก, 1969), Murchison (ออสเตรเลีย, 1969), Tagish Lake (แคนาดา, 2000)</p>
+        <p><strong>องค์ประกอบ:</strong> คาร์บอนสูง 2–4%, น้ำ (ในรูปไฮดรัสแร่), กรดอะมิโน, น้ำตาล, nucleobase, PAH (Polycyclic Aromatic Hydrocarbons)</p>
+        <p><strong>พลังงาน:</strong> หินแห่ง "เมล็ดพันธุ์ชีวิต" ในมุมมองจิตวิญญาณ เชื่อมต่อกับพลังงานสร้างสรรค์และการกำเนิดใหม่ระดับจักรวาล เหมาะกับผู้ที่ต้องการ rebirth, healing ในระดับลึก หรือค้นหาจุดมุ่งหมายในชีวิต</p>
+        <p><strong>ราคา:</strong> $5–100/กรัม ขึ้นอยู่กับประเภทย่อย (CI, CM, CV, CR) ตัวอย่าง CI เช่น Ivuna หรือ Orgueil ราคาสูงมากเพราะหายากยิ่ง</p>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section class="content-section">
+      <h2 class="section-h2">🔍 วิธีดูอุกกาบาตของแท้ vs ของปลอม</h2>
+      <p>ตลาดอุกกาบาตมีของปลอมจำนวนมาก โดยเฉพาะที่เรียกกันว่า "Meteorwrong" หรือหินโลกทั่วๆ ไปที่ถูกนำมาขายในราคาอุกกาบาต ต่อไปนี้คือวิธีตรวจสอบที่ Dr. Cosmos แนะนำ</p>
+
+      <ul class="check-list">
+        <li><span class="icon">🧲</span><div><strong>ทดสอบแม่เหล็ก</strong> — อุกกาบาตเกือบทุกประเภทมีเหล็กและนิกเกิล ทำให้ดูดติดแม่เหล็กได้ดี แต่ระวัง: หินโลกบางชนิดก็ดูดแม่เหล็กได้เช่น Magnetite และ Hematite ดังนั้นนี่เป็นแค่ขั้นแรกเท่านั้น</div></li>
+        <li><span class="icon">🔬</span><div><strong>ทดสอบ Widmanstätten (เฉพาะ Iron)</strong> — ตัดผิวและใช้กรด Nital เผย ถ้าไม่มีลายข้าวหลามตัดที่ชัดเจนและประณีต ไม่ใช่อุกกาบาตเหล็ก ไม่มีวิธีสังเคราะห์ลายนี้ได้เลย</div></li>
+        <li><span class="icon">⚫</span><div><strong>ตรวจ Fusion Crust</strong> — อุกกาบาตที่ตกใหม่มักมีเปลือกดำบางๆ หนา 1-3 มม. จากการหลอมเหลวขณะลงมา แต่อุกกาบาตที่อยู่บนโลกนานอาจสูญเสีย Fusion Crust ไปแล้ว</div></li>
+        <li><span class="icon">🪨</span><div><strong>ตรวจ Regmaglypts</strong> — รอยบุ๋มคล้ายนิ้วกดบนพื้นผิว เกิดจากการที่วัสดุละลายออกไม่สม่ำเสมอขณะลงมา เป็นลักษณะเฉพาะที่ยากจะปลอมแปลง</div></li>
+        <li><span class="icon">⚖️</span><div><strong>ตรวจความหนาแน่น</strong> — Iron Meteorite มีความหนาแน่น 7-8 g/cm³ (หนักผิดปกติมาก) Chondrite ~3.5 g/cm³ หนักกว่าหินทั่วไป (2.5-2.8)</div></li>
+        <li><span class="icon">🧪</span><div><strong>Nickel Test</strong> — ใช้ชุดทดสอบนิกเกิล (Dimethylglyoxime test) อุกกาบาตเหล็กและ Chondrite มีนิกเกิล 5-30% หินโลกทั่วไปแทบไม่มีเลย นี่คือการทดสอบที่แม่นยำที่สุดที่ไม่ต้องใช้แล็บ</div></li>
+        <li><span class="icon">📄</span><div><strong>ขอ Meteorite Classification</strong> — อุกกาบาตแท้ที่มีมูลค่าสูงควรมีใบรับรองจากสถาบันเช่น Meteoritical Society และมีชื่อในฐานข้อมูล Meteoritical Bulletin</div></li>
+      </ul>
+
+      <div class="warn-box">
+        <strong>⚠️ หินโลกที่มักถูกขายเป็นอุกกาบาต:</strong> Magnetite (แร่เหล็กดูดแม่เหล็ก), Hematite (แร่เหล็กสีแดง-ดำ), Basalt (หินภูเขาไฟสีดำ), Slag (กากโลหะจากการถลุง) — ทั้งหมดดูดแม่เหล็กได้บ้าง แต่ไม่มี Widmanstätten, Chondrule หรือ Nickel สูง
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section class="content-section">
+      <h2 class="section-h2">⚡ พลังงานและการใช้งาน</h2>
+
+      <h3 class="section-h3">พลังงานสากล — สิ่งที่อุกกาบาตทุกชนิดมีร่วมกัน</h3>
+      <p>ไม่ว่าจะเป็นอุกกาบาตประเภทใด สิ่งที่ทำให้มันพิเศษกว่าหินโลกทุกชนิดคือ <strong>พลังงานจักรวาล (Cosmic Energy)</strong> — การสั่นสะเทือนของวัตถุที่เดินทางข้ามอวกาศมาหลายพันล้านปี บันทึกความทรงจำของระบบสุริยะยุคต้น ก่อนมีชีวิตใดๆ บนโลก</p>
+
+      <div class="highlight-box">
+        <strong>💡 ประโยชน์พลังงานตามประเภท:</strong><br><br>
+        🔩 <strong>Iron Meteorite:</strong> Grounding ลึก, ความมั่นคง, ความแกร่ง, Root Chakra<br>
+        🌑 <strong>Chondrite:</strong> สมดุลพลังงาน, เชื่อมต่อจักรวาล, รีเซ็ตพลังงาน<br>
+        ✨ <strong>Pallasite:</strong> Root + Crown พร้อมกัน, ยึดโยงโลก+จักรวาล, การเปลี่ยนแปลงสูงสุด<br>
+        🧬 <strong>Carbonaceous:</strong> การเกิดใหม่, ความสร้างสรรค์, เชื่อมต่อ DNA จักรวาล
+      </div>
+
+      <h3 class="section-h3">วิธีใช้งานทั่วไป</h3>
+      <p>อุกกาบาตทุกประเภทเหมาะสำหรับ:</p>
+      <ul style="padding-left:1.5rem;font-size:.9rem;line-height:2.2;color:#374151;">
+        <li><strong>Meditation ลึก:</strong> ถือระหว่างทำสมาธิเพื่อรับพลังงานจักรวาลโดยตรง</li>
+        <li><strong>Crystal Grid:</strong> ใช้เป็นจุดยึดพลังงาน ให้ความถี่จักรวาลรองรับหินอื่น</li>
+        <li><strong>Astral Travel:</strong> บางคนรายงานว่าช่วยในการ lucid dreaming และ astral projection</li>
+        <li><strong>Shadow Work:</strong> ช่วยเผชิญกับสิ่งที่ซ่อนอยู่ในตัวเองอย่างกล้าหาญ</li>
+        <li><strong>Past Life / Akashic:</strong> เป็นสะพานเชื่อมกับความทรงจำก่อนการก่อตัวของโลก</li>
+      </ul>
+
+      <h3 class="section-h3">ล้างและชาร์จอุกกาบาต</h3>
+      <p>อุกกาบาตเหล็กไม่ควรสัมผัสน้ำเป็นเวลานาน เพราะจะเกิดสนิม ล้างได้ด้วย Selenite Plate หรือเสียง Tuning Fork 432Hz การชาร์จที่ดีที่สุดคือวางกลางแจ้งคืนพระจันทร์เต็มดวง หรือวางบน Selenite Slab ค้างคืน</p>
+    </section>
+
+    <hr class="divider">
+
+    <section class="content-section">
+      <h2 class="section-h2">❓ คำถามที่พบบ่อย</h2>
+      <div class="faq">
+        <details>
+          <summary>ฉันซื้ออุกกาบาตได้ถูกกฎหมายไหม?</summary>
+          <p>ในประเทศส่วนใหญ่รวมถึงไทย การซื้อขายอุกกาบาตเป็นเรื่องถูกกฎหมาย แต่บางประเทศห้ามส่งออกอุกกาบาตที่พบในดินแดนของตน เช่น อาร์เจนตินา บราซิล และบางประเทศในแอฟริกา แนะนำซื้อจากดีลเลอร์ที่เชื่อถือได้และมีเอกสารที่มา</p>
+        </details>
+        <details>
+          <summary>อุกกาบาตจากดาวอังคารหรือดวงจันทร์มีจริงไหม?</summary>
+          <p>มีจริง อุกกาบาตจากดาวอังคาร (SNC meteorites: Shergottite, Nakhlite, Chassignite) และจากดวงจันทร์ (Lunar meteorites) พบในแอนตาร์กติกาและทะเลทรายซาฮาร่า ยืนยันได้จากองค์ประกอบก๊าซที่ตรงกับที่ยานสำรวจวัดได้บนดาวอังคาร ราคาแพงมาก $1,000+ ต่อกรัมสำหรับ Lunar meteorites</p>
+        </details>
+        <details>
+          <summary>อุกกาบาตที่เก่าที่สุดในโลกคืออะไร?</summary>
+          <p>Inclusion ใน Allende Meteorite (CC type) มีอายุ 4.567 พันล้านปี เก่าแก่ที่สุดที่เคยวัดได้ในระบบสุริยะ เรียกว่า CAI (Calcium-Aluminum-rich Inclusions) ซึ่งเป็นของแข็งชิ้นแรกที่ก่อตัวในระบบสุริยะ นานก่อนโลกจะก่อตัวขึ้นถึง 10-50 ล้านปี</p>
+        </details>
+        <details>
+          <summary>อุกกาบาตมีประโยชน์ทางการแพทย์ไหม?</summary>
+          <p>ในแง่วิทยาศาสตร์การแพทย์กระแสหลัก ไม่มีหลักฐาน แต่ crystal healing ใช้อุกกาบาตในการ energy work รายงานผลเป็น subjective experience เช่น ความรู้สึกสงบ มั่นคง ชัดเจน สิ่งสำคัญคือไม่ควรใช้อุกกาบาตแทนการรักษาแพทย์</p>
+        </details>
+        <details>
+          <summary>อุกกาบาตที่เล็กที่สุดที่ซื้อได้คือขนาดไหน?</summary>
+          <p>อุกกาบาตที่เล็กที่สุดในตลาดคือ "micrometeorites" ขนาดไม่กี่มิลลิเมตร ขายในแผ่น Acrylic พร้อมแว่นขยาย ราคาตั้งแต่฿200-500 เหมาะสำหรับผู้เริ่มต้นสะสม ชิ้นใหญ่ขึ้นมาเป็น gram-sized specimens ราคาตั้งแต่฿300-1,000 ขึ้นอยู่กับประเภท</p>
+        </details>
+      </div>
+    </section>
+
+    <div class="author-box">
+      <div class="author-avatar">🔭</div>
+      <div>
+        <div class="author-name">Dr. Cosmos</div>
+        <div class="author-role">นักวิทยาศาสตร์ด้านหินอวกาศและพลังงานจักรวาล — Amethez</div>
+        <div class="author-bio">ผมเชื่อว่าอุกกาบาตไม่ใช่แค่หิน แต่เป็นข้อความจากจักรวาลที่ส่งมาให้เราศึกษา ทุกก้อนเก็บประวัติศาสตร์ที่ไม่มีหนังสือเล่มไหนบันทึกได้</div>
+      </div>
+    </div>
+  </div>
+
+  <section class="shopee-section">
+    <div class="shopee-wrap">
+      <h2 class="shopee-title">🛒 เริ่มต้นสะสมอุกกาบาต</h2>
+      <p class="shopee-sub">อุกกาบาตแต่ละชิ้นมีเรื่องราวนับพันล้านปี เริ่มต้นสะสมได้ไม่ยาก ราคาเริ่มต้นไม่สูงอย่างที่คิด</p>
+      <div class="shopee-grid">
+        <div class="shopee-card">
+          <div class="shopee-card-img">☄️</div>
+          <div class="shopee-card-name">สะเก็ดดาวไทย Tektite</div>
+          <div class="shopee-card-price">ราคาเริ่มต้น ฿89</div>
+          <a href="https://s.shopee.co.th/7fBBAbpGxA" class="shopee-btn" target="_blank" rel="nofollow">ดูสินค้า</a>
+        </div>
+        <div class="shopee-card">
+          <div class="shopee-card-img">🪨</div>
+          <div class="shopee-card-name">เศษหิน Clear Quartz</div>
+          <div class="shopee-card-price">ราคาเริ่มต้น ฿40</div>
+          <a href="https://s.shopee.co.th/7fBBAbpGxA" class="shopee-btn" target="_blank" rel="nofollow">ดูสินค้า</a>
+        </div>
+        <div class="shopee-card">
+          <div class="shopee-card-img">🔮</div>
+          <div class="shopee-card-name">โพรงอเมทิสต์</div>
+          <div class="shopee-card-price">ราคาเริ่มต้น ฿1,200</div>
+          <a href="https://s.shopee.co.th/7fBBAbpGxA" class="shopee-btn" target="_blank" rel="nofollow">ดูสินค้า</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer"></footer>
+<script src="/js/components.js"></script>
+</body>
+</html>

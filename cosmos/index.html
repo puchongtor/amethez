@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dr. Cosmos — หินจากนอกโลก วิทยาศาสตร์พบพลังงาน | Amethez</title>
+  <meta name="description" content="Dr. Cosmos ศูนย์รวมความรู้เกี่ยวกับสะเก็ดดาว อุกกาบาต และแก้วอิมแพคจากทั่วโลก วิทยาศาสตร์เชิงลึกพบพลังงานจักรวาล โดย Amethez">
+  <meta property="og:title" content="Dr. Cosmos — หินจากนอกโลก | Amethez">
+  <meta property="og:description" content="ศูนย์รวมความรู้สะเก็ดดาว อุกกาบาต แก้วอิมแพค — วิทยาศาสตร์เชิงลึกพบพลังงานจักรวาล">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://amethez.com/cosmos/">
+  <link rel="canonical" href="https://amethez.com/cosmos/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Dr. Cosmos — หินจากนอกโลก",
+    "url": "https://amethez.com/cosmos/",
+    "description": "ศูนย์รวมความรู้เกี่ยวกับสะเก็ดดาว อุกกาบาต และแก้วอิมแพคจากทั่วโลก",
+    "isPartOf": { "@type": "WebSite", "name": "Amethez", "url": "https://amethez.com" }
+  }
+  </script>
+  <style>
+    :root {
+      --gold:#c9a84c; --purple:#7c3aed; --dark:#0f0a1e; --text:#1a1228;
+      --muted:#6b7280; --bg:#faf8f4; --border:#ede9fe;
+    }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:Sarabun,sans-serif; background:var(--bg); color:var(--text); }
+
+    .topbar { background:linear-gradient(90deg,#1a0936,#2d1b5e,#1a0936); padding:.55rem 1.5rem; display:flex; align-items:center; justify-content:center; gap:2rem; flex-wrap:wrap; }
+    .topbar span { color:rgba(255,255,255,.65); font-size:.78rem; }
+    .topbar strong { color:var(--gold); }
+
+    /* ── HERO ── */
+    .cosmos-hero {
+      background: linear-gradient(155deg,#0f0a1e 0%,#0a0520 40%,#0c1a3a 100%);
+      padding: 5rem 1.5rem 4rem;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .cosmos-hero::before {
+      content:'';
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(ellipse 40% 60% at 20% 50%, rgba(124,58,237,.18), transparent 60%),
+        radial-gradient(ellipse 30% 50% at 80% 30%, rgba(12,26,58,.6), transparent 60%),
+        radial-gradient(ellipse 50% 40% at 60% 80%, rgba(201,168,76,.08), transparent 60%);
+      pointer-events:none;
+    }
+    /* Star field */
+    .cosmos-hero::after {
+      content:'✦ · ✦ · ✦ · ✦ · ✦';
+      position:absolute;
+      top:1.5rem;
+      left:50%;
+      transform:translateX(-50%);
+      color:rgba(201,168,76,.3);
+      font-size:.6rem;
+      letter-spacing:1.5rem;
+      white-space:nowrap;
+    }
+    .cosmos-hero-inner { max-width:820px; margin:0 auto; position:relative; }
+    .cosmos-eyebrow {
+      display:inline-block;
+      font-size:.7rem;
+      letter-spacing:.25em;
+      text-transform:uppercase;
+      font-weight:700;
+      color:rgba(201,168,76,.75);
+      margin-bottom:1rem;
+      border:1px solid rgba(201,168,76,.2);
+      padding:.3rem .9rem;
+      border-radius:2rem;
+    }
+    .cosmos-hero h1 {
+      font-family:'Playfair Display',serif;
+      font-size:clamp(2rem,5vw,3.25rem);
+      color:white;
+      line-height:1.2;
+      margin-bottom:1rem;
+    }
+    .cosmos-hero h1 em { font-style:italic; color:#c4b5fd; }
+    .cosmos-hero-sub {
+      color:rgba(255,255,255,.55);
+      font-size:1.05rem;
+      max-width:580px;
+      margin:0 auto 2rem;
+      line-height:1.75;
+    }
+    .cosmos-stats {
+      display:flex;
+      justify-content:center;
+      gap:2.5rem;
+      flex-wrap:wrap;
+      margin-top:2.5rem;
+    }
+    .cosmos-stat { text-align:center; }
+    .cosmos-stat-num { font-family:'Playfair Display',serif; font-size:2rem; color:var(--gold); display:block; }
+    .cosmos-stat-label { font-size:.75rem; color:rgba(255,255,255,.4); text-transform:uppercase; letter-spacing:.1em; }
+
+    /* ── BIO ── */
+    .bio-section { background:white; }
+    .bio-inner {
+      max-width:900px;
+      margin:0 auto;
+      padding:3.5rem 1.5rem;
+      display:grid;
+      grid-template-columns:200px 1fr;
+      gap:2.5rem;
+      align-items:start;
+    }
+    .bio-avatar {
+      background:linear-gradient(155deg,#0f0a1e,#1a0936);
+      border-radius:1rem;
+      padding:2rem 1rem;
+      text-align:center;
+      border:2px solid rgba(124,58,237,.3);
+    }
+    .bio-avatar-icon { font-size:3.5rem; display:block; margin-bottom:.75rem; }
+    .bio-avatar-name {
+      font-family:'Playfair Display',serif;
+      font-size:1rem;
+      color:white;
+      display:block;
+      margin-bottom:.25rem;
+    }
+    .bio-avatar-title { font-size:.72rem; color:rgba(201,168,76,.75); letter-spacing:.1em; text-transform:uppercase; }
+    .bio-creds { display:flex; flex-direction:column; gap:.5rem; margin-top:1rem; }
+    .bio-cred { font-size:.7rem; color:rgba(255,255,255,.45); text-align:left; display:flex; align-items:flex-start; gap:.35rem; line-height:1.5; }
+    .bio-cred::before { content:'◆'; color:var(--gold); font-size:.5rem; flex-shrink:0; margin-top:.2rem; }
+    .bio-content h2 {
+      font-family:'Playfair Display',serif;
+      font-size:1.5rem;
+      color:var(--text);
+      margin-bottom:1rem;
+    }
+    .bio-content p { color:var(--muted); line-height:1.85; margin-bottom:1rem; font-size:.95rem; }
+    .bio-content p strong { color:var(--text); }
+    .bio-quote {
+      border-left:4px solid var(--purple);
+      padding:.75rem 1.25rem;
+      background:#f5f0ff;
+      border-radius:0 .75rem .75rem 0;
+      font-style:italic;
+      color:var(--text);
+      margin:1.25rem 0;
+      font-size:.95rem;
+      line-height:1.8;
+    }
+
+    /* ── CATEGORIES ── */
+    .categories-section { padding:4rem 1.5rem; }
+    .section-center { text-align:center; margin-bottom:2.5rem; }
+    .sec-label { font-size:.72rem; font-weight:700; color:var(--purple); text-transform:uppercase; letter-spacing:.12em; margin-bottom:.4rem; }
+    .sec-title { font-family:'Playfair Display',serif; font-size:1.75rem; color:var(--text); }
+    .sec-sub { color:var(--muted); font-size:.9rem; margin-top:.35rem; }
+    .cat-grid {
+      max-width:1000px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:1.25rem;
+    }
+    .cat-card {
+      background:white;
+      border:1.5px solid var(--border);
+      border-radius:1rem;
+      padding:1.75rem 1.25rem;
+      text-decoration:none;
+      transition:all .2s;
+      display:block;
+    }
+    .cat-card:hover { transform:translateY(-4px); border-color:var(--purple); box-shadow:0 8px 30px rgba(124,58,237,.12); }
+    .cat-icon { font-size:2.25rem; display:block; margin-bottom:.75rem; }
+    .cat-name { font-family:'Playfair Display',serif; font-size:1.05rem; color:var(--text); margin-bottom:.35rem; }
+    .cat-name-en { font-size:.78rem; color:var(--purple); font-weight:700; text-transform:uppercase; letter-spacing:.05em; }
+    .cat-desc { font-size:.82rem; color:var(--muted); line-height:1.65; margin-top:.5rem; }
+    .cat-stones { display:flex; flex-wrap:wrap; gap:.3rem; margin-top:.875rem; }
+    .cat-stone-tag {
+      font-size:.7rem;
+      background:#f5f0ff;
+      color:var(--purple);
+      padding:.2rem .55rem;
+      border-radius:1rem;
+      font-weight:600;
+    }
+
+    /* ── ARTICLE GRID ── */
+    .articles-section { background:white; padding:4rem 1.5rem; }
+    .articles-inner { max-width:1000px; margin:0 auto; }
+    .article-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+      gap:1.25rem;
+      margin-top:2rem;
+    }
+    .article-card {
+      border:1.5px solid var(--border);
+      border-radius:1rem;
+      overflow:hidden;
+      text-decoration:none;
+      transition:all .2s;
+      display:block;
+    }
+    .article-card:hover { transform:translateY(-3px); box-shadow:0 8px 30px rgba(124,58,237,.12); border-color:var(--purple); }
+    .article-card-header {
+      background:linear-gradient(135deg,#0f0a1e,#1a0936);
+      padding:1.5rem 1.25rem;
+      display:flex;
+      align-items:center;
+      gap:.75rem;
+    }
+    .article-card-icon { font-size:2rem; }
+    .article-card-name-th { font-family:'Playfair Display',serif; font-size:1rem; color:white; display:block; }
+    .article-card-name-en { font-size:.72rem; color:rgba(201,168,76,.75); }
+    .article-card-body { padding:1rem 1.25rem; }
+    .article-card-desc { font-size:.82rem; color:var(--muted); line-height:1.65; }
+    .article-card-meta { display:flex; gap:.5rem; margin-top:.75rem; flex-wrap:wrap; }
+    .article-card-tag {
+      font-size:.68rem;
+      background:#f5f0ff;
+      color:var(--purple);
+      padding:.15rem .5rem;
+      border-radius:1rem;
+      font-weight:600;
+    }
+    .article-card-tag-gold {
+      background:#fef3c7;
+      color:#92400e;
+    }
+    .article-card-arrow {
+      display:inline-block;
+      font-size:.8rem;
+      color:var(--purple);
+      font-weight:700;
+      margin-top:.75rem;
+    }
+
+    /* ── COMING SOON card ── */
+    .article-card-coming {
+      opacity:.6;
+      pointer-events:none;
+    }
+    .coming-badge {
+      font-size:.65rem;
+      background:#f1f5f9;
+      color:var(--muted);
+      padding:.15rem .5rem;
+      border-radius:1rem;
+      font-weight:600;
+    }
+
+    /* ── METHODOLOGY ── */
+    .method-section {
+      background:linear-gradient(155deg,#0f0a1e,#1a0936,#0c1a3a);
+      padding:4rem 1.5rem;
+      text-align:center;
+    }
+    .method-inner { max-width:800px; margin:0 auto; }
+    .method-section h2 { font-family:'Playfair Display',serif; font-size:1.5rem; color:white; margin-bottom:.75rem; }
+    .method-section p { color:rgba(255,255,255,.5); font-size:.9rem; line-height:1.85; margin-bottom:2rem; }
+    .method-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; }
+    .method-item { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); border-radius:.875rem; padding:1.25rem 1rem; }
+    .method-icon { font-size:1.75rem; display:block; margin-bottom:.5rem; }
+    .method-label { font-size:.82rem; color:white; font-weight:600; display:block; margin-bottom:.25rem; }
+    .method-desc { font-size:.75rem; color:rgba(255,255,255,.4); line-height:1.6; }
+
+    @media(max-width:768px) {
+      .bio-inner { grid-template-columns:1fr; }
+      .bio-avatar { max-width:240px; margin:0 auto; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <span>☄️ <strong>Dr. Cosmos</strong> — หินจากนอกโลก: วิทยาศาสตร์พบพลังงานจักรวาล</span>
+  <span>· สะเก็ดดาว · อุกกาบาต · แก้วอิมแพค ·</span>
+</div>
+
+<header class="site-header"></header>
+
+<!-- ── HERO ── -->
+<section class="cosmos-hero">
+  <div class="cosmos-hero-inner">
+    <span class="cosmos-eyebrow">☄️ Dr. Cosmos · Amethez</span>
+    <h1>หินจากนอกโลก<br><em>วิทยาศาสตร์พบพลังงาน</em></h1>
+    <p class="cosmos-hero-sub">
+      ข้อมูลเชิงลึกเกี่ยวกับสะเก็ดดาว อุกกาบาต และแก้วอิมแพค
+      จากหลักฐานทางธรณีวิทยา วิทยาแร่ศาสตร์ และพลังงานจักรวาล
+      รวบรวมโดย Dr. Cosmos นักวิทยาศาสตร์-นักพลังงานแห่ง Amethez
+    </p>
+    <div class="cosmos-stats">
+      <div class="cosmos-stat">
+        <span class="cosmos-stat-num">4</span>
+        <span class="cosmos-stat-label">หมวดหมู่</span>
+      </div>
+      <div class="cosmos-stat">
+        <span class="cosmos-stat-num">0.78</span>
+        <span class="cosmos-stat-label">ล้านปีก่อน (Indochinite)</span>
+      </div>
+      <div class="cosmos-stat">
+        <span class="cosmos-stat-num">14.7</span>
+        <span class="cosmos-stat-label">ล้านปีก่อน (Moldavite)</span>
+      </div>
+      <div class="cosmos-stat">
+        <span class="cosmos-stat-num">4.6B</span>
+        <span class="cosmos-stat-label">ปีอายุของดวงอาทิตย์</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BIO ── -->
+<section class="bio-section">
+  <div class="bio-inner">
+    <div class="bio-avatar">
+      <span class="bio-avatar-icon">🔭</span>
+      <span class="bio-avatar-name">Dr. Cosmos</span>
+      <span class="bio-avatar-title">Cosmic Mineralogist<br>& Energy Scientist</span>
+      <div class="bio-creds">
+        <span class="bio-cred">Ph.D. Geology & Mineralogy, วิทยาแร่ศาสตร์จักรวาล</span>
+        <span class="bio-cred">ผู้เชี่ยวชาญสะเก็ดดาวภาคอินโดจีน 15+ ปี</span>
+        <span class="bio-cred">นักวิจัยพลังงานหินจากนอกโลก</span>
+        <span class="bio-cred">ผู้เขียนงานวิจัย Australasian Strewn Field</span>
+      </div>
+    </div>
+    <div class="bio-content">
+      <h2>ทำไมหินจากนอกโลกจึงพิเศษ?</h2>
+      <p>
+        <strong>Dr. Cosmos</strong> เชื่อว่าความเข้าใจอย่างแท้จริงในพลังงานของหินต้องเริ่มจากวิทยาศาสตร์
+        สะเก็ดดาวและอุกกาบาตไม่ใช่แค่ "หินสวย" — พวกมันคือข้อความจากจักรวาล
+        บันทึกเหตุการณ์ที่เกิดขึ้นล้านถึงพันล้านปีก่อน ซึ่งมนุษย์เพิ่งเริ่มอ่านออก
+      </p>
+      <p>
+        เมื่ออุกกาบาตขนาดยักษ์พุ่งชนโลกด้วยความเร็วหลายกิโลเมตรต่อวินาที
+        แรงกระแทกสร้างความดันและอุณหภูมิสูงกว่าพื้นผิวดวงอาทิตย์
+        หินจากโลกถูกหลอมละลาย พุ่งขึ้นสู่อวกาศ และตกกลับมาเป็น<strong>แก้วจักรวาล</strong>
+        ที่มีองค์ประกอบทางเคมีแปลกใหม่ที่ไม่มีที่ไหนในโลกธรรมดา
+      </p>
+      <blockquote class="bio-quote">
+        "วิทยาศาสตร์บอกเราว่าหินเหล่านี้เกิดมาจากหายนะ
+        แต่พลังงานศาสตร์บอกว่านั่นคือการกำเนิดใหม่
+        ทุกครั้งที่คุณถือสะเก็ดดาว คุณถือจักรวาลที่ผ่านเปลวไฟและรอดมา"
+        <br>— Dr. Cosmos
+      </blockquote>
+      <p>
+        ในหน้านี้คุณจะพบทั้งหลักฐานทางธรณีวิทยา ข้อมูลองค์ประกอบทางเคมี
+        วิธีพิสูจน์ของแท้ และพลังงานที่นักพลังงานศาสตร์ทั่วโลกได้รับการรายงาน
+        เพราะ <strong>ความรู้ที่สมบูรณ์คือทั้งสองมิติ</strong>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ── CATEGORIES ── -->
+<section class="categories-section">
+  <div class="section-center">
+    <div class="sec-label">☄️ หมวดหมู่</div>
+    <h2 class="sec-title">หินจากนอกโลก 4 ประเภทหลัก</h2>
+    <p class="sec-sub">แต่ละประเภทมีกระบวนการกำเนิด คุณสมบัติ และพลังงานที่แตกต่างกัน</p>
+  </div>
+  <div class="cat-grid">
+    <a href="/cosmos/tektites/" class="cat-card">
+      <span class="cat-icon">🌠</span>
+      <div class="cat-name">สะเก็ดดาว</div>
+      <div class="cat-name-en">Tektites</div>
+      <p class="cat-desc">แก้วธรรมชาติที่เกิดจากการพุ่งชนของอุกกาบาต หินโลกถูกหลอมและพุ่งขึ้นสู่ชั้นบรรยากาศ</p>
+      <div class="cat-stones">
+        <span class="cat-stone-tag">สะเก็ดดาวไทย</span>
+        <span class="cat-stone-tag">โมลดาไวท์</span>
+        <span class="cat-stone-tag">ออสตราไลท์</span>
+        <span class="cat-stone-tag">Philippinite</span>
+      </div>
+    </a>
+    <a href="/cosmos/impact-glass/" class="cat-card">
+      <span class="cat-icon">💫</span>
+      <div class="cat-name">แก้วอุกกาบาต</div>
+      <div class="cat-name-en">Impact Glass</div>
+      <p class="cat-desc">แก้วที่เกิดจากความร้อนระเบิดโดยตรง ณ จุดพุ่งชน มักมีสีเขียวหรือเหลือง</p>
+      <div class="cat-stones">
+        <span class="cat-stone-tag">Libyan Desert Glass</span>
+        <span class="cat-stone-tag">Darwin Glass</span>
+        <span class="cat-stone-tag">Irghizite</span>
+      </div>
+    </a>
+    <a href="/cosmos/meteorites/" class="cat-card">
+      <span class="cat-icon">☄️</span>
+      <div class="cat-name">อุกกาบาต</div>
+      <div class="cat-name-en">Meteorites</div>
+      <p class="cat-desc">ชิ้นส่วนอวกาศที่ตกถึงพื้นโลก มีทั้งชนิดเหล็ก หิน และส่วนผสม อายุกว่า 4.5 พันล้านปี</p>
+      <div class="cat-stones">
+        <span class="cat-stone-tag">Iron Meteorite</span>
+        <span class="cat-stone-tag">Pallasite</span>
+        <span class="cat-stone-tag">Chondrite</span>
+      </div>
+    </a>
+    <a href="/cosmos/high-energy/" class="cat-card">
+      <span class="cat-icon">⚡</span>
+      <div class="cat-name">หินพลังงานสูง</div>
+      <div class="cat-name-en">High-Energy Earth</div>
+      <p class="cat-desc">หินจากโลกที่มีโครงสร้างพิเศษหรือสภาพแวดล้อมกำเนิดที่รุนแรง พลังงานเข้มข้นผิดปกติ</p>
+      <div class="cat-stones">
+        <span class="cat-stone-tag">Shungite</span>
+        <span class="cat-stone-tag">Nuummite</span>
+        <span class="cat-stone-tag">Fulgurite</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ── ARTICLE GRID ── -->
+<section class="articles-section">
+  <div class="articles-inner">
+    <div style="text-align:center; margin-bottom:2rem;">
+      <div class="sec-label">📖 บทความเชิงลึก</div>
+      <h2 class="sec-title">หินจากนอกโลก — เรียนรู้รายชนิด</h2>
+      <p class="sec-sub">วิทยาศาสตร์เต็มรูปแบบ + พลังงานศาสตร์ + วิธีพิสูจน์ของแท้</p>
+    </div>
+    <div class="article-grid">
+
+      <!-- Thai Tektite -->
+      <a href="/cosmos/thai-tektite.html" class="article-card">
+        <div class="article-card-header">
+          <span class="article-card-icon">🌑</span>
+          <div>
+            <span class="article-card-name-th">สะเก็ดดาวไทย</span>
+            <span class="article-card-name-en">Thai Tektite / Indochinite</span>
+          </div>
+        </div>
+        <div class="article-card-body">
+          <p class="article-card-desc">สะเก็ดดาวดำขนาดใหญ่ที่สุดในโลก เกิด 0.78 ล้านปีก่อน ครอบคลุมพื้นที่ Southeast Asia ทั้งหมด</p>
+          <div class="article-card-meta">
+            <span class="article-card-tag">Tektite</span>
+            <span class="article-card-tag">0.78 Ma</span>
+            <span class="article-card-tag article-card-tag-gold">พบในไทย</span>
+          </div>
+          <span class="article-card-arrow">อ่านบทความ →</span>
+        </div>
+      </a>
+
+      <!-- Moldavite -->
+      <a href="/cosmos/moldavite.html" class="article-card">
+        <div class="article-card-header" style="background:linear-gradient(135deg,#0a2010,#0f3a18);">
+          <span class="article-card-icon">💚</span>
+          <div>
+            <span class="article-card-name-th">โมลดาไวท์</span>
+            <span class="article-card-name-en">Moldavite</span>
+          </div>
+        </div>
+        <div class="article-card-body">
+          <p class="article-card-desc">แก้วสีเขียวพิเศษจากสาธารณรัฐเช็ก เกิด 14.7 ล้านปีก่อน พลังงานสูงที่สุดในบรรดาสะเก็ดดาว</p>
+          <div class="article-card-meta">
+            <span class="article-card-tag">Tektite</span>
+            <span class="article-card-tag">14.7 Ma</span>
+            <span class="article-card-tag article-card-tag-gold">หายากมาก</span>
+          </div>
+          <span class="article-card-arrow">อ่านบทความ →</span>
+        </div>
+      </a>
+
+      <!-- Australite -->
+      <a href="/cosmos/australite.html" class="article-card">
+        <div class="article-card-header" style="background:linear-gradient(135deg,#1a0f00,#3a2000);">
+          <span class="article-card-icon">🪐</span>
+          <div>
+            <span class="article-card-name-th">ออสตราไลท์</span>
+            <span class="article-card-name-en">Australite</span>
+          </div>
+        </div>
+        <div class="article-card-body">
+          <p class="article-card-desc">สะเก็ดดาวทรงกระดุมเอกลักษณ์จากออสเตรเลีย ร่องรอยการกลับเข้าชั้นบรรยากาศสมบูรณ์ที่สุด</p>
+          <div class="article-card-meta">
+            <span class="article-card-tag">Tektite</span>
+            <span class="article-card-tag">0.78 Ma</span>
+            <span class="article-card-tag article-card-tag-gold">หายาก</span>
+          </div>
+          <span class="article-card-arrow">อ่านบทความ →</span>
+        </div>
+      </a>
+
+      <!-- Libyan Desert Glass - Coming soon -->
+      <div class="article-card article-card-coming">
+        <div class="article-card-header" style="background:linear-gradient(135deg,#1a1200,#2d2000);">
+          <span class="article-card-icon">🟡</span>
+          <div>
+            <span class="article-card-name-th">Libyan Desert Glass</span>
+            <span class="article-card-name-en">แก้วทะเลทรายลิเบีย</span>
+          </div>
+        </div>
+        <div class="article-card-body">
+          <p class="article-card-desc">แก้วสีเหลืองทองจากทะเลทรายซาฮารา 28 ล้านปีก่อน ครั้งหนึ่งเคยประดับเครื่องอาภรณ์ฟาโรห์ Tutankhamun</p>
+          <div class="article-card-meta">
+            <span class="article-card-tag">Impact Glass</span>
+            <span class="coming-badge">เร็วๆ นี้</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Iron Meteorite - Coming soon -->
+      <div class="article-card article-card-coming">
+        <div class="article-card-header" style="background:linear-gradient(135deg,#1a1a1a,#2d2d2d);">
+          <span class="article-card-icon">⚫</span>
+          <div>
+            <span class="article-card-name-th">อุกกาบาตเหล็ก</span>
+            <span class="article-card-name-en">Iron Meteorite</span>
+          </div>
+        </div>
+        <div class="article-card-body">
+          <p class="article-card-desc">แกนกลางดาวเคราะห์น้อยที่พุ่งมาถึงโลก โครงสร้าง Widmanstätten Pattern เกิดจากการเย็นตัวช้ากว่าล้านปี</p>
+          <div class="article-card-meta">
+            <span class="article-card-tag">Meteorite</span>
+            <span class="coming-badge">เร็วๆ นี้</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shungite - Coming soon -->
+      <div class="article-card article-card-coming">
+        <div class="article-card-header" style="background:linear-gradient(135deg,#0f0f0f,#1a1a1a);">
+          <span class="article-card-icon">⚡</span>
+          <div>
+            <span class="article-card-name-th">ชุงไกต์</span>
+            <span class="article-card-name-en">Shungite</span>
+          </div>
+        </div>
+        <div class="article-card-body">
+          <p class="article-card-desc">คาร์บอนโบราณจากรัสเซีย 2 พันล้านปี ประกอบด้วย Fullerene โมเลกุลทรงกลมที่พบเพียงในอวกาศและอุกกาบาต</p>
+          <div class="article-card-meta">
+            <span class="article-card-tag">High-Energy</span>
+            <span class="coming-badge">เร็วๆ นี้</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── METHODOLOGY ── -->
+<section class="method-section">
+  <div class="method-inner">
+    <h2>วิธีการศึกษาของ Dr. Cosmos</h2>
+    <p>ทุกบทความผ่านการวิจัยจากแหล่งข้อมูลทางวิทยาศาสตร์ชั้นนำ ก่อนนำมาบูรณาการกับพลังงานศาสตร์</p>
+    <div class="method-grid">
+      <div class="method-item">
+        <span class="method-icon">🔬</span>
+        <span class="method-label">วิทยาแร่ศาสตร์</span>
+        <span class="method-desc">วิเคราะห์องค์ประกอบทางเคมี โครงสร้างผลึก และคุณสมบัติกายภาพ</span>
+      </div>
+      <div class="method-item">
+        <span class="method-icon">📄</span>
+        <span class="method-label">งานวิจัยวิชาการ</span>
+        <span class="method-desc">อ้างอิงจาก Nature, Meteoritics & Planetary Science, Geochimica</span>
+      </div>
+      <div class="method-item">
+        <span class="method-icon">⚡</span>
+        <span class="method-label">พลังงานศาสตร์</span>
+        <span class="method-desc">รวบรวมประสบการณ์จากนักพลังงานและผู้ใช้งานทั่วโลก</span>
+      </div>
+      <div class="method-item">
+        <span class="method-icon">🛡️</span>
+        <span class="method-label">การยืนยันความแท้</span>
+        <span class="method-desc">วิธีพิสูจน์ด้วยตัวเองและเครื่องมือมาตรฐาน</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer"></footer>
+<script src="/js/components.js"></script>
+</body>
+</html>

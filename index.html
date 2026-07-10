@@ -1,12 +1,12 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Amethez — ศูนย์ข้อมูลคริสตัลและพลอยที่ใหญ่ที่สุดในไทย</title>
-  <meta name="description" content="Amethez แหล่งรวมความรู้คริสตัล พลอย และหินพลังงาน ครบที่สุดในไทย พร้อมคำแนะนำจากผู้เชี่ยวชาญ Crystal Atlas, Master Wuchong และอาจารย์เมธา">
+  <title>Amethez — อาณาจักรความรู้คริสตัล รวบรวมจากทั่วโลก เรียบเรียงใหม่เพื่อคนไทย</title>
+  <meta name="description" content="Amethez แหล่งรวมความรู้คริสตัล พลอย และหินพลังงาน รวบรวมจากทั่วโลก เรียบเรียงใหม่เพื่อคนไทย พร้อมคำแนะนำจาก Crystal Atlas, Master Wuchong และอาจารย์เมธา">
   <meta property="og:title" content="Amethez — Stones · Stories · Soul">
-  <meta property="og:description" content="ศูนย์ข้อมูลคริสตัลและพลอยที่ใหญ่ที่สุดในไทย">
+  <meta property="og:description" content="อาณาจักรความรู้คริสตัล รวบรวมจากทั่วโลก เรียบเรียงใหม่เพื่อคนไทย">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://amethez.com">
   <link rel="canonical" href="https://amethez.com">
@@ -17,42 +17,63 @@
   {"@context":"https://schema.org","@type":"WebSite","name":"Amethez","url":"https://amethez.com","potentialAction":{"@type":"SearchAction","target":"https://amethez.com/stones/encyclopedia.html?q={search_term_string}","query-input":"required name=search_term_string"}}
   </script>
   <style>
-    :root { --gold:#c9a84c; --purple:#7c3aed; --dark:#0f0a1e; --text:#1a1228; --muted:#6b7280; --bg:#faf8f4; --border:#ede9fe; }
+    :root {
+      --gold:#c9a84c; --purple:#7c3aed; --dark:#0f0a1e; --text:#1a1228;
+      --muted:#6b7280; --bg:#faf8f4; --border:#ede9fe;
+    }
     * { box-sizing:border-box; margin:0; padding:0; }
     body { font-family:Sarabun,sans-serif; background:var(--bg); color:var(--text); }
 
-    /* ── NAV ── */
+    /* ── TOPBAR ── */
     .topbar { background:linear-gradient(90deg,#1a0936,#2d1b5e,#1a0936); padding:.55rem 1.5rem; display:flex; align-items:center; justify-content:center; gap:2rem; flex-wrap:wrap; }
     .topbar span { color:rgba(255,255,255,.65); font-size:.78rem; }
     .topbar strong { color:var(--gold); }
-    .nav { position:sticky; top:0; z-index:100; background:rgba(255,255,255,.96); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); }
-    .nav-inner { max-width:1160px; margin:0 auto; padding:.875rem 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
-    .logo { display:flex; align-items:center; gap:.6rem; text-decoration:none; flex-shrink:0; }
-    .logo svg { width:32px; height:32px; }
-    .logo-text { font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--text); font-weight:700; letter-spacing:.04em; }
-    .logo-sub { font-size:.65rem; color:var(--muted); display:block; letter-spacing:.08em; }
-    .nav-links { display:flex; align-items:center; gap:.25rem; list-style:none; }
-    .nav-links a { font-size:.875rem; font-weight:600; color:var(--text); text-decoration:none; padding:.4rem .75rem; border-radius:.5rem; transition:all .15s; white-space:nowrap; }
-    .nav-links a:hover { background:#f5f0ff; color:var(--purple); }
-    .nav-links .nav-shop { background:linear-gradient(135deg,#c9a84c,#b8922e); color:#0f0a1e !important; border-radius:2rem; padding:.4rem 1rem !important; }
-    .nav-links .nav-shop:hover { opacity:.88; background:linear-gradient(135deg,#c9a84c,#b8922e) !important; }
-    .nav-links .nav-digital { color:var(--purple) !important; }
-    .hamburger { display:none; background:none; border:none; font-size:1.5rem; cursor:pointer; color:var(--text); }
-    @media(max-width:860px){ .nav-links{display:none}.nav-links.open{display:flex;flex-direction:column;position:absolute;top:58px;left:0;right:0;background:white;padding:1rem 1.5rem;gap:.25rem;border-bottom:1px solid var(--border);box-shadow:0 8px 24px rgba(0,0,0,.1)}.hamburger{display:block} }
+
+    /* ── SHARED ── */
+    .wrap { max-width:1160px; margin:0 auto; padding:0 1.5rem; }
+    .section { padding:3rem 1.5rem; }
+    .section-dark { background:linear-gradient(155deg,#0f0a1e,#1a0936,#0c1a3a); }
+    .sec-label { font-size:.72rem; font-weight:700; color:var(--purple); text-transform:uppercase; letter-spacing:.12em; margin-bottom:.4rem; }
+    .sec-label-gold { color:rgba(201,168,76,.8); }
+    .sec-title { font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--text); line-height:1.3; }
+    .sec-title-white { color:white; }
+    .sec-sub { color:var(--muted); font-size:.9rem; margin-top:.35rem; }
+    .sec-sub-white { color:rgba(255,255,255,.5); }
+    .divider { width:100%; height:1px; background:linear-gradient(90deg,transparent,var(--border),transparent); margin:0; border:none; }
+    .see-all { font-size:.82rem; font-weight:700; color:var(--purple); text-decoration:none; white-space:nowrap; }
+    .see-all:hover { text-decoration:underline; }
+    .row-head { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:1.75rem; gap:1rem; flex-wrap:wrap; }
 
     /* ── HERO ── */
-    .hero { background:linear-gradient(155deg,#0f0a1e 0%,#1a0936 40%,#0c1a3a 100%); padding:5rem 1.5rem 4rem; text-align:center; position:relative; overflow:hidden; }
-    .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 80% 70% at 50% 20%,rgba(124,58,237,.2) 0%,transparent 65%); pointer-events:none; }
-    .hero::after { content:''; position:absolute; bottom:0; left:0; right:0; height:100px; background:linear-gradient(to bottom,transparent,var(--bg)); pointer-events:none; }
-    .hero-badge { display:inline-flex; align-items:center; gap:.45rem; background:rgba(201,168,76,.1); border:1px solid rgba(201,168,76,.3); color:var(--gold); padding:.3rem .9rem; border-radius:2rem; font-size:.75rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; margin-bottom:1.5rem; }
-    .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.2rem,6vw,4rem); color:white; line-height:1.2; margin-bottom:1.25rem; position:relative; }
+    .hero { background:linear-gradient(155deg,#0f0a1e 0%,#1a0936 50%,#0c1a3a 100%); padding:4rem 1.5rem 3.5rem; position:relative; overflow:hidden; }
+    .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 70% at 55% 40%,rgba(124,58,237,.25),transparent 65%); pointer-events:none; }
+    .hero::after { content:''; position:absolute; bottom:0; left:0; right:0; height:80px; background:linear-gradient(to bottom,transparent,var(--bg)); pointer-events:none; }
+    .hero-inner { max-width:1160px; margin:0 auto; display:grid; grid-template-columns:1fr 420px; gap:3rem; align-items:center; position:relative; }
+    .hero-eyebrow { display:inline-block; font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; font-weight:700; color:rgba(201,168,76,.75); margin-bottom:1rem; }
+    .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2rem,4.5vw,3rem); color:white; line-height:1.22; margin-bottom:1.125rem; }
     .hero h1 em { font-style:italic; color:#c4b5fd; }
-    .hero-sub { color:rgba(255,255,255,.55); font-size:1rem; line-height:1.8; max-width:520px; margin:0 auto 2rem; position:relative; }
-    .hero-actions { display:flex; gap:.875rem; justify-content:center; flex-wrap:wrap; position:relative; }
+    .hero-tags { list-style:none; display:flex; flex-direction:column; gap:.45rem; margin-bottom:1.75rem; }
+    .hero-tags li { font-size:.88rem; color:rgba(255,255,255,.55); display:flex; align-items:center; gap:.55rem; }
+    .hero-tags li::before { content:'✦'; color:var(--gold); font-size:.6rem; flex-shrink:0; }
+    .hero-tags li strong { color:rgba(255,255,255,.8); font-weight:600; }
+    .hero-actions { display:flex; gap:.75rem; flex-wrap:wrap; }
     .btn-primary { background:linear-gradient(135deg,#7c3aed,#6d28d9); color:white; padding:.85rem 1.75rem; border-radius:.625rem; font-family:Sarabun,sans-serif; font-size:.95rem; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:.4rem; transition:all .2s; box-shadow:0 4px 20px rgba(124,58,237,.4); }
     .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(124,58,237,.5); }
     .btn-ghost { background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.18); color:rgba(255,255,255,.88); padding:.85rem 1.75rem; border-radius:.625rem; font-family:Sarabun,sans-serif; font-size:.95rem; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:.4rem; transition:all .2s; }
     .btn-ghost:hover { background:rgba(255,255,255,.13); }
+    .hero-img { border-radius:1rem; overflow:hidden; aspect-ratio:4/5; background:rgba(255,255,255,.05); border:1.5px solid rgba(201,168,76,.2); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:.75rem; color:rgba(201,168,76,.5); font-size:.8rem; text-align:center; position:relative; }
+    .hero-img-placeholder { font-size:5rem; }
+    @media(max-width:860px) { .hero-inner { grid-template-columns:1fr; } .hero-img { display:none; } }
+
+    /* ── TRUST STRIP ── */
+    .trust-strip { background:white; border-bottom:1px solid var(--border); }
+    .trust-inner { max-width:1160px; margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); }
+    .trust-item { padding:1.25rem 1.5rem; display:flex; align-items:center; gap:.875rem; border-right:1px solid var(--border); }
+    .trust-item:last-child { border-right:none; }
+    .trust-icon { font-size:1.5rem; flex-shrink:0; }
+    .trust-item strong { display:block; font-size:.88rem; font-weight:700; color:var(--text); }
+    .trust-item span { font-size:.76rem; color:var(--muted); }
+    @media(max-width:640px) { .trust-inner { grid-template-columns:1fr; } .trust-item { border-right:none; border-bottom:1px solid var(--border); } }
 
     /* ── SEARCH ── */
     .search-bar { max-width:640px; margin:0 auto; position:relative; }
@@ -63,87 +84,70 @@
     .hint { background:#f5f0ff; color:var(--purple); font-size:.78rem; padding:.25rem .75rem; border-radius:2rem; cursor:pointer; border:1px solid var(--border); transition:all .15s; }
     .hint:hover { background:var(--purple); color:white; }
 
-    /* ── SHARED LAYOUT ── */
-    .wrap { max-width:1160px; margin:0 auto; padding:0 1.5rem; }
-    .section { padding:3rem 1.5rem; }
-    .section-dark { background:linear-gradient(155deg,#0f0a1e,#1a0936,#0c1a3a); }
-    .sec-head { margin-bottom:1.75rem; }
-    .sec-label { font-size:.72rem; font-weight:700; color:var(--purple); text-transform:uppercase; letter-spacing:.12em; margin-bottom:.4rem; }
-    .sec-label-gold { color:rgba(201,168,76,.8); }
-    .sec-title { font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--text); line-height:1.3; }
-    .sec-title-white { color:white; }
-    .sec-sub { color:var(--muted); font-size:.9rem; margin-top:.35rem; }
-    .sec-sub-white { color:rgba(255,255,255,.5); }
-    .row-head { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:1.75rem; gap:1rem; flex-wrap:wrap; }
-    .see-all { font-size:.82rem; font-weight:700; color:var(--purple); text-decoration:none; white-space:nowrap; }
-    .see-all:hover { text-decoration:underline; }
-    .see-all-white { color:rgba(255,255,255,.5); }
+    /* ── DIGITAL STRIP ── */
+    .digital-strip { background:#f3eef9; border-bottom:1px solid var(--border); }
+    .digital-inner { max-width:1160px; margin:0 auto; padding:.875rem 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
+    .digital-left { display:flex; align-items:center; gap:.75rem; }
+    .digital-icon { font-size:1.2rem; }
+    .digital-text strong { font-size:.85rem; font-weight:700; color:var(--text); display:block; }
+    .digital-text span { font-size:.75rem; color:var(--muted); }
+    .digital-pills { display:flex; gap:.375rem; flex-wrap:wrap; }
+    .digital-pill { background:white; border:1px solid var(--border); border-radius:2rem; padding:.22rem .7rem; font-size:.72rem; font-weight:700; color:var(--text); }
+    .digital-cta { font-size:.8rem; font-weight:700; color:var(--purple); white-space:nowrap; text-decoration:none; }
+    .digital-cta:hover { text-decoration:underline; }
 
-    /* ── CATEGORY PILLS ── */
-    .cat-pills { display:flex; gap:.625rem; flex-wrap:wrap; margin-bottom:2rem; }
-    .cat-pill { display:flex; align-items:center; gap:.5rem; background:white; border:1.5px solid var(--border); border-radius:.75rem; padding:.6rem 1rem; text-decoration:none; transition:all .2s; }
-    .cat-pill:hover { border-color:var(--purple); box-shadow:0 4px 16px rgba(124,58,237,.1); transform:translateY(-2px); }
-    .cat-pill-icon { font-size:1.35rem; }
-    .cat-pill-text strong { display:block; font-size:.85rem; color:var(--text); font-weight:700; }
-    .cat-pill-text span { font-size:.72rem; color:var(--muted); }
+    /* ── INTENT CIRCLES ── */
+    .intent-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:1rem; margin-top:1.5rem; }
+    .intent-item { text-align:center; text-decoration:none; display:block; transition:all .2s; }
+    .intent-item:hover .intent-circle { border-color:var(--purple); box-shadow:0 6px 20px rgba(124,58,237,.15); transform:translateY(-3px); }
+    .intent-item:hover .intent-label { color:var(--purple); }
+    .intent-circle { width:80px; height:80px; border-radius:50%; margin:0 auto .6rem; border:2px solid var(--border); background:white; display:flex; align-items:center; justify-content:center; font-size:1.75rem; transition:all .2s; box-shadow:0 2px 8px rgba(0,0,0,.05); }
+    .intent-label { font-size:.78rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; transition:color .2s; }
+    @media(max-width:640px) { .intent-grid { grid-template-columns:repeat(3,1fr); } }
 
-    /* ── ARTICLE GRID ── */
-    .article-bento { display:grid; grid-template-columns:1fr 1fr 1fr; grid-template-rows:auto auto; gap:1.125rem; }
-    .ab-main { grid-column:1/3; grid-row:1/3; text-decoration:none; display:block; border-radius:1.125rem; overflow:hidden; background:white; border:1.5px solid var(--border); transition:all .2s; }
-    .ab-main:hover { transform:translateY(-3px); box-shadow:0 12px 36px rgba(124,58,237,.1); border-color:#c4b5fd; }
-    .ab-thumb-big { height:240px; display:flex; align-items:center; justify-content:center; font-size:5rem; position:relative; }
-    .ab-body { padding:1.25rem 1.375rem 1.375rem; }
-    .ab-cat { font-size:.7rem; font-weight:700; color:var(--purple); text-transform:uppercase; letter-spacing:.08em; margin-bottom:.35rem; }
-    .ab-title-big { font-family:'Playfair Display',serif; font-size:1.25rem; color:var(--text); line-height:1.4; margin-bottom:.5rem; }
-    .ab-sub { font-size:.85rem; color:var(--muted); line-height:1.6; }
-    .ab-sm { text-decoration:none; display:block; border-radius:1rem; overflow:hidden; background:white; border:1.5px solid var(--border); transition:all .2s; display:flex; flex-direction:column; }
-    .ab-sm:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(124,58,237,.1); border-color:#c4b5fd; }
-    .ab-thumb-sm { height:120px; display:flex; align-items:center; justify-content:center; font-size:3rem; }
-    .ab-body-sm { padding:.875rem 1rem 1rem; flex:1; }
-    .ab-title-sm { font-weight:700; font-size:.88rem; color:var(--text); line-height:1.45; margin-bottom:.3rem; }
-    .ab-sub-sm { font-size:.76rem; color:var(--muted); line-height:1.5; }
-    @media(max-width:720px){ .article-bento{grid-template-columns:1fr;} .ab-main{grid-column:1;grid-row:auto;} }
-
-    /* ── STONE ROW ── */
-    .stone-row { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:.75rem; }
-    .stone-chip { text-decoration:none; display:flex; flex-direction:column; align-items:center; gap:.4rem; background:white; border:1.5px solid var(--border); border-radius:.875rem; padding:1rem .75rem; text-align:center; transition:all .15s; }
+    /* ── STONE GRID 5×2 ── */
+    .stone-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:.75rem; }
+    .stone-chip { text-decoration:none; background:white; border:1.5px solid var(--border); border-radius:.875rem; overflow:hidden; transition:all .15s; }
     .stone-chip:hover { border-color:var(--purple); box-shadow:0 4px 16px rgba(124,58,237,.12); transform:translateY(-2px); }
-    .stone-emoji { font-size:2rem; }
-    .stone-name { font-size:.82rem; font-weight:700; color:var(--text); }
-    .stone-kw { font-size:.7rem; color:var(--muted); line-height:1.3; }
+    .stone-thumb { aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:2rem; }
+    .stone-info { padding:.5rem .625rem .625rem; }
+    .stone-name { font-size:.8rem; font-weight:700; color:var(--text); }
+    .stone-kw { font-size:.68rem; color:var(--muted); margin-top:.1rem; }
     .stone-more { background:linear-gradient(135deg,#f5f0ff,#fdf4ff); border-color:var(--purple); }
     .stone-more .stone-name { color:var(--purple); }
+    @media(max-width:700px) { .stone-grid { grid-template-columns:repeat(3,1fr); } }
+    @media(max-width:440px) { .stone-grid { grid-template-columns:repeat(2,1fr); } }
 
-    /* ── DIGITAL PRODUCTS ── */
-    .dp-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
-    .dp-card { border-radius:1.125rem; overflow:hidden; text-decoration:none; display:block; border:1px solid rgba(255,255,255,.1); background:rgba(255,255,255,.055); transition:all .2s; }
-    .dp-card:hover { background:rgba(255,255,255,.1); transform:translateY(-3px); box-shadow:0 16px 40px rgba(0,0,0,.4); border-color:rgba(201,168,76,.3); }
-    /* Wallpaper card — tall phone ratio */
-    .dp-wall { grid-row:span 2; display:flex; flex-direction:column; }
-    .dp-wall-img { flex:1; min-height:340px; display:flex; align-items:center; justify-content:center; font-size:6rem; position:relative; overflow:hidden; }
-    .dp-wall-img .phone-frame { width:140px; height:240px; background:linear-gradient(160deg,#1a0936,#3b0764); border-radius:2rem; border:3px solid rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; font-size:4rem; position:relative; box-shadow:0 20px 60px rgba(0,0,0,.5); }
-    .dp-wall-img .phone-frame::before { content:''; position:absolute; top:.4rem; left:50%; transform:translateX(-50%); width:40px; height:4px; background:rgba(255,255,255,.2); border-radius:2px; }
-    .dp-body { padding:1.125rem 1.25rem 1.25rem; }
-    .dp-badge { display:inline-flex; align-items:center; gap:.3rem; font-size:.68rem; font-weight:700; padding:.18rem .55rem; border-radius:2rem; margin-bottom:.75rem; }
-    .dp-badge-free { background:rgba(74,222,128,.15); color:#4ade80; }
-    .dp-badge-paid { background:rgba(201,168,76,.15); color:var(--gold); }
-    .dp-title { font-weight:700; font-size:.92rem; color:white; line-height:1.4; margin-bottom:.35rem; }
-    .dp-sub { font-size:.78rem; color:rgba(255,255,255,.45); line-height:1.5; }
-    .dp-cta { margin-top:.875rem; font-size:.8rem; font-weight:700; display:flex; align-items:center; gap:.3rem; }
-    .dp-cta-free { color:#4ade80; }
-    .dp-cta-paid { color:var(--gold); }
-    @media(max-width:720px){ .dp-grid{grid-template-columns:1fr 1fr;} .dp-wall{grid-row:auto;} .dp-wall-img{min-height:200px;} }
-    @media(max-width:480px){ .dp-grid{grid-template-columns:1fr;} }
+    /* ── COSMIC / ห้องคลื่นเสียง ── */
+    .cosmic { background:linear-gradient(170deg,#080412 0%,#0d0a1f 45%,#050d1a 100%); padding:3.5rem 1.5rem; position:relative; overflow:hidden; }
+    .cosmic::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 90% 55% at 50% 25%,rgba(30,10,60,.7),transparent 70%); pointer-events:none; }
+    .cosmic-inner { max-width:1160px; margin:0 auto; position:relative; }
+    .cosmic-stones { display:flex; flex-wrap:wrap; gap:.5rem; margin:1.5rem 0; }
+    .cosmic-tag { background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.14); border-radius:2rem; padding:.5rem 1.125rem; font-size:.85rem; font-weight:600; color:rgba(255,255,255,.85); display:inline-flex; align-items:center; gap:.5rem; cursor:pointer; transition:all .2s; text-decoration:none; }
+    .cosmic-tag:hover { background:rgba(255,255,255,.13); border-color:rgba(201,168,76,.4); color:white; }
+    .cosmic-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+    .cosmic-cats { display:flex; gap:.5rem; flex-wrap:wrap; margin-bottom:1.75rem; }
+    .cosmic-cat { background:transparent; border:1px solid rgba(201,168,76,.22); color:rgba(201,168,76,.65); border-radius:2rem; padding:.35rem .9rem; font-size:.75rem; font-weight:600; text-decoration:none; transition:all .2s; }
+    .cosmic-cat:hover { border-color:rgba(201,168,76,.5); color:var(--gold); }
+    .btn-cosmic { display:inline-flex; align-items:center; gap:.5rem; background:transparent; border:1.5px solid rgba(255,255,255,.2); color:rgba(255,255,255,.8); padding:.75rem 1.75rem; border-radius:.625rem; font-family:Sarabun,sans-serif; font-size:.95rem; font-weight:700; text-decoration:none; transition:all .2s; }
+    .btn-cosmic:hover { background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.4); }
 
-    /* ── GUIDES COMPACT ── */
-    .guides-compact { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:.75rem; }
-    .guide-row { display:flex; align-items:center; gap:.75rem; background:white; border:1.5px solid var(--border); border-radius:.875rem; padding:.875rem 1rem; text-decoration:none; transition:all .15s; }
-    .guide-row:hover { border-color:var(--purple); box-shadow:0 4px 16px rgba(124,58,237,.08); }
-    .guide-icon { font-size:1.5rem; flex-shrink:0; }
-    .guide-label strong { display:block; font-size:.85rem; font-weight:700; color:var(--text); }
-    .guide-label span { font-size:.74rem; color:var(--muted); }
+    /* ── BLOG JOURNAL (alternating) ── */
+    .journal-row { display:grid; grid-template-columns:55fr 45fr; gap:2.5rem; align-items:center; }
+    .journal-row.rev { grid-template-columns:45fr 55fr; }
+    .journal-row.rev .j-img { order:2; }
+    .journal-row.rev .j-txt { order:1; }
+    .j-img { border-radius:1rem; overflow:hidden; aspect-ratio:4/3; background:#f3eef9; display:flex; align-items:center; justify-content:center; font-size:3.5rem; border:1.5px solid var(--border); }
+    .j-img img { width:100%; height:100%; object-fit:cover; }
+    .j-eyebrow { font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; font-weight:700; color:var(--gold); margin-bottom:.5rem; }
+    .j-title { font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--text); line-height:1.4; margin-bottom:.625rem; }
+    .j-desc { font-size:.88rem; color:var(--muted); line-height:1.8; margin-bottom:1rem; }
+    .j-link { font-size:.85rem; font-weight:700; color:var(--purple); text-decoration:none; }
+    .j-link:hover { text-decoration:underline; }
+    .j-divider { border:none; height:1px; background:var(--border); margin:2rem 0; }
+    @media(max-width:700px) { .journal-row, .journal-row.rev { grid-template-columns:1fr; } .journal-row.rev .j-img, .journal-row.rev .j-txt { order:unset; } }
 
-    /* ── EXPERTS STRIP ── */
+    /* ── EXPERTS ── */
     .expert-strip { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
     .ex-card { background:white; border:1.5px solid var(--border); border-radius:1.125rem; padding:1.375rem; text-decoration:none; display:block; transition:all .2s; }
     .ex-card:hover { border-color:var(--purple); box-shadow:0 6px 24px rgba(124,58,237,.1); transform:translateY(-2px); }
@@ -156,61 +160,77 @@
     .ex-desc { font-size:.82rem; color:var(--muted); line-height:1.6; }
     .ex-tags { display:flex; gap:.35rem; flex-wrap:wrap; margin-top:.75rem; }
     .ex-tag { background:#f5f0ff; color:var(--purple); font-size:.68rem; padding:.18rem .55rem; border-radius:2rem; }
-    @media(max-width:700px){ .expert-strip{grid-template-columns:1fr;} }
+    @media(max-width:700px) { .expert-strip { grid-template-columns:1fr; } }
 
     /* ── LINE CTA ── */
-    .line-cta { background:linear-gradient(135deg,#f0fdf4,#dcfce7); padding:3rem 1.5rem; text-align:center; }
-    .line-cta h2 { font-family:'Playfair Display',serif; font-size:1.5rem; color:#14532d; margin-bottom:.5rem; }
-    .line-cta p { color:#166534; opacity:.8; margin-bottom:1.5rem; font-size:.9rem; }
-    .btn-line { display:inline-flex; align-items:center; gap:.5rem; background:#06C755; color:white; padding:.9rem 2rem; border-radius:.75rem; font-family:Sarabun,sans-serif; font-size:1rem; font-weight:700; text-decoration:none; transition:all .2s; box-shadow:0 4px 16px rgba(6,199,85,.3); }
+    .line-cta-section { background:linear-gradient(135deg,#f0fdf4,#dcfce7); padding:3.5rem 1.5rem; }
+    .line-cta-inner { max-width:760px; margin:0 auto; display:grid; grid-template-columns:56px 1fr; gap:1.5rem; align-items:start; }
+    .line-avatar { width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg,var(--purple),#9333ea); display:flex; align-items:center; justify-content:center; font-size:1.5rem; flex-shrink:0; }
+    .line-title { font-family:'Playfair Display',serif; font-size:1.35rem; color:#14532d; margin-bottom:.5rem; }
+    .line-sub { font-size:.88rem; color:#166534; line-height:1.75; margin-bottom:1rem; opacity:.85; }
+    .line-topic-tags { display:flex; gap:.375rem; flex-wrap:wrap; margin-bottom:1.25rem; }
+    .line-topic { background:white; border:1px solid rgba(22,101,52,.2); border-radius:2rem; padding:.25rem .8rem; font-size:.75rem; font-weight:700; color:#166534; }
+    .btn-line { display:inline-flex; align-items:center; gap:.5rem; background:#06C755; color:white; padding:.85rem 2rem; border-radius:.75rem; font-family:Sarabun,sans-serif; font-size:.95rem; font-weight:700; text-decoration:none; transition:all .2s; box-shadow:0 4px 16px rgba(6,199,85,.3); }
     .btn-line:hover { background:#05b04a; transform:translateY(-2px); box-shadow:0 8px 24px rgba(6,199,85,.4); }
-
-    /* ── FOOTER ── */
-    .footer { background:#0f0a1e; color:rgba(255,255,255,.55); padding:3rem 1.5rem 2rem; }
-    .footer-grid { max-width:1160px; margin:0 auto; display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr; gap:2rem; margin-bottom:2rem; }
-    .footer h4 { color:white; font-size:.85rem; font-weight:700; margin-bottom:.875rem; }
-    .footer ul { list-style:none; display:flex; flex-direction:column; gap:.45rem; }
-    .footer ul a { color:rgba(255,255,255,.5); text-decoration:none; font-size:.82rem; transition:color .15s; }
-    .footer ul a:hover { color:rgba(255,255,255,.9); }
-    .footer-brand p { font-size:.82rem; line-height:1.7; margin-top:.5rem; }
-    .footer-bottom { max-width:1160px; margin:0 auto; border-top:1px solid rgba(255,255,255,.07); padding-top:1.25rem; font-size:.78rem; text-align:center; }
-    @media(max-width:720px){ .footer-grid{grid-template-columns:1fr 1fr;} }
-    @media(max-width:480px){ .footer-grid{grid-template-columns:1fr;} }
-
-    /* ── DIVIDER ── */
-    .divider { width:100%; height:1px; background:linear-gradient(90deg,transparent,var(--border),transparent); margin:0; border:none; }
+    .line-disclaimer { margin-top:.625rem; font-size:.76rem; color:#166534; opacity:.6; }
+    @media(max-width:560px) { .line-cta-inner { grid-template-columns:1fr; } .line-avatar { display:none; } }
   </style>
 </head>
 <body data-cms-page="index">
 
 <!-- Top Announcement -->
 <div class="topbar">
-  <span data-cms-text="global.ann_1">💎 <strong>300+</strong> บทความหิน</span>
-  <span data-cms-text="global.ann_2">📥 <strong>คู่มือฟรี</strong> ดาวน์โหลดได้เลย</span>
-  <span data-cms-text="global.ann_3">🎬 <strong>วิดีโอ</strong> พร้อมสรุปโดย AI</span>
-  <span data-cms-text="global.ann_4">🔍 ข้อมูล <strong>วิทยาศาสตร์ + สายมู</strong></span>
+  <span>💎 <strong>300+</strong> บทความหิน</span>
+  <span>📥 <strong>คู่มือฟรี</strong> ดาวน์โหลดได้เลย</span>
+  <span>🌙 <strong>ดูดวงประจำวัน</strong> จากอาจารย์เมธา</span>
+  <span>🔍 ข้อมูล <strong>วิทยาศาสตร์ + สายมู</strong></span>
 </div>
 
 <header class="site-header"></header>
 
-<!-- ═══ HERO ═══ -->
+<!-- ═══ 1. HERO ═══ -->
 <section class="hero">
-  <div class="wrap" style="max-width:700px;position:relative">
-    <div data-cms-img="home_hero" style="position:absolute;inset:0;background-size:cover;background-position:center;opacity:.35;pointer-events:none"></div>
-    <div class="hero-badge" data-cms-text="index.hero_badge">✨ Thailand's Crystal Knowledge Hub</div>
-    <h1 data-cms-text="index.hero_title">ความรู้<em>คริสตัล</em><br>ครบ ลึก ถูกต้อง<br>ที่สุดในไทย</h1>
-    <p class="hero-sub" data-cms-text="index.hero_sub">หิน 300+ ชนิด ทั้งวิทยาศาสตร์ พลังงาน และสายมู<br>จาก 3 ผู้เชี่ยวชาญในบรรยากาศเดียวกัน</p>
-    <div class="hero-actions">
-      <a href="/stones/encyclopedia.html" class="btn-primary">💎 เปิดสารานุกรมหิน</a>
-      <a href="/digital/" class="btn-ghost">📥 คู่มือฟรี</a>
+  <div class="hero-inner">
+    <div>
+      <span class="hero-eyebrow">Stones · Stories · Soul</span>
+      <h1>อาณาจักรความรู้<em>คริสตัล</em><br>รวบรวมจากทั่วโลก<br>เรียบเรียงใหม่เพื่อคนไทย</h1>
+      <ul class="hero-tags">
+        <li><strong>300+ ชนิดหิน</strong> — วิทยาศาสตร์ พลังงาน และสายมู ครบทุกมิติ</li>
+        <li>คัดสรรโดย <strong>Crystal Atlas · Master Wuchong · อาจารย์เมธา</strong></li>
+        <li>✨ <strong>ดูดวงประจำวัน</strong> จากอาจารย์เมธา — อัปเดตทุกวัน</li>
+      </ul>
+      <div class="hero-actions">
+        <a href="/stones/encyclopedia.html" class="btn-primary">💎 เปิดสารานุกรมหิน</a>
+        <a href="/blog/" class="btn-ghost">📖 อ่านบทความ</a>
+      </div>
+    </div>
+    <div class="hero-img" data-cms-img="home_hero">
+      <div class="hero-img-placeholder">🪨</div>
+      <span style="font-size:.78rem;opacity:.55">รูปหินดิบ editorial</span>
     </div>
   </div>
 </section>
 
-<!-- Search + Smart Finder -->
-<div style="background:var(--bg);padding:2.5rem 1.5rem 2rem">
+<!-- ═══ 2. TRUST STRIP ═══ -->
+<div class="trust-strip">
+  <div class="trust-inner">
+    <div class="trust-item">
+      <div class="trust-icon">🔬</div>
+      <div><strong>วิทยาศาสตร์ + พลังงาน</strong><span>ครบทุกมิติ ไม่เลือกข้าง</span></div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">🌍</div>
+      <div><strong>ฐานข้อมูลนานาชาติ</strong><span>คัดสรรจากแหล่งข้อมูลทั่วโลก</span></div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">✨</div>
+      <div><strong>อัปเดตต่อเนื่อง</strong><span>เพิ่มบทความใหม่ทุกสัปดาห์</span></div>
+    </div>
+  </div>
+</div>
 
-  <!-- Mode toggle -->
+<!-- ═══ SEARCH ═══ -->
+<div style="background:var(--bg);padding:2.5rem 1.5rem 2rem">
   <div style="display:flex;justify-content:center;margin-bottom:1rem">
     <div style="display:flex;background:#f0ebff;border-radius:.75rem;padding:.25rem;gap:.25rem;border:1.5px solid var(--border)">
       <button id="tabArticle" onclick="switchSearchMode('article')"
@@ -223,8 +243,6 @@
       </button>
     </div>
   </div>
-
-  <!-- Article search (default) -->
   <div id="searchModeArticle">
     <div class="search-bar">
       <span class="search-icon">🔍</span>
@@ -239,12 +257,10 @@
       </div>
     </div>
   </div>
-
-  <!-- Product finder (hidden by default) -->
   <div id="searchModeProduct" style="display:none;max-width:640px;margin:0 auto">
     <div style="background:white;border:1.5px solid var(--border);border-radius:1.125rem;padding:1.25rem;box-shadow:0 4px 20px rgba(124,58,237,.08)">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:.625rem;margin-bottom:.75rem">
-        <select id="qColor" style="padding:.5rem .75rem;border:1.5px solid var(--border);border-radius:.5rem;font-family:Sarabun,sans-serif;font-size:.88rem;color:var(--text);appearance:none;background:white url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E\") no-repeat right .75rem center">
+        <select id="qColor" style="padding:.5rem .75rem;border:1.5px solid var(--border);border-radius:.5rem;font-family:Sarabun,sans-serif;font-size:.88rem;color:var(--text)">
           <option value="">🌈 ทุกสี</option>
           <option value="ม่วง">💜 ม่วง</option>
           <option value="ชมพู">🩷 ชมพู</option>
@@ -254,7 +270,7 @@
           <option value="ใส">🔮 ใส</option>
           <option value="น้ำเงิน">💙 น้ำเงิน</option>
         </select>
-        <select id="qChakra" style="padding:.5rem .75rem;border:1.5px solid var(--border);border-radius:.5rem;font-family:Sarabun,sans-serif;font-size:.88rem;color:var(--text);appearance:none;background:white url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E\") no-repeat right .75rem center">
+        <select id="qChakra" style="padding:.5rem .75rem;border:1.5px solid var(--border);border-radius:.5rem;font-family:Sarabun,sans-serif;font-size:.88rem;color:var(--text)">
           <option value="">☯️ ทุกจักระ</option>
           <option value="ราก">🔴 ราก</option>
           <option value="Solar Plexus">🟡 Solar Plexus</option>
@@ -262,7 +278,7 @@
           <option value="Third Eye">🟣 Third Eye</option>
           <option value="มงกุฎ">🔮 มงกุฎ</option>
         </select>
-        <select id="qBelief" style="padding:.5rem .75rem;border:1.5px solid var(--border);border-radius:.5rem;font-family:Sarabun,sans-serif;font-size:.88rem;color:var(--text);appearance:none;background:white url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E\") no-repeat right .75rem center">
+        <select id="qBelief" style="padding:.5rem .75rem;border:1.5px solid var(--border);border-radius:.5rem;font-family:Sarabun,sans-serif;font-size:.88rem;color:var(--text)">
           <option value="">🙏 ทุกกลุ่มความเชื่อ</option>
           <option value="เสริมโชค">🍀 เสริมโชคลาภ</option>
           <option value="ความรัก">💕 ความรัก</option>
@@ -271,7 +287,7 @@
           <option value="สุขภาพ">🌿 สุขภาพ</option>
           <option value="สมาธิ">🧘 สมาธิ</option>
         </select>
-        <select id="qShape" style="padding:.5rem .75rem;border:1.5px solid var(--border);border-radius:.5rem;font-family:Sarabun,sans-serif;font-size:.88rem;color:var(--text);appearance:none;background:white url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E\") no-repeat right .75rem center">
+        <select id="qShape" style="padding:.5rem .75rem;border:1.5px solid var(--border);border-radius:.5rem;font-family:Sarabun,sans-serif;font-size:.88rem;color:var(--text)">
           <option value="">💎 ทุกรูปทรง</option>
           <option value="หินดิบ">🪨 หินดิบ</option>
           <option value="ทรงกลม">⚪ ทรงกลม</option>
@@ -289,8 +305,239 @@
       </p>
     </div>
   </div>
-
 </div>
+
+<!-- ═══ 3. DIGITAL STRIP ═══ -->
+<div class="digital-strip">
+  <div class="digital-inner">
+    <div class="digital-left">
+      <div class="digital-icon">📦</div>
+      <div class="digital-text">
+        <strong>E-Book · Wallpaper · คอร์สออนไลน์</strong>
+        <span>ดาวน์โหลดได้ทันที · มีทั้งฟรีและพรีเมียม</span>
+      </div>
+    </div>
+    <div class="digital-pills">
+      <span class="digital-pill">📄 ฟรี</span>
+      <span class="digital-pill">🖼 Wallpaper</span>
+      <span class="digital-pill">🎓 คอร์ส</span>
+    </div>
+    <a href="/digital/" class="digital-cta">ดูทั้งหมด →</a>
+  </div>
+</div>
+<hr class="divider">
+
+<!-- ═══ 4. 6 INTENTION CATEGORIES ═══ -->
+<section class="section">
+  <div class="wrap">
+    <div style="margin-bottom:.25rem">
+      <div class="sec-label">ค้นพบตามความต้องการ</div>
+      <div class="sec-title">เลือกหินที่ใช่ — ตรงตัวตนคุณ</div>
+    </div>
+    <div class="intent-grid">
+      <a href="/categories/chakra.html" class="intent-item">
+        <div class="intent-circle">☯️</div>
+        <div class="intent-label">จักระ</div>
+      </a>
+      <a href="/categories/zodiac.html" class="intent-item">
+        <div class="intent-circle">♈</div>
+        <div class="intent-label">ราศี</div>
+      </a>
+      <a href="/categories/planet.html" class="intent-item">
+        <div class="intent-circle">🪐</div>
+        <div class="intent-label">ดาวเคราะห์</div>
+      </a>
+      <a href="/categories/element.html" class="intent-item">
+        <div class="intent-circle">🔥</div>
+        <div class="intent-label">ธาตุ</div>
+      </a>
+      <a href="/categories/color.html" class="intent-item">
+        <div class="intent-circle">🎨</div>
+        <div class="intent-label">สีพลังงาน</div>
+      </a>
+      <a href="/categories/purpose.html" class="intent-item">
+        <div class="intent-circle">✨</div>
+        <div class="intent-label">วัตถุประสงค์</div>
+      </a>
+    </div>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- ═══ 5. FEATURED STONES 5×2 ═══ -->
+<section class="section" style="background:white;padding-top:2.5rem;padding-bottom:2.5rem">
+  <div class="wrap">
+    <div class="row-head">
+      <div>
+        <div class="sec-label">สารานุกรมหิน</div>
+        <div class="sec-title">หินที่คนค้นหามากที่สุด</div>
+      </div>
+      <a href="/stones/encyclopedia.html" class="see-all">ดูหิน A–Z ทั้งหมด 300+ ชนิด →</a>
+    </div>
+    <div class="stone-grid">
+      <a href="/stones/amethyst.html" class="stone-chip">
+        <div class="stone-thumb" style="background:linear-gradient(135deg,#ede9fe,#c4b5fd)">💜</div>
+        <div class="stone-info"><div class="stone-name">อเมทิสต์</div><div class="stone-kw">สมาธิ · ปัญญา</div></div>
+      </a>
+      <a href="/stones/rose-quartz.html" class="stone-chip">
+        <div class="stone-thumb" style="background:linear-gradient(135deg,#fce7f3,#fbcfe8)">🩷</div>
+        <div class="stone-info"><div class="stone-name">โรสควอตซ์</div><div class="stone-kw">ความรัก</div></div>
+      </a>
+      <a href="/stones/moldavite.html" class="stone-chip">
+        <div class="stone-thumb" style="background:linear-gradient(135deg,#d1fae5,#6ee7b7)">🌿</div>
+        <div class="stone-info"><div class="stone-name">โมลดาไวท์</div><div class="stone-kw">เปลี่ยนแปลง</div></div>
+      </a>
+      <a href="/stones/citrine.html" class="stone-chip">
+        <div class="stone-thumb" style="background:linear-gradient(135deg,#fef9c3,#fde68a)">🌟</div>
+        <div class="stone-info"><div class="stone-name">ซิทริน</div><div class="stone-kw">โชค · การเงิน</div></div>
+      </a>
+      <a href="/stones/lapis-lazuli.html" class="stone-chip">
+        <div class="stone-thumb" style="background:linear-gradient(135deg,#1e1b4b,#4338ca)">🔵</div>
+        <div class="stone-info"><div class="stone-name">ลาพิส ลาซูลี</div><div class="stone-kw">ปัญญา · ความจริง</div></div>
+      </a>
+      <a href="/stones/black-tourmaline.html" class="stone-chip">
+        <div class="stone-thumb" style="background:linear-gradient(135deg,#111827,#374151)">⚫</div>
+        <div class="stone-info"><div class="stone-name">ทัวร์มาลีนดำ</div><div class="stone-kw">ปกป้อง</div></div>
+      </a>
+      <a href="/stones/clear-quartz.html" class="stone-chip">
+        <div class="stone-thumb" style="background:linear-gradient(135deg,#f0fdf4,#bbf7d0)">🔮</div>
+        <div class="stone-info"><div class="stone-name">Clear Quartz</div><div class="stone-kw">ขยายพลังงาน</div></div>
+      </a>
+      <a href="/stones/carnelian.html" class="stone-chip">
+        <div class="stone-thumb" style="background:linear-gradient(135deg,#fff7ed,#fed7aa)">🟠</div>
+        <div class="stone-info"><div class="stone-name">คาร์เนเลียน</div><div class="stone-kw">ความกล้า · ไฟ</div></div>
+      </a>
+      <a href="/stones/tektite.html" class="stone-chip">
+        <div class="stone-thumb" style="background:linear-gradient(135deg,#111827,#1f2937)">🌑</div>
+        <div class="stone-info"><div class="stone-name">สะเก็ดดาวไทย</div><div class="stone-kw">ป้องกัน · จักรวาล</div></div>
+      </a>
+      <a href="/stones/encyclopedia.html" class="stone-chip stone-more">
+        <div class="stone-thumb">📚</div>
+        <div class="stone-info"><div class="stone-name">A–Z ทั้งหมด</div><div class="stone-kw">300+ ชนิด</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- ═══ 6. ห้องคลื่นเสียง COSMIC ═══ -->
+<section class="cosmic">
+  <div class="cosmic-inner">
+    <div class="sec-label sec-label-gold">ห้องพลังงานสูง · หินจักรวาล</div>
+    <div class="sec-title sec-title-white" style="margin-bottom:.5rem">ห้องคลื่นเสียง Manifest</div>
+    <div class="sec-sub sec-sub-white">หินพลังงานจักรวาล · คลื่นบำบัด Solfeggio · บทตั้งจิต AI นำทาง</div>
+
+    <div style="margin-top:1.5rem;font-size:.72rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.14em;margin-bottom:.625rem">✦ คลิกหินเพื่อเข้าห้อง</div>
+    <div class="cosmic-stones">
+      <a href="/talk/?stone=moldavite" class="cosmic-tag">
+        <span class="cosmic-dot" style="background:#4ade80"></span>โมลดาไวท์
+      </a>
+      <a href="/talk/?stone=tektite" class="cosmic-tag">
+        <span class="cosmic-dot" style="background:#94a3b8"></span>สะเก็ดดาวไทย
+      </a>
+      <a href="/talk/?stone=libyan-glass" class="cosmic-tag">
+        <span class="cosmic-dot" style="background:#fbbf24"></span>แก้วทะเลทรายลิเบียน
+      </a>
+      <a href="/talk/?stone=meteorite" class="cosmic-tag">
+        <span class="cosmic-dot" style="background:#e0e7ff"></span>อุกกาบาต (Meteorite)
+      </a>
+      <a href="/talk/?stone=shungite" class="cosmic-tag">
+        <span class="cosmic-dot" style="background:#64748b"></span>Shungite
+      </a>
+    </div>
+
+    <div style="font-size:.72rem;color:rgba(255,255,255,.28);text-transform:uppercase;letter-spacing:.12em;margin-bottom:.5rem">— หรือเลือกตามจุดประสงค์</div>
+    <div class="cosmic-cats">
+      <a href="/talk/?intent=wealth" class="cosmic-cat">💰 ความมั่งคั่ง</a>
+      <a href="/talk/?intent=love" class="cosmic-cat">💕 ความรัก</a>
+      <a href="/talk/?intent=protect" class="cosmic-cat">🛡 ปกป้อง</a>
+      <a href="/talk/?intent=growth" class="cosmic-cat">🌱 การเติบโต</a>
+      <a href="/talk/?intent=meditate" class="cosmic-cat">🧘 สมาธิ</a>
+    </div>
+
+    <a href="/talk/" class="btn-cosmic">🔊 เข้าห้องคลื่นเสียง Manifest</a>
+  </div>
+</section>
+<hr class="divider" style="background:rgba(255,255,255,.06)">
+
+<!-- ═══ 7. BLOG JOURNAL ═══ -->
+<section class="section" style="padding-top:3rem;padding-bottom:3rem">
+  <div class="wrap">
+    <div class="row-head">
+      <div>
+        <div class="sec-label">จากคลังบทความ</div>
+        <div class="sec-title">บทความล่าสุด</div>
+      </div>
+      <a href="/blog/" class="see-all">ดูบทความทั้งหมด 27 ชิ้น →</a>
+    </div>
+    <div id="blogJournal">
+      <!-- JS inject -->
+      <div class="journal-row">
+        <div class="j-img">📖</div>
+        <div class="j-txt">
+          <div class="j-eyebrow">กำลังโหลด...</div>
+          <div class="j-title">บทความจาก blog.json</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- ═══ 8. EXPERTS ═══ -->
+<section class="section" style="background:#f8f5ff">
+  <div class="wrap">
+    <div style="margin-bottom:1.75rem">
+      <div class="sec-label">ผู้เชี่ยวชาญ</div>
+      <div class="sec-title">3 มุมมอง · ครบทุกมิติ</div>
+      <div class="sec-sub">วิทยาศาสตร์ · พลังงาน · สายมู — รู้จริงทุกด้านในที่เดียว</div>
+    </div>
+    <div class="expert-strip">
+      <a href="/stones/" class="ex-card">
+        <div class="ex-icon ex-icon-atlas">🔬</div>
+        <div class="ex-name">Crystal Atlas</div>
+        <div class="ex-role">สารานุกรมหินคริสตัล</div>
+        <div class="ex-desc">ข้อมูลวิทยาศาสตร์ แหล่งกำเนิด ของแท้/เทียม ราคาตลาด อ้างอิงได้ระดับสากล</div>
+        <div class="ex-tags"><span class="ex-tag">แร่วิทยา</span><span class="ex-tag">แหล่งกำเนิด</span><span class="ex-tag">ราคาตลาด</span></div>
+      </a>
+      <a href="/wuchong/" class="ex-card">
+        <div class="ex-icon ex-icon-wuchong">🧘</div>
+        <div class="ex-name">Master Wuchong</div>
+        <div class="ex-role">พลังงาน · ความสำเร็จ · การเงิน</div>
+        <div class="ex-desc">วิธีใช้หินเพื่อพัฒนาชีวิต ดึงดูดความมั่งคั่ง สุขภาพ และความสำเร็จ</div>
+        <div class="ex-tags"><span class="ex-tag">จักระ</span><span class="ex-tag">การเงิน</span><span class="ex-tag">สุขภาพ</span></div>
+      </a>
+      <a href="/metha/" class="ex-card">
+        <div class="ex-icon ex-icon-metha">🌙</div>
+        <div class="ex-name">อาจารย์เมธา</div>
+        <div class="ex-role">ดวง · โหราศาสตร์ · ดูดวงรายวัน</div>
+        <div class="ex-desc">เลือกหินตามราศีและวันเกิด ดูดวงประจำวัน ดวงรายเดือน อัปเดตทุกวัน</div>
+        <div class="ex-tags"><span class="ex-tag">ราศี</span><span class="ex-tag">ดวงรายวัน</span><span class="ex-tag">เทพ</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 9. LINE CTA ═══ -->
+<section class="line-cta-section">
+  <div class="wrap">
+    <div class="line-cta-inner">
+      <div class="line-avatar">💎</div>
+      <div>
+        <h2 class="line-title">ปรึกษาเรื่องหินกับทีม Amethez</h2>
+        <p class="line-sub">ส่งคำถามมาได้เลย ไม่ว่าจะเป็นเรื่องการเลือกหิน การดูแลรักษา หรือวิธีใช้งานให้เหมาะกับคุณ ทีมงานจะตอบกลับในเวลาทำการ</p>
+        <div class="line-topic-tags">
+          <span class="line-topic">🪨 แนะนำหินตามจุดประสงค์</span>
+          <span class="line-topic">🔍 เช็คของแท้/ของปลอม</span>
+          <span class="line-topic">📦 แหล่งซื้อที่เชื่อถือได้</span>
+          <span class="line-topic">💬 คำถามทั่วไป</span>
+        </div>
+        <a href="https://line.me/R/ti/p/@amethez" target="_blank" rel="noopener" class="btn-line">LINE @amethez</a>
+        <div class="line-disclaimer">ตอบกลับภายใน 24 ชั่วโมง · ไม่มีค่าบริการ · ไม่บังคับซื้อ</div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <script>
 function switchSearchMode(mode) {
@@ -303,437 +550,61 @@ function switchSearchMode(mode) {
   document.getElementById('tabProduct').style.color = isProduct ? 'white' : 'var(--purple)';
   if (isProduct) updateFinderLink();
 }
-
 function updateFinderLink() {
-  const color  = document.getElementById('qColor').value;
-  const chakra = document.getElementById('qChakra').value;
-  const belief = document.getElementById('qBelief').value;
-  const shape  = document.getElementById('qShape').value;
-  const params = new URLSearchParams();
-  if (color)  params.set('color',  color);
-  if (chakra) params.set('chakra', chakra);
-  if (belief) params.set('belief', belief);
-  if (shape)  params.set('shape',  shape);
-  const qs = params.toString();
+  const p = new URLSearchParams();
+  ['qColor','qChakra','qBelief','qShape'].forEach(id => {
+    const v = document.getElementById(id)?.value;
+    if (v) p.set(id.replace('q','').toLowerCase(), v);
+  });
+  const qs = p.toString();
   document.getElementById('findBtn').href = '/shop/finder.html' + (qs ? '?' + qs : '');
 }
-
 ['qColor','qChakra','qBelief','qShape'].forEach(id =>
   document.getElementById(id)?.addEventListener('change', updateFinderLink)
 );
-</script>
-<hr class="divider">
-
-<!-- ═══ CATEGORIES ═══ -->
-<section class="section" style="padding-bottom:2rem">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-label">หมวดหมู่</div>
-      <div class="sec-title">เลือกหินที่ใช่ ตรงความต้องการ</div>
-    </div>
-    <div class="cat-pills">
-      <a href="/categories/chakra.html" class="cat-pill">
-        <span class="cat-pill-icon">☯️</span>
-        <div class="cat-pill-text"><strong>หินตามจักระ</strong><span>จักระ 1–7</span></div>
-      </a>
-      <a href="/categories/zodiac.html" class="cat-pill">
-        <span class="cat-pill-icon">♈</span>
-        <div class="cat-pill-text"><strong>หินตามราศี</strong><span>12 ราศี</span></div>
-      </a>
-      <a href="/categories/birthday-stone.html" class="cat-pill">
-        <span class="cat-pill-icon">📅</span>
-        <div class="cat-pill-text"><strong>หินตามวันเกิด</strong><span>7 วัน สีมงคล</span></div>
-      </a>
-      <a href="/categories/birth-month.html" class="cat-pill">
-        <span class="cat-pill-icon">🗓️</span>
-        <div class="cat-pill-text"><strong>หินตามเดือน</strong><span>Birthstone</span></div>
-      </a>
-      <a href="/categories/master-crystal.html" class="cat-pill">
-        <span class="cat-pill-icon">💎</span>
-        <div class="cat-pill-text"><strong>Master Crystal</strong><span>ฮีลเลอร์</span></div>
-      </a>
-      <a href="/categories/color.html" class="cat-pill">
-        <span class="cat-pill-icon">🎨</span>
-        <div class="cat-pill-text"><strong>หินตามสี</strong><span>9 สีพลังงาน</span></div>
-      </a>
-      <a href="/categories/chinese-zodiac.html" class="cat-pill">
-        <span class="cat-pill-icon">🐉</span>
-        <div class="cat-pill-text"><strong>อัญมณีปีเกิด</strong><span>12 นักษัตร</span></div>
-      </a>
-      <a href="/categories/purpose.html" class="cat-pill">
-        <span class="cat-pill-icon">🎯</span>
-        <div class="cat-pill-text"><strong>ตามวัตถุประสงค์</strong><span>เงิน · ความรัก</span></div>
-      </a>
-    </div>
-
-    <!-- Popular stones row -->
-    <div class="stone-row">
-      <a href="/stones/amethyst.html" class="stone-chip">
-        <span class="stone-emoji">💜</span>
-        <div class="stone-name">อเมทิสต์</div>
-        <div class="stone-kw">สมาธิ · ปัญญา</div>
-      </a>
-      <a href="/stones/moldavite.html" class="stone-chip">
-        <span class="stone-emoji">🌿</span>
-        <div class="stone-name">โมลดาไวท์</div>
-        <div class="stone-kw">เปลี่ยนแปลง</div>
-      </a>
-      <a href="/stones/tektite.html" class="stone-chip">
-        <span class="stone-emoji">🌑</span>
-        <div class="stone-name">สะเก็ดดาวไทย</div>
-        <div class="stone-kw">ป้องกัน</div>
-      </a>
-      <a href="/stones/citrine.html" class="stone-chip">
-        <span class="stone-emoji">🌟</span>
-        <div class="stone-name">ซิทริน</div>
-        <div class="stone-kw">โชค · การเงิน</div>
-      </a>
-      <a href="/stones/clear-quartz.html" class="stone-chip">
-        <span class="stone-emoji">🔮</span>
-        <div class="stone-name">คริสตัลใส</div>
-        <div class="stone-kw">ชำระล้าง</div>
-      </a>
-      <a href="/stones/rudraksha.html" class="stone-chip">
-        <span class="stone-emoji">📿</span>
-        <div class="stone-name">รุทรากษะ</div>
-        <div class="stone-kw">ศักดิ์สิทธิ์</div>
-      </a>
-      <a href="/stones/black-tourmaline.html" class="stone-chip">
-        <span class="stone-emoji">🖤</span>
-        <div class="stone-name">ทัวร์มาลีนดำ</div>
-        <div class="stone-kw">ป้องกันพลังลบ</div>
-      </a>
-      <a href="/stones/rose-quartz.html" class="stone-chip">
-        <span class="stone-emoji">🩷</span>
-        <div class="stone-name">โรสควอตซ์</div>
-        <div class="stone-kw">ความรัก</div>
-      </a>
-      <a href="/stones/encyclopedia.html" class="stone-chip stone-more">
-        <span class="stone-emoji">📚</span>
-        <div class="stone-name">A–Z ทั้งหมด</div>
-        <div class="stone-kw">300+ ชนิด</div>
-      </a>
-    </div>
-  </div>
-</section>
-<hr class="divider">
-
-<!-- ═══ ARTICLES ═══ -->
-<section class="section" style="background:#f8f5ff">
-  <div class="wrap">
-    <div class="row-head">
-      <div class="sec-head" style="margin-bottom:0">
-        <div class="sec-label">บทความล่าสุด</div>
-        <div class="sec-title">ความรู้เพิ่มใหม่ทุกวัน</div>
-      </div>
-      <a href="/stones/" class="see-all">ดูทั้งหมด →</a>
-    </div>
-    <div class="article-bento">
-      <!-- Main feature -->
-      <a href="/stones/amethyst.html" class="ab-main">
-        <div class="ab-thumb-big" data-cms-img="home_feat_main" style="background:linear-gradient(135deg,#4c1d95,#7c3aed,#a78bfa)"><span class="cms-placeholder">💜</span></div>
-        <div class="ab-body">
-          <div class="ab-cat">Crystal Atlas · สารานุกรมหิน</div>
-          <div class="ab-title-big">อเมทิสต์ — หินแห่งปัญญาและจิตวิญญาณ</div>
-          <div class="ab-sub">ประวัติ 2,000 ปี คุณสมบัติทางวิทยาศาสตร์ จักระมงกุฎ และวิธีใช้งานที่ได้ผลจริง พร้อมคำถามที่พบบ่อย</div>
-        </div>
-      </a>
-      <!-- Side cards -->
-      <a href="/stones/moldavite.html" class="ab-sm">
-        <div class="ab-thumb-sm" data-cms-img="home_feat_side1" style="background:linear-gradient(135deg,#064e3b,#059669)"><span class="cms-placeholder">🌿</span></div>
-        <div class="ab-body-sm">
-          <div class="ab-cat">Crystal Atlas</div>
-          <div class="ab-title-sm">โมลดาไวท์ — หินจากนอกโลก ดูของแท้อย่างไร</div>
-          <div class="ab-sub-sm">ราคาตลาด วิธีดูของจริง และพลังงานที่ทำให้คนกลัว</div>
-        </div>
-      </a>
-      <a href="/guides/cleanse.html" class="ab-sm">
-        <div class="ab-thumb-sm" data-cms-img="home_feat_side2" style="background:linear-gradient(135deg,#0c4a6e,#0369a1)"><span class="cms-placeholder">🌊</span></div>
-        <div class="ab-body-sm">
-          <div class="ab-cat">คู่มือพลังบำบัด</div>
-          <div class="ab-title-sm">7 วิธีชาร์จและล้างหินคริสตัล ที่ถูกต้อง</div>
-          <div class="ab-sub-sm">น้ำ · แสงจันทร์ · เกลือ — แต่ละวิธีเหมาะกับหินชนิดใด</div>
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
-<hr class="divider">
-
-<!-- ═══ FEATURED ARTICLES ═══ -->
-<section class="section" style="padding-top:2.5rem;padding-bottom:2.5rem">
-  <div class="wrap">
-    <div class="row-head">
-      <div class="sec-head" style="margin-bottom:0">
-        <div class="sec-label">บทความแนะนำ</div>
-        <div class="sec-title">เริ่มต้นที่นี่ — เนื้อหาที่อ่านมากที่สุด</div>
-      </div>
-      <a href="/stones/" class="see-all">ดูทั้งหมด →</a>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.125rem;margin-top:1.75rem">
-
-      <a href="/stones/amethyst.html" style="text-decoration:none;background:white;border:1.5px solid var(--border);border-radius:1rem;overflow:hidden;transition:all .2s;display:flex;flex-direction:column" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 28px rgba(124,58,237,.12)';this.style.borderColor='#c4b5fd'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='var(--border)'">
-        <div data-cms-img="home_art1" style="height:110px;background:linear-gradient(135deg,#4c1d95,#7c3aed,#a78bfa);display:flex;align-items:center;justify-content:center;font-size:3rem"><span class="cms-placeholder">💜</span></div>
-        <div style="padding:1rem 1.125rem 1.25rem;flex:1;display:flex;flex-direction:column">
-          <div style="font-size:.7rem;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem">Crystal Atlas</div>
-          <div style="font-weight:700;font-size:.95rem;color:var(--text);line-height:1.4;margin-bottom:.4rem">อเมทิสต์ — หินแห่งปัญญา</div>
-          <div style="font-size:.8rem;color:var(--muted);line-height:1.55;flex:1">ประวัติ 2,000 ปี คุณสมบัติ จักระมงกุฎ วิธีใช้งานจริง</div>
-          <div style="margin-top:.875rem;font-size:.8rem;font-weight:700;color:var(--purple)">อ่านต่อ →</div>
-        </div>
-      </a>
-
-      <a href="/stones/moldavite.html" style="text-decoration:none;background:white;border:1.5px solid var(--border);border-radius:1rem;overflow:hidden;transition:all .2s;display:flex;flex-direction:column" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 28px rgba(124,58,237,.12)';this.style.borderColor='#c4b5fd'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='var(--border)'">
-        <div data-cms-img="home_art2" style="height:110px;background:linear-gradient(135deg,#064e3b,#059669,#34d399);display:flex;align-items:center;justify-content:center;font-size:3rem"><span class="cms-placeholder">🌿</span></div>
-        <div style="padding:1rem 1.125rem 1.25rem;flex:1;display:flex;flex-direction:column">
-          <div style="font-size:.7rem;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem">Crystal Atlas</div>
-          <div style="font-weight:700;font-size:.95rem;color:var(--text);line-height:1.4;margin-bottom:.4rem">โมลดาไวท์ — หินจากนอกโลก</div>
-          <div style="font-size:.8rem;color:var(--muted);line-height:1.55;flex:1">ดูของแท้อย่างไร ราคาตลาด และพลังงานที่ทำให้คนกลัว</div>
-          <div style="margin-top:.875rem;font-size:.8rem;font-weight:700;color:var(--purple)">อ่านต่อ →</div>
-        </div>
-      </a>
-
-      <a href="/stones/citrine.html" style="text-decoration:none;background:white;border:1.5px solid var(--border);border-radius:1rem;overflow:hidden;transition:all .2s;display:flex;flex-direction:column" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 28px rgba(124,58,237,.12)';this.style.borderColor='#c4b5fd'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='var(--border)'">
-        <div data-cms-img="home_art3" style="height:110px;background:linear-gradient(135deg,#78350f,#d97706,#fbbf24);display:flex;align-items:center;justify-content:center;font-size:3rem"><span class="cms-placeholder">🌟</span></div>
-        <div style="padding:1rem 1.125rem 1.25rem;flex:1;display:flex;flex-direction:column">
-          <div style="font-size:.7rem;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem">Crystal Atlas</div>
-          <div style="font-weight:700;font-size:.95rem;color:var(--text);line-height:1.4;margin-bottom:.4rem">ซิทริน — หินแห่งโชคลาภ</div>
-          <div style="font-size:.8rem;color:var(--muted);line-height:1.55;flex:1">เสริมการเงิน ดึงดูดความมั่งคั่ง แยกแท้-เทียมอย่างไร</div>
-          <div style="margin-top:.875rem;font-size:.8rem;font-weight:700;color:var(--purple)">อ่านต่อ →</div>
-        </div>
-      </a>
-
-      <a href="/stones/tektite.html" style="text-decoration:none;background:white;border:1.5px solid var(--border);border-radius:1rem;overflow:hidden;transition:all .2s;display:flex;flex-direction:column" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 28px rgba(124,58,237,.12)';this.style.borderColor='#c4b5fd'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='var(--border)'">
-        <div data-cms-img="home_art4" style="height:110px;background:linear-gradient(135deg,#111827,#1f2937,#374151);display:flex;align-items:center;justify-content:center;font-size:3rem"><span class="cms-placeholder">🌑</span></div>
-        <div style="padding:1rem 1.125rem 1.25rem;flex:1;display:flex;flex-direction:column">
-          <div style="font-size:.7rem;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem">Crystal Atlas</div>
-          <div style="font-weight:700;font-size:.95rem;color:var(--text);line-height:1.4;margin-bottom:.4rem">สะเก็ดดาวไทย — อุกกาบาตหายาก</div>
-          <div style="font-size:.8rem;color:var(--muted);line-height:1.55;flex:1">ป้องกันพลังงานลบ แหล่งที่มา และสินค้าในตลาดไทย</div>
-          <div style="margin-top:.875rem;font-size:.8rem;font-weight:700;color:var(--purple)">อ่านต่อ →</div>
-        </div>
-      </a>
-
-      <a href="/categories/chakra.html" style="text-decoration:none;background:white;border:1.5px solid var(--border);border-radius:1rem;overflow:hidden;transition:all .2s;display:flex;flex-direction:column" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 28px rgba(124,58,237,.12)';this.style.borderColor='#c4b5fd'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='var(--border)'">
-        <div data-cms-img="home_art5" style="height:110px;background:linear-gradient(135deg,#1e1b4b,#4338ca,#818cf8);display:flex;align-items:center;justify-content:center;font-size:3rem"><span class="cms-placeholder">☯️</span></div>
-        <div style="padding:1rem 1.125rem 1.25rem;flex:1;display:flex;flex-direction:column">
-          <div style="font-size:.7rem;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem">หมวดหมู่</div>
-          <div style="font-weight:700;font-size:.95rem;color:var(--text);line-height:1.4;margin-bottom:.4rem">หินตามจักระ — 7 ศูนย์พลังงาน</div>
-          <div style="font-size:.8rem;color:var(--muted);line-height:1.55;flex:1">เลือกหินให้ตรงจักระที่ต้องการเสริม ครบทั้ง 7 ระดับ</div>
-          <div style="margin-top:.875rem;font-size:.8rem;font-weight:700;color:var(--purple)">อ่านต่อ →</div>
-        </div>
-      </a>
-
-      <a href="/talk/" style="text-decoration:none;background:white;border:1.5px solid var(--border);border-radius:1rem;overflow:hidden;transition:all .2s;display:flex;flex-direction:column" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 28px rgba(124,58,237,.12)';this.style.borderColor='#c4b5fd'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='var(--border)'">
-        <div data-cms-img="home_art6" style="height:110px;background:linear-gradient(135deg,#0f0a1e,#2d1b69,#7c3aed);display:flex;align-items:center;justify-content:center;font-size:3rem"><span class="cms-placeholder">🔮</span></div>
-        <div style="padding:1rem 1.125rem 1.25rem;flex:1;display:flex;flex-direction:column">
-          <div style="font-size:.7rem;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem">Talk to Stones</div>
-          <div style="font-weight:700;font-size:.95rem;color:var(--text);line-height:1.4;margin-bottom:.4rem">คุยกับหิน — บทตั้งจิต</div>
-          <div style="font-size:.8rem;color:var(--muted);line-height:1.55;flex:1">บทสวดและตั้งจิตสำหรับแต่ละหิน การเงิน ความรัก ปกป้อง</div>
-          <div style="margin-top:.875rem;font-size:.8rem;font-weight:700;color:var(--purple)">อ่านต่อ →</div>
-        </div>
-      </a>
-
-    </div>
-  </div>
-</section>
-<hr class="divider">
-
-<!-- ═══ DIGITAL PRODUCTS ═══ -->
-<section class="section section-dark">
-  <div class="wrap">
-    <div class="row-head">
-      <div>
-        <div class="sec-label sec-label-gold">Digital Products</div>
-        <div class="sec-title sec-title-white">E-Book · Wallpaper · คอร์ส</div>
-        <div class="sec-sub sec-sub-white">ดาวน์โหลดได้ทันที · มีทั้งฟรีและพรีเมียม</div>
-      </div>
-      <a href="/digital/" class="see-all see-all-white">ดูทั้งหมด →</a>
-    </div>
-    <div class="dp-grid">
-
-      <!-- Wallpaper — tall -->
-      <a href="/digital/" class="dp-card dp-wall">
-        <div class="dp-wall-img" data-cms-img="home_dp_wall" style="background:linear-gradient(160deg,#1e0a3c,#0a1f3d)">
-          <div class="phone-frame cms-placeholder">🔮</div>
-        </div>
-        <div class="dp-body">
-          <div class="dp-badge dp-badge-free">✨ ฟรี</div>
-          <div class="dp-title">Wallpaper คริสตัล — ชุด 12 ภาพ</div>
-          <div class="dp-sub">ภาพความละเอียดสูง ใช้เป็น Lock Screen / Home Screen มือถือ AI-generated</div>
-          <div class="dp-cta dp-cta-free">⬇️ ดาวน์โหลดฟรี →</div>
-        </div>
-      </a>
-
-      <!-- E-book free -->
-      <a href="/digital/" class="dp-card">
-        <div class="dp-wall-img" data-cms-img="home_dp_ebook" style="background:linear-gradient(135deg,#1a0936,#3b0764);height:160px">
-          <div style="font-size:3.5rem" class="cms-placeholder">📖</div>
-        </div>
-        <div class="dp-body">
-          <div class="dp-badge dp-badge-free">✨ ฟรี</div>
-          <div class="dp-title">คู่มือเริ่มต้นสะสมหิน สำหรับมือใหม่</div>
-          <div class="dp-sub">หิน 10 ชนิดแรกที่ควรมี PDF 24 หน้า</div>
-          <div class="dp-cta dp-cta-free">⬇️ ดาวน์โหลดฟรี →</div>
-        </div>
-      </a>
-
-      <!-- Affirmation Cards free -->
-      <a href="/digital/" class="dp-card">
-        <div class="dp-wall-img" data-cms-img="home_dp_cards" style="background:linear-gradient(135deg,#0c1a3a,#1e3a5f);height:160px">
-          <div style="font-size:3.5rem" class="cms-placeholder">🃏</div>
-        </div>
-        <div class="dp-body">
-          <div class="dp-badge dp-badge-free">✨ ฟรี</div>
-          <div class="dp-title">Affirmation Cards ดึงดูดพลังบวก 21 ใบ</div>
-          <div class="dp-sub">พิมพ์ได้เลย ใช้ร่วมกับหินทุกชนิด</div>
-          <div class="dp-cta dp-cta-free">⬇️ ดาวน์โหลดฟรี →</div>
-        </div>
-      </a>
-
-      <!-- Bible paid -->
-      <a href="/digital/" class="dp-card">
-        <div class="dp-wall-img" data-cms-img="home_dp_bible" style="background:linear-gradient(135deg,#0f0a1e,#2d1b5e);height:160px">
-          <div style="font-size:3.5rem" class="cms-placeholder">💎</div>
-        </div>
-        <div class="dp-body">
-          <div class="dp-badge dp-badge-paid">⭐ Premium</div>
-          <div class="dp-title">Crystal Bible ฉบับสมบูรณ์ 300 หน้า</div>
-          <div class="dp-sub">หิน 80+ ชนิด ราศี จักระ วิธีใช้งานเต็ม</div>
-          <div class="dp-cta dp-cta-paid">💎 ฿299 — ดูรายละเอียด →</div>
-        </div>
-      </a>
-
-      <!-- Course paid -->
-      <a href="/digital/" class="dp-card">
-        <div class="dp-wall-img" data-cms-img="home_dp_course" style="background:linear-gradient(135deg,#1a0936,#0c1a3a);height:160px">
-          <div style="font-size:3.5rem" class="cms-placeholder">🧘</div>
-        </div>
-        <div class="dp-body">
-          <div class="dp-badge dp-badge-paid">⭐ Premium</div>
-          <div class="dp-title">คอร์ส Master Wuchong — หินกับพลังงาน</div>
-          <div class="dp-sub">ดึงดูดความสำเร็จ การเงิน สุขภาพด้วยหิน</div>
-          <div class="dp-cta dp-cta-paid">🧘 ฿990 — ดูรายละเอียด →</div>
-        </div>
-      </a>
-
-    </div>
-  </div>
-</section>
-<hr class="divider">
-
-<!-- ═══ GUIDES ═══ -->
-<section class="section" style="padding-bottom:2rem">
-  <div class="wrap">
-    <div class="row-head">
-      <div class="sec-head" style="margin-bottom:0">
-        <div class="sec-label">คู่มือพลังบำบัด</div>
-        <div class="sec-title">ใช้หินให้ถูกวิธี ได้ผลจริง</div>
-      </div>
-      <a href="/guides/" class="see-all">ดูทั้งหมด →</a>
-    </div>
-    <div class="guides-compact">
-      <a href="/guides/cleanse.html" class="guide-row">
-        <span class="guide-icon">🌊</span>
-        <div class="guide-label"><strong>ชาร์จและล้างหิน</strong><span>7 วิธีที่ได้ผลจริง</span></div>
-      </a>
-      <a href="/guides/how-to-wear.html" class="guide-row">
-        <span class="guide-icon">📿</span>
-        <div class="guide-label"><strong>วิธีใส่กำไลหิน</strong><span>ซ้าย-ขวา ต่างกันอย่างไร</span></div>
-      </a>
-      <a href="/guides/healing-color.html" class="guide-row">
-        <span class="guide-icon">🌈</span>
-        <div class="guide-label"><strong>หินตามสีพลังงาน</strong><span>9 สี · ความหมาย</span></div>
-      </a>
-      <a href="/guides/stone-shape.html" class="guide-row">
-        <span class="guide-icon">🔷</span>
-        <div class="guide-label"><strong>รูปทรงหิน</strong><span>Pyramid · Tower · Sphere</span></div>
-      </a>
-      <a href="/guides/healing-affliction.html" class="guide-row">
-        <span class="guide-icon">🙏</span>
-        <div class="guide-label"><strong>หินแก้ปัญหา</strong><span>เงิน · ความรัก · สุขภาพ</span></div>
-      </a>
-      <a href="/videos/" class="guide-row" style="border-color:var(--purple)">
-        <span class="guide-icon">🎬</span>
-        <div class="guide-label"><strong style="color:var(--purple)">วิดีโอพร้อมสรุป AI</strong><span>คลิปดีพร้อม insight</span></div>
-      </a>
-    </div>
-  </div>
-</section>
-<hr class="divider">
-
-<!-- ═══ TALK TO STONES ═══ -->
-<section class="section section-dark">
-  <div class="wrap" style="text-align:center;max-width:640px">
-    <div style="font-size:3rem;margin-bottom:1rem;filter:drop-shadow(0 0 24px rgba(124,58,237,.6))">🔮</div>
-    <div class="sec-label sec-label-gold" style="text-align:center">ใหม่ · Talk to Your Stones</div>
-    <div class="sec-title sec-title-white" style="margin-bottom:.75rem">คุยกับหิน — บทตั้งจิตพร้อมเปิดฟังเสียง</div>
-    <p class="sec-sub sec-sub-white" style="margin-bottom:1.75rem">บทตั้งจิตสำหรับแต่ละหินและความตั้งใจ การเงิน ความรัก ปกป้อง ความสำเร็จ<br>กดเล่นแล้วฟัง หรือท่องตาม ใช้ทำสมาธิทุกวัน</p>
-    <a href="/talk/" class="btn-primary" style="background:linear-gradient(135deg,#c9a84c,#b8922e);color:#0f0a1e;box-shadow:0 4px 20px rgba(201,168,76,.35)">🔊 เปิดฟังบทตั้งจิต</a>
-  </div>
-</section>
-<hr class="divider">
-
-<!-- ═══ EXPERTS ═══ -->
-<section class="section" style="background:#f8f5ff">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-label">ผู้เชี่ยวชาญ</div>
-      <div class="sec-title">3 มุมมอง · ครบทุกมิติ</div>
-      <div class="sec-sub">วิทยาศาสตร์ · พลังงาน · สายมู — รู้จริงทุกด้านในที่เดียว</div>
-    </div>
-    <div class="expert-strip">
-      <a href="/stones/" class="ex-card">
-        <div class="ex-icon ex-icon-atlas">🔬</div>
-        <div class="ex-name">Crystal Atlas</div>
-        <div class="ex-role">สารานุกรมหินคริสตัล</div>
-        <div class="ex-desc">ข้อมูลวิทยาศาสตร์ แหล่งกำเนิด ของแท้/เทียม ราคาตลาด อ้างอิงได้ระดับสากล</div>
-        <div class="ex-tags">
-          <span class="ex-tag">แร่วิทยา</span><span class="ex-tag">แหล่งกำเนิด</span><span class="ex-tag">ราคาตลาด</span>
-        </div>
-      </a>
-      <a href="/wuchong/" class="ex-card">
-        <div class="ex-icon ex-icon-wuchong">🧘</div>
-        <div class="ex-name">Master Wuchong</div>
-        <div class="ex-role">พลังงาน · ความสำเร็จ · การเงิน</div>
-        <div class="ex-desc">วิธีใช้หินเพื่อพัฒนาชีวิต ดึงดูดความมั่งคั่ง สุขภาพ และความสำเร็จ</div>
-        <div class="ex-tags">
-          <span class="ex-tag">จักระ</span><span class="ex-tag">การเงิน</span><span class="ex-tag">สุขภาพ</span>
-        </div>
-      </a>
-      <a href="/metha/" class="ex-card">
-        <div class="ex-icon ex-icon-metha">🌙</div>
-        <div class="ex-name">อาจารย์เมธา</div>
-        <div class="ex-role">ดวง · โหราศาสตร์ · สายมู</div>
-        <div class="ex-desc">เลือกหินตามราศี วันเกิด และฤกษ์มงคล ดวงรายวัน ดวงรายเดือน</div>
-        <div class="ex-tags">
-          <span class="ex-tag">ราศี</span><span class="ex-tag">ดวงรายวัน</span><span class="ex-tag">เทพ</span>
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ LINE CTA ═══ -->
-<section class="line-cta">
-  <div style="max-width:520px;margin:0 auto">
-    <div style="font-size:2.5rem;margin-bottom:.875rem">💬</div>
-    <h2>ไม่รู้จะเริ่มจากไหน?</h2>
-    <p>แอดไลน์ฟรี บอกวัตถุประสงค์ — เราแนะนำหินที่ใช่ให้คุณทันที</p>
-    <a data-cms-href="global.line_url" href="https://line.me/R/ti/p/@amethez" target="_blank" rel="noopener" class="btn-line">
-      ➕ Add Line @amethez — ฟรี ไม่มีค่าใช้จ่าย
-    </a>
-    <div style="margin-top:.875rem;font-size:.78rem;color:#166534;opacity:.7">ตอบไวภายใน 1 ชม. · รับโปรโมชั่นก่อนใคร</div>
-  </div>
-</section>
-
-<!-- ═══ FOOTER ═══ -->
-
-<script>
 function doSearch(kw) {
   window.location.href = '/stones/encyclopedia.html?q=' + encodeURIComponent(kw);
 }
 document.getElementById('searchInput').addEventListener('keydown', function(e) {
   if (e.key === 'Enter' && this.value.trim()) doSearch(this.value.trim());
 });
+
+// Blog dynamic loader
+const CAT_COLORS = {
+  'มือใหม่': 'linear-gradient(135deg,#ede9fe,#c4b5fd)',
+  'วิทยาศาสตร์': 'linear-gradient(135deg,#dbeafe,#93c5fd)',
+  'พลังงาน': 'linear-gradient(135deg,#f5f0ff,#a78bfa)',
+  'ฮวงจุ้ย': 'linear-gradient(135deg,#fef9c3,#fde68a)',
+  'การดูแล': 'linear-gradient(135deg,#d1fae5,#6ee7b7)',
+  'เทคนิคขั้นสูง': 'linear-gradient(135deg,#fce7f3,#f9a8d4)',
+  'สารานุกรม': 'linear-gradient(135deg,#ccfbf1,#5eead4)',
+  'เสียงบำบัด': 'linear-gradient(135deg,#e0e7ff,#818cf8)',
+};
+async function loadBlog() {
+  try {
+    const res = await fetch('/data/blog.json');
+    if (!res.ok) return;
+    const { articles } = await res.json();
+    const container = document.getElementById('blogJournal');
+    if (!container || !articles.length) return;
+    const featured = articles.slice(0, 4);
+    container.innerHTML = featured.map((a, i) => `
+      <div class="journal-row${i % 2 === 1 ? ' rev' : ''}">
+        <div class="j-img" style="background:${CAT_COLORS[a.category] || 'linear-gradient(135deg,#f3eef9,#e9d5ff)'}">
+          <span>${a.emoji || '📖'}</span>
+        </div>
+        <div class="j-txt">
+          <div class="j-eyebrow">${a.category}</div>
+          <div class="j-title">${a.title}</div>
+          <div class="j-desc">${a.desc}</div>
+          <a href="${a.url}" class="j-link">อ่านบทความ →</a>
+        </div>
+      </div>
+      ${i < featured.length - 1 ? '<hr class="j-divider">' : ''}
+    `).join('');
+  } catch(e) { /* silent fail */ }
+}
+loadBlog();
 </script>
 <link rel="stylesheet" href="/css/sila.css">
 <script src="/js/sila.js"></script>
