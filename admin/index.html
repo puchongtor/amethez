@@ -3460,18 +3460,33 @@ function openEditPost(id){
   toggleBESchedule();
   document.getElementById('beThumbFile').value='';
   updateBEThumbPreview(p.thumb||'');
-  // body — load from localStorage first, else fetch actual HTML file
+  // body — show cached copy immediately, but always verify it against the live
+  // page in the background and self-heal if the cache looks stale/truncated
+  // (this is how the FAQ/related-links content-loss bug happened before)
   const localBody=p.body||'';
   document.getElementById('beBodyTA').value=localBody||'(กำลังโหลด...)';
   document.getElementById('beBodyPreview').innerHTML=localBody;
   updateBEBodyLen(localBody);
   switchBETab('html');
-  if(!localBody && p.url){
-    fetchLivePostBody(p.url).then(body2=>{
-      document.getElementById('beBodyTA').value=body2;
-      document.getElementById('beBodyPreview').innerHTML=body2;
-      updateBEBodyLen(body2);
-    }).catch(()=>{ document.getElementById('beBodyTA').value=''; });
+  if(p.url){
+    fetchLivePostBody(p.url).then(liveBody=>{
+      if(!liveBody) return;
+      // if the editor moved to a different post while this was in flight, bail
+      if(document.getElementById('beEditId').value!==p.id) return;
+      const liveTextLen=(new DOMParser().parseFromString(liveBody,'text/html').body.textContent||'').trim().length;
+      const localTextLen=(new DOMParser().parseFromString(localBody,'text/html').body.textContent||'').trim().length;
+      const staleCache = liveTextLen>200 && localTextLen < liveTextLen*0.6;
+      if(!localBody || staleCache){
+        document.getElementById('beBodyTA').value=liveBody;
+        document.getElementById('beBodyPreview').innerHTML=liveBody;
+        updateBEBodyLen(liveBody);
+        if(document.getElementById('beTabPreview').style.display!=='none') attachBEImgResize();
+        p.body=liveBody;
+        saveBlogPosts(getBlogPosts().map(b=>b.id===p.id?p:b));
+        _dirtyBodyPostIds.delete(String(p.id));
+        if(staleCache) toast('⚠️ ข้อมูลที่แคชไว้ในเครื่องดูไม่ครบ — โหลดเนื้อหาสดจากเว็บจริงมาแทนแล้ว','ok');
+      }
+    }).catch(()=>{ if(!localBody) document.getElementById('beBodyTA').value=''; });
   }
   // show editor view
   document.getElementById('blogListView').style.display='none';
@@ -3505,7 +3520,14 @@ function updateBEBodyLen(v){
 let _dirtyBodyPostIds=new Set();
 function markBEBodyDirty(){
   const eid=document.getElementById('beEditId').value;
-  if(eid) _dirtyBodyPostIds.add(String(eid));
+  if(!eid) return;
+  _dirtyBodyPostIds.add(String(eid));
+  // Auto-persist the body immediately — don't depend on the user remembering
+  // to click "บันทึก" before "🚀 เผยแพร่", that gap is how an inserted image
+  // silently never reached the live page before.
+  const posts=getBlogPosts();
+  const p=posts.find(b=>b.id===eid);
+  if(p){ p.body=document.getElementById('beBodyTA').value; saveBlogPosts(posts); }
 }
 function attachBEImgResize(){
   document.getElementById('beBodyPreview').querySelectorAll('img').forEach(img => attachImgResize(img, onBEPreviewEdit));
@@ -3898,10 +3920,12 @@ function attachImgResize(img, onSync){
   });
 }
 
+let _overlayScrollHandler=null;
 function selectImg(img, onSync){
   onSync = onSync || onPreviewEdit;
   // Deselect previous
   if(_selectedImg) _selectedImg.classList.remove('img-selected');
+  if(_overlayScrollHandler){ window.removeEventListener('scroll', _overlayScrollHandler, true); _overlayScrollHandler=null; }
   _selectedImg = img;
   img.classList.add('img-selected');
 
@@ -3919,6 +3943,10 @@ function selectImg(img, onSync){
     sizeLabel.textContent  = Math.round(r.width) + ' × ' + Math.round(r.height) + 'px';
   }
   positionOverlay();
+  // Keep the overlay glued to the image when the preview area (or page) scrolls —
+  // it's position:fixed so it otherwise drifts away from the image on scroll.
+  _overlayScrollHandler = positionOverlay;
+  window.addEventListener('scroll', _overlayScrollHandler, true);
 
   // Drag-to-resize
   handle.onmousedown = e => {
@@ -3950,6 +3978,7 @@ document.addEventListener('click', e => {
     _selectedImg.classList.remove('img-selected');
     _selectedImg = null;
     document.getElementById('imgResizeOverlay').style.display = 'none';
+    if(_overlayScrollHandler){ window.removeEventListener('scroll', _overlayScrollHandler, true); _overlayScrollHandler=null; }
   }
 });
 
