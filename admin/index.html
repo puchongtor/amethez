@@ -1326,6 +1326,22 @@ textarea.form-input{resize:vertical;min-height:80px;}
 </div>
 
 <script>
+// Bumped whenever admin/index.html changes. checkAdminIsCurrent() compares this
+// against the deployed file right before a publish, so an admin tab left open
+// across a deploy can't silently run stale JS and publish with it — this is
+// exactly how the FAQ/related-links content got wiped from a live page 3 times
+// in one session (self-heal/safety-net fixes existed in the file, but not yet
+// in the browser tab that was still running the pre-fix version).
+const ADMIN_VERSION='2026-07-11.1';
+async function checkAdminIsCurrent(){
+  try{
+    const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
+    if(!r.ok) return true; // can't check — don't block on a network hiccup
+    const html=await r.text();
+    const m=html.match(/const ADMIN_VERSION='([^']+)'/);
+    return !m || m[1]===ADMIN_VERSION;
+  }catch(e){ return true; }
+}
 const PASSWORD='amethez2026';
 const AUTH_KEY='amethez_admin_auth';
 const IMG_KEY='amethez_images';
@@ -4107,6 +4123,12 @@ async function publishToGitHub(){
     return;
   }
   const btn=document.getElementById('publishBtn');
+  btn.textContent='⏳ กำลังตรวจสอบเวอร์ชัน...'; btn.disabled=true;
+  if(!(await checkAdminIsCurrent())){
+    btn.textContent='🚀 เผยแพร่'; btn.disabled=false;
+    alert('หน้า Admin นี้เป็นเวอร์ชันเก่ากว่าที่ deploy ไว้แล้ว (มีการแก้ไขเข้ามาใหม่)\n\nกรุณากด Ctrl+Shift+R เพื่อรีเฟรชหน้านี้ก่อนกดเผยแพร่ ไม่งั้นอาจมีข้อมูลเก่าที่ค้างอยู่ในเครื่องไปทับเนื้อหาบนเว็บจริงโดยไม่ได้ตั้งใจ');
+    return;
+  }
   btn.textContent='⏳ กำลังเผยแพร่...'; btn.disabled=true;
 
   try {
