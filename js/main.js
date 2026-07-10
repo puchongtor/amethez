@@ -39,6 +39,14 @@ async function initShopeeSection(containerId, tags) {
   const INIT = 5;
   let showing = INIT;
 
+  // ปรับ header ให้เป็นกลาง ไม่ระบุแหล่งที่มา
+  if (section) {
+    const h = section.querySelector('h3');
+    if (h) h.textContent = '✨ สินค้าแนะนำ';
+    const sub = section.querySelector('p');
+    if (sub) sub.remove();
+  }
+
   const row = document.createElement('div');
   row.style.cssText = 'display:flex;gap:.75rem;overflow-x:auto;padding-bottom:.75rem;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch';
   row.id = containerId + '_row';
