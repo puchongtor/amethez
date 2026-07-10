@@ -82,38 +82,34 @@
     /* ── Hero Two-Column ── */
     .article-hero-inner {
       display: grid;
-      grid-template-columns: 1fr 220px;
+      grid-template-columns: 1fr 260px;
       gap: 2rem;
       align-items: center;
+    }
+    /* spotlight gradient ขวามือขับตัวหิน */
+    .article-hero {
+      background:
+        radial-gradient(ellipse at 82% 50%, rgba(192,168,255,.22) 0%, transparent 52%),
+        linear-gradient(135deg, #2d1b69 0%, #1a1228 100%) !important;
     }
     .hero-crystal-wrap {
       display: flex;
       justify-content: center;
       align-items: center;
     }
-    /* placeholder SVG — swap with <img> when cutout.png is ready */
     .hero-crystal-svg {
-      width: 180px;
-      height: 180px;
+      width: 220px;
+      height: 220px;
       display: block;
-      filter: drop-shadow(0 8px 28px rgba(167,139,250,.65));
-      animation: floatCrystal 4s ease-in-out infinite;
-    }
-    /* [FLOW_PLACEHOLDER]
-       เมื่อเจน Flow + ลบพื้นหลังเสร็จ ให้แทน <svg> ด้วย:
-       <img src="/images/stones/amethyst_cutout.png"
-            alt="อเมทิสต์ cutout"
-            class="hero-crystal-svg"
-            width="400" height="400">
-    */
-    @keyframes floatCrystal {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-10px); }
+      /* soft lavender glow — double layer ให้ลึก */
+      filter:
+        drop-shadow(0 0 18px rgba(192,168,255,.70))
+        drop-shadow(0 0 42px rgba(124,58,237,.40));
     }
     @media (max-width: 600px) {
       .article-hero-inner { grid-template-columns: 1fr; }
       .hero-crystal-wrap { order: -1; }
-      .hero-crystal-svg  { width: 110px; height: 110px; }
+      .hero-crystal-svg  { width: 130px; height: 130px; }
     }
 
     /* ── Page-specific symbols ── */
