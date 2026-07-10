@@ -3443,7 +3443,26 @@ async function publishToGitHub(){
       setImgs(imgs); // save updated (paths, not base64)
       try{ renderSlots(); }catch(_){}
       try{ renderDash(); }catch(_){}
-      toast('🚀 เผยแพร่สำเร็จ! รูปขึ้นเว็บใน ~3 นาที','ok');
+
+      // Push products.json
+      loadAff();
+      if(affProducts.length){
+        const prodStr=JSON.stringify({version:'1.0',updated:new Date().toISOString().slice(0,10),products:affProducts},null,2);
+        const prodB64=btoa(unescape(encodeURIComponent(prodStr)));
+        let pSha='';
+        try{
+          const pr=await fetch(`https://api.github.com/repos/${repo}/contents/data/products.json`,
+            {headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}});
+          if(pr.ok){ const pd=await pr.json(); pSha=pd.sha; }
+        }catch{}
+        await fetch(`https://api.github.com/repos/${repo}/contents/data/products.json`,{
+          method:'PUT',
+          headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},
+          body:JSON.stringify({message:'cms: update products.json ('+affProducts.length+' items)',content:prodB64,...(pSha?{sha:pSha}:{})})
+        });
+      }
+
+      toast('🚀 เผยแพร่สำเร็จ! สินค้า '+affProducts.length+' ชิ้น ขึ้นเว็บใน ~3 นาที','ok');
     } else {
       const e=await cr.json();
       toast('❌ เผยแพร่ไม่สำเร็จ: '+(e.message||cr.status),'err');

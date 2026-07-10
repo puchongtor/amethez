@@ -13,14 +13,21 @@ async function loadShopeeProducts(tags = [], limit = 4) {
 }
 
 function renderProductCard(p) {
+  const imgHtml = p.image_url
+    ? `<img src="${p.image_url}" alt="" style="width:100%;height:160px;object-fit:cover;display:block;border-radius:.6rem .6rem 0 0"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+    : '';
   return `
-    <div class="card product-card">
-      <img src="${p.image_url}" alt="${p.name}" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'200\'%3E%3Crect fill=\'%23f5f0ff\' width=\'200\' height=\'200\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dy=\'.3em\' fill=\'%237c3aed\'%3E💎%3C/text%3E%3C/svg%3E'">
-      <div class="product-name">${p.name}</div>
-      <div class="product-price">฿${p.price.toLocaleString()}</div>
-      <a href="${p.url}" target="_blank" rel="nofollow noopener" class="btn btn-primary">
-        🛒 ดูบน Shopee
-      </a>
+    <div class="card product-card" style="border-radius:.75rem;overflow:hidden;display:flex;flex-direction:column">
+      ${imgHtml}
+      <div style="display:${p.image_url?'none':'flex'};align-items:center;justify-content:center;height:120px;background:linear-gradient(135deg,#ede9fe,#f5f0ff);font-size:2.5rem">💎</div>
+      <div style="padding:.85rem;flex:1;display:flex;flex-direction:column;gap:.4rem">
+        <div class="product-name" style="font-size:.82rem;font-weight:600;line-height:1.4;color:#1a1228">${p.name}</div>
+        <div class="product-price" style="font-size:1rem;font-weight:700;color:#7c3aed;margin-top:auto">฿${p.price.toLocaleString()}</div>
+        <a href="${p.url}" target="_blank" rel="nofollow noopener" class="btn btn-primary" style="text-align:center;margin-top:.5rem;font-size:.82rem;padding:.5rem">
+          🛒 ดูบน Shopee
+        </a>
+      </div>
     </div>`;
 }
 
