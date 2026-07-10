@@ -313,3 +313,28 @@ a:hover { color: var(--purple-dark); }
     max-height: 220px;
   }
 }
+
+/* ── SVG Icon System ── */
+.site-icon {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+.site-icon use { color: currentColor; }
+
+/* benefit grid icons */
+.benefit-svg-icon {
+  width: 2.75rem;
+  height: 2.75rem;
+  color: var(--purple);
+  display: block;
+  margin: 0 auto 0.6rem;
+}
+
+/* chakra icons */
+.chakra-svg-icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  display: block;
+  margin: 0 auto 0.5rem;
+}
