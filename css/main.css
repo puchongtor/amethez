@@ -223,7 +223,8 @@ a:hover { color: var(--purple-dark); }
 }
 
 /* ── Article / Stone Page ── */
-.article-hero { background: linear-gradient(135deg, #2d1b69, #1a1228); color: white; padding: 4rem 1.5rem 3rem; }
+.article-hero { background: linear-gradient(135deg, #2d1b69, #1a1228); color: white; padding: 4rem 1.5rem 3rem; text-align: center; }
+.article-hero .article-meta { justify-content: center; }
 .article-hero h1 { color: white; margin-bottom: 0.75rem; }
 .article-meta { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; }
 .meta-tag {
