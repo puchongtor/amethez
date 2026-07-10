@@ -3,9 +3,7 @@
     "favicon": "/data/images/favicon.png",
     "home_feat_main": "/data/images/home_feat_main.jpg",
     "home_hero": "/data/images/home_hero.jpg",
-    "stone_amethyst_hero": "/data/images/stone_amethyst_hero.jpg",
-    "home_feat_side1": "/data/images/home_feat_side1.jpg",
-    "stone_amethyst_healing": "/data/images/stone_amethyst_healing.jpg"
+    "home_feat_side1": "/data/images/home_feat_side1.jpg"
   },
   "text": {}
 }
