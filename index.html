@@ -143,20 +143,37 @@
     .btn-cosmic { display:inline-flex; align-items:center; gap:.5rem; background:transparent; border:1.5px solid rgba(255,255,255,.2); color:rgba(255,255,255,.8); padding:.75rem 1.75rem; border-radius:.625rem; font-family:Sarabun,sans-serif; font-size:.95rem; font-weight:700; text-decoration:none; transition:all .2s; }
     .btn-cosmic:hover { background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.4); }
 
-    /* ── BLOG JOURNAL (alternating) ── */
-    .journal-row { display:grid; grid-template-columns:55fr 45fr; gap:2.5rem; align-items:center; }
-    .journal-row.rev { grid-template-columns:45fr 55fr; }
-    .journal-row.rev .j-img { order:2; }
-    .journal-row.rev .j-txt { order:1; }
-    .j-img { border-radius:1rem; overflow:hidden; aspect-ratio:4/3; background:#f3eef9; display:flex; align-items:center; justify-content:center; font-size:3.5rem; border:1.5px solid var(--border); }
-    .j-img img { width:100%; height:100%; object-fit:cover; }
-    .j-eyebrow { font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; font-weight:700; color:var(--gold); margin-bottom:.5rem; }
-    .j-title { font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--text); line-height:1.4; margin-bottom:.625rem; }
-    .j-desc { font-size:.88rem; color:var(--muted); line-height:1.8; margin-bottom:1rem; }
-    .j-link { font-size:.85rem; font-weight:700; color:var(--purple); text-decoration:none; }
-    .j-link:hover { text-decoration:underline; }
-    .j-divider { border:none; height:1px; background:var(--border); margin:2rem 0; }
-    @media(max-width:700px) { .journal-row, .journal-row.rev { grid-template-columns:1fr; } .journal-row.rev .j-img, .journal-row.rev .j-txt { order:unset; } }
+    /* ── BLOG GRID ── */
+    .blog-tabs { display:flex; gap:0; border-bottom:1px solid var(--border); margin-bottom:1.5rem; }
+    .blog-tab { background:none; border:none; padding:.45rem 1rem; font-family:Sarabun,sans-serif; font-size:.8rem; color:var(--muted); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; transition:color .15s; }
+    .blog-tab.active { color:var(--purple); border-bottom-color:var(--purple); font-weight:600; }
+    .blog-tab:hover:not(.active) { color:var(--text); }
+    .blog-hero-row { display:grid; grid-template-columns:1.7fr 1fr; gap:.875rem; margin-bottom:.875rem; }
+    .blog-mini-row { display:grid; grid-template-columns:repeat(4,1fr); gap:.75rem; }
+    .bc { background:white; border:1px solid var(--border); border-radius:.875rem; overflow:hidden; display:flex; flex-direction:column; text-decoration:none; transition:box-shadow .2s,transform .18s; }
+    .bc:hover { box-shadow:0 4px 18px rgba(124,58,237,.1); transform:translateY(-2px); }
+    .bc-img { background:linear-gradient(135deg,#f3eef9,#e9d5ff); position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+    .bc-img.h-hero { height:190px; font-size:4rem; }
+    .bc-img.h-mini { height:72px; font-size:1.75rem; }
+    .bc-img img { width:100%; height:100%; object-fit:cover; position:absolute; inset:0; }
+    .bc-badge { position:absolute; top:8px; left:8px; font-size:.62rem; font-weight:700; padding:2px 7px; border-radius:20px; letter-spacing:.04em; }
+    .bc-badge.new { background:#fef3c7; color:#92400e; }
+    .bc-badge.feat { background:#ede9fe; color:#5b21b6; }
+    .bc-body { padding:.875rem 1rem; flex:1; display:flex; flex-direction:column; gap:.3rem; }
+    .bc-cat { font-size:.67rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--purple); }
+    .bc-title { font-size:.9rem; font-weight:600; color:var(--text); line-height:1.45; }
+    .bc-title.lg { font-size:1.05rem; }
+    .bc-desc { font-size:.78rem; color:var(--muted); line-height:1.6; margin-top:.15rem; }
+    .bc-meta { font-size:.68rem; color:#9ca3af; margin-top:auto; padding-top:.375rem; }
+    .bc-side { display:flex; flex-direction:column; gap:.75rem; }
+    .bc-side-item { background:white; border:1px solid var(--border); border-radius:.875rem; overflow:hidden; display:flex; text-decoration:none; transition:box-shadow .2s,transform .18s; min-height:80px; }
+    .bc-side-item:hover { box-shadow:0 4px 18px rgba(124,58,237,.1); transform:translateY(-2px); }
+    .bc-side-img { width:76px; flex-shrink:0; background:linear-gradient(135deg,#f3eef9,#e9d5ff); display:flex; align-items:center; justify-content:center; font-size:1.8rem; position:relative; overflow:hidden; }
+    .bc-side-img img { width:100%; height:100%; object-fit:cover; position:absolute; inset:0; }
+    .bc-side-body { padding:.6rem .875rem; flex:1; display:flex; flex-direction:column; justify-content:center; gap:.25rem; }
+    @media(max-width:860px){ .blog-hero-row { grid-template-columns:1fr; } .bc-img.h-hero { height:150px; } }
+    @media(max-width:640px){ .blog-mini-row { grid-template-columns:repeat(2,1fr); } }
+    @media(max-width:400px){ .blog-mini-row { grid-template-columns:1fr; } }
 
     /* ── EXPERTS ── */
     .expert-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
@@ -519,26 +536,22 @@
   </div>
 </section>
 
-<!-- ═══ 8. BLOG JOURNAL ═══ -->
-<section class="section" style="padding-top:3rem;padding-bottom:3rem">
+<!-- ═══ 8. BLOG GRID ═══ -->
+<section class="section" style="padding-top:2.75rem;padding-bottom:3rem">
   <div class="wrap">
-    <div class="row-head">
+    <div class="row-head" style="margin-bottom:.875rem">
       <div>
         <div class="sec-label">จากคลังบทความ</div>
-        <div class="sec-title">บทความล่าสุด</div>
+        <div class="sec-title">บทความแนะนำ</div>
       </div>
-      <a href="/blog/" class="see-all">ดูบทความทั้งหมด 27 ชิ้น →</a>
+      <a href="/blog/" class="see-all">ดูทั้งหมด 27 ชิ้น →</a>
     </div>
-    <div id="blogJournal">
-      <!-- JS inject -->
-      <div class="journal-row">
-        <div class="j-img">📖</div>
-        <div class="j-txt">
-          <div class="j-eyebrow">กำลังโหลด...</div>
-          <div class="j-title">บทความจาก blog.json</div>
-        </div>
-      </div>
+    <div class="blog-tabs" id="blogTabs">
+      <button class="blog-tab active" data-filter="all">ทั้งหมด</button>
+      <button class="blog-tab" data-filter="feat">บทความเด่น</button>
+      <button class="blog-tab" data-filter="new">ล่าสุด</button>
     </div>
+    <div id="blogGrid"></div>
   </div>
 </section>
 <hr class="divider">
@@ -635,39 +648,90 @@ document.getElementById('searchInput').addEventListener('keydown', function(e) {
   if (e.key === 'Enter' && this.value.trim()) doSearch(this.value.trim());
 });
 
-// Blog dynamic loader
-const CAT_COLORS = {
-  'มือใหม่': 'linear-gradient(135deg,#ede9fe,#c4b5fd)',
-  'วิทยาศาสตร์': 'linear-gradient(135deg,#dbeafe,#93c5fd)',
-  'พลังงาน': 'linear-gradient(135deg,#f5f0ff,#a78bfa)',
-  'ฮวงจุ้ย': 'linear-gradient(135deg,#fef9c3,#fde68a)',
-  'การดูแล': 'linear-gradient(135deg,#d1fae5,#6ee7b7)',
-  'เทคนิคขั้นสูง': 'linear-gradient(135deg,#fce7f3,#f9a8d4)',
-  'สารานุกรม': 'linear-gradient(135deg,#ccfbf1,#5eead4)',
-  'เสียงบำบัด': 'linear-gradient(135deg,#e0e7ff,#818cf8)',
+// Blog grid loader
+const CAT_BG = {
+  'มือใหม่':'linear-gradient(135deg,#ede9fe,#c4b5fd)',
+  'วิทยาศาสตร์':'linear-gradient(135deg,#dbeafe,#93c5fd)',
+  'พลังงาน':'linear-gradient(135deg,#f5f0ff,#a78bfa)',
+  'ฮวงจุ้ย':'linear-gradient(135deg,#fef9c3,#fde68a)',
+  'การดูแล':'linear-gradient(135deg,#d1fae5,#6ee7b7)',
+  'เทคนิคขั้นสูง':'linear-gradient(135deg,#fce7f3,#f9a8d4)',
+  'สารานุกรม':'linear-gradient(135deg,#ccfbf1,#5eead4)',
+  'เสียงบำบัด':'linear-gradient(135deg,#e0e7ff,#818cf8)',
 };
+let _blogAll = [];
+
+function blogBadge(a) {
+  if (!a.badge) return '';
+  const cls = a.badge === 'ใหม่' ? 'new' : 'feat';
+  return `<span class="bc-badge ${cls}">${a.badge}</span>`;
+}
+
+function renderBlogGrid(filter) {
+  const grid = document.getElementById('blogGrid');
+  if (!grid || !_blogAll.length) return;
+  let pool = [..._blogAll];
+  if (filter === 'feat') pool = pool.filter(a => a.badge === 'เด่น');
+  else if (filter === 'new') pool = pool.slice().reverse().slice(0, 10);
+
+  const hero = pool[0];
+  const sides = pool.slice(1, 3);
+  const minis = pool.slice(3, 7);
+  const bg = a => CAT_BG[a.category] || 'linear-gradient(135deg,#f3eef9,#e9d5ff)';
+
+  const heroHtml = hero ? `
+    <a href="${hero.url}" class="bc">
+      <div class="bc-img h-hero" style="background:${bg(hero)}">${blogBadge(hero)}<span>${hero.emoji||'📖'}</span></div>
+      <div class="bc-body">
+        <div class="bc-cat">${hero.category}</div>
+        <div class="bc-title lg">${hero.title}</div>
+        <div class="bc-desc">${hero.desc}</div>
+        <div class="bc-meta">${hero.author} · ${hero.date}</div>
+      </div>
+    </a>` : '';
+
+  const sideHtml = sides.map(a => `
+    <a href="${a.url}" class="bc-side-item">
+      <div class="bc-side-img" style="background:${bg(a)}">${blogBadge(a)}<span>${a.emoji||'📖'}</span></div>
+      <div class="bc-side-body">
+        <div class="bc-cat">${a.category}</div>
+        <div class="bc-title">${a.title}</div>
+        <div class="bc-meta">${a.author}</div>
+      </div>
+    </a>`).join('');
+
+  const miniHtml = minis.map(a => `
+    <a href="${a.url}" class="bc">
+      <div class="bc-img h-mini" style="background:${bg(a)}">${blogBadge(a)}<span>${a.emoji||'📖'}</span></div>
+      <div class="bc-body">
+        <div class="bc-cat">${a.category}</div>
+        <div class="bc-title">${a.title}</div>
+        <div class="bc-meta">${a.author}</div>
+      </div>
+    </a>`).join('');
+
+  grid.innerHTML = `
+    <div class="blog-hero-row">
+      ${heroHtml}
+      <div class="bc-side">${sideHtml}</div>
+    </div>
+    ${miniHtml ? `<div class="blog-mini-row">${miniHtml}</div>` : ''}`;
+}
+
 async function loadBlog() {
   try {
     const res = await fetch('/data/blog.json');
     if (!res.ok) return;
     const { articles } = await res.json();
-    const container = document.getElementById('blogJournal');
-    if (!container || !articles.length) return;
-    const featured = articles.slice(0, 4);
-    container.innerHTML = featured.map((a, i) => `
-      <div class="journal-row${i % 2 === 1 ? ' rev' : ''}">
-        <div class="j-img" style="background:${CAT_COLORS[a.category] || 'linear-gradient(135deg,#f3eef9,#e9d5ff)'}">
-          <span>${a.emoji || '📖'}</span>
-        </div>
-        <div class="j-txt">
-          <div class="j-eyebrow">${a.category}</div>
-          <div class="j-title">${a.title}</div>
-          <div class="j-desc">${a.desc}</div>
-          <a href="${a.url}" class="j-link">อ่านบทความ →</a>
-        </div>
-      </div>
-      ${i < featured.length - 1 ? '<hr class="j-divider">' : ''}
-    `).join('');
+    _blogAll = articles;
+    renderBlogGrid('all');
+    document.querySelectorAll('.blog-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.blog-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderBlogGrid(btn.dataset.filter);
+      });
+    });
   } catch(e) { /* silent fail */ }
 }
 loadBlog();
