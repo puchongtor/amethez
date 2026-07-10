@@ -11,19 +11,19 @@ async function loadShopeeProducts(tags = [], limit = 40) {
 }
 
 function renderProductCard(p) {
-  const imgHtml = p.image_url
-    ? `<img src="${p.image_url}" alt="" style="width:100%;height:150px;object-fit:cover;display:block"
-        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
-    : '';
-  return `<div style="flex:0 0 180px;width:180px;border-radius:.75rem;overflow:hidden;background:#fff;border:1px solid #ede9fe;display:flex;flex-direction:column;box-shadow:0 2px 8px rgba(124,58,237,.08)">
-    ${imgHtml}
-    <div style="display:${p.image_url?'none':'flex'};align-items:center;justify-content:center;height:120px;background:linear-gradient(135deg,#ede9fe,#f5f0ff);font-size:2rem">💎</div>
-    <div style="padding:.7rem;flex:1;display:flex;flex-direction:column;gap:.35rem">
-      <div style="font-size:.75rem;font-weight:600;line-height:1.35;color:#1a1228;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden">${p.name}</div>
-      <div style="font-size:.95rem;font-weight:700;color:#7c3aed;margin-top:auto">฿${p.price.toLocaleString()}</div>
+  const fallback = `this.style.display='none';this.nextElementSibling.style.display='flex'`;
+  const imgBlock = p.image_url
+    ? `<img src="${p.image_url}" alt="" style="width:100%;height:150px;object-fit:cover;display:block" onerror="${fallback}">
+       <div style="display:none;align-items:center;justify-content:center;height:150px;background:linear-gradient(135deg,#ede9fe,#f5f0ff);font-size:2rem">💎</div>`
+    : `<div style="display:flex;align-items:center;justify-content:center;height:150px;background:linear-gradient(135deg,#ede9fe,#f5f0ff);font-size:2rem">💎</div>`;
+  return `<div style="flex:0 0 175px;width:175px;border-radius:.75rem;overflow:hidden;background:#fff;border:1px solid #ede9fe;display:flex;flex-direction:column;box-shadow:0 2px 8px rgba(124,58,237,.08)">
+    <a href="${p.url}" target="_blank" rel="nofollow noopener" style="display:block;flex-shrink:0">${imgBlock}</a>
+    <div style="padding:.6rem .7rem;display:flex;flex-direction:column;gap:.25rem">
+      <div style="font-size:.75rem;font-weight:600;line-height:1.35;color:#1a1228;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${p.name}</div>
+      <div style="font-size:.95rem;font-weight:700;color:#7c3aed">฿${p.price.toLocaleString()}</div>
       <a href="${p.url}" target="_blank" rel="nofollow noopener"
-        style="display:block;text-align:center;background:#ee4d2d;color:#fff;border-radius:.4rem;padding:.4rem .5rem;font-size:.75rem;font-weight:700;text-decoration:none;margin-top:.3rem">
-        🛒 ดูบน Shopee
+        style="font-size:.72rem;color:#ee4d2d;text-decoration:none;font-weight:600;margin-top:.1rem">
+        &raquo; สั่งซื้อผ่านทาง Shopee
       </a>
     </div>
   </div>`;
