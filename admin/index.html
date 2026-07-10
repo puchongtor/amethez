@@ -2189,7 +2189,8 @@ function renderDash(){
   const set=Object.keys(imgs).length;
   const total=SLOTS.length;
   const avail=geodes.filter(g=>g.status==='available').length;
-  document.getElementById('dashStats').innerHTML=`
+  const dashStats=document.getElementById('dashStats');
+  if(dashStats) dashStats.innerHTML=`
     <div class="stat-card"><div class="stat-num c-green">${set}</div><div class="stat-label">รูปที่ใส่แล้ว</div></div>
     <div class="stat-card"><div class="stat-num c-gold">${total-set}</div><div class="stat-label">รูปที่ยังขาด</div></div>
     <div class="stat-card"><div class="stat-num c-purple">${total}</div><div class="stat-label">Slots ทั้งหมด</div></div>
@@ -2197,7 +2198,8 @@ function renderDash(){
     <div class="stat-card"><div class="stat-num c-green">${avail}</div><div class="stat-label">พร้อมขาย</div></div>
     <div class="stat-card"><div class="stat-num c-gray">${ARTICLES.length}</div><div class="stat-label">หน้าทั้งหมด</div></div>`;
   const missing=SLOTS.filter(s=>!imgs[s.id]);
-  document.getElementById('dashImgStatus').innerHTML=missing.length===0
+  const dashImgStatus=document.getElementById('dashImgStatus');
+  if(dashImgStatus) dashImgStatus.innerHTML=missing.length===0
     ?`<div style="color:var(--green);font-weight:700;font-size:.95rem">✅ ครบทุกรูปแล้ว!</div>`
     :`<div style="color:var(--yellow);margin-bottom:.75rem;font-size:.875rem">⚠️ ยังขาดรูป ${missing.length} จุด — คลิกเพื่อเพิ่ม:</div>
       <div style="display:flex;flex-wrap:wrap;gap:.4rem">${missing.map(s=>`<button onclick="showTab('images',document.querySelectorAll('.nav-item')[1]);setTimeout(()=>openSlot('${s.id}'),300)" class="btn btn-outline btn-sm" style="font-size:.75rem">${x(s.label)}</button>`).join('')}</div>`;
