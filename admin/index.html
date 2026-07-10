@@ -705,6 +705,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
               <div class="card-title" style="margin:0">📦 รายการสินค้า Aff (<span id="affCount">0</span>)</div>
               <div style="display:flex;gap:.5rem;flex-wrap:wrap">
                 <input class="form-input" style="width:180px" id="affSearch" placeholder="🔍 ค้นหา..." oninput="renderAffTable()">
+                <button class="btn btn-outline btn-sm" onclick="retagUntagged()" id="btnRetag">🔄 Re-tag ที่ยังไม่มี tag</button>
                 <button class="btn btn-outline btn-sm" onclick="exportAffJson()">⬇️ Export JSON</button>
               </div>
             </div>
@@ -1988,12 +1989,12 @@ function initStatsTab(){
 // ── SHOPEE AFF ────────────────────────────────
 const AFF_KEY = 'amethez_aff_products';
 const AFF_TAG_GROUPS = [
-  { label:'💎 ชื่อหิน', tags:['อเมทิสต์','โมลดาไวท์','สะเก็ดดาวไทย','ซิทริน','ควอตซ์ใส','โรสควอตซ์','ทัวร์มาลีนดำ','ลาพิสลาซูลี','ลาบราโดไรต์','มูนสโตน','การ์เนต','ออบซิเดียน','หยก','อะความารีน','ลาริมาร์','เซเลไนต์','ไพไรต์','ซันสโตน','เพริดอต','โอปอล'] },
-  { label:'🎨 สี', tags:['ม่วง','ชมพู','เขียว','ดำ','ขาว','น้ำเงิน','แดง','ส้ม','เหลือง','ทอง','รุ้ง','เทา'] },
+  { label:'💎 ชื่อหิน', tags:['อเมทิสต์','โมลดาไวท์','สะเก็ดดาวไทย','ซิทริน','ควอตซ์ใส','โรสควอตซ์','ทัวร์มาลีนดำ','ลาพิสลาซูลี','ลาบราโดไรต์','มูนสโตน','การ์เนต','ออบซิเดียน','หยก','เจไดต์','อาเกต','อะความารีน','ลาริมาร์','เซเลไนต์','ไพไรต์','ซันสโตน','เพริดอต','โอปอล','ไทเกอร์อาย','แมลาไคต์','ก้อนโป่งขาม','แก้วขนเหล็ก'] },
+  { label:'🎨 สี', tags:['ม่วง','ชมพู','เขียว','ดำ','ขาว','น้ำเงิน','แดง','ส้ม','เหลือง','ทอง','รุ้ง','เทา','น้ำตาล'] },
   { label:'🔮 จักระ', tags:['มงกุฎ','Third Eye','คอ','หัวใจ','สุริยะ','ก้นกบ','ราก'] },
   { label:'⭐ ราศี', tags:['เมษ','พฤษภ','เมถุน','กรกฎ','สิงห์','กันย์','ตุลย์','พิจิก','ธนู','มังกร','กุมภ์','มีน'] },
-  { label:'🎯 วัตถุประสงค์', tags:['ความสำเร็จ','การเงิน','ความรัก','สุขภาพ','ป้องกัน','สมาธิ','ความสงบ','พลังงาน','ดึงดูด','ฮวงจุ้ย','นอนหลับ'] },
-  { label:'📦 รูปแบบสินค้า', tags:['สร้อยข้อมือ','จี้','แหวน','ต่างหู','หินดิบ','โพรง','ทรงกลม','ทรงแหลม','ทรงไข่','แผ่น','ของตกแต่ง','Crystal Grid','Singing Bowl','ใบเสจ','เกลือหิมาลัย'] },
+  { label:'🎯 วัตถุประสงค์', tags:['ความสำเร็จ','การเงิน','ความรัก','สุขภาพ','ป้องกัน','สมาธิ','ความสงบ','พลังงาน','ดึงดูด','ฮวงจุ้ย','นอนหลับ','ดูดซับพลังงานลบ','เสริมดวง','มงคล'] },
+  { label:'📦 รูปแบบสินค้า', tags:['สร้อยข้อมือ','จี้','แหวน','ต่างหู','พวงกุญแจ','กัวซา','ลูกปัด','หินดิบ','โพรง','ทรงกลม','ทรงแหลม','ทรงไข่','แผ่น','ของตกแต่ง','Crystal Grid','Singing Bowl','ใบเสจ','เกลือหิมาลัย'] },
 ];
 
 let affProducts = [];
@@ -2303,6 +2304,17 @@ function renderAffTable(){
         <button class="btn btn-danger btn-sm" onclick="delAff('${p.id}')">🗑</button>
       </div></td></tr>`;
   }).join('') : `<tr><td colspan="6" style="text-align:center;padding:2rem;color:#9ca3af">ยังไม่มีสินค้า — เพิ่มด้านบน</td></tr>`;
+}
+
+async function retagUntagged(){
+  const key = localStorage.getItem(GEMINI_KEY_STORE);
+  if(!key){ toast('กรุณาใส่ Groq API Key ในหน้าตั้งค่าก่อน','err'); return; }
+  const untagged = affProducts.filter(p => !p.tags || p.tags.length === 0);
+  if(!untagged.length){ toast('ทุกรายการมี tag แล้ว ✓','ok'); return; }
+  const btn = document.getElementById('btnRetag');
+  if(btn){ btn.textContent = `⏳ กำลัง tag ${untagged.length} รายการ...`; btn.disabled = true; }
+  await batchAutoTag(untagged.map(p=>p.name), key);
+  if(btn){ btn.textContent = '🔄 Re-tag ที่ยังไม่มี tag'; btn.disabled = false; }
 }
 
 function exportAffJson(){
