@@ -658,7 +658,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
               <div class="form-group full">
                 <label class="fl">ชื่อสินค้า * <span style="color:#9ca3af;font-weight:400">(ใส่แล้วกด AI แนะนำ Tag)</span></label>
                 <div style="display:flex;gap:.5rem">
-                  <input class="form-input" id="affName" placeholder="เช่น สร้อยข้อมืออเมทิสต์ 8mm" style="flex:1" oninput="clearAffTags()">
+                  <input class="form-input" id="affName" placeholder="เช่น สร้อยข้อมืออเมทิสต์ 8mm" style="flex:1" oninput="document.getElementById('affTagStatus').textContent=''">
                   <button class="btn btn-gold" onclick="aiSuggestTags()" id="btnAiTag" style="white-space:nowrap;flex-shrink:0">✨ AI แนะนำ Tag</button>
                 </div>
               </div>
@@ -686,11 +686,12 @@ textarea.form-input{resize:vertical;min-height:80px;}
 
             <!-- TAG SECTION -->
             <div id="affTagSection" style="margin-top:1.25rem">
-              <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem;flex-wrap:wrap">
-                <label class="fl" style="margin:0">🏷 Tags</label>
+              <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.5rem;flex-wrap:wrap">
+                <label class="fl" style="margin:0">🏷 Tags <span style="font-weight:400;color:#9ca3af">(4–6 tag คั่นด้วยคอมมา)</span></label>
                 <span id="affTagStatus" style="font-size:.78rem;color:#9b89bb"></span>
               </div>
-              <div id="affTagGroups" style="display:flex;flex-direction:column;gap:1rem"></div>
+              <input class="form-input" id="affTagInput" placeholder="เช่น หยก, เขียว, กัวซา, สุขภาพ, ดูดซับพลังงานลบ">
+              <div id="affTagChips" style="display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.5rem"></div>
             </div>
 
             <div style="display:flex;gap:.75rem;margin-top:1.5rem;flex-wrap:wrap">
@@ -2002,36 +2003,28 @@ function loadAff(){ try{ affProducts = JSON.parse(localStorage.getItem(AFF_KEY)|
 function saveAffStore(){ localStorage.setItem(AFF_KEY, JSON.stringify(affProducts)); }
 function genAffId(){ return 'A'+(affProducts.length+1).toString().padStart(3,'0')+'_'+Date.now().toString(36).toUpperCase(); }
 
-function initAffTags(){
-  const el = document.getElementById('affTagGroups');
-  if(!el || el.children.length > 0) return;
-  el.innerHTML = AFF_TAG_GROUPS.map((g,gi) => `
-    <div>
-      <div style="font-size:.78rem;font-weight:700;color:#7c3aed;margin-bottom:.4rem">${g.label}</div>
-      <div style="display:flex;flex-wrap:wrap;gap:.35rem">
-        ${g.tags.map(t => `<label class="tag-chip" id="chip_${gi}_${t.replace(/\s/g,'_')}">
-          <input type="checkbox" value="${t}" style="display:none" onchange="this.parentElement.classList.toggle('on',this.checked)">
-          ${t}
-        </label>`).join('')}
-      </div>
-    </div>`).join('');
-}
+function initAffTags(){ /* ไม่ใช้แล้ว — เปลี่ยนเป็น free-text input */ }
 
 function getCheckedTags(){
-  return [...document.querySelectorAll('#affTagGroups input[type=checkbox]:checked')].map(c=>c.value);
+  const val = (document.getElementById('affTagInput')||{}).value||'';
+  return val.split(',').map(t=>t.trim()).filter(Boolean);
 }
 function setCheckedTags(tags){
-  document.querySelectorAll('#affTagGroups input[type=checkbox]').forEach(cb=>{
-    const on = tags.includes(cb.value);
-    cb.checked = on;
-    cb.parentElement.classList.toggle('on', on);
-  });
+  const el = document.getElementById('affTagInput');
+  if(el) el.value = tags.join(', ');
+  renderTagChips(tags);
 }
 function clearAffTags(){
-  document.querySelectorAll('#affTagGroups input[type=checkbox]').forEach(cb=>{
-    cb.checked = false; cb.parentElement.classList.remove('on');
-  });
-  document.getElementById('affTagStatus').textContent = '';
+  const el = document.getElementById('affTagInput');
+  if(el) el.value = '';
+  renderTagChips([]);
+  const st = document.getElementById('affTagStatus');
+  if(st) st.textContent = '';
+}
+function renderTagChips(tags){
+  const el = document.getElementById('affTagChips');
+  if(!el) return;
+  el.innerHTML = tags.map(t=>`<span style="background:#ede9fe;color:#5b21b6;padding:.2rem .6rem;border-radius:2rem;font-size:.78rem">${t}</span>`).join('');
 }
 
 async function aiSuggestTags(){
@@ -2044,33 +2037,31 @@ async function aiSuggestTags(){
   btn.textContent = '⏳ กำลังวิเคราะห์...'; btn.disabled = true;
   document.getElementById('affTagStatus').textContent = '';
 
-  const allTags = AFF_TAG_GROUPS.flatMap(g=>g.tags).join(', ');
   const cats = 'เครื่องประดับ,หินดิบ,หินตกแต่ง,อุปกรณ์ดูแลหิน,DIY,ของมงคล';
-  const prompt = `คุณคือผู้เชี่ยวชาญหินคริสตัล วิเคราะห์ชื่อสินค้า: "${name}"
-1) เลือก tag จาก: ${allTags}
-2) เลือกหมวด 1 อย่างจาก: ${cats}
-ตอบ JSON object: {"tags":["อเมทิสต์","ม่วง","สร้อยข้อมือ"],"category":"เครื่องประดับ"} ไม่ต้องอธิบายเพิ่ม`;
+  const prompt = `คุณคือผู้เชี่ยวชาญหินคริสตัลและเครื่องประดับ วิเคราะห์ชื่อสินค้า: "${name}"
+1) สร้าง tag ภาษาไทย 4-6 ตัว ที่บอกถึง: ชื่อหิน/วัสดุ, สี, รูปแบบสินค้า, วัตถุประสงค์ — สร้างเองได้อิสระ ไม่ต้องจำกัดรายการ
+2) เลือกหมวดจาก: ${cats}
+ตอบ JSON: {"tags":["หยก","เขียว","กัวซา","สุขภาพ","ดูดซับพลังงานลบ"],"category":"เครื่องประดับ"} ไม่ต้องอธิบายเพิ่ม`;
 
   try{
     const r = await fetch('https://api.groq.com/openai/v1/chat/completions',{
       method:'POST',
       headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
-      body: JSON.stringify({model:'llama-3.1-8b-instant',messages:[{role:'user',content:prompt}],max_tokens:200,temperature:0.2})
+      body: JSON.stringify({model:'llama-3.1-8b-instant',messages:[{role:'user',content:prompt}],max_tokens:200,temperature:0.3})
     });
     const d = await r.json();
     if(!r.ok) throw new Error(d?.error?.message||r.statusText);
     const raw = d?.choices?.[0]?.message?.content||'{}';
     const match = raw.match(/\{[\s\S]*?\}/);
     const obj = match ? JSON.parse(match[0]) : {};
-    const suggested = Array.isArray(obj.tags) ? obj.tags : [];
+    const suggested = Array.isArray(obj.tags) ? obj.tags.slice(0,6) : [];
     setCheckedTags(suggested);
     if(obj.category){
       const catEl = document.getElementById('affCat');
       const opt = [...catEl.options].find(o=>o.value===obj.category);
       if(opt) catEl.value = obj.category;
     }
-    const count = getCheckedTags().length;
-    document.getElementById('affTagStatus').textContent = `✅ AI แนะนำ ${count} tag · หมวด: ${obj.category||'-'} — ปรับได้ตามต้องการ`;
+    document.getElementById('affTagStatus').textContent = `✅ ${suggested.length} tag · หมวด: ${obj.category||'-'} — แก้ไขได้ในช่องด้านบน`;
     document.getElementById('affTagStatus').style.color = '#059669';
   }catch(e){
     document.getElementById('affTagStatus').textContent = '❌ '+e.message;
@@ -2194,14 +2185,13 @@ function confirmBulkImport(){
 }
 
 async function batchAutoTag(productNames, groqKey){
-  const allTags = AFF_TAG_GROUPS.flatMap(g=>g.tags).join(', ');
   let done = 0;
   for(const name of productNames){
     const p = affProducts.find(a=>a.name===name);
     if(!p || p.tags.length) { done++; continue; }
     try{
       const cats = 'เครื่องประดับ,หินดิบ,หินตกแต่ง,อุปกรณ์ดูแลหิน,DIY,ของมงคล';
-      const prompt = `คุณคือผู้เชี่ยวชาญหินคริสตัล วิเคราะห์ชื่อสินค้า: "${name}"\n1) เลือก tag จาก: ${allTags}\n2) เลือกหมวด 1 อย่างจาก: ${cats}\nตอบ JSON object: {"tags":["..."],"category":"..."} ไม่ต้องอธิบายเพิ่ม`;
+      const prompt = `คุณคือผู้เชี่ยวชาญหินคริสตัลและเครื่องประดับ วิเคราะห์ชื่อสินค้า: "${name}"\n1) สร้าง tag ภาษาไทย 4-6 ตัว บอกถึง ชื่อหิน/วัสดุ, สี, รูปแบบ, วัตถุประสงค์ — อิสระ ไม่ต้องจำกัดรายการ\n2) เลือกหมวดจาก: ${cats}\nตอบ JSON: {"tags":["หยก","เขียว","กัวซา","สุขภาพ"],"category":"เครื่องประดับ"} ไม่ต้องอธิบายเพิ่ม`;
       const r = await fetch('https://api.groq.com/openai/v1/chat/completions',{
         method:'POST',
         headers:{'Content-Type':'application/json','Authorization':'Bearer '+groqKey},
@@ -2276,7 +2266,7 @@ function editAff(id){
   document.getElementById('affFormTitle').textContent = '✏️ แก้ไข: '+p.name;
   previewAffImg(p.image_url);
   setCheckedTags(p.tags||[]);
-  document.getElementById('affTagStatus').textContent = `${(p.tags||[]).length} tag`;
+  document.getElementById('affTagStatus').textContent = `${(p.tags||[]).length} tag — แก้ไขได้ในช่องด้านบน`;
   document.getElementById('tab-shopee').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
