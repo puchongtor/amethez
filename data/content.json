@@ -2,7 +2,8 @@
   "images": {
     "logo": "/data/images/logo.png",
     "favicon": "/data/images/favicon.png",
-    "home_feat_main": "/data/images/home_feat_main.jpg"
+    "home_feat_main": "/data/images/home_feat_main.jpg",
+    "home_hero": "/data/images/home_hero.jpg"
   },
   "text": {}
 }
