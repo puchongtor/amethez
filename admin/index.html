@@ -1332,7 +1332,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-11.1';
+const ADMIN_VERSION='2026-07-11.2';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -3744,15 +3744,20 @@ function setTextVal(pageKey,fieldId,val){
 // ── PAGE GRID ──────────────────────────────────
 let pgActiveGroup='all', currentPage=null;
 function renderPageGrid(){
+  // Stone pages (group 's') are edited via "สารานุกรมหิน" (which deep-links back
+  // into openPageEditor for them) — keep them out of this grid so they don't
+  // show up twice; PAGES itself still has them so that link keeps working.
+  const NON_STONE_PAGES=PAGES.filter(p=>p.group!=='s');
+  if(pgActiveGroup==='s') pgActiveGroup='all';
   const bar=document.getElementById('pageFilterBar');
   bar.innerHTML='<span style="font-size:.82rem;color:#6b7280">กรอง:</span>';
-  [{k:'all',v:'ทั้งหมด'},...Object.entries(PAGE_GROUPS).map(([k,v])=>({k,v}))].forEach(({k,v})=>{
+  [{k:'all',v:'ทั้งหมด'},...Object.entries(PAGE_GROUPS).filter(([k])=>k!=='s').map(([k,v])=>({k,v}))].forEach(({k,v})=>{
     const c=document.createElement('button');
     c.className='filter-chip'+(pgActiveGroup===k?' active':'');
     c.textContent=v; c.onclick=()=>{ pgActiveGroup=k; renderPageGrid(); };
     bar.appendChild(c);
   });
-  const list=pgActiveGroup==='all'?PAGES:PAGES.filter(p=>p.group===pgActiveGroup);
+  const list=pgActiveGroup==='all'?NON_STONE_PAGES:NON_STONE_PAGES.filter(p=>p.group===pgActiveGroup);
   const imgs=getImgs(); const texts=getTexts();
   document.getElementById('pageGrid').innerHTML=list.map(p=>{
     const ic=p.imgs?p.imgs.filter(i=>imgs[i]).length:0;
