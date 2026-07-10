@@ -79,38 +79,10 @@
   </script>
 
   <style>
-    /* ── Hero Two-Column ── */
-    .article-hero-inner {
-      display: grid;
-      grid-template-columns: 1fr 260px;
-      gap: 2rem;
-      align-items: center;
-    }
-    /* spotlight gradient ขวามือขับตัวหิน */
-    .article-hero {
-      background:
-        radial-gradient(ellipse at 82% 50%, rgba(192,168,255,.22) 0%, transparent 52%),
-        linear-gradient(135deg, #2d1b69 0%, #1a1228 100%) !important;
-    }
-    .hero-crystal-wrap {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .hero-crystal-svg {
-      width: 220px;
-      height: 220px;
-      display: block;
-      /* soft lavender glow — double layer ให้ลึก */
-      filter:
-        drop-shadow(0 0 18px rgba(192,168,255,.70))
-        drop-shadow(0 0 42px rgba(124,58,237,.40));
-    }
-    @media (max-width: 600px) {
-      .article-hero-inner { grid-template-columns: 1fr; }
-      .hero-crystal-wrap { order: -1; }
-      .hero-crystal-svg  { width: 130px; height: 130px; }
-    }
+    /* ── Hero Center ── */
+    .article-hero-inner { text-align: center; }
+    .article-hero-inner .hero-text { max-width: 700px; margin: 0 auto; }
+    .article-meta { justify-content: center; }
 
     /* ── Page-specific symbols ── */
     .sym {
@@ -247,13 +219,6 @@
         </div>
       </div>
 
-      <!-- RIGHT: amethyst cutout -->
-      <div class="hero-crystal-wrap">
-        <img src="/images/stones/amethyst_hero.png"
-             alt="อเมทิสต์ผลึกสีม่วง cutout"
-             class="hero-crystal-svg"
-             width="400" height="400">
-      </div>
 
     </div>
   </div>
