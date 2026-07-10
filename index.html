@@ -42,6 +42,17 @@
     .divider { width:100%; height:1px; background:linear-gradient(90deg,transparent,var(--border),transparent); margin:0; border:none; }
     .see-all { font-size:.82rem; font-weight:700; color:var(--purple); text-decoration:none; white-space:nowrap; }
     .see-all:hover { text-decoration:underline; }
+    /* DR. COSMOS MINI CARDS */
+    .cosmos-mini-card { display:block; background:white; border:1.5px solid var(--border); border-radius:1rem; padding:1.25rem 1rem; text-decoration:none; position:relative; transition:box-shadow .2s,transform .2s; }
+    .cosmos-mini-card:hover { box-shadow:0 4px 16px rgba(124,58,237,.12); transform:translateY(-2px); }
+    .cmc-icon { font-size:1.75rem; margin-bottom:.5rem; }
+    .cmc-name { font-family:'Playfair Display',serif; font-size:.95rem; font-weight:700; color:var(--text); margin-bottom:.2rem; }
+    .cmc-sub { font-size:.72rem; color:var(--muted); }
+    .cmc-rare { border-color:#fde68a; background:#fffbeb; }
+    .cmc-rare .cmc-name { color:#92400e; }
+    .cmc-badge { position:absolute; top:.6rem; right:.75rem; background:#f59e0b; color:white; font-size:.6rem; font-weight:700; padding:.15rem .5rem; border-radius:2rem; letter-spacing:.05em; }
+    .cmc-more { border-style:dashed; background:var(--bg); }
+    .cmc-more .cmc-icon { color:var(--purple); font-size:1.5rem; font-weight:700; }
     .row-head { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:1.75rem; gap:1rem; flex-wrap:wrap; }
 
     /* ── HERO ── */
@@ -460,7 +471,54 @@
 </section>
 <hr class="divider" style="background:rgba(255,255,255,.06)">
 
-<!-- ═══ 7. BLOG JOURNAL ═══ -->
+<!-- ═══ 7. DR. COSMOS ═══ -->
+<section class="section" style="padding-top:3rem;padding-bottom:3.5rem;background:#faf8f4">
+  <div class="wrap">
+    <div class="row-head" style="margin-bottom:1.5rem">
+      <div>
+        <div class="sec-label">หมวดพิเศษ</div>
+        <div class="sec-title">☄️ Dr. Cosmos — หินจักรวาล</div>
+        <div class="sec-sub" style="margin-top:.4rem">สสารนอกโลก สะเก็ดดาว อุกกาบาต และความลึกลับของจักรวาล</div>
+      </div>
+      <a href="/cosmos/" class="see-all">ดูทั้งหมด →</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem">
+      <a href="/cosmos/thai-tektite.html" class="cosmos-mini-card">
+        <div class="cmc-icon">🌑</div>
+        <div class="cmc-name">สะเก็ดดาวไทย</div>
+        <div class="cmc-sub">Indochinite · 0.78 ล้านปี</div>
+      </a>
+      <a href="/cosmos/moldavite.html" class="cosmos-mini-card">
+        <div class="cmc-icon">🌿</div>
+        <div class="cmc-name">โมลดาไวท์</div>
+        <div class="cmc-sub">เช็กเกียว · 14.7 ล้านปี</div>
+      </a>
+      <a href="/cosmos/muong-nong-tektite.html" class="cosmos-mini-card cmc-rare">
+        <div class="cmc-badge">หายาก</div>
+        <div class="cmc-icon">🟫</div>
+        <div class="cmc-name">Muong Nong</div>
+        <div class="cmc-sub">Layered Tektite · ลุ่มน้ำโขง</div>
+      </a>
+      <a href="/cosmos/libyan-desert-glass.html" class="cosmos-mini-card">
+        <div class="cmc-icon">✨</div>
+        <div class="cmc-name">แก้วทะเลทรายลิเบียน</div>
+        <div class="cmc-sub">สคาราบตูตันคาเมน</div>
+      </a>
+      <a href="/cosmos/australite.html" class="cosmos-mini-card">
+        <div class="cmc-icon">🔵</div>
+        <div class="cmc-name">ออสตราไลท์</div>
+        <div class="cmc-sub">Button Form · ออสเตรเลีย</div>
+      </a>
+      <a href="/cosmos/" class="cosmos-mini-card cmc-more">
+        <div class="cmc-icon">→</div>
+        <div class="cmc-name">ดูทั้งหมด</div>
+        <div class="cmc-sub">10+ หน้าสะเก็ดดาวและอุกกาบาต</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 8. BLOG JOURNAL ═══ -->
 <section class="section" style="padding-top:3rem;padding-bottom:3rem">
   <div class="wrap">
     <div class="row-head">
