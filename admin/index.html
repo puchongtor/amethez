@@ -810,6 +810,8 @@ textarea.form-input{resize:vertical;min-height:80px;}
 
         <!-- BLOG -->
         <div id="tab-blog">
+          <!-- LIST VIEW -->
+          <div id="blogListView">
           <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:.75rem;margin-bottom:1.25rem">
             <div>
               <div class="section-title">📝 Blog & Schedule</div>
@@ -827,8 +829,123 @@ textarea.form-input{resize:vertical;min-height:80px;}
           </div>
 
           <div id="blogList"></div>
+          </div><!-- /blogListView -->
 
-          <!-- blog post modal -->
+          <!-- FULL PAGE EDITOR VIEW -->
+          <div id="blogEditorView" style="display:none">
+            <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap">
+              <button class="btn btn-outline btn-sm" onclick="closeBlogEditor()">← กลับ</button>
+              <div style="flex:1">
+                <div id="beTitle" style="font-size:1.1rem;font-weight:700"></div>
+                <div id="bePath" style="font-size:.8rem;color:#9ca3af"></div>
+              </div>
+              <button class="btn btn-danger btn-sm" id="beDelBtn" onclick="deleteBlogFromEditor()">🗑 ลบ</button>
+              <button class="btn btn-primary" onclick="saveBlogEditor()">💾 บันทึก</button>
+            </div>
+
+            <input type="hidden" id="beEditId">
+
+            <!-- Row 1: Meta (left) + Thumbnail (right) -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem">
+              <div class="card" style="margin-bottom:0">
+                <div class="card-title">📝 ข้อความย่อ (Meta)</div>
+                <div class="form-grid" style="gap:.75rem">
+                  <div class="form-group full"><label class="fl">หัวข้อบทความ *</label>
+                    <input class="form-input" id="beTitle2" placeholder="เช่น 5 หินสำหรับดึงดูดความรัก"></div>
+                  <div class="form-group"><label class="fl">ผู้เขียน / Avatar</label>
+                    <select class="form-input" id="beAuthor">
+                      <option value="atlas">🌐 Crystal Atlas</option>
+                      <option value="wuchong">🧙 Master Wuchong</option>
+                      <option value="metha">🌙 อาจารย์เมธา</option>
+                      <option value="gemma">💃 Gemma</option>
+                    </select></div>
+                  <div class="form-group"><label class="fl">หมวดหมู่</label>
+                    <select class="form-input" id="beCategory">
+                      <option value="stone">💎 บทความหิน</option>
+                      <option value="energy">⚡ พลังงาน</option>
+                      <option value="horoscope">🌟 ดวง/ราศี</option>
+                      <option value="guide">📖 คู่มือ</option>
+                      <option value="news">📢 ข่าวสาร</option>
+                    </select></div>
+                  <div class="form-group"><label class="fl">สถานะ</label>
+                    <select class="form-input" id="beStatus" onchange="toggleBESchedule()">
+                      <option value="published">🟢 เผยแพร่เลย</option>
+                      <option value="scheduled">⏰ ตั้งเวลา</option>
+                      <option value="draft">⚫ Draft</option>
+                    </select></div>
+                  <div class="form-group full" id="beScheduleGroup" style="display:none"><label class="fl">วัน/เวลาที่จะเผยแพร่</label>
+                    <input class="form-input" id="bePublishDate" type="datetime-local"></div>
+                  <div class="form-group full"><label class="fl">URL Slug (ชื่อไฟล์)</label>
+                    <input class="form-input" id="beSlug" placeholder="5-stones-for-love"></div>
+                  <div class="form-group full"><label class="fl">สรุปสั้น (Excerpt)</label>
+                    <textarea class="form-input" id="beExcerpt" rows="2" placeholder="สรุป 1-2 ประโยค..."></textarea></div>
+                  <div class="form-group full"><label class="fl">แท็ก (คั่นด้วยจุลภาค)</label>
+                    <input class="form-input" id="beTags" placeholder="โรสควอตซ์, ความรัก, จักระหัวใจ"></div>
+                </div>
+              </div>
+              <div class="card" style="margin-bottom:0">
+                <div class="card-title">🖼️ รูป Thumbnail</div>
+                <div style="display:flex;gap:.5rem;align-items:flex-start;margin-bottom:.75rem">
+                  <input class="form-input" id="beThumb" placeholder="https://... หรืออัปโหลดรูปด้านขวา" style="flex:1" oninput="updateBEThumbPreview(this.value)">
+                  <label style="cursor:pointer;flex-shrink:0">
+                    <span class="btn btn-outline btn-sm" style="display:inline-flex;align-items:center;gap:.3rem">📁 เลือกรูป</span>
+                    <input type="file" id="beThumbFile" accept="image/*" style="display:none" onchange="uploadBEThumb(this)">
+                  </label>
+                </div>
+                <div id="beThumbPreview" style="display:none">
+                  <img id="beThumbImg" style="width:100%;max-height:220px;border-radius:.75rem;object-fit:cover;border:1px solid #e5e7eb">
+                </div>
+                <div id="beThumbEmpty" style="height:140px;background:#f5f3ff;border-radius:.75rem;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:.85rem">
+                  ยังไม่มีรูป — ใส่ URL หรืออัปโหลด
+                </div>
+                <div style="margin-top:.75rem;padding:.6rem .85rem;background:#f5f0ff;border-radius:.5rem;font-size:.75rem;color:#5b21b6;line-height:1.6">
+                  💡 ใส่ URL รูปตรงๆ หรือกด "เลือกรูป" เพื่ออัปโหลด — จะแสดง preview ทันที
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 2: Body editor -->
+            <div class="card" style="margin-bottom:0">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem">
+                <div class="card-title" style="margin:0">📄 เนื้อหาบทความ (Body)</div>
+                <span id="beBodyLen" style="font-size:.72rem;color:#9ca3af"></span>
+              </div>
+              <!-- Tab bar -->
+              <div style="display:flex;gap:0;margin-bottom:0;border-bottom:2px solid #e9e0f5">
+                <button id="beTabBtnHtml" onclick="switchBETab('html')"
+                  style="padding:.5rem 1.25rem;border:none;border-bottom:2px solid #7c3aed;margin-bottom:-2px;background:none;font-size:.85rem;font-weight:700;color:#7c3aed;cursor:pointer">
+                  &lt;/&gt; HTML
+                </button>
+                <button id="beTabBtnPreview" onclick="switchBETab('preview')"
+                  style="padding:.5rem 1.25rem;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;background:none;font-size:.85rem;font-weight:600;color:#9ca3af;cursor:pointer">
+                  👁 Preview
+                </button>
+              </div>
+              <!-- HTML tab -->
+              <div id="beTabHtml">
+                <div style="font-size:.75rem;color:#6b7280;margin:.75rem 0;line-height:1.6;background:#fffbeb;padding:.5rem .85rem;border-radius:.5rem;border-left:3px solid #f59e0b">
+                  ✏️ แก้ไข HTML ได้เลย — &lt;h2&gt; &lt;p&gt; &lt;ul&gt; &lt;strong&gt; &lt;img&gt; &lt;div class="..."&gt; ครบทุก tag
+                </div>
+                <textarea id="beBodyTA" rows="28"
+                  style="width:100%;font-family:'Consolas','Courier New',monospace;font-size:.8rem;line-height:1.7;border:1.5px solid #e9e0f5;border-radius:.5rem;padding:.85rem 1rem;resize:vertical;background:#fdfcff;color:#1a1228;tab-size:2"
+                  placeholder="เนื้อหาบทความ HTML..."
+                  oninput="onBEBodyEdit(this.value)"></textarea>
+              </div>
+              <!-- Preview tab -->
+              <div id="beTabPreview" style="display:none">
+                <div style="margin:.75rem 0 .5rem">
+                  <span style="font-size:.75rem;background:#e0f2fe;color:#0369a1;padding:.25rem .65rem;border-radius:20px;font-weight:600">✏️ คลิกข้อความ → แก้ได้เลย</span>
+                </div>
+                <div id="beBodyPreview"
+                  contenteditable="true"
+                  spellcheck="false"
+                  oninput="onBEPreviewEdit()"
+                  style="min-height:500px;border:1.5px solid #e9e0f5;border-radius:.5rem;background:#faf8f4;padding:2rem 2.5rem;outline:none;overflow-y:auto;font-family:'Sarabun',sans-serif;font-size:17px;line-height:1.75;color:#1a1228"></div>
+              </div>
+            </div>
+          </div><!-- /blogEditorView -->
+
+          <!-- blog post modal (add new only) -->
           <div class="modal-overlay" id="blogModal">
             <div class="modal" style="max-width:640px">
               <h3 id="blogModalTitle">➕ เพิ่มบทความ</h3>
@@ -3262,26 +3379,108 @@ function openAddPost(){
 }
 function openEditPost(id){
   const p=getBlogPosts().find(b=>b.id===id); if(!p) return;
-  document.getElementById('blogModalTitle').textContent='✏️ แก้ไข: '+p.title;
-  document.getElementById('blogEditId').value=p.id;
-  document.getElementById('blogTitle').value=p.title||'';
-  document.getElementById('blogSlug').value=p.slug||'';
-  document.getElementById('blogExcerpt').value=p.excerpt||'';
-  document.getElementById('blogTags').value=(p.tags||[]).join(', ');
-  document.getElementById('blogThumb').value=p.thumb||'';
-  document.getElementById('blogAuthor').value=p.author||'atlas';
-  document.getElementById('blogCategory').value=p.category||'stone';
-  document.getElementById('blogStatus').value=p.status||'published';
-  document.getElementById('blogPublishDate').value=p.publishDate||'';
-  toggleScheduleField();
-  document.getElementById('blogDelBtn').style.display='';
-  document.getElementById('blogThumbFile').value='';
-  const thumb=p.thumb||'';
-  if(thumb){ document.getElementById('blogThumbImg').src=thumb; document.getElementById('blogThumbPreview').style.display=''; }
-  else { document.getElementById('blogThumbPreview').style.display='none'; }
-  document.getElementById('blogModal').classList.add('open');
+  // fill editor view
+  document.getElementById('beEditId').value=p.id;
+  document.getElementById('beTitle').textContent='✏️ '+p.title;
+  document.getElementById('bePath').textContent=(p.url||('/blog/'+p.slug+'.html'));
+  document.getElementById('beTitle2').value=p.title||'';
+  document.getElementById('beSlug').value=p.slug||'';
+  document.getElementById('beExcerpt').value=p.excerpt||'';
+  document.getElementById('beTags').value=(p.tags||[]).join(', ');
+  document.getElementById('beThumb').value=p.thumb||'';
+  document.getElementById('beAuthor').value=p.author||'atlas';
+  document.getElementById('beCategory').value=p.category||'stone';
+  document.getElementById('beStatus').value=p.status||'published';
+  document.getElementById('bePublishDate').value=p.publishDate||'';
+  toggleBESchedule();
+  document.getElementById('beThumbFile').value='';
+  updateBEThumbPreview(p.thumb||'');
+  // body
+  const body=p.body||'';
+  document.getElementById('beBodyTA').value=body;
+  document.getElementById('beBodyPreview').innerHTML=body;
+  updateBEBodyLen(body);
+  switchBETab('html');
+  // show editor view
+  document.getElementById('blogListView').style.display='none';
+  document.getElementById('blogEditorView').style.display='';
+}
+function closeBlogEditor(){
+  document.getElementById('blogEditorView').style.display='none';
+  document.getElementById('blogListView').style.display='';
 }
 function closeBlogModal(){ document.getElementById('blogModal').classList.remove('open'); }
+
+function toggleBESchedule(){
+  const show=document.getElementById('beStatus').value==='scheduled';
+  document.getElementById('beScheduleGroup').style.display=show?'':'none';
+}
+function updateBEThumbPreview(url){
+  const hasUrl=url&&url.trim();
+  document.getElementById('beThumbPreview').style.display=hasUrl?'':'none';
+  document.getElementById('beThumbEmpty').style.display=hasUrl?'none':'';
+  if(hasUrl) document.getElementById('beThumbImg').src=url.trim();
+}
+function uploadBEThumb(input){
+  const f=input.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=e=>{ document.getElementById('beThumb').value=e.target.result; updateBEThumbPreview(e.target.result); };
+  r.readAsDataURL(f);
+}
+function updateBEBodyLen(v){
+  document.getElementById('beBodyLen').textContent=(v||'').length.toLocaleString()+' ตัวอักษร · '+(v||'').replace(/<[^>]*>/g,'').trim().split(/\s+/).filter(Boolean).length+' คำ';
+}
+function onBEBodyEdit(v){
+  updateBEBodyLen(v);
+  if(document.getElementById('beTabPreview').style.display!=='none') document.getElementById('beBodyPreview').innerHTML=v;
+}
+function onBEPreviewEdit(){
+  const html=document.getElementById('beBodyPreview').innerHTML;
+  document.getElementById('beBodyTA').value=html;
+  updateBEBodyLen(html);
+}
+function switchBETab(t){
+  const isHtml=t==='html';
+  document.getElementById('beTabHtml').style.display=isHtml?'':'none';
+  document.getElementById('beTabPreview').style.display=isHtml?'none':'';
+  document.getElementById('beTabBtnHtml').style.cssText='padding:.5rem 1.25rem;border:none;border-bottom:2px solid '+(isHtml?'#7c3aed':'transparent')+';margin-bottom:-2px;background:none;font-size:.85rem;font-weight:'+(isHtml?'700':'600')+';color:'+(isHtml?'#7c3aed':'#9ca3af')+';cursor:pointer';
+  document.getElementById('beTabBtnPreview').style.cssText='padding:.5rem 1.25rem;border:none;border-bottom:2px solid '+(isHtml?'transparent':'#7c3aed')+';margin-bottom:-2px;background:none;font-size:.85rem;font-weight:'+(isHtml?'600':'700')+';color:'+(isHtml?'#9ca3af':'#7c3aed')+';cursor:pointer';
+  if(!isHtml) document.getElementById('beBodyPreview').innerHTML=document.getElementById('beBodyTA').value;
+}
+function saveBlogEditor(){
+  const title=document.getElementById('beTitle2').value.trim();
+  if(!title){ toast('กรุณาใส่หัวข้อบทความ','err'); return; }
+  const eid=document.getElementById('beEditId').value;
+  const posts=getBlogPosts();
+  const body=document.getElementById('beBodyTA').value;
+  const p={
+    id: eid||'blog_'+Date.now(),
+    title,
+    slug: document.getElementById('beSlug').value.trim()||title.toLowerCase().replace(/[^\w฀-๿]+/g,'-'),
+    excerpt: document.getElementById('beExcerpt').value.trim(),
+    tags: document.getElementById('beTags').value.split(',').map(t=>t.trim()).filter(Boolean),
+    thumb: document.getElementById('beThumb').value.trim(),
+    author: document.getElementById('beAuthor').value,
+    category: document.getElementById('beCategory').value,
+    status: document.getElementById('beStatus').value,
+    publishDate: document.getElementById('bePublishDate').value||new Date().toISOString(),
+    body,
+    created: eid?(posts.find(b=>b.id===eid)?.created||new Date().toISOString()):new Date().toISOString(),
+    updated: new Date().toISOString(),
+  };
+  if(eid){ const i=posts.findIndex(b=>b.id===eid); if(i>=0) posts[i]=p; else posts.push(p); }
+  else posts.unshift(p);
+  saveBlogPosts(posts);
+  toast('บันทึก "'+title+'" แล้ว ✓','ok');
+  document.getElementById('beTitle').textContent='✏️ '+title;
+}
+function deleteBlogFromEditor(){
+  const eid=document.getElementById('beEditId').value;
+  if(!eid||!confirm('ลบบทความนี้?')) return;
+  saveBlogPosts(getBlogPosts().filter(b=>b.id!==eid));
+  closeBlogEditor(); renderBlog();
+  toast('ลบแล้ว','ok');
+}
 function toggleScheduleField(){
   const show=document.getElementById('blogStatus').value==='scheduled';
   document.getElementById('scheduleDateGroup').style.display=show?'':'none';
