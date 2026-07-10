@@ -315,6 +315,18 @@ const TAGS = [
   {t:'นอนหลับ',s:'sm'},{t:'ราคาหิน',s:'sm'},{t:'Meditation',s:'sm'},
 ];
 
+// Merge real thumbnail images from CMS (data/blog.json) by matching url
+(async () => {
+  try {
+    const r = await fetch('/data/blog.json?v=' + Date.now());
+    const d = await r.json();
+    const thumbByUrl = {};
+    (d.articles || []).forEach(a => { if (a.thumb) thumbByUrl[a.url] = a.thumb; });
+    ARTICLES.forEach(a => { if (thumbByUrl[a.url]) a.thumb = thumbByUrl[a.url]; });
+  } catch (e) {}
+  renderAll();
+})();
+
 let curCat = 'all', curTag = '';
 
 function counts() {
@@ -375,7 +387,7 @@ function renderAll() {
   const catInfo = CATS.find(c => c.id === feat.cat);
   document.getElementById('blogFeatured').innerHTML = `
     <a href="${feat.url || '#'}" class="feat-card" ${!feat.url ? 'onclick="return false"' : ''}>
-      <div class="feat-img">${feat.emoji}</div>
+      <div class="feat-img">${feat.thumb ? `<img src="${feat.thumb}" alt="${feat.title.replace(/"/g,'')}" onerror="this.parentElement.textContent='${feat.emoji}'">` : feat.emoji}</div>
       <div class="feat-body">
         <div class="feat-label"><span class="feat-label-dot"></span>${catInfo?.icon} ${catInfo?.th}</div>
         <div class="feat-title">${feat.title}</div>
@@ -405,7 +417,7 @@ function renderAll() {
 function cardHTML(a) {
   const cat = CATS.find(c => c.id === a.cat);
   return `<a href="${a.url || '#'}" class="card${a.url ? '' : ' soon'}" ${!a.url ? 'onclick="return false"' : ''}>
-    <div class="card-img">${a.emoji}</div>
+    <div class="card-img">${a.thumb ? `<img src="${a.thumb}" alt="${a.title.replace(/"/g,'')}" onerror="this.parentElement.textContent='${a.emoji}'">` : a.emoji}</div>
     <div class="card-body">
       <div class="card-cat">${cat?.icon} ${cat?.th}</div>
       <div class="card-title">${a.title}</div>
