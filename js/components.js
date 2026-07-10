@@ -3,13 +3,13 @@
 const NAV_HTML = `
 <div class="container nav-inner">
   <a href="/" class="logo">
-    <svg viewBox="0 0 36 36" fill="none">
+    <svg viewBox="0 0 36 36" fill="none" data-cms-logo>
       <polygon points="18,2 30,12 26,30 10,30 6,12" fill="#7c3aed" opacity="0.9"/>
       <polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity="0.95"/>
       <polygon points="18,8 30,12 18,28" fill="#a78bfa"/>
       <polygon points="18,8 6,12 18,28" fill="#7c3aed"/>
     </svg>
-    <span>AMETHEZ <small class="logo-tagline">Stones · Stories · Soul</small></span>
+    <span data-cms-logo-text>AMETHEZ <small class="logo-tagline">Stones · Stories · Soul</small></span>
   </a>
   <button class="nav-toggle" aria-label="เมนู" onclick="document.querySelector('.nav-links').classList.toggle('open')">
     <span></span><span></span><span></span>

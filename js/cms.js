@@ -58,6 +58,10 @@
         img.style.cssText = 'height:32px;width:auto;object-fit:contain';
         el.replaceWith(img);
       });
+      // ซ่อน text span เมื่อมีรูปโลโก้
+      document.querySelectorAll('[data-cms-logo-text]').forEach(el => {
+        el.style.display = 'none';
+      });
     }
 
     // ── FAVICON ──
