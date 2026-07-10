@@ -115,33 +115,41 @@
     @media (max-width: 600px) { .benefit-row { grid-template-columns: 1fr 1fr; } }
 
     /* ── Chakra visual ── */
+    /* stone belongs links */
+    .sb-link { display:inline-flex; align-items:center; gap:.3rem; padding:.3rem .75rem; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.22); border-radius:20px; color:rgba(255,255,255,.9); font-size:.75rem; font-weight:600; text-decoration:none; transition:background .15s; }
+    .sb-link:hover { background:rgba(255,255,255,.22); }
+
     .chakra-visual {
       margin: 2rem 0;
-      padding: 1.25rem 1.5rem;
+      padding: 1.25rem 1.25rem;
       background: linear-gradient(135deg, #faf8ff, #f3f0ff);
       border-radius: 1rem;
       border: 1px solid #ede9fe;
+      overflow: hidden;
     }
     .chakra-visual-label {
       font-size: .72rem; font-weight: 700; color: #9ca3af;
       text-transform: uppercase; letter-spacing: .08em; margin-bottom: 1rem;
     }
     .chakra-row {
-      display: flex; align-items: center; gap: 0; justify-content: space-between;
+      display: flex; align-items: center; gap: 0;
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; padding-bottom: 4px;
     }
+    .chakra-row::-webkit-scrollbar { display: none; }
     .chakra-dot {
-      display: flex; flex-direction: column; align-items: center; gap: .35rem; flex: 1;
+      display: flex; flex-direction: column; align-items: center; gap: .35rem;
+      flex: 0 0 56px; min-width: 56px;
     }
-    .chakra-dot svg { width: 40px; height: 40px; opacity: .22; filter: grayscale(.8); }
+    .chakra-dot svg { width: 36px; height: 36px; opacity: .22; filter: grayscale(.8); }
     .chakra-dot.active svg {
-      opacity: 1; filter: none;
-      filter: drop-shadow(0 0 6px currentColor);
+      opacity: 1; filter: drop-shadow(0 0 6px currentColor);
     }
     .chakra-dot-name {
-      font-size: .6rem; color: #9ca3af; text-align: center; line-height: 1.3;
+      font-size: .58rem; color: #9ca3af; text-align: center; line-height: 1.3; white-space: nowrap;
     }
     .chakra-dot.active .chakra-dot-name { color: #4c1d95; font-weight: 700; }
-    .chakra-sep { flex: 0 0 1.5rem; height: 1px; background: #e9e0f5; }
+    .chakra-sep { flex: 0 0 20px; height: 1px; background: #e9e0f5; }
 
     /* ── FAQ ── */
     .faq-q-mark {
@@ -209,13 +217,18 @@
         <p style="font-size:1.1rem;color:rgba(255,255,255,.82);margin:.75rem 0 1rem">
           หินสีม่วงแห่งสมาธิ ปัญญา และการเชื่อมต่อจิตวิญญาณ
         </p>
-        <div class="article-meta">
-          <span class="meta-tag"><span style="opacity:.6;margin-right:.3rem">◆</span>Crystal Atlas</span>
-          <span class="meta-tag">สีม่วง</span>
-          <span class="meta-tag">จักระมงกุฎ</span>
-          <span class="meta-tag">Third Eye</span>
-          <span class="meta-tag">ความแข็ง 7</span>
-          <span class="meta-tag">⏱ 8 นาที</span>
+        <div class="article-meta" style="flex-wrap:wrap;justify-content:center;gap:.4rem .5rem">
+          <span class="meta-tag" style="opacity:.55;font-size:.7rem">◆ Crystal Atlas</span>
+          <span class="meta-tag" style="opacity:.55;font-size:.7rem">ความแข็ง 7</span>
+          <span class="meta-tag" style="opacity:.55;font-size:.7rem">⏱ 8 นาที</span>
+        </div>
+        <div class="stone-belongs" style="margin-top:.875rem;display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center">
+          <a href="/categories/color.html#purple" class="sb-link">🎨 สีม่วง</a>
+          <a href="/categories/chakra.html#crown" class="sb-link">☯️ จักระมงกุฎ</a>
+          <a href="/categories/chakra.html#thirdeye" class="sb-link">👁 Third Eye</a>
+          <a href="/categories/zodiac.html#aquarius" class="sb-link">♒ ราศีกุมภ์</a>
+          <a href="/categories/purpose.html#wisdom" class="sb-link">✨ ปัญญา</a>
+          <a href="/categories/purpose.html#sleep" class="sb-link">🌙 การนอนหลับ</a>
         </div>
       </div>
 
