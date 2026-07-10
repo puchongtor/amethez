@@ -3233,7 +3233,8 @@ async function publishToGitHub(){
     });
     if(cr.ok){
       setImgs(imgs); // save updated (paths, not base64)
-      renderSlots(); renderDash();
+      try{ renderSlots(); }catch(_){}
+      try{ renderDash(); }catch(_){}
       toast('🚀 เผยแพร่สำเร็จ! รูปขึ้นเว็บใน ~3 นาที','ok');
     } else {
       const e=await cr.json();
