@@ -900,7 +900,7 @@ const STONES = [
   {th:'ไคยาไนต์',en:'Kyanite',l:'K',col:'blue',img:'kyanite',url:''},
   // L
   {th:'แลบราโดไรต์',en:'Labradorite',l:'L',col:'multi',img:'labradorite',url:'/stones/labradorite.html'},
-  {th:'ลาพิสลาซูลี',en:'Lapis Lazuli',l:'L',col:'blue',img:'lapis_lazuli',url:'/stones/lapis-lazuli.html'},
+  {th:'ลาพิสลาซูลี',en:'Lapis Lazuli',l:'L',col:'blue',img:'lapis',url:'/stones/lapis-lazuli.html'},
   {th:'ลาริมาร์',en:'Larimar',l:'L',col:'blue',img:'larimar',url:''},
   {th:'เลพิโดไลต์',en:'Lepidolite',l:'L',col:'purple',img:'lepidolite',url:''},
   // M
@@ -982,7 +982,7 @@ function renderStones() {
 
     el.innerHTML = `
       <div class="sc-img-wrap bg-${s.col}">
-        <img data-cms-img="${s.img}_thumb" class="sc-img" loading="lazy" alt="${s.th}"
+        <img data-cms-img="stone_${s.img}_hero" class="sc-img" loading="lazy" alt="${s.th}"
           onerror="this.style.display='none'">
         <div class="sc-placeholder">${colorEmoji(s.col)}</div>
         ${s.url ? '<span class="sc-badge">✓</span>' : '<span class="sc-badge soon">เร็วๆนี้</span>'}
