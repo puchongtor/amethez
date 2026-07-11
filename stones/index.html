@@ -48,37 +48,16 @@
     .hub-tile.gold { border-color:#c9a84c; background:linear-gradient(135deg,#fffdf5,#fef9e7); }
     .hub-tile.gold:hover { border-color:#b8922e; box-shadow:0 12px 36px rgba(201,168,76,.18); }
 
-    /* ── Sticky Alphabet Bar ── */
-    .alpha-bar { background:white; border-bottom:1px solid #f0e8ff; padding:.6rem 1rem;
-      position:sticky; top:64px; z-index:80; overflow-x:auto; white-space:nowrap;
-      box-shadow:0 2px 8px rgba(0,0,0,.04); }
-    .alpha-bar-inner { display:flex; gap:.2rem; max-width:1100px; margin:0 auto; align-items:center; flex-wrap:nowrap; }
-    .alpha-btn { min-width:30px; height:30px; border-radius:.35rem; border:none; background:transparent;
-      font-size:.82rem; font-weight:600; color:#6b5e8a; cursor:pointer; transition:all .15s; padding:0 .25rem; }
-    .alpha-btn:hover { background:#f3effa; color:#7c3aed; }
-    .alpha-btn.active { background:#7c3aed; color:white; }
-    .alpha-sep { color:#d1d5db; font-size:.7rem; padding:0 .15rem; }
-
-    /* ── Search bar ── */
-    .search-wrap { background:white; border-bottom:1px solid #f0e8ff; padding:1rem 1.5rem; }
-    .search-inner { max-width:1100px; margin:0 auto; display:flex; gap:.75rem; align-items:center; flex-wrap:wrap; }
-    .search-inp { flex:1; min-width:200px; padding:.7rem 1rem .7rem 2.75rem; border:2px solid #e9e0f8;
-      border-radius:.65rem; font-family:Sarabun,sans-serif; font-size:.95rem; color:#1a1228; box-sizing:border-box; }
-    .search-inp:focus { outline:none; border-color:#7c3aed; }
-    .search-wrap-rel { position:relative; flex:1; }
-    .search-icon { position:absolute; left:.85rem; top:50%; transform:translateY(-50%); color:#9b89bb; pointer-events:none; }
-    .filter-tabs { display:flex; gap:.4rem; flex-wrap:wrap; }
-    .ftab { padding:.4rem .9rem; border-radius:2rem; font-size:.8rem; border:1.5px solid #e9e0f8;
-      background:white; color:#6b5e8a; cursor:pointer; transition:all .15s; font-family:Sarabun,sans-serif; }
-    .ftab:hover,.ftab.on { background:#7c3aed; border-color:#7c3aed; color:white; }
-
-    /* ── Stone Compact Grid ── */
-    .atlas { padding:2.5rem 1.5rem; background:#faf8f4; }
-    .atlas-header { max-width:1100px; margin:0 auto 1.5rem; display:flex; align-items:baseline; gap:1rem; flex-wrap:wrap; }
-    .atlas-title { font-family:'Playfair Display',serif; font-size:1.5rem; color:#1a1228; }
-    .atlas-count { font-size:.82rem; color:#9b89bb; }
-    .stone-grid { max-width:1100px; margin:0 auto;
-      display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:1rem; }
+    /* ── Featured stone strip (scrollable) ── */
+    .strip-wrap { padding:2.5rem 1.5rem; background:#faf8f4; }
+    .strip-header { max-width:1100px; margin:0 auto 1.25rem; display:flex; align-items:baseline;
+      justify-content:space-between; gap:1rem; flex-wrap:wrap; }
+    .strip-title { font-family:'Playfair Display',serif; font-size:1.5rem; color:#1a1228; }
+    .strip-sub { font-size:.82rem; color:#9b89bb; }
+    .stone-strip-scroll { max-width:1100px; margin:0 auto; overflow-x:auto; padding-bottom:.5rem;
+      -webkit-overflow-scrolling:touch; }
+    .stone-strip { display:flex; gap:1rem; width:max-content; }
+    .stone-strip .sc { flex:0 0 140px; }
     .sc { text-decoration:none; color:#1a1228; display:block; }
     .sc-img-wrap { position:relative; border-radius:.65rem; overflow:hidden;
       background:#f3effa; aspect-ratio:1; margin-bottom:.4rem; }
@@ -87,12 +66,13 @@
     .sc:hover .sc-img { transform:scale(1.05); }
     .sc-placeholder { width:100%; height:100%; display:flex; align-items:center;
       justify-content:center; font-size:2.5rem; }
-    .sc-badge { position:absolute; top:.35rem; right:.35rem; background:#7c3aed; color:white;
-      font-size:.6rem; font-weight:700; padding:.15rem .45rem; border-radius:2rem; }
-    .sc-badge.soon { background:#d1d5db; color:#6b5e8a; }
     .sc-th { font-size:.88rem; font-weight:600; line-height:1.3; }
     .sc-en { font-size:.72rem; color:#9b89bb; }
-    .sc.hidden { display:none; }
+    .sc-more { flex:0 0 140px; border-radius:.65rem; background:linear-gradient(135deg,#7c3aed,#a78bfa);
+      color:white; display:flex; flex-direction:column; align-items:center; justify-content:center;
+      text-align:center; text-decoration:none; aspect-ratio:1; font-weight:700; font-size:.85rem;
+      padding:1rem; gap:.35rem; }
+    .sc-more span:first-child { font-size:1.6rem; }
 
     /* Color dots for placeholders */
     .bg-purple { background:linear-gradient(135deg,#ede9fe,#c4b5fd); }
@@ -247,7 +227,7 @@
     <h2 class="hub-title">ต้องการค้นหาหินคริสตัลแบบไหน?</h2>
     <p class="hub-sub">Looking to Explore Crystal Meanings? — เลือกวิธีที่ใช่สำหรับคุณ</p>
     <div class="hub-grid">
-      <a href="#az" class="hub-tile gold">
+      <a href="/stones/a-z.html" class="hub-tile gold">
         <span class="hub-tile-icon">🔤</span>
         <span class="hub-tile-th">หิน A ถึง Z</span>
         <span class="hub-tile-en">Crystals A to Z</span>
@@ -296,69 +276,14 @@
   </div>
 </section>
 
-<!-- ── A-Z ENCYCLOPEDIA ── -->
-<section id="az">
-  <!-- Search -->
-  <div class="search-wrap">
-    <div class="search-inner">
-      <div class="search-wrap-rel">
-        <span class="search-icon">🔍</span>
-        <input class="search-inp" id="stoneSearch" type="text"
-          placeholder="ค้นหา เช่น อเมทิสต์, Rose Quartz, หินเรียกเงิน…"
-          oninput="filterStones()">
-      </div>
-      <div class="filter-tabs" id="filterTabs">
-        <button class="ftab on" onclick="setFilter('all',this)">ทั้งหมด</button>
-        <button class="ftab" onclick="setFilter('article',this)">มีบทความ</button>
-        <button class="ftab" onclick="setFilter('purple',this)">💜 ม่วง</button>
-        <button class="ftab" onclick="setFilter('green',this)">💚 เขียว</button>
-        <button class="ftab" onclick="setFilter('pink',this)">🩷 ชมพู</button>
-        <button class="ftab" onclick="setFilter('black',this)">🖤 ดำ</button>
-        <button class="ftab" onclick="setFilter('blue',this)">💙 น้ำเงิน</button>
-        <button class="ftab" onclick="setFilter('yellow',this)">💛 เหลือง</button>
-        <button class="ftab" onclick="setFilter('white',this)">🤍 ขาว</button>
-      </div>
-    </div>
+<!-- ── FEATURED STONE STRIP ── -->
+<section class="strip-wrap" id="az">
+  <div class="strip-header">
+    <span class="strip-title">🪨 หินยอดนิยม</span>
+    <span class="strip-sub">เลื่อนดูเพิ่มเติม หรือดูทั้งหมด 72+ ชนิดแบบ A-Z</span>
   </div>
-
-  <!-- Alphabet Bar -->
-  <div class="alpha-bar">
-    <div class="alpha-bar-inner">
-      <button class="alpha-btn active" onclick="setLetter('',this)">ทั้งหมด</button>
-      <span class="alpha-sep">|</span>
-      <button class="alpha-btn" onclick="setLetter('A',this)">A</button>
-      <button class="alpha-btn" onclick="setLetter('B',this)">B</button>
-      <button class="alpha-btn" onclick="setLetter('C',this)">C</button>
-      <button class="alpha-btn" onclick="setLetter('D',this)">D</button>
-      <button class="alpha-btn" onclick="setLetter('E',this)">E</button>
-      <button class="alpha-btn" onclick="setLetter('F',this)">F</button>
-      <button class="alpha-btn" onclick="setLetter('G',this)">G</button>
-      <button class="alpha-btn" onclick="setLetter('H',this)">H</button>
-      <button class="alpha-btn" onclick="setLetter('I',this)">I</button>
-      <button class="alpha-btn" onclick="setLetter('J',this)">J</button>
-      <button class="alpha-btn" onclick="setLetter('K',this)">K</button>
-      <button class="alpha-btn" onclick="setLetter('L',this)">L</button>
-      <button class="alpha-btn" onclick="setLetter('M',this)">M</button>
-      <button class="alpha-btn" onclick="setLetter('N',this)">N</button>
-      <button class="alpha-btn" onclick="setLetter('O',this)">O</button>
-      <button class="alpha-btn" onclick="setLetter('P',this)">P</button>
-      <button class="alpha-btn" onclick="setLetter('Q',this)">Q</button>
-      <button class="alpha-btn" onclick="setLetter('R',this)">R</button>
-      <button class="alpha-btn" onclick="setLetter('S',this)">S</button>
-      <button class="alpha-btn" onclick="setLetter('T',this)">T</button>
-      <button class="alpha-btn" onclick="setLetter('U',this)">U</button>
-      <button class="alpha-btn" onclick="setLetter('V',this)">V</button>
-      <button class="alpha-btn" onclick="setLetter('Z',this)">Z</button>
-    </div>
-  </div>
-
-  <!-- Grid -->
-  <div class="atlas">
-    <div class="atlas-header">
-      <span class="atlas-title">🪨 หินทั้งหมด</span>
-      <span class="atlas-count" id="stoneCount"></span>
-    </div>
-    <div class="stone-grid" id="stoneGrid"></div>
+  <div class="stone-strip-scroll">
+    <div class="stone-strip" id="stoneStrip"></div>
   </div>
 </section>
 
@@ -850,103 +775,62 @@
 </section>
 
 <script>
-/* ═══ STONE DATA ═══ */
-const STONES = [
-  // A
-  {th:'อาเกต',en:'Agate',l:'A',col:'multi',img:'agate',url:'/stones/agate.html'},
-  {th:'อะเมโซไนต์',en:'Amazonite',l:'A',col:'green',img:'amazonite',url:'/stones/amazonite.html'},
-  {th:'อำพัน',en:'Amber',l:'A',col:'yellow',img:'amber',url:'/stones/amber.html'},
-  {th:'อเมทิสต์',en:'Amethyst',l:'A',col:'purple',img:'amethyst',url:'/stones/amethyst.html'},
-  {th:'อะเมทรีน',en:'Ametrine',l:'A',col:'purple',img:'ametrine',url:'/stones/ametrine.html'},
-  {th:'แองเจลไลต์',en:'Angelite',l:'A',col:'blue',img:'angelite',url:'/stones/angelite.html'},
-  {th:'อาพาไทต์',en:'Apatite',l:'A',col:'blue',img:'apatite',url:'/stones/apatite.html'},
-  {th:'อะความารีน',en:'Aquamarine',l:'A',col:'blue',img:'aquamarine',url:'/stones/aquamarine.html'},
-  {th:'อะเวนทูริน',en:'Aventurine',l:'A',col:'green',img:'aventurine',url:'/stones/aventurine.html'},
-  {th:'แอซูไรต์',en:'Azurite',l:'A',col:'blue',img:'azurite',url:'/stones/azurite.html'},
-  // B
-  {th:'ทัวร์มาลีนดำ',en:'Black Tourmaline',l:'B',col:'black',img:'black_tourmaline',url:'/stones/black-tourmaline.html'},
-  {th:'อาเกตลายน้ำเงิน',en:'Blue Lace Agate',l:'B',col:'blue',img:'blue_lace_agate',url:'/stones/blue-lace-agate.html'},
-  {th:'ไคยาไนต์น้ำเงิน',en:'Blue Kyanite',l:'B',col:'blue',img:'blue_kyanite',url:'/stones/blue-kyanite.html'},
-  // C
-  {th:'คาร์เนเลียน',en:'Carnelian',l:'C',col:'orange',img:'carnelian',url:'/stones/carnelian.html'},
-  {th:'เซเลสไตต์',en:'Celestite',l:'C',col:'blue',img:'celestite',url:'/stones/celestite.html'},
-  {th:'คาลเซโดนี',en:'Chalcedony',l:'C',col:'blue',img:'chalcedony',url:'/stones/chalcedony.html'},
-  {th:'ครีโซคอลลา',en:'Chrysocolla',l:'C',col:'green',img:'chrysocolla',url:'/stones/chrysocolla.html'},
-  {th:'ซิทริน',en:'Citrine',l:'C',col:'yellow',img:'citrine',url:'/stones/citrine.html'},
-  {th:'คริสตัลใส',en:'Clear Quartz',l:'C',col:'clear',img:'clear_quartz',url:'/stones/clear-quartz.html'},
-  {th:'คอรัลดำ',en:'Black Coral',l:'C',col:'black',img:'black_coral',url:'/stones/black-coral.html'},
-  // D
-  {th:'แดนบิวไรต์',en:'Danburite',l:'D',col:'white',img:'danburite',url:'/stones/danburite.html'},
-  {th:'เพชร',en:'Diamond',l:'D',col:'clear',img:'diamond',url:'/stones/diamond.html'},
-  // E
-  {th:'มรกต',en:'Emerald',l:'E',col:'green',img:'emerald',url:'/stones/emerald.html'},
-  // F
-  {th:'ฟลูออไรต์',en:'Fluorite',l:'F',col:'multi',img:'fluorite',url:'/stones/fluorite.html'},
-  {th:'ฟุคไซต์',en:'Fuchsite',l:'F',col:'green',img:'fuchsite',url:'/stones/fuchsite.html'},
-  // G
-  {th:'การ์เนต',en:'Garnet',l:'G',col:'red',img:'garnet',url:'/stones/garnet.html'},
-  {th:'อะเวนทูรินเขียว',en:'Green Aventurine',l:'G',col:'green',img:'green_aventurine',url:'/stones/green-aventurine.html'},
-  {th:'โกลเดนฮีลเลอร์',en:'Golden Healer',l:'G',col:'yellow',img:'golden_healer',url:'/stones/golden-healer.html'},
-  // H
-  {th:'เฮไมต์',en:'Hematite',l:'H',col:'black',img:'hematite',url:'/stones/hematite.html'},
-  {th:'ฮาวไลต์',en:'Howlite',l:'H',col:'white',img:'howlite',url:'/stones/howlite.html'},
-  // I
-  {th:'ไอโอไลต์',en:'Iolite',l:'I',col:'blue',img:'iolite',url:'/stones/iolite.html'},
-  // J
-  {th:'หยก',en:'Jade',l:'J',col:'green',img:'jade',url:'/stones/jade.html'},
-  {th:'เจสเปอร์แดง',en:'Red Jasper',l:'J',col:'red',img:'red_jasper',url:'/stones/red-jasper.html'},
-  // K
-  {th:'คูไนต์',en:'Kunzite',l:'K',col:'pink',img:'kunzite',url:'/stones/kunzite.html'},
-  {th:'ไคยาไนต์',en:'Kyanite',l:'K',col:'blue',img:'kyanite',url:'/stones/kyanite.html'},
-  // L
-  {th:'แลบราโดไรต์',en:'Labradorite',l:'L',col:'multi',img:'labradorite',url:'/stones/labradorite.html'},
-  {th:'ลาพิสลาซูลี',en:'Lapis Lazuli',l:'L',col:'blue',img:'lapis',url:'/stones/lapis-lazuli.html'},
-  {th:'ลาริมาร์',en:'Larimar',l:'L',col:'blue',img:'larimar',url:'/stones/larimar.html'},
-  {th:'เลพิโดไลต์',en:'Lepidolite',l:'L',col:'purple',img:'lepidolite',url:'/stones/lepidolite.html'},
-  // M
-  {th:'มาลาไคต์',en:'Malachite',l:'M',col:'green',img:'malachite',url:'/stones/malachite.html'},
-  {th:'โมลดาไวท์',en:'Moldavite',l:'M',col:'green',img:'moldavite',url:'/stones/moldavite.html'},
-  {th:'มูนสโตน',en:'Moonstone',l:'M',col:'white',img:'moonstone',url:'/stones/moonstone.html'},
-  {th:'โมร์กาไนต์',en:'Morganite',l:'M',col:'pink',img:'morganite',url:'/stones/morganite.html'},
-  // N
-  {th:'นีออนอาปาไทต์',en:'Neon Apatite',l:'N',col:'blue',img:'neon_apatite',url:'/stones/neon-apatite.html'},
-  // O
-  {th:'ออบซิเดียน',en:'Obsidian',l:'O',col:'black',img:'obsidian',url:'/stones/obsidian.html'},
-  {th:'โอนิกซ์',en:'Onyx',l:'O',col:'black',img:'onyx',url:'/stones/onyx.html'},
-  {th:'โอปอล',en:'Opal',l:'O',col:'multi',img:'opal',url:'/stones/opal.html'},
-  {th:'ออเรนจ์คาลไซต์',en:'Orange Calcite',l:'O',col:'orange',img:'orange_calcite',url:'/stones/orange-calcite.html'},
-  // P
-  {th:'ไข่มุก',en:'Pearl',l:'P',col:'white',img:'pearl',url:'/stones/pearl.html'},
-  {th:'เพริดอต',en:'Peridot',l:'P',col:'green',img:'peridot',url:'/stones/peridot.html'},
-  {th:'พิงค์โอปอล',en:'Pink Opal',l:'P',col:'pink',img:'pink_opal',url:'/stones/pink-opal.html'},
-  {th:'เพรห์ไนต์',en:'Prehnite',l:'P',col:'green',img:'prehnite',url:'/stones/prehnite.html'},
-  {th:'ไพไรต์',en:'Pyrite',l:'P',col:'gold',img:'pyrite',url:'/stones/pyrite.html'},
-  // R
-  {th:'โรโดไนต์',en:'Rhodonite',l:'R',col:'pink',img:'rhodonite',url:'/stones/rhodonite.html'},
-  {th:'โรสควอตซ์',en:'Rose Quartz',l:'R',col:'pink',img:'rose_quartz',url:'/stones/rose-quartz.html'},
-  {th:'รุทรักษะ',en:'Rudraksha',l:'R',col:'brown',img:'rudraksha',url:'/stones/rudraksha.html'},
-  {th:'ทับทิม',en:'Ruby',l:'R',col:'red',img:'ruby',url:'/stones/ruby.html'},
-  {th:'ควอตซ์รูทิเลต',en:'Rutilated Quartz',l:'R',col:'gold',img:'rutilated_quartz',url:'/stones/rutilated-quartz.html'},
-  // S
-  {th:'ไพลิน',en:'Sapphire',l:'S',col:'blue',img:'sapphire',url:'/stones/sapphire.html'},
-  {th:'เซเลไนต์',en:'Selenite',l:'S',col:'white',img:'selenite',url:'/stones/selenite.html'},
-  {th:'ชังไกต์',en:'Shungite',l:'S',col:'black',img:'shungite',url:'/stones/shungite.html'},
-  {th:'สโมกกี้ควอตซ์',en:'Smoky Quartz',l:'S',col:'brown',img:'smoky_quartz',url:'/stones/smoky-quartz.html'},
-  {th:'โซดาไลต์',en:'Sodalite',l:'S',col:'blue',img:'sodalite',url:'/stones/sodalite.html'},
-  {th:'ซูจิไลต์',en:'Sugilite',l:'S',col:'purple',img:'sugilite',url:'/stones/sugilite.html'},
-  {th:'ซันสโตน',en:'Sunstone',l:'S',col:'orange',img:'sunstone',url:'/stones/sunstone.html'},
-  // T
-  {th:'สะเก็ดดาวไทย',en:'Tektite',l:'T',col:'black',img:'tektite',url:'/stones/tektite.html'},
-  {th:'ไทเกอร์อาย',en:'Tiger Eye',l:'T',col:'brown',img:'tiger_eye',url:'/stones/tiger-eye.html'},
-  {th:'โทแพซ',en:'Topaz',l:'T',col:'yellow',img:'topaz',url:'/stones/topaz.html'},
-  {th:'เทอร์ควอยซ์',en:'Turquoise',l:'T',col:'blue',img:'turquoise',url:'/stones/turquoise.html'},
-  // U
-  {th:'ยูนาไคต์',en:'Unakite',l:'U',col:'green',img:'unakite',url:'/stones/unakite.html'},
-  // V
-  {th:'วาเนดิไนต์',en:'Vanadinite',l:'V',col:'red',img:'vanadinite',url:'/stones/vanadinite.html'},
-  // Z
-  {th:'เซอร์คอน',en:'Zircon',l:'Z',col:'multi',img:'zircon',url:'/stones/zircon.html'},
+/* ═══ FEATURED STONES (strip on this hub page — full A-Z list lives at /stones/a-z.html) ═══ */
+const FEATURED_STONES = [
+  {th:'อเมทิสต์',en:'Amethyst',col:'purple',img:'amethyst',url:'/stones/amethyst.html'},
+  {th:'โมลดาไวท์',en:'Moldavite',col:'green',img:'moldavite',url:'/stones/moldavite.html'},
+  {th:'สะเก็ดดาวไทย',en:'Tektite',col:'black',img:'tektite',url:'/stones/tektite.html'},
+  {th:'ซิทริน',en:'Citrine',col:'yellow',img:'citrine',url:'/stones/citrine.html'},
+  {th:'คริสตัลใส',en:'Clear Quartz',col:'clear',img:'clear_quartz',url:'/stones/clear-quartz.html'},
+  {th:'โรสควอตซ์',en:'Rose Quartz',col:'pink',img:'rose_quartz',url:'/stones/rose-quartz.html'},
+  {th:'ทัวร์มาลีนดำ',en:'Black Tourmaline',col:'black',img:'black_tourmaline',url:'/stones/black-tourmaline.html'},
+  {th:'แลบราโดไรต์',en:'Labradorite',col:'multi',img:'labradorite',url:'/stones/labradorite.html'},
+  {th:'ลาพิสลาซูลี',en:'Lapis Lazuli',col:'blue',img:'lapis',url:'/stones/lapis-lazuli.html'},
+  {th:'คาร์เนเลียน',en:'Carnelian',col:'orange',img:'carnelian',url:'/stones/carnelian.html'},
+  {th:'เซเลไนต์',en:'Selenite',col:'white',img:'selenite',url:'/stones/selenite.html'},
+  {th:'รุทรักษะ',en:'Rudraksha',col:'brown',img:'rudraksha',url:'/stones/rudraksha.html'},
+  {th:'ไพไรต์',en:'Pyrite',col:'gold',img:'pyrite',url:'/stones/pyrite.html'},
+  {th:'ไทเกอร์อาย',en:'Tiger Eye',col:'brown',img:'tiger_eye',url:'/stones/tiger-eye.html'},
+  {th:'มาลาไคต์',en:'Malachite',col:'green',img:'malachite',url:'/stones/malachite.html'},
+  {th:'ออบซิเดียน',en:'Obsidian',col:'black',img:'obsidian',url:'/stones/obsidian.html'},
 ];
+
+function colorEmoji(col) {
+  const map = {purple:'💜',green:'💚',blue:'💙',pink:'🩷',yellow:'💛',red:'❤️',
+    black:'🖤',white:'🤍',orange:'🧡',brown:'🟤',gold:'✨',multi:'🌈',clear:'🔷'};
+  return map[col] || '💎';
+}
+
+function renderStoneStrip(cmsImgs) {
+  const strip = document.getElementById('stoneStrip');
+  strip.innerHTML = FEATURED_STONES.map(s => {
+    const imgUrl = (cmsImgs && cmsImgs[`stone_${s.img}_hero`]) || '';
+    return `
+      <a class="sc" href="${s.url}">
+        <div class="sc-img-wrap bg-${s.col}">
+          <img class="sc-img" loading="lazy" alt="${s.th}"
+            src="${imgUrl}" style="${imgUrl ? '' : 'display:none'}"
+            onerror="this.style.display='none'">
+          <div class="sc-placeholder">${colorEmoji(s.col)}</div>
+        </div>
+        <div class="sc-th">${s.th}</div>
+        <div class="sc-en">${s.en}</div>
+      </a>`;
+  }).join('') + `
+      <a class="sc-more" href="/stones/a-z.html">
+        <span>🔤</span>
+        <span>ดูหินทั้งหมด<br>A-Z (72+ ชนิด)</span>
+      </a>`;
+}
+
+(async () => {
+  let cmsImgs = {};
+  try {
+    const r = await fetch('/data/content.json?v=' + Date.now());
+    if (r.ok) { const d = await r.json(); cmsImgs = d.images || {}; }
+  } catch(e) {}
+  renderStoneStrip(cmsImgs);
+})();
 
 const ELEM_DATA = {
   metal: { name:'ธาตุทอง 🥇', desc:'คนธาตุทองมีความมุ่งมั่น เฉียบแหลม และมีระเบียบวินัยสูง', rec:'หินแนะนำ: ไพไรต์, เฮไมต์, ควอตซ์รูทิเลต, คริสตัลใส' },
@@ -955,67 +839,6 @@ const ELEM_DATA = {
   fire:  { name:'ธาตุไฟ 🔥', desc:'คนธาตุไฟมีพลังงานสูง กล้าหาญ และเป็นผู้นำโดยธรรมชาติ', rec:'หินแนะนำ: คาร์เนเลียน, ทับทิม, ไพไรต์, ซันสโตน' },
   earth: { name:'ธาตุดิน 🌍', desc:'คนธาตุดินมีความมั่นคง น่าเชื่อถือ และอดทนสูง', rec:'หินแนะนำ: ไทเกอร์อาย, ซิทริน, ออบซิเดียน, เฮไมต์' },
 };
-
-let curLetter = '', curFilter = 'all';
-
-function renderStones() {
-  const q = (document.getElementById('stoneSearch')?.value || '').toLowerCase();
-  const grid = document.getElementById('stoneGrid');
-  const count = document.getElementById('stoneCount');
-  let visible = 0;
-  grid.innerHTML = '';
-
-  STONES.forEach(s => {
-    const matchLetter = !curLetter || s.l === curLetter;
-    const matchSearch = !q || s.th.includes(q) || s.en.toLowerCase().includes(q);
-    const matchFilter = curFilter === 'all'
-      || (curFilter === 'article' && s.url)
-      || s.col === curFilter;
-    if (!matchLetter || !matchSearch || !matchFilter) return;
-    visible++;
-
-    const hasImg = false; // รูปใส่ผ่าน CMS
-    const tag = s.url ? 'a' : 'div';
-    const el = document.createElement(tag);
-    el.className = 'sc';
-    if (s.url) el.href = s.url;
-
-    el.innerHTML = `
-      <div class="sc-img-wrap bg-${s.col}">
-        <img data-cms-img="stone_${s.img}_hero" class="sc-img" loading="lazy" alt="${s.th}"
-          onerror="this.style.display='none'">
-        <div class="sc-placeholder">${colorEmoji(s.col)}</div>
-        ${s.url ? '<span class="sc-badge">✓</span>' : '<span class="sc-badge soon">เร็วๆนี้</span>'}
-      </div>
-      <div class="sc-th">${s.th}</div>
-      <div class="sc-en">${s.en}</div>`;
-    grid.appendChild(el);
-  });
-
-  count.textContent = `${visible} ชนิด`;
-}
-
-function colorEmoji(col) {
-  const map = {purple:'💜',green:'💚',blue:'💙',pink:'🩷',yellow:'💛',red:'❤️',
-    black:'🖤',white:'🤍',orange:'🧡',brown:'🟤',gold:'✨',multi:'🌈',clear:'🔷'};
-  return map[col] || '💎';
-}
-
-function setLetter(l, btn) {
-  curLetter = l;
-  document.querySelectorAll('.alpha-btn').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-  renderStones();
-}
-
-function setFilter(f, btn) {
-  curFilter = f;
-  document.querySelectorAll('.ftab').forEach(b => b.classList.remove('on'));
-  if (btn) btn.classList.add('on');
-  renderStones();
-}
-
-function filterStones() { renderStones(); }
 
 function filterEl(el) {
   document.getElementById('element').scrollIntoView({behavior:'smooth'});
@@ -1033,23 +856,6 @@ function calcElement() {
   document.getElementById('calcElRec').textContent = data.rec;
   document.getElementById('calcResult').style.display = 'block';
 }
-
-// Init
-renderStones();
-
-// Load CMS images
-(async () => {
-  try {
-    const r = await fetch('/data/content.json?v=' + Date.now());
-    if (!r.ok) return;
-    const d = await r.json();
-    const imgs = d.images || {};
-    document.querySelectorAll('[data-cms-img]').forEach(el => {
-      const url = imgs[el.dataset.cmsImg];
-      if (url && el.tagName === 'IMG') { el.src = url; el.style.display = 'block'; }
-    });
-  } catch(e) {}
-})();
 </script>
 
 <script src="/js/cms.js"></script>
