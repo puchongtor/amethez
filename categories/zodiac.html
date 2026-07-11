@@ -50,14 +50,14 @@
     }
   </style>
 </head>
-<body>
+<body data-cms-page="zodiac">
 <header class="site-header"></header>
 <main>
   <div class="cat-hero">
     <div class="container">
       <p style="font-size:2rem;margin-bottom:.5rem;position:relative;letter-spacing:.2rem">♈♉♊♋♌♍♎♏♐♑♒♓</p>
-      <h1>หินคริสตัลตามราศี</h1>
-      <p>ค้นหาหินที่สอดคล้องกับพลังงานราศีของคุณ ครบทั้ง 12 ราศี</p>
+      <h1 data-cms-text="title">หินคริสตัลตามราศี</h1>
+      <p data-cms-text="subtitle">ค้นหาหินที่สอดคล้องกับพลังงานราศีของคุณ ครบทั้ง 12 ราศี</p>
     </div>
   </div>
   <div class="container">
@@ -73,6 +73,7 @@
   </div>
 </main>
 <footer class="site-footer"></footer>
+<script src="/js/cms.js"></script>
 <script src="/js/components.js"></script>
 <script>
 fetch('/data/categories.json').then(r=>r.json()).then(data=>{

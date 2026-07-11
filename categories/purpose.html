@@ -29,14 +29,14 @@
     @keyframes spin { to { transform:rotate(360deg); } }
   </style>
 </head>
-<body>
+<body data-cms-page="purpose">
 <header class="site-header"></header>
 <main>
   <div class="cat-hero">
     <div class="container">
       <p style="font-size:2rem;margin-bottom:.5rem;position:relative">💕💰🏆🛡💚🧘😴🔮</p>
-      <h1>หินคริสตัลตามวัตถุประสงค์</h1>
-      <p>เลือกหินตามสิ่งที่ต้องการในชีวิต ตั้งแต่ความรัก การเงิน ไปจนถึงจิตวิญญาณ</p>
+      <h1 data-cms-text="title">หินคริสตัลตามวัตถุประสงค์</h1>
+      <p data-cms-text="subtitle">เลือกหินตามสิ่งที่ต้องการในชีวิต ตั้งแต่ความรัก การเงิน ไปจนถึงจิตวิญญาณ</p>
     </div>
   </div>
   <div class="container">
@@ -52,6 +52,7 @@
   </div>
 </main>
 <footer class="site-footer"></footer>
+<script src="/js/cms.js"></script>
 <script src="/js/components.js"></script>
 <script>
 fetch('/data/categories.json').then(r=>r.json()).then(data=>{
