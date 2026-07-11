@@ -277,23 +277,29 @@ textarea.form-input{resize:vertical;min-height:80px;}
           <div class="card">
             <div class="card-title">⚡ Quick Actions</div>
             <div class="quick-grid">
-              <div class="quick-card" onclick="showTab('pages',document.querySelectorAll('.nav-item')[2])">
+              <div class="quick-card" onclick="showTab('pages',getNavItem('pages'))">
                 <div class="qic">🎨</div><div class="qt">แก้ไขหน้า</div><div class="qs">รูป + ข้อความทุกหน้า</div>
               </div>
-              <div class="quick-card" onclick="showTab('shopee',document.querySelectorAll('.nav-item')[4])">
+              <div class="quick-card" onclick="showTab('stones',getNavItem('stones'))">
+                <div class="qic">💎</div><div class="qt">สารานุกรมหิน</div><div class="qs">72 หิน — แก้ไข/ใส่รูป</div>
+              </div>
+              <div class="quick-card" onclick="showTab('blog',getNavItem('blog'))">
+                <div class="qic">📝</div><div class="qt">Blog & Schedule</div><div class="qs">บทความ + ตั้งเวลา</div>
+              </div>
+              <div class="quick-card" onclick="showTab('catalog',getNavItem('catalog'))">
+                <div class="qic">✦</div><div class="qt">Crystal Catalog</div><div class="qs">หน้าขายรายหิน</div>
+              </div>
+              <div class="quick-card" onclick="showTab('shopee',getNavItem('shopee'))">
                 <div class="qic">🛒</div><div class="qt">Shopee Aff</div><div class="qs">เพิ่มสินค้า Affiliate</div>
               </div>
-              <div class="quick-card" onclick="showTab('products',document.querySelectorAll('.nav-item')[3])">
-                <div class="qic">💎</div><div class="qt">จัดการสินค้า</div><div class="qs">โพรงอเมทิสต์</div>
-              </div>
-              <div class="quick-card" onclick="showTab('articles',document.querySelectorAll('.nav-item')[5])">
-                <div class="qic">📝</div><div class="qt">บทความ</div><div class="qs">ดูหน้าทั้งหมด</div>
+              <div class="quick-card" onclick="showTab('products',getNavItem('products'))">
+                <div class="qic">🪨</div><div class="qt">สินค้าโพรง</div><div class="qs">โพรงอเมทิสต์</div>
               </div>
               <a href="/talk/" target="_blank" class="quick-card">
                 <div class="qic">🔮</div><div class="qt">ห้องคลื่นเสียง</div><div class="qs">Manifest Sessions</div>
               </a>
-              <a href="/stones/" target="_blank" class="quick-card">
-                <div class="qic">📖</div><div class="qt">สารานุกรมหิน</div><div class="qs">ดูหน้าหลัก</div>
+              <a href="/" target="_blank" class="quick-card">
+                <div class="qic">🌐</div><div class="qt">หน้าเว็บหลัก</div><div class="qs">ดู amethez.com</div>
               </a>
             </div>
           </div>
@@ -458,7 +464,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
                     <div style="font-weight:700;font-size:.88rem">ยังไม่ได้เชื่อมต่อ GA4</div>
                     <div style="font-size:.78rem;color:#6b7280">ใส่ GA4 Measurement ID ในหน้าตั้งค่าก่อน</div>
                   </div>
-                  <button class="btn btn-outline btn-sm" onclick="showTab('settings',document.querySelectorAll('.nav-item')[7])">ไปตั้งค่า →</button>
+                  <button class="btn btn-outline btn-sm" onclick="showTab('settings',getNavItem('settings'))">ไปตั้งค่า →</button>
                 </div>
 
                 <div id="ga4AuthSection" style="display:none;margin-top:1rem">
@@ -1462,7 +1468,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-11.4';
+const ADMIN_VERSION='2026-07-11.5';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -1838,6 +1844,13 @@ if(sessionStorage.getItem(AUTH_KEY)){
 
 // ── TABS ──────────────────────────────────────
 const TAB_TITLES={dashboard:'📊 ภาพรวม',stats:'📈 สถิติ & เป้าหมาย',pages:'🎨 แก้ไขหน้า',stones:'💎 สารานุกรมหิน',blog:'📝 Blog & Schedule',products:'🪨 สินค้าโพรง',shopee:'🛒 Shopee Aff',roadmap:'🗺️ แผน 6 เดือน',articles:'📋 หน้าทั้งหมด',settings:'⚙️ ตั้งค่า',catalog:'✦ Crystal Catalog'};
+// Look up a sidebar nav-item by the tab name it opens, instead of a hardcoded
+// array index — indices silently went stale every time a nav item was added
+// (found 5 call sites pointing at the wrong tab, one at a tab that no longer
+// exists, after Crystal Catalog was appended).
+function getNavItem(tabName){
+  return [...document.querySelectorAll('.nav-item')].find(n=>(n.getAttribute('onclick')||'').includes(`showTab('${tabName}'`));
+}
 function showTab(name,el){
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   if(el) el.classList.add('active');
@@ -3166,24 +3179,37 @@ function goEditPage(key){
 // ── DASHBOARD ─────────────────────────────────
 function renderDash(){
   loadGeodes();
+  drawDashStats();
+  // Blog/Catalog counts live in localStorage seeded from their JSON files —
+  // seed them if this is the first tab visited this session, then repaint
+  // with accurate numbers once that resolves.
+  Promise.all([seedBlogFromJson(),seedCatalogFromJson()]).then(drawDashStats).catch(()=>{});
+}
+function drawDashStats(){
   const imgs=getImgs();
   const set=Object.keys(imgs).length;
   const total=SLOTS.length;
   const avail=geodes.filter(g=>g.status==='available').length;
+  const stoneCount=PAGES.filter(p=>p.group==='s').length;
+  const blogCount=getBlogPosts().filter(p=>p.status==='published').length;
+  const catalogCount=getCatalogItems().filter(p=>p.status==='published').length;
   const dashStats=document.getElementById('dashStats');
   if(dashStats) dashStats.innerHTML=`
+    <div class="stat-card"><div class="stat-num c-purple">${PAGES.length}</div><div class="stat-label">หน้าทั้งหมดในเว็บ</div></div>
+    <div class="stat-card"><div class="stat-num c-purple">${stoneCount}</div><div class="stat-label">บทความหิน (สารานุกรม)</div></div>
+    <div class="stat-card"><div class="stat-num c-purple">${blogCount}</div><div class="stat-label">บทความ Blog</div></div>
+    <div class="stat-card"><div class="stat-num c-purple">${catalogCount}</div><div class="stat-label">หินใน Crystal Catalog</div></div>
     <div class="stat-card"><div class="stat-num c-green">${set}</div><div class="stat-label">รูปที่ใส่แล้ว</div></div>
     <div class="stat-card"><div class="stat-num c-gold">${total-set}</div><div class="stat-label">รูปที่ยังขาด</div></div>
-    <div class="stat-card"><div class="stat-num c-purple">${total}</div><div class="stat-label">Slots ทั้งหมด</div></div>
+    <div class="stat-card"><div class="stat-num c-gray">${total}</div><div class="stat-label">Slots รูปทั้งหมด</div></div>
     <div class="stat-card"><div class="stat-num c-purple">${geodes.length}</div><div class="stat-label">สินค้าโพรง</div></div>
-    <div class="stat-card"><div class="stat-num c-green">${avail}</div><div class="stat-label">พร้อมขาย</div></div>
-    <div class="stat-card"><div class="stat-num c-gray">${ARTICLES.length}</div><div class="stat-label">หน้าทั้งหมด</div></div>`;
+    <div class="stat-card"><div class="stat-num c-green">${avail}</div><div class="stat-label">พร้อมขาย</div></div>`;
   const missing=SLOTS.filter(s=>!imgs[s.id]);
   const dashImgStatus=document.getElementById('dashImgStatus');
   if(dashImgStatus) dashImgStatus.innerHTML=missing.length===0
     ?`<div style="color:var(--green);font-weight:700;font-size:.95rem">✅ ครบทุกรูปแล้ว!</div>`
     :`<div style="color:var(--yellow);margin-bottom:.75rem;font-size:.875rem">⚠️ ยังขาดรูป ${missing.length} จุด — คลิกเพื่อเพิ่ม:</div>
-      <div style="display:flex;flex-wrap:wrap;gap:.4rem">${missing.map(s=>`<button onclick="showTab('images',document.querySelectorAll('.nav-item')[1]);setTimeout(()=>openSlot('${s.id}'),300)" class="btn btn-outline btn-sm" style="font-size:.75rem">${x(s.label)}</button>`).join('')}</div>`;
+      <div style="display:flex;flex-wrap:wrap;gap:.4rem">${missing.slice(0,60).map(s=>`<button onclick="openImgModal('${s.id}')" class="btn btn-outline btn-sm" style="font-size:.75rem">${x(s.label)}</button>`).join('')}${missing.length>60?`<span style="font-size:.75rem;color:#9ca3af;align-self:center">+ อีก ${missing.length-60} จุด</span>`:''}</div>`;
 }
 
 // ── UTIL ──────────────────────────────────────
@@ -5207,7 +5233,7 @@ async function publishToGitHub(){
   const repo=localStorage.getItem(GH_REPO_KEY);
   if(!token||!repo){
     toast('❌ ตั้งค่า GitHub Token และ Repo ในแท็บ ตั้งค่า ก่อนนะคะ','err');
-    showTab('settings',document.querySelectorAll('.nav-item')[5]);
+    showTab('settings',getNavItem('settings'));
     return;
   }
   const btn=document.getElementById('publishBtn');
