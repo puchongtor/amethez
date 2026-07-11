@@ -250,6 +250,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
       <div class="nav-item" onclick="showTab('roadmap',this)"><span class="ic">🗺️</span> แผน 6 เดือน</div>
       <div class="nav-item" onclick="showTab('settings',this)"><span class="ic">⚙️</span> ตั้งค่า</div>
       <div class="nav-item" onclick="showTab('catalog',this)"><span class="ic">✦</span> Crystal Catalog</div>
+      <div class="nav-item" onclick="showTab('top100',this)"><span class="ic">🏆</span> Top 100 ยอดนิยม</div>
     </div>
     <div class="sidebar-footer">
       <button class="btn-logout" onclick="doLogout()">🚪 ออกจากระบบ</button>
@@ -1399,6 +1400,33 @@ textarea.form-input{resize:vertical;min-height:80px;}
           </div><!-- /catalogEditorView -->
         </div>
 
+        <!-- TOP 100 -->
+        <div id="tab-top100">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1rem">
+            <div>
+              <div class="section-title">🏆 100 อันดับหินยอดนิยม</div>
+              <div class="section-sub">แก้ชื่อ/คำอธิบาย/รูปได้ตรงนี้ — บันทึกอัตโนมัติทุกครั้งที่พิมพ์ กด "🚀 เผยแพร่" ด้านบนเพื่อขึ้นเว็บจริง (รวมกับการเผยแพร่อื่นๆ ทั้งหมด)</div>
+            </div>
+            <input class="form-input" id="top100Search" placeholder="ค้นหาชื่อหิน..." style="max-width:220px" oninput="renderTop100Table()">
+          </div>
+          <div style="overflow-x:auto">
+            <table style="width:100%;border-collapse:collapse;font-size:.85rem;min-width:900px">
+              <thead>
+                <tr style="background:#f3effa;text-align:left">
+                  <th style="padding:.5rem;width:40px">#</th>
+                  <th style="padding:.5rem;width:64px">รูป</th>
+                  <th style="padding:.5rem;min-width:130px">ชื่อไทย</th>
+                  <th style="padding:.5rem;min-width:150px">ชื่ออังกฤษ</th>
+                  <th style="padding:.5rem;min-width:220px">คำอธิบาย</th>
+                  <th style="padding:.5rem;min-width:220px">พลังความเชื่อ</th>
+                  <th style="padding:.5rem;min-width:160px">แท็ก (คั่นด้วย ,)</th>
+                </tr>
+              </thead>
+              <tbody id="top100Rows"></tbody>
+            </table>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -1468,7 +1496,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-12.3';
+const ADMIN_VERSION='2026-07-12.4';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -1843,7 +1871,7 @@ if(sessionStorage.getItem(AUTH_KEY)){
 }
 
 // ── TABS ──────────────────────────────────────
-const TAB_TITLES={dashboard:'📊 ภาพรวม',stats:'📈 สถิติ & เป้าหมาย',pages:'🎨 แก้ไขหน้า',stones:'💎 สารานุกรมหิน',blog:'📝 Blog & Schedule',products:'🪨 สินค้าโพรง',shopee:'🛒 Shopee Aff',roadmap:'🗺️ แผน 6 เดือน',articles:'📋 หน้าทั้งหมด',settings:'⚙️ ตั้งค่า',catalog:'✦ Crystal Catalog'};
+const TAB_TITLES={dashboard:'📊 ภาพรวม',stats:'📈 สถิติ & เป้าหมาย',pages:'🎨 แก้ไขหน้า',stones:'💎 สารานุกรมหิน',blog:'📝 Blog & Schedule',products:'🪨 สินค้าโพรง',shopee:'🛒 Shopee Aff',roadmap:'🗺️ แผน 6 เดือน',articles:'📋 หน้าทั้งหมด',settings:'⚙️ ตั้งค่า',catalog:'✦ Crystal Catalog',top100:'🏆 Top 100 ยอดนิยม'};
 // Look up a sidebar nav-item by the tab name it opens, instead of a hardcoded
 // array index — indices silently went stale every time a nav item was added
 // (found 5 call sites pointing at the wrong tab, one at a tab that no longer
@@ -1868,6 +1896,7 @@ function showTab(name,el){
   if(name==='roadmap') renderRoadmap();
   if(name==='settings') loadSettingsTab();
   if(name==='catalog'){ seedCatalogFromJson().then(()=>renderCatalog()); }
+  if(name==='top100'){ seedTop100FromJson().then(()=>renderTop100Table()); }
 }
 
 // ── SETTINGS / STORE INFO ──────────────────────────────────────
@@ -3666,6 +3695,9 @@ const PAGES=[
    text:[{id:'title',label:'หัวข้อหน้า',type:'i',ph:'อัญมณีตามนักษัตร 12 ปีเกิด'}],
    imgs:['cat_chinese_hero']},
 
+  {key:'encyclopedia',label:'🏆 100 อันดับยอดนิยม',group:'c',path:'/stones/encyclopedia.html',
+   text:[{id:'subtitle',label:'คำบรรยายใต้หัวข้อ',type:'t',ph:''}]},
+
   {key:'geode',label:'🪨 โพรงอเมทิสต์',group:'sp',path:'/geode/',
    text:[
      {id:'title',label:'หัวข้อ',type:'i',ph:'โพรงอเมทิสต์ Premium'},
@@ -5226,6 +5258,70 @@ function deleteCatalogFromEditor(){
   toast('ลบแล้ว','ok');
 }
 
+// ── TOP 100 ยอดนิยม ─────────────────────────────
+const TOP100_KEY='amethez_top100';
+function getTop100Items(){ try{ return JSON.parse(localStorage.getItem(TOP100_KEY)||'[]'); }catch{ return []; } }
+function saveTop100Items(arr){ localStorage.setItem(TOP100_KEY,JSON.stringify(arr)); }
+async function seedTop100FromJson(){
+  if(getTop100Items().length) return;
+  try{
+    const r=await fetch('/data/top-100-stones.json?v='+Date.now());
+    if(!r.ok) return;
+    const d=await r.json();
+    saveTop100Items((d.stones||[]).sort((a,b)=>a.rank-b.rank));
+  }catch{}
+}
+function renderTop100Table(){
+  const items=getTop100Items();
+  const q=(document.getElementById('top100Search')?.value||'').trim().toLowerCase();
+  const tbody=document.getElementById('top100Rows');
+  if(!tbody) return;
+  const filtered=q?items.filter(it=>(it.th+it.en).toLowerCase().includes(q)):items;
+  tbody.innerHTML=filtered.map(it=>{
+    const imgUrl=it.imgSlot?(getImgs()[it.imgSlot]||''):'';
+    const thumb=imgUrl?`<img src="${x(imgUrl)}" style="width:48px;height:48px;object-fit:cover;border-radius:.4rem">`
+      :`<div style="width:48px;height:48px;border-radius:.4rem;background:#f3effa;display:flex;align-items:center;justify-content:center;font-size:1.1rem">💎</div>`;
+    return `<tr style="border-bottom:1px solid #f0e8ff" data-rank="${it.rank}">
+      <td style="padding:.5rem;font-weight:700;color:#7c3aed">${it.rank}</td>
+      <td style="padding:.5rem">
+        <label style="cursor:pointer;display:block" title="อัปโหลดรูป">
+          ${thumb}
+          <input type="file" accept="image/*" style="display:none" onchange="uploadTop100Img(${it.rank},this)">
+        </label>
+      </td>
+      <td style="padding:.5rem"><input class="form-input" style="font-size:.85rem" value="${x(it.th)}" oninput="setTop100Field(${it.rank},'th',this.value)"></td>
+      <td style="padding:.5rem"><input class="form-input" style="font-size:.85rem" value="${x(it.en)}" oninput="setTop100Field(${it.rank},'en',this.value)"></td>
+      <td style="padding:.5rem"><textarea class="form-input" style="font-size:.8rem;min-height:44px" oninput="setTop100Field(${it.rank},'desc',this.value)">${x(it.desc)}</textarea></td>
+      <td style="padding:.5rem"><textarea class="form-input" style="font-size:.8rem;min-height:44px" oninput="setTop100Field(${it.rank},'belief',this.value)">${x(it.belief)}</textarea></td>
+      <td style="padding:.5rem"><input class="form-input" style="font-size:.8rem" value="${x((it.tags||[]).join(', '))}" oninput="setTop100Field(${it.rank},'tags',this.value.split(',').map(s=>s.trim()).filter(Boolean))"></td>
+    </tr>`;
+  }).join('');
+}
+function setTop100Field(rank,field,value){
+  const items=getTop100Items();
+  const it=items.find(i=>i.rank===rank);
+  if(!it) return;
+  it[field]=value;
+  saveTop100Items(items);
+}
+function uploadTop100Img(rank,input){
+  const f=input.files[0]; if(!f) return;
+  const items=getTop100Items();
+  const it=items.find(i=>i.rank===rank);
+  if(!it) return;
+  const r=new FileReader();
+  r.onload=e=>{
+    const slug=(it.id||'rank-'+rank).replace(/^rank-\d+-/,'');
+    const key=it.imgSlot||`top100_${rank}_${slug}_hero`;
+    it.imgSlot=key;
+    const imgs=getImgs(); imgs[key]=e.target.result; setImgs(imgs);
+    saveTop100Items(items);
+    renderTop100Table();
+    toast('เพิ่มรูปแล้ว — กด "🚀 เผยแพร่" เพื่อขึ้นเว็บจริง','ok');
+  };
+  r.readAsDataURL(f);
+}
+
 // ── GITHUB PUBLISH ─────────────────────────────
 async function publishToGitHub(){
   const token=localStorage.getItem(GH_TOKEN_KEY);
@@ -5484,6 +5580,83 @@ async function publishToGitHub(){
       }
       _dirtyCatBodyIds.clear();
       saveCatalogItems(catalogItems);
+
+      // Regenerate & push the Top 100 ranking page + data (image binaries already
+      // handled above by the generic imgs upload loop — same getImgs()/setImgs() store)
+      if(localStorage.getItem(TOP100_KEY)){
+        const top100Items=getTop100Items().sort((a,b)=>a.rank-b.rank);
+        const emojiMap={purple:'💜',green:'💚',blue:'💙',pink:'🩷',yellow:'💛',red:'❤️',black:'🖤',white:'🤍',orange:'🧡',brown:'🟤',gold:'✨',multi:'🌈',clear:'🔷'};
+        let lastBand=0, cardsHtml='';
+        for(const it of top100Items){
+          const bandStart=Math.floor((it.rank-1)/10)*10+1;
+          if(bandStart!==lastBand){
+            const bandEnd=Math.min(bandStart+9,99);
+            cardsHtml+=`<div class="rank-band-header" id="band-${bandStart}"><span>อันดับ ${bandStart}-${bandEnd}</span></div>`;
+            lastBand=bandStart;
+          }
+          const isTop10=it.rank<=10;
+          const emo=emojiMap[it.col]||'💎';
+          const imgTag=it.imgSlot?`<img data-cms-img="${it.imgSlot}" class="rank-img" alt="${x(it.th)} — Amethez Crystal Atlas" loading="lazy" onerror="this.style.display='none'">`:'';
+          const tagsHtml=(it.tags||[]).map(t=>`<span class="rank-tag">${x(t)}</span>`).join('');
+          const linkHtml=it.articleUrl?`<a class="rank-more" href="${it.articleUrl}">อ่านเพิ่มเติม →</a>`:'';
+          cardsHtml+=`
+  <article class="rank-card${isTop10?' top10':''}" id="${it.id}">
+    <div class="rank-num">${it.rank}</div>
+    <div class="rank-thumb bg-${it.col}">
+      ${imgTag}
+      <span class="cms-placeholder">${emo}</span>
+    </div>
+    <div class="rank-body">
+      <h3 class="rank-name"><span class="rank-th">${x(it.th)}</span> <span class="rank-sep">·</span> <span class="rank-en">${x(it.en)}</span></h3>
+      <p class="rank-desc">${x(it.desc)}</p>
+      <p class="rank-belief">${x(it.belief)}</p>
+      <div class="rank-tags">${tagsHtml}</div>
+      ${linkHtml}
+    </div>
+  </article>`;
+        }
+
+        const itemListSchema={
+          '@context':'https://schema.org','@type':'ItemList',
+          name:'100 อันดับหินคริสตัลและแร่ยอดนิยมในไทย',
+          description:'จัดอันดับหินคริสตัลและแร่ที่ได้รับความนิยมสูงสุดในตลาดไทย คัดกรองจากสถิติการค้นหาและความนิยมซื้อขายจริง',
+          numberOfItems:top100Items.length,
+          itemListOrder:'https://schema.org/ItemListOrderDescending',
+          itemListElement:top100Items.map(it=>({
+            '@type':'ListItem', position:it.rank,
+            name:`${it.th} (${it.en})`,
+            url:it.articleUrl?`https://amethez.com${it.articleUrl}`:`https://amethez.com/stones/encyclopedia.html#${it.id}`
+          }))
+        };
+
+        try{
+          const pr=await fetch(`https://api.github.com/repos/${repo}/contents/stones/encyclopedia.html`,{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}});
+          if(pr.ok){
+            const pd=await pr.json();
+            const pageHtml=decodeURIComponent(escape(atob(pd.content.replace(/\n/g,''))));
+            const doc=new DOMParser().parseFromString(pageHtml,'text/html');
+            const listEl=doc.querySelector('[data-cms-generated="rank-list"]');
+            if(listEl){
+              listEl.innerHTML=cardsHtml;
+              const scripts=[...doc.querySelectorAll('script[type="application/ld+json"]')];
+              const ilScript=scripts.find(s=>{ try{ return JSON.parse(s.textContent)['@type']==='ItemList'; }catch{ return false; } });
+              if(ilScript) ilScript.textContent=JSON.stringify(itemListSchema,null,2);
+              const updatedHtml='<!DOCTYPE html>\n'+doc.documentElement.outerHTML;
+              const newB64=btoa(unescape(encodeURIComponent(updatedHtml)));
+              const pur=await fetch(`https://api.github.com/repos/${repo}/contents/stones/encyclopedia.html`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:'cms: update Top 100 ranking page',content:newB64,sha:pd.sha})});
+              if(!pur.ok) toast('⚠️ อัปเดตหน้า Top 100 ไม่สำเร็จ','err');
+            } else {
+              toast('⚠️ ไม่พบส่วนรายการ Top 100 ในหน้าเว็บ — ข้ามการอัปเดต','err');
+            }
+          }
+        }catch(e){ toast('⚠️ อัปเดตหน้า Top 100 ผิดพลาด: '+e.message,'err'); }
+
+        const top100Json=JSON.stringify({generated:new Date().toISOString().slice(0,10),source:'Admin-edited via Top 100 tab',stones:top100Items},null,2);
+        const t100B64=btoa(unescape(encodeURIComponent(top100Json)));
+        let t100Sha='';
+        try{ const tr=await fetch(`https://api.github.com/repos/${repo}/contents/data/top-100-stones.json`,{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}}); if(tr.ok){ const td=await tr.json(); t100Sha=td.sha; } }catch{}
+        await fetch(`https://api.github.com/repos/${repo}/contents/data/top-100-stones.json`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:'cms: update top-100-stones.json',content:t100B64,...(t100Sha?{sha:t100Sha}:{})})});
+      }
 
       // Push data/catalog.json (index-grid manifest)
       if(catalogItems.length){
