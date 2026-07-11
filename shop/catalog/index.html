@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crystal Catalog — เลือกหินตามความเชื่อและพลังงาน | Amethez</title>
+  <meta name="description" content="Crystal Catalog — คลังหินคริสตัลเรียงตามตัวอักษร เน้นเรื่องราวพลังงานและความเชื่อ พร้อมแหวน จี้ สร้อยข้อมือ สั่งซื้อผ่าน Shopee หรือทักไลน์ได้ทันที">
+  <link rel="canonical" href="https://amethez.com/shop/catalog/">
+
+  <meta property="og:site_name" content="Amethez">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Crystal Catalog — เลือกหินตามความเชื่อและพลังงาน">
+  <meta property="og:description" content="คลังหินคริสตัลเรียงตามตัวอักษร เน้นเรื่องราวพลังงานและความเชื่อ">
+  <meta property="og:url" content="https://amethez.com/shop/catalog/">
+  <meta property="og:locale" content="th_TH">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+
+  <style>
+    .catlist-hero { background:linear-gradient(160deg,#1a1228 0%,#2d1b69 60%,#1a1228 100%);
+      padding:3.5rem 1.5rem 2.5rem; text-align:center; }
+    .catlist-hero h1 { font-family:'Playfair Display',serif; font-size:clamp(1.6rem,4vw,2.4rem); color:white; margin-bottom:.5rem; }
+    .catlist-hero p { color:rgba(255,255,255,.65); font-size:.95rem; }
+    .catlist-wrap { max-width:1100px; margin:0 auto; padding:2.5rem 1.5rem; }
+    .catlist-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:1.5rem; }
+    .cat-card { background:white; border:1px solid #e9e0f8; border-radius:1rem; overflow:hidden;
+      text-decoration:none; color:#1a1228; transition:all .2s; display:block; }
+    .cat-card:hover { border-color:var(--purple); transform:translateY(-3px); box-shadow:0 10px 30px rgba(124,58,237,.12); }
+    .cat-card-img { aspect-ratio:1; background:#f5f0ff; display:flex; align-items:center; justify-content:center;
+      font-size:2.75rem; position:relative; overflow:hidden; }
+    .cat-card-img img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1; }
+    .cat-card-body { padding:1rem 1.1rem 1.2rem; }
+    .cat-card-title { font-weight:700; font-size:1rem; margin-bottom:.35rem; }
+    .cat-card-teaser { font-size:.78rem; color:var(--text-muted); line-height:1.55; }
+    .catlist-empty { text-align:center; padding:4rem 1rem; color:#9ca3af; }
+  </style>
+</head>
+<body data-cms-page="shop-catalog">
+
+<header class="site-header"></header>
+
+<section class="catlist-hero">
+  <h1>✦ Crystal Catalog</h1>
+  <p>เลือกหินตามความเชื่อและพลังงาน — พร้อมแหวน จี้ สร้อยข้อมือ สั่งซื้อผ่าน Shopee หรือทักไลน์ได้ทันที</p>
+</section>
+
+<div class="catlist-wrap">
+  <div class="catlist-grid" id="catGrid">
+    <div class="catlist-empty">กำลังโหลด...</div>
+  </div>
+</div>
+
+<footer class="site-footer"></footer>
+<script>
+(async () => {
+  try {
+    const [catRes, contentRes] = await Promise.all([
+      fetch('/data/catalog.json?v=' + Date.now()),
+      fetch('/data/content.json?v=' + Date.now()),
+    ]);
+    const catData = await catRes.json();
+    const content = await contentRes.json();
+    const imgs = content.images || {};
+
+    const items = (catData.items || [])
+      .filter(it => it.status === 'published')
+      .sort((a, b) => a.title.localeCompare(b.title, 'th'));
+
+    const grid = document.getElementById('catGrid');
+    if (!items.length) {
+      grid.innerHTML = '<div class="catlist-empty">ยังไม่มีหินในแคตตาล็อก</div>';
+      return;
+    }
+
+    grid.innerHTML = items.map(it => {
+      const url = imgs[it.heroSlot];
+      const imgTag = url
+        ? `<img src="${url}" alt="${it.title}" loading="lazy" onerror="this.style.display='none'">`
+        : '';
+      return `<a href="${it.url}" class="cat-card">
+        <div class="cat-card-img">${imgTag}<span>💎</span></div>
+        <div class="cat-card-body">
+          <div class="cat-card-title">${it.title}</div>
+          <div class="cat-card-teaser">${it.teaser || ''}</div>
+        </div>
+      </a>`;
+    }).join('');
+  } catch (e) {
+    document.getElementById('catGrid').innerHTML = '<div class="catlist-empty">โหลดข้อมูลไม่สำเร็จ</div>';
+  }
+})();
+</script>
+<script src="/js/components.js"></script>
+<script src="/js/shila.js"></script>
+</body>
+</html>

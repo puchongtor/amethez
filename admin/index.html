@@ -249,6 +249,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
       <div class="nav-item" onclick="showTab('shopee',this)"><span class="ic">🛒</span> Shopee Aff</div>
       <div class="nav-item" onclick="showTab('roadmap',this)"><span class="ic">🗺️</span> แผน 6 เดือน</div>
       <div class="nav-item" onclick="showTab('settings',this)"><span class="ic">⚙️</span> ตั้งค่า</div>
+      <div class="nav-item" onclick="showTab('catalog',this)"><span class="ic">✦</span> Crystal Catalog</div>
     </div>
     <div class="sidebar-footer">
       <button class="btn-logout" onclick="doLogout()">🚪 ออกจากระบบ</button>
@@ -1263,6 +1264,135 @@ textarea.form-input{resize:vertical;min-height:80px;}
           </div>
         </div>
 
+        <!-- CRYSTAL CATALOG -->
+        <div id="tab-catalog">
+          <div id="catalogListView">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem">
+            <div>
+              <div class="section-title">✦ Crystal Catalog</div>
+              <div class="section-sub">หน้าขายรายหิน เน้นพลังงาน/ความเชื่อ + ลิงก์ Shopee + ไลน์ — เรียงตามตัวอักษรอัตโนมัติ</div>
+            </div>
+            <button class="btn btn-primary" onclick="openAddCatalogItem()">➕ เพิ่มหิน</button>
+          </div>
+          <div id="catalogList"></div>
+          </div><!-- /catalogListView -->
+
+          <!-- FULL PAGE EDITOR VIEW -->
+          <div id="catalogEditorView" style="display:none">
+            <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap">
+              <button class="btn btn-outline btn-sm" onclick="closeCatalogEditor()">← กลับ</button>
+              <div style="flex:1">
+                <div id="catTitle" style="font-size:1.1rem;font-weight:700"></div>
+                <a id="catPath" href="#" target="_blank" style="font-size:.8rem;color:#9ca3af;text-decoration:none"></a>
+              </div>
+              <a class="btn btn-outline btn-sm" id="catViewBtn" href="#" target="_blank" style="text-decoration:none">👁 ดูหน้า</a>
+              <button class="btn btn-outline btn-sm" onclick="resetCatBodyToOriginal()">↺ โหลดต้นฉบับ</button>
+              <button class="btn btn-danger btn-sm" id="catDelBtn" onclick="deleteCatalogFromEditor()">🗑 ลบ</button>
+              <button class="btn btn-primary" onclick="saveCatalogEditor()">💾 บันทึก</button>
+            </div>
+
+            <input type="hidden" id="catEditId">
+
+            <!-- Row 1: Meta (left) + Thumbnail (right) -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem">
+              <div class="card" style="margin-bottom:0">
+                <div class="card-title">📝 ข้อความย่อ (Meta)</div>
+                <div class="form-grid" style="gap:.75rem">
+                  <div class="form-group full"><label class="fl">ชื่อหิน (ไทย) *</label>
+                    <input class="form-input" id="catTitleTh" placeholder="เช่น โมลดาไวท์"></div>
+                  <div class="form-group full"><label class="fl">ชื่อหิน (อังกฤษ)</label>
+                    <input class="form-input" id="catTitleEn" placeholder="เช่น Moldavite"></div>
+                  <div class="form-group full"><label class="fl">แท็กไลน์สั้น (โชว์ใต้ชื่อในหน้าขาย)</label>
+                    <input class="form-input" id="catTagline" placeholder="เช่น หินแห่งการเปลี่ยนแปลงครั้งใหญ่ จากนอกโลก"></div>
+                  <div class="form-group full"><label class="fl">คำโปรยสั้น (โชว์ในหน้ารวม Catalog)</label>
+                    <textarea class="form-input" id="catTeaser" rows="2" placeholder="สรุป 1 บรรทัด..."></textarea></div>
+                  <div class="form-group full"><label class="fl">URL Slug</label>
+                    <input class="form-input" id="catSlug" placeholder="เช่น moldavite"></div>
+                  <div class="form-group full"><label class="fl">สถานะ</label>
+                    <select class="form-input" id="catStatus">
+                      <option value="published">🟢 เผยแพร่</option>
+                      <option value="draft">⚫ Draft</option>
+                    </select></div>
+                  <div class="form-group full"><label class="fl">💬 ลิงก์ไลน์ (ปุ่มทักไลน์)</label>
+                    <input class="form-input" id="catLineUrl" placeholder="https://line.me/R/ti/p/@masterpuch"></div>
+                </div>
+              </div>
+              <div class="card" style="margin-bottom:0">
+                <div class="card-title">🖼️ รูป Hero</div>
+                <div style="display:flex;gap:.5rem;align-items:flex-start;margin-bottom:.75rem">
+                  <input class="form-input" id="catHero" placeholder="https://... หรืออัปโหลดรูปด้านขวา" style="flex:1" oninput="updateCatHeroPreview(this.value)">
+                  <label style="cursor:pointer;flex-shrink:0">
+                    <span class="btn btn-outline btn-sm" style="display:inline-flex;align-items:center;gap:.3rem">📁 เลือกรูป</span>
+                    <input type="file" id="catHeroFile" accept="image/*" style="display:none" onchange="uploadCatHero(this)">
+                  </label>
+                </div>
+                <div id="catHeroPreview" style="display:none">
+                  <img id="catHeroImg" style="width:100%;max-height:180px;border-radius:.75rem;object-fit:cover;border:1px solid #e5e7eb">
+                </div>
+                <div id="catHeroEmpty" style="height:120px;background:#f5f3ff;border-radius:.75rem;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:.85rem">
+                  ยังไม่มีรูป — ใส่ URL หรืออัปโหลด
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 2: Products -->
+            <div class="card" style="margin-bottom:1.5rem">
+              <div class="card-title">💍 สินค้า 3 แบบ (แหวน / จี้ / สร้อยข้อมือ)</div>
+              <div id="catProductRows" style="display:flex;flex-direction:column;gap:1rem"></div>
+            </div>
+
+            <!-- Row 3: Body editor -->
+            <div class="card" style="margin-bottom:0">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem">
+                <div class="card-title" style="margin:0">📄 เนื้อหาเรื่องราวพลังงาน/ความเชื่อ (Body)</div>
+                <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
+                  <label style="cursor:pointer" onmousedown="saveCatInsertRange()">
+                    <span class="btn btn-outline btn-sm" style="display:inline-flex;align-items:center;gap:.3rem">🖼️ แทรกรูปในเนื้อหา</span>
+                    <input type="file" id="catInsertImgFile" accept="image/*" style="display:none" onchange="insertCatBodyImage(this)">
+                  </label>
+                  <span id="catBodyLen" style="font-size:.72rem;color:#9ca3af"></span>
+                </div>
+              </div>
+              <div style="display:flex;gap:0;margin-bottom:0;border-bottom:2px solid #e9e0f5">
+                <button id="catTabBtnHtml" onclick="switchCatTab('html')"
+                  style="padding:.5rem 1.25rem;border:none;border-bottom:2px solid #7c3aed;margin-bottom:-2px;background:none;font-size:.85rem;font-weight:700;color:#7c3aed;cursor:pointer">
+                  &lt;/&gt; HTML
+                </button>
+                <button id="catTabBtnPreview" onclick="switchCatTab('preview')"
+                  style="padding:.5rem 1.25rem;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;background:none;font-size:.85rem;font-weight:600;color:#9ca3af;cursor:pointer">
+                  👁 Preview
+                </button>
+              </div>
+              <div id="catTabHtml">
+                <textarea id="catBodyTA" rows="20"
+                  style="width:100%;font-family:'Consolas','Courier New',monospace;font-size:.8rem;line-height:1.7;border:1.5px solid #e9e0f5;border-radius:.5rem;padding:.85rem 1rem;resize:vertical;background:#fdfcff;color:#1a1228;tab-size:2"
+                  placeholder="เนื้อหาเรื่องราวพลังงาน/ความเชื่อ HTML..."
+                  oninput="onCatBodyEdit(this.value)"></textarea>
+              </div>
+              <div id="catTabPreview" style="display:none">
+                <div style="margin:.75rem 0 .5rem;display:flex;gap:.5rem;flex-wrap:wrap">
+                  <span style="font-size:.75rem;background:#e0f2fe;color:#0369a1;padding:.25rem .65rem;border-radius:20px;font-weight:600">✏️ คลิกข้อความ → แก้ได้เลย</span>
+                  <span style="font-size:.75rem;background:#fce7f3;color:#be185d;padding:.25rem .65rem;border-radius:20px;font-weight:600">🖼 คลิกรูป → ย่อ/ขยาย</span>
+                </div>
+                <div id="catBodyPreview"
+                  contenteditable="true"
+                  spellcheck="false"
+                  oninput="onCatPreviewEdit()"
+                  style="min-height:400px;border:1.5px solid #e9e0f5;border-radius:.5rem;background:#faf8f4;padding:2rem 2.5rem;outline:none;overflow-y:auto;position:relative"></div>
+                <style id="catBodyPreviewStyleTag">
+                  #catBodyPreview { font-family:'Sarabun',sans-serif; font-size:17px; line-height:1.75; color:#1a1228; }
+                  #catBodyPreview h2 { font-family:'Playfair Display',serif; font-size:1.35rem; color:#5b21b6; margin:1.5rem 0 .75rem; }
+                  #catBodyPreview p  { margin-bottom:1rem; }
+                  #catBodyPreview ul,#catBodyPreview ol { margin:0 0 1rem 1.5rem; }
+                  #catBodyPreview li { margin-bottom:.35rem; }
+                  #catBodyPreview img { max-width:100%; cursor:pointer; border-radius:.5rem; }
+                  #catBodyPreview img.img-selected { outline:2px solid #7c3aed; outline-offset:2px; }
+                </style>
+              </div>
+            </div>
+          </div><!-- /catalogEditorView -->
+        </div>
+
       </div>
     </div>
   </div>
@@ -1332,7 +1462,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-11.3';
+const ADMIN_VERSION='2026-07-11.4';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -1707,7 +1837,7 @@ if(sessionStorage.getItem(AUTH_KEY)){
 }
 
 // ── TABS ──────────────────────────────────────
-const TAB_TITLES={dashboard:'📊 ภาพรวม',stats:'📈 สถิติ & เป้าหมาย',pages:'🎨 แก้ไขหน้า',stones:'💎 สารานุกรมหิน',blog:'📝 Blog & Schedule',products:'🪨 สินค้าโพรง',shopee:'🛒 Shopee Aff',roadmap:'🗺️ แผน 6 เดือน',articles:'📋 หน้าทั้งหมด',settings:'⚙️ ตั้งค่า'};
+const TAB_TITLES={dashboard:'📊 ภาพรวม',stats:'📈 สถิติ & เป้าหมาย',pages:'🎨 แก้ไขหน้า',stones:'💎 สารานุกรมหิน',blog:'📝 Blog & Schedule',products:'🪨 สินค้าโพรง',shopee:'🛒 Shopee Aff',roadmap:'🗺️ แผน 6 เดือน',articles:'📋 หน้าทั้งหมด',settings:'⚙️ ตั้งค่า',catalog:'✦ Crystal Catalog'};
 function showTab(name,el){
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   if(el) el.classList.add('active');
@@ -1724,6 +1854,7 @@ function showTab(name,el){
   if(name==='dashboard') renderDash();
   if(name==='roadmap') renderRoadmap();
   if(name==='settings') loadSettingsTab();
+  if(name==='catalog'){ seedCatalogFromJson().then(()=>renderCatalog()); }
 }
 
 // ── SETTINGS / STORE INFO ──────────────────────────────────────
@@ -3992,15 +4123,18 @@ function openAddPost(){
   document.getElementById('blogThumbFile').value='';
   document.getElementById('blogModal').classList.add('open');
 }
-// Fetch the current live .post-body content for a page — uses DOMParser
-// (not a terminator regex) so nested elements like .faq-item/.related-links
-// can't fool it into truncating the body early.
+// Fetch the current live data-cms-text="body" content for a page — uses
+// DOMParser (not a terminator regex) so nested elements like
+// .faq-item/.related-links can't fool it into truncating the body early.
+// data-cms-text="body" is the marker every body-editable page type shares
+// (blog .post-body, stones .article-body, cosmos .content-wrap, catalog
+// .cat-body), so this one function covers all of them.
 async function fetchLivePostBody(url){
   const r=await fetch(url+'?v='+Date.now());
   if(!r.ok) return '';
   const html=await r.text();
   const doc=new DOMParser().parseFromString(html,'text/html');
-  const el=doc.querySelector('.post-body');
+  const el=doc.querySelector('[data-cms-text="body"]');
   return el?el.innerHTML.trim():'';
 }
 async function resetBEBodyToOriginal(){
@@ -4683,6 +4817,390 @@ function toggleGhVis(){
   else { inp.type='password'; btn.textContent='👁'; }
 }
 
+// ── CRYSTAL CATALOG CRUD ─────────────────────────────
+const CATALOG_KEY='amethez_catalog';
+function getCatalogItems(){ try{ return JSON.parse(localStorage.getItem(CATALOG_KEY)||'[]'); }catch{ return []; } }
+function saveCatalogItems(arr){ localStorage.setItem(CATALOG_KEY,JSON.stringify(arr)); }
+const CAT_PRODUCT_TYPES=[{key:'ring',label:'💍 แหวน'},{key:'pendant',label:'📿 จี้'},{key:'bracelet',label:'⚫ สร้อยข้อมือ'}];
+function emptyCatProducts(){ const o={}; CAT_PRODUCT_TYPES.forEach(t=>o[t.key]={name:'',img:'',url:''}); return o; }
+
+async function seedCatalogFromJson(){
+  if(localStorage.getItem('amethez_catalog_seeded')) return;
+  try{
+    const r=await fetch('/data/catalog.json?v='+Date.now());
+    if(!r.ok) return;
+    const d=await r.json();
+    const existing=getCatalogItems();
+    const existIds=new Set(existing.map(p=>String(p.id)));
+    const seeded=(d.items||[]).filter(a=>!existIds.has(String(a.id))).map(a=>({
+      id: String(a.id),
+      titleTh: a.title||'',
+      titleEn: a.titleEn||'',
+      slug: a.slug||'',
+      url: a.url||'',
+      teaser: a.teaser||'',
+      tagline: '',
+      hero: '',
+      status: a.status||'published',
+      lineUrl: '',
+      products: emptyCatProducts(),
+      body: '',
+      created: a.updated||new Date().toISOString(),
+      updated: a.updated||new Date().toISOString(),
+    }));
+    saveCatalogItems([...existing,...seeded]);
+    localStorage.setItem('amethez_catalog_seeded','1');
+  }catch(e){ console.warn('seedCatalog:',e); }
+}
+
+function renderCatalog(){
+  const list=getCatalogItems();
+  if(!list.length){
+    document.getElementById('catalogList').innerHTML='<div style="text-align:center;padding:4rem;color:#9ca3af">ยังไม่มีหินใน Catalog — กด ➕ เพิ่มหิน</div>';
+    return;
+  }
+  const STATUS_LABEL={published:'🟢 เผยแพร่',draft:'⚫ Draft'};
+  const STATUS_COLOR={published:'#059669',draft:'#9ca3af'};
+  document.getElementById('catalogList').innerHTML=`<div class="article-list">${[...list].sort((a,b)=>(a.titleTh||'').localeCompare(b.titleTh||'','th')).map(p=>{
+    const col=STATUS_COLOR[p.status]||'#9ca3af';
+    const thumb=p.hero?`<img src="${x(p.hero)}" style="width:56px;height:56px;object-fit:cover;border-radius:.5rem;flex-shrink:0">`
+      :`<div style="width:56px;height:56px;background:#f5f0ff;border-radius:.5rem;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0">💎</div>`;
+    return `<div class="article-item" style="border-left:3px solid ${col}">
+      ${thumb}
+      <div class="article-info" style="flex:1;min-width:0">
+        <div class="article-name">${x(p.titleTh)}</div>
+        <div style="font-size:.72rem;color:#9ca3af;margin-top:.2rem">${x(p.url||'/shop/catalog/'+p.slug+'.html')}</div>
+      </div>
+      <div style="display:flex;gap:.4rem;align-items:center;flex-wrap:wrap">
+        <span style="font-size:.72rem;color:${col};background:${col}22;padding:.15rem .55rem;border-radius:2rem">${STATUS_LABEL[p.status]||p.status}</span>
+        <button class="btn btn-outline btn-sm" onclick="openEditCatalogItem('${x(p.id)}')">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="delCatalogItem('${x(p.id)}')">🗑</button>
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+}
+function delCatalogItem(id){
+  if(!confirm('ลบหินนี้ออกจาก Catalog?')) return;
+  saveCatalogItems(getCatalogItems().filter(p=>p.id!==id));
+  renderCatalog();
+  toast('ลบแล้ว','ok');
+}
+
+function openAddCatalogItem(){
+  document.getElementById('catEditId').value='';
+  document.getElementById('catTitleTh').value='';
+  document.getElementById('catTitleEn').value='';
+  document.getElementById('catTagline').value='';
+  document.getElementById('catTeaser').value='';
+  document.getElementById('catSlug').value='';
+  document.getElementById('catStatus').value='draft';
+  let defaultLine='https://line.me/R/ti/p/@masterpuch';
+  try{ const s=JSON.parse(localStorage.getItem(STORE_KEY)||'{}'); if(s.linePartner) defaultLine=s.linePartner; }catch{}
+  document.getElementById('catLineUrl').value=defaultLine;
+  document.getElementById('catHero').value='';
+  updateCatHeroPreview('');
+  document.getElementById('catTitle').textContent='✏️ เพิ่มหินใหม่';
+  document.getElementById('catPath').textContent='';
+  document.getElementById('catPath').removeAttribute('href');
+  document.getElementById('catViewBtn').removeAttribute('href');
+  document.getElementById('catBodyTA').value='';
+  document.getElementById('catBodyPreview').innerHTML='';
+  updateCatBodyLen('');
+  switchCatTab('html');
+  renderCatProductRows(emptyCatProducts());
+  document.getElementById('catDelBtn').style.display='none';
+  document.getElementById('catalogListView').style.display='none';
+  document.getElementById('catalogEditorView').style.display='';
+}
+
+function openEditCatalogItem(id){
+  const p=getCatalogItems().find(b=>b.id===id); if(!p) return;
+  document.getElementById('catEditId').value=p.id;
+  document.getElementById('catTitleTh').value=p.titleTh||'';
+  document.getElementById('catTitleEn').value=p.titleEn||'';
+  document.getElementById('catTagline').value=p.tagline||'';
+  document.getElementById('catTeaser').value=p.teaser||'';
+  document.getElementById('catSlug').value=p.slug||'';
+  document.getElementById('catStatus').value=p.status||'draft';
+  document.getElementById('catLineUrl').value=p.lineUrl||'';
+  document.getElementById('catHero').value=p.hero||'';
+  updateCatHeroPreview(p.hero||'');
+  document.getElementById('catTitle').textContent='✏️ '+p.titleTh;
+  const pagePath=p.url||('/shop/catalog/'+p.slug+'.html');
+  document.getElementById('catPath').textContent=pagePath;
+  document.getElementById('catPath').href=pagePath;
+  document.getElementById('catViewBtn').href=pagePath;
+  document.getElementById('catDelBtn').style.display='';
+  renderCatProductRows(p.products||emptyCatProducts());
+
+  // body — same self-heal-against-stale-cache pattern as the Blog editor
+  const localBody=p.body||'';
+  document.getElementById('catBodyTA').value=localBody||'(กำลังโหลด...)';
+  document.getElementById('catBodyPreview').innerHTML=localBody;
+  updateCatBodyLen(localBody);
+  switchCatTab('html');
+  if(pagePath){
+    fetchLivePostBody(pagePath).then(liveBody=>{
+      if(!liveBody) return;
+      if(document.getElementById('catEditId').value!==p.id) return;
+      const liveTextLen=(new DOMParser().parseFromString(liveBody,'text/html').body.textContent||'').trim().length;
+      const localTextLen=(new DOMParser().parseFromString(localBody,'text/html').body.textContent||'').trim().length;
+      const staleCache=liveTextLen>100 && localTextLen < liveTextLen*0.6;
+      if(!localBody || staleCache){
+        document.getElementById('catBodyTA').value=liveBody;
+        document.getElementById('catBodyPreview').innerHTML=liveBody;
+        updateCatBodyLen(liveBody);
+        if(document.getElementById('catTabPreview').style.display!=='none') attachCatImgResize();
+        p.body=liveBody;
+        saveCatalogItems(getCatalogItems().map(b=>b.id===p.id?p:b));
+        _dirtyCatBodyIds.delete(String(p.id));
+        if(staleCache) toast('⚠️ ข้อมูลที่แคชไว้ในเครื่องดูไม่ครบ — โหลดเนื้อหาสดจากเว็บจริงมาแทนแล้ว','ok');
+      }
+    }).catch(()=>{});
+  }
+
+  document.getElementById('catalogListView').style.display='none';
+  document.getElementById('catalogEditorView').style.display='';
+}
+function closeCatalogEditor(){
+  document.getElementById('catalogEditorView').style.display='none';
+  document.getElementById('catalogListView').style.display='';
+  renderCatalog();
+}
+
+// Hero image
+function updateCatHeroPreview(url){
+  const hasUrl=url&&url.trim();
+  document.getElementById('catHeroPreview').style.display=hasUrl?'':'none';
+  document.getElementById('catHeroEmpty').style.display=hasUrl?'none':'';
+  if(hasUrl) document.getElementById('catHeroImg').src=url.trim();
+}
+function uploadCatHero(input){
+  const f=input.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=e=>{ document.getElementById('catHero').value=e.target.result; updateCatHeroPreview(e.target.result); };
+  r.readAsDataURL(f);
+}
+
+// Product rows (แหวน / จี้ / สร้อยข้อมือ)
+let _catProducts={};
+function renderCatProductRows(products){
+  _catProducts=JSON.parse(JSON.stringify(products||emptyCatProducts()));
+  document.getElementById('catProductRows').innerHTML=CAT_PRODUCT_TYPES.map(t=>{
+    const p=_catProducts[t.key]||{name:'',img:'',url:''};
+    return `<div style="display:grid;grid-template-columns:56px 1fr 1fr auto;gap:.75rem;align-items:center;padding:.6rem;background:#faf8ff;border-radius:.6rem">
+      <div style="width:56px;height:56px;border-radius:.5rem;overflow:hidden;background:#f5f0ff;display:flex;align-items:center;justify-content:center;font-size:1.3rem" id="catProdImgPreview_${t.key}">
+        ${p.img?`<img src="${x(p.img)}" style="width:100%;height:100%;object-fit:cover">`:t.label.split(' ')[0]}
+      </div>
+      <input class="form-input" placeholder="ชื่อ${t.label.split(' ')[1]||'สินค้า'}" value="${x(p.name)}" oninput="setCatProductField('${t.key}','name',this.value)">
+      <input class="form-input" placeholder="ลิงก์ Shopee" value="${x(p.url)}" oninput="setCatProductField('${t.key}','url',this.value)">
+      <label style="cursor:pointer">
+        <span class="btn btn-outline btn-sm">📁</span>
+        <input type="file" accept="image/*" style="display:none" onchange="uploadCatProductImg('${t.key}',this)">
+      </label>
+    </div>`;
+  }).join('');
+}
+function setCatProductField(key,field,val){
+  if(!_catProducts[key]) _catProducts[key]={name:'',img:'',url:''};
+  _catProducts[key][field]=val;
+}
+function uploadCatProductImg(key,input){
+  const f=input.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=e=>{
+    if(!_catProducts[key]) _catProducts[key]={name:'',img:'',url:''};
+    _catProducts[key].img=e.target.result;
+    document.getElementById('catProdImgPreview_'+key).innerHTML=`<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover">`;
+  };
+  r.readAsDataURL(f);
+}
+
+// Body editor — mirrors the Blog editor's safe patterns (auto-persist,
+// paste/insert image, resize, DOMParser splice-back on publish) exactly.
+function updateCatBodyLen(v){
+  document.getElementById('catBodyLen').textContent=(v||'').length.toLocaleString()+' ตัวอักษร · '+(v||'').replace(/<[^>]*>/g,'').trim().split(/\s+/).filter(Boolean).length+' คำ';
+}
+let _dirtyCatBodyIds=new Set();
+function markCatBodyDirty(){
+  const eid=document.getElementById('catEditId').value;
+  if(!eid) return;
+  _dirtyCatBodyIds.add(String(eid));
+  const items=getCatalogItems();
+  const p=items.find(b=>b.id===eid);
+  if(p){ p.body=document.getElementById('catBodyTA').value; saveCatalogItems(items); }
+}
+function attachCatImgResize(){
+  document.getElementById('catBodyPreview').querySelectorAll('img').forEach(img=>attachImgResize(img,onCatPreviewEdit));
+}
+function onCatBodyEdit(v){
+  updateCatBodyLen(v);
+  markCatBodyDirty();
+  if(document.getElementById('catTabPreview').style.display!=='none'){
+    document.getElementById('catBodyPreview').innerHTML=v;
+    attachCatImgResize();
+  }
+}
+function onCatPreviewEdit(){
+  const html=document.getElementById('catBodyPreview').innerHTML;
+  document.getElementById('catBodyTA').value=html;
+  updateCatBodyLen(html);
+  markCatBodyDirty();
+}
+function switchCatTab(t){
+  const isHtml=t==='html';
+  document.getElementById('catTabHtml').style.display=isHtml?'':'none';
+  document.getElementById('catTabPreview').style.display=isHtml?'none':'';
+  document.getElementById('catTabBtnHtml').style.cssText='padding:.5rem 1.25rem;border:none;border-bottom:2px solid '+(isHtml?'#7c3aed':'transparent')+';margin-bottom:-2px;background:none;font-size:.85rem;font-weight:'+(isHtml?'700':'600')+';color:'+(isHtml?'#7c3aed':'#9ca3af')+';cursor:pointer';
+  document.getElementById('catTabBtnPreview').style.cssText='padding:.5rem 1.25rem;border:none;border-bottom:2px solid '+(isHtml?'transparent':'#7c3aed')+';margin-bottom:-2px;background:none;font-size:.85rem;font-weight:'+(isHtml?'600':'700')+';color:'+(isHtml?'#9ca3af':'#7c3aed')+';cursor:pointer';
+  if(!isHtml){
+    document.getElementById('catBodyPreview').innerHTML=document.getElementById('catBodyTA').value;
+    attachCatImgResize();
+  }
+}
+let _catInsertRange=null;
+function saveCatInsertRange(){
+  const preview=document.getElementById('catBodyPreview');
+  const sel=window.getSelection();
+  if(sel && sel.rangeCount>0 && preview.contains(sel.anchorNode)){
+    _catInsertRange=sel.getRangeAt(0).cloneRange();
+  } else {
+    _catInsertRange=null;
+  }
+}
+function insertCatBodyImage(input){
+  const f=input.files[0]; if(!f) return;
+  insertImageFileIntoCatBody(f);
+  input.value='';
+}
+function insertImageFileIntoCatBody(file,opts){
+  opts=opts||{};
+  if(!file || !file.type || !file.type.startsWith('image/')) return;
+  const r=new FileReader();
+  r.onload=e=>{
+    const dataUrl=e.target.result;
+    const imgHTML=`<img src="${dataUrl}" alt="" style="max-width:100%;border-radius:.75rem;margin:1.25rem 0">`;
+    const isHtmlTab=document.getElementById('catTabHtml').style.display!=='none';
+    if(isHtmlTab){
+      const ta=document.getElementById('catBodyTA');
+      const start=opts.taStart!=null?opts.taStart:(ta.selectionStart!=null?ta.selectionStart:ta.value.length);
+      const end=opts.taEnd!=null?opts.taEnd:(ta.selectionEnd!=null?ta.selectionEnd:ta.value.length);
+      ta.value=ta.value.slice(0,start)+'\n'+imgHTML+'\n'+ta.value.slice(end);
+      onCatBodyEdit(ta.value);
+      const pos=start+imgHTML.length+2;
+      ta.focus(); ta.setSelectionRange(pos,pos);
+    } else {
+      const preview=document.getElementById('catBodyPreview');
+      preview.focus();
+      const sel=window.getSelection();
+      const savedRange=opts.range||_catInsertRange;
+      if(savedRange){ sel.removeAllRanges(); sel.addRange(savedRange); }
+      let range=sel.rangeCount?sel.getRangeAt(0):null;
+      if(!range || !preview.contains(range.commonAncestorContainer)){
+        range=document.createRange();
+        range.selectNodeContents(preview);
+        range.collapse(false);
+      }
+      const imgEl=document.createElement('img');
+      imgEl.src=dataUrl;
+      imgEl.alt='';
+      imgEl.style.cssText='max-width:100%;border-radius:.75rem;margin:1.25rem 0';
+      range.deleteContents();
+      range.insertNode(imgEl);
+      range.setStartAfter(imgEl);
+      range.collapse(true);
+      sel.removeAllRanges();
+      sel.addRange(range);
+      attachImgResize(imgEl,onCatPreviewEdit);
+      onCatPreviewEdit();
+    }
+    toast('แทรกรูปแล้ว — บันทึกอัตโนมัติแล้ว กด 🚀 เผยแพร่ ได้เลย','ok');
+  };
+  r.readAsDataURL(file);
+}
+document.getElementById('catBodyTA').addEventListener('paste', e=>{
+  const items=e.clipboardData&&e.clipboardData.items; if(!items) return;
+  for(const item of items){
+    if(item.type&&item.type.startsWith('image/')){
+      e.preventDefault();
+      const ta=e.target;
+      insertImageFileIntoCatBody(item.getAsFile(),{taStart:ta.selectionStart,taEnd:ta.selectionEnd});
+      return;
+    }
+  }
+});
+document.getElementById('catBodyPreview').addEventListener('paste', e=>{
+  const items=e.clipboardData&&e.clipboardData.items; if(!items) return;
+  for(const item of items){
+    if(item.type&&item.type.startsWith('image/')){
+      e.preventDefault();
+      const sel=window.getSelection();
+      const range=sel.rangeCount?sel.getRangeAt(0).cloneRange():null;
+      insertImageFileIntoCatBody(item.getAsFile(),{range});
+      return;
+    }
+  }
+});
+
+async function resetCatBodyToOriginal(){
+  const eid=document.getElementById('catEditId').value;
+  const p=getCatalogItems().find(b=>b.id===eid);
+  const url=p?.url||document.getElementById('catPath').textContent;
+  if(!url){ toast('ยังไม่มีลิงก์หน้าเว็บของหินนี้','err'); return; }
+  if(!confirm('โหลดเนื้อหาจากหน้าเว็บจริงทับของที่แก้ไว้? การแก้ไขที่ยังไม่เผยแพร่จะหายไป')) return;
+  try{
+    const body=await fetchLivePostBody(url);
+    document.getElementById('catBodyTA').value=body;
+    document.getElementById('catBodyPreview').innerHTML=body;
+    updateCatBodyLen(body);
+    if(document.getElementById('catTabPreview').style.display!=='none') attachCatImgResize();
+    if(p){ p.body=body; saveCatalogItems(getCatalogItems().map(b=>b.id===eid?p:b)); }
+    _dirtyCatBodyIds.delete(String(eid));
+    toast('โหลดต้นฉบับจากเว็บจริงแล้ว','ok');
+  }catch(e){ toast('โหลดต้นฉบับไม่สำเร็จ: '+e.message,'err'); }
+}
+
+function saveCatalogEditor(){
+  const titleTh=document.getElementById('catTitleTh').value.trim();
+  if(!titleTh){ toast('กรุณาใส่ชื่อหิน','err'); return; }
+  const eid=document.getElementById('catEditId').value;
+  const items=getCatalogItems();
+  const slug=document.getElementById('catSlug').value.trim()||titleTh.toLowerCase().replace(/[^\w฀-๿]+/g,'-');
+  const p={
+    id: eid||'cat_'+Date.now(),
+    titleTh,
+    titleEn: document.getElementById('catTitleEn').value.trim(),
+    tagline: document.getElementById('catTagline').value.trim(),
+    teaser: document.getElementById('catTeaser').value.trim(),
+    slug,
+    url: '/shop/catalog/'+slug+'.html',
+    status: document.getElementById('catStatus').value,
+    lineUrl: document.getElementById('catLineUrl').value.trim(),
+    hero: document.getElementById('catHero').value.trim(),
+    products: _catProducts,
+    body: document.getElementById('catBodyTA').value,
+    created: eid?(items.find(b=>b.id===eid)?.created||new Date().toISOString()):new Date().toISOString(),
+    updated: new Date().toISOString(),
+  };
+  if(eid){ const i=items.findIndex(b=>b.id===eid); if(i>=0) items[i]=p; else items.push(p); }
+  else items.unshift(p);
+  saveCatalogItems(items);
+  document.getElementById('catEditId').value=p.id;
+  document.getElementById('catTitle').textContent='✏️ '+p.titleTh;
+  document.getElementById('catPath').textContent=p.url;
+  document.getElementById('catPath').href=p.url;
+  document.getElementById('catViewBtn').href=p.url;
+  document.getElementById('catDelBtn').style.display='';
+  toast('บันทึก "'+titleTh+'" แล้ว ✓','ok');
+}
+function deleteCatalogFromEditor(){
+  const eid=document.getElementById('catEditId').value;
+  if(!eid||!confirm('ลบหินนี้ออกจาก Catalog?')) return;
+  saveCatalogItems(getCatalogItems().filter(b=>b.id!==eid));
+  closeCatalogEditor();
+  toast('ลบแล้ว','ok');
+}
+
 // ── GITHUB PUBLISH ─────────────────────────────
 async function publishToGitHub(){
   const token=localStorage.getItem(GH_TOKEN_KEY);
@@ -4702,6 +5220,34 @@ async function publishToGitHub(){
   btn.textContent='⏳ กำลังเผยแพร่...'; btn.disabled=true;
 
   try {
+    // Merge Crystal Catalog hero/product images + title/tagline/product-name/
+    // shopee-url/line-url text into the same imgs/texts stores the generic
+    // upload loop and content.json build below already read from — so those
+    // existing mechanisms upload catalog images and publish catalog text
+    // without any catalog-specific upload code needed here.
+    {
+      const preImgs=getImgs();
+      const preTexts=getTexts();
+      for(const item of getCatalogItems()){
+        if(!item.slug) continue;
+        const slugU=item.slug.replace(/-/g,'_');
+        const pageKey='catalog-'+item.slug;
+        if(item.hero) preImgs['catalog_'+slugU+'_hero']=item.hero;
+        for(const t of CAT_PRODUCT_TYPES){
+          const prod=(item.products||{})[t.key]||{name:'',img:'',url:''};
+          if(prod.img) preImgs['catalog_'+slugU+'_'+t.key+'_img']=prod.img;
+          preTexts[pageKey+'.product_'+t.key+'_name']=prod.name||'';
+          preTexts['catalog_'+slugU+'_'+t.key+'_url']=prod.url||'';
+        }
+        preTexts[pageKey+'.title']=item.titleTh||'';
+        preTexts[pageKey+'.tagline']=item.tagline||'';
+        preTexts['catalog_'+slugU+'_line_url']=item.lineUrl||'';
+        preTexts['catalog_'+slugU+'_shopee_url']=(item.products&&item.products.ring&&item.products.ring.url)||item.lineUrl||'';
+      }
+      setImgs(preImgs);
+      setTexts(preTexts);
+    }
+
     const imgs=getImgs();
     const published={};
 
@@ -4864,6 +5410,69 @@ async function publishToGitHub(){
         let bSha='';
         try{ const bgr=await fetch(`https://api.github.com/repos/${repo}/contents/data/blog.json`,{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}}); if(bgr.ok){ const bgd=await bgr.json(); bSha=bgd.sha; } }catch{}
         await fetch(`https://api.github.com/repos/${repo}/contents/data/blog.json`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:'cms: update blog.json ('+blogPosts.length+' articles)',content:blogB64,...(bSha?{sha:bSha}:{})})});
+      }
+
+      // Push edited catalog body content back into the live page HTML
+      // (same DOMParser splice + safety-net pattern as blog/stone bodies)
+      const catalogItems=getCatalogItems();
+      for(const item of catalogItems){
+        if(!_dirtyCatBodyIds.has(String(item.id))||!item.body) continue;
+        const bodyImgs=[...item.body.matchAll(/src="(data:image\/([a-zA-Z0-9.+-]+);base64,([^"]+))"/g)];
+        let n=0;
+        for(const mm of bodyImgs){
+          n++;
+          const ext=mm[2]==='jpeg'?'jpg':mm[2]==='svg+xml'?'svg':mm[2];
+          const bpath=`data/images/catalog_${item.slug.replace(/-/g,'_')}_body${n}.${ext}`;
+          let bsha='';
+          try{ const br=await fetch(`https://api.github.com/repos/${repo}/contents/${bpath}`,{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}}); if(br.ok){ const bd=await br.json(); bsha=bd.sha; } }catch{}
+          const bur=await fetch(`https://api.github.com/repos/${repo}/contents/${bpath}`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:`cms: catalog body image ${item.slug}-${n}`,content:mm[3],...(bsha?{sha:bsha}:{})})});
+          if(bur.ok){ item.body=item.body.replace(mm[1],'/'+bpath); }
+          else toast('⚠️ อัปโหลดรูปในเนื้อหา "'+item.titleTh+'" ไม่สำเร็จ','err');
+        }
+        const pagePath=(item.url||'/shop/catalog/'+item.slug+'.html').replace(/^\//,'');
+        try{
+          const pr=await fetch(`https://api.github.com/repos/${repo}/contents/${pagePath}`,{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}});
+          if(pr.ok){
+            const pd=await pr.json();
+            const pageHtml=decodeURIComponent(escape(atob(pd.content.replace(/\n/g,''))));
+            const doc=new DOMParser().parseFromString(pageHtml,'text/html');
+            const bodyEl=doc.querySelector('[data-cms-text="body"]');
+            if(bodyEl){
+              const liveLen=bodyEl.textContent.trim().length;
+              const newLen=new DOMParser().parseFromString(item.body,'text/html').body.textContent.trim().length;
+              if(liveLen>100 && newLen < liveLen*0.6){
+                toast('⚠️ ข้ามการอัปเดต "'+item.titleTh+'" — เนื้อหาที่จะเผยแพร่สั้นกว่าหน้าเว็บจริงมาก กด "↺ โหลดต้นฉบับ" ก่อน','err');
+              } else {
+                bodyEl.innerHTML=item.body;
+                const updatedHtml='<!DOCTYPE html>\n'+doc.documentElement.outerHTML;
+                const newB64=btoa(unescape(encodeURIComponent(updatedHtml)));
+                const pur=await fetch(`https://api.github.com/repos/${repo}/contents/${pagePath}`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:`cms: update catalog body — ${item.titleTh}`,content:newB64,sha:pd.sha})});
+                if(!pur.ok) toast('⚠️ อัปเดตเนื้อหาหน้า "'+item.titleTh+'" ไม่สำเร็จ','err');
+              }
+            } else {
+              toast('⚠️ ไม่พบ body ในหน้า "'+item.titleTh+'" — ข้ามการอัปเดตเนื้อหา','err');
+            }
+          } else {
+            toast('⚠️ ยังไม่มีไฟล์หน้าเว็บของ "'+item.titleTh+'" — ต้องสร้างหน้าก่อน','err');
+          }
+        }catch(e){ toast('⚠️ อัปเดตเนื้อหาหน้า "'+item.titleTh+'" ผิดพลาด: '+e.message,'err'); }
+      }
+      _dirtyCatBodyIds.clear();
+      saveCatalogItems(catalogItems);
+
+      // Push data/catalog.json (index-grid manifest)
+      if(catalogItems.length){
+        const catalogJson={items:catalogItems.map(it=>({
+          id:it.id, title:it.titleTh, titleEn:it.titleEn, slug:it.slug,
+          url:it.url||'/shop/catalog/'+it.slug+'.html', teaser:it.teaser,
+          heroSlot:'catalog_'+it.slug.replace(/-/g,'_')+'_hero',
+          status:it.status, updated:it.updated,
+        }))};
+        const catStr=JSON.stringify(catalogJson,null,2);
+        const catB64=btoa(unescape(encodeURIComponent(catStr)));
+        let catSha='';
+        try{ const cgr=await fetch(`https://api.github.com/repos/${repo}/contents/data/catalog.json`,{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}}); if(cgr.ok){ const cgd=await cgr.json(); catSha=cgd.sha; } }catch{}
+        await fetch(`https://api.github.com/repos/${repo}/contents/data/catalog.json`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:'cms: update catalog.json ('+catalogItems.length+' items)',content:catB64,...(catSha?{sha:catSha}:{})})});
       }
 
       toast('🚀 เผยแพร่สำเร็จ! สินค้า '+affProducts.length+' ชิ้น ขึ้นเว็บใน ~3 นาที','ok');

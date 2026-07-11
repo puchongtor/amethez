@@ -1,0 +1,37 @@
+{
+  "items": [
+    {
+      "id": "moldavite",
+      "title": "โมลดาไวท์",
+      "titleEn": "Moldavite",
+      "slug": "moldavite",
+      "url": "/shop/catalog/moldavite.html",
+      "teaser": "หินแห่งการเปลี่ยนแปลงครั้งใหญ่ จากนอกโลก",
+      "heroSlot": "catalog_moldavite_hero",
+      "status": "published",
+      "updated": "2026-07-11"
+    },
+    {
+      "id": "thai-tektite",
+      "title": "สะเก็ดดาวไทย",
+      "titleEn": "Thai Tektite",
+      "slug": "thai-tektite",
+      "url": "/shop/catalog/thai-tektite.html",
+      "teaser": "หินป้องกันจากฟ้า พลังงานหนักแน่น สายอีสาน",
+      "heroSlot": "catalog_thai_tektite_hero",
+      "status": "published",
+      "updated": "2026-07-11"
+    },
+    {
+      "id": "libyan-desert-glass",
+      "title": "แก้วทะเลทรายลิเบียน",
+      "titleEn": "Libyan Desert Glass",
+      "slug": "libyan-desert-glass",
+      "url": "/shop/catalog/libyan-desert-glass.html",
+      "teaser": "พลังสุริยะโบราณจากทะเลทรายซาฮารา",
+      "heroSlot": "catalog_libyan_desert_glass_hero",
+      "status": "published",
+      "updated": "2026-07-11"
+    }
+  ]
+}

@@ -43,6 +43,7 @@ const NAV_HTML = `
     <li class="has-drop"><a href="/shop/" class="nav-shop">🛒 ร้านค้า</a>
       <ul class="dropdown">
         <li><a href="/shop/">✦ Crystal Market</a></li>
+        <li><a href="/shop/catalog/">✦ Crystal Catalog</a></li>
         <li><a href="/shop/collection.html">✦ Private Collection</a></li>
         <li><div class="drop-sep"></div></li>
         <li><a href="/shop/academy.html">✦ Crystal Academy</a></li>
@@ -93,6 +94,7 @@ const FOOTER_HTML = `
       <h4>ร้านค้า</h4>
       <ul>
         <li><a href="/shop/">✦ Crystal Market</a></li>
+        <li><a href="/shop/catalog/">✦ Crystal Catalog</a></li>
         <li><a href="/shop/collection.html">✦ Private Collection</a></li>
         <li><a href="/shop/academy.html">✦ Crystal Academy</a></li>
       </ul>
