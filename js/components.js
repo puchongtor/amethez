@@ -45,6 +45,7 @@ const NAV_HTML = `
         <li><a href="/shop/">✦ Crystal Market</a></li>
         <li><a href="/shop/catalog/">✦ Crystal Catalog</a></li>
         <li><a href="/shop/collection.html">✦ Private Collection</a></li>
+        <li><a href="/consign.html">✦ รับฝากขาย</a></li>
         <li><div class="drop-sep"></div></li>
         <li><a href="/shop/academy.html">✦ Crystal Academy</a></li>
       </ul>
@@ -96,6 +97,7 @@ const FOOTER_HTML = `
         <li><a href="/shop/">✦ Crystal Market</a></li>
         <li><a href="/shop/catalog/">✦ Crystal Catalog</a></li>
         <li><a href="/shop/collection.html">✦ Private Collection</a></li>
+        <li><a href="/consign.html">✦ รับฝากขาย</a></li>
         <li><a href="/shop/academy.html">✦ Crystal Academy</a></li>
       </ul>
     </div>
