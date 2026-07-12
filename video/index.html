@@ -54,7 +54,8 @@
     .shop-items { display:flex; gap:.85rem; flex-wrap:wrap; }
     .shop-item { display:flex; align-items:center; gap:.65rem; background:white; border:1px solid #e9e0f8; border-radius:.75rem; padding:.65rem .9rem; text-decoration:none; color:#1a1228; transition:all .2s; flex:1; min-width:200px; }
     .shop-item:hover { border-color:#f97316; }
-    .shop-item-img { width:48px; height:48px; background:#f3effa; border-radius:.5rem; display:flex; align-items:center; justify-content:center; font-size:1.5rem; flex-shrink:0; }
+    .shop-item-img { width:48px; height:48px; background:#f3effa; border-radius:.5rem; display:flex; align-items:center; justify-content:center; font-size:1.5rem; flex-shrink:0; overflow:hidden; }
+    .shop-item-img img { width:100%; height:100%; object-fit:cover; }
     .shop-item-name { font-size:.8rem; font-weight:600; }
     .shop-item-price { font-size:.75rem; color:#f97316; font-weight:700; }
     .shop-item-arrow { margin-left:auto; color:#9b89bb; font-size:.75rem; flex-shrink:0; }
@@ -106,20 +107,9 @@
         </div>
       </div>
     </div>
-    <div class="vcard-shop">
+    <div class="vcard-shop" id="vshop-1">
       <div class="vcard-shop-label">🛍 สินค้าในคลิปนี้</div>
-      <div class="shop-items">
-        <a href="https://s.shopee.co.th/xxx" class="shop-item" target="_blank">
-          <div class="shop-item-img">💎</div>
-          <div><div class="shop-item-name">เซตหินมือใหม่ 5 ชนิด</div><div class="shop-item-price">฿290</div></div>
-          <span class="shop-item-arrow">Shopee →</span>
-        </a>
-        <a href="https://s.shopee.co.th/xxx" class="shop-item" target="_blank">
-          <div class="shop-item-img">📿</div>
-          <div><div class="shop-item-name">ถุงผ้าใส่หิน</div><div class="shop-item-price">฿89</div></div>
-          <span class="shop-item-arrow">Shopee →</span>
-        </a>
-      </div>
+      <div class="shop-items" id="vshop-1-items"></div>
     </div>
   </div>
 
@@ -144,20 +134,9 @@
         </div>
       </div>
     </div>
-    <div class="vcard-shop">
+    <div class="vcard-shop" id="vshop-2">
       <div class="vcard-shop-label">🛍 สินค้าในคลิปนี้</div>
-      <div class="shop-items">
-        <a href="https://s.shopee.co.th/xxx" class="shop-item" target="_blank">
-          <div class="shop-item-img">💜</div>
-          <div><div class="shop-item-name">อเมทิสต์ดิบ สำหรับนั่งสมาธิ</div><div class="shop-item-price">฿190</div></div>
-          <span class="shop-item-arrow">Shopee →</span>
-        </a>
-        <a href="https://s.shopee.co.th/xxx" class="shop-item" target="_blank">
-          <div class="shop-item-img">🤍</div>
-          <div><div class="shop-item-name">เซเลไนต์แท่ง Charging Plate</div><div class="shop-item-price">฿240</div></div>
-          <span class="shop-item-arrow">Shopee →</span>
-        </a>
-      </div>
+      <div class="shop-items" id="vshop-2-items"></div>
     </div>
   </div>
 
@@ -182,20 +161,9 @@
         </div>
       </div>
     </div>
-    <div class="vcard-shop">
+    <div class="vcard-shop" id="vshop-3">
       <div class="vcard-shop-label">🛍 สินค้าในคลิปนี้</div>
-      <div class="shop-items">
-        <a href="https://s.shopee.co.th/xxx" class="shop-item" target="_blank">
-          <div class="shop-item-img">🌿</div>
-          <div><div class="shop-item-name">White Sage ใบเสจอเมริกา</div><div class="shop-item-price">฿180</div></div>
-          <span class="shop-item-arrow">Shopee →</span>
-        </a>
-        <a href="https://s.shopee.co.th/xxx" class="shop-item" target="_blank">
-          <div class="shop-item-img">🧂</div>
-          <div><div class="shop-item-name">เกลือหิมาลัยสีชมพู</div><div class="shop-item-price">฿120</div></div>
-          <span class="shop-item-arrow">Shopee →</span>
-        </a>
-      </div>
+      <div class="shop-items" id="vshop-3-items"></div>
     </div>
   </div>
 
@@ -220,20 +188,9 @@
         </div>
       </div>
     </div>
-    <div class="vcard-shop">
+    <div class="vcard-shop" id="vshop-4">
       <div class="vcard-shop-label">🛍 สินค้าในคลิปนี้</div>
-      <div class="shop-items">
-        <a href="https://s.shopee.co.th/xxx" class="shop-item" target="_blank">
-          <div class="shop-item-img">⬡</div>
-          <div><div class="shop-item-name">Crystal Grid Board ไม้แกะสลัก</div><div class="shop-item-price">฿350</div></div>
-          <span class="shop-item-arrow">Shopee →</span>
-        </a>
-        <a href="https://s.shopee.co.th/xxx" class="shop-item" target="_blank">
-          <div class="shop-item-img">🔮</div>
-          <div><div class="shop-item-name">Clear Quartz Point แกนกลาง Grid</div><div class="shop-item-price">฿90</div></div>
-          <span class="shop-item-arrow">Shopee →</span>
-        </a>
-      </div>
+      <div class="shop-items" id="vshop-4-items"></div>
     </div>
   </div>
 
@@ -258,20 +215,9 @@
         </div>
       </div>
     </div>
-    <div class="vcard-shop">
+    <div class="vcard-shop" id="vshop-5">
       <div class="vcard-shop-label">🛍 สินค้าในคลิปนี้</div>
-      <div class="shop-items">
-        <a href="https://s.shopee.co.th/xxx" class="shop-item" target="_blank">
-          <div class="shop-item-img">🪨</div>
-          <div><div class="shop-item-name">หินดิบ Raw Specimen เซต</div><div class="shop-item-price">฿220</div></div>
-          <span class="shop-item-arrow">Shopee →</span>
-        </a>
-        <a href="https://s.shopee.co.th/xxx" class="shop-item" target="_blank">
-          <div class="shop-item-img">🔍</div>
-          <div><div class="shop-item-name">แว่นขยายดูหิน 10x</div><div class="shop-item-price">฿149</div></div>
-          <span class="shop-item-arrow">Shopee →</span>
-        </a>
-      </div>
+      <div class="shop-items" id="vshop-5-items"></div>
     </div>
   </div>
 
@@ -279,6 +225,7 @@
 
 <footer class="site-footer"></footer>
 
+<script src="/js/main.js"></script>
 <script>
 function setVCat(cat, btn) {
   document.querySelectorAll('.vtab').forEach(b => b.classList.remove('on'));
@@ -287,6 +234,28 @@ function setVCat(cat, btn) {
     c.classList.toggle('hidden', cat !== 'all' && c.dataset.cat !== cat);
   });
 }
+
+// Real Shopee affiliate products only — matches loadShopeeProducts()'s tag
+// logic (same source used everywhere else on the site). A video with no
+// matching real product hides its whole "สินค้าในคลิปนี้" block rather than
+// showing a placeholder link.
+async function initVideoShop(id, tags) {
+  const wrap = document.getElementById('vshop-' + id);
+  const itemsEl = document.getElementById('vshop-' + id + '-items');
+  const products = await loadShopeeProducts(tags, 2);
+  if (!products.length) { wrap.style.display = 'none'; return; }
+  itemsEl.innerHTML = products.map(p => `
+    <a href="${p.url}" class="shop-item" target="_blank" rel="nofollow noopener">
+      <div class="shop-item-img">${p.image_url ? `<img src="${p.image_url}" alt="" onerror="this.remove()">` : '💎'}</div>
+      <div><div class="shop-item-name">${p.name}</div><div class="shop-item-price">฿${p.price.toLocaleString()}</div></div>
+      <span class="shop-item-arrow">Shopee →</span>
+    </a>`).join('');
+}
+initVideoShop(1, ['มือใหม่']);
+initVideoShop(2, ['สมาธิ', 'ความสงบ']);
+initVideoShop(3, ['ล้างหิน', 'ชาร์จหิน']);
+initVideoShop(4, ['ควอตซ์ใส']);
+initVideoShop(5, ['หินดิบ', 'แร่วิทยา']);
 </script>
 <script src="/js/components.js"></script>
 <script src="/js/shila.js"></script>
