@@ -1639,7 +1639,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-13.2';
+const ADMIN_VERSION='2026-07-13.3';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -5407,12 +5407,27 @@ const TOP100_KEY='amethez_top100';
 function getTop100Items(){ try{ return JSON.parse(localStorage.getItem(TOP100_KEY)||'[]'); }catch{ return []; } }
 function saveTop100Items(arr){ localStorage.setItem(TOP100_KEY,JSON.stringify(arr)); }
 async function seedTop100FromJson(){
-  if(getTop100Items().length) return;
   try{
     const r=await fetch('/data/top-100-stones.json?v='+Date.now());
     if(!r.ok) return;
     const d=await r.json();
-    saveTop100Items((d.stones||[]).sort((a,b)=>a.rank-b.rank));
+    const live=d.stones||[];
+    const existing=getTop100Items();
+    if(!existing.length){
+      saveTop100Items(live.slice().sort((a,b)=>a.rank-b.rank));
+      return;
+    }
+    // Self-heal: the live JSON is the source of truth for which ranks exist —
+    // a stale localStorage cache from before a rank was added (or before this
+    // admin session last opened the tab) must not silently keep hiding it
+    // forever. Add any ranks missing locally without touching existing
+    // in-progress local edits.
+    const existRanks=new Set(existing.map(it=>it.rank));
+    const missing=live.filter(it=>!existRanks.has(it.rank));
+    if(missing.length){
+      saveTop100Items([...existing,...missing].sort((a,b)=>a.rank-b.rank));
+      toast(`🔄 ซิงก์ข้อมูล Top 100 ที่ขาดไป ${missing.length} อันดับจากเว็บจริงแล้ว`,'ok');
+    }
   }catch{}
 }
 function renderTop100Table(){
