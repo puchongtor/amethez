@@ -95,7 +95,7 @@
         "อายุยืนยาว"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_6_jadeite_hero",
       "articleUrl": null
     },
     {
@@ -159,7 +159,7 @@
         "ความเด็ดขาดในการคุมบริวาร"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_10_iron-meteorite_hero",
       "articleUrl": null
     },
     {
@@ -590,7 +590,7 @@
         "ความสำเร็จระดับพรีเมียม"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_37_platinum-rutilated-quartz_hero",
       "articleUrl": null
     },
     {
@@ -670,7 +670,7 @@
         "ต้านทานการเปลี่ยนแปลงที่เลวร้าย"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_42_petrified-wood_hero",
       "articleUrl": null
     },
     {
@@ -686,7 +686,7 @@
         "ช่วยให้จิตใจปลอดโปร่งฝันแม่นยำ"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_43_herkimer-diamond_hero",
       "articleUrl": null
     },
     {
@@ -702,7 +702,7 @@
         "เลื่อนขั้นเลื่อนตำแหน่งในหน้าที่การงาน"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_44_phantom-quartz_hero",
       "articleUrl": null
     },
     {
@@ -814,7 +814,7 @@
         "และสร้างความมั่นใจในตนเอง"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_51_orange-kyanite_hero",
       "articleUrl": null
     },
     {
@@ -830,7 +830,7 @@
         "นำความเจริญงอกงาม"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_52_green-kyanite_hero",
       "articleUrl": null
     },
     {
@@ -846,7 +846,7 @@
         "ความกล้าแสดงออก"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_53_rubellite_hero",
       "articleUrl": null
     },
     {
@@ -862,7 +862,7 @@
         "และความสงบลึกภายในใจ"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_54_indicolite_hero",
       "articleUrl": null
     },
     {
@@ -878,7 +878,7 @@
         "นำพาความสุขสมบูรณ์"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_55_watermelon-tourmaline_hero",
       "articleUrl": null
     },
     {
@@ -973,7 +973,7 @@
         "ปกป้องสูงสุด"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_61_muonionalusta-meteorite_hero",
       "articleUrl": null
     },
     {
@@ -989,7 +989,7 @@
         "เสริมความเด็ดเดี่ยว"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_62_campo-del-cielo-meteorite_hero",
       "articleUrl": null
     },
     {
@@ -1004,7 +1004,7 @@
         "ดึงดูดความมั่งคั่งชั้นสูงและสติปัญญาหลุดพ้น"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_63_pallasite-meteorite_hero",
       "articleUrl": null
     },
     {
@@ -1242,7 +1242,7 @@
         "เงินทองสะสมมั่นคง"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_78_moss-agate_hero",
       "articleUrl": null
     },
     {
@@ -1258,7 +1258,7 @@
         "และการเข้าถึงสมาธิขั้นลึกยามค่ำคืน"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_79_grape-agate_hero",
       "articleUrl": null
     },
     {
@@ -1274,7 +1274,7 @@
         "เมตตามหานิยม"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_80_cherry-blossom-agate_hero",
       "articleUrl": null
     },
     {
@@ -1290,7 +1290,7 @@
         "คลายความซึมเศร้า"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_81_botswana-agate_hero",
       "articleUrl": null
     },
     {
@@ -1306,7 +1306,7 @@
         "เสริมพลังใจในการต่อสู้กับอุปสรรค"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_82_bloodstone_hero",
       "articleUrl": null
     },
     {
@@ -1417,7 +1417,7 @@
         "เสริมความอดทนและอายุยืนยาว"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_89_trilobite-fossil_hero",
       "articleUrl": null
     },
     {
@@ -1433,7 +1433,7 @@
         "เพิ่มพลังอำนาจคุมบริวารเด็ดขาด"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_90_megalodon-tooth-fossil_hero",
       "articleUrl": null
     },
     {
@@ -1449,7 +1449,7 @@
         "ปกป้องคุ้มครองที่อยู่อาศัย"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_91_agatized-coral-fossil_hero",
       "articleUrl": null
     },
     {
@@ -1465,7 +1465,7 @@
         "สร้างรากฐานธุรกิจ"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_92_orthoceras-fossil_hero",
       "articleUrl": null
     },
     {
@@ -1481,7 +1481,7 @@
         "แคล้วคลาด"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_93_jet-stone_hero",
       "articleUrl": null
     },
     {
@@ -1545,7 +1545,7 @@
         "ความเมตตา"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_97_lavender-jadeite_hero",
       "articleUrl": null
     },
     {
@@ -1561,7 +1561,7 @@
         "และสร้างความสามัคคีในบ้าน"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_98_honey-jade_hero",
       "articleUrl": null
     },
     {
