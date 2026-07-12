@@ -236,10 +236,16 @@ function goPage(p) {
 
 (async () => {
   try {
-    const r = await fetch('/data/rankings.json?v=' + Date.now());
+    const [r, cr] = await Promise.all([
+      fetch('/data/rankings.json?v=' + Date.now()),
+      fetch('/data/content.json?v=' + Date.now())
+    ]);
     const d = await r.json();
+    const imgs = (await cr.json()).images || {};
     const now = new Date().toISOString();
-    RANKINGS = (d.articles || []).filter(a => a.status !== 'draft' && (a.status !== 'scheduled' || (a.publishDate || '') <= now));
+    RANKINGS = (d.articles || [])
+      .filter(a => a.status !== 'draft' && (a.status !== 'scheduled' || (a.publishDate || '') <= now))
+      .map(a => ({ ...a, thumb: a.thumb || (a.heroImgSlot && imgs[a.heroImgSlot]) || '' }));
   } catch (e) {
     RANKINGS = [];
   }

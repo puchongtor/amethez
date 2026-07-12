@@ -467,10 +467,15 @@
 <script>
 (async () => {
   try {
-    const r = await fetch('/data/rankings.json?v=' + Date.now());
+    const [r, cr] = await Promise.all([
+      fetch('/data/rankings.json?v=' + Date.now()),
+      fetch('/data/content.json?v=' + Date.now())
+    ]);
     const d = await r.json();
+    const imgs = (await cr.json()).images || {};
     const now = new Date().toISOString();
     const list = (d.articles || []).filter(a => a.status !== 'draft' && (a.status !== 'scheduled' || (a.publishDate || '') <= now))
+      .map(a => ({ ...a, thumb: a.thumb || (a.heroImgSlot && imgs[a.heroImgSlot]) || '' }))
       .sort((a,b) => (b.publishDate||'').localeCompare(a.publishDate||'')).slice(0,5);
     const el = document.getElementById('homeRankings');
     if (!list.length) { el.innerHTML = ''; el.closest('section').style.display = 'none'; return; }
@@ -719,9 +724,11 @@ function renderBlogGrid(filter) {
   const minis = pool.slice(3, 7);
   const bg = a => CAT_BG[a.category] || 'linear-gradient(135deg,#f3eef9,#e9d5ff)';
 
+  const thumbImg = a => a.thumb ? `<img src="${a.thumb}" alt="${(a.title||'').replace(/"/g,'')}" loading="lazy" onerror="this.remove()">` : '';
+
   const heroHtml = hero ? `
     <a href="${hero.url}" class="bc">
-      <div class="bc-img h-hero" style="background:${bg(hero)}">${blogBadge(hero)}<span>${hero.emoji||'📖'}</span></div>
+      <div class="bc-img h-hero" style="background:${bg(hero)}">${blogBadge(hero)}${thumbImg(hero)}<span>${hero.emoji||'📖'}</span></div>
       <div class="bc-body">
         <div class="bc-cat">${hero.category}</div>
         <div class="bc-title lg">${hero.title}</div>
@@ -732,7 +739,7 @@ function renderBlogGrid(filter) {
 
   const sideHtml = sides.map(a => `
     <a href="${a.url}" class="bc-side-item">
-      <div class="bc-side-img" style="background:${bg(a)}">${blogBadge(a)}<span>${a.emoji||'📖'}</span></div>
+      <div class="bc-side-img" style="background:${bg(a)}">${blogBadge(a)}${thumbImg(a)}<span>${a.emoji||'📖'}</span></div>
       <div class="bc-side-body">
         <div class="bc-cat">${a.category}</div>
         <div class="bc-title">${a.title}</div>
@@ -742,7 +749,7 @@ function renderBlogGrid(filter) {
 
   const miniHtml = minis.map(a => `
     <a href="${a.url}" class="bc">
-      <div class="bc-img h-mini" style="background:${bg(a)}">${blogBadge(a)}<span>${a.emoji||'📖'}</span></div>
+      <div class="bc-img h-mini" style="background:${bg(a)}">${blogBadge(a)}${thumbImg(a)}<span>${a.emoji||'📖'}</span></div>
       <div class="bc-body">
         <div class="bc-cat">${a.category}</div>
         <div class="bc-title">${a.title}</div>
