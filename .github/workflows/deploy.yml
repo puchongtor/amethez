@@ -9,6 +9,9 @@ on:
     branches: [main]
   workflow_dispatch:       # manual trigger
 
+permissions:
+  contents: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -26,6 +29,18 @@ jobs:
 
       - name: Generate sitemap
         run: node scripts/sitemap.js || true
+
+      - name: Commit schedule/sitemap state back to repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/schedule.json sitemap.xml 2>/dev/null || true
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: sync published schedule + sitemap [skip ci]"
+            git push
+          else
+            echo "No schedule/sitemap changes to commit"
+          fi
 
       - name: Deploy to HostNeverDie via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5

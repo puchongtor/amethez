@@ -18,7 +18,7 @@ const NAV_HTML = `
     <li class="has-drop"><a href="/stones/">📖 สารานุกรมหิน</a>
       <ul class="dropdown">
         <li><a href="/stones/a-z.html">🔤 หิน A–Z ทั้งหมด</a></li>
-        <li><a href="/stones/encyclopedia.html">🏆 100 อันดับยอดนิยม</a></li>
+        <li><a href="/stones/rankings/">🏆 จัดอันดับหินคริสตัล</a></li>
         <li><div class="drop-sep"></div></li>
         <li><a href="/categories/chakra.html">🧘 ค้นหาตามจักระ</a></li>
         <li><a href="/categories/zodiac.html">♈ ค้นหาตามราศี</a></li>
@@ -78,7 +78,7 @@ const FOOTER_HTML = `
       <h4>สำรวจ</h4>
       <ul>
         <li><a href="/stones/">📖 สารานุกรมหิน A–Z</a></li>
-        <li><a href="/stones/encyclopedia.html">🏆 100 อันดับยอดนิยม</a></li>
+        <li><a href="/stones/rankings/">🏆 จัดอันดับหินคริสตัล</a></li>
         <li><a href="/blog/">📖 บทความ</a></li>
         <li><a href="/video/">🎬 Crystal Talks</a></li>
         <li><a href="/stories/">📚 เรื่องเล่าหินทั่วโลก</a></li>

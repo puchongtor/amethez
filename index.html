@@ -229,7 +229,7 @@
         <li>✨ <strong>ดูดวงประจำวัน</strong> จากอาจารย์เมธา — อัปเดตทุกวัน</li>
       </ul>
       <div class="hero-actions">
-        <a href="/stones/encyclopedia.html" class="btn-primary">💎 เปิดสารานุกรมหิน</a>
+        <a href="/stones/" class="btn-primary">💎 เปิดสารานุกรมหิน</a>
         <a href="/blog/" class="btn-ghost">📖 อ่านบทความ</a>
       </div>
     </div>
@@ -401,7 +401,7 @@
         <div class="sec-label">สารานุกรมหิน</div>
         <div class="sec-title">หินที่คนค้นหามากที่สุด</div>
       </div>
-      <a href="/stones/encyclopedia.html" class="see-all">ดูหิน A–Z ทั้งหมด 300+ ชนิด →</a>
+      <a href="/stones/a-z.html" class="see-all">ดูหิน A–Z ทั้งหมด 300+ ชนิด →</a>
     </div>
     <div class="stone-grid">
       <a href="/stones/amethyst.html" class="stone-chip">
@@ -440,7 +440,7 @@
         <div class="stone-thumb" data-cms-img="stone_tektite_hero" style="background:linear-gradient(135deg,#111827,#1f2937)"><span class="cms-placeholder">🌑</span></div>
         <div class="stone-info"><div class="stone-name">สะเก็ดดาวไทย</div><div class="stone-kw">ป้องกัน · จักรวาล</div></div>
       </a>
-      <a href="/stones/encyclopedia.html" class="stone-chip stone-more">
+      <a href="/stones/a-z.html" class="stone-chip stone-more">
         <div class="stone-thumb">📚</div>
         <div class="stone-info"><div class="stone-name">A–Z ทั้งหมด</div><div class="stone-kw">300+ ชนิด</div></div>
       </a>
@@ -448,6 +448,46 @@
   </div>
 </section>
 <hr class="divider">
+
+<!-- ═══ 5.5 จัดอันดับหินคริสตัล ═══ -->
+<section class="section" style="padding-top:2.5rem;padding-bottom:2.5rem;background:#faf8f4">
+  <div class="wrap">
+    <div class="row-head">
+      <div>
+        <div class="sec-label">🏆 จัดอันดับหินคริสตัล</div>
+        <div class="sec-title">บทความจัดอันดับล่าสุด</div>
+      </div>
+      <a href="/stones/rankings/" class="see-all">ดูทั้งหมด →</a>
+    </div>
+    <div id="homeRankings" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.25rem">
+      <div style="grid-column:1/-1;text-align:center;padding:2rem;color:#9b89bb;font-size:.85rem">กำลังโหลด…</div>
+    </div>
+  </div>
+</section>
+<script>
+(async () => {
+  try {
+    const r = await fetch('/data/rankings.json?v=' + Date.now());
+    const d = await r.json();
+    const now = new Date().toISOString();
+    const list = (d.articles || []).filter(a => a.status !== 'draft' && (a.status !== 'scheduled' || (a.publishDate || '') <= now))
+      .sort((a,b) => (b.publishDate||'').localeCompare(a.publishDate||'')).slice(0,5);
+    const el = document.getElementById('homeRankings');
+    if (!list.length) { el.innerHTML = ''; el.closest('section').style.display = 'none'; return; }
+    el.innerHTML = list.map(a => `
+      <a href="${a.url}" style="background:white;border:1px solid #e9e0f8;border-radius:1rem;overflow:hidden;text-decoration:none;color:#1a1228;display:flex;flex-direction:column;transition:all .2s" onmouseover="this.style.borderColor='#7c3aed';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='#e9e0f8';this.style.transform='none'">
+        <div style="height:150px;background:#f3effa;display:flex;align-items:center;justify-content:center;font-size:3rem;position:relative;overflow:hidden">
+          ${a.thumb ? `<img src="${a.thumb}" alt="${(a.title||'').replace(/"/g,'')}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" onerror="this.parentElement.textContent='💎'">` : '💎'}
+        </div>
+        <div style="padding:1.1rem;flex:1">
+          <div style="font-weight:700;font-size:.9rem;line-height:1.5">${a.title}</div>
+        </div>
+      </a>`).join('');
+  } catch (e) {
+    document.getElementById('homeRankings')?.closest('section') && (document.getElementById('homeRankings').closest('section').style.display = 'none');
+  }
+})();
+</script>
 
 <!-- ═══ 6. ห้องคลื่นเสียง COSMIC ═══ -->
 <section class="cosmic">

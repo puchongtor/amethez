@@ -251,6 +251,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
       <div class="nav-item" onclick="showTab('settings',this)"><span class="ic">⚙️</span> ตั้งค่า</div>
       <div class="nav-item" onclick="showTab('catalog',this)"><span class="ic">✦</span> Crystal Catalog</div>
       <div class="nav-item" onclick="showTab('top100',this)"><span class="ic">🏆</span> Top 100 ยอดนิยม</div>
+      <div class="nav-item" onclick="showTab('rankings',this)"><span class="ic">📊</span> จัดอันดับหินคริสตัล</div>
     </div>
     <div class="sidebar-footer">
       <button class="btn-logout" onclick="doLogout()">🚪 ออกจากระบบ</button>
@@ -1427,6 +1428,129 @@ textarea.form-input{resize:vertical;min-height:80px;}
           </div>
         </div>
 
+        <!-- RANKINGS (จัดอันดับหินคริสตัล) -->
+        <div id="tab-rankings">
+          <div id="rankingsListView">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem">
+            <div>
+              <div class="section-title">📊 จัดอันดับหินคริสตัล</div>
+              <div class="section-sub">บทความ Top 5 ทุกหมวด — แก้ไข/ใส่รูป แล้วกด "🚀 เผยแพร่" (หน้าเว็บต้องถูกสร้างไว้แล้วก่อน จึงจะแก้เนื้อหาได้)</div>
+            </div>
+            <button class="btn btn-primary" onclick="openAddRanking()">➕ เพิ่มบทความ</button>
+          </div>
+          <div id="rankingsList"></div>
+          </div><!-- /rankingsListView -->
+
+          <!-- FULL PAGE EDITOR VIEW -->
+          <div id="rankingsEditorView" style="display:none">
+            <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap">
+              <button class="btn btn-outline btn-sm" onclick="closeRankingEditor()">← กลับ</button>
+              <div style="flex:1">
+                <div id="rkTitle" style="font-size:1.1rem;font-weight:700"></div>
+                <a id="rkPath" href="#" target="_blank" style="font-size:.8rem;color:#9ca3af;text-decoration:none"></a>
+              </div>
+              <a class="btn btn-outline btn-sm" id="rkViewBtn" href="#" target="_blank" style="text-decoration:none">👁 ดูหน้า</a>
+              <button class="btn btn-outline btn-sm" onclick="resetRkBodyToOriginal()">↺ โหลดต้นฉบับ</button>
+              <button class="btn btn-danger btn-sm" id="rkDelBtn" onclick="deleteRankingFromEditor()">🗑 ลบ</button>
+              <button class="btn btn-primary" onclick="saveRankingEditor()">💾 บันทึก</button>
+            </div>
+
+            <input type="hidden" id="rkEditId">
+
+            <!-- Row 1: Meta (left) + Hero image (right) -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem">
+              <div class="card" style="margin-bottom:0">
+                <div class="card-title">📝 ข้อความย่อ (Meta)</div>
+                <div class="form-grid" style="gap:.75rem">
+                  <div class="form-group full"><label class="fl">หัวข้อบทความ *</label>
+                    <input class="form-input" id="rkTitle2" placeholder="เช่น 5 อันดับหินมงคลเกรดพรีเมี่ยม..."></div>
+                  <div class="form-group full"><label class="fl">URL Slug (ชื่อไฟล์ ต้องตรงกับหน้าเว็บที่สร้างไว้)</label>
+                    <input class="form-input" id="rkSlug" placeholder="5-andap-hin-mongkol-premium"></div>
+                  <div class="form-group full"><label class="fl">สรุปสั้น (Excerpt)</label>
+                    <textarea class="form-input" id="rkExcerpt" rows="2" placeholder="สรุป 1-2 ประโยค..."></textarea></div>
+                  <div class="form-group"><label class="fl">สถานะ</label>
+                    <select class="form-input" id="rkStatus" onchange="toggleRkSchedule()">
+                      <option value="published">🟢 เผยแพร่เลย</option>
+                      <option value="scheduled">⏰ ตั้งเวลา</option>
+                      <option value="draft">⚫ Draft</option>
+                    </select></div>
+                  <div class="form-group" id="rkScheduleGroup" style="display:none"><label class="fl">วัน/เวลาที่จะเผยแพร่</label>
+                    <input class="form-input" id="rkPublishDate" type="datetime-local"></div>
+                </div>
+              </div>
+              <div class="card" style="margin-bottom:0">
+                <div class="card-title">🖼️ รูป Hero</div>
+                <div style="display:flex;gap:.5rem;align-items:flex-start;margin-bottom:.75rem">
+                  <input class="form-input" id="rkHero" placeholder="https://... หรืออัปโหลดรูปด้านขวา" style="flex:1" oninput="updateRkHeroPreview(this.value)">
+                  <label style="cursor:pointer;flex-shrink:0">
+                    <span class="btn btn-outline btn-sm" style="display:inline-flex;align-items:center;gap:.3rem">📁 เลือกรูป</span>
+                    <input type="file" id="rkHeroFile" accept="image/*" style="display:none" onchange="uploadRkHero(this)">
+                  </label>
+                </div>
+                <div id="rkHeroPreview" style="display:none">
+                  <img id="rkHeroImg" style="width:100%;max-height:180px;border-radius:.75rem;object-fit:cover;border:1px solid #e5e7eb">
+                </div>
+                <div id="rkHeroEmpty" style="height:120px;background:#f5f3ff;border-radius:.75rem;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:.85rem">
+                  ยังไม่มีรูป — ใส่ URL หรืออัปโหลด
+                </div>
+                <div style="margin-top:.75rem;padding:.6rem .85rem;background:#f5f0ff;border-radius:.5rem;font-size:.75rem;color:#5b21b6;line-height:1.6">
+                  💡 รูปนี้จะขึ้นเป็นภาพหน้าปกทั้งในบทความและในหน้ารวม/หน้าแรก
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 2: Body editor -->
+            <div class="card" style="margin-bottom:0">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem">
+                <div class="card-title" style="margin:0">📄 เนื้อหาบทความ (Body)</div>
+                <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
+                  <label style="cursor:pointer" onmousedown="saveRkInsertRange()">
+                    <span class="btn btn-outline btn-sm" style="display:inline-flex;align-items:center;gap:.3rem">🖼️ แทรกรูปในเนื้อหา</span>
+                    <input type="file" id="rkInsertImgFile" accept="image/*" style="display:none" onchange="insertRkBodyImage(this)">
+                  </label>
+                  <span id="rkBodyLen" style="font-size:.72rem;color:#9ca3af"></span>
+                </div>
+              </div>
+              <div style="display:flex;gap:0;margin-bottom:0;border-bottom:2px solid #e9e0f5">
+                <button id="rkTabBtnHtml" onclick="switchRkTab('html')"
+                  style="padding:.5rem 1.25rem;border:none;border-bottom:2px solid #7c3aed;margin-bottom:-2px;background:none;font-size:.85rem;font-weight:700;color:#7c3aed;cursor:pointer">
+                  &lt;/&gt; HTML
+                </button>
+                <button id="rkTabBtnPreview" onclick="switchRkTab('preview')"
+                  style="padding:.5rem 1.25rem;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;background:none;font-size:.85rem;font-weight:600;color:#9ca3af;cursor:pointer">
+                  👁 Preview
+                </button>
+              </div>
+              <div id="rkTabHtml">
+                <textarea id="rkBodyTA" rows="28"
+                  style="width:100%;font-family:'Consolas','Courier New',monospace;font-size:.8rem;line-height:1.7;border:1.5px solid #e9e0f5;border-radius:.5rem;padding:.85rem 1rem;resize:vertical;background:#fdfcff;color:#1a1228;tab-size:2"
+                  placeholder="เนื้อหาบทความ HTML..."
+                  oninput="onRkBodyEdit(this.value)"></textarea>
+              </div>
+              <div id="rkTabPreview" style="display:none">
+                <div style="margin:.75rem 0 .5rem;display:flex;gap:.5rem;flex-wrap:wrap">
+                  <span style="font-size:.75rem;background:#e0f2fe;color:#0369a1;padding:.25rem .65rem;border-radius:20px;font-weight:600">✏️ คลิกข้อความ → แก้ได้เลย</span>
+                  <span style="font-size:.75rem;background:#fce7f3;color:#be185d;padding:.25rem .65rem;border-radius:20px;font-weight:600">🖼 คลิกรูป → ย่อ/ขยาย</span>
+                </div>
+                <div id="rkBodyPreview"
+                  contenteditable="true"
+                  spellcheck="false"
+                  oninput="onRkPreviewEdit()"
+                  style="min-height:500px;border:1.5px solid #e9e0f5;border-radius:.5rem;background:#faf8f4;padding:2rem 2.5rem;outline:none;overflow-y:auto;position:relative"></div>
+                <style id="rkBodyPreviewStyleTag">
+                  #rkBodyPreview { font-family:'Sarabun',sans-serif; font-size:17px; line-height:1.75; color:#1a1228; }
+                  #rkBodyPreview h2 { font-family:'Playfair Display',serif; font-size:1.5rem; color:#7c3aed; margin:1.75rem 0 .75rem; }
+                  #rkBodyPreview p  { margin-bottom:1rem; }
+                  #rkBodyPreview ul,#rkBodyPreview ol { margin:0 0 1rem 1.5rem; }
+                  #rkBodyPreview li { margin-bottom:.35rem; }
+                  #rkBodyPreview img { max-width:100%; cursor:pointer; border-radius:.5rem; }
+                  #rkBodyPreview img.img-selected { outline:2px solid #7c3aed; outline-offset:2px; }
+                </style>
+              </div>
+            </div>
+          </div><!-- /rankingsEditorView -->
+        </div>
+
       </div>
     </div>
   </div>
@@ -1496,7 +1620,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-12.4';
+const ADMIN_VERSION='2026-07-13.1';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -1871,7 +1995,7 @@ if(sessionStorage.getItem(AUTH_KEY)){
 }
 
 // ── TABS ──────────────────────────────────────
-const TAB_TITLES={dashboard:'📊 ภาพรวม',stats:'📈 สถิติ & เป้าหมาย',pages:'🎨 แก้ไขหน้า',stones:'💎 สารานุกรมหิน',blog:'📝 Blog & Schedule',products:'🪨 สินค้าโพรง',shopee:'🛒 Shopee Aff',roadmap:'🗺️ แผน 6 เดือน',articles:'📋 หน้าทั้งหมด',settings:'⚙️ ตั้งค่า',catalog:'✦ Crystal Catalog',top100:'🏆 Top 100 ยอดนิยม'};
+const TAB_TITLES={dashboard:'📊 ภาพรวม',stats:'📈 สถิติ & เป้าหมาย',pages:'🎨 แก้ไขหน้า',stones:'💎 สารานุกรมหิน',blog:'📝 Blog & Schedule',products:'🪨 สินค้าโพรง',shopee:'🛒 Shopee Aff',roadmap:'🗺️ แผน 6 เดือน',articles:'📋 หน้าทั้งหมด',settings:'⚙️ ตั้งค่า',catalog:'✦ Crystal Catalog',top100:'🏆 Top 100 ยอดนิยม',rankings:'📊 จัดอันดับหินคริสตัล'};
 // Look up a sidebar nav-item by the tab name it opens, instead of a hardcoded
 // array index — indices silently went stale every time a nav item was added
 // (found 5 call sites pointing at the wrong tab, one at a tab that no longer
@@ -1897,6 +2021,7 @@ function showTab(name,el){
   if(name==='settings') loadSettingsTab();
   if(name==='catalog'){ seedCatalogFromJson().then(()=>renderCatalog()); }
   if(name==='top100'){ seedTop100FromJson().then(()=>renderTop100Table()); }
+  if(name==='rankings'){ seedRankingsFromJson().then(()=>renderRankings()); }
 }
 
 // ── SETTINGS / STORE INFO ──────────────────────────────────────
@@ -5322,6 +5447,343 @@ function uploadTop100Img(rank,input){
   r.readAsDataURL(f);
 }
 
+// ── RANKINGS (จัดอันดับหินคริสตัล) ──────────────
+const RANKING_KEY='amethez_rankings';
+function getRankingItems(){ try{ return JSON.parse(localStorage.getItem(RANKING_KEY)||'[]'); }catch{ return []; } }
+function saveRankingItems(arr){ localStorage.setItem(RANKING_KEY,JSON.stringify(arr)); }
+
+async function seedRankingsFromJson(){
+  if(localStorage.getItem('amethez_rankings_seeded')) return;
+  try{
+    const r=await fetch('/data/rankings.json?v='+Date.now());
+    if(!r.ok) return;
+    const d=await r.json();
+    const existing=getRankingItems();
+    const existIds=new Set(existing.map(p=>String(p.id)));
+    const seeded=(d.articles||[]).filter(a=>!existIds.has(String(a.id))).map(a=>({
+      id: String(a.id),
+      title: a.title||'',
+      slug: a.slug||'',
+      url: a.url||'',
+      excerpt: a.excerpt||'',
+      hero: '',
+      heroImgSlot: a.heroImgSlot||'',
+      status: a.status||'published',
+      publishDate: a.publishDate?a.publishDate+'T08:00':new Date().toISOString(),
+      body: '',
+      created: a.publishDate||new Date().toISOString(),
+      updated: a.publishDate||new Date().toISOString(),
+    }));
+    saveRankingItems([...existing,...seeded]);
+    localStorage.setItem('amethez_rankings_seeded','1');
+  }catch(e){ console.warn('seedRankings:',e); }
+}
+
+function renderRankings(){
+  const list=getRankingItems();
+  if(!list.length){
+    document.getElementById('rankingsList').innerHTML='<div style="text-align:center;padding:4rem;color:#9ca3af">ยังไม่มีบทความจัดอันดับ — กด ➕ เพิ่มบทความ</div>';
+    return;
+  }
+  const STATUS_LABEL={published:'🟢 เผยแพร่',scheduled:'⏰ ตั้งเวลา',draft:'⚫ Draft'};
+  const STATUS_COLOR={published:'#059669',scheduled:'#d97706',draft:'#9ca3af'};
+  document.getElementById('rankingsList').innerHTML=`<div class="article-list">${[...list].sort((a,b)=>
+    (b.created||'').localeCompare(a.created||'')).map(p=>{
+    const col=STATUS_COLOR[p.status]||'#9ca3af';
+    const heroUrl=(getImgs()[p.heroImgSlot])||p.hero;
+    const thumb=heroUrl?`<img src="${x(heroUrl)}" style="width:56px;height:56px;object-fit:cover;border-radius:.5rem;flex-shrink:0">`
+      :`<div style="width:56px;height:56px;background:#f5f0ff;border-radius:.5rem;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0">🏆</div>`;
+    const dateStr=p.publishDate?new Date(p.publishDate).toLocaleDateString('th-TH',{day:'numeric',month:'short',year:'2-digit',hour:'2-digit',minute:'2-digit'}):'—';
+    return `<div class="article-item" style="border-left:3px solid ${col}">
+      ${thumb}
+      <div class="article-info" style="flex:1;min-width:0">
+        <div class="article-name">${x(p.title)}</div>
+        <div style="font-size:.72rem;color:#9ca3af;margin-top:.2rem">${p.status==='scheduled'?'⏰ '+dateStr:dateStr} · ${x(p.url||'/stones/rankings/'+p.slug+'.html')}</div>
+      </div>
+      <div style="display:flex;gap:.4rem;align-items:center;flex-wrap:wrap">
+        <span style="font-size:.72rem;color:${col};background:${col}22;padding:.15rem .55rem;border-radius:2rem">${STATUS_LABEL[p.status]||p.status}</span>
+        <button class="btn btn-outline btn-sm" onclick="openEditRanking('${x(p.id)}')">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="delRankingItem('${x(p.id)}')">🗑</button>
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+}
+function delRankingItem(id){
+  if(!confirm('ลบบทความจัดอันดับนี้?')) return;
+  saveRankingItems(getRankingItems().filter(p=>p.id!==id));
+  renderRankings();
+  toast('ลบแล้ว','ok');
+}
+
+function openAddRanking(){
+  document.getElementById('rkEditId').value='';
+  document.getElementById('rkTitle2').value='';
+  document.getElementById('rkSlug').value='';
+  document.getElementById('rkExcerpt').value='';
+  document.getElementById('rkStatus').value='draft';
+  document.getElementById('rkPublishDate').value='';
+  toggleRkSchedule();
+  document.getElementById('rkHero').value='';
+  updateRkHeroPreview('');
+  document.getElementById('rkHeroFile').value='';
+  document.getElementById('rkTitle').textContent='✏️ เพิ่มบทความจัดอันดับใหม่';
+  document.getElementById('rkPath').textContent='';
+  document.getElementById('rkPath').removeAttribute('href');
+  document.getElementById('rkViewBtn').removeAttribute('href');
+  document.getElementById('rkBodyTA').value='';
+  document.getElementById('rkBodyPreview').innerHTML='';
+  updateRkBodyLen('');
+  switchRkTab('html');
+  document.getElementById('rkDelBtn').style.display='none';
+  document.getElementById('rankingsListView').style.display='none';
+  document.getElementById('rankingsEditorView').style.display='';
+}
+
+function openEditRanking(id){
+  const p=getRankingItems().find(b=>b.id===id); if(!p) return;
+  document.getElementById('rkEditId').value=p.id;
+  document.getElementById('rkTitle2').value=p.title||'';
+  document.getElementById('rkSlug').value=p.slug||'';
+  document.getElementById('rkExcerpt').value=p.excerpt||'';
+  document.getElementById('rkStatus').value=p.status||'published';
+  document.getElementById('rkPublishDate').value=(p.publishDate||'').slice(0,16);
+  toggleRkSchedule();
+  const heroUrl=p.hero||(getImgs()[p.heroImgSlot])||'';
+  document.getElementById('rkHero').value=heroUrl;
+  updateRkHeroPreview(heroUrl);
+  document.getElementById('rkHeroFile').value='';
+  document.getElementById('rkTitle').textContent='✏️ '+p.title;
+  const pagePath=p.url||('/stones/rankings/'+p.slug+'.html');
+  document.getElementById('rkPath').textContent=pagePath;
+  document.getElementById('rkPath').href=pagePath;
+  document.getElementById('rkViewBtn').href=pagePath;
+  document.getElementById('rkDelBtn').style.display='';
+
+  // body — same self-heal-against-stale-cache pattern as Blog/Catalog editors
+  const localBody=p.body||'';
+  document.getElementById('rkBodyTA').value=localBody||'(กำลังโหลด...)';
+  document.getElementById('rkBodyPreview').innerHTML=localBody;
+  updateRkBodyLen(localBody);
+  switchRkTab('html');
+  if(pagePath){
+    fetchLivePostBody(pagePath).then(liveBody=>{
+      if(!liveBody) return;
+      if(document.getElementById('rkEditId').value!==p.id) return;
+      const liveTextLen=(new DOMParser().parseFromString(liveBody,'text/html').body.textContent||'').trim().length;
+      const localTextLen=(new DOMParser().parseFromString(localBody,'text/html').body.textContent||'').trim().length;
+      const staleCache=liveTextLen>200 && localTextLen < liveTextLen*0.6;
+      if(!localBody || staleCache){
+        document.getElementById('rkBodyTA').value=liveBody;
+        document.getElementById('rkBodyPreview').innerHTML=liveBody;
+        updateRkBodyLen(liveBody);
+        if(document.getElementById('rkTabPreview').style.display!=='none') attachRkImgResize();
+        p.body=liveBody;
+        saveRankingItems(getRankingItems().map(b=>b.id===p.id?p:b));
+        _dirtyRkBodyIds.delete(String(p.id));
+        if(staleCache) toast('⚠️ ข้อมูลที่แคชไว้ในเครื่องดูไม่ครบ — โหลดเนื้อหาสดจากเว็บจริงมาแทนแล้ว','ok');
+      }
+    }).catch(()=>{});
+  }
+
+  document.getElementById('rankingsListView').style.display='none';
+  document.getElementById('rankingsEditorView').style.display='';
+}
+function closeRankingEditor(){
+  document.getElementById('rankingsEditorView').style.display='none';
+  document.getElementById('rankingsListView').style.display='';
+  renderRankings();
+}
+async function resetRkBodyToOriginal(){
+  const eid=document.getElementById('rkEditId').value;
+  const p=getRankingItems().find(b=>b.id===eid);
+  const url=p?.url||document.getElementById('rkPath').textContent;
+  if(!url){ toast('ยังไม่มีลิงก์หน้าเว็บของบทความนี้','err'); return; }
+  if(!confirm('โหลดเนื้อหาจากหน้าเว็บจริงทับของที่แก้ไว้? การแก้ไขที่ยังไม่เผยแพร่จะหายไป')) return;
+  try{
+    const body=await fetchLivePostBody(url);
+    document.getElementById('rkBodyTA').value=body;
+    document.getElementById('rkBodyPreview').innerHTML=body;
+    updateRkBodyLen(body);
+    if(document.getElementById('rkTabPreview').style.display!=='none') attachRkImgResize();
+    if(p){ p.body=body; saveRankingItems(getRankingItems().map(b=>b.id===eid?p:b)); }
+    _dirtyRkBodyIds.delete(String(eid));
+    toast('โหลดต้นฉบับจากเว็บจริงแล้ว','ok');
+  }catch(e){ toast('โหลดต้นฉบับไม่สำเร็จ: '+e.message,'err'); }
+}
+function deleteRankingFromEditor(){
+  const eid=document.getElementById('rkEditId').value;
+  if(!eid||!confirm('ลบบทความนี้?')) return;
+  saveRankingItems(getRankingItems().filter(b=>b.id!==eid));
+  closeRankingEditor();
+  toast('ลบแล้ว','ok');
+}
+function toggleRkSchedule(){
+  const show=document.getElementById('rkStatus').value==='scheduled';
+  document.getElementById('rkScheduleGroup').style.display=show?'':'none';
+}
+function updateRkHeroPreview(url){
+  const hasUrl=url&&url.trim();
+  document.getElementById('rkHeroPreview').style.display=hasUrl?'':'none';
+  document.getElementById('rkHeroEmpty').style.display=hasUrl?'none':'';
+  if(hasUrl) document.getElementById('rkHeroImg').src=url.trim();
+}
+function uploadRkHero(input){
+  const f=input.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=e=>{ document.getElementById('rkHero').value=e.target.result; updateRkHeroPreview(e.target.result); };
+  r.readAsDataURL(f);
+}
+function updateRkBodyLen(v){
+  document.getElementById('rkBodyLen').textContent=(v||'').length.toLocaleString()+' ตัวอักษร · '+(v||'').replace(/<[^>]*>/g,'').trim().split(/\s+/).filter(Boolean).length+' คำ';
+}
+let _dirtyRkBodyIds=new Set();
+function markRkBodyDirty(){
+  const eid=document.getElementById('rkEditId').value;
+  if(!eid) return;
+  _dirtyRkBodyIds.add(String(eid));
+  const items=getRankingItems();
+  const p=items.find(b=>b.id===eid);
+  if(p){ p.body=document.getElementById('rkBodyTA').value; saveRankingItems(items); }
+}
+function attachRkImgResize(){
+  document.getElementById('rkBodyPreview').querySelectorAll('img').forEach(img=>attachImgResize(img,onRkPreviewEdit));
+}
+function onRkBodyEdit(v){
+  updateRkBodyLen(v);
+  markRkBodyDirty();
+  if(document.getElementById('rkTabPreview').style.display!=='none'){
+    document.getElementById('rkBodyPreview').innerHTML=v;
+    attachRkImgResize();
+  }
+}
+function onRkPreviewEdit(){
+  const html=document.getElementById('rkBodyPreview').innerHTML;
+  document.getElementById('rkBodyTA').value=html;
+  updateRkBodyLen(html);
+  markRkBodyDirty();
+}
+function switchRkTab(t){
+  const isHtml=t==='html';
+  document.getElementById('rkTabHtml').style.display=isHtml?'':'none';
+  document.getElementById('rkTabPreview').style.display=isHtml?'none':'';
+  document.getElementById('rkTabBtnHtml').style.cssText='padding:.5rem 1.25rem;border:none;border-bottom:2px solid '+(isHtml?'#7c3aed':'transparent')+';margin-bottom:-2px;background:none;font-size:.85rem;font-weight:'+(isHtml?'700':'600')+';color:'+(isHtml?'#7c3aed':'#9ca3af')+';cursor:pointer';
+  document.getElementById('rkTabBtnPreview').style.cssText='padding:.5rem 1.25rem;border:none;border-bottom:2px solid '+(isHtml?'transparent':'#7c3aed')+';margin-bottom:-2px;background:none;font-size:.85rem;font-weight:'+(isHtml?'600':'700')+';color:'+(isHtml?'#9ca3af':'#7c3aed')+';cursor:pointer';
+  if(!isHtml){
+    document.getElementById('rkBodyPreview').innerHTML=document.getElementById('rkBodyTA').value;
+    attachRkImgResize();
+  }
+}
+let _rkInsertRange=null;
+function saveRkInsertRange(){
+  const preview=document.getElementById('rkBodyPreview');
+  const sel=window.getSelection();
+  if(sel && sel.rangeCount>0 && preview.contains(sel.anchorNode)){
+    _rkInsertRange=sel.getRangeAt(0).cloneRange();
+  } else {
+    _rkInsertRange=null;
+  }
+}
+function insertRkBodyImage(input){
+  const f=input.files[0]; if(!f) return;
+  insertImageFileIntoRkBody(f);
+  input.value='';
+}
+function insertImageFileIntoRkBody(file,opts){
+  opts=opts||{};
+  if(!file || !file.type || !file.type.startsWith('image/')) return;
+  const r=new FileReader();
+  r.onload=e=>{
+    const dataUrl=e.target.result;
+    const imgHTML=`<img src="${dataUrl}" alt="" style="max-width:100%;border-radius:.75rem;margin:1.25rem 0">`;
+    const isHtmlTab=document.getElementById('rkTabHtml').style.display!=='none';
+    if(isHtmlTab){
+      const ta=document.getElementById('rkBodyTA');
+      const start=opts.taStart!=null?opts.taStart:(ta.selectionStart!=null?ta.selectionStart:ta.value.length);
+      const end=opts.taEnd!=null?opts.taEnd:(ta.selectionEnd!=null?ta.selectionEnd:ta.value.length);
+      ta.value=ta.value.slice(0,start)+'\n'+imgHTML+'\n'+ta.value.slice(end);
+      onRkBodyEdit(ta.value);
+      const pos=start+imgHTML.length+2;
+      ta.focus(); ta.setSelectionRange(pos,pos);
+    } else {
+      const preview=document.getElementById('rkBodyPreview');
+      preview.focus();
+      const sel=window.getSelection();
+      const savedRange=opts.range||_rkInsertRange;
+      if(savedRange){ sel.removeAllRanges(); sel.addRange(savedRange); }
+      let range=sel.rangeCount?sel.getRangeAt(0):null;
+      if(!range || !preview.contains(range.commonAncestorContainer)){
+        range=document.createRange();
+        range.selectNodeContents(preview);
+        range.collapse(false);
+      }
+      const imgEl=document.createElement('img');
+      imgEl.src=dataUrl;
+      imgEl.alt='';
+      imgEl.style.cssText='max-width:100%;border-radius:.75rem;margin:1.25rem 0';
+      range.deleteContents();
+      range.insertNode(imgEl);
+      range.setStartAfter(imgEl);
+      range.collapse(true);
+      sel.removeAllRanges();
+      sel.addRange(range);
+      attachImgResize(imgEl, onRkPreviewEdit);
+      onRkPreviewEdit();
+    }
+    toast('แทรกรูปแล้ว — บันทึกอัตโนมัติแล้ว กด 🚀 เผยแพร่ ได้เลย','ok');
+  };
+  r.readAsDataURL(file);
+}
+document.getElementById('rkBodyTA').addEventListener('paste', e=>{
+  const items=e.clipboardData&&e.clipboardData.items; if(!items) return;
+  for(const item of items){
+    if(item.type&&item.type.startsWith('image/')){
+      e.preventDefault();
+      const ta=e.target;
+      insertImageFileIntoRkBody(item.getAsFile(),{taStart:ta.selectionStart,taEnd:ta.selectionEnd});
+      return;
+    }
+  }
+});
+document.getElementById('rkBodyPreview').addEventListener('paste', e=>{
+  const items=e.clipboardData&&e.clipboardData.items; if(!items) return;
+  for(const item of items){
+    if(item.type&&item.type.startsWith('image/')){
+      e.preventDefault();
+      const sel=window.getSelection();
+      const range=sel.rangeCount?sel.getRangeAt(0).cloneRange():null;
+      insertImageFileIntoRkBody(item.getAsFile(),{range});
+      return;
+    }
+  }
+});
+function saveRankingEditor(){
+  const title=document.getElementById('rkTitle2').value.trim();
+  if(!title){ toast('กรุณาใส่หัวข้อบทความ','err'); return; }
+  const eid=document.getElementById('rkEditId').value;
+  const items=getRankingItems();
+  const body=document.getElementById('rkBodyTA').value;
+  const slug=document.getElementById('rkSlug').value.trim()||title.toLowerCase().replace(/[^\w฀-๿]+/g,'-');
+  const p={
+    id: eid||'rk_'+Date.now(),
+    title,
+    slug,
+    url: '/stones/rankings/'+slug+'.html',
+    excerpt: document.getElementById('rkExcerpt').value.trim(),
+    hero: document.getElementById('rkHero').value.trim(),
+    heroImgSlot: (eid&&items.find(b=>b.id===eid)?.heroImgSlot)||('ranking_'+slug.replace(/-/g,'_')+'_hero'),
+    status: document.getElementById('rkStatus').value,
+    publishDate: document.getElementById('rkPublishDate').value||new Date().toISOString(),
+    body,
+    created: eid?(items.find(b=>b.id===eid)?.created||new Date().toISOString()):new Date().toISOString(),
+    updated: new Date().toISOString(),
+  };
+  if(eid){ const i=items.findIndex(b=>b.id===eid); if(i>=0) items[i]=p; else items.push(p); }
+  else items.unshift(p);
+  saveRankingItems(items);
+  toast('บันทึก "'+title+'" แล้ว ✓','ok');
+  document.getElementById('rkTitle').textContent='✏️ '+title;
+}
+
 // ── GITHUB PUBLISH ─────────────────────────────
 async function publishToGitHub(){
   const token=localStorage.getItem(GH_TOKEN_KEY);
@@ -5364,6 +5826,12 @@ async function publishToGitHub(){
         preTexts[pageKey+'.tagline']=item.tagline||'';
         preTexts['catalog_'+slugU+'_line_url']=item.lineUrl||'';
         preTexts['catalog_'+slugU+'_shopee_url']=(item.products&&item.products.ring&&item.products.ring.url)||item.lineUrl||'';
+      }
+      // Same trick for Crystal Rankings hero images — reuses the generic
+      // getImgs()/setImgs() store + upload loop below, no ranking-specific
+      // upload code needed.
+      for(const item of getRankingItems()){
+        if(item.hero && item.heroImgSlot) preImgs[item.heroImgSlot]=item.hero;
       }
       setImgs(preImgs);
       setTexts(preTexts);
@@ -5671,6 +6139,72 @@ async function publishToGitHub(){
         let catSha='';
         try{ const cgr=await fetch(`https://api.github.com/repos/${repo}/contents/data/catalog.json`,{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}}); if(cgr.ok){ const cgd=await cgr.json(); catSha=cgd.sha; } }catch{}
         await fetch(`https://api.github.com/repos/${repo}/contents/data/catalog.json`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:'cms: update catalog.json ('+catalogItems.length+' items)',content:catB64,...(catSha?{sha:catSha}:{})})});
+      }
+
+      // Push edited Crystal Rankings body content back into the live article
+      // page HTML (same DOMParser splice + safety-net pattern as blog/catalog),
+      // then regenerate data/rankings.json for the hub page + homepage strip.
+      const rankingItems=getRankingItems();
+      for(const item of rankingItems){
+        if(!_dirtyRkBodyIds.has(String(item.id))||!item.body) continue;
+        const bodyImgs=[...item.body.matchAll(/src="(data:image\/([a-zA-Z0-9.+-]+);base64,([^"]+))"/g)];
+        let n=0;
+        for(const mm of bodyImgs){
+          n++;
+          const ext=mm[2]==='jpeg'?'jpg':mm[2]==='svg+xml'?'svg':mm[2];
+          const bpath=`data/images/ranking_${item.slug.replace(/-/g,'_')}_body${n}.${ext}`;
+          let bsha='';
+          try{ const br=await fetch(`https://api.github.com/repos/${repo}/contents/${bpath}`,{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}}); if(br.ok){ const bd=await br.json(); bsha=bd.sha; } }catch{}
+          const bur=await fetch(`https://api.github.com/repos/${repo}/contents/${bpath}`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:`cms: ranking body image ${item.slug}-${n}`,content:mm[3],...(bsha?{sha:bsha}:{})})});
+          if(bur.ok){ item.body=item.body.replace(mm[1],'/'+bpath); }
+          else toast('⚠️ อัปโหลดรูปในเนื้อหา "'+item.title+'" ไม่สำเร็จ','err');
+        }
+        const pagePath=(item.url||'/stones/rankings/'+item.slug+'.html').replace(/^\//,'');
+        try{
+          const pr=await fetch(`https://api.github.com/repos/${repo}/contents/${pagePath}`,{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}});
+          if(pr.ok){
+            const pd=await pr.json();
+            const pageHtml=decodeURIComponent(escape(atob(pd.content.replace(/\n/g,''))));
+            const doc=new DOMParser().parseFromString(pageHtml,'text/html');
+            const bodyEl=doc.querySelector('[data-cms-text="body"]');
+            if(bodyEl){
+              const liveLen=bodyEl.textContent.trim().length;
+              const newLen=new DOMParser().parseFromString(item.body,'text/html').body.textContent.trim().length;
+              if(liveLen>200 && newLen < liveLen*0.6){
+                toast('⚠️ ข้ามการอัปเดต "'+item.title+'" — เนื้อหาที่จะเผยแพร่สั้นกว่าหน้าเว็บจริงมาก กด "↺ โหลดต้นฉบับ" ก่อน','err');
+              } else {
+                bodyEl.innerHTML=item.body;
+                const titleEl=doc.querySelector('[data-cms-text="title"]');
+                if(titleEl) titleEl.innerHTML=item.title;
+                const excerptEl=doc.querySelector('[data-cms-text="subtitle"]');
+                if(excerptEl && item.excerpt) excerptEl.innerHTML=item.excerpt;
+                const updatedHtml='<!DOCTYPE html>\n'+doc.documentElement.outerHTML;
+                const newB64=btoa(unescape(encodeURIComponent(updatedHtml)));
+                const pur=await fetch(`https://api.github.com/repos/${repo}/contents/${pagePath}`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:`cms: update ranking body — ${item.title}`,content:newB64,sha:pd.sha})});
+                if(!pur.ok) toast('⚠️ อัปเดตเนื้อหาหน้า "'+item.title+'" ไม่สำเร็จ','err');
+              }
+            } else {
+              toast('⚠️ ไม่พบ body ในหน้า "'+item.title+'" — ข้ามการอัปเดตเนื้อหา','err');
+            }
+          } else {
+            toast('⚠️ ยังไม่มีไฟล์หน้าเว็บของ "'+item.title+'" — ต้องให้ Claude สร้างหน้าก่อน จึงจะแก้เนื้อหาได้','err');
+          }
+        }catch(e){ toast('⚠️ อัปเดตเนื้อหาหน้า "'+item.title+'" ผิดพลาด: '+e.message,'err'); }
+      }
+      _dirtyRkBodyIds.clear();
+      saveRankingItems(rankingItems);
+
+      if(rankingItems.length){
+        const rankingsJson={generated:new Date().toISOString().slice(0,10),articles:rankingItems.filter(it=>it.status!=='draft').map(it=>({
+          id:it.id, slug:it.slug, title:it.title, excerpt:it.excerpt,
+          heroImgSlot:it.heroImgSlot, url:it.url||'/stones/rankings/'+it.slug+'.html',
+          publishDate:(it.publishDate||'').slice(0,10), status:it.status,
+        }))};
+        const rkStr=JSON.stringify(rankingsJson,null,2);
+        const rkB64=btoa(unescape(encodeURIComponent(rkStr)));
+        let rkSha='';
+        try{ const rgr=await fetch(`https://api.github.com/repos/${repo}/contents/data/rankings.json`,{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}}); if(rgr.ok){ const rgd=await rgr.json(); rkSha=rgd.sha; } }catch{}
+        await fetch(`https://api.github.com/repos/${repo}/contents/data/rankings.json`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:'cms: update rankings.json ('+rankingItems.length+' articles)',content:rkB64,...(rkSha?{sha:rkSha}:{})})});
       }
 
       toast('🚀 เผยแพร่สำเร็จ! สินค้า '+affProducts.length+' ชิ้น ขึ้นเว็บใน ~3 นาที','ok');
