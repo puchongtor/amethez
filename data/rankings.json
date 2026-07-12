@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-13",
+  "generated": "2026-07-12",
   "articles": [
     {
       "id": "5-andap-hin-mongkol-premium",
@@ -7,34 +7,8 @@
       "title": "5 อันดับหินมงคลเกรดพรีเมี่ยมที่เศรษฐีระดับโลกนิยมสะสมมากที่สุด",
       "excerpt": "พาส่อง 5 หินมงคลเกรดพรีเมี่ยมที่เหล่ามหาเศรษฐีทั่วโลกกว้านซื้อสะสม ตั้งแต่หยกจักรพรรดิที่แพงกว่าเพชร ไปจนถึงแก้วทะเลทรายลิเบียที่เคยประดับพระศอฟาโรห์ตุตันคาเมน",
       "heroImgSlot": "ranking_5_andap_hin_mongkol_premium_hero",
-      "heroPrompt": "A high-impact 4:3 luxury article cover photograph. On the left side of the image, the focus is an incredibly sharp, thick, and beautifully styled three-dimensional golden Thai text that reads: \"5 หินมงคลเกรดพรีเมี่ยมที่เศรษฐีระดับโลกสะสม\". On the right side, next to the typography, a museum-grade natural clear Quartz crystal cluster with dense golden rutile needles inside stands elegantly, catching the light and creating a brilliant metallic gold reflection. The entire composition rests on a minimalist, dark matte charcoal velvet surface with a cinematic soft overhead spotlight highlighting both the golden text and the sparkling crystal. Extreme texture fidelity, absolute click-attracting premium visual design, professional publisher quality, photorealistic --ar 4:3 --stylize 120 --v 6.0",
-      "items": [
-        {
-          "label": "หยกจักรพรรดิ (Imperial Jade)",
-          "prompt": "A professional 4:3 museum catalog photograph of a raw green Imperial Jadeite specimen. The uncut stone displays natural fractures and rich emerald-green semi-transparency. In the lower section of the image, the clean, crisp, bold white text \"IMPERIAL JADE\" is printed directly and neatly on the smooth dark background. Sharp textures, documentary style, shot with a Nikon D850, f/16, highly realistic --ar 4:3 --stylize 80 --v 6.0",
-          "imgSlot": "ranking_5_andap_hin_mongkol_premium_item1_hero"
-        },
-        {
-          "label": "โมลดาไวต์ (Moldavite)",
-          "prompt": "A high-end 4:3 geological specimen photograph of a raw green Moldavite tektite with deeply pitted natural wrinkles and a matte olive-green surface. In the lower section of the image, the clean, crisp, bold white text \"MOLDAVITE\" is printed directly and neatly on the matte black surface. Harsh realistic laboratory lighting, zero digital sheen, documentary style --ar 4:3 --stylize 80 --v 6.0",
-          "imgSlot": "ranking_5_andap_hin_mongkol_premium_item2_hero"
-        },
-        {
-          "label": "พาราอีบา ทัวร์มาลีน (Paraiba Tourmaline)",
-          "prompt": "A sharp 4:3 studio photograph of a raw, uncut Paraiba Tourmaline stone displaying its neon electric blue color on a white quartz matrix. In the lower section of the image, the clean, crisp, bold black text \"PARAIBA TOURMALINE\" is printed directly and neatly on the clean light background. Soft daylight lighting, realistic internal reflections, high texture fidelity --ar 4:3 --stylize 80 --v 6.0",
-          "imgSlot": "ranking_5_andap_hin_mongkol_premium_item3_hero"
-        },
-        {
-          "label": "แก้วทะเลทรายลิเบีย (Libyan Desert Glass)",
-          "prompt": "A 4:3 close-up photograph of a raw, genuine canary-yellow Libyan Desert Glass specimen with a wind-eroded shape and sand dust particles. In the lower section of the image, the clean, crisp, bold white text \"LIBYAN DESERT GLASS\" is printed directly and neatly on the dark rustic stone background. Coarse textures, realistic long shadows, pure raw reality --ar 4:3 --stylize 80 --v 6.0",
-          "imgSlot": "ranking_5_andap_hin_mongkol_premium_item4_hero"
-        },
-        {
-          "label": "ไหมทองเกรดซูเปอร์พรีเมี่ยม (Rutilated Quartz)",
-          "prompt": "A stunning 4:3 mineralogy photograph of a natural clear Quartz crystal point filled with dense, coarse golden rutile needles inside. In the lower section of the image, the clean, crisp, bold white text \"RUTILATED QUARTZ\" is printed directly and neatly on the dark matte background. Metallic gold luster, crisp focus, high resolution capturing fine growth lines --ar 4:3 --stylize 100 --v 6.0",
-          "imgSlot": "ranking_5_andap_hin_mongkol_premium_item5_hero"
-        }
-      ],
+      "heroPrompt": "",
+      "items": [],
       "url": "/stones/rankings/5-andap-hin-mongkol-premium.html",
       "publishDate": "2026-07-13",
       "status": "published"
