@@ -1410,6 +1410,35 @@ textarea.form-input{resize:vertical;min-height:80px;}
             </div>
             <input class="form-input" id="top100Search" placeholder="ค้นหาชื่อหิน..." style="max-width:220px" oninput="renderTop100Table()">
           </div>
+
+          <div class="card" style="margin-bottom:1.5rem">
+            <div class="card-title">🖼️ รูป Hero (แบนเนอร์บนสุดของหน้า)</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+              <div>
+                <div style="display:flex;gap:.5rem;align-items:flex-start;margin-bottom:.75rem">
+                  <input class="form-input" id="top100Hero" placeholder="https://... หรืออัปโหลดรูปด้านขวา" style="flex:1" oninput="updateTop100HeroPreview(this.value);persistTop100Hero()">
+                  <label style="cursor:pointer;flex-shrink:0">
+                    <span class="btn btn-outline btn-sm" style="display:inline-flex;align-items:center;gap:.3rem">📁 เลือกรูป</span>
+                    <input type="file" id="top100HeroFile" accept="image/*" style="display:none" onchange="uploadTop100Hero(this)">
+                  </label>
+                </div>
+                <div id="top100HeroPreview" style="display:none">
+                  <img id="top100HeroImg" style="width:100%;max-height:180px;border-radius:.75rem;object-fit:cover;border:1px solid #e5e7eb">
+                </div>
+                <div id="top100HeroEmpty" style="height:120px;background:#f5f3ff;border-radius:.75rem;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:.85rem">
+                  ยังไม่มีรูป — ใส่ URL หรืออัปโหลด
+                </div>
+              </div>
+              <div>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.35rem">
+                  <label class="fl" style="margin:0">🎨 AI Image Prompt</label>
+                  <button class="btn btn-outline btn-sm" onclick="copyTop100HeroPrompt()" style="font-size:.7rem">📋 คัดลอก</button>
+                </div>
+                <textarea class="form-input" id="top100HeroPrompt" rows="8" placeholder="วาง/แก้ prompt สำหรับ Google Flow..." style="font-size:.72rem;font-family:'Consolas','Courier New',monospace;height:180px" oninput="persistTop100Hero()"></textarea>
+              </div>
+            </div>
+          </div>
+
           <div style="overflow-x:auto">
             <table style="width:100%;border-collapse:collapse;font-size:.85rem;min-width:900px">
               <thead>
@@ -1639,7 +1668,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-13.4';
+const ADMIN_VERSION='2026-07-13.5';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -2039,7 +2068,7 @@ function showTab(name,el){
   if(name==='roadmap') renderRoadmap();
   if(name==='settings') loadSettingsTab();
   if(name==='catalog'){ seedCatalogFromJson().then(()=>renderCatalog()); }
-  if(name==='top100'){ seedTop100FromJson().then(()=>renderTop100Table()); }
+  if(name==='top100'){ seedTop100FromJson().then(()=>{ renderTop100Table(); loadTop100HeroUI(); }); }
   if(name==='rankings'){ seedRankingsFromJson().then(()=>renderRankings()); }
 }
 
@@ -5406,12 +5435,66 @@ function deleteCatalogFromEditor(){
 const TOP100_KEY='amethez_top100';
 function getTop100Items(){ try{ return JSON.parse(localStorage.getItem(TOP100_KEY)||'[]'); }catch{ return []; } }
 function saveTop100Items(arr){ localStorage.setItem(TOP100_KEY,JSON.stringify(arr)); }
+const TOP100_HERO_KEY='amethez_top100_hero';
+function getTop100Hero(){ try{ return JSON.parse(localStorage.getItem(TOP100_HERO_KEY)||'{}'); }catch{ return {}; } }
+function saveTop100Hero(o){ localStorage.setItem(TOP100_HERO_KEY,JSON.stringify(o)); }
+async function loadTop100HeroUI(){
+  let heroUrl=getImgs()['top100_page_hero']||'';
+  // Fall back to the live published content.json if this browser's localStorage
+  // never had this key set (e.g. the image was uploaded from a different
+  // session/machine) — otherwise the preview looks empty even though the
+  // image is really live on the site.
+  if(!heroUrl){
+    try{
+      const r=await fetch('/data/content.json?v='+Date.now());
+      if(r.ok){
+        const d=await r.json();
+        if(d.images&&d.images['top100_page_hero']) heroUrl=d.images['top100_page_hero'];
+      }
+    }catch{}
+  }
+  document.getElementById('top100Hero').value=heroUrl;
+  updateTop100HeroPreview(heroUrl);
+  document.getElementById('top100HeroFile').value='';
+  document.getElementById('top100HeroPrompt').value=getTop100Hero().heroPrompt||'';
+}
+function updateTop100HeroPreview(url){
+  const hasUrl=url&&url.trim();
+  document.getElementById('top100HeroPreview').style.display=hasUrl?'':'none';
+  document.getElementById('top100HeroEmpty').style.display=hasUrl?'none':'';
+  if(hasUrl) document.getElementById('top100HeroImg').src=url.trim();
+}
+function uploadTop100Hero(input){
+  const f=input.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=e=>{
+    document.getElementById('top100Hero').value=e.target.result;
+    updateTop100HeroPreview(e.target.result);
+    persistTop100Hero();
+  };
+  r.readAsDataURL(f);
+}
+function persistTop100Hero(){
+  const imgs=getImgs();
+  imgs['top100_page_hero']=document.getElementById('top100Hero').value.trim();
+  setImgs(imgs);
+  saveTop100Hero({heroPrompt:document.getElementById('top100HeroPrompt').value.trim()});
+}
+async function copyTop100HeroPrompt(){
+  const v=document.getElementById('top100HeroPrompt').value;
+  if(!v.trim()){ toast('ยังไม่มี prompt','err'); return; }
+  try{ await navigator.clipboard.writeText(v); toast('คัดลอก prompt แล้ว','ok'); }
+  catch{ toast('คัดลอกไม่สำเร็จ — เลือกข้อความแล้วก็อบปี้เองได้','err'); }
+}
 async function seedTop100FromJson(){
   try{
     const r=await fetch('/data/top-100-stones.json?v='+Date.now());
     if(!r.ok) return;
     const d=await r.json();
     const live=d.stones||[];
+    if(d.heroPrompt && !getTop100Hero().heroPrompt){
+      saveTop100Hero({heroPrompt:d.heroPrompt});
+    }
     const existing=getTop100Items();
     if(!existing.length){
       saveTop100Items(live.slice().sort((a,b)=>a.rank-b.rank));
@@ -6274,7 +6357,7 @@ async function publishToGitHub(){
           }
         }catch(e){ toast('⚠️ อัปเดตหน้า Top 100 ผิดพลาด: '+e.message,'err'); }
 
-        const top100Json=JSON.stringify({generated:new Date().toISOString().slice(0,10),source:'Admin-edited via Top 100 tab',stones:top100Items},null,2);
+        const top100Json=JSON.stringify({generated:new Date().toISOString().slice(0,10),source:'Admin-edited via Top 100 tab',heroPrompt:getTop100Hero().heroPrompt||'',stones:top100Items},null,2);
         const t100B64=btoa(unescape(encodeURIComponent(top100Json)));
         let t100Sha='';
         try{ const tr=await fetch(`https://api.github.com/repos/${repo}/contents/data/top-100-stones.json`,{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}}); if(tr.ok){ const td=await tr.json(); t100Sha=td.sha; } }catch{}
