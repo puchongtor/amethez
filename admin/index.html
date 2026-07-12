@@ -1481,7 +1481,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
               <div class="card" style="margin-bottom:0">
                 <div class="card-title">🖼️ รูป Hero</div>
                 <div style="display:flex;gap:.5rem;align-items:flex-start;margin-bottom:.75rem">
-                  <input class="form-input" id="rkHero" placeholder="https://... หรืออัปโหลดรูปด้านขวา" style="flex:1" oninput="updateRkHeroPreview(this.value)">
+                  <input class="form-input" id="rkHero" placeholder="https://... หรืออัปโหลดรูปด้านขวา" style="flex:1" oninput="updateRkHeroPreview(this.value);persistRkMeta()">
                   <label style="cursor:pointer;flex-shrink:0">
                     <span class="btn btn-outline btn-sm" style="display:inline-flex;align-items:center;gap:.3rem">📁 เลือกรูป</span>
                     <input type="file" id="rkHeroFile" accept="image/*" style="display:none" onchange="uploadRkHero(this)">
@@ -1501,7 +1501,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
                     <label class="fl" style="margin:0">🎨 AI Image Prompt (ปก)</label>
                     <button class="btn btn-outline btn-sm" onclick="copyRkHeroPrompt()" style="font-size:.7rem">📋 คัดลอก</button>
                   </div>
-                  <textarea class="form-input" id="rkHeroPrompt" rows="3" placeholder="วาง/แก้ prompt สำหรับ Google Flow..." style="font-size:.72rem;font-family:'Consolas','Courier New',monospace"></textarea>
+                  <textarea class="form-input" id="rkHeroPrompt" rows="3" placeholder="วาง/แก้ prompt สำหรับ Google Flow..." style="font-size:.72rem;font-family:'Consolas','Courier New',monospace" oninput="persistRkMeta()"></textarea>
                 </div>
               </div>
             </div>
@@ -1639,7 +1639,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-13.3';
+const ADMIN_VERSION='2026-07-13.4';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -5487,7 +5487,6 @@ function getRankingItems(){ try{ return JSON.parse(localStorage.getItem(RANKING_
 function saveRankingItems(arr){ localStorage.setItem(RANKING_KEY,JSON.stringify(arr)); }
 
 async function seedRankingsFromJson(){
-  if(localStorage.getItem('amethez_rankings_seeded')) return;
   try{
     const r=await fetch('/data/rankings.json?v='+Date.now());
     if(!r.ok) return;
@@ -5510,8 +5509,25 @@ async function seedRankingsFromJson(){
       created: a.publishDate||new Date().toISOString(),
       updated: a.publishDate||new Date().toISOString(),
     }));
+    // Self-heal: an article that already exists locally but has never had
+    // its heroPrompt/items touched (both still empty) most likely means this
+    // browser cached the article before those fields were added to the
+    // published JSON — not that the user deliberately cleared them. Backfill
+    // from the live JSON in that case only, so real edits are never clobbered.
+    let healed=0;
+    for(const a of (d.articles||[])){
+      const local=existing.find(p=>String(p.id)===String(a.id));
+      if(!local) continue;
+      const localEmpty=!local.heroPrompt && (!local.items||!local.items.length);
+      const liveHas=a.heroPrompt || (a.items&&a.items.length);
+      if(localEmpty && liveHas){
+        local.heroPrompt=a.heroPrompt||'';
+        local.items=(a.items||[]).map(it=>({label:it.label||'',prompt:it.prompt||'',img:'',imgSlot:it.imgSlot||''}));
+        healed++;
+      }
+    }
     saveRankingItems([...existing,...seeded]);
-    localStorage.setItem('amethez_rankings_seeded','1');
+    if(healed) toast(`🔄 ซิงก์ prompt/รูปประกอบที่ขาดไป ${healed} บทความจากเว็บจริงแล้ว`,'ok');
   }catch(e){ console.warn('seedRankings:',e); }
 }
 
@@ -5667,10 +5683,27 @@ function updateRkHeroPreview(url){
   document.getElementById('rkHeroEmpty').style.display=hasUrl?'none':'';
   if(hasUrl) document.getElementById('rkHeroImg').src=url.trim();
 }
+// Auto-persist hero/prompt/items into the stored record immediately on every
+// change — mirrors markRkBodyDirty()'s auto-persist for body text. Without
+// this, edits only reach storage if "💾 บันทึก" is clicked before "🚀
+// เผยแพร่", and skipping that step silently publishes stale (often empty)
+// data — this exact gap is how inserted images never reached the live blog
+// page before, and it happened again here with Rankings hero/item images.
+function persistRkMeta(){
+  const eid=document.getElementById('rkEditId').value;
+  if(!eid) return;
+  const items=getRankingItems();
+  const p=items.find(b=>b.id===eid);
+  if(!p) return;
+  p.hero=document.getElementById('rkHero').value.trim();
+  p.heroPrompt=document.getElementById('rkHeroPrompt').value.trim();
+  p.items=JSON.parse(JSON.stringify(_rkItems));
+  saveRankingItems(items);
+}
 function uploadRkHero(input){
   const f=input.files[0]; if(!f) return;
   const r=new FileReader();
-  r.onload=e=>{ document.getElementById('rkHero').value=e.target.result; updateRkHeroPreview(e.target.result); };
+  r.onload=e=>{ document.getElementById('rkHero').value=e.target.result; updateRkHeroPreview(e.target.result); persistRkMeta(); };
   r.readAsDataURL(f);
 }
 async function copyRkHeroPrompt(){
@@ -5717,6 +5750,7 @@ function renderRkItemRows(items){
 function setRkItemField(i,field,val){
   if(!_rkItems[i]) return;
   _rkItems[i][field]=val;
+  persistRkMeta();
 }
 function uploadRkItemImg(i,input){
   const f=input.files[0]; if(!f) return;
@@ -5725,16 +5759,19 @@ function uploadRkItemImg(i,input){
     if(!_rkItems[i]) return;
     _rkItems[i].img=e.target.result;
     document.getElementById('rkItemImgPreview_'+i).innerHTML=`<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover">`;
+    persistRkMeta();
   };
   r.readAsDataURL(f);
 }
 function addRkItem(){
   const base=currentRkSlugBase();
   _rkItems.push({label:'',prompt:'',img:'',imgSlot:base+'_item'+(_rkItems.length+1)+'_hero'});
+  persistRkMeta();
   renderRkItemRows(_rkItems);
 }
 function removeRkItem(i){
   _rkItems.splice(i,1);
+  persistRkMeta();
   renderRkItemRows(_rkItems);
 }
 async function copyRkPrompt(i){
