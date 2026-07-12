@@ -1496,7 +1496,26 @@ textarea.form-input{resize:vertical;min-height:80px;}
                 <div style="margin-top:.75rem;padding:.6rem .85rem;background:#f5f0ff;border-radius:.5rem;font-size:.75rem;color:#5b21b6;line-height:1.6">
                   💡 รูปนี้จะขึ้นเป็นภาพหน้าปกทั้งในบทความและในหน้ารวม/หน้าแรก
                 </div>
+                <div style="margin-top:.75rem">
+                  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.35rem">
+                    <label class="fl" style="margin:0">🎨 AI Image Prompt (ปก)</label>
+                    <button class="btn btn-outline btn-sm" onclick="copyRkHeroPrompt()" style="font-size:.7rem">📋 คัดลอก</button>
+                  </div>
+                  <textarea class="form-input" id="rkHeroPrompt" rows="3" placeholder="วาง/แก้ prompt สำหรับ Google Flow..." style="font-size:.72rem;font-family:'Consolas','Courier New',monospace"></textarea>
+                </div>
               </div>
+            </div>
+
+            <!-- Row 1.5: Per-item images + prompts -->
+            <div class="card" style="margin-bottom:1.5rem">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem">
+                <div>
+                  <div class="card-title" style="margin:0">🖼️ รูปประกอบแต่ละอันดับ + Prompt</div>
+                  <div class="section-sub" style="margin-top:.25rem">คัดลอก prompt ไปเจนใน Google Flow แล้วอัปโหลดรูปกลับช่องเดียวกัน — รูปจะไปโผล่เหนือหัวข้ออันดับนั้นในบทความ</div>
+                </div>
+                <button class="btn btn-outline btn-sm" onclick="addRkItem()">➕ เพิ่มอันดับ</button>
+              </div>
+              <div id="rkItemRows" style="display:flex;flex-direction:column;gap:1rem"></div>
             </div>
 
             <!-- Row 2: Body editor -->
@@ -1620,7 +1639,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-13.1';
+const ADMIN_VERSION='2026-07-13.2';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -5468,6 +5487,8 @@ async function seedRankingsFromJson(){
       excerpt: a.excerpt||'',
       hero: '',
       heroImgSlot: a.heroImgSlot||'',
+      heroPrompt: a.heroPrompt||'',
+      items: (a.items||[]).map(it=>({label:it.label||'',prompt:it.prompt||'',img:'',imgSlot:it.imgSlot||''})),
       status: a.status||'published',
       publishDate: a.publishDate?a.publishDate+'T08:00':new Date().toISOString(),
       body: '',
@@ -5526,6 +5547,7 @@ function openAddRanking(){
   document.getElementById('rkHero').value='';
   updateRkHeroPreview('');
   document.getElementById('rkHeroFile').value='';
+  document.getElementById('rkHeroPrompt').value='';
   document.getElementById('rkTitle').textContent='✏️ เพิ่มบทความจัดอันดับใหม่';
   document.getElementById('rkPath').textContent='';
   document.getElementById('rkPath').removeAttribute('href');
@@ -5534,6 +5556,7 @@ function openAddRanking(){
   document.getElementById('rkBodyPreview').innerHTML='';
   updateRkBodyLen('');
   switchRkTab('html');
+  renderRkItemRows([]);
   document.getElementById('rkDelBtn').style.display='none';
   document.getElementById('rankingsListView').style.display='none';
   document.getElementById('rankingsEditorView').style.display='';
@@ -5552,12 +5575,14 @@ function openEditRanking(id){
   document.getElementById('rkHero').value=heroUrl;
   updateRkHeroPreview(heroUrl);
   document.getElementById('rkHeroFile').value='';
+  document.getElementById('rkHeroPrompt').value=p.heroPrompt||'';
   document.getElementById('rkTitle').textContent='✏️ '+p.title;
   const pagePath=p.url||('/stones/rankings/'+p.slug+'.html');
   document.getElementById('rkPath').textContent=pagePath;
   document.getElementById('rkPath').href=pagePath;
   document.getElementById('rkViewBtn').href=pagePath;
   document.getElementById('rkDelBtn').style.display='';
+  renderRkItemRows(p.items||[]);
 
   // body — same self-heal-against-stale-cache pattern as Blog/Catalog editors
   const localBody=p.body||'';
@@ -5632,6 +5657,76 @@ function uploadRkHero(input){
   const r=new FileReader();
   r.onload=e=>{ document.getElementById('rkHero').value=e.target.result; updateRkHeroPreview(e.target.result); };
   r.readAsDataURL(f);
+}
+async function copyRkHeroPrompt(){
+  const v=document.getElementById('rkHeroPrompt').value;
+  if(!v.trim()){ toast('ยังไม่มี prompt','err'); return; }
+  try{ await navigator.clipboard.writeText(v); toast('คัดลอก prompt แล้ว','ok'); }
+  catch{ toast('คัดลอกไม่สำเร็จ — เลือกข้อความแล้วก็อบปี้เองได้','err'); }
+}
+
+// Per-item images + prompts (รูปประกอบแต่ละอันดับ)
+let _rkItems=[];
+function slugU(s){ return (s||'').replace(/-/g,'_'); }
+function currentRkSlugBase(){
+  const slug=document.getElementById('rkSlug').value.trim()||document.getElementById('rkTitle2').value.trim().toLowerCase().replace(/[^\w฀-๿]+/g,'-');
+  return 'ranking_'+slugU(slug);
+}
+function renderRkItemRows(items){
+  _rkItems=JSON.parse(JSON.stringify(items||[]));
+  const base=currentRkSlugBase();
+  _rkItems.forEach((it,i)=>{ if(!it.imgSlot) it.imgSlot=base+'_item'+(i+1)+'_hero'; });
+  document.getElementById('rkItemRows').innerHTML=_rkItems.map((it,i)=>{
+    const imgUrl=it.img||getImgs()[it.imgSlot]||'';
+    return `<div style="display:grid;grid-template-columns:90px 1fr;gap:1rem;padding:1rem;background:#faf8ff;border-radius:.75rem;align-items:start">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:.4rem">
+        <div style="width:90px;height:90px;border-radius:.6rem;overflow:hidden;background:#f5f0ff;display:flex;align-items:center;justify-content:center;font-size:1.6rem" id="rkItemImgPreview_${i}">
+          ${imgUrl?`<img src="${x(imgUrl)}" style="width:100%;height:100%;object-fit:cover">`:'🏆'}
+        </div>
+        <label style="cursor:pointer">
+          <span class="btn btn-outline btn-sm" style="font-size:.65rem;padding:.3rem .5rem">📁 อัปโหลด</span>
+          <input type="file" accept="image/*" style="display:none" onchange="uploadRkItemImg(${i},this)">
+        </label>
+      </div>
+      <div>
+        <input class="form-input" placeholder="อันดับ ${i+1}: ชื่อหิน (เช่น หยกจักรพรรดิ - Imperial Jade)" value="${x(it.label||'')}" oninput="setRkItemField(${i},'label',this.value)" style="margin-bottom:.5rem">
+        <div style="display:flex;gap:.4rem;align-items:flex-start">
+          <textarea class="form-input" rows="3" placeholder="AI Image Prompt สำหรับ Google Flow..." oninput="setRkItemField(${i},'prompt',this.value)" style="font-size:.72rem;font-family:'Consolas','Courier New',monospace;flex:1">${x(it.prompt||'')}</textarea>
+          <button class="btn btn-outline btn-sm" onclick="copyRkPrompt(${i})" title="คัดลอก Prompt" style="flex-shrink:0">📋</button>
+        </div>
+        <button class="btn btn-danger btn-sm" onclick="removeRkItem(${i})" style="margin-top:.4rem;font-size:.7rem">🗑 ลบอันดับนี้</button>
+      </div>
+    </div>`;
+  }).join('')||'<div style="text-align:center;padding:1.5rem;color:#9ca3af;font-size:.85rem">ยังไม่มีอันดับ — กด ➕ เพิ่มอันดับ</div>';
+}
+function setRkItemField(i,field,val){
+  if(!_rkItems[i]) return;
+  _rkItems[i][field]=val;
+}
+function uploadRkItemImg(i,input){
+  const f=input.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=e=>{
+    if(!_rkItems[i]) return;
+    _rkItems[i].img=e.target.result;
+    document.getElementById('rkItemImgPreview_'+i).innerHTML=`<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover">`;
+  };
+  r.readAsDataURL(f);
+}
+function addRkItem(){
+  const base=currentRkSlugBase();
+  _rkItems.push({label:'',prompt:'',img:'',imgSlot:base+'_item'+(_rkItems.length+1)+'_hero'});
+  renderRkItemRows(_rkItems);
+}
+function removeRkItem(i){
+  _rkItems.splice(i,1);
+  renderRkItemRows(_rkItems);
+}
+async function copyRkPrompt(i){
+  const v=(_rkItems[i]&&_rkItems[i].prompt)||'';
+  if(!v.trim()){ toast('ยังไม่มี prompt','err'); return; }
+  try{ await navigator.clipboard.writeText(v); toast('คัดลอก prompt แล้ว','ok'); }
+  catch{ toast('คัดลอกไม่สำเร็จ — เลือกข้อความแล้วก็อบปี้เองได้','err'); }
 }
 function updateRkBodyLen(v){
   document.getElementById('rkBodyLen').textContent=(v||'').length.toLocaleString()+' ตัวอักษร · '+(v||'').replace(/<[^>]*>/g,'').trim().split(/\s+/).filter(Boolean).length+' คำ';
@@ -5771,8 +5866,10 @@ function saveRankingEditor(){
     excerpt: document.getElementById('rkExcerpt').value.trim(),
     hero: document.getElementById('rkHero').value.trim(),
     heroImgSlot: (eid&&items.find(b=>b.id===eid)?.heroImgSlot)||('ranking_'+slug.replace(/-/g,'_')+'_hero'),
+    heroPrompt: document.getElementById('rkHeroPrompt').value.trim(),
     status: document.getElementById('rkStatus').value,
     publishDate: document.getElementById('rkPublishDate').value||new Date().toISOString(),
+    items: JSON.parse(JSON.stringify(_rkItems)),
     body,
     created: eid?(items.find(b=>b.id===eid)?.created||new Date().toISOString()):new Date().toISOString(),
     updated: new Date().toISOString(),
@@ -5827,11 +5924,17 @@ async function publishToGitHub(){
         preTexts['catalog_'+slugU+'_line_url']=item.lineUrl||'';
         preTexts['catalog_'+slugU+'_shopee_url']=(item.products&&item.products.ring&&item.products.ring.url)||item.lineUrl||'';
       }
-      // Same trick for Crystal Rankings hero images — reuses the generic
-      // getImgs()/setImgs() store + upload loop below, no ranking-specific
-      // upload code needed.
+      // Same trick for Crystal Rankings hero + per-item images — reuses the
+      // generic getImgs()/setImgs() store + upload loop below, no
+      // ranking-specific upload code needed. Per-item images are referenced
+      // by <img data-cms-img="..."> tags already embedded directly in each
+      // article's body HTML (added above each ranked item's heading), so
+      // cms.js picks them up automatically once content.json is rebuilt.
       for(const item of getRankingItems()){
         if(item.hero && item.heroImgSlot) preImgs[item.heroImgSlot]=item.hero;
+        for(const it of (item.items||[])){
+          if(it.img && it.imgSlot) preImgs[it.imgSlot]=it.img;
+        }
       }
       setImgs(preImgs);
       setTexts(preTexts);
@@ -6197,7 +6300,9 @@ async function publishToGitHub(){
       if(rankingItems.length){
         const rankingsJson={generated:new Date().toISOString().slice(0,10),articles:rankingItems.filter(it=>it.status!=='draft').map(it=>({
           id:it.id, slug:it.slug, title:it.title, excerpt:it.excerpt,
-          heroImgSlot:it.heroImgSlot, url:it.url||'/stones/rankings/'+it.slug+'.html',
+          heroImgSlot:it.heroImgSlot, heroPrompt:it.heroPrompt||'',
+          items:(it.items||[]).map(x2=>({label:x2.label||'',prompt:x2.prompt||'',imgSlot:x2.imgSlot||''})),
+          url:it.url||'/stones/rankings/'+it.slug+'.html',
           publishDate:(it.publishDate||'').slice(0,10), status:it.status,
         }))};
         const rkStr=JSON.stringify(rankingsJson,null,2);
