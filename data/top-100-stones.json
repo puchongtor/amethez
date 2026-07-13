@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-12",
+  "generated": "2026-07-13",
   "source": "Admin-edited via Top 100 tab",
   "heroPrompt": "",
   "stones": [
@@ -256,7 +256,7 @@
         "เงิน"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_16_multi-rutilated-quartz_hero",
       "articleUrl": null
     },
     {
@@ -495,7 +495,7 @@
         "เพิ่มพลังกายและจิต"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_31_shiva-lingam_hero",
       "articleUrl": null
     },
     {
@@ -559,7 +559,7 @@
         "ความเจริญรุ่งเรืองชั้นสูงของชีวิต"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_35_imperial-jade_hero",
       "articleUrl": null
     },
     {
@@ -1021,7 +1021,7 @@
         "และการฝ่าฟันอุปสรรคจนชนะ"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_64_gibeon-meteorite_hero",
       "articleUrl": null
     },
     {
@@ -1037,14 +1037,14 @@
         "สะท้อนคุณไสยและพลังงานท็อกซิกอย่างเฉียบขาด"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_65_turmalinated-quartz_hero",
       "articleUrl": null
     },
     {
       "rank": 66,
       "id": "rank-66-scenic-quartz",
-      "th": "ควอตซ์ภาพวิว",
-      "en": "Scenic Quartz / Lodolite",
+      "th": "โปร่งข่าม",
+      "en": "Lodolite Garden Quartz",
       "desc": "ควอตซ์ฝังแร่หลากชนิดเกิดเป็นรูปทรงคล้ายทิวทัศน์ ภูเขา หรือป่าไม้ใต้แก้ว",
       "belief": "หินแห่งความอุดมสมบูรณ์ในชีวิต การเดินทางท่องเที่ยวปลอดภัย นำพาโชคดี",
       "tags": [
@@ -1053,7 +1053,7 @@
         "นำพาโชคดี"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_66_scenic-quartz_hero",
       "articleUrl": null
     },
     {
@@ -1100,7 +1100,7 @@
         "บำบัดและปรับคลื่นความถี่ออร่า"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_69_brandberg-amethyst_hero",
       "articleUrl": null
     },
     {
@@ -1116,7 +1116,7 @@
         "เสริมมงคลรอบด้าน"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_70_super-seven_hero",
       "articleUrl": null
     },
     {
