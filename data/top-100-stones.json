@@ -996,7 +996,7 @@
     {
       "rank": 63,
       "id": "rank-63-pallasite-meteorite",
-      "th": "พัลลาไซต์",
+      "th": "อุกกาบาตพัลลาไซต์",
       "en": "Pallasite Meteorite",
       "desc": "อุกกาบาตชนิดหินปนเหล็กที่แทรกด้วยผลึกแร่โอลิวีนสีเหลืองเขียวโปร่งแสง หายากมาก",
       "belief": "ที่สุดแห่งแร่แปรพลังงานจักรวาล ดึงดูดความมั่งคั่งชั้นสูงและสติปัญญาหลุดพ้น",
@@ -1069,7 +1069,7 @@
         "ชำระล้างออร่า"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_67_shaman-quartz_hero",
       "articleUrl": null
     },
     {
@@ -1085,7 +1085,7 @@
         "และคลายเครียด"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_68_chevron-amethyst_hero",
       "articleUrl": null
     },
     {
@@ -1132,7 +1132,7 @@
         "ความอดทน"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_71_dumortierite-in-quartz_hero",
       "articleUrl": null
     },
     {
@@ -1164,7 +1164,7 @@
         "เสริมสมาธิลึก"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_73_lemurian-seed-quartz_hero",
       "articleUrl": null
     },
     {
@@ -1196,7 +1196,7 @@
         "ขยายพลังบวกกระจายตัว"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_75_spirit-quartz_hero",
       "articleUrl": null
     },
     {
@@ -1227,7 +1227,7 @@
         "ความอุดมสมบูรณ์"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_77_chrysoprase_hero",
       "articleUrl": null
     },
     {
@@ -1322,7 +1322,7 @@
         "สร้างความมั่นคงในธุรกิจอสังหาริมทรัพย์"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_83_picture-jasper_hero",
       "articleUrl": null
     },
     {
@@ -1338,13 +1338,13 @@
         "เคลียร์อารมณ์หม่นหมอง"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_84_dalmatian-jasper_hero",
       "articleUrl": null
     },
     {
       "rank": 85,
       "id": "rank-85-kambaba-jasper",
-      "th": "คัมบาบาแจสเปอร์",
+      "th": "คัมบาบา แจสเปอร์",
       "en": "Kambaba Jasper",
       "desc": "หินฟอสซิลสาหร่ายโบราณสีเขียวเข้ม ลายวงกลมสีดำคล้ายดวงตาจระเข้",
       "belief": "ความสงบเยือกเย็นอย่างลึกซึ้ง เชื่อมโยงรากฐานชีวิต ปรับสมดุลหัวใจและปอด",
@@ -1354,13 +1354,13 @@
         "ปรับสมดุลหัวใจและปอด"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_85_kambaba-jasper_hero",
       "articleUrl": null
     },
     {
       "rank": 86,
       "id": "rank-86-mookaite-jasper",
-      "th": "มูคาอิตแจสเปอร์",
+      "th": "มูไคต์ แจสเปอร์",
       "en": "Mookaite Jasper",
       "desc": "แจสเปอร์สัญชาติออสเตรเลีย สีสันจัดจ้านโทนเหลืองมัสตาร์ด แดงก่ำ ครีม ในก้อนเดียว",
       "belief": "หินแห่งความอ่อนเยาว์ ชะลอวัย เสริมความยืดหยุ่นในการตัดสินใจหน้างาน",
@@ -1370,7 +1370,7 @@
         "เสริมความยืดหยุ่นในการตัดสินใจหน้างาน"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_86_mookaite-jasper_hero",
       "articleUrl": null
     },
     {
@@ -1386,7 +1386,7 @@
         "เสริมบารมีผู้นำองค์กรใหญ่"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_87_imperial-jasper_hero",
       "articleUrl": null
     },
     {
@@ -1402,7 +1402,7 @@
         "เรียกทรัพย์สินเงินทองขั้นสูงสุด"
       ],
       "col": "multi",
-      "imgSlot": null,
+      "imgSlot": "top100_88_amolite_hero",
       "articleUrl": null
     },
     {
