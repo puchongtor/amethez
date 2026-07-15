@@ -1668,7 +1668,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-13.5';
+const ADMIN_VERSION='2026-07-13.6';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -2991,6 +2991,42 @@ function loadAff(){ try{ affProducts = JSON.parse(localStorage.getItem(AFF_KEY)|
 function saveAffStore(){ localStorage.setItem(AFF_KEY, JSON.stringify(affProducts)); }
 function genAffId(){ return 'A'+(affProducts.length+1).toString().padStart(3,'0')+'_'+Date.now().toString(36).toUpperCase(); }
 
+// ── Stone-name grounding (ห้ามมั่ว) ──────────────
+// The AI tagger used to invent stone names freely from a product title —
+// this is exactly the class of bug the whole site's naming discipline
+// exists to prevent (see stone-keywords.json: 771 verified real Thai names +
+// their alt spellings). Before ever asking the AI to guess a stone identity,
+// check the product name against this real database first, and force the
+// AI to use those verified names instead of inventing/renaming its own.
+let _stoneKeywords = null;
+async function getStoneKeywords(){
+  if(_stoneKeywords) return _stoneKeywords;
+  try{
+    const r = await fetch('/data/stone-keywords.json?v='+Date.now());
+    const d = await r.json();
+    _stoneKeywords = d.stones || [];
+  }catch{ _stoneKeywords = []; }
+  return _stoneKeywords;
+}
+function matchStoneNames(productName){
+  const stones = _stoneKeywords || [];
+  const hits = [];
+  for(const s of stones){
+    const names = [s.th_main, ...(s.alt||[])];
+    if(names.some(n => n && productName.includes(n))){
+      hits.push(s.th_main);
+    }
+  }
+  // Longer/more specific names first (e.g. "หยกจักรพรรดิ์" before a shorter
+  // generic "หยก" match), dedup, cap to a sane number per product.
+  return [...new Set(hits)].sort((a,b)=>b.length-a.length).slice(0,3);
+}
+function groundedTagPrompt(name, groundedStones){
+  return groundedStones.length
+    ? `ระบบตรวจสอบกับฐานข้อมูลชื่อหินจริงแล้ว พบว่าสินค้านี้คือ: ${groundedStones.join(', ')} — ห้ามระบุชื่อหินเองหรือเปลี่ยนชื่อเด็ดขาด ให้ใช้ชื่อเหล่านี้เป็น tag ชื่อหินโดยตรง แล้วเพิ่ม tag เสริมอีก 2-4 ตัว (สี, รูปแบบสินค้า, วัตถุประสงค์) เท่านั้น ห้ามเพิ่มชื่อหินอื่นที่ไม่ได้ระบุมา`
+    : `ระบบตรวจสอบกับฐานข้อมูลชื่อหินจริงแล้ว ไม่พบชื่อหินที่ตรงกับชื่อสินค้านี้โดยตรง — ถ้ามั่นใจจริงๆ ว่าชื่อสินค้าระบุชื่อแร่/หินที่เป็นที่รู้จักสากลอยู่แล้ว (เช่น Agate, Kyanite, Garnet) ใส่ tag ชื่อนั้นเป็นภาษาไทยได้ แต่ห้ามสร้างชื่อแปลกใหม่หรือเดาสุ่มเด็ดขาด ถ้าไม่มั่นใจให้เว้นชื่อหินไว้ แล้วเน้น tag สี, รูปแบบสินค้า, วัตถุประสงค์แทน (รวมไม่เกิน 4 ตัว)`;
+}
+
 function initAffTags(){ /* ไม่ใช้แล้ว — เปลี่ยนเป็น free-text input */ }
 
 function getCheckedTags(){
@@ -3025,11 +3061,14 @@ async function aiSuggestTags(){
   btn.textContent = '⏳ กำลังวิเคราะห์...'; btn.disabled = true;
   document.getElementById('affTagStatus').textContent = '';
 
+  await getStoneKeywords();
+  const groundedStones = matchStoneNames(name);
+
   const cats = 'เครื่องประดับ,หินดิบ,หินตกแต่ง,อุปกรณ์ดูแลหิน,DIY,ของมงคล';
   const prompt = `คุณคือผู้เชี่ยวชาญหินคริสตัลและเครื่องประดับ วิเคราะห์ชื่อสินค้า: "${name}"
-1) สร้าง tag ภาษาไทย 4-6 ตัว ที่บอกถึง: ชื่อหิน/วัสดุ, สี, รูปแบบสินค้า, วัตถุประสงค์ — สร้างเองได้อิสระ ไม่ต้องจำกัดรายการ
-2) เลือกหมวดจาก: ${cats}
-ตอบ JSON: {"tags":["หยก","เขียว","กัวซา","สุขภาพ","ดูดซับพลังงานลบ"],"category":"เครื่องประดับ"} ไม่ต้องอธิบายเพิ่ม`;
+${groundedTagPrompt(name, groundedStones)}
+เลือกหมวดจาก: ${cats}
+ตอบ JSON: {"tags":["เขียว","กัวซา","สุขภาพ","ดูดซับพลังงานลบ"],"category":"เครื่องประดับ"} ไม่ต้องอธิบายเพิ่ม`;
 
   try{
     const r = await fetch('https://api.groq.com/openai/v1/chat/completions',{
@@ -3042,7 +3081,8 @@ async function aiSuggestTags(){
     const raw = d?.choices?.[0]?.message?.content||'{}';
     const match = raw.match(/\{[\s\S]*?\}/);
     const obj = match ? JSON.parse(match[0]) : {};
-    const suggested = Array.isArray(obj.tags) ? obj.tags.slice(0,6) : [];
+    const aiTags = Array.isArray(obj.tags) ? obj.tags.slice(0,6) : [];
+    const suggested = [...new Set([...groundedStones, ...aiTags])].slice(0,6);
     setCheckedTags(suggested);
     if(obj.category){
       const catEl = document.getElementById('affCat');
@@ -3173,13 +3213,15 @@ function confirmBulkImport(){
 }
 
 async function batchAutoTag(productNames, groqKey){
+  await getStoneKeywords();
   let done = 0;
   for(const name of productNames){
     const p = affProducts.find(a=>a.name===name);
     if(!p || p.tags.length) { done++; continue; }
     try{
+      const groundedStones = matchStoneNames(name);
       const cats = 'เครื่องประดับ,หินดิบ,หินตกแต่ง,อุปกรณ์ดูแลหิน,DIY,ของมงคล';
-      const prompt = `คุณคือผู้เชี่ยวชาญหินคริสตัลและเครื่องประดับ วิเคราะห์ชื่อสินค้า: "${name}"\n1) สร้าง tag ภาษาไทย 4-6 ตัว บอกถึง ชื่อหิน/วัสดุ, สี, รูปแบบ, วัตถุประสงค์ — อิสระ ไม่ต้องจำกัดรายการ\n2) เลือกหมวดจาก: ${cats}\nตอบ JSON: {"tags":["หยก","เขียว","กัวซา","สุขภาพ"],"category":"เครื่องประดับ"} ไม่ต้องอธิบายเพิ่ม`;
+      const prompt = `คุณคือผู้เชี่ยวชาญหินคริสตัลและเครื่องประดับ วิเคราะห์ชื่อสินค้า: "${name}"\n${groundedTagPrompt(name, groundedStones)}\nเลือกหมวดจาก: ${cats}\nตอบ JSON: {"tags":["เขียว","กัวซา","สุขภาพ"],"category":"เครื่องประดับ"} ไม่ต้องอธิบายเพิ่ม`;
       const r = await fetch('https://api.groq.com/openai/v1/chat/completions',{
         method:'POST',
         headers:{'Content-Type':'application/json','Authorization':'Bearer '+groqKey},
@@ -3188,11 +3230,10 @@ async function batchAutoTag(productNames, groqKey){
       const d = await r.json();
       const raw = d?.choices?.[0]?.message?.content||'{}';
       const match = raw.match(/\{[\s\S]*?\}/);
-      if(match){
-        const obj = JSON.parse(match[0]);
-        if(Array.isArray(obj.tags)) p.tags = obj.tags;
-        if(obj.category) p.category = obj.category;
-      }
+      const aiTags = match ? (JSON.parse(match[0]).tags || []) : [];
+      const category = match ? JSON.parse(match[0]).category : null;
+      p.tags = [...new Set([...groundedStones, ...(Array.isArray(aiTags)?aiTags:[])])].slice(0,6);
+      if(category) p.category = category;
     }catch(e){ /* ข้ามถ้า error */ }
     done++;
     if(done % 5 === 0){ saveAffStore(); renderAffTable(); }
