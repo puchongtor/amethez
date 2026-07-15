@@ -641,7 +641,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
             <div class="card-title">📥 นำเข้าสินค้าจาก Excel (Bulk Import)</div>
             <div style="background:#fef9ec;border:1px solid #f0d580;border-radius:.65rem;padding:.85rem 1rem;margin-bottom:1.25rem;font-size:.82rem;line-height:1.7;color:#92620a">
               <strong>วิธีใช้:</strong> Copy จาก Excel หลายบรรทัด (Ctrl+A → Ctrl+C) แล้ววางในช่องด้านล่าง<br>
-              คอลัมน์ที่ใช้: <strong>B</strong>=ชื่อสินค้า &nbsp;·&nbsp; <strong>C</strong>=ราคา &nbsp;·&nbsp; <strong>E</strong>=ร้านค้า &nbsp;·&nbsp; <strong>F</strong>=commission% &nbsp;·&nbsp; <strong>H</strong>=URL รูปภาพ (แทนที่ลิงค์สินค้า) &nbsp;·&nbsp; <strong>I</strong>=ลิงค์ Affiliate
+              คอลัมน์ที่ใช้: <strong>A</strong>=ลิงค์ Affiliate &nbsp;·&nbsp; <strong>B</strong>=URL รูปภาพ &nbsp;·&nbsp; <strong>C</strong>=ชื่อสินค้า &nbsp;·&nbsp; <strong>D</strong>=ราคา &nbsp;·&nbsp; <strong>E</strong>=ยอดขาย &nbsp;·&nbsp; <strong>F</strong>=commission% &nbsp;·&nbsp; <strong>G</strong>=ร้านค้า
             </div>
             <textarea id="bulkPasteArea" style="width:100%;height:160px;font-family:monospace;font-size:.78rem;border:1.5px solid var(--border);border-radius:.6rem;padding:.75rem;resize:vertical;outline:none" placeholder="วางข้อมูลจาก Excel ที่นี่...&#10;(tab-separated, หลายบรรทัด)"></textarea>
             <div style="display:flex;gap:.75rem;margin-top:.75rem;align-items:center;flex-wrap:wrap">
@@ -665,7 +665,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
                 <table class="product-table" id="bulkPreviewTable">
                   <thead><tr>
                     <th><input type="checkbox" id="bulkCheckAll" onchange="toggleAllBulk(this.checked)" title="เลือกทั้งหมด" style="width:16px;height:16px;cursor:pointer"></th>
-                    <th>รูป</th><th>ชื่อสินค้า</th><th>ร้าน</th><th>ราคา</th><th>Commission</th><th>Affiliate Link</th>
+                    <th>รูป</th><th>ชื่อสินค้า</th><th>ร้าน</th><th>ราคา</th><th>ยอดขาย</th><th>Commission</th><th>Affiliate Link</th>
                   </tr></thead>
                   <tbody id="bulkPreviewBody"></tbody>
                 </table>
@@ -741,7 +741,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
             </div>
             <div style="overflow-x:auto">
               <table class="product-table">
-                <thead><tr><th>รูป</th><th>ชื่อสินค้า</th><th>หมวด</th><th>ราคา</th><th>Tags</th><th>จัดการ</th></tr></thead>
+                <thead><tr><th>รูป</th><th>ชื่อสินค้า</th><th>หมวด</th><th>ราคา</th><th>ยอดขาย</th><th>Tags</th><th>จัดการ</th></tr></thead>
                 <tbody id="affTableBody"></tbody>
               </table>
             </div>
@@ -1670,7 +1670,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-13.9';
+const ADMIN_VERSION='2026-07-13.10';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -3200,16 +3200,19 @@ function parseBulkPreview(){
 
   lines.forEach((line, idx) => {
     const cols = line.split('\t');
-    // ต้องมีอย่างน้อย 9 columns (A-I)
-    if(cols.length < 9){ skipped++; return; }
-    const name    = (cols[1]||'').trim();
-    const price   = parseFloat((cols[2]||'0').replace(/[^\d.]/g,''))||0;
-    const store   = (cols[4]||'').trim();
+    // คอลัมน์จริงจากชีทที่ดึงมา: A=ลิงค์ B=รูป C=รายการสินค้า D=ราคา
+    // E=ยอดขาย F=ค่าคอม G=ชื่อร้าน (7 คอลัมน์ ไม่ใช่ 9 แบบเดิม)
+    if(cols.length < 7){ skipped++; return; }
+    const affUrl  = (cols[0]||'').trim();
+    const imgUrl  = (cols[1]||'').trim();
+    const name    = (cols[2]||'').trim();
+    const price   = parseFloat((cols[3]||'0').replace(/[^\d.]/g,''))||0;
+    const soldRaw = (cols[4]||'').trim();
+    const sold    = parseInt(soldRaw.replace(/[^\d]/g,''),10) || 0;
     const commPct = (cols[5]||'').trim();
-    const imgUrl  = (cols[7]||'').trim();
-    const affUrl  = (cols[8]||'').trim();
+    const store   = (cols[6]||'').trim();
     if(!name || !affUrl){ skipped++; return; }
-    _bulkParsed.push({ name, price, store, commPct, imgUrl, affUrl });
+    _bulkParsed.push({ name, price, store, commPct, imgUrl, affUrl, sold });
   });
 
   if(!_bulkParsed.length){
@@ -3229,6 +3232,7 @@ function parseBulkPreview(){
       <td style="font-size:.82rem;max-width:240px">${p.name}</td>
       <td style="font-size:.78rem;color:#6b7280">${p.store}</td>
       <td style="font-weight:700">฿${p.price.toLocaleString()}</td>
+      <td style="font-size:.78rem;color:#6b7280">${p.sold ? p.sold.toLocaleString()+' ชิ้น' : '—'}</td>
       <td style="color:var(--green);font-size:.82rem">${p.commPct}</td>
       <td style="font-size:.72rem;color:#7c3aed;max-width:140px;word-break:break-all">${p.affUrl.replace('https://s.shopee.co.th/','s.shopee…/')}</td>
     </tr>`).join('');
@@ -3262,12 +3266,13 @@ function confirmBulkImport(){
   const added = [];
   selected.forEach(p => {
     const existing = affProducts.find(a => a.url === p.affUrl);
-    if(existing){ existing.price = p.price; existing.image_url = p.imgUrl||existing.image_url; existing.updated = today; return; }
+    if(existing){ existing.price = p.price; existing.image_url = p.imgUrl||existing.image_url; existing.sold = p.sold||existing.sold||0; existing.updated = today; return; }
     affProducts.unshift({
       id: genAffId(),
       name: p.name,
       url: p.affUrl,
       price: p.price,
+      sold: p.sold || 0,
       // No hardcoded category — every bulk-imported item used to get
       // "เครื่องประดับ" (jewelry) regardless of what it actually was (gua
       // sha tools, raw specimens, meteorite chunks, etc.), which is exactly
@@ -3415,12 +3420,13 @@ function renderAffTable(){
       <td style="font-weight:600;max-width:180px"><a href="${x(p.url)}" target="_blank" style="color:#7c3aed;text-decoration:none">${x(p.name)}</a></td>
       <td style="font-size:.8rem;color:#6b7280">${x(p.category)}</td>
       <td>${p.price?'฿'+p.price.toLocaleString():'—'}</td>
+      <td style="font-size:.8rem;color:#6b7280">${p.sold?p.sold.toLocaleString()+' ชิ้น':'—'}</td>
       <td><div style="display:flex;flex-wrap:wrap;gap:.2rem">${tags}${(p.tags||[]).length>4?`<span style="font-size:.65rem;color:#9ca3af">+${p.tags.length-4}</span>`:''}</div></td>
       <td><div style="display:flex;gap:.35rem">
         <button class="btn btn-outline btn-sm" onclick="editAff('${p.id}')">✏️</button>
         <button class="btn btn-danger btn-sm" onclick="delAff('${p.id}')">🗑</button>
       </div></td></tr>`;
-  }).join('') : `<tr><td colspan="6" style="text-align:center;padding:2rem;color:#9ca3af">ยังไม่มีสินค้า — เพิ่มด้านบน</td></tr>`;
+  }).join('') : `<tr><td colspan="7" style="text-align:center;padding:2rem;color:#9ca3af">ยังไม่มีสินค้า — เพิ่มด้านบน</td></tr>`;
 }
 
 async function retagUntagged(){
