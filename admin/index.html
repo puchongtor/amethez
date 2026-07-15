@@ -1668,7 +1668,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-13.6';
+const ADMIN_VERSION='2026-07-13.7';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -3008,23 +3008,101 @@ async function getStoneKeywords(){
   }catch{ _stoneKeywords = []; }
   return _stoneKeywords;
 }
+// Generic qualifier words that show up as the first word of many different
+// international stone names (colors, "raw", "clear", etc.) — matching on
+// these alone would collide across dozens of unrelated stones, so they
+// don't count as a distinguishing single-word match on their own.
+const STONE_NAME_STOPWORDS = new Set(['BLUE','GREEN','BLACK','WHITE','RED','PINK','YELLOW','ORANGE','PURPLE',
+  'GOLDEN','GOLD','SILVER','RAINBOW','RAW','CLEAR','ROCK','NATURAL','ROSE','SMOKY','SMOKEY','MILKY','LEMON',
+  "CAT'S",'CATS','RUTILATED','TIBETAN','BRAZILIAN',
+  // Generic base mineral-type words that recur as the shared suffix across
+  // many differently-qualified compound names (Orange/Black/Green Kyanite,
+  // Blue Lace/Botswana/Crazy Lace Agate, etc.) — matching on these alone
+  // would collide across unrelated siblings, so they never count as the
+  // single distinguishing word on their own.
+  'AGATE','KYANITE','QUARTZ','TOURMALINE','JASPER','JADE','DIAMOND','OBSIDIAN','CALCITE','FLUORITE',
+  'GARNET','GLASS','CRYSTAL','STONE','METEORITE','TEKTITE','OPAL','CORAL','JADEITE']);
 function matchStoneNames(productName){
   const stones = _stoneKeywords || [];
   const hits = [];
+  const upperName = productName.toUpperCase();
   for(const s of stones){
-    const names = [s.th_main, ...(s.alt||[])];
-    if(names.some(n => n && productName.includes(n))){
-      hits.push(s.th_main);
+    const thaiNames = [s.th_main, ...(s.alt||[])];
+    const hasThai = thaiNames.some(n => n && productName.includes(n));
+    // Product titles are often bilingual ("LIBYAN GANESHA...") — match the
+    // English/international name too, not just the Thai ones, otherwise a
+    // product that only states the English name never gets grounded at all.
+    // A full-phrase match is ideal, but titles often only mention the one
+    // distinctive word (e.g. "LIBYAN" not "LIBYAN DESERT GLASS"), so also
+    // accept a single significant word from the international name — as
+    // long as it isn't a generic color/qualifier that many stones share.
+    let hasEn = false;
+    if(s.international){
+      const intlUpper = s.international.toUpperCase();
+      if(intlUpper.length > 3 && upperName.includes(intlUpper)){
+        hasEn = true;
+      } else {
+        hasEn = intlUpper.split(/\s+/).some(w =>
+          w.length > 4 && !STONE_NAME_STOPWORDS.has(w) && upperName.includes(w)
+        );
+      }
     }
+    if(hasThai || hasEn) hits.push(s.th_main);
   }
   // Longer/more specific names first (e.g. "หยกจักรพรรดิ์" before a shorter
   // generic "หยก" match), dedup, cap to a sane number per product.
   return [...new Set(hits)].sort((a,b)=>b.length-a.length).slice(0,3);
 }
-function groundedTagPrompt(name, groundedStones){
-  return groundedStones.length
-    ? `ระบบตรวจสอบกับฐานข้อมูลชื่อหินจริงแล้ว พบว่าสินค้านี้คือ: ${groundedStones.join(', ')} — ห้ามระบุชื่อหินเองหรือเปลี่ยนชื่อเด็ดขาด ให้ใช้ชื่อเหล่านี้เป็น tag ชื่อหินโดยตรง แล้วเพิ่ม tag เสริมอีก 2-4 ตัว (สี, รูปแบบสินค้า, วัตถุประสงค์) เท่านั้น ห้ามเพิ่มชื่อหินอื่นที่ไม่ได้ระบุมา`
-    : `ระบบตรวจสอบกับฐานข้อมูลชื่อหินจริงแล้ว ไม่พบชื่อหินที่ตรงกับชื่อสินค้านี้โดยตรง — ถ้ามั่นใจจริงๆ ว่าชื่อสินค้าระบุชื่อแร่/หินที่เป็นที่รู้จักสากลอยู่แล้ว (เช่น Agate, Kyanite, Garnet) ใส่ tag ชื่อนั้นเป็นภาษาไทยได้ แต่ห้ามสร้างชื่อแปลกใหม่หรือเดาสุ่มเด็ดขาด ถ้าไม่มั่นใจให้เว้นชื่อหินไว้ แล้วเน้น tag สี, รูปแบบสินค้า, วัตถุประสงค์แทน (รวมไม่เกิน 4 ตัว)`;
+
+// Sacred figures / เทพ / รูปเคารพ carved from stone are a huge real category
+// in this catalog (Ganesha, Buddha images, Naga, etc.) that had no grounded
+// tag dimension at all before — the AI was left to invent or ignore it.
+// These are well-established, universally-known Thai/Hindu figures, not
+// stone-identification facts, so a fixed reference list is safe here.
+const SACRED_FIGURE_NAMES = [
+  { th:'พระพิฆเนศ', alt:['พิฆเนศ','GANESHA','GANESH'] },
+  { th:'พระพุทธรูป', alt:['พุทธรูป','BUDDHA'] },
+  { th:'พระสังกัจจายน์', alt:['สังกัจจายน์'] },
+  { th:'พญานาค', alt:['นาค','NAGA'] },
+  { th:'เจ้าแม่กวนอิม', alt:['กวนอิม','GUANYIN','GUAN YIN'] },
+  { th:'หนุมาน', alt:['HANUMAN'] },
+  { th:'พระแม่ลักษมี', alt:['ลักษมี','LAKSHMI'] },
+  { th:'ท้าวเวสสุวรรณ', alt:['เวสสุวรรณ'] },
+  { th:'ไอ้ไข่', alt:[] },
+  { th:'จตุคามรามเทพ', alt:['จตุคาม'] },
+  { th:'กุมารทอง', alt:['กุมารทอง'] },
+  { th:'พระราหู', alt:['ราหู'] },
+];
+function matchSacredFigures(productName){
+  const upperName = productName.toUpperCase();
+  const hits = [];
+  for(const fig of SACRED_FIGURE_NAMES){
+    const names = [fig.th, ...fig.alt];
+    if(names.some(n => productName.includes(n) || upperName.includes(n.toUpperCase()))){
+      hits.push(fig.th);
+    }
+  }
+  return [...new Set(hits)].slice(0,2);
+}
+
+// Defense in depth — even with the explicit prompt instruction, the AI can
+// still occasionally emit a placeholder/explanatory "tag" instead of just
+// omitting the category. Strip anything that reads like a non-answer.
+function isPlaceholderTag(t){
+  if(!t) return true;
+  const s = String(t).trim();
+  if(!s) return true;
+  const bad = ['ไม่มี','ไม่ทราบ','ไม่ระบุ','ไม่แน่ใจ','ไม่ชัดเจน','unknown','n/a','none','ไม่ใช่'];
+  return bad.some(b => s.toLowerCase().includes(b.toLowerCase()));
+}
+function groundedTagPrompt(name, groundedStones, groundedFigures){
+  const stoneNote = groundedStones.length
+    ? `ระบบตรวจสอบกับฐานข้อมูลชื่อหินจริงแล้ว พบว่าสินค้านี้คือ: ${groundedStones.join(', ')} — ห้ามระบุชื่อหินเองหรือเปลี่ยนชื่อเด็ดขาด ใช้ชื่อเหล่านี้เป็น tag ชื่อหินโดยตรง (ไม่ต้องสร้าง tag ชื่อหินเพิ่มเอง)`
+    : `ระบบไม่พบชื่อหินที่ตรงกับฐานข้อมูลจริง — ถ้ามั่นใจจริงๆ ว่าเป็นชื่อแร่/หินที่รู้จักสากล (เช่น Agate, Kyanite, Garnet) ใส่ tag ชื่อนั้นเป็นภาษาไทยได้ แต่ห้ามสร้างชื่อแปลกใหม่หรือเดาสุ่ม`;
+  const figureNote = groundedFigures.length
+    ? `ระบบตรวจพบรูปเคารพ/สิ่งศักดิ์สิทธิ์ในชื่อสินค้านี้แล้วคือ: ${groundedFigures.join(', ')} — ใช้ชื่อเหล่านี้เป็น tag ตรงๆ ไม่ต้องเดาเพิ่ม`
+    : '';
+  return `${stoneNote}\n${figureNote}\nสำคัญ: ห้ามใส่ tag ที่เป็นข้อความอธิบาย เช่น "ไม่มีชื่อหิน" หรือ "ไม่ทราบ" เด็ดขาด — ถ้าไม่มีข้อมูลด้านใด ให้ข้ามด้านนั้นไปเลย อย่าสร้าง tag แทนที่ ให้เติมเฉพาะ tag ที่เป็นข้อมูลจริงเท่านั้น (สี, รูปแบบสินค้า, วัตถุประสงค์) รวมทั้งหมดไม่เกิน 6 ตัว`;
 }
 
 function initAffTags(){ /* ไม่ใช้แล้ว — เปลี่ยนเป็น free-text input */ }
@@ -3063,10 +3141,11 @@ async function aiSuggestTags(){
 
   await getStoneKeywords();
   const groundedStones = matchStoneNames(name);
+  const groundedFigures = matchSacredFigures(name);
 
   const cats = 'เครื่องประดับ,หินดิบ,หินตกแต่ง,อุปกรณ์ดูแลหิน,DIY,ของมงคล';
   const prompt = `คุณคือผู้เชี่ยวชาญหินคริสตัลและเครื่องประดับ วิเคราะห์ชื่อสินค้า: "${name}"
-${groundedTagPrompt(name, groundedStones)}
+${groundedTagPrompt(name, groundedStones, groundedFigures)}
 เลือกหมวดจาก: ${cats}
 ตอบ JSON: {"tags":["เขียว","กัวซา","สุขภาพ","ดูดซับพลังงานลบ"],"category":"เครื่องประดับ"} ไม่ต้องอธิบายเพิ่ม`;
 
@@ -3081,8 +3160,8 @@ ${groundedTagPrompt(name, groundedStones)}
     const raw = d?.choices?.[0]?.message?.content||'{}';
     const match = raw.match(/\{[\s\S]*?\}/);
     const obj = match ? JSON.parse(match[0]) : {};
-    const aiTags = Array.isArray(obj.tags) ? obj.tags.slice(0,6) : [];
-    const suggested = [...new Set([...groundedStones, ...aiTags])].slice(0,6);
+    const aiTags = (Array.isArray(obj.tags) ? obj.tags : []).filter(t => !isPlaceholderTag(t));
+    const suggested = [...new Set([...groundedStones, ...groundedFigures, ...aiTags])].slice(0,6);
     setCheckedTags(suggested);
     if(obj.category){
       const catEl = document.getElementById('affCat');
@@ -3220,8 +3299,9 @@ async function batchAutoTag(productNames, groqKey){
     if(!p || p.tags.length) { done++; continue; }
     try{
       const groundedStones = matchStoneNames(name);
+      const groundedFigures = matchSacredFigures(name);
       const cats = 'เครื่องประดับ,หินดิบ,หินตกแต่ง,อุปกรณ์ดูแลหิน,DIY,ของมงคล';
-      const prompt = `คุณคือผู้เชี่ยวชาญหินคริสตัลและเครื่องประดับ วิเคราะห์ชื่อสินค้า: "${name}"\n${groundedTagPrompt(name, groundedStones)}\nเลือกหมวดจาก: ${cats}\nตอบ JSON: {"tags":["เขียว","กัวซา","สุขภาพ"],"category":"เครื่องประดับ"} ไม่ต้องอธิบายเพิ่ม`;
+      const prompt = `คุณคือผู้เชี่ยวชาญหินคริสตัลและเครื่องประดับ วิเคราะห์ชื่อสินค้า: "${name}"\n${groundedTagPrompt(name, groundedStones, groundedFigures)}\nเลือกหมวดจาก: ${cats}\nตอบ JSON: {"tags":["เขียว","กัวซา","สุขภาพ"],"category":"เครื่องประดับ"} ไม่ต้องอธิบายเพิ่ม`;
       const r = await fetch('https://api.groq.com/openai/v1/chat/completions',{
         method:'POST',
         headers:{'Content-Type':'application/json','Authorization':'Bearer '+groqKey},
@@ -3230,10 +3310,10 @@ async function batchAutoTag(productNames, groqKey){
       const d = await r.json();
       const raw = d?.choices?.[0]?.message?.content||'{}';
       const match = raw.match(/\{[\s\S]*?\}/);
-      const aiTags = match ? (JSON.parse(match[0]).tags || []) : [];
-      const category = match ? JSON.parse(match[0]).category : null;
-      p.tags = [...new Set([...groundedStones, ...(Array.isArray(aiTags)?aiTags:[])])].slice(0,6);
-      if(category) p.category = category;
+      const parsedObj = match ? JSON.parse(match[0]) : {};
+      const aiTags = (Array.isArray(parsedObj.tags) ? parsedObj.tags : []).filter(t => !isPlaceholderTag(t));
+      p.tags = [...new Set([...groundedStones, ...groundedFigures, ...aiTags])].slice(0,6);
+      if(parsedObj.category) p.category = parsedObj.category;
     }catch(e){ /* ข้ามถ้า error */ }
     done++;
     if(done % 5 === 0){ saveAffStore(); renderAffTable(); }
