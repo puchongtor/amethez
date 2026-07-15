@@ -736,6 +736,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
                 <button class="btn btn-outline btn-sm" onclick="retagUntagged()" id="btnRetag">🔄 Re-tag ที่ยังไม่มี tag</button>
                 <button class="btn btn-outline btn-sm" onclick="retagAll()" id="btnRetagAll" title="เขียนทับ tag/หมวดเดิมทุกรายการด้วยระบบที่ยึดฐานข้อมูลจริงตัวใหม่">🔄 Re-tag ทั้งหมด (เขียนทับ)</button>
                 <button class="btn btn-outline btn-sm" onclick="exportAffJson()">⬇️ Export JSON</button>
+                <button class="btn btn-danger btn-sm" onclick="delAllAff()" title="ลบสินค้า Aff ทั้งหมด ใช้ตอนอยากล้างของเก่าแล้วนำเข้าใหม่ทั้งหมด">🗑 ลบทั้งหมด</button>
               </div>
             </div>
             <div style="overflow-x:auto">
@@ -1669,7 +1670,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-13.8';
+const ADMIN_VERSION='2026-07-13.9';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -3389,6 +3390,16 @@ function editAff(id){
 function delAff(id){
   if(!confirm('ลบสินค้านี้?')) return;
   affProducts = affProducts.filter(a=>a.id!==id); saveAffStore(); renderAffTable(); toast('ลบแล้ว','ok');
+}
+function delAllAff(){
+  if(!affProducts.length){ toast('ไม่มีสินค้าอยู่แล้ว','err'); return; }
+  const n = affProducts.length;
+  if(!confirm(`ลบสินค้า Aff ทั้งหมด ${n} รายการ? ลบแล้วกู้คืนไม่ได้ (ถ้าเผยแพร่ไปแล้วก่อนหน้านี้ ของบนเว็บจริงจะยังอยู่จนกว่าจะกด "🚀 เผยแพร่" อีกครั้ง)`)) return;
+  if(!confirm(`ยืนยันอีกครั้ง — ลบ ${n} รายการทิ้งทั้งหมด?`)) return;
+  affProducts = [];
+  saveAffStore();
+  renderAffTable();
+  toast('ลบสินค้าทั้งหมดแล้ว — เริ่มนำเข้าใหม่ได้เลย','ok');
 }
 
 function renderAffTable(){
