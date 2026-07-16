@@ -58,26 +58,12 @@
     .bs-sold { font-size:.7rem; color:var(--muted); margin-top:.1rem; }
     .bs-store { font-size:.68rem; color:var(--muted); margin-top:.1rem; }
 
-    /* ── ตัวกรองเพิ่มเติม (รวมมาจาก shop/finder.html เดิม) ── */
+    /* ── ค้นหา + เลือกร้าน ── */
     .filter-panel { background:white; border:1.5px solid var(--border); border-radius:1rem; padding:1.1rem 1.25rem; margin-bottom:1.5rem; }
-    .bday-row { display:flex; align-items:center; gap:.75rem; flex-wrap:wrap; margin-bottom:.85rem; padding:.75rem .9rem; background:linear-gradient(135deg,#f5f0ff,#fdf8ee); border-radius:.75rem; border:1.5px solid #e0d4fa; }
-    .bday-label { font-size:.8rem; font-weight:700; color:var(--purple); white-space:nowrap; }
+    .search-row { display:flex; align-items:center; gap:.75rem; flex-wrap:wrap; }
     .bday-input { padding:.4rem .8rem; border:1.5px solid var(--border); border-radius:.5rem; font-family:Sarabun,sans-serif; font-size:.85rem; color:#1a1228; outline:none; }
     .bday-input:focus { border-color:var(--purple); }
-    .bday-result { display:flex; align-items:center; gap:.4rem; background:var(--purple); color:white; padding:.28rem .8rem; border-radius:2rem; font-size:.78rem; font-weight:700; }
-    .filter-grid { display:flex; gap:.6rem; flex-wrap:wrap; align-items:flex-end; }
-    .filter-group { display:flex; flex-direction:column; gap:.28rem; min-width:120px; }
-    .filter-group label { font-size:.7rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; }
     .filter-select { padding:.45rem .8rem; border:1.5px solid var(--border); border-radius:.55rem; font-family:Sarabun,sans-serif; font-size:.83rem; color:#1a1228; background:white; cursor:pointer; outline:none; }
-    .filter-select.has-value { border-color:var(--purple); background-color:#f5f0ff; color:var(--purple); }
-    .price-group { min-width:190px; }
-    .price-labels { display:flex; justify-content:space-between; font-size:.74rem; color:var(--muted); }
-    .price-slider { width:100%; accent-color:var(--purple); cursor:pointer; }
-    .active-filters { display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.8rem; align-items:center; }
-    .active-tag { display:inline-flex; align-items:center; gap:.35rem; background:var(--purple); color:white; font-size:.76rem; font-weight:600; padding:.22rem .65rem; border-radius:2rem; }
-    .active-tag button { background:none; border:none; color:white; cursor:pointer; font-size:.85rem; padding:0; line-height:1; opacity:.75; }
-    .active-tag button:hover { opacity:1; }
-    .clear-all { font-size:.78rem; color:var(--muted); text-decoration:underline; cursor:pointer; background:none; border:none; font-family:Sarabun,sans-serif; }
 
     /* ── สินค้าทั้งหมด layout ── */
     .browse-layout { display:flex; gap:1.5rem; align-items:flex-start; }
@@ -162,102 +148,13 @@
   <div class="section-title" id="allProducts">📦 สินค้าทั้งหมด</div>
 
   <div class="filter-panel">
-    <div class="bday-row" style="background:white">
+    <div class="search-row">
       <span style="font-size:1.1rem">🔍</span>
       <input type="search" id="searchInput" class="bday-input" style="flex:1;min-width:200px" placeholder="ค้นหาสินค้า เช่น อเมทิสต์, กำไล, พระพิฆเนศ..." oninput="applyFiltersAndSort()">
+      <select class="filter-select" id="fStore" onchange="applyFiltersAndSort()" style="flex-shrink:0">
+        <option value="">ทุกร้าน</option>
+      </select>
     </div>
-    <div class="bday-row">
-      <span class="bday-label">🗓️ ใส่วันเกิด</span>
-      <input type="date" id="bdayInput" class="bday-input" onchange="calcZodiac(this.value)">
-      <div id="bdayResult" style="display:none" class="bday-result"><span id="bdayZodiac"></span></div>
-      <span style="font-size:.78rem;color:#9c84c5">→ ระบบจะเลือกราศีให้อัตโนมัติ</span>
-    </div>
-    <div class="filter-grid">
-      <div class="filter-group">
-        <label>🏪 ร้านค้า</label>
-        <select class="filter-select" id="fStore" onchange="applyFiltersAndSort()">
-          <option value="">ทุกร้าน</option>
-        </select>
-      </div>
-      <div class="filter-group">
-        <label>🌈 สี</label>
-        <select class="filter-select" id="fColor" onchange="applyFiltersAndSort()">
-          <option value="">ทุกสี</option>
-          <option value="ม่วง">💜 ม่วง</option>
-          <option value="ชมพู">🩷 ชมพู</option>
-          <option value="เขียว">💚 เขียว</option>
-          <option value="เหลือง">💛 เหลือง</option>
-          <option value="ดำ">🖤 ดำ</option>
-          <option value="ใส">🔮 ใส/ขาว</option>
-          <option value="น้ำเงิน">💙 น้ำเงิน</option>
-          <option value="น้ำตาล">🤎 น้ำตาล</option>
-          <option value="หลากสี">🌈 หลากสี</option>
-        </select>
-      </div>
-      <div class="filter-group">
-        <label>☯️ จักระ</label>
-        <select class="filter-select" id="fChakra" onchange="applyFiltersAndSort()">
-          <option value="">ทุกจักระ</option>
-          <option value="ราก">🔴 ราก (Root)</option>
-          <option value="Sacral">🟠 Sacral</option>
-          <option value="Solar Plexus">🟡 Solar Plexus</option>
-          <option value="หัวใจ">💚 หัวใจ (Heart)</option>
-          <option value="คอหอย">🔵 คอหอย (Throat)</option>
-          <option value="Third Eye">🟣 Third Eye</option>
-          <option value="มงกุฎ">🔮 มงกุฎ (Crown)</option>
-        </select>
-      </div>
-      <div class="filter-group">
-        <label>♈ ราศี</label>
-        <select class="filter-select" id="fZodiac" onchange="applyFiltersAndSort()">
-          <option value="">ทุกราศี</option>
-          <option value="เมษ">♈ เมษ</option>
-          <option value="พฤษภ">♉ พฤษภ</option>
-          <option value="มิถุน">♊ มิถุน</option>
-          <option value="กรกฎ">♋ กรกฎ</option>
-          <option value="สิงห์">♌ สิงห์</option>
-          <option value="กันย์">♍ กันย์</option>
-          <option value="ตุลย์">♎ ตุลย์</option>
-          <option value="พิจิก">♏ พิจิก</option>
-          <option value="ธนู">♐ ธนู</option>
-          <option value="แคปริคอร์น">♑ มกร</option>
-          <option value="กุมภ์">♒ กุมภ์</option>
-          <option value="มีน">♓ มีน</option>
-        </select>
-      </div>
-      <div class="filter-group">
-        <label>💎 รูปทรง</label>
-        <select class="filter-select" id="fShape" onchange="applyFiltersAndSort()">
-          <option value="">ทุกรูปทรง</option>
-          <option value="หินดิบ">🪨 หินดิบ (Raw)</option>
-          <option value="ทรงกลม">⚪ ทรงกลม (Sphere)</option>
-          <option value="ทรงพีระมิด">🔺 พีระมิด</option>
-          <option value="โพรง">🫙 โพรง (Geode)</option>
-          <option value="กำไล">📿 กำไล</option>
-          <option value="สร้อย">📿 สร้อย</option>
-          <option value="แผ่น">🪬 แผ่น</option>
-          <option value="อุปกรณ์">🎵 อุปกรณ์</option>
-        </select>
-      </div>
-      <div class="filter-group">
-        <label>🙏 ความเชื่อ</label>
-        <select class="filter-select" id="fBelief" onchange="applyFiltersAndSort()">
-          <option value="">ทุกกลุ่ม</option>
-          <option value="เสริมโชค">🍀 เสริมโชคลาภ</option>
-          <option value="ความรัก">💕 ความรัก</option>
-          <option value="ป้องกัน">🛡️ ป้องกัน</option>
-          <option value="การงาน">💼 การงาน/ธุรกิจ</option>
-          <option value="สุขภาพ">🌿 สุขภาพ</option>
-          <option value="สมาธิ">🧘 สมาธิ/จิตวิญญาณ</option>
-        </select>
-      </div>
-      <div class="filter-group price-group">
-        <label>💰 งบประมาณ (฿<span id="priceVal">5,000</span>)</label>
-        <input type="range" class="price-slider" id="fPrice" min="40" max="5000" value="5000" step="50" oninput="updatePrice(this.value)">
-        <div class="price-labels"><span>฿40</span><span>฿5,000+</span></div>
-      </div>
-    </div>
-    <div class="active-filters" id="activeFilters"></div>
   </div>
 
   <div class="browse-layout">
@@ -389,89 +286,9 @@ function populateStoreFilterOptions(){
   sel.innerHTML = '<option value="">ทุกร้าน</option>' + names.map(n => `<option value="${x(n)}">${x(n)}</option>`).join('');
 }
 
-// ── ตัวกรองเพิ่มเติม (รวมมาจาก shop/finder.html — สินค้าจริงไม่มี field
-// p.color/p.chakra/p.zodiac/p.shape/p.belief_group เลย จับคู่กับชื่อ+tags
-// แทน เหมือนที่แก้ไว้ตอนซ่อม finder.html เดิม) ─────────────────────
+// ── ค้นหา (ชื่อ+tags) ─────────────────────────────
 function nameLower(p){ return (p.name || '').toLowerCase(); }
 function tagsLower(p){ return (p.tags || []).map(t => t.toLowerCase()); }
-function matchesFacet(p, value){
-  if(!value) return true;
-  const v = value.toLowerCase();
-  const tl = tagsLower(p);
-  return nameLower(p).includes(v) || tl.some(t => t.includes(v) || v.includes(t));
-}
-
-let priceMax = 5000;
-function updatePrice(val){
-  priceMax = parseInt(val);
-  document.getElementById('priceVal').textContent = priceMax >= 5000 ? '5,000+' : val;
-  applyFiltersAndSort();
-}
-
-function calcZodiac(dateStr){
-  if(!dateStr) return;
-  const d = new Date(dateStr);
-  const m = d.getMonth() + 1, day = d.getDate();
-  let sign = '';
-  if((m===3&&day>=21)||(m===4&&day<=19)) sign='เมษ';
-  else if((m===4&&day>=20)||(m===5&&day<=20)) sign='พฤษภ';
-  else if((m===5&&day>=21)||(m===6&&day<=20)) sign='มิถุน';
-  else if((m===6&&day>=21)||(m===7&&day<=22)) sign='กรกฎ';
-  else if((m===7&&day>=23)||(m===8&&day<=22)) sign='สิงห์';
-  else if((m===8&&day>=23)||(m===9&&day<=22)) sign='กันย์';
-  else if((m===9&&day>=23)||(m===10&&day<=22)) sign='ตุลย์';
-  else if((m===10&&day>=23)||(m===11&&day<=21)) sign='พิจิก';
-  else if((m===11&&day>=22)||(m===12&&day<=21)) sign='ธนู';
-  else if((m===12&&day>=22)||(m===1&&day<=19)) sign='แคปริคอร์น';
-  else if((m===1&&day>=20)||(m===2&&day<=18)) sign='กุมภ์';
-  else sign='มีน';
-  document.getElementById('bdayResult').style.display = 'flex';
-  document.getElementById('bdayZodiac').textContent = '♈ ราศี'+sign;
-  const zEl = document.getElementById('fZodiac');
-  zEl.value = sign;
-  zEl.classList.add('has-value');
-  applyFiltersAndSort();
-}
-
-function renderActiveFilters(){
-  const store = document.getElementById('fStore').value;
-  const color = document.getElementById('fColor').value;
-  const chakra = document.getElementById('fChakra').value;
-  const zodiac = document.getElementById('fZodiac').value;
-  const shape = document.getElementById('fShape').value;
-  const belief = document.getElementById('fBelief').value;
-  const wrap = document.getElementById('activeFilters');
-  const active = [];
-  if(store) active.push({key:'fStore', label:'🏪 '+store});
-  if(color) active.push({key:'fColor', label:'🎨 '+color});
-  if(chakra) active.push({key:'fChakra', label:'☯️ '+chakra});
-  if(zodiac) active.push({key:'fZodiac', label:'♈ '+zodiac});
-  if(shape) active.push({key:'fShape', label:'💎 '+shape});
-  if(belief) active.push({key:'fBelief', label:'🙏 '+belief});
-  if(priceMax < 5000) active.push({key:'fPrice', label:'💰 ≤฿'+priceMax});
-  if(!active.length){ wrap.innerHTML = ''; return; }
-  wrap.innerHTML = active.map(a => `<span class="active-tag">${a.label} <button onclick="clearFilter('${a.key}')">✕</button></span>`).join('')
-    + `<button class="clear-all" onclick="clearAllFilters()">ล้างทั้งหมด</button>`;
-}
-
-function clearFilter(id){
-  if(id === 'fPrice'){ document.getElementById('fPrice').value = 5000; updatePrice(5000); }
-  else { document.getElementById(id).value = ''; document.getElementById(id).classList.remove('has-value'); applyFiltersAndSort(); }
-}
-
-function clearAllFilters(){
-  ['fStore','fColor','fChakra','fZodiac','fShape','fBelief'].forEach(id => {
-    document.getElementById(id).value = '';
-    document.getElementById(id).classList.remove('has-value');
-  });
-  document.getElementById('fPrice').value = 5000;
-  document.getElementById('bdayInput').value = '';
-  document.getElementById('bdayResult').style.display = 'none';
-  document.getElementById('searchInput').value = '';
-  priceMax = 5000;
-  document.getElementById('priceVal').textContent = '5,000+';
-  applyFiltersAndSort();
-}
 
 // ── Copy affiliate link ──
 let _copyRegistry = [];
@@ -498,22 +315,11 @@ function copyProdLink(idx, btn){
 function applyFiltersAndSort(){
   const q = (document.getElementById('searchInput').value || '').trim().toLowerCase();
   const store = document.getElementById('fStore').value;
-  const color = document.getElementById('fColor').value;
-  const chakra = document.getElementById('fChakra').value;
-  const zodiac = document.getElementById('fZodiac').value;
-  const shape = document.getElementById('fShape').value;
-  const belief = document.getElementById('fBelief').value;
 
   let list = availableProducts().filter(p => {
     if(currentCat && p.category !== currentCat) return false;
     if(store && p.store !== store) return false;
     if(q && !(nameLower(p).includes(q) || tagsLower(p).some(t => t.includes(q)))) return false;
-    if(color && !matchesFacet(p, color)) return false;
-    if(chakra && !matchesFacet(p, chakra)) return false;
-    if(zodiac && !matchesFacet(p, zodiac)) return false;
-    if(shape && !matchesFacet(p, shape)) return false;
-    if(belief && !matchesFacet(p, belief)) return false;
-    if(p.price > priceMax && priceMax < 5000) return false;
     return true;
   });
 
@@ -524,7 +330,6 @@ function applyFiltersAndSort(){
   else if(sort === 'name') list = [...list].sort((a,b) => a.name.localeCompare(b.name,'th'));
   sortedList = list;
   currentPage = 1;
-  renderActiveFilters();
   renderProductGrid();
 }
 
@@ -613,18 +418,14 @@ async function init(){
 
   // รับค่าจาก index.html (widget ค้นหาสินค้าหน้าแรก) หรือลิงก์ภายนอก
   const params = new URLSearchParams(location.search);
-  const facetMap = { color:'fColor', chakra:'fChakra', zodiac:'fZodiac', shape:'fShape', belief:'fBelief' };
-  let hasFacetParam = false;
-  Object.entries(facetMap).forEach(([param, id]) => {
-    const val = params.get(param);
-    if(val){
-      const el = document.getElementById(id);
-      if(el){ el.value = val; el.classList.add('has-value'); hasFacetParam = true; }
-    }
-  });
+  const q = params.get('q');
+  const storeParam = params.get('store');
+  let hasHandoff = false;
+  if(q){ document.getElementById('searchInput').value = q; hasHandoff = true; }
+  if(storeParam){ document.getElementById('fStore').value = storeParam; hasHandoff = true; }
 
   applyFiltersAndSort();
-  if(hasFacetParam) document.getElementById('allProducts').scrollIntoView({behavior:'smooth', block:'start'});
+  if(hasHandoff) document.getElementById('allProducts').scrollIntoView({behavior:'smooth', block:'start'});
 }
 init();
 </script>

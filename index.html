@@ -288,49 +288,14 @@
   </div>
   <div id="searchModeProduct" style="display:none;max-width:640px;margin:0 auto">
     <div style="background:white;border:1.5px solid var(--border);border-radius:1.125rem;padding:1.25rem;box-shadow:0 4px 20px rgba(124,58,237,.08)">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.625rem;margin-bottom:.75rem">
-        <select id="qColor" style="padding:.5rem .75rem;border:1.5px solid var(--border);border-radius:.5rem;font-family:Sarabun,sans-serif;font-size:.88rem;color:var(--text)">
-          <option value="">🌈 ทุกสี</option>
-          <option value="ม่วง">💜 ม่วง</option>
-          <option value="ชมพู">🩷 ชมพู</option>
-          <option value="เขียว">💚 เขียว</option>
-          <option value="เหลือง">💛 เหลือง</option>
-          <option value="ดำ">🖤 ดำ</option>
-          <option value="ใส">🔮 ใส</option>
-          <option value="น้ำเงิน">💙 น้ำเงิน</option>
-        </select>
-        <select id="qChakra" style="padding:.5rem .75rem;border:1.5px solid var(--border);border-radius:.5rem;font-family:Sarabun,sans-serif;font-size:.88rem;color:var(--text)">
-          <option value="">☯️ ทุกจักระ</option>
-          <option value="ราก">🔴 ราก</option>
-          <option value="Solar Plexus">🟡 Solar Plexus</option>
-          <option value="หัวใจ">💚 หัวใจ</option>
-          <option value="Third Eye">🟣 Third Eye</option>
-          <option value="มงกุฎ">🔮 มงกุฎ</option>
-        </select>
-        <select id="qBelief" style="padding:.5rem .75rem;border:1.5px solid var(--border);border-radius:.5rem;font-family:Sarabun,sans-serif;font-size:.88rem;color:var(--text)">
-          <option value="">🙏 ทุกกลุ่มความเชื่อ</option>
-          <option value="เสริมโชค">🍀 เสริมโชคลาภ</option>
-          <option value="ความรัก">💕 ความรัก</option>
-          <option value="ป้องกัน">🛡️ ป้องกัน</option>
-          <option value="การงาน">💼 การงาน</option>
-          <option value="สุขภาพ">🌿 สุขภาพ</option>
-          <option value="สมาธิ">🧘 สมาธิ</option>
-        </select>
-        <select id="qShape" style="padding:.5rem .75rem;border:1.5px solid var(--border);border-radius:.5rem;font-family:Sarabun,sans-serif;font-size:.88rem;color:var(--text)">
-          <option value="">💎 ทุกรูปทรง</option>
-          <option value="หินดิบ">🪨 หินดิบ</option>
-          <option value="ทรงกลม">⚪ ทรงกลม</option>
-          <option value="กำไล">📿 กำไล</option>
-          <option value="โพรง">🫙 โพรง</option>
-          <option value="อุปกรณ์">🎵 อุปกรณ์</option>
-        </select>
-      </div>
+      <input id="qSearch" type="search" placeholder="ค้นหาสินค้า เช่น อเมทิสต์, กำไล, พระพิฆเนศ..."
+        style="width:100%;padding:.75rem 1rem;border:1.5px solid var(--border);border-radius:.65rem;font-family:Sarabun,sans-serif;font-size:.95rem;color:var(--text);outline:none;margin-bottom:.75rem;box-sizing:border-box">
       <a id="findBtn" href="/shop/"
         style="display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;padding:.85rem;background:linear-gradient(135deg,#7c3aed,#6d28d9);color:white;border-radius:.75rem;font-family:Sarabun,sans-serif;font-size:.95rem;font-weight:700;text-decoration:none;transition:all .2s;box-shadow:0 4px 16px rgba(124,58,237,.3)">
         🔍 ค้นหาสินค้า
       </a>
-      <p style="text-align:center;font-size:.75rem;color:var(--muted);margin-top:.625rem">ฟิลเตอร์เพิ่มเติม: ราศี · ขนาด · งบประมาณ →
-        <a href="/shop/" style="color:var(--purple);font-weight:700">หน้าค้นหาเต็ม</a>
+      <p style="text-align:center;font-size:.75rem;color:var(--muted);margin-top:.625rem">
+        <a href="/shop/" style="color:var(--purple);font-weight:700">ดูสินค้าทั้งหมด →</a>
       </p>
     </div>
   </div>
@@ -714,17 +679,13 @@ function switchSearchMode(mode) {
   if (isProduct) updateFinderLink();
 }
 function updateFinderLink() {
-  const p = new URLSearchParams();
-  ['qColor','qChakra','qBelief','qShape'].forEach(id => {
-    const v = document.getElementById(id)?.value;
-    if (v) p.set(id.replace('q','').toLowerCase(), v);
-  });
-  const qs = p.toString();
-  document.getElementById('findBtn').href = '/shop/' + (qs ? '?' + qs : '');
+  const kw = document.getElementById('qSearch')?.value.trim();
+  document.getElementById('findBtn').href = '/shop/' + (kw ? '?q=' + encodeURIComponent(kw) : '');
 }
-['qColor','qChakra','qBelief','qShape'].forEach(id =>
-  document.getElementById(id)?.addEventListener('change', updateFinderLink)
-);
+document.getElementById('qSearch')?.addEventListener('input', updateFinderLink);
+document.getElementById('qSearch')?.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') { e.preventDefault(); document.getElementById('findBtn').click(); }
+});
 function doSearch(kw) {
   window.location.href = '/stones/encyclopedia.html?q=' + encodeURIComponent(kw);
 }
