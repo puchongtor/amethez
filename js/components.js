@@ -114,7 +114,10 @@ const FOOTER_HTML = `
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2025 Amethez · Stones · Stories · Soul &nbsp;|&nbsp;
+    <p style="font-size:.7rem;color:rgba(255,255,255,.4);line-height:1.7;max-width:720px;margin:0 auto .9rem;padding:0 .5rem">
+      *Disclaimer: Amethez.com เป็นแพลตฟอร์มสื่อกลางในการคัดสรรและแนะนำพิกัดร้านค้าคุณภาพเพื่ออำนวยความสะดวกแก่ผู้บริโภคเท่านั้น เครื่องหมายการค้า โลโก้ และลิขสิทธิ์ทั้งหมดเป็นสิทธิ์ของเจ้าของแบรนด์นั้น ๆ โดยทางเราไม่มีส่วนเกี่ยวข้องหรือมีส่วนรับผิดชอบต่อข้อตกลง การซื้อขาย หรือการบริการใด ๆ ของทางร้านค้าดังกล่าว
+    </p>
+    <p>© 2026 Amethez · Stones · Stories · Soul &nbsp;|&nbsp;
     <a href="/about/" style="color:rgba(255,255,255,.5)">เกี่ยวกับเรา</a> &nbsp;|&nbsp;
     <a href="https://line.me/R/ti/p/@masterpuch" style="color:#06C755">Line @masterpuch</a></p>
   </div>

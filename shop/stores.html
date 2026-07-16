@@ -29,6 +29,8 @@
     .store-card-tagline { font-size:.78rem; color:var(--muted); line-height:1.4; }
     .store-card-count { font-size:.74rem; color:var(--purple); font-weight:600; }
     .empty-state { text-align:center; padding:3rem 2rem; grid-column:1/-1; color:var(--muted); }
+    .verify-note { margin-top:2rem; padding:.9rem 1.1rem; background:#f8f5ff; border:1.5px solid var(--border); border-radius:.75rem; font-size:.85rem; color:var(--muted); text-align:center; }
+    .verify-note a { color:var(--purple); font-weight:700; text-decoration:none; }
   </style>
 </head>
 <body>
@@ -36,7 +38,7 @@
 <header class="site-header"></header>
 
 <section class="shop-hero">
-  <h1>🏪 ร้านแนะนำทั้งหมด</h1>
+  <h1>🏪 พิกัดร้านหินยอดนิยม (ทั้งหมด)</h1>
   <p>คลิกร้านที่สนใจ ไปหน้า Shopee ของร้านนั้นได้เลย</p>
 </section>
 
@@ -44,6 +46,9 @@
   <a href="/shop/" class="back-link">← กลับไป Crystal Market</a>
   <div class="stores-grid" id="storesGrid">
     <div class="empty-state">กำลังโหลด…</div>
+  </div>
+  <div class="verify-note">
+    💬 เป็นเจ้าของร้านที่เห็นชื่อ/รูปร้านตรงนี้? <a href="https://line.me/R/ti/p/@amethez" target="_blank" rel="noopener">ยืนยันสิทธิ์ หรือร่วมเป็นร้านแนะนำอย่างเป็นทางการกับเรา ติดต่อที่นี่ →</a>
   </div>
 </div>
 
@@ -72,10 +77,11 @@ async function init(){
 
   grid.innerHTML = names.map(name => {
     const profile = stores.find(s => s.name === name) || {};
-    const logo = profile.logo_url ? `<img src="${x(profile.logo_url)}" alt="" onerror="this.parentElement.textContent='🏪'">` : '🏪';
+    // โลโก้จริงโชว์เฉพาะร้านที่ยืนยันแล้ว (featured) เหมือนหน้า /shop/
+    const logo = (profile.featured && profile.logo_url) ? `<img src="${x(profile.logo_url)}" alt="" onerror="this.parentElement.textContent='🏪'">` : '🏪';
     const hasLink = !!profile.aff_link;
     const tag = hasLink ? 'a' : 'div';
-    const linkAttrs = hasLink ? `href="${x(profile.aff_link)}" target="_blank" rel="nofollow noopener sponsored"` : '';
+    const linkAttrs = hasLink ? `href="${x(profile.aff_link)}" target="_blank" rel="nofollow noopener sponsored" onclick="if(typeof gtag==='function')gtag('event','shopee_click',{store:'${x(name)}'})"` : '';
     return `<${tag} class="store-card${hasLink ? '' : ' disabled'}" ${linkAttrs}>
       <div class="store-card-logo">${logo}</div>
       <div class="store-card-name">${x(name)}</div>

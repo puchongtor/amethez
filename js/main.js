@@ -123,14 +123,15 @@ function renderProductCard(p) {
     : `<div style="display:flex;align-items:center;justify-content:center;height:150px;background:linear-gradient(135deg,#ede9fe,#f5f0ff);font-size:2rem">💎</div>`;
   const storeLine = p.store ? `<div style="font-size:.66rem;color:#9ca3af">${p.store}</div>` : '';
   const urlIdx = _copyUrlRegistry.push(p.url) - 1;
+  const trackAttr = `onclick="if(typeof gtag==='function')gtag('event','shopee_click',{store:'${(p.store||'').replace(/'/g,"")}'})"`;
   return `<div style="flex:0 0 175px;width:175px;border-radius:.75rem;overflow:hidden;background:#fff;border:1px solid #ede9fe;display:flex;flex-direction:column;box-shadow:0 2px 8px rgba(124,58,237,.08)">
-    <a href="${p.url}" target="_blank" rel="nofollow noopener" style="display:block;flex-shrink:0">${imgBlock}</a>
+    <a href="${p.url}" target="_blank" rel="nofollow noopener" style="display:block;flex-shrink:0" ${trackAttr}>${imgBlock}</a>
     <div style="padding:.6rem .7rem;display:flex;flex-direction:column;gap:.25rem">
       <div style="font-size:.75rem;font-weight:600;line-height:1.35;color:#1a1228;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${p.name}</div>
       ${storeLine}
       <div style="font-size:.95rem;font-weight:700;color:#7c3aed">฿${p.price.toLocaleString()}</div>
       <div style="display:flex;align-items:center;gap:.35rem;margin-top:.1rem">
-        <a href="${p.url}" target="_blank" rel="nofollow noopener"
+        <a href="${p.url}" target="_blank" rel="nofollow noopener" ${trackAttr}
           style="font-size:.72rem;color:#ee4d2d;text-decoration:none;font-weight:600;flex:1;min-width:0">
           &raquo; สั่งซื้อผ่านทาง Shopee
         </a>

@@ -486,6 +486,11 @@ textarea.form-input{resize:vertical;min-height:80px;}
                     <div style="font-size:.78rem;font-weight:700;color:#6b7280;margin-bottom:.5rem">🏆 หน้ายอดนิยม (30 วัน)</div>
                     <div id="ga4TopPages" style="font-size:.8rem"></div>
                   </div>
+                  <div style="margin-top:1rem">
+                    <div style="font-size:.78rem;font-weight:700;color:#6b7280;margin-bottom:.5rem">🛒 คลิกไปร้าน/สินค้าใน Shopee แยกตามร้าน (30 วัน)</div>
+                    <div id="ga4StoreClicks" style="font-size:.8rem"></div>
+                    <div id="ga4StoreClicksNote" style="display:none;font-size:.72rem;color:#9ca3af;margin-top:.4rem;line-height:1.6"></div>
+                  </div>
                   <button class="btn btn-outline btn-sm" style="margin-top:.75rem" onclick="ga4FetchData()">🔄 รีเฟรชข้อมูล</button>
                 </div>
 
@@ -1681,7 +1686,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-16.6';
+const ADMIN_VERSION='2026-07-17.1';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -2980,6 +2985,49 @@ async function ga4FetchData(){
         <span style="flex:1;font-size:.78rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#374151">${row.dimensionValues[0].value}</span>
         <span style="font-size:.78rem;font-weight:700;color:#7c3aed">${Number(row.metricValues[0].value).toLocaleString()}</span>
       </div>`).join('');
+
+    // คลิกไปร้าน/สินค้าใน Shopee — นับจาก event "shopee_click" ที่ยิงจากทุกหน้า
+    // ที่มีการ์ดสินค้า/โลโก้ร้าน (js/main.js, categories/detail.html, shop/*.html)
+    // ต้องตั้งค่า custom dimension "store" (event-scoped, พารามิเตอร์ "store")
+    // ใน GA4 → Admin → Custom definitions ก่อนครั้งแรก ไม่งั้น query นี้จะว่าง/error
+    const noteEl = document.getElementById('ga4StoreClicksNote');
+    try{
+      const body3={
+        dateRanges:[{startDate:'30daysAgo',endDate:'today'}],
+        dimensions:[{name:'customEvent:store'}],
+        metrics:[{name:'eventCount'}],
+        dimensionFilter:{filter:{fieldName:'eventName',stringFilter:{value:'shopee_click'}}},
+        orderBys:[{metric:{metricName:'eventCount'},desc:true}],
+        limit:20
+      };
+      const r3=await fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${prop}:runReport`,{
+        method:'POST',headers:{'Authorization':'Bearer '+ga4AccessToken,'Content-Type':'application/json'},body:JSON.stringify(body3)});
+      const d3=await r3.json();
+      if(!r3.ok){
+        document.getElementById('ga4StoreClicks').innerHTML='';
+        noteEl.style.display='block';
+        noteEl.textContent='⚠️ ยังดึงข้อมูลนี้ไม่ได้ — ต้องไปตั้งค่า custom dimension ก่อนครั้งแรก: GA4 → Admin → Custom definitions → Create custom dimension → Dimension name "store", Scope "Event", Event parameter "store" แล้วรอ 24-48 ชม.ให้ข้อมูลเริ่มเก็บ';
+        return;
+      }
+      const rows3=d3?.rows||[];
+      if(!rows3.length){
+        document.getElementById('ga4StoreClicks').innerHTML='';
+        noteEl.style.display='block';
+        noteEl.textContent='ยังไม่มีข้อมูลคลิกใน 30 วันนี้ (หรือเพิ่งตั้งค่า custom dimension — ข้อมูลใหม่จะเริ่มเก็บหลังตั้งค่าเสร็จ ไม่ย้อนหลัง)';
+        return;
+      }
+      noteEl.style.display='none';
+      document.getElementById('ga4StoreClicks').innerHTML=rows3.map((row,i)=>`
+        <div style="display:flex;gap:.5rem;padding:.3rem 0;border-bottom:1px solid #f3f4f6;align-items:center">
+          <span style="font-size:.72rem;color:#9ca3af;width:1rem">${i+1}</span>
+          <span style="flex:1;font-size:.78rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#374151">${row.dimensionValues[0].value}</span>
+          <span style="font-size:.78rem;font-weight:700;color:#7c3aed">${Number(row.metricValues[0].value).toLocaleString()} คลิก</span>
+        </div>`).join('');
+    }catch(e){
+      document.getElementById('ga4StoreClicks').innerHTML='';
+      noteEl.style.display='block';
+      noteEl.textContent='⚠️ ดึงข้อมูลคลิกไม่สำเร็จ: '+e.message;
+    }
   }catch(e){ console.error(e); }
 }
 
@@ -3242,7 +3290,7 @@ let storeProfiles = [];
 function loadStoreProfiles(){ try{ storeProfiles = JSON.parse(localStorage.getItem(SELLER_STORES_KEY)||'[]'); }catch{ storeProfiles=[]; } }
 function saveStoreProfilesStore(){ localStorage.setItem(SELLER_STORES_KEY, JSON.stringify(storeProfiles)); }
 
-const INITIAL_FEATURED_STORES = ['Harmenstone','ช่างหิน'];
+const INITIAL_FEATURED_STORES = ['ช่างหิน','NAYA มีทุกอย่าง'];
 function isInitialFeatured(name){
   return INITIAL_FEATURED_STORES.includes(name) || name.toLowerCase().includes('master puch');
 }

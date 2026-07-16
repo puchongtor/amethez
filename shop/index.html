@@ -129,7 +129,7 @@
 
   <!-- ร้านแนะนำ (โลโก้ — คลิกไปหน้า Shopee ร้านนั้นเลย) -->
   <div class="section-head-row">
-    <div class="section-title">🏪 ร้านแนะนำของเรา</div>
+    <div class="section-title">🏪 พิกัดร้านหินยอดนิยม</div>
     <a href="/shop/stores.html" class="see-all-btn" id="allStoresLink" style="display:none">ร้านทั้งหมด →</a>
   </div>
   <div class="store-logo-grid" id="storeLogoGrid"></div>
@@ -202,19 +202,32 @@ const PAGE_SIZE = 24;
 function x(s){ return s ? String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') : ''; }
 function availableProducts(){ return allProducts.filter(p => p.status === 'available'); }
 
+// นับคลิกออกไป Shopee แยกตามร้าน ผ่าน GA4 (gtag ถูกโหลดไว้ทุกหน้าอยู่แล้วจาก
+// js/components.js) — ใช้เป็นตัวเลขจริงคุยกับร้านตอนต่อ/คิดค่าสมาชิก แทนยอดขาย
+// ที่เช็คย้อนหลังไม่ได้เลย
+function trackShopeeClick(store){
+  if(typeof gtag === 'function') gtag('event', 'shopee_click', { store: store || 'unknown' });
+}
+
 // ── ร้านแนะนำ (โลโก้ — คลิกไปหน้า Shopee ร้านนั้นตรงๆ ไม่เข้ามาในเว็บเรา) ──
 function renderStoreShowcase(){
   const counts = {};
   availableProducts().forEach(p => { if(p.store) counts[p.store] = (counts[p.store]||0)+1; });
   const names = Object.keys(counts).sort((a,b) => counts[b]-counts[a]);
-  const top10 = names.slice(0, 10);
+  // ร้านที่ "แนะนำ" (ยืนยันสิทธิ์แล้ว) ต้องได้ช่องโชว์เสมอ ไม่งั้นร้านที่ตั้งใจ
+  // เลือกไว้ (เช่น NAYA ยอดสินค้าน้อยกว่าร้านอื่น) อาจหลุดจาก top 10 ไปเฉยๆ
+  const featuredNames = names.filter(n => stores.find(s=>s.name===n)?.featured);
+  const restNames = names.filter(n => !featuredNames.includes(n));
+  const top10 = [...featuredNames, ...restNames].slice(0, 10);
   const grid = document.getElementById('storeLogoGrid');
   grid.innerHTML = top10.map(name => {
     const profile = stores.find(s => s.name === name) || {};
-    const logo = profile.logo_url ? `<img src="${x(profile.logo_url)}" alt="" onerror="this.parentElement.textContent='🏪'">` : '🏪';
+    // โลโก้จริงโชว์เฉพาะร้านที่ยืนยันแล้ว (featured) — ร้านอื่นที่ดึงมาจาก
+    // Shopee ยังไม่เคยติดต่อขอสิทธิ์ใช้โลโก้เลย ใช้ไอคอนร้านค้าทั่วไปแทนไปก่อน
+    const logo = (profile.featured && profile.logo_url) ? `<img src="${x(profile.logo_url)}" alt="" onerror="this.parentElement.textContent='🏪'">` : '🏪';
     const hasLink = !!profile.aff_link;
     const tag = hasLink ? 'a' : 'div';
-    const linkAttrs = hasLink ? `href="${x(profile.aff_link)}" target="_blank" rel="nofollow noopener sponsored"` : '';
+    const linkAttrs = hasLink ? `href="${x(profile.aff_link)}" target="_blank" rel="nofollow noopener sponsored" onclick="trackShopeeClick('${x(name)}')"` : '';
     return `<${tag} class="store-logo-item${hasLink ? '' : ' disabled'}" ${linkAttrs} title="${x(name)}">
       <div class="store-logo-circle">${logo}</div>
       <div class="store-logo-name">${x(name)}</div>
@@ -229,7 +242,7 @@ function renderBestsellers(){
   const grid = document.getElementById('bestsellerGrid');
   if(!list.length){ grid.innerHTML = `<div class="empty-state"><div class="empty-icon">🛒</div><p>ยังไม่มีข้อมูลยอดขาย</p></div>`; return; }
   grid.innerHTML = list.map((p,i) => `
-    <a href="${x(p.url)}" target="_blank" rel="nofollow noopener" class="bs-card">
+    <a href="${x(p.url)}" target="_blank" rel="nofollow noopener" class="bs-card" onclick="trackShopeeClick('${x(p.store||'')}')">
       <span class="bs-top-badge">TOP ${i+1}</span>
       <div class="bs-img">${p.image_url ? `<img src="${x(p.image_url)}" alt="" onerror="this.parentElement.textContent='💎'">` : '💎'}</div>
       <div class="bs-body">
@@ -254,7 +267,7 @@ function renderRecommended(){
   }
   const list = shuffled.slice(0,8);
   document.getElementById('recommendedGrid').innerHTML = list.map(p => `
-    <a href="${x(p.url)}" target="_blank" rel="nofollow noopener" class="bs-card">
+    <a href="${x(p.url)}" target="_blank" rel="nofollow noopener" class="bs-card" onclick="trackShopeeClick('${x(p.store||'')}')">
       <div class="bs-img">${p.image_url ? `<img src="${x(p.image_url)}" alt="" onerror="this.parentElement.textContent='💎'">` : '💎'}</div>
       <div class="bs-body">
         <div class="bs-name">${x(p.name)}</div>
@@ -383,7 +396,7 @@ function renderProductGrid(){
       ? `<img src="${x(p.image_url)}" alt="" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.textContent='💎'">`
       : '💎';
     return `
-    <a href="${x(p.url)}" target="_blank" rel="nofollow noopener" class="product-card">
+    <a href="${x(p.url)}" target="_blank" rel="nofollow noopener" class="product-card" onclick="trackShopeeClick('${x(p.store||'')}')">
       <div class="product-thumb" style="background:linear-gradient(135deg,#ede9fe,#f5f0ff)">${thumb}</div>
       <div class="product-body">
         <div class="product-badges">${tagBadges}${soldBadge}</div>

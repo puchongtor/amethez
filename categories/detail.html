@@ -441,7 +441,8 @@
         : '';
       const placeholder = `<div class="aff-img-placeholder" ${p.image_url?'style="display:none"':''}>🛒</div>`;
       const storeLine = p.store ? `<div class="aff-store">${p.store}</div>` : '';
-      return `<a href="${p.url}" target="_blank" rel="noopener noreferrer nofollow" class="aff-card">
+      const storeSafe = (p.store||'').replace(/'/g,"");
+      return `<a href="${p.url}" target="_blank" rel="noopener noreferrer nofollow" class="aff-card" onclick="if(typeof gtag==='function')gtag('event','shopee_click',{store:'${storeSafe}'})">
         ${img}${placeholder}
         <div class="aff-info">
           ${storeLine}
