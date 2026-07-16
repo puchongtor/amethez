@@ -744,6 +744,18 @@ textarea.form-input{resize:vertical;min-height:80px;}
               </table>
             </div>
           </div>
+
+          <!-- STORE PROFILES -->
+          <div class="card">
+            <div class="card-title">🏪 ร้านค้า — โลโก้หน้าแรก + ลิงก์ Aff ทั้งร้าน</div>
+            <div class="section-sub" style="margin-bottom:1rem">รายชื่อร้านดึงมาจากสินค้าที่ import อัตโนมัติ — ติ๊ก "แนะนำหน้าแรก" ให้ร้านที่จะขึ้นโชว์ที่ index.html (แก้ค่าจะบันทึกทันทีไม่ต้องกดปุ่ม)</div>
+            <div style="overflow-x:auto">
+              <table class="product-table">
+                <thead><tr><th>ร้าน</th><th>โลโก้</th><th>คำโปรยสั้น</th><th>ลิงก์ Aff ร้าน</th><th>แนะนำหน้าแรก</th></tr></thead>
+                <tbody id="storeProfilesBody"></tbody>
+              </table>
+            </div>
+          </div>
         </div>
 
         <!-- STONES -->
@@ -1668,7 +1680,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-16.2';
+const ADMIN_VERSION='2026-07-16.3';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -2062,7 +2074,7 @@ function showTab(name,el){
   if(name==='blog'){ seedBlogFromJson().then(()=>renderBlog()); }
   if(name==='products'){ loadGeodes(); renderPTable(); }
   if(name==='stats') initStatsTab();
-  if(name==='shopee'){ loadAff(); initAffTags(); renderAffTable(); }
+  if(name==='shopee'){ loadAff(); initAffTags(); renderAffTable(); renderStoreProfiles(); }
   if(name==='articles') renderArticles();
   if(name==='dashboard') renderDash();
   if(name==='roadmap') renderRoadmap();
@@ -3208,6 +3220,83 @@ function populateAffFilters(){
 
 function copyAffUrl(url){
   navigator.clipboard.writeText(url).then(()=>toast('คัดลอกลิงก์แล้ว ✓','ok')).catch(()=>toast('คัดลอกไม่สำเร็จ','err'));
+}
+
+// ── STORE PROFILES (โลโก้ร้านหน้าแรก + ลิงก์ Aff ทั้งร้าน) ──────
+const SELLER_STORES_KEY = 'amethez_seller_stores';
+let storeProfiles = [];
+function loadStoreProfiles(){ try{ storeProfiles = JSON.parse(localStorage.getItem(SELLER_STORES_KEY)||'[]'); }catch{ storeProfiles=[]; } }
+function saveStoreProfilesStore(){ localStorage.setItem(SELLER_STORES_KEY, JSON.stringify(storeProfiles)); }
+
+const INITIAL_FEATURED_STORES = ['Harmenstone','ช่างหิน'];
+function isInitialFeatured(name){
+  return INITIAL_FEATURED_STORES.includes(name) || name.toLowerCase().includes('master puch');
+}
+
+// เหมือนปัญหาที่เคยเจอกับ Top100/รายการอื่นๆ ในไฟล์นี้ — แอดมินเปิดจาก
+// เครื่อง/browser ใหม่จะเจอ localStorage ว่างเปล่า ทั้งที่ค่า featured จริง
+// ถูก publish ขึ้นเว็บไปแล้วใน data/stores.json ต้อง seed มาจากไฟล์จริงก่อน
+// (ครั้งเดียว ไม่ทับของที่มีอยู่แล้วในเครื่อง)
+async function seedStoreProfilesFromJson(){
+  try{
+    const r = await fetch('/data/stores.json?v='+Date.now());
+    if(!r.ok) return;
+    const d = await r.json();
+    const existingNames = new Set(storeProfiles.map(s=>s.name));
+    let changed = false;
+    for(const s of (d.stores||[])){
+      if(!existingNames.has(s.name)){ storeProfiles.push(s); changed = true; }
+    }
+    if(changed) saveStoreProfilesStore();
+  }catch(e){}
+}
+
+function ensureStoreProfiles(){
+  const names = [...new Set(affProducts.map(p=>p.store).filter(Boolean))];
+  let changed = false;
+  for(const name of names){
+    if(!storeProfiles.find(s=>s.name===name)){
+      storeProfiles.push({ name, logo_url:'', tagline:'', aff_link:'', featured: isInitialFeatured(name) });
+      changed = true;
+    }
+  }
+  if(changed) saveStoreProfilesStore();
+}
+
+function storeProductCount(name){
+  return affProducts.filter(p=>p.store===name).length;
+}
+
+function updateStoreProfile(name, field, value){
+  const s = storeProfiles.find(x=>x.name===name);
+  if(!s) return;
+  s[field] = value;
+  saveStoreProfilesStore();
+}
+
+async function renderStoreProfiles(){
+  loadStoreProfiles();
+  if(!storeProfiles.length) await seedStoreProfilesFromJson();
+  ensureStoreProfiles();
+  const tbody = document.getElementById('storeProfilesBody');
+  if(!tbody) return;
+  const sorted = [...storeProfiles].sort((a,b)=>storeProductCount(b.name)-storeProductCount(a.name));
+  tbody.innerHTML = sorted.length ? sorted.map((s,i)=>`
+    <tr>
+      <td style="font-weight:600;max-width:160px">${x(s.name)}<div style="font-size:.72rem;color:#9ca3af;font-weight:400">${storeProductCount(s.name)} รายการ</div></td>
+      <td>
+        <input class="form-input" style="width:170px;font-size:.78rem" placeholder="URL โลโก้" value="${x(s.logo_url)}" oninput="updateStoreProfile('${x(s.name)}','logo_url',this.value); previewStoreLogo(${i},this.value)">
+        <img id="storeLogoPrev_${i}" src="${x(s.logo_url)}" style="width:32px;height:32px;object-fit:cover;border-radius:.3rem;margin-top:.3rem;display:${s.logo_url?'block':'none'}" onerror="this.style.display='none'">
+      </td>
+      <td><input class="form-input" style="width:150px;font-size:.78rem" placeholder="คำโปรยสั้น" value="${x(s.tagline)}" oninput="updateStoreProfile('${x(s.name)}','tagline',this.value)"></td>
+      <td><input class="form-input" style="width:180px;font-size:.78rem" placeholder="https://s.shopee.co.th/..." value="${x(s.aff_link)}" oninput="updateStoreProfile('${x(s.name)}','aff_link',this.value)"></td>
+      <td style="text-align:center"><input type="checkbox" ${s.featured?'checked':''} style="width:18px;height:18px;cursor:pointer" onchange="updateStoreProfile('${x(s.name)}','featured',this.checked)"></td>
+    </tr>`).join('') : `<tr><td colspan="5" style="text-align:center;padding:1.5rem;color:#9ca3af">ยังไม่มีร้าน — import สินค้า Shopee Aff ก่อน</td></tr>`;
+}
+function previewStoreLogo(i, url){
+  const el = document.getElementById('storeLogoPrev_'+i);
+  if(!el) return;
+  if(url){ el.src = url; el.style.display = 'block'; } else { el.style.display = 'none'; }
 }
 
 function renderAffTable(){
@@ -6098,6 +6187,24 @@ async function publishToGitHub(){
           method:'PUT',
           headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},
           body:JSON.stringify({message:'cms: update products.json ('+affProducts.length+' items)',content:prodB64,...(pSha?{sha:pSha}:{})})
+        });
+      }
+
+      // Push stores.json (ร้านที่แนะนำหน้าแรก + ลิงก์ Aff ทั้งร้าน)
+      loadStoreProfiles();
+      if(storeProfiles.length){
+        const storesStr=JSON.stringify({version:'1.0',updated:new Date().toISOString().slice(0,10),stores:storeProfiles},null,2);
+        const storesB64=btoa(unescape(encodeURIComponent(storesStr)));
+        let sSha='';
+        try{
+          const sr=await fetch(`https://api.github.com/repos/${repo}/contents/data/stores.json`,
+            {headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}});
+          if(sr.ok){ const sd=await sr.json(); sSha=sd.sha; }
+        }catch{}
+        await fetch(`https://api.github.com/repos/${repo}/contents/data/stores.json`,{
+          method:'PUT',
+          headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},
+          body:JSON.stringify({message:'cms: update stores.json ('+storeProfiles.length+' stores)',content:storesB64,...(sSha?{sha:sSha}:{})})
         });
       }
 

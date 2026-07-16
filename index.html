@@ -494,6 +494,45 @@
 })();
 </script>
 
+<!-- ═══ 5.6 ร้านค้าพันธมิตร ═══ -->
+<section class="section" style="padding-top:2.5rem;padding-bottom:2.5rem;background:white">
+  <div class="wrap">
+    <div class="row-head">
+      <div>
+        <div class="sec-label">🏪 ร้านค้าพันธมิตร</div>
+        <div class="sec-title">ร้านที่เราแนะนำ</div>
+      </div>
+      <a href="/shop/" class="see-all">ดูสินค้าทั้งหมด →</a>
+    </div>
+    <div id="featuredStores" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.25rem">
+      <div style="grid-column:1/-1;text-align:center;padding:2rem;color:#9b89bb;font-size:.85rem">กำลังโหลด…</div>
+    </div>
+  </div>
+</section>
+<hr class="divider">
+<script>
+(async () => {
+  try {
+    const r = await fetch('/data/stores.json?v=' + Date.now());
+    const d = await r.json();
+    const list = (d.stores || []).filter(s => s.featured);
+    const el = document.getElementById('featuredStores');
+    if (!list.length) { el.closest('section').style.display = 'none'; return; }
+    el.innerHTML = list.map(s => `
+      <a href="${s.aff_link || '/shop/'}" target="_blank" rel="nofollow noopener sponsored" style="background:white;border:1.5px solid #e9e0f8;border-radius:1rem;padding:1.25rem 1rem;text-decoration:none;color:#1a1228;display:flex;flex-direction:column;align-items:center;text-align:center;gap:.6rem;transition:all .2s" onmouseover="this.style.borderColor='#7c3aed';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='#e9e0f8';this.style.transform='none'">
+        <div style="width:64px;height:64px;border-radius:50%;background:#f3effa;display:flex;align-items:center;justify-content:center;font-size:1.75rem;overflow:hidden">
+          ${s.logo_url ? `<img src="${s.logo_url}" alt="${s.name}" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.textContent='🏪'">` : '🏪'}
+        </div>
+        <div style="font-weight:700;font-size:.9rem;line-height:1.4">${s.name}</div>
+        ${s.tagline ? `<div style="font-size:.76rem;color:#6b7280;line-height:1.4">${s.tagline}</div>` : ''}
+      </a>`).join('');
+  } catch (e) {
+    const el = document.getElementById('featuredStores');
+    if (el) el.closest('section').style.display = 'none';
+  }
+})();
+</script>
+
 <!-- ═══ 6. ห้องคลื่นเสียง COSMIC ═══ -->
 <section class="cosmic">
   <div class="cosmic-inner">
