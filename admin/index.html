@@ -1681,7 +1681,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-16.5';
+const ADMIN_VERSION='2026-07-16.6';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -6139,6 +6139,28 @@ function saveRankingEditor(){
 }
 
 // ── GITHUB PUBLISH ─────────────────────────────
+// เผยแพร่แต่ละครั้งเดิมจะอัปโหลดไฟล์ทั้ง 7 ไฟล์ซ้ำทุกครั้งไม่ว่าจะเปลี่ยน
+// จริงหรือไม่ — products.json อย่างเดียวตอนนี้ก็ 1.39MB แล้ว (1,535 ชิ้น)
+// พอโตขึ้นเรื่อยๆ เวลาเผยแพร่เลยยาวขึ้นเรื่อยๆ ทั้งที่บางทีแก้แค่จุดเดียว
+// เก็บ "ก้อนข้อมูลล่าสุดที่เผยแพร่สำเร็จ" ของแต่ละไฟล์ไว้ เทียบกับข้อมูล
+// ปัจจุบันแบบเป๊ะตัวอักษรก่อนอัปโหลด — เหมือนกันทุกตัวอักษรก็ข้ามได้เลย
+// (ไม่ fetch sha, ไม่ PUT) ปลอดภัยเพราะ: ถ้าไม่มีข้อมูลเดิมเก็บไว้ (browser
+// ใหม่/localStorage โดนล้าง) หรือเทียบแล้วต่างแม้แต่ตัวเดียว ถือว่า "เปลี่ยน
+// แล้ว" เสมอ กลับไปอัปโหลดแบบเดิมทั้งไฟล์ — ไม่มีทางข้ามการอัปที่จำเป็นไป
+// โดยไม่ตั้งใจ และจะ markPublished() ก็ต่อเมื่อ PUT สำเร็จจริง (.ok) เท่านั้น
+const PUBLISH_SNAPSHOT_KEY = 'amethez_publish_snapshots';
+function getPublishSnapshots(){
+  try{ return JSON.parse(localStorage.getItem(PUBLISH_SNAPSHOT_KEY)||'{}'); }catch{ return {}; }
+}
+function isUnchangedSincePublish(key, compareStr){
+  return getPublishSnapshots()[key] === compareStr;
+}
+function markPublished(key, compareStr){
+  const snaps = getPublishSnapshots();
+  snaps[key] = compareStr;
+  localStorage.setItem(PUBLISH_SNAPSHOT_KEY, JSON.stringify(snaps));
+}
+
 async function publishToGitHub(){
   const token=localStorage.getItem(GH_TOKEN_KEY);
   const repo=localStorage.getItem(GH_REPO_KEY);
@@ -6155,6 +6177,7 @@ async function publishToGitHub(){
     return;
   }
   btn.textContent='⏳ กำลังเผยแพร่...'; btn.disabled=true;
+  const publishSkipped=[]; // ไฟล์ที่ข้ามเพราะข้อมูลไม่เปลี่ยนตั้งแต่ publish ล่าสุด
 
   try {
     // Merge Crystal Catalog hero/product images + title/tagline/product-name/
@@ -6257,9 +6280,13 @@ async function publishToGitHub(){
       try{ renderSlots(); }catch(_){}
       try{ renderDash(); }catch(_){}
 
-      // Push products.json
+      // Push products.json — ข้ามถ้าข้อมูลสินค้าไม่เปลี่ยนเลยตั้งแต่ publish ล่าสุด
       loadAff();
       if(affProducts.length){
+        const prodCompare = JSON.stringify(affProducts);
+        if(isUnchangedSincePublish('products', prodCompare)){
+          publishSkipped.push('products.json');
+        } else {
         const prodStr=JSON.stringify({version:'1.0',updated:new Date().toISOString().slice(0,10),products:affProducts},null,2);
         const prodB64=btoa(unescape(encodeURIComponent(prodStr)));
         let pSha='';
@@ -6268,16 +6295,23 @@ async function publishToGitHub(){
             {headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}});
           if(pr.ok){ const pd=await pr.json(); pSha=pd.sha; }
         }catch{}
-        await fetch(`https://api.github.com/repos/${repo}/contents/data/products.json`,{
+        const pPutRes=await fetch(`https://api.github.com/repos/${repo}/contents/data/products.json`,{
           method:'PUT',
           headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},
           body:JSON.stringify({message:'cms: update products.json ('+affProducts.length+' items)',content:prodB64,...(pSha?{sha:pSha}:{})})
         });
+        if(pPutRes.ok) markPublished('products', prodCompare);
+        else toast('⚠️ อัปโหลด products.json ไม่สำเร็จ','err');
+        }
       }
 
-      // Push stores.json (ร้านที่แนะนำหน้าแรก + ลิงก์ Aff ทั้งร้าน)
+      // Push stores.json (ร้านที่แนะนำหน้าแรก + ลิงก์ Aff ทั้งร้าน) — ข้ามถ้าไม่เปลี่ยน
       loadStoreProfiles();
       if(storeProfiles.length){
+        const storesCompare = JSON.stringify(storeProfiles);
+        if(isUnchangedSincePublish('stores', storesCompare)){
+          publishSkipped.push('stores.json');
+        } else {
         const storesStr=JSON.stringify({version:'1.0',updated:new Date().toISOString().slice(0,10),stores:storeProfiles},null,2);
         const storesB64=btoa(unescape(encodeURIComponent(storesStr)));
         let sSha='';
@@ -6286,11 +6320,14 @@ async function publishToGitHub(){
             {headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}});
           if(sr.ok){ const sd=await sr.json(); sSha=sd.sha; }
         }catch{}
-        await fetch(`https://api.github.com/repos/${repo}/contents/data/stores.json`,{
+        const sPutRes=await fetch(`https://api.github.com/repos/${repo}/contents/data/stores.json`,{
           method:'PUT',
           headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},
           body:JSON.stringify({message:'cms: update stores.json ('+storeProfiles.length+' stores)',content:storesB64,...(sSha?{sha:sSha}:{})})
         });
+        if(sPutRes.ok) markPublished('stores', storesCompare);
+        else toast('⚠️ อัปโหลด stores.json ไม่สำเร็จ','err');
+        }
       }
 
       // Push blog.json with updated thumbs
@@ -6372,11 +6409,18 @@ async function publishToGitHub(){
           ...(bp.badge?{badge:bp.badge}:{}),
           ...(bp.thumb?{thumb:bp.thumb}:{}),
         }))};
+        const blogCompare = JSON.stringify(blogJson);
+        if(isUnchangedSincePublish('blog', blogCompare)){
+          publishSkipped.push('blog.json');
+        } else {
         const blogStr=JSON.stringify(blogJson,null,2);
         const blogB64=btoa(unescape(encodeURIComponent(blogStr)));
         let bSha='';
         try{ const bgr=await fetch(`https://api.github.com/repos/${repo}/contents/data/blog.json`,{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}}); if(bgr.ok){ const bgd=await bgr.json(); bSha=bgd.sha; } }catch{}
-        await fetch(`https://api.github.com/repos/${repo}/contents/data/blog.json`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:'cms: update blog.json ('+blogPosts.length+' articles)',content:blogB64,...(bSha?{sha:bSha}:{})})});
+        const blogPutRes=await fetch(`https://api.github.com/repos/${repo}/contents/data/blog.json`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:'cms: update blog.json ('+blogPosts.length+' articles)',content:blogB64,...(bSha?{sha:bSha}:{})})});
+        if(blogPutRes.ok) markPublished('blog', blogCompare);
+        else toast('⚠️ อัปโหลด blog.json ไม่สำเร็จ','err');
+        }
       }
 
       // Push edited catalog body content back into the live page HTML
@@ -6431,6 +6475,12 @@ async function publishToGitHub(){
       // handled above by the generic imgs upload loop — same getImgs()/setImgs() store)
       if(localStorage.getItem(TOP100_KEY)){
         const top100Items=getTop100Items().sort((a,b)=>a.rank-b.rank);
+        const top100HeroPrompt=getTop100Hero().heroPrompt||'';
+        const top100Compare=JSON.stringify({items:top100Items,heroPrompt:top100HeroPrompt});
+        if(isUnchangedSincePublish('top100', top100Compare)){
+          publishSkipped.push('Top 100');
+        } else {
+        let top100PageOk=true;
         const emojiMap={purple:'💜',green:'💚',blue:'💙',pink:'🩷',yellow:'💛',red:'❤️',black:'🖤',white:'🤍',orange:'🧡',brown:'🟤',gold:'✨',multi:'🌈',clear:'🔷'};
         let lastBand=0, cardsHtml='';
         for(const it of top100Items){
@@ -6490,18 +6540,23 @@ async function publishToGitHub(){
               const updatedHtml='<!DOCTYPE html>\n'+doc.documentElement.outerHTML;
               const newB64=btoa(unescape(encodeURIComponent(updatedHtml)));
               const pur=await fetch(`https://api.github.com/repos/${repo}/contents/stones/encyclopedia.html`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:'cms: update Top 100 ranking page',content:newB64,sha:pd.sha})});
+              top100PageOk=pur.ok;
               if(!pur.ok) toast('⚠️ อัปเดตหน้า Top 100 ไม่สำเร็จ','err');
             } else {
               toast('⚠️ ไม่พบส่วนรายการ Top 100 ในหน้าเว็บ — ข้ามการอัปเดต','err');
+              top100PageOk=false;
             }
           }
-        }catch(e){ toast('⚠️ อัปเดตหน้า Top 100 ผิดพลาด: '+e.message,'err'); }
+        }catch(e){ toast('⚠️ อัปเดตหน้า Top 100 ผิดพลาด: '+e.message,'err'); top100PageOk=false; }
 
-        const top100Json=JSON.stringify({generated:new Date().toISOString().slice(0,10),source:'Admin-edited via Top 100 tab',heroPrompt:getTop100Hero().heroPrompt||'',stones:top100Items},null,2);
+        const top100Json=JSON.stringify({generated:new Date().toISOString().slice(0,10),source:'Admin-edited via Top 100 tab',heroPrompt:top100HeroPrompt,stones:top100Items},null,2);
         const t100B64=btoa(unescape(encodeURIComponent(top100Json)));
         let t100Sha='';
         try{ const tr=await fetch(`https://api.github.com/repos/${repo}/contents/data/top-100-stones.json`,{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}}); if(tr.ok){ const td=await tr.json(); t100Sha=td.sha; } }catch{}
-        await fetch(`https://api.github.com/repos/${repo}/contents/data/top-100-stones.json`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:'cms: update top-100-stones.json',content:t100B64,...(t100Sha?{sha:t100Sha}:{})})});
+        const t100PutRes=await fetch(`https://api.github.com/repos/${repo}/contents/data/top-100-stones.json`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:'cms: update top-100-stones.json',content:t100B64,...(t100Sha?{sha:t100Sha}:{})})});
+        if(!t100PutRes.ok) toast('⚠️ อัปโหลด top-100-stones.json ไม่สำเร็จ','err');
+        if(top100PageOk && t100PutRes.ok) markPublished('top100', top100Compare);
+        }
       }
 
       // Push data/catalog.json (index-grid manifest)
@@ -6512,11 +6567,18 @@ async function publishToGitHub(){
           heroSlot:'catalog_'+it.slug.replace(/-/g,'_')+'_hero',
           status:it.status, updated:it.updated,
         }))};
+        const catCompare=JSON.stringify(catalogJson);
+        if(isUnchangedSincePublish('catalog', catCompare)){
+          publishSkipped.push('catalog.json');
+        } else {
         const catStr=JSON.stringify(catalogJson,null,2);
         const catB64=btoa(unescape(encodeURIComponent(catStr)));
         let catSha='';
         try{ const cgr=await fetch(`https://api.github.com/repos/${repo}/contents/data/catalog.json`,{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}}); if(cgr.ok){ const cgd=await cgr.json(); catSha=cgd.sha; } }catch{}
-        await fetch(`https://api.github.com/repos/${repo}/contents/data/catalog.json`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:'cms: update catalog.json ('+catalogItems.length+' items)',content:catB64,...(catSha?{sha:catSha}:{})})});
+        const catPutRes=await fetch(`https://api.github.com/repos/${repo}/contents/data/catalog.json`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:'cms: update catalog.json ('+catalogItems.length+' items)',content:catB64,...(catSha?{sha:catSha}:{})})});
+        if(catPutRes.ok) markPublished('catalog', catCompare);
+        else toast('⚠️ อัปโหลด catalog.json ไม่สำเร็จ','err');
+        }
       }
 
       // Push edited Crystal Rankings body content back into the live article
@@ -6580,14 +6642,22 @@ async function publishToGitHub(){
           url:it.url||'/stones/rankings/'+it.slug+'.html',
           publishDate:(it.publishDate||'').slice(0,10), status:it.status,
         }))};
+        const rkCompare=JSON.stringify(rankingsJson.articles);
+        if(isUnchangedSincePublish('rankings', rkCompare)){
+          publishSkipped.push('rankings.json');
+        } else {
         const rkStr=JSON.stringify(rankingsJson,null,2);
         const rkB64=btoa(unescape(encodeURIComponent(rkStr)));
         let rkSha='';
         try{ const rgr=await fetch(`https://api.github.com/repos/${repo}/contents/data/rankings.json`,{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}}); if(rgr.ok){ const rgd=await rgr.json(); rkSha=rgd.sha; } }catch{}
-        await fetch(`https://api.github.com/repos/${repo}/contents/data/rankings.json`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:'cms: update rankings.json ('+rankingItems.length+' articles)',content:rkB64,...(rkSha?{sha:rkSha}:{})})});
+        const rkPutRes=await fetch(`https://api.github.com/repos/${repo}/contents/data/rankings.json`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:'cms: update rankings.json ('+rankingItems.length+' articles)',content:rkB64,...(rkSha?{sha:rkSha}:{})})});
+        if(rkPutRes.ok) markPublished('rankings', rkCompare);
+        else toast('⚠️ อัปโหลด rankings.json ไม่สำเร็จ','err');
+        }
       }
 
-      toast('🚀 เผยแพร่สำเร็จ! สินค้า '+affProducts.length+' ชิ้น ขึ้นเว็บใน ~3 นาที','ok');
+      const skippedNote = publishSkipped.length ? ` (ข้าม ${publishSkipped.length} ไฟล์ที่ไม่เปลี่ยน: ${publishSkipped.join(', ')})` : '';
+      toast('🚀 เผยแพร่สำเร็จ! สินค้า '+affProducts.length+' ชิ้น ขึ้นเว็บใน ~3 นาที'+skippedNote,'ok');
     } else {
       const e=await cr.json();
       toast('❌ เผยแพร่ไม่สำเร็จ: '+(e.message||cr.status),'err');
