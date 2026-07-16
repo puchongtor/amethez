@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Crystal Market — ช้อปหินคริสตัลคุณภาพจากทุกร้านพันธมิตร | Amethez</title>
-  <meta name="description" content="เลือกซื้อหินคริสตัล เครื่องประดับ และของมงคลจากร้านพันธมิตรของ Amethez เลือกดูทีละร้าน หรือดูสินค้าขายดีจากทุกร้านรวมกัน">
+  <meta name="description" content="เลือกซื้อหินคริสตัล เครื่องประดับ และของมงคลจากร้านพันธมิตรของ Amethez สินค้าขายดี สินค้าแนะนำ และค้นหาสินค้าทั้งหมดในหน้าเดียว">
   <link rel="canonical" href="https://amethez.com/shop/">
   <meta property="og:title" content="Crystal Market — ช้อปหินคริสตัลคุณภาพ">
   <meta property="og:url" content="https://amethez.com/shop/">
@@ -25,33 +25,28 @@
     .shop-subnav a { padding:.4rem 1rem; border-radius:2rem; font-size:.78rem; font-weight:700; text-decoration:none; color:#6b5e8a; border:1.5px solid #d8cef5; transition:all .15s; font-family:Sarabun,sans-serif; }
     .shop-subnav a.on, .shop-subnav a:hover { background:var(--purple); color:white; border-color:var(--purple); }
 
-    /* ── Store switcher ── */
-    .store-tabs-wrap { background:white; border-bottom:1px solid var(--border); position:sticky; top:64px; z-index:70; }
-    .store-tabs { max-width:1180px; margin:0 auto; padding:.75rem 1.25rem; display:flex; gap:.5rem; overflow-x:auto; }
-    .store-tab { flex-shrink:0; padding:.5rem 1.1rem; border-radius:2rem; font-size:.85rem; font-weight:700; border:1.5px solid var(--border); background:white; color:#6b5e8a; cursor:pointer; white-space:nowrap; transition:all .15s; font-family:Sarabun,sans-serif; }
-    .store-tab.on { background:var(--purple); border-color:var(--purple); color:white; }
-    .store-tab:hover:not(.on) { border-color:#c4b5fd; }
-
-    /* ── Store banner (when one store selected) ── */
-    .store-banner { max-width:1180px; margin:1.25rem auto 0; padding:0 1.25rem; }
-    .store-banner-inner { display:flex; align-items:center; gap:1.25rem; background:white; border:1.5px solid var(--border); border-radius:1.1rem; padding:1.25rem 1.5rem; flex-wrap:wrap; }
-    .store-logo { width:64px; height:64px; border-radius:50%; background:#f3effa; display:flex; align-items:center; justify-content:center; font-size:1.75rem; overflow:hidden; flex-shrink:0; }
-    .store-logo img { width:100%; height:100%; object-fit:cover; }
-    .store-banner-name { font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; color:#1a1228; }
-    .store-banner-tagline { font-size:.85rem; color:var(--muted); margin-top:.15rem; }
-    .store-banner-count { font-size:.78rem; color:var(--purple); font-weight:600; margin-top:.3rem; }
-    .btn-go-store { margin-left:auto; background:linear-gradient(135deg,#f97316,#ea580c); color:white; padding:.6rem 1.25rem; border-radius:.65rem; font-size:.85rem; font-weight:700; text-decoration:none; white-space:nowrap; }
-
-    /* ── Mode tabs ── */
-    .mode-tabs { max-width:1180px; margin:1.25rem auto 0; padding:0 1.25rem; display:flex; gap:1.75rem; border-bottom:2px solid var(--border); }
-    .mode-tab { padding:.4rem 0 .9rem; font-size:.95rem; font-weight:700; color:var(--muted); background:none; border:none; border-bottom:3px solid transparent; cursor:pointer; font-family:Sarabun,sans-serif; margin-bottom:-2px; }
-    .mode-tab.on { color:var(--purple); border-bottom-color:var(--purple); }
-
     .wrap { max-width:1180px; margin:0 auto; padding:1.75rem 1.25rem 2.5rem; }
 
-    /* ── Bestseller (หน้าแรก) ── */
-    .bestseller-title { font-family:'Playfair Display',serif; font-size:1.2rem; color:#1a1228; margin-bottom:1.1rem; display:flex; align-items:center; gap:.5rem; }
-    .bestseller-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:1rem; margin-bottom:1.5rem; }
+    .section-title { font-family:'Playfair Display',serif; font-size:1.2rem; color:#1a1228; margin:1.75rem 0 1.1rem; display:flex; align-items:center; gap:.5rem; }
+    .section-title:first-child { margin-top:0; }
+    .section-head-row { display:flex; align-items:center; justify-content:space-between; margin:1.75rem 0 1.1rem; }
+    .section-head-row:first-child { margin-top:0; }
+    .section-head-row .section-title { margin:0; }
+    .see-all-btn { display:inline-block; color:var(--purple); font-size:.85rem; font-weight:700; text-decoration:none; background:none; border:none; cursor:pointer; font-family:Sarabun,sans-serif; white-space:nowrap; }
+
+    /* ── ร้านพันธมิตร (โลโก้) ── */
+    .store-logo-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:.75rem; }
+    .store-logo-item { display:flex; flex-direction:column; align-items:center; gap:.4rem; text-decoration:none; padding:.6rem .3rem; border-radius:.75rem; transition:background .15s; }
+    .store-logo-item:hover:not(.disabled) { background:#f8f5ff; }
+    .store-logo-item.disabled { cursor:default; }
+    .store-logo-circle { width:52px; height:52px; border-radius:50%; background:#f3effa; display:flex; align-items:center; justify-content:center; font-size:1.4rem; overflow:hidden; border:1.5px solid var(--border); }
+    .store-logo-circle img { width:100%; height:100%; object-fit:cover; }
+    .store-logo-name { font-size:.7rem; color:#4b3f6b; text-align:center; line-height:1.3; max-width:82px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    @media(max-width:720px) { .store-logo-grid { grid-template-columns:repeat(4,1fr); } }
+    @media(max-width:480px) { .store-logo-grid { grid-template-columns:repeat(3,1fr); } }
+
+    /* ── สินค้าขายดี / สินค้าแนะนำ ── */
+    .bestseller-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:1rem; }
     .bs-card { position:relative; background:white; border:1.5px solid var(--border); border-radius:1rem; overflow:hidden; text-decoration:none; color:#1a1228; display:block; transition:all .2s; }
     .bs-card:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(124,58,237,.12); border-color:#c4b5fd; }
     .bs-top-badge { position:absolute; top:.5rem; left:.5rem; background:var(--orange); color:white; font-size:.7rem; font-weight:800; padding:.15rem .5rem; border-radius:.35rem; z-index:2; }
@@ -61,7 +56,7 @@
     .bs-name { font-size:.8rem; font-weight:600; line-height:1.4; margin-bottom:.3rem; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
     .bs-price { font-size:.9rem; font-weight:700; color:var(--orange); }
     .bs-sold { font-size:.7rem; color:var(--muted); margin-top:.1rem; }
-    .see-all-btn { display:inline-block; margin-top:.5rem; color:var(--purple); font-size:.85rem; font-weight:700; text-decoration:none; background:none; border:none; cursor:pointer; font-family:Sarabun,sans-serif; }
+    .bs-store { font-size:.68rem; color:var(--muted); margin-top:.1rem; }
 
     /* ── ตัวกรองเพิ่มเติม (รวมมาจาก shop/finder.html เดิม) ── */
     .filter-panel { background:white; border:1.5px solid var(--border); border-radius:1rem; padding:1.1rem 1.25rem; margin-bottom:1.5rem; }
@@ -133,7 +128,7 @@
 
 <header class="site-header"></header>
 
-<section class="shop-hero" id="shopHero">
+<section class="shop-hero">
   <h1>💎 Crystal Market</h1>
   <p>หินคริสตัล เครื่องประดับ และของมงคล คัดสรรจากร้านพันธมิตรของ Amethez</p>
 </section>
@@ -144,142 +139,145 @@
   <a href="/shop/academy.html">✦ Crystal Academy</a>
 </div>
 
-<div class="store-tabs-wrap">
-  <div class="store-tabs" id="storeTabs"></div>
-</div>
-
-<div class="store-banner" id="storeBanner" style="display:none"></div>
-
-<div class="mode-tabs">
-  <button class="mode-tab on" id="tabHome" onclick="setPageMode('home')">หน้าแรก</button>
-  <button class="mode-tab" id="tabAll" onclick="setPageMode('all')">สินค้าทั้งหมด</button>
-</div>
-
 <div class="wrap">
 
-  <!-- ══ หน้าแรก ══ -->
-  <div id="modeHome">
-    <div class="bestseller-title">🔥 สินค้าขายดี</div>
-    <div class="bestseller-grid" id="bestsellerGrid"></div>
-    <button class="see-all-btn" onclick="setPageMode('all')">ดูสินค้าทั้งหมด →</button>
+  <!-- ร้านพันธมิตร (โลโก้ — คลิกไปหน้า Shopee ร้านนั้นเลย) -->
+  <div class="section-head-row">
+    <div class="section-title">🏪 ร้านพันธมิตรของเรา</div>
+    <a href="/shop/stores.html" class="see-all-btn" id="allStoresLink" style="display:none">ร้านทั้งหมด →</a>
+  </div>
+  <div class="store-logo-grid" id="storeLogoGrid"></div>
+
+  <!-- สินค้าขายดี -->
+  <div class="section-title">🔥 สินค้าขายดี</div>
+  <div class="bestseller-grid" id="bestsellerGrid"></div>
+
+  <!-- สินค้าแนะนำ (สุ่มจากร้านแนะนำ) -->
+  <div id="recommendedSection">
+    <div class="section-title">✨ สินค้าแนะนำ</div>
+    <div class="bestseller-grid" id="recommendedGrid"></div>
   </div>
 
-  <!-- ══ สินค้าทั้งหมด ══ -->
-  <div id="modeAll" style="display:none">
+  <!-- สินค้าทั้งหมด -->
+  <div class="section-title" id="allProducts">📦 สินค้าทั้งหมด</div>
 
-    <!-- Filter panel (รวมมาจาก shop/finder.html) -->
-    <div class="filter-panel">
-      <div class="bday-row" style="background:white">
-        <span style="font-size:1.1rem">🔍</span>
-        <input type="search" id="searchInput" class="bday-input" style="flex:1;min-width:200px" placeholder="ค้นหาสินค้า เช่น อเมทิสต์, กำไล, พระพิฆเนศ..." oninput="applyFiltersAndSort()">
-      </div>
-      <div class="bday-row">
-        <span class="bday-label">🗓️ ใส่วันเกิด</span>
-        <input type="date" id="bdayInput" class="bday-input" onchange="calcZodiac(this.value)">
-        <div id="bdayResult" style="display:none" class="bday-result"><span id="bdayZodiac"></span></div>
-        <span style="font-size:.78rem;color:#9c84c5">→ ระบบจะเลือกราศีให้อัตโนมัติ</span>
-      </div>
-      <div class="filter-grid">
-        <div class="filter-group">
-          <label>🌈 สี</label>
-          <select class="filter-select" id="fColor" onchange="applyFiltersAndSort()">
-            <option value="">ทุกสี</option>
-            <option value="ม่วง">💜 ม่วง</option>
-            <option value="ชมพู">🩷 ชมพู</option>
-            <option value="เขียว">💚 เขียว</option>
-            <option value="เหลือง">💛 เหลือง</option>
-            <option value="ดำ">🖤 ดำ</option>
-            <option value="ใส">🔮 ใส/ขาว</option>
-            <option value="น้ำเงิน">💙 น้ำเงิน</option>
-            <option value="น้ำตาล">🤎 น้ำตาล</option>
-            <option value="หลากสี">🌈 หลากสี</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <label>☯️ จักระ</label>
-          <select class="filter-select" id="fChakra" onchange="applyFiltersAndSort()">
-            <option value="">ทุกจักระ</option>
-            <option value="ราก">🔴 ราก (Root)</option>
-            <option value="Sacral">🟠 Sacral</option>
-            <option value="Solar Plexus">🟡 Solar Plexus</option>
-            <option value="หัวใจ">💚 หัวใจ (Heart)</option>
-            <option value="คอหอย">🔵 คอหอย (Throat)</option>
-            <option value="Third Eye">🟣 Third Eye</option>
-            <option value="มงกุฎ">🔮 มงกุฎ (Crown)</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <label>♈ ราศี</label>
-          <select class="filter-select" id="fZodiac" onchange="applyFiltersAndSort()">
-            <option value="">ทุกราศี</option>
-            <option value="เมษ">♈ เมษ</option>
-            <option value="พฤษภ">♉ พฤษภ</option>
-            <option value="มิถุน">♊ มิถุน</option>
-            <option value="กรกฎ">♋ กรกฎ</option>
-            <option value="สิงห์">♌ สิงห์</option>
-            <option value="กันย์">♍ กันย์</option>
-            <option value="ตุลย์">♎ ตุลย์</option>
-            <option value="พิจิก">♏ พิจิก</option>
-            <option value="ธนู">♐ ธนู</option>
-            <option value="แคปริคอร์น">♑ มกร</option>
-            <option value="กุมภ์">♒ กุมภ์</option>
-            <option value="มีน">♓ มีน</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <label>💎 รูปทรง</label>
-          <select class="filter-select" id="fShape" onchange="applyFiltersAndSort()">
-            <option value="">ทุกรูปทรง</option>
-            <option value="หินดิบ">🪨 หินดิบ (Raw)</option>
-            <option value="ทรงกลม">⚪ ทรงกลม (Sphere)</option>
-            <option value="ทรงพีระมิด">🔺 พีระมิด</option>
-            <option value="โพรง">🫙 โพรง (Geode)</option>
-            <option value="กำไล">📿 กำไล</option>
-            <option value="สร้อย">📿 สร้อย</option>
-            <option value="แผ่น">🪬 แผ่น</option>
-            <option value="อุปกรณ์">🎵 อุปกรณ์</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <label>🙏 ความเชื่อ</label>
-          <select class="filter-select" id="fBelief" onchange="applyFiltersAndSort()">
-            <option value="">ทุกกลุ่ม</option>
-            <option value="เสริมโชค">🍀 เสริมโชคลาภ</option>
-            <option value="ความรัก">💕 ความรัก</option>
-            <option value="ป้องกัน">🛡️ ป้องกัน</option>
-            <option value="การงาน">💼 การงาน/ธุรกิจ</option>
-            <option value="สุขภาพ">🌿 สุขภาพ</option>
-            <option value="สมาธิ">🧘 สมาธิ/จิตวิญญาณ</option>
-          </select>
-        </div>
-        <div class="filter-group price-group">
-          <label>💰 งบประมาณ (฿<span id="priceVal">5,000</span>)</label>
-          <input type="range" class="price-slider" id="fPrice" min="40" max="5000" value="5000" step="50" oninput="updatePrice(this.value)">
-          <div class="price-labels"><span>฿40</span><span>฿5,000+</span></div>
-        </div>
-      </div>
-      <div class="active-filters" id="activeFilters"></div>
+  <div class="filter-panel">
+    <div class="bday-row" style="background:white">
+      <span style="font-size:1.1rem">🔍</span>
+      <input type="search" id="searchInput" class="bday-input" style="flex:1;min-width:200px" placeholder="ค้นหาสินค้า เช่น อเมทิสต์, กำไล, พระพิฆเนศ..." oninput="applyFiltersAndSort()">
     </div>
+    <div class="bday-row">
+      <span class="bday-label">🗓️ ใส่วันเกิด</span>
+      <input type="date" id="bdayInput" class="bday-input" onchange="calcZodiac(this.value)">
+      <div id="bdayResult" style="display:none" class="bday-result"><span id="bdayZodiac"></span></div>
+      <span style="font-size:.78rem;color:#9c84c5">→ ระบบจะเลือกราศีให้อัตโนมัติ</span>
+    </div>
+    <div class="filter-grid">
+      <div class="filter-group">
+        <label>🏪 ร้านค้า</label>
+        <select class="filter-select" id="fStore" onchange="applyFiltersAndSort()">
+          <option value="">ทุกร้าน</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>🌈 สี</label>
+        <select class="filter-select" id="fColor" onchange="applyFiltersAndSort()">
+          <option value="">ทุกสี</option>
+          <option value="ม่วง">💜 ม่วง</option>
+          <option value="ชมพู">🩷 ชมพู</option>
+          <option value="เขียว">💚 เขียว</option>
+          <option value="เหลือง">💛 เหลือง</option>
+          <option value="ดำ">🖤 ดำ</option>
+          <option value="ใส">🔮 ใส/ขาว</option>
+          <option value="น้ำเงิน">💙 น้ำเงิน</option>
+          <option value="น้ำตาล">🤎 น้ำตาล</option>
+          <option value="หลากสี">🌈 หลากสี</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>☯️ จักระ</label>
+        <select class="filter-select" id="fChakra" onchange="applyFiltersAndSort()">
+          <option value="">ทุกจักระ</option>
+          <option value="ราก">🔴 ราก (Root)</option>
+          <option value="Sacral">🟠 Sacral</option>
+          <option value="Solar Plexus">🟡 Solar Plexus</option>
+          <option value="หัวใจ">💚 หัวใจ (Heart)</option>
+          <option value="คอหอย">🔵 คอหอย (Throat)</option>
+          <option value="Third Eye">🟣 Third Eye</option>
+          <option value="มงกุฎ">🔮 มงกุฎ (Crown)</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>♈ ราศี</label>
+        <select class="filter-select" id="fZodiac" onchange="applyFiltersAndSort()">
+          <option value="">ทุกราศี</option>
+          <option value="เมษ">♈ เมษ</option>
+          <option value="พฤษภ">♉ พฤษภ</option>
+          <option value="มิถุน">♊ มิถุน</option>
+          <option value="กรกฎ">♋ กรกฎ</option>
+          <option value="สิงห์">♌ สิงห์</option>
+          <option value="กันย์">♍ กันย์</option>
+          <option value="ตุลย์">♎ ตุลย์</option>
+          <option value="พิจิก">♏ พิจิก</option>
+          <option value="ธนู">♐ ธนู</option>
+          <option value="แคปริคอร์น">♑ มกร</option>
+          <option value="กุมภ์">♒ กุมภ์</option>
+          <option value="มีน">♓ มีน</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>💎 รูปทรง</label>
+        <select class="filter-select" id="fShape" onchange="applyFiltersAndSort()">
+          <option value="">ทุกรูปทรง</option>
+          <option value="หินดิบ">🪨 หินดิบ (Raw)</option>
+          <option value="ทรงกลม">⚪ ทรงกลม (Sphere)</option>
+          <option value="ทรงพีระมิด">🔺 พีระมิด</option>
+          <option value="โพรง">🫙 โพรง (Geode)</option>
+          <option value="กำไล">📿 กำไล</option>
+          <option value="สร้อย">📿 สร้อย</option>
+          <option value="แผ่น">🪬 แผ่น</option>
+          <option value="อุปกรณ์">🎵 อุปกรณ์</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>🙏 ความเชื่อ</label>
+        <select class="filter-select" id="fBelief" onchange="applyFiltersAndSort()">
+          <option value="">ทุกกลุ่ม</option>
+          <option value="เสริมโชค">🍀 เสริมโชคลาภ</option>
+          <option value="ความรัก">💕 ความรัก</option>
+          <option value="ป้องกัน">🛡️ ป้องกัน</option>
+          <option value="การงาน">💼 การงาน/ธุรกิจ</option>
+          <option value="สุขภาพ">🌿 สุขภาพ</option>
+          <option value="สมาธิ">🧘 สมาธิ/จิตวิญญาณ</option>
+        </select>
+      </div>
+      <div class="filter-group price-group">
+        <label>💰 งบประมาณ (฿<span id="priceVal">5,000</span>)</label>
+        <input type="range" class="price-slider" id="fPrice" min="40" max="5000" value="5000" step="50" oninput="updatePrice(this.value)">
+        <div class="price-labels"><span>฿40</span><span>฿5,000+</span></div>
+      </div>
+    </div>
+    <div class="active-filters" id="activeFilters"></div>
+  </div>
 
-    <div class="browse-layout">
-      <div class="browse-sidebar">
-        <div class="sidebar-title">📂 หมวดหมู่</div>
-        <div class="cat-list" id="catList"></div>
+  <div class="browse-layout">
+    <div class="browse-sidebar">
+      <div class="sidebar-title">📂 หมวดหมู่</div>
+      <div class="cat-list" id="catList"></div>
+    </div>
+    <div class="browse-main">
+      <div class="browse-header">
+        <div class="browse-count">แสดง <strong id="resultCount">0</strong> รายการ</div>
+        <select class="sort-select" id="sortSelect" onchange="applyFiltersAndSort()">
+          <option value="default">เรียงตาม: แนะนำ</option>
+          <option value="sold-desc">🔥 ขายดีที่สุด</option>
+          <option value="price-asc">ราคา: ต่ำ → สูง</option>
+          <option value="price-desc">ราคา: สูง → ต่ำ</option>
+          <option value="name">ชื่อ ก → ฮ</option>
+        </select>
       </div>
-      <div class="browse-main">
-        <div class="browse-header">
-          <div class="browse-count">แสดง <strong id="resultCount">0</strong> รายการ</div>
-          <select class="sort-select" id="sortSelect" onchange="applyFiltersAndSort()">
-            <option value="default">เรียงตาม: แนะนำ</option>
-            <option value="sold-desc">🔥 ขายดีที่สุด</option>
-            <option value="price-asc">ราคา: ต่ำ → สูง</option>
-            <option value="price-desc">ราคา: สูง → ต่ำ</option>
-            <option value="name">ชื่อ ก → ฮ</option>
-          </select>
-        </div>
-        <div class="product-grid" id="productGrid"></div>
-        <div id="paginationWrap" style="display:flex;justify-content:center;align-items:center;gap:.35rem;margin-top:2rem;flex-wrap:wrap"></div>
-      </div>
+      <div class="product-grid" id="productGrid"></div>
+      <div id="paginationWrap" style="display:flex;justify-content:center;align-items:center;gap:.35rem;margin-top:2rem;flex-wrap:wrap"></div>
     </div>
   </div>
 
@@ -299,73 +297,38 @@
 <script>
 let allProducts = [];
 let stores = [];
-let currentStore = ''; // '' = ทุกร้าน
 let currentCat = '';
-let pageMode = 'home';
 let sortedList = [];
 let currentPage = 1;
 const PAGE_SIZE = 24;
 
 function x(s){ return s ? String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') : ''; }
+function availableProducts(){ return allProducts.filter(p => p.status === 'available'); }
 
-function scopedProducts(){
-  return allProducts.filter(p => p.status === 'available' && (!currentStore || p.store === currentStore));
-}
-
-// ── Store switcher ──────────────────────────────
-function renderStoreTabs(){
+// ── ร้านพันธมิตร (โลโก้ — คลิกไปหน้า Shopee ร้านนั้นตรงๆ ไม่เข้ามาในเว็บเรา) ──
+function renderStoreShowcase(){
   const counts = {};
-  allProducts.forEach(p => { if(p.status==='available' && p.store) counts[p.store] = (counts[p.store]||0)+1; });
+  availableProducts().forEach(p => { if(p.store) counts[p.store] = (counts[p.store]||0)+1; });
   const names = Object.keys(counts).sort((a,b) => counts[b]-counts[a]);
-  const wrap = document.getElementById('storeTabs');
-  wrap.innerHTML = `<button class="store-tab ${!currentStore?'on':''}" onclick="selectStore('')">🌐 ทุกร้าน (${allProducts.filter(p=>p.status==='available').length})</button>` +
-    names.map(n => `<button class="store-tab ${currentStore===n?'on':''}" onclick="selectStore('${x(n)}')">${x(n)} (${counts[n]})</button>`).join('');
+  const top10 = names.slice(0, 10);
+  const grid = document.getElementById('storeLogoGrid');
+  grid.innerHTML = top10.map(name => {
+    const profile = stores.find(s => s.name === name) || {};
+    const logo = profile.logo_url ? `<img src="${x(profile.logo_url)}" alt="" onerror="this.parentElement.textContent='🏪'">` : '🏪';
+    const hasLink = !!profile.aff_link;
+    const tag = hasLink ? 'a' : 'div';
+    const linkAttrs = hasLink ? `href="${x(profile.aff_link)}" target="_blank" rel="nofollow noopener sponsored"` : '';
+    return `<${tag} class="store-logo-item${hasLink ? '' : ' disabled'}" ${linkAttrs} title="${x(name)}">
+      <div class="store-logo-circle">${logo}</div>
+      <div class="store-logo-name">${x(name)}</div>
+    </${tag}>`;
+  }).join('');
+  document.getElementById('allStoresLink').style.display = names.length > 10 ? '' : 'none';
 }
 
-function selectStore(name){
-  currentStore = name;
-  currentCat = '';
-  const url = new URL(location.href);
-  if(name) url.searchParams.set('store', name); else url.searchParams.delete('store');
-  history.replaceState(null, '', url);
-  renderStoreTabs();
-  renderStoreBanner();
-  renderAll();
-}
-
-function renderStoreBanner(){
-  const el = document.getElementById('storeBanner');
-  const hero = document.getElementById('shopHero');
-  if(!currentStore){ el.style.display = 'none'; hero.style.display = ''; return; }
-  const profile = stores.find(s => s.name === currentStore) || { name: currentStore };
-  const count = scopedProducts().length;
-  hero.style.display = 'none';
-  el.style.display = 'block';
-  el.innerHTML = `<div class="store-banner-inner">
-    <div class="store-logo">${profile.logo_url ? `<img src="${x(profile.logo_url)}" alt="" onerror="this.parentElement.textContent='🏪'">` : '🏪'}</div>
-    <div>
-      <div class="store-banner-name">${x(profile.name)}</div>
-      ${profile.tagline ? `<div class="store-banner-tagline">${x(profile.tagline)}</div>` : ''}
-      <div class="store-banner-count">${count.toLocaleString()} รายการ</div>
-    </div>
-    ${profile.aff_link ? `<a class="btn-go-store" href="${x(profile.aff_link)}" target="_blank" rel="nofollow noopener sponsored">🔗 ไปที่ร้าน Shopee</a>` : ''}
-  </div>`;
-}
-
-// ── Mode tabs ────────────────────────────────────
-function setPageMode(mode){
-  pageMode = mode;
-  document.getElementById('tabHome').classList.toggle('on', mode==='home');
-  document.getElementById('tabAll').classList.toggle('on', mode==='all');
-  document.getElementById('modeHome').style.display = mode==='home' ? '' : 'none';
-  document.getElementById('modeAll').style.display = mode==='all' ? '' : 'none';
-  if(mode==='home') renderBestsellers();
-  else { currentPage = 1; renderCatList(); applyFiltersAndSort(); }
-}
-
-// ── หน้าแรก: สินค้าขายดี ─────────────────────────
+// ── สินค้าขายดี (รวมทุกร้าน) ──
 function renderBestsellers(){
-  const list = [...scopedProducts()].sort((a,b) => (b.sold||0)-(a.sold||0)).slice(0,6);
+  const list = [...availableProducts()].sort((a,b) => (b.sold||0)-(a.sold||0)).slice(0,6);
   const grid = document.getElementById('bestsellerGrid');
   if(!list.length){ grid.innerHTML = `<div class="empty-state"><div class="empty-icon">🛒</div><p>ยังไม่มีข้อมูลยอดขาย</p></div>`; return; }
   grid.innerHTML = list.map((p,i) => `
@@ -380,13 +343,37 @@ function renderBestsellers(){
     </a>`).join('');
 }
 
+// ── สินค้าแนะนำ — สุ่มจากร้านที่ตั้งเป็น "แนะนำ" ในแอดมิน ──
+function renderRecommended(){
+  const section = document.getElementById('recommendedSection');
+  const featuredNames = new Set(stores.filter(s => s.featured).map(s => s.name));
+  const pool = availableProducts().filter(p => featuredNames.has(p.store));
+  if(!pool.length){ section.style.display = 'none'; return; }
+  section.style.display = '';
+  const shuffled = [...pool];
+  for(let i = shuffled.length-1; i > 0; i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  const list = shuffled.slice(0,8);
+  document.getElementById('recommendedGrid').innerHTML = list.map(p => `
+    <a href="${x(p.url)}" target="_blank" rel="nofollow noopener" class="bs-card">
+      <div class="bs-img">${p.image_url ? `<img src="${x(p.image_url)}" alt="" onerror="this.parentElement.textContent='💎'">` : '💎'}</div>
+      <div class="bs-body">
+        <div class="bs-name">${x(p.name)}</div>
+        <div class="bs-price">฿${p.price.toLocaleString()}</div>
+        ${p.store ? `<div class="bs-store">${x(p.store)}</div>` : ''}
+      </div>
+    </a>`).join('');
+}
+
 // ── สินค้าทั้งหมด: category sidebar ──────────────
 function renderCatList(){
   const counts = {};
-  scopedProducts().forEach(p => { if(p.category) counts[p.category] = (counts[p.category]||0)+1; });
+  availableProducts().forEach(p => { if(p.category) counts[p.category] = (counts[p.category]||0)+1; });
   const cats = Object.keys(counts).sort();
   const wrap = document.getElementById('catList');
-  wrap.innerHTML = `<button class="cat-item ${!currentCat?'on':''}" onclick="selectCat('')">ทั้งหมด (${scopedProducts().length})</button>` +
+  wrap.innerHTML = `<button class="cat-item ${!currentCat?'on':''}" onclick="selectCat('')">ทั้งหมด (${availableProducts().length})</button>` +
     cats.map(c => `<button class="cat-item ${currentCat===c?'on':''}" onclick="selectCat('${x(c)}')">${x(c)} (${counts[c]})</button>`).join('');
 }
 
@@ -394,6 +381,12 @@ function selectCat(cat){
   currentCat = cat;
   renderCatList();
   applyFiltersAndSort();
+}
+
+function populateStoreFilterOptions(){
+  const sel = document.getElementById('fStore');
+  const names = [...new Set(availableProducts().map(p => p.store).filter(Boolean))].sort();
+  sel.innerHTML = '<option value="">ทุกร้าน</option>' + names.map(n => `<option value="${x(n)}">${x(n)}</option>`).join('');
 }
 
 // ── ตัวกรองเพิ่มเติม (รวมมาจาก shop/finder.html — สินค้าจริงไม่มี field
@@ -441,6 +434,7 @@ function calcZodiac(dateStr){
 }
 
 function renderActiveFilters(){
+  const store = document.getElementById('fStore').value;
   const color = document.getElementById('fColor').value;
   const chakra = document.getElementById('fChakra').value;
   const zodiac = document.getElementById('fZodiac').value;
@@ -448,6 +442,7 @@ function renderActiveFilters(){
   const belief = document.getElementById('fBelief').value;
   const wrap = document.getElementById('activeFilters');
   const active = [];
+  if(store) active.push({key:'fStore', label:'🏪 '+store});
   if(color) active.push({key:'fColor', label:'🎨 '+color});
   if(chakra) active.push({key:'fChakra', label:'☯️ '+chakra});
   if(zodiac) active.push({key:'fZodiac', label:'♈ '+zodiac});
@@ -465,7 +460,7 @@ function clearFilter(id){
 }
 
 function clearAllFilters(){
-  ['fColor','fChakra','fZodiac','fShape','fBelief'].forEach(id => {
+  ['fStore','fColor','fChakra','fZodiac','fShape','fBelief'].forEach(id => {
     document.getElementById(id).value = '';
     document.getElementById(id).classList.remove('has-value');
   });
@@ -478,7 +473,7 @@ function clearAllFilters(){
   applyFiltersAndSort();
 }
 
-// ── Sort + pagination ──
+// ── Copy affiliate link ──
 let _copyRegistry = [];
 function legacyCopyProd(text){
   return new Promise((resolve, reject) => {
@@ -502,14 +497,16 @@ function copyProdLink(idx, btn){
 
 function applyFiltersAndSort(){
   const q = (document.getElementById('searchInput').value || '').trim().toLowerCase();
+  const store = document.getElementById('fStore').value;
   const color = document.getElementById('fColor').value;
   const chakra = document.getElementById('fChakra').value;
   const zodiac = document.getElementById('fZodiac').value;
   const shape = document.getElementById('fShape').value;
   const belief = document.getElementById('fBelief').value;
 
-  let list = scopedProducts().filter(p => {
+  let list = availableProducts().filter(p => {
     if(currentCat && p.category !== currentCat) return false;
+    if(store && p.store !== store) return false;
     if(q && !(nameLower(p).includes(q) || tagsLower(p).some(t => t.includes(q)))) return false;
     if(color && !matchesFacet(p, color)) return false;
     if(chakra && !matchesFacet(p, chakra)) return false;
@@ -563,7 +560,7 @@ function renderProductGrid(){
   document.getElementById('resultCount').textContent = sortedList.length;
 
   if(!sortedList.length){
-    grid.innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div><p>ยังไม่มีสินค้าในหมวดนี้</p></div>`;
+    grid.innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div><p>ยังไม่มีสินค้าตรงเงื่อนไข</p></div>`;
     renderPaginationControls(0);
     return;
   }
@@ -586,7 +583,7 @@ function renderProductGrid(){
       <div class="product-body">
         <div class="product-badges">${tagBadges}${soldBadge}</div>
         <div class="product-name">${x(p.name)}</div>
-        ${!currentStore && p.store ? `<div class="product-store">${x(p.store)}</div>` : ''}
+        ${p.store ? `<div class="product-store">${x(p.store)}</div>` : ''}
         <div class="product-bottom">
           <div class="product-price">฿${p.price.toLocaleString()}</div>
           <button class="copy-btn" onclick="event.preventDefault();event.stopPropagation();copyProdLink(${idx},this)" title="คัดลอกลิงก์">📋</button>
@@ -595,11 +592,6 @@ function renderProductGrid(){
     </a>`;
   }).join('');
   renderPaginationControls(totalPages);
-}
-
-function renderAll(){
-  if(pageMode === 'home') renderBestsellers();
-  else { renderCatList(); applyFiltersAndSort(); }
 }
 
 // ── Init ─────────────────────────────────────────
@@ -613,12 +605,14 @@ async function init(){
     stores = sr && sr.ok ? ((await sr.json()).stores || []) : [];
   }catch(e){ allProducts = []; stores = []; }
 
-  const params = new URLSearchParams(location.search);
-  currentStore = params.get('store') || '';
+  renderStoreShowcase();
+  renderBestsellers();
+  renderRecommended();
+  populateStoreFilterOptions();
+  renderCatList();
 
-  // รับค่าจาก index.html (widget ค้นหาสินค้าหน้าแรก) หรือลิงก์ภายนอก —
-  // ถ้ามีตัวกรองมาจาก URL ให้ข้ามไปแท็บ "สินค้าทั้งหมด" เลย เหมือน
-  // shop/finder.html เดิมที่ถูกรวมมาไว้ในหน้านี้
+  // รับค่าจาก index.html (widget ค้นหาสินค้าหน้าแรก) หรือลิงก์ภายนอก
+  const params = new URLSearchParams(location.search);
   const facetMap = { color:'fColor', chakra:'fChakra', zodiac:'fZodiac', shape:'fShape', belief:'fBelief' };
   let hasFacetParam = false;
   Object.entries(facetMap).forEach(([param, id]) => {
@@ -629,10 +623,8 @@ async function init(){
     }
   });
 
-  renderStoreTabs();
-  renderStoreBanner();
-  if(hasFacetParam) setPageMode('all');
-  else renderAll();
+  applyFiltersAndSort();
+  if(hasFacetParam) document.getElementById('allProducts').scrollIntoView({behavior:'smooth', block:'start'});
 }
 init();
 </script>

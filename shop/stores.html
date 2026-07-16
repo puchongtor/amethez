@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ร้านพันธมิตรทั้งหมด | Amethez</title>
+  <meta name="description" content="รวมร้านพันธมิตรทั้งหมดของ Amethez — หินคริสตัล เครื่องประดับ และของมงคล คลิกไปที่ร้านบน Shopee ได้เลย">
+  <link rel="canonical" href="https://amethez.com/shop/stores.html">
+  <meta property="og:title" content="ร้านพันธมิตรทั้งหมด | Amethez">
+  <meta property="og:url" content="https://amethez.com/shop/stores.html">
+  <meta property="og:locale" content="th_TH">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    :root { --purple:#7c3aed; --muted:#6b7280; --border:#ede9fe; }
+    .shop-hero { background:linear-gradient(160deg,#1a0a2e,#2d1a4a,#0f0820); padding:2.75rem 1.5rem 2rem; text-align:center; }
+    .shop-hero h1 { font-family:'Playfair Display',serif; font-size:clamp(1.6rem,4vw,2.4rem); color:#f3effa; margin-bottom:.4rem; }
+    .shop-hero p { color:rgba(255,255,255,.6); font-size:.88rem; }
+    .wrap { max-width:1180px; margin:0 auto; padding:1.75rem 1.25rem 2.5rem; }
+    .back-link { display:inline-block; margin-bottom:1.25rem; color:var(--purple); font-size:.85rem; font-weight:700; text-decoration:none; }
+    .stores-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:1.25rem; }
+    .store-card { background:white; border:1.5px solid var(--border); border-radius:1rem; padding:1.25rem 1rem; text-decoration:none; color:#1a1228; display:flex; flex-direction:column; align-items:center; text-align:center; gap:.6rem; transition:all .2s; }
+    .store-card:hover:not(.disabled) { border-color:#c4b5fd; transform:translateY(-3px); box-shadow:0 8px 24px rgba(124,58,237,.1); }
+    .store-card.disabled { cursor:default; }
+    .store-card-logo { width:72px; height:72px; border-radius:50%; background:#f3effa; display:flex; align-items:center; justify-content:center; font-size:1.9rem; overflow:hidden; }
+    .store-card-logo img { width:100%; height:100%; object-fit:cover; }
+    .store-card-name { font-weight:700; font-size:.95rem; line-height:1.4; }
+    .store-card-tagline { font-size:.78rem; color:var(--muted); line-height:1.4; }
+    .store-card-count { font-size:.74rem; color:var(--purple); font-weight:600; }
+    .empty-state { text-align:center; padding:3rem 2rem; grid-column:1/-1; color:var(--muted); }
+  </style>
+</head>
+<body>
+
+<header class="site-header"></header>
+
+<section class="shop-hero">
+  <h1>🏪 ร้านพันธมิตรทั้งหมด</h1>
+  <p>คลิกร้านที่สนใจ ไปหน้า Shopee ของร้านนั้นได้เลย</p>
+</section>
+
+<div class="wrap">
+  <a href="/shop/" class="back-link">← กลับไป Crystal Market</a>
+  <div class="stores-grid" id="storesGrid">
+    <div class="empty-state">กำลังโหลด…</div>
+  </div>
+</div>
+
+<footer class="site-footer"></footer>
+
+<script>
+function x(s){ return s ? String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') : ''; }
+
+async function init(){
+  let products = [], stores = [];
+  try{
+    const [pr, sr] = await Promise.all([
+      fetch('/data/products.json?v='+Date.now()),
+      fetch('/data/stores.json?v='+Date.now()).catch(()=>null)
+    ]);
+    products = (await pr.json()).products || [];
+    stores = sr && sr.ok ? ((await sr.json()).stores || []) : [];
+  }catch(e){}
+
+  const counts = {};
+  products.forEach(p => { if(p.status==='available' && p.store) counts[p.store] = (counts[p.store]||0)+1; });
+  const names = Object.keys(counts).sort((a,b) => counts[b]-counts[a]);
+
+  const grid = document.getElementById('storesGrid');
+  if(!names.length){ grid.innerHTML = '<div class="empty-state">ยังไม่มีร้านค้า</div>'; return; }
+
+  grid.innerHTML = names.map(name => {
+    const profile = stores.find(s => s.name === name) || {};
+    const logo = profile.logo_url ? `<img src="${x(profile.logo_url)}" alt="" onerror="this.parentElement.textContent='🏪'">` : '🏪';
+    const hasLink = !!profile.aff_link;
+    const tag = hasLink ? 'a' : 'div';
+    const linkAttrs = hasLink ? `href="${x(profile.aff_link)}" target="_blank" rel="nofollow noopener sponsored"` : '';
+    return `<${tag} class="store-card${hasLink ? '' : ' disabled'}" ${linkAttrs}>
+      <div class="store-card-logo">${logo}</div>
+      <div class="store-card-name">${x(name)}</div>
+      ${profile.tagline ? `<div class="store-card-tagline">${x(profile.tagline)}</div>` : ''}
+      <div class="store-card-count">${counts[name].toLocaleString()} รายการ</div>
+    </${tag}>`;
+  }).join('');
+}
+init();
+</script>
+
+<script src="/js/components.js"></script>
+<script src="/js/shila.js"></script>
+</body>
+</html>
