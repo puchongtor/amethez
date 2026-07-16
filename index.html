@@ -325,12 +325,12 @@
           <option value="อุปกรณ์">🎵 อุปกรณ์</option>
         </select>
       </div>
-      <a id="findBtn" href="/shop/finder.html"
+      <a id="findBtn" href="/shop/"
         style="display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;padding:.85rem;background:linear-gradient(135deg,#7c3aed,#6d28d9);color:white;border-radius:.75rem;font-family:Sarabun,sans-serif;font-size:.95rem;font-weight:700;text-decoration:none;transition:all .2s;box-shadow:0 4px 16px rgba(124,58,237,.3)">
         🔍 ค้นหาสินค้า
       </a>
       <p style="text-align:center;font-size:.75rem;color:var(--muted);margin-top:.625rem">ฟิลเตอร์เพิ่มเติม: ราศี · ขนาด · งบประมาณ →
-        <a href="/shop/finder.html" style="color:var(--purple);font-weight:700">หน้าค้นหาเต็ม</a>
+        <a href="/shop/" style="color:var(--purple);font-weight:700">หน้าค้นหาเต็ม</a>
       </p>
     </div>
   </div>
@@ -720,7 +720,7 @@ function updateFinderLink() {
     if (v) p.set(id.replace('q','').toLowerCase(), v);
   });
   const qs = p.toString();
-  document.getElementById('findBtn').href = '/shop/finder.html' + (qs ? '?' + qs : '');
+  document.getElementById('findBtn').href = '/shop/' + (qs ? '?' + qs : '');
 }
 ['qColor','qChakra','qBelief','qShape'].forEach(id =>
   document.getElementById(id)?.addEventListener('change', updateFinderLink)
