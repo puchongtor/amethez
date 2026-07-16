@@ -34,21 +34,65 @@ async function loadShopeeProducts(tags = [], limit = 40) {
   } catch { return []; }
 }
 
+// ให้ปุ่มคัดลอกลิงก์ทำงานได้แม้ถูกเรียกจาก HTML string ที่ต่อด้วย template
+// literal (อักขระพิเศษในชื่อ/ลิงก์อาจทำให้ inline onclick พังได้) — เก็บ URL
+// ไว้ใน map แล้วอ้างด้วย index แทนการฝัง URL ตรงๆ ในแอตทริบิวต์
+let _copyUrlRegistry = [];
+function copyTextWithFallback(text){
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    return navigator.clipboard.writeText(text).catch(() => legacyCopy(text));
+  }
+  return legacyCopy(text);
+}
+function legacyCopy(text){
+  return new Promise((resolve, reject) => {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try{
+      document.execCommand('copy') ? resolve() : reject(new Error('execCommand failed'));
+    }catch(e){ reject(e); }
+    finally{ document.body.removeChild(ta); }
+  });
+}
+function copyAffLinkByIdx(idx, btn){
+  const url = _copyUrlRegistry[idx];
+  if(!url) return;
+  const orig = btn.textContent;
+  copyTextWithFallback(url).then(()=>{
+    btn.textContent = '✅';
+    setTimeout(()=>{ btn.textContent = orig; }, 1200);
+  }).catch(()=>{
+    btn.textContent = '❌';
+    setTimeout(()=>{ btn.textContent = orig; }, 1200);
+  });
+}
+
 function renderProductCard(p) {
   const fallback = `this.style.display='none';this.nextElementSibling.style.display='flex'`;
   const imgBlock = p.image_url
     ? `<img src="${p.image_url}" alt="" style="width:100%;height:150px;object-fit:cover;display:block" onerror="${fallback}">
        <div style="display:none;align-items:center;justify-content:center;height:150px;background:linear-gradient(135deg,#ede9fe,#f5f0ff);font-size:2rem">💎</div>`
     : `<div style="display:flex;align-items:center;justify-content:center;height:150px;background:linear-gradient(135deg,#ede9fe,#f5f0ff);font-size:2rem">💎</div>`;
+  const storeLine = p.store ? `<div style="font-size:.66rem;color:#9ca3af">${p.store}</div>` : '';
+  const urlIdx = _copyUrlRegistry.push(p.url) - 1;
   return `<div style="flex:0 0 175px;width:175px;border-radius:.75rem;overflow:hidden;background:#fff;border:1px solid #ede9fe;display:flex;flex-direction:column;box-shadow:0 2px 8px rgba(124,58,237,.08)">
     <a href="${p.url}" target="_blank" rel="nofollow noopener" style="display:block;flex-shrink:0">${imgBlock}</a>
     <div style="padding:.6rem .7rem;display:flex;flex-direction:column;gap:.25rem">
       <div style="font-size:.75rem;font-weight:600;line-height:1.35;color:#1a1228;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${p.name}</div>
+      ${storeLine}
       <div style="font-size:.95rem;font-weight:700;color:#7c3aed">฿${p.price.toLocaleString()}</div>
-      <a href="${p.url}" target="_blank" rel="nofollow noopener"
-        style="font-size:.72rem;color:#ee4d2d;text-decoration:none;font-weight:600;margin-top:.1rem">
-        &raquo; สั่งซื้อผ่านทาง Shopee
-      </a>
+      <div style="display:flex;align-items:center;gap:.35rem;margin-top:.1rem">
+        <a href="${p.url}" target="_blank" rel="nofollow noopener"
+          style="font-size:.72rem;color:#ee4d2d;text-decoration:none;font-weight:600;flex:1;min-width:0">
+          &raquo; สั่งซื้อผ่านทาง Shopee
+        </a>
+        <button onclick="copyAffLinkByIdx(${urlIdx},this)" title="คัดลอกลิงก์"
+          style="border:1px solid #ede9fe;background:#f5f0ff;color:#7c3aed;border-radius:.4rem;padding:.2rem .4rem;font-size:.72rem;line-height:1;cursor:pointer;flex-shrink:0">📋</button>
+      </div>
     </div>
   </div>`;
 }

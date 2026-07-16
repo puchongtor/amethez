@@ -151,8 +151,11 @@
     .aff-img-placeholder { width:100%; aspect-ratio:1; background:linear-gradient(135deg,#fef3c7,#fde68a); display:flex; align-items:center; justify-content:center; font-size:2.5rem; }
     .aff-info { padding:.875rem; }
     .aff-name { font-weight:600; font-size:.875rem; line-height:1.4; margin-bottom:.35rem; }
+    .aff-store { font-size:.72rem; color:#9ca3af; margin-bottom:.2rem; }
     .aff-price { color:#ee4d2d; font-weight:700; font-size:1rem; }
-    .aff-btn { display:block; margin:.25rem .875rem .75rem; color:#ee4d2d; font-size:.72rem; font-weight:600; }
+    .aff-btn-row { display:flex; align-items:center; gap:.35rem; margin:.25rem .875rem .75rem; }
+    .aff-btn { color:#ee4d2d; font-size:.72rem; font-weight:600; flex:1; min-width:0; }
+    .aff-copy-btn { border:1px solid #fde68a; background:#fffbeb; color:#ee4d2d; border-radius:.4rem; padding:.2rem .4rem; font-size:.72rem; line-height:1; cursor:pointer; flex-shrink:0; }
     .load-more-btn { display:block; width:100%; margin-top:1.25rem; padding:.875rem; background:#fff; border:2px solid #ee4d2d; color:#ee4d2d; border-radius:.875rem; font-size:.95rem; font-weight:700; cursor:pointer; transition:all .2s; font-family:'Sarabun',sans-serif; }
     .load-more-btn:hover { background:#ee4d2d; color:#fff; }
     .aff-empty { text-align:center; padding:2rem; color:#9ca3af; font-size:.9rem; }
@@ -402,18 +405,54 @@
     window._affAll = matched;
     window._affShown = 4;
 
+    function legacyCopy(text){
+      return new Promise((resolve, reject) => {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try{
+          document.execCommand('copy') ? resolve() : reject(new Error('execCommand failed'));
+        }catch(e){ reject(e); }
+        finally{ document.body.removeChild(ta); }
+      });
+    }
+    window.copyAffLink = function(e, url){
+      e.preventDefault();
+      e.stopPropagation();
+      const btn = e.currentTarget;
+      const orig = btn.textContent;
+      const write = (navigator.clipboard && navigator.clipboard.writeText)
+        ? navigator.clipboard.writeText(url).catch(() => legacyCopy(url))
+        : legacyCopy(url);
+      write.then(()=>{
+        btn.textContent = '✅';
+        setTimeout(()=>{ btn.textContent = orig; }, 1200);
+      }).catch(()=>{
+        btn.textContent = '❌';
+        setTimeout(()=>{ btn.textContent = orig; }, 1200);
+      });
+    }
+
     function card(p){
       const img = p.image_url
         ? `<img class="aff-img" src="${p.image_url}" alt="${p.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
         : '';
       const placeholder = `<div class="aff-img-placeholder" ${p.image_url?'style="display:none"':''}>🛒</div>`;
+      const storeLine = p.store ? `<div class="aff-store">${p.store}</div>` : '';
       return `<a href="${p.url}" target="_blank" rel="noopener noreferrer nofollow" class="aff-card">
         ${img}${placeholder}
         <div class="aff-info">
+          ${storeLine}
           <div class="aff-name">${p.name}</div>
           <div class="aff-price">฿${Number(p.price).toLocaleString()}</div>
         </div>
-        <div class="aff-btn">&raquo; สั่งซื้อผ่านทาง Shopee</div>
+        <div class="aff-btn-row">
+          <span class="aff-btn">&raquo; สั่งซื้อผ่านทาง Shopee</span>
+          <button class="aff-copy-btn" title="คัดลอกลิงก์" onclick="copyAffLink(event,'${p.url}')">📋</button>
+        </div>
       </a>`;
     }
 

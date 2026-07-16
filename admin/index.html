@@ -727,12 +727,19 @@ textarea.form-input{resize:vertical;min-height:80px;}
               <div class="card-title" style="margin:0">📦 รายการสินค้า Aff (<span id="affCount">0</span>)</div>
               <div style="display:flex;gap:.5rem;flex-wrap:wrap">
                 <input class="form-input" style="width:180px" id="affSearch" placeholder="🔍 ค้นหา..." oninput="renderAffTable()">
+                <select class="form-input" style="width:150px" id="affFilterStore" onchange="renderAffTable()"><option value="">ร้านทั้งหมด</option></select>
+                <select class="form-input" style="width:140px" id="affFilterCat" onchange="renderAffTable()"><option value="">หมวดทั้งหมด</option></select>
+                <select class="form-input" style="width:130px" id="affFilterTag" onchange="renderAffTable()">
+                  <option value="">Tag ทั้งหมด</option>
+                  <option value="tagged">มี tag</option>
+                  <option value="untagged">ยังไม่มี tag</option>
+                </select>
                 <button class="btn btn-outline btn-sm" onclick="exportAffJson()">⬇️ Export JSON</button>
               </div>
             </div>
             <div style="overflow-x:auto">
               <table class="product-table">
-                <thead><tr><th>รูป</th><th>ชื่อสินค้า</th><th>หมวด</th><th>ราคา</th><th>ยอดขาย</th><th>Tags</th><th>จัดการ</th></tr></thead>
+                <thead><tr><th>รูป</th><th>ชื่อสินค้า</th><th>ร้าน</th><th>หมวด</th><th>ราคา</th><th>ยอดขาย</th><th>Tags</th><th>จัดการ</th></tr></thead>
                 <tbody id="affTableBody"></tbody>
               </table>
             </div>
@@ -1661,7 +1668,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-16.1';
+const ADMIN_VERSION='2026-07-16.2';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -3184,10 +3191,38 @@ function delAff(id){
   if(!confirm('ลบสินค้านี้?')) return;
   affProducts = affProducts.filter(a=>a.id!==id); saveAffStore(); renderAffTable(); toast('ลบแล้ว','ok');
 }
+// เก็บค่าที่เลือกไว้ก่อนสร้าง <option> ใหม่ทับ ไม่งั้น dropdown จะรีเซ็ตกลับ
+// "ทั้งหมด" ทุกครั้งที่มีการ import/แก้ไขสินค้าแล้วเรียก renderAffTable() ใหม่
+function populateAffFilters(){
+  const storeSel = document.getElementById('affFilterStore');
+  const catSel = document.getElementById('affFilterCat');
+  if(!storeSel || !catSel) return;
+  const curStore = storeSel.value, curCat = catSel.value;
+  const stores = [...new Set(affProducts.map(p=>p.store).filter(Boolean))].sort();
+  const cats = [...new Set(affProducts.map(p=>p.category).filter(Boolean))].sort();
+  storeSel.innerHTML = '<option value="">ร้านทั้งหมด</option>' + stores.map(s=>`<option value="${x(s)}">${x(s)}</option>`).join('');
+  catSel.innerHTML = '<option value="">หมวดทั้งหมด</option>' + cats.map(c=>`<option value="${x(c)}">${x(c)}</option>`).join('');
+  if(stores.includes(curStore)) storeSel.value = curStore;
+  if(cats.includes(curCat)) catSel.value = curCat;
+}
+
+function copyAffUrl(url){
+  navigator.clipboard.writeText(url).then(()=>toast('คัดลอกลิงก์แล้ว ✓','ok')).catch(()=>toast('คัดลอกไม่สำเร็จ','err'));
+}
+
 function renderAffTable(){
   loadAff();
+  populateAffFilters();
   const kw = (document.getElementById('affSearch')?.value||'').toLowerCase();
-  const list = kw ? affProducts.filter(p=>p.name.toLowerCase().includes(kw)||p.tags.some(t=>t.includes(kw))) : affProducts;
+  const storeFilter = document.getElementById('affFilterStore')?.value||'';
+  const catFilter = document.getElementById('affFilterCat')?.value||'';
+  const tagFilter = document.getElementById('affFilterTag')?.value||'';
+  let list = affProducts;
+  if(kw) list = list.filter(p=>p.name.toLowerCase().includes(kw)||p.tags.some(t=>t.includes(kw)));
+  if(storeFilter) list = list.filter(p=>p.store===storeFilter);
+  if(catFilter) list = list.filter(p=>p.category===catFilter);
+  if(tagFilter==='tagged') list = list.filter(p=>p.tags&&p.tags.length);
+  if(tagFilter==='untagged') list = list.filter(p=>!p.tags||!p.tags.length);
   document.getElementById('affCount').textContent = affProducts.length;
   document.getElementById('affTableBody').innerHTML = list.length ? list.map(p=>{
     const img = p.image_url ? `<div class="td-img"><img src="${x(p.image_url)}" onerror="this.parentElement.innerHTML='🛒'"></div>` : `<div class="td-img">🛒</div>`;
@@ -3195,15 +3230,17 @@ function renderAffTable(){
     return `<tr>
       <td>${img}</td>
       <td style="font-weight:600;max-width:180px"><a href="${x(p.url)}" target="_blank" style="color:#7c3aed;text-decoration:none">${x(p.name)}</a></td>
+      <td style="font-size:.78rem;color:#6b7280;max-width:120px">${x(p.store||'—')}</td>
       <td style="font-size:.8rem;color:#6b7280">${x(p.category)}</td>
       <td>${p.price?'฿'+p.price.toLocaleString():'—'}</td>
       <td style="font-size:.8rem;color:#6b7280">${p.sold?p.sold.toLocaleString()+' ชิ้น':'—'}</td>
       <td><div style="display:flex;flex-wrap:wrap;gap:.2rem">${tags}${(p.tags||[]).length>4?`<span style="font-size:.65rem;color:#9ca3af">+${p.tags.length-4}</span>`:''}</div></td>
       <td><div style="display:flex;gap:.35rem">
+        <button class="btn btn-outline btn-sm" onclick="copyAffUrl('${x(p.url)}')" title="คัดลอกลิงก์ Affiliate">📋</button>
         <button class="btn btn-outline btn-sm" onclick="editAff('${p.id}')">✏️</button>
         <button class="btn btn-danger btn-sm" onclick="delAff('${p.id}')">🗑</button>
       </div></td></tr>`;
-  }).join('') : `<tr><td colspan="7" style="text-align:center;padding:2rem;color:#9ca3af">ยังไม่มีสินค้า — เพิ่มด้านบน</td></tr>`;
+  }).join('') : `<tr><td colspan="8" style="text-align:center;padding:2rem;color:#9ca3af">ยังไม่มีสินค้า — เพิ่มด้านบน</td></tr>`;
 }
 
 function exportAffJson(){
