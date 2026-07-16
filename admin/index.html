@@ -634,21 +634,18 @@ textarea.form-input{resize:vertical;min-height:80px;}
         <!-- SHOPEE AFF -->
         <div id="tab-shopee">
           <div class="section-title">🛒 Shopee Affiliate Products</div>
-          <div class="section-sub">เพิ่มสินค้า Shopee Aff — AI แนะนำ Tag จากชื่อสินค้าอัตโนมัติ</div>
+          <div class="section-sub">เพิ่มสินค้า Shopee Aff — tags และหมวดหมู่มาจาก Excel/Google Sheet โดยตรง</div>
 
           <!-- BULK IMPORT CARD -->
           <div class="card" id="bulkImportCard">
             <div class="card-title">📥 นำเข้าสินค้าจาก Excel (Bulk Import)</div>
             <div style="background:#fef9ec;border:1px solid #f0d580;border-radius:.65rem;padding:.85rem 1rem;margin-bottom:1.25rem;font-size:.82rem;line-height:1.7;color:#92620a">
               <strong>วิธีใช้:</strong> Copy จาก Excel หลายบรรทัด (Ctrl+A → Ctrl+C) แล้ววางในช่องด้านล่าง<br>
-              คอลัมน์ที่ใช้: <strong>A</strong>=ลิงค์ Affiliate &nbsp;·&nbsp; <strong>B</strong>=URL รูปภาพ &nbsp;·&nbsp; <strong>C</strong>=ชื่อสินค้า &nbsp;·&nbsp; <strong>D</strong>=ราคา &nbsp;·&nbsp; <strong>E</strong>=ยอดขาย &nbsp;·&nbsp; <strong>F</strong>=commission% &nbsp;·&nbsp; <strong>G</strong>=ร้านค้า
+              คอลัมน์ที่ใช้: <strong>A</strong>=ลิงค์ Affiliate &nbsp;·&nbsp; <strong>B</strong>=URL รูปภาพ &nbsp;·&nbsp; <strong>C</strong>=ชื่อสินค้า &nbsp;·&nbsp; <strong>D</strong>=ราคา &nbsp;·&nbsp; <strong>E</strong>=ยอดขาย &nbsp;·&nbsp; <strong>F</strong>=commission% &nbsp;·&nbsp; <strong>G</strong>=ร้านค้า &nbsp;·&nbsp; <strong>H</strong>=Tags (คั่นด้วยคอมมา) &nbsp;·&nbsp; <strong>I</strong>=หมวดหมู่
             </div>
             <textarea id="bulkPasteArea" style="width:100%;height:160px;font-family:monospace;font-size:.78rem;border:1.5px solid var(--border);border-radius:.6rem;padding:.75rem;resize:vertical;outline:none" placeholder="วางข้อมูลจาก Excel ที่นี่...&#10;(tab-separated, หลายบรรทัด)"></textarea>
             <div style="display:flex;gap:.75rem;margin-top:.75rem;align-items:center;flex-wrap:wrap">
               <button class="btn btn-primary" onclick="parseBulkPreview()">🔍 ดูตัวอย่างก่อน import</button>
-              <label style="display:flex;align-items:center;gap:.4rem;font-size:.85rem;cursor:pointer">
-                <input type="checkbox" id="bulkAutoTag" checked style="width:15px;height:15px"> ✨ Auto-tag หลัง import (ใช้ AI)
-              </label>
               <span id="bulkParseStatus" style="font-size:.82rem;color:#6b7280"></span>
             </div>
 
@@ -665,7 +662,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
                 <table class="product-table" id="bulkPreviewTable">
                   <thead><tr>
                     <th><input type="checkbox" id="bulkCheckAll" onchange="toggleAllBulk(this.checked)" title="เลือกทั้งหมด" style="width:16px;height:16px;cursor:pointer"></th>
-                    <th>รูป</th><th>ชื่อสินค้า</th><th>ร้าน</th><th>ราคา</th><th>ยอดขาย</th><th>Commission</th><th>Affiliate Link</th>
+                    <th>รูป</th><th>ชื่อสินค้า</th><th>ร้าน</th><th>ราคา</th><th>ยอดขาย</th><th>Commission</th><th>Tags</th><th>หมวด</th><th>Affiliate Link</th>
                   </tr></thead>
                   <tbody id="bulkPreviewBody"></tbody>
                 </table>
@@ -683,11 +680,8 @@ textarea.form-input{resize:vertical;min-height:80px;}
                 <input class="form-input" id="affUrl" placeholder="https://s.shopee.co.th/...">
               </div>
               <div class="form-group full">
-                <label class="fl">ชื่อสินค้า * <span style="color:#9ca3af;font-weight:400">(ใส่แล้วกด AI แนะนำ Tag)</span></label>
-                <div style="display:flex;gap:.5rem">
-                  <input class="form-input" id="affName" placeholder="เช่น สร้อยข้อมืออเมทิสต์ 8mm" style="flex:1" oninput="document.getElementById('affTagStatus').textContent=''">
-                  <button class="btn btn-gold" onclick="aiSuggestTags()" id="btnAiTag" style="white-space:nowrap;flex-shrink:0">✨ AI แนะนำ Tag</button>
-                </div>
+                <label class="fl">ชื่อสินค้า *</label>
+                <input class="form-input" id="affName" placeholder="เช่น สร้อยข้อมืออเมทิสต์ 8mm">
               </div>
               <div class="form-group">
                 <label class="fl">ราคา (บาท)</label>
@@ -733,8 +727,6 @@ textarea.form-input{resize:vertical;min-height:80px;}
               <div class="card-title" style="margin:0">📦 รายการสินค้า Aff (<span id="affCount">0</span>)</div>
               <div style="display:flex;gap:.5rem;flex-wrap:wrap">
                 <input class="form-input" style="width:180px" id="affSearch" placeholder="🔍 ค้นหา..." oninput="renderAffTable()">
-                <button class="btn btn-outline btn-sm" onclick="retagUntagged()" id="btnRetag">🔄 Re-tag ที่ยังไม่มี tag</button>
-                <button class="btn btn-outline btn-sm" onclick="retagAll()" id="btnRetagAll" title="เขียนทับ tag/หมวดเดิมทุกรายการด้วยระบบที่ยึดฐานข้อมูลจริงตัวใหม่">🔄 Re-tag ทั้งหมด (เขียนทับ)</button>
                 <button class="btn btn-outline btn-sm" onclick="exportAffJson()">⬇️ Export JSON</button>
               </div>
             </div>
@@ -2978,133 +2970,11 @@ function initStatsTab(){
 
 // ── SHOPEE AFF ────────────────────────────────
 const AFF_KEY = 'amethez_aff_products';
-const AFF_TAG_GROUPS = [
-  { label:'💎 ชื่อหิน', tags:['อเมทิสต์','โมลดาไวท์','สะเก็ดดาวไทย','ซิทริน','ควอตซ์ใส','โรสควอตซ์','แบล็กทัวร์มาลีน','ลาพิสลาซูลี','ลาบราโดไรต์','มูนสโตน','การ์เนต','ออบซิเดียน','หยก','เจไดต์','อาเกต','อะความารีน','ลาริมาร์','เซเลไนต์','ไพไรต์','ซันสโตน','เพอริโดต์','โอปอล','ไทเกอร์อาย','แมลาไคต์','ก้อนโป่งขาม','แก้วขนเหล็ก'] },
-  { label:'🎨 สี', tags:['ม่วง','ชมพู','เขียว','ดำ','ขาว','น้ำเงิน','แดง','ส้ม','เหลือง','ทอง','รุ้ง','เทา','น้ำตาล'] },
-  { label:'🔮 จักระ', tags:['มงกุฎ','Third Eye','คอ','หัวใจ','สุริยะ','ก้นกบ','ราก'] },
-  { label:'⭐ ราศี', tags:['เมษ','พฤษภ','เมถุน','กรกฎ','สิงห์','กันย์','ตุลย์','พิจิก','ธนู','มังกร','กุมภ์','มีน'] },
-  { label:'🎯 วัตถุประสงค์', tags:['ความสำเร็จ','การเงิน','ความรัก','สุขภาพ','ป้องกัน','สมาธิ','ความสงบ','พลังงาน','ดึงดูด','ฮวงจุ้ย','นอนหลับ','ดูดซับพลังงานลบ','เสริมดวง','มงคล'] },
-  { label:'📦 รูปแบบสินค้า', tags:['สร้อยข้อมือ','จี้','แหวน','ต่างหู','พวงกุญแจ','กัวซา','ลูกปัด','หินดิบ','โพรง','ทรงกลม','ทรงแหลม','ทรงไข่','แผ่น','ของตกแต่ง','Crystal Grid','Singing Bowl','ใบเสจ','เกลือหิมาลัย'] },
-];
 
 let affProducts = [];
 function loadAff(){ try{ affProducts = JSON.parse(localStorage.getItem(AFF_KEY)||'[]'); }catch{ affProducts=[]; } }
 function saveAffStore(){ localStorage.setItem(AFF_KEY, JSON.stringify(affProducts)); }
 function genAffId(){ return 'A'+(affProducts.length+1).toString().padStart(3,'0')+'_'+Date.now().toString(36).toUpperCase(); }
-
-// ── Stone-name grounding (ห้ามมั่ว) ──────────────
-// The AI tagger used to invent stone names freely from a product title —
-// this is exactly the class of bug the whole site's naming discipline
-// exists to prevent (see stone-keywords.json: 771 verified real Thai names +
-// their alt spellings). Before ever asking the AI to guess a stone identity,
-// check the product name against this real database first, and force the
-// AI to use those verified names instead of inventing/renaming its own.
-let _stoneKeywords = null;
-async function getStoneKeywords(){
-  if(_stoneKeywords) return _stoneKeywords;
-  try{
-    const r = await fetch('/data/stone-keywords.json?v='+Date.now());
-    const d = await r.json();
-    _stoneKeywords = d.stones || [];
-  }catch{ _stoneKeywords = []; }
-  return _stoneKeywords;
-}
-// Generic qualifier words that show up as the first word of many different
-// international stone names (colors, "raw", "clear", etc.) — matching on
-// these alone would collide across dozens of unrelated stones, so they
-// don't count as a distinguishing single-word match on their own.
-const STONE_NAME_STOPWORDS = new Set(['BLUE','GREEN','BLACK','WHITE','RED','PINK','YELLOW','ORANGE','PURPLE',
-  'GOLDEN','GOLD','SILVER','RAINBOW','RAW','CLEAR','ROCK','NATURAL','ROSE','SMOKY','SMOKEY','MILKY','LEMON',
-  "CAT'S",'CATS','RUTILATED','TIBETAN','BRAZILIAN',
-  // Generic base mineral-type words that recur as the shared suffix across
-  // many differently-qualified compound names (Orange/Black/Green Kyanite,
-  // Blue Lace/Botswana/Crazy Lace Agate, etc.) — matching on these alone
-  // would collide across unrelated siblings, so they never count as the
-  // single distinguishing word on their own.
-  'AGATE','KYANITE','QUARTZ','TOURMALINE','JASPER','JADE','DIAMOND','OBSIDIAN','CALCITE','FLUORITE',
-  'GARNET','GLASS','CRYSTAL','STONE','METEORITE','TEKTITE','OPAL','CORAL','JADEITE']);
-function matchStoneNames(productName){
-  const stones = _stoneKeywords || [];
-  const hits = [];
-  const upperName = productName.toUpperCase();
-  for(const s of stones){
-    const thaiNames = [s.th_main, ...(s.alt||[])];
-    const hasThai = thaiNames.some(n => n && productName.includes(n));
-    // Product titles are often bilingual ("LIBYAN GANESHA...") — match the
-    // English/international name too, not just the Thai ones, otherwise a
-    // product that only states the English name never gets grounded at all.
-    // A full-phrase match is ideal, but titles often only mention the one
-    // distinctive word (e.g. "LIBYAN" not "LIBYAN DESERT GLASS"), so also
-    // accept a single significant word from the international name — as
-    // long as it isn't a generic color/qualifier that many stones share.
-    let hasEn = false;
-    if(s.international){
-      const intlUpper = s.international.toUpperCase();
-      if(intlUpper.length > 3 && upperName.includes(intlUpper)){
-        hasEn = true;
-      } else {
-        hasEn = intlUpper.split(/\s+/).some(w =>
-          w.length > 4 && !STONE_NAME_STOPWORDS.has(w) && upperName.includes(w)
-        );
-      }
-    }
-    if(hasThai || hasEn) hits.push(s.th_main);
-  }
-  // Longer/more specific names first (e.g. "หยกจักรพรรดิ์" before a shorter
-  // generic "หยก" match), dedup, cap to a sane number per product.
-  return [...new Set(hits)].sort((a,b)=>b.length-a.length).slice(0,3);
-}
-
-// Sacred figures / เทพ / รูปเคารพ carved from stone are a huge real category
-// in this catalog (Ganesha, Buddha images, Naga, etc.) that had no grounded
-// tag dimension at all before — the AI was left to invent or ignore it.
-// These are well-established, universally-known Thai/Hindu figures, not
-// stone-identification facts, so a fixed reference list is safe here.
-const SACRED_FIGURE_NAMES = [
-  { th:'พระพิฆเนศ', alt:['พิฆเนศ','GANESHA','GANESH'] },
-  { th:'พระพุทธรูป', alt:['พุทธรูป','BUDDHA'] },
-  { th:'พระสังกัจจายน์', alt:['สังกัจจายน์'] },
-  { th:'พญานาค', alt:['นาค','NAGA'] },
-  { th:'เจ้าแม่กวนอิม', alt:['กวนอิม','GUANYIN','GUAN YIN'] },
-  { th:'หนุมาน', alt:['HANUMAN'] },
-  { th:'พระแม่ลักษมี', alt:['ลักษมี','LAKSHMI'] },
-  { th:'ท้าวเวสสุวรรณ', alt:['เวสสุวรรณ'] },
-  { th:'ไอ้ไข่', alt:[] },
-  { th:'จตุคามรามเทพ', alt:['จตุคาม'] },
-  { th:'กุมารทอง', alt:['กุมารทอง'] },
-  { th:'พระราหู', alt:['ราหู'] },
-];
-function matchSacredFigures(productName){
-  const upperName = productName.toUpperCase();
-  const hits = [];
-  for(const fig of SACRED_FIGURE_NAMES){
-    const names = [fig.th, ...fig.alt];
-    if(names.some(n => productName.includes(n) || upperName.includes(n.toUpperCase()))){
-      hits.push(fig.th);
-    }
-  }
-  return [...new Set(hits)].slice(0,2);
-}
-
-// Defense in depth — even with the explicit prompt instruction, the AI can
-// still occasionally emit a placeholder/explanatory "tag" instead of just
-// omitting the category. Strip anything that reads like a non-answer.
-function isPlaceholderTag(t){
-  if(!t) return true;
-  const s = String(t).trim();
-  if(!s) return true;
-  const bad = ['ไม่มี','ไม่ทราบ','ไม่ระบุ','ไม่แน่ใจ','ไม่ชัดเจน','unknown','n/a','none','ไม่ใช่'];
-  return bad.some(b => s.toLowerCase().includes(b.toLowerCase()));
-}
-function groundedTagPrompt(name, groundedStones, groundedFigures){
-  const stoneNote = groundedStones.length
-    ? `ระบบตรวจสอบกับฐานข้อมูลชื่อหินจริงแล้ว พบว่าสินค้านี้คือ: ${groundedStones.join(', ')} — ห้ามระบุชื่อหินเองหรือเปลี่ยนชื่อเด็ดขาด ใช้ชื่อเหล่านี้เป็น tag ชื่อหินโดยตรง (ไม่ต้องสร้าง tag ชื่อหินเพิ่มเอง)`
-    : `ระบบไม่พบชื่อหินที่ตรงกับฐานข้อมูลจริง — ถ้ามั่นใจจริงๆ ว่าเป็นชื่อแร่/หินที่รู้จักสากล (เช่น Agate, Kyanite, Garnet) ใส่ tag ชื่อนั้นเป็นภาษาไทยได้ แต่ห้ามสร้างชื่อแปลกใหม่หรือเดาสุ่ม`;
-  const figureNote = groundedFigures.length
-    ? `ระบบตรวจพบรูปเคารพ/สิ่งศักดิ์สิทธิ์ในชื่อสินค้านี้แล้วคือ: ${groundedFigures.join(', ')} — ใช้ชื่อเหล่านี้เป็น tag ตรงๆ ไม่ต้องเดาเพิ่ม`
-    : '';
-  return `${stoneNote}\n${figureNote}\nสำคัญ: ห้ามใส่ tag ที่เป็นข้อความอธิบาย เช่น "ไม่มีชื่อหิน" หรือ "ไม่ทราบ" เด็ดขาด — ถ้าไม่มีข้อมูลด้านใด ให้ข้ามด้านนั้นไปเลย อย่าสร้าง tag แทนที่ ให้เติมเฉพาะ tag ที่เป็นข้อมูลจริงเท่านั้น (สี, รูปแบบสินค้า, วัตถุประสงค์) รวมทั้งหมดไม่เกิน 6 ตัว`;
-}
 
 function initAffTags(){ /* ไม่ใช้แล้ว — เปลี่ยนเป็น free-text input */ }
 
@@ -3130,55 +3000,6 @@ function renderTagChips(tags){
   el.innerHTML = tags.map(t=>`<span style="background:#ede9fe;color:#5b21b6;padding:.2rem .6rem;border-radius:2rem;font-size:.78rem">${t}</span>`).join('');
 }
 
-async function aiSuggestTags(){
-  const name = document.getElementById('affName').value.trim();
-  if(!name){ toast('กรุณาใส่ชื่อสินค้าก่อน','err'); return; }
-  const key = localStorage.getItem(GEMINI_KEY_STORE);
-  if(!key){ toast('กรุณาใส่ Groq API Key ในหน้าตั้งค่าก่อน','err'); return; }
-
-  const btn = document.getElementById('btnAiTag');
-  btn.textContent = '⏳ กำลังวิเคราะห์...'; btn.disabled = true;
-  document.getElementById('affTagStatus').textContent = '';
-
-  await getStoneKeywords();
-  const groundedStones = matchStoneNames(name);
-  const groundedFigures = matchSacredFigures(name);
-
-  const cats = 'เครื่องประดับ,หินดิบ,หินตกแต่ง,อุปกรณ์ดูแลหิน,DIY,ของมงคล';
-  const prompt = `คุณคือผู้เชี่ยวชาญหินคริสตัลและเครื่องประดับ วิเคราะห์ชื่อสินค้า: "${name}"
-${groundedTagPrompt(name, groundedStones, groundedFigures)}
-เลือกหมวดจาก: ${cats}
-ตอบ JSON: {"tags":["เขียว","กัวซา","สุขภาพ","ดูดซับพลังงานลบ"],"category":"เครื่องประดับ"} ไม่ต้องอธิบายเพิ่ม`;
-
-  try{
-    const r = await fetch('https://api.groq.com/openai/v1/chat/completions',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
-      body: JSON.stringify({model:'llama-3.1-8b-instant',messages:[{role:'user',content:prompt}],max_tokens:200,temperature:0.3})
-    });
-    const d = await r.json();
-    if(!r.ok) throw new Error(d?.error?.message||r.statusText);
-    const raw = d?.choices?.[0]?.message?.content||'{}';
-    const match = raw.match(/\{[\s\S]*?\}/);
-    const obj = match ? JSON.parse(match[0]) : {};
-    const aiTags = (Array.isArray(obj.tags) ? obj.tags : []).filter(t => !isPlaceholderTag(t));
-    const suggested = [...new Set([...groundedStones, ...groundedFigures, ...aiTags])].slice(0,6);
-    setCheckedTags(suggested);
-    if(obj.category){
-      const catEl = document.getElementById('affCat');
-      const opt = [...catEl.options].find(o=>o.value===obj.category);
-      if(opt) catEl.value = obj.category;
-    }
-    document.getElementById('affTagStatus').textContent = `✅ ${suggested.length} tag · หมวด: ${obj.category||'-'} — แก้ไขได้ในช่องด้านบน`;
-    document.getElementById('affTagStatus').style.color = '#059669';
-  }catch(e){
-    document.getElementById('affTagStatus').textContent = '❌ '+e.message;
-    document.getElementById('affTagStatus').style.color = '#dc2626';
-  }finally{
-    btn.textContent = '✨ AI แนะนำ Tag'; btn.disabled = false;
-  }
-}
-
 function previewAffImg(url){
   const el = document.getElementById('affImgPreview');
   if(url && url.startsWith('http')){ el.src=url; el.style.display='block'; el.onerror=()=>el.style.display='none'; }
@@ -3200,7 +3021,8 @@ function parseBulkPreview(){
   lines.forEach((line, idx) => {
     const cols = line.split('\t');
     // คอลัมน์จริงจากชีทที่ดึงมา: A=ลิงค์ B=รูป C=รายการสินค้า D=ราคา
-    // E=ยอดขาย F=ค่าคอม G=ชื่อร้าน (7 คอลัมน์ ไม่ใช่ 9 แบบเดิม)
+    // E=ยอดขาย F=ค่าคอม G=ชื่อร้าน H=tags (คั่นคอมมา) I=หมวดหมู่ — H/I เป็น
+    // ทางเลือก (sheet เก่าอาจมีแค่ 7 คอลัมน์) จึงยังรับบรรทัดที่มีแค่ A-G ได้
     if(cols.length < 7){ skipped++; return; }
     const affUrl  = (cols[0]||'').trim();
     const imgUrl  = (cols[1]||'').trim();
@@ -3210,8 +3032,10 @@ function parseBulkPreview(){
     const sold    = parseInt(soldRaw.replace(/[^\d]/g,''),10) || 0;
     const commPct = (cols[5]||'').trim();
     const store   = (cols[6]||'').trim();
+    const tags    = (cols[7]||'').split(',').map(t=>t.trim()).filter(Boolean);
+    const category = (cols[8]||'').trim();
     if(!name || !affUrl){ skipped++; return; }
-    _bulkParsed.push({ name, price, store, commPct, imgUrl, affUrl, sold });
+    _bulkParsed.push({ name, price, store, commPct, imgUrl, affUrl, sold, tags, category });
   });
 
   if(!_bulkParsed.length){
@@ -3233,6 +3057,8 @@ function parseBulkPreview(){
       <td style="font-weight:700">฿${p.price.toLocaleString()}</td>
       <td style="font-size:.78rem;color:#6b7280">${p.sold ? p.sold.toLocaleString()+' ชิ้น' : '—'}</td>
       <td style="color:var(--green);font-size:.82rem">${p.commPct}</td>
+      <td style="font-size:.72rem;color:#7c3aed;max-width:180px">${p.tags.join(', ')||'—'}</td>
+      <td style="font-size:.78rem;color:#6b7280">${p.category||'—'}</td>
       <td style="font-size:.72rem;color:#7c3aed;max-width:140px;word-break:break-all">${p.affUrl.replace('https://s.shopee.co.th/','s.shopee…/')}</td>
     </tr>`).join('');
   document.getElementById('bulkCheckAll').checked = true;
@@ -3265,24 +3091,28 @@ function confirmBulkImport(){
   const added = [];
   selected.forEach(p => {
     const existing = affProducts.find(a => a.url === p.affUrl);
-    if(existing){ existing.price = p.price; existing.image_url = p.imgUrl||existing.image_url; existing.sold = p.sold||existing.sold||0; existing.updated = today; return; }
+    if(existing){
+      existing.price = p.price;
+      existing.image_url = p.imgUrl||existing.image_url;
+      existing.sold = p.sold||existing.sold||0;
+      // Google Sheet คำนวณ tags/หมวดให้แล้ว — ถือเป็น source of truth
+      // อัปเดตทับได้เลยถ้า sheet มีค่าใหม่มา (ไม่ทับด้วยค่าว่าง)
+      existing.tags = p.tags.length ? p.tags : existing.tags;
+      existing.category = p.category || existing.category;
+      existing.updated = today;
+      return;
+    }
     affProducts.unshift({
       id: genAffId(),
       name: p.name,
       url: p.affUrl,
       price: p.price,
       sold: p.sold || 0,
-      // No hardcoded category — every bulk-imported item used to get
-      // "เครื่องประดับ" (jewelry) regardless of what it actually was (gua
-      // sha tools, raw specimens, meteorite chunks, etc.), which is exactly
-      // the wrong-category bug reported. Left blank so the auto-tag pass
-      // (grounded, see matchStoneNames/matchSacredFigures) determines the
-      // real category per item instead of defaulting every item the same.
-      category: '',
+      category: p.category || '',
       image_url: p.imgUrl,
       store: p.store,
       commission_pct: p.commPct,
-      tags: [],
+      tags: p.tags || [],
       status: 'available',
       created: today,
       updated: today,
@@ -3292,48 +3122,7 @@ function confirmBulkImport(){
   saveAffStore();
   clearBulk();
   renderAffTable();
-  const doAutoTag = document.getElementById('bulkAutoTag').checked;
-  if(doAutoTag && added.length){
-    const key = localStorage.getItem(GEMINI_KEY_STORE);
-    if(!key){ toast(`✅ นำเข้า ${added.length} รายการ — ไม่มี Groq Key จึงข้าม Auto-tag`, 'ok'); return; }
-    toast(`✅ นำเข้า ${added.length} รายการ — กำลัง Auto-tag...`, 'ok');
-    batchAutoTag(added, key);
-  } else {
-    toast(`✅ นำเข้าสำเร็จ ${added.length} รายการ (อัปเดต ${selected.length-added.length} รายการ)`, 'ok');
-  }
-}
-
-async function batchAutoTag(productNames, groqKey, force){
-  await getStoneKeywords();
-  let done = 0;
-  for(const name of productNames){
-    const p = affProducts.find(a=>a.name===name);
-    if(!p || (!force && p.tags.length)) { done++; continue; }
-    try{
-      const groundedStones = matchStoneNames(name);
-      const groundedFigures = matchSacredFigures(name);
-      const cats = 'เครื่องประดับ,หินดิบ,หินตกแต่ง,อุปกรณ์ดูแลหิน,DIY,ของมงคล';
-      const prompt = `คุณคือผู้เชี่ยวชาญหินคริสตัลและเครื่องประดับ วิเคราะห์ชื่อสินค้า: "${name}"\n${groundedTagPrompt(name, groundedStones, groundedFigures)}\nเลือกหมวดจาก: ${cats}\nตอบ JSON: {"tags":["เขียว","กัวซา","สุขภาพ"],"category":"เครื่องประดับ"} ไม่ต้องอธิบายเพิ่ม`;
-      const r = await fetch('https://api.groq.com/openai/v1/chat/completions',{
-        method:'POST',
-        headers:{'Content-Type':'application/json','Authorization':'Bearer '+groqKey},
-        body: JSON.stringify({model:'llama-3.1-8b-instant',messages:[{role:'user',content:prompt}],max_tokens:200,temperature:0.2})
-      });
-      const d = await r.json();
-      const raw = d?.choices?.[0]?.message?.content||'{}';
-      const match = raw.match(/\{[\s\S]*?\}/);
-      const parsedObj = match ? JSON.parse(match[0]) : {};
-      const aiTags = (Array.isArray(parsedObj.tags) ? parsedObj.tags : []).filter(t => !isPlaceholderTag(t));
-      p.tags = [...new Set([...groundedStones, ...groundedFigures, ...aiTags])].slice(0,6);
-      if(parsedObj.category) p.category = parsedObj.category;
-    }catch(e){ /* ข้ามถ้า error */ }
-    done++;
-    if(done % 5 === 0){ saveAffStore(); renderAffTable(); }
-    await new Promise(res=>setTimeout(res, 300));
-  }
-  saveAffStore();
-  renderAffTable();
-  toast(`🏷 Auto-tag เสร็จ ${done} รายการ`, 'ok');
+  toast(`✅ นำเข้าสำเร็จ ${added.length} รายการ (อัปเดต ${selected.length-added.length} รายการ)`, 'ok');
 }
 
 function clearBulk(){
@@ -3415,32 +3204,6 @@ function renderAffTable(){
         <button class="btn btn-danger btn-sm" onclick="delAff('${p.id}')">🗑</button>
       </div></td></tr>`;
   }).join('') : `<tr><td colspan="7" style="text-align:center;padding:2rem;color:#9ca3af">ยังไม่มีสินค้า — เพิ่มด้านบน</td></tr>`;
-}
-
-async function retagUntagged(){
-  const key = localStorage.getItem(GEMINI_KEY_STORE);
-  if(!key){ toast('กรุณาใส่ Groq API Key ในหน้าตั้งค่าก่อน','err'); return; }
-  const untagged = affProducts.filter(p => !p.tags || p.tags.length === 0);
-  if(!untagged.length){ toast('ทุกรายการมี tag แล้ว ✓','ok'); return; }
-  const btn = document.getElementById('btnRetag');
-  if(btn){ btn.textContent = `⏳ กำลัง tag ${untagged.length} รายการ...`; btn.disabled = true; }
-  await batchAutoTag(untagged.map(p=>p.name), key);
-  if(btn){ btn.textContent = '🔄 Re-tag ที่ยังไม่มี tag'; btn.disabled = false; }
-}
-
-// Overwrites tags/category on EVERY product, including ones already tagged —
-// needed because older tags (from before stone-name grounding existed) can
-// be wrong (e.g. a Ganesha pendant tagged "กัวซา"), and "Re-tag ที่ยังไม่มี
-// tag" skips anything with tags already set, so it would never touch those.
-async function retagAll(){
-  const key = localStorage.getItem(GEMINI_KEY_STORE);
-  if(!key){ toast('กรุณาใส่ Groq API Key ในหน้าตั้งค่าก่อน','err'); return; }
-  if(!affProducts.length){ toast('ยังไม่มีสินค้า','err'); return; }
-  if(!confirm(`เขียนทับ tag และหมวดเดิมของสินค้าทั้งหมด ${affProducts.length} รายการด้วยระบบใหม่? การแก้ไข tag ที่ทำเองด้วยมือจะหายไป`)) return;
-  const btn = document.getElementById('btnRetagAll');
-  if(btn){ btn.textContent = `⏳ กำลัง tag ${affProducts.length} รายการ...`; btn.disabled = true; }
-  await batchAutoTag(affProducts.map(p=>p.name), key, true);
-  if(btn){ btn.textContent = '🔄 Re-tag ทั้งหมด (เขียนทับ)'; btn.disabled = false; }
 }
 
 function exportAffJson(){
