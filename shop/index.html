@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Crystal Market — ช้อปหินคริสตัลคุณภาพ | Amethez</title>
-  <meta name="description" content="เลือกซื้อหินคริสตัล เครื่องประดับ และอุปกรณ์ดูแลหินจาก Shopee คัดสรรโดย Crystal Atlas แม่เหล็กดึงดูดพลังงานที่ดีเข้าหาคุณ">
+  <title>Crystal Market — ช้อปหินคริสตัลคุณภาพจากทุกร้านพันธมิตร | Amethez</title>
+  <meta name="description" content="เลือกซื้อหินคริสตัล เครื่องประดับ และของมงคลจากร้านพันธมิตรของ Amethez เลือกดูทีละร้าน หรือดูสินค้าขายดีจากทุกร้านรวมกัน">
   <link rel="canonical" href="https://amethez.com/shop/">
   <meta property="og:title" content="Crystal Market — ช้อปหินคริสตัลคุณภาพ">
   <meta property="og:url" content="https://amethez.com/shop/">
@@ -15,52 +15,106 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
   <style>
-    :root { --purple:#7c3aed; --gold:#c9a84c; --orange:#f97316; }
+    :root { --purple:#7c3aed; --gold:#c9a84c; --orange:#f97316; --muted:#6b7280; --border:#ede9fe; }
 
-    .shop-hero { background:linear-gradient(160deg,#1a0a2e,#2d1a4a,#0f0820); padding:3.5rem 1.5rem 2.5rem; text-align:center; }
-    .shop-hero h1 { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,4vw,2.6rem); color:#f3effa; margin-bottom:.5rem; }
-    .shop-hero p { color:rgba(255,255,255,.6); font-size:.9rem; }
-    .shop-subnav { display:flex; justify-content:center; gap:.5rem; padding:1.25rem; background:#f3effa; flex-wrap:wrap; }
-    .shop-subnav a { padding:.45rem 1.1rem; border-radius:2rem; font-size:.82rem; font-weight:700; text-decoration:none; color:#6b5e8a; border:1.5px solid #d8cef5; transition:all .15s; font-family:Sarabun,sans-serif; }
-    .shop-subnav a.on, .shop-subnav a:hover { background:#7c3aed; color:white; border-color:#7c3aed; }
+    .shop-hero { background:linear-gradient(160deg,#1a0a2e,#2d1a4a,#0f0820); padding:2.75rem 1.5rem 2rem; text-align:center; }
+    .shop-hero h1 { font-family:'Playfair Display',serif; font-size:clamp(1.6rem,4vw,2.4rem); color:#f3effa; margin-bottom:.4rem; }
+    .shop-hero p { color:rgba(255,255,255,.6); font-size:.88rem; }
 
-    .wrap { max-width:1100px; margin:0 auto; padding:2.5rem 1.5rem; }
+    .shop-subnav { display:flex; justify-content:center; gap:.5rem; padding:1rem; background:#f3effa; flex-wrap:wrap; }
+    .shop-subnav a { padding:.4rem 1rem; border-radius:2rem; font-size:.78rem; font-weight:700; text-decoration:none; color:#6b5e8a; border:1.5px solid #d8cef5; transition:all .15s; font-family:Sarabun,sans-serif; }
+    .shop-subnav a.on, .shop-subnav a:hover { background:var(--purple); color:white; border-color:var(--purple); }
 
-    /* Category section */
-    .cat-section { margin-bottom:3rem; }
-    .cat-title { font-family:'Playfair Display',serif; font-size:1.25rem; color:#1a1228; margin-bottom:1.25rem; padding-bottom:.6rem; border-bottom:2px solid #f0e8ff; display:flex; align-items:center; gap:.6rem; }
-    .products-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:1rem; }
+    /* ── Store switcher ── */
+    .store-tabs-wrap { background:white; border-bottom:1px solid var(--border); position:sticky; top:64px; z-index:70; }
+    .store-tabs { max-width:1180px; margin:0 auto; padding:.75rem 1.25rem; display:flex; gap:.5rem; overflow-x:auto; }
+    .store-tab { flex-shrink:0; padding:.5rem 1.1rem; border-radius:2rem; font-size:.85rem; font-weight:700; border:1.5px solid var(--border); background:white; color:#6b5e8a; cursor:pointer; white-space:nowrap; transition:all .15s; font-family:Sarabun,sans-serif; }
+    .store-tab.on { background:var(--purple); border-color:var(--purple); color:white; }
+    .store-tab:hover:not(.on) { border-color:#c4b5fd; }
 
-    .pcard { background:white; border:1px solid #e9e0f8; border-radius:1rem; overflow:hidden; transition:all .2s; text-decoration:none; color:#1a1228; display:block; }
-    .pcard:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(124,58,237,.1); }
-    .pcard-img { width:100%; aspect-ratio:1; background:#f3effa; display:flex; align-items:center; justify-content:center; font-size:3rem; }
-    .pcard-img img { width:100%; height:100%; object-fit:cover; }
-    .pcard-body { padding:.85rem; }
-    .pcard-name { font-size:.85rem; font-weight:600; margin-bottom:.3rem; line-height:1.4; }
-    .pcard-price { font-size:.9rem; font-weight:700; color:#f97316; }
-    .pcard-badge { display:inline-block; font-size:.65rem; background:#f3effa; color:#7c3aed; padding:.15rem .5rem; border-radius:2rem; margin-bottom:.4rem; }
-    .pcard-shopee { display:flex; align-items:center; justify-content:center; gap:.35rem; background:#f97316; color:white; font-size:.75rem; font-weight:700; padding:.45rem; border-radius:0 0 .85rem .85rem; }
+    /* ── Store banner (when one store selected) ── */
+    .store-banner { max-width:1180px; margin:1.25rem auto 0; padding:0 1.25rem; }
+    .store-banner-inner { display:flex; align-items:center; gap:1.25rem; background:white; border:1.5px solid var(--border); border-radius:1.1rem; padding:1.25rem 1.5rem; flex-wrap:wrap; }
+    .store-logo { width:64px; height:64px; border-radius:50%; background:#f3effa; display:flex; align-items:center; justify-content:center; font-size:1.75rem; overflow:hidden; flex-shrink:0; }
+    .store-logo img { width:100%; height:100%; object-fit:cover; }
+    .store-banner-name { font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; color:#1a1228; }
+    .store-banner-tagline { font-size:.85rem; color:var(--muted); margin-top:.15rem; }
+    .store-banner-count { font-size:.78rem; color:var(--purple); font-weight:600; margin-top:.3rem; }
+    .btn-go-store { margin-left:auto; background:linear-gradient(135deg,#f97316,#ea580c); color:white; padding:.6rem 1.25rem; border-radius:.65rem; font-size:.85rem; font-weight:700; text-decoration:none; white-space:nowrap; }
 
-    /* Filter bar */
-    .filter-bar { display:flex; gap:.5rem; flex-wrap:wrap; margin-bottom:2rem; align-items:center; }
-    .filter-btn { padding:.35rem .85rem; border-radius:2rem; font-size:.78rem; font-weight:600; border:1.5px solid #e9e0f8; background:white; color:#6b5e8a; cursor:pointer; transition:all .15s; font-family:Sarabun,sans-serif; }
-    .filter-btn:hover,.filter-btn.on { background:#7c3aed; border-color:#7c3aed; color:white; }
-    .filter-label { font-size:.8rem; color:#9b89bb; font-weight:600; }
+    /* ── Mode tabs ── */
+    .mode-tabs { max-width:1180px; margin:1.25rem auto 0; padding:0 1.25rem; display:flex; gap:1.75rem; border-bottom:2px solid var(--border); }
+    .mode-tab { padding:.4rem 0 .9rem; font-size:.95rem; font-weight:700; color:var(--muted); background:none; border:none; border-bottom:3px solid transparent; cursor:pointer; font-family:Sarabun,sans-serif; margin-bottom:-2px; }
+    .mode-tab.on { color:var(--purple); border-bottom-color:var(--purple); }
 
-    /* Banner */
-    .private-banner { background:linear-gradient(135deg,#1a1228,#2d1a4a); border-radius:1.25rem; padding:2rem; margin-bottom:3rem; display:flex; align-items:center; gap:2rem; flex-wrap:wrap; }
-    .private-banner h3 { font-family:'Playfair Display',serif; font-size:1.3rem; color:#f3effa; margin-bottom:.5rem; }
-    .private-banner p { color:rgba(255,255,255,.6); font-size:.85rem; line-height:1.7; flex:1; min-width:200px; }
-    .private-banner a { background:#06C755; color:white; padding:.6rem 1.4rem; border-radius:.65rem; font-weight:700; font-size:.85rem; text-decoration:none; white-space:nowrap; display:inline-block; }
+    .wrap { max-width:1180px; margin:0 auto; padding:1.75rem 1.25rem 2.5rem; }
+
+    /* ── Bestseller (หน้าแรก) ── */
+    .bestseller-title { font-family:'Playfair Display',serif; font-size:1.2rem; color:#1a1228; margin-bottom:1.1rem; display:flex; align-items:center; gap:.5rem; }
+    .bestseller-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:1rem; margin-bottom:1.5rem; }
+    .bs-card { position:relative; background:white; border:1.5px solid var(--border); border-radius:1rem; overflow:hidden; text-decoration:none; color:#1a1228; display:block; transition:all .2s; }
+    .bs-card:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(124,58,237,.12); border-color:#c4b5fd; }
+    .bs-top-badge { position:absolute; top:.5rem; left:.5rem; background:var(--orange); color:white; font-size:.7rem; font-weight:800; padding:.15rem .5rem; border-radius:.35rem; z-index:2; }
+    .bs-img { width:100%; aspect-ratio:1; background:#f3effa; display:flex; align-items:center; justify-content:center; font-size:2.5rem; }
+    .bs-img img { width:100%; height:100%; object-fit:cover; }
+    .bs-body { padding:.7rem .8rem; }
+    .bs-name { font-size:.8rem; font-weight:600; line-height:1.4; margin-bottom:.3rem; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .bs-price { font-size:.9rem; font-weight:700; color:var(--orange); }
+    .bs-sold { font-size:.7rem; color:var(--muted); margin-top:.1rem; }
+    .see-all-btn { display:inline-block; margin-top:.5rem; color:var(--purple); font-size:.85rem; font-weight:700; text-decoration:none; background:none; border:none; cursor:pointer; font-family:Sarabun,sans-serif; }
+
+    /* ── สินค้าทั้งหมด layout ── */
+    .browse-layout { display:flex; gap:1.5rem; align-items:flex-start; }
+    .browse-sidebar { width:190px; flex-shrink:0; }
+    .sidebar-title { font-size:.85rem; font-weight:700; color:#1a1228; margin-bottom:.6rem; display:flex; align-items:center; gap:.4rem; }
+    .cat-list { display:flex; flex-direction:column; gap:.15rem; }
+    .cat-item { padding:.5rem .6rem; border-radius:.5rem; font-size:.83rem; color:#4b3f6b; cursor:pointer; text-align:left; border:none; background:none; font-family:Sarabun,sans-serif; }
+    .cat-item.on { background:#f3effa; color:var(--purple); font-weight:700; }
+    .cat-item:hover:not(.on) { background:#faf8ff; }
+    .browse-main { flex:1; min-width:0; }
+    .browse-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.1rem; flex-wrap:wrap; gap:.6rem; }
+    .browse-count { font-size:.85rem; color:var(--muted); }
+    .browse-count strong { color:#1a1228; }
+    .sort-select { padding:.4rem .8rem; border:1.5px solid var(--border); border-radius:.5rem; font-family:Sarabun,sans-serif; font-size:.83rem; color:#1a1228; background:white; cursor:pointer; outline:none; }
+
+    .product-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:1rem; }
+    .product-card { background:white; border:1.5px solid var(--border); border-radius:1rem; overflow:hidden; transition:all .2s; display:flex; flex-direction:column; text-decoration:none; color:inherit; }
+    .product-card:hover { transform:translateY(-3px); box-shadow:0 10px 28px rgba(124,58,237,.12); border-color:#c4b5fd; }
+    .product-thumb { aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:2.5rem; overflow:hidden; }
+    .product-body { padding:.8rem .9rem 1rem; flex:1; display:flex; flex-direction:column; }
+    .product-badges { display:flex; gap:.3rem; flex-wrap:wrap; margin-bottom:.4rem; }
+    .badge { font-size:.63rem; font-weight:700; padding:.15rem .5rem; border-radius:2rem; }
+    .badge-tag { background:#ede9fe; color:#6d28d9; }
+    .badge-sold { background:#fef3c7; color:#92400e; }
+    .product-name { font-weight:600; font-size:.85rem; color:#1a1228; line-height:1.4; margin-bottom:.3rem; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .product-store { font-size:.7rem; color:var(--muted); margin-bottom:.5rem; }
+    .product-bottom { display:flex; align-items:center; justify-content:space-between; margin-top:auto; }
+    .product-price { font-family:'Playfair Display',serif; font-size:1.05rem; font-weight:700; color:var(--purple); }
+    .copy-btn { border:1.5px solid var(--border); background:#f5f0ff; color:var(--purple); border-radius:.5rem; padding:.35rem .5rem; font-size:.78rem; cursor:pointer; }
+
+    .empty-state { text-align:center; padding:3rem 2rem; grid-column:1/-1; }
+    .empty-state .empty-icon { font-size:3rem; margin-bottom:.75rem; }
+    .empty-state p { color:var(--muted); font-size:.88rem; }
+
+    .private-banner { background:linear-gradient(135deg,#1a1228,#2d1a4a); border-radius:1.25rem; padding:1.75rem; margin-top:2.5rem; display:flex; align-items:center; gap:2rem; flex-wrap:wrap; }
+    .private-banner h3 { font-family:'Playfair Display',serif; font-size:1.2rem; color:#f3effa; margin-bottom:.4rem; }
+    .private-banner p { color:rgba(255,255,255,.6); font-size:.83rem; line-height:1.7; flex:1; min-width:200px; }
+    .private-banner a { background:#06C755; color:white; padding:.55rem 1.3rem; border-radius:.65rem; font-weight:700; font-size:.83rem; text-decoration:none; white-space:nowrap; display:inline-block; }
+
+    @media(max-width:720px) {
+      .browse-layout { flex-direction:column; }
+      .browse-sidebar { width:100%; }
+      .cat-list { flex-direction:row; flex-wrap:wrap; }
+    }
   </style>
 </head>
 <body>
 
 <header class="site-header"></header>
 
-<section class="shop-hero">
+<section class="shop-hero" id="shopHero">
   <h1>💎 Crystal Market</h1>
-  <p>หินคริสตัล เครื่องประดับ และอุปกรณ์ คัดสรรจาก Shopee · จัดส่งทั่วไทย</p>
+  <p>หินคริสตัล เครื่องประดับ และของมงคล คัดสรรจากร้านพันธมิตรของ Amethez</p>
 </section>
 
 <div class="shop-subnav">
@@ -69,255 +123,47 @@
   <a href="/shop/academy.html">✦ Crystal Academy</a>
 </div>
 
+<div class="store-tabs-wrap">
+  <div class="store-tabs" id="storeTabs"></div>
+</div>
+
+<div class="store-banner" id="storeBanner" style="display:none"></div>
+
+<div class="mode-tabs">
+  <button class="mode-tab on" id="tabHome" onclick="setPageMode('home')">หน้าแรก</button>
+  <button class="mode-tab" id="tabAll" onclick="setPageMode('all')">สินค้าทั้งหมด</button>
+</div>
+
 <div class="wrap">
 
-  <div class="filter-bar">
-    <span class="filter-label">หมวด:</span>
-    <button class="filter-btn on" onclick="filterCat('all',this)">ทั้งหมด</button>
-    <button class="filter-btn" onclick="filterCat('jewelry',this)">💍 เครื่องประดับ</button>
-    <button class="filter-btn" onclick="filterCat('raw',this)">🪨 หินดิบ</button>
-    <button class="filter-btn" onclick="filterCat('care',this)">✨ ดูแลหิน</button>
-    <button class="filter-btn" onclick="filterCat('diy',this)">🛠 DIY & Grid</button>
-    <button class="filter-btn" onclick="filterCat('home',this)">🏠 ของตกแต่ง</button>
+  <!-- ══ หน้าแรก ══ -->
+  <div id="modeHome">
+    <div class="bestseller-title">🔥 สินค้าขายดี</div>
+    <div class="bestseller-grid" id="bestsellerGrid"></div>
+    <button class="see-all-btn" onclick="setPageMode('all')">ดูสินค้าทั้งหมด →</button>
   </div>
 
-  <!-- เครื่องประดับ -->
-  <div class="cat-section" data-cat="jewelry">
-    <div class="cat-title">💍 เครื่องประดับหินคริสตัล</div>
-    <div class="products-grid">
-
-      <a href="https://s.shopee.co.th/xxx" class="pcard" target="_blank">
-        <div class="pcard-img">💜</div>
-        <div class="pcard-body">
-          <div class="pcard-badge">อเมทิสต์</div>
-          <div class="pcard-name">สร้อยข้อมืออเมทิสต์ 8mm ลูกกลม</div>
-          <div class="pcard-price">฿490</div>
+  <!-- ══ สินค้าทั้งหมด ══ -->
+  <div id="modeAll" style="display:none">
+    <div class="browse-layout">
+      <div class="browse-sidebar">
+        <div class="sidebar-title">📂 หมวดหมู่</div>
+        <div class="cat-list" id="catList"></div>
+      </div>
+      <div class="browse-main">
+        <div class="browse-header">
+          <div class="browse-count">แสดง <strong id="resultCount">0</strong> รายการ</div>
+          <select class="sort-select" id="sortSelect" onchange="applySort()">
+            <option value="default">เรียงตาม: แนะนำ</option>
+            <option value="sold-desc">🔥 ขายดีที่สุด</option>
+            <option value="price-asc">ราคา: ต่ำ → สูง</option>
+            <option value="price-desc">ราคา: สูง → ต่ำ</option>
+            <option value="name">ชื่อ ก → ฮ</option>
+          </select>
         </div>
-        <div class="pcard-shopee">🛒 ซื้อบน Shopee</div>
-      </a>
-
-      <a href="https://s.shopee.co.th/xxx" class="pcard" target="_blank">
-        <div class="pcard-img">🟡</div>
-        <div class="pcard-body">
-          <div class="pcard-badge">ซิทริน</div>
-          <div class="pcard-name">สร้อยข้อมือซิทรินความมั่งคั่ง</div>
-          <div class="pcard-price">฿390</div>
-        </div>
-        <div class="pcard-shopee">🛒 ซื้อบน Shopee</div>
-      </a>
-
-      <a href="https://s.shopee.co.th/xxx" class="pcard" target="_blank">
-        <div class="pcard-img">🖤</div>
-        <div class="pcard-body">
-          <div class="pcard-badge">ออบซิเดียน</div>
-          <div class="pcard-name">สร้อยข้อมือออบซิเดียนป้องกัน</div>
-          <div class="pcard-price">฿320</div>
-        </div>
-        <div class="pcard-shopee">🛒 ซื้อบน Shopee</div>
-      </a>
-
-      <a href="https://s.shopee.co.th/xxx" class="pcard" target="_blank">
-        <div class="pcard-img">💚</div>
-        <div class="pcard-body">
-          <div class="pcard-badge">หยก</div>
-          <div class="pcard-name">จี้หยกแท้ทรงหัวใจ สีเขียว</div>
-          <div class="pcard-price">฿650</div>
-        </div>
-        <div class="pcard-shopee">🛒 ซื้อบน Shopee</div>
-      </a>
-
-      <a href="https://s.shopee.co.th/xxx" class="pcard" target="_blank">
-        <div class="pcard-img">🤍</div>
-        <div class="pcard-body">
-          <div class="pcard-badge">มูนสโตน</div>
-          <div class="pcard-name">แหวนมูนสโตนสีรุ้ง เงิน 925</div>
-          <div class="pcard-price">฿890</div>
-        </div>
-        <div class="pcard-shopee">🛒 ซื้อบน Shopee</div>
-      </a>
-
-      <a href="https://s.shopee.co.th/xxx" class="pcard" target="_blank">
-        <div class="pcard-img">🔴</div>
-        <div class="pcard-body">
-          <div class="pcard-badge">การ์เนต</div>
-          <div class="pcard-name">สร้อยข้อมือการ์เนตสีแดง พลังรัก</div>
-          <div class="pcard-price">฿420</div>
-        </div>
-        <div class="pcard-shopee">🛒 ซื้อบน Shopee</div>
-      </a>
-
-    </div>
-  </div>
-
-  <!-- หินดิบ -->
-  <div class="cat-section" data-cat="raw">
-    <div class="cat-title">🪨 หินดิบและตัวอย่างแร่</div>
-    <div class="products-grid">
-
-      <a href="https://s.shopee.co.th/xxx" class="pcard" target="_blank">
-        <div class="pcard-img">🔮</div>
-        <div class="pcard-body">
-          <div class="pcard-badge">อเมทิสต์</div>
-          <div class="pcard-name">โพรงอเมทิสต์บราซิล 500g+</div>
-          <div class="pcard-price">฿1,490</div>
-        </div>
-        <div class="pcard-shopee">🛒 ซื้อบน Shopee</div>
-      </a>
-
-      <a href="https://s.shopee.co.th/xxx" class="pcard" target="_blank">
-        <div class="pcard-img">🪨</div>
-        <div class="pcard-body">
-          <div class="pcard-badge">สะเก็ดดาว</div>
-          <div class="pcard-name">สะเก็ดดาวไทย Tektite ดิบ</div>
-          <div class="pcard-price">฿180</div>
-        </div>
-        <div class="pcard-shopee">🛒 ซื้อบน Shopee</div>
-      </a>
-
-      <a href="https://s.shopee.co.th/xxx" class="pcard" target="_blank">
-        <div class="pcard-img">🤍</div>
-        <div class="pcard-body">
-          <div class="pcard-badge">ควอตซ์</div>
-          <div class="pcard-name">เศษหิน Clear Quartz แท้ 100g</div>
-          <div class="pcard-price">฿40</div>
-        </div>
-        <div class="pcard-shopee">🛒 ซื้อบน Shopee</div>
-      </a>
-
-      <a href="https://s.shopee.co.th/xxx" class="pcard" target="_blank">
-        <div class="pcard-img">🟡</div>
-        <div class="pcard-body">
-          <div class="pcard-badge">ซิทริน</div>
-          <div class="pcard-name">ซิทรินดิบแท้ Natural Citrine</div>
-          <div class="pcard-price">฿290</div>
-        </div>
-        <div class="pcard-shopee">🛒 ซื้อบน Shopee</div>
-      </a>
-
-    </div>
-  </div>
-
-  <!-- ดูแลหิน -->
-  <div class="cat-section" data-cat="care">
-    <div class="cat-title">✨ อุปกรณ์ดูแลหิน</div>
-    <div class="products-grid">
-
-      <a href="https://s.shopee.co.th/xxx" class="pcard" target="_blank">
-        <div class="pcard-img">🌿</div>
-        <div class="pcard-body">
-          <div class="pcard-badge">ล้างหิน</div>
-          <div class="pcard-name">White Sage ใบเสจอเมริกา</div>
-          <div class="pcard-price">฿180</div>
-        </div>
-        <div class="pcard-shopee">🛒 ซื้อบน Shopee</div>
-      </a>
-
-      <a href="https://s.shopee.co.th/xxx" class="pcard" target="_blank">
-        <div class="pcard-img">🧂</div>
-        <div class="pcard-body">
-          <div class="pcard-badge">ล้างหิน</div>
-          <div class="pcard-name">เกลือหิมาลัยสีชมพู 500g</div>
-          <div class="pcard-price">฿120</div>
-        </div>
-        <div class="pcard-shopee">🛒 ซื้อบน Shopee</div>
-      </a>
-
-      <a href="https://s.shopee.co.th/xxx" class="pcard" target="_blank">
-        <div class="pcard-img">🪘</div>
-        <div class="pcard-body">
-          <div class="pcard-badge">ชาร์จหิน</div>
-          <div class="pcard-name">Singing Bowl ทองเหลือง 4 นิ้ว</div>
-          <div class="pcard-price">฿590</div>
-        </div>
-        <div class="pcard-shopee">🛒 ซื้อบน Shopee</div>
-      </a>
-
-      <a href="https://s.shopee.co.th/xxx" class="pcard" target="_blank">
-        <div class="pcard-img">🤍</div>
-        <div class="pcard-body">
-          <div class="pcard-badge">ชาร์จหิน</div>
-          <div class="pcard-name">เซเลไนต์แท่ง Charging Plate</div>
-          <div class="pcard-price">฿240</div>
-        </div>
-        <div class="pcard-shopee">🛒 ซื้อบน Shopee</div>
-      </a>
-
-    </div>
-  </div>
-
-  <!-- DIY -->
-  <div class="cat-section" data-cat="diy">
-    <div class="cat-title">🛠 DIY และ Crystal Grid</div>
-    <div class="products-grid">
-
-      <a href="https://s.shopee.co.th/xxx" class="pcard" target="_blank">
-        <div class="pcard-img">⬡</div>
-        <div class="pcard-body">
-          <div class="pcard-badge">Crystal Grid</div>
-          <div class="pcard-name">Grid Board ไม้แกะ Flower of Life</div>
-          <div class="pcard-price">฿350</div>
-        </div>
-        <div class="pcard-shopee">🛒 ซื้อบน Shopee</div>
-      </a>
-
-      <a href="https://s.shopee.co.th/xxx" class="pcard" target="_blank">
-        <div class="pcard-img">🔮</div>
-        <div class="pcard-body">
-          <div class="pcard-badge">Grid</div>
-          <div class="pcard-name">Clear Quartz Point แกนกลาง Grid</div>
-          <div class="pcard-price">฿90</div>
-        </div>
-        <div class="pcard-shopee">🛒 ซื้อบน Shopee</div>
-      </a>
-
-      <a href="https://s.shopee.co.th/xxx" class="pcard" target="_blank">
-        <div class="pcard-img">🪡</div>
-        <div class="pcard-body">
-          <div class="pcard-badge">DIY</div>
-          <div class="pcard-name">ลวดหุ้มหิน Wire Wrapping ทองแดง</div>
-          <div class="pcard-price">฿85</div>
-        </div>
-        <div class="pcard-shopee">🛒 ซื้อบน Shopee</div>
-      </a>
-
-    </div>
-  </div>
-
-  <!-- ของตกแต่ง -->
-  <div class="cat-section" data-cat="home">
-    <div class="cat-title">🏠 ของตกแต่งมงคล</div>
-    <div class="products-grid">
-
-      <a href="https://s.shopee.co.th/xxx" class="pcard" target="_blank">
-        <div class="pcard-img">🌊</div>
-        <div class="pcard-body">
-          <div class="pcard-badge">ของตกแต่ง</div>
-          <div class="pcard-name">น้ำพุหินอ่อนตั้งโต๊ะ</div>
-          <div class="pcard-price">฿890</div>
-        </div>
-        <div class="pcard-shopee">🛒 ซื้อบน Shopee</div>
-      </a>
-
-      <a href="https://s.shopee.co.th/xxx" class="pcard" target="_blank">
-        <div class="pcard-img">🪴</div>
-        <div class="pcard-body">
-          <div class="pcard-badge">ฮวงจุ้ย</div>
-          <div class="pcard-name">ต้นไม้หินเงิน-ทองฮวงจุ้ย</div>
-          <div class="pcard-price">฿450</div>
-        </div>
-        <div class="pcard-shopee">🛒 ซื้อบน Shopee</div>
-      </a>
-
-      <a href="https://s.shopee.co.th/xxx" class="pcard" target="_blank">
-        <div class="pcard-img">🕯</div>
-        <div class="pcard-body">
-          <div class="pcard-badge">บรรยากาศ</div>
-          <div class="pcard-name">เชิงเทียนหินอลาบาสเตอร์</div>
-          <div class="pcard-price">฿390</div>
-        </div>
-        <div class="pcard-shopee">🛒 ซื้อบน Shopee</div>
-      </a>
-
+        <div class="product-grid" id="productGrid"></div>
+        <div id="paginationWrap" style="display:flex;justify-content:center;align-items:center;gap:.35rem;margin-top:2rem;flex-wrap:wrap"></div>
+      </div>
     </div>
   </div>
 
@@ -335,14 +181,231 @@
 <footer class="site-footer"></footer>
 
 <script>
-function filterCat(cat, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('on'));
-  btn.classList.add('on');
-  document.querySelectorAll('.cat-section').forEach(s => {
-    s.style.display = (cat === 'all' || s.dataset.cat === cat) ? '' : 'none';
+let allProducts = [];
+let stores = [];
+let currentStore = ''; // '' = ทุกร้าน
+let currentCat = '';
+let pageMode = 'home';
+let sortedList = [];
+let currentPage = 1;
+const PAGE_SIZE = 24;
+
+function x(s){ return s ? String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') : ''; }
+
+function scopedProducts(){
+  return allProducts.filter(p => p.status === 'available' && (!currentStore || p.store === currentStore));
+}
+
+// ── Store switcher ──────────────────────────────
+function renderStoreTabs(){
+  const counts = {};
+  allProducts.forEach(p => { if(p.status==='available' && p.store) counts[p.store] = (counts[p.store]||0)+1; });
+  const names = Object.keys(counts).sort((a,b) => counts[b]-counts[a]);
+  const wrap = document.getElementById('storeTabs');
+  wrap.innerHTML = `<button class="store-tab ${!currentStore?'on':''}" onclick="selectStore('')">🌐 ทุกร้าน (${allProducts.filter(p=>p.status==='available').length})</button>` +
+    names.map(n => `<button class="store-tab ${currentStore===n?'on':''}" onclick="selectStore('${x(n)}')">${x(n)} (${counts[n]})</button>`).join('');
+}
+
+function selectStore(name){
+  currentStore = name;
+  currentCat = '';
+  const url = new URL(location.href);
+  if(name) url.searchParams.set('store', name); else url.searchParams.delete('store');
+  history.replaceState(null, '', url);
+  renderStoreTabs();
+  renderStoreBanner();
+  renderAll();
+}
+
+function renderStoreBanner(){
+  const el = document.getElementById('storeBanner');
+  const hero = document.getElementById('shopHero');
+  if(!currentStore){ el.style.display = 'none'; hero.style.display = ''; return; }
+  const profile = stores.find(s => s.name === currentStore) || { name: currentStore };
+  const count = scopedProducts().length;
+  hero.style.display = 'none';
+  el.style.display = 'block';
+  el.innerHTML = `<div class="store-banner-inner">
+    <div class="store-logo">${profile.logo_url ? `<img src="${x(profile.logo_url)}" alt="" onerror="this.parentElement.textContent='🏪'">` : '🏪'}</div>
+    <div>
+      <div class="store-banner-name">${x(profile.name)}</div>
+      ${profile.tagline ? `<div class="store-banner-tagline">${x(profile.tagline)}</div>` : ''}
+      <div class="store-banner-count">${count.toLocaleString()} รายการ</div>
+    </div>
+    ${profile.aff_link ? `<a class="btn-go-store" href="${x(profile.aff_link)}" target="_blank" rel="nofollow noopener sponsored">🔗 ไปที่ร้าน Shopee</a>` : ''}
+  </div>`;
+}
+
+// ── Mode tabs ────────────────────────────────────
+function setPageMode(mode){
+  pageMode = mode;
+  document.getElementById('tabHome').classList.toggle('on', mode==='home');
+  document.getElementById('tabAll').classList.toggle('on', mode==='all');
+  document.getElementById('modeHome').style.display = mode==='home' ? '' : 'none';
+  document.getElementById('modeAll').style.display = mode==='all' ? '' : 'none';
+  if(mode==='home') renderBestsellers();
+  else { currentPage = 1; renderCatList(); applySort(); }
+}
+
+// ── หน้าแรก: สินค้าขายดี ─────────────────────────
+function renderBestsellers(){
+  const list = [...scopedProducts()].sort((a,b) => (b.sold||0)-(a.sold||0)).slice(0,6);
+  const grid = document.getElementById('bestsellerGrid');
+  if(!list.length){ grid.innerHTML = `<div class="empty-state"><div class="empty-icon">🛒</div><p>ยังไม่มีข้อมูลยอดขาย</p></div>`; return; }
+  grid.innerHTML = list.map((p,i) => `
+    <a href="${x(p.url)}" target="_blank" rel="nofollow noopener" class="bs-card">
+      <span class="bs-top-badge">TOP ${i+1}</span>
+      <div class="bs-img">${p.image_url ? `<img src="${x(p.image_url)}" alt="" onerror="this.parentElement.textContent='💎'">` : '💎'}</div>
+      <div class="bs-body">
+        <div class="bs-name">${x(p.name)}</div>
+        <div class="bs-price">฿${p.price.toLocaleString()}</div>
+        ${p.sold ? `<div class="bs-sold">ขายแล้ว ${p.sold.toLocaleString()} ชิ้น</div>` : ''}
+      </div>
+    </a>`).join('');
+}
+
+// ── สินค้าทั้งหมด: category sidebar ──────────────
+function renderCatList(){
+  const counts = {};
+  scopedProducts().forEach(p => { if(p.category) counts[p.category] = (counts[p.category]||0)+1; });
+  const cats = Object.keys(counts).sort();
+  const wrap = document.getElementById('catList');
+  wrap.innerHTML = `<button class="cat-item ${!currentCat?'on':''}" onclick="selectCat('')">ทั้งหมด (${scopedProducts().length})</button>` +
+    cats.map(c => `<button class="cat-item ${currentCat===c?'on':''}" onclick="selectCat('${x(c)}')">${x(c)} (${counts[c]})</button>`).join('');
+}
+
+function selectCat(cat){
+  currentCat = cat;
+  renderCatList();
+  applySort();
+}
+
+// ── Sort + pagination (แบบเดียวกับ shop/finder.html) ──
+let _copyRegistry = [];
+function legacyCopyProd(text){
+  return new Promise((resolve, reject) => {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy') ? resolve() : reject(new Error('execCommand failed')); }
+    catch(e){ reject(e); } finally { document.body.removeChild(ta); }
   });
 }
+function copyProdLink(idx, btn){
+  const url = _copyRegistry[idx];
+  if(!url) return;
+  const orig = btn.textContent;
+  const write = (navigator.clipboard && navigator.clipboard.writeText)
+    ? navigator.clipboard.writeText(url).catch(() => legacyCopyProd(url))
+    : legacyCopyProd(url);
+  write.then(() => { btn.textContent = '✅'; setTimeout(() => { btn.textContent = orig; }, 1200); })
+       .catch(() => { btn.textContent = '❌'; setTimeout(() => { btn.textContent = orig; }, 1200); });
+}
+
+function applySort(){
+  const sort = document.getElementById('sortSelect').value;
+  let list = scopedProducts().filter(p => !currentCat || p.category === currentCat);
+  if(sort === 'price-asc') list = [...list].sort((a,b) => a.price - b.price);
+  else if(sort === 'price-desc') list = [...list].sort((a,b) => b.price - a.price);
+  else if(sort === 'sold-desc') list = [...list].sort((a,b) => (b.sold||0)-(a.sold||0));
+  else if(sort === 'name') list = [...list].sort((a,b) => a.name.localeCompare(b.name,'th'));
+  sortedList = list;
+  currentPage = 1;
+  renderProductGrid();
+}
+
+function goToPage(n){
+  currentPage = n;
+  renderProductGrid();
+  document.querySelector('.browse-main').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+function renderPaginationControls(totalPages){
+  const wrap = document.getElementById('paginationWrap');
+  if(totalPages <= 1){ wrap.innerHTML = ''; return; }
+  const p = currentPage;
+  const btn = (label, page, disabled, active) => `<button ${disabled?'disabled':''} onclick="goToPage(${page})"
+    style="min-width:2.3rem;padding:.4rem .65rem;border-radius:.5rem;font-family:Sarabun,sans-serif;font-size:.85rem;cursor:${disabled?'default':'pointer'};
+    border:1.5px solid ${active?'var(--purple)':'var(--border)'};
+    background:${active?'var(--purple)':'white'};
+    color:${active?'white':disabled?'#c4c4c4':'#1a1228'};
+    font-weight:${active?'700':'500'}">${label}</button>`;
+  const pages = [1];
+  if(p > 3) pages.push('…');
+  for(let i = Math.max(2,p-1); i <= Math.min(totalPages-1,p+1); i++) pages.push(i);
+  if(p < totalPages-2) pages.push('…');
+  if(totalPages > 1) pages.push(totalPages);
+  wrap.innerHTML =
+    btn('‹ ก่อนหน้า', p-1, p===1, false) +
+    [...new Set(pages)].map(v => v==='…' ? `<span style="padding:.4rem .3rem;color:var(--muted)">…</span>` : btn(v,v,false,v===p)).join('') +
+    btn('ถัดไป ›', p+1, p===totalPages, false);
+}
+
+function renderProductGrid(){
+  const grid = document.getElementById('productGrid');
+  document.getElementById('resultCount').textContent = sortedList.length;
+
+  if(!sortedList.length){
+    grid.innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div><p>ยังไม่มีสินค้าในหมวดนี้</p></div>`;
+    renderPaginationControls(0);
+    return;
+  }
+
+  const totalPages = Math.max(1, Math.ceil(sortedList.length / PAGE_SIZE));
+  if(currentPage > totalPages) currentPage = totalPages;
+  const start = (currentPage-1) * PAGE_SIZE;
+  const pageItems = sortedList.slice(start, start+PAGE_SIZE);
+  _copyRegistry = pageItems.map(p => p.url);
+
+  grid.innerHTML = pageItems.map((p, idx) => {
+    const tagBadges = (p.tags||[]).slice(0,2).map(t => `<span class="badge badge-tag">${x(t)}</span>`).join('');
+    const soldBadge = p.sold ? `<span class="badge badge-sold">🔥 ${p.sold.toLocaleString()}</span>` : '';
+    const thumb = p.image_url
+      ? `<img src="${x(p.image_url)}" alt="" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.textContent='💎'">`
+      : '💎';
+    return `
+    <a href="${x(p.url)}" target="_blank" rel="nofollow noopener" class="product-card">
+      <div class="product-thumb" style="background:linear-gradient(135deg,#ede9fe,#f5f0ff)">${thumb}</div>
+      <div class="product-body">
+        <div class="product-badges">${tagBadges}${soldBadge}</div>
+        <div class="product-name">${x(p.name)}</div>
+        ${!currentStore && p.store ? `<div class="product-store">${x(p.store)}</div>` : ''}
+        <div class="product-bottom">
+          <div class="product-price">฿${p.price.toLocaleString()}</div>
+          <button class="copy-btn" onclick="event.preventDefault();event.stopPropagation();copyProdLink(${idx},this)" title="คัดลอกลิงก์">📋</button>
+        </div>
+      </div>
+    </a>`;
+  }).join('');
+  renderPaginationControls(totalPages);
+}
+
+function renderAll(){
+  if(pageMode === 'home') renderBestsellers();
+  else { renderCatList(); applySort(); }
+}
+
+// ── Init ─────────────────────────────────────────
+async function init(){
+  try{
+    const [pr, sr] = await Promise.all([
+      fetch('/data/products.json?v='+Date.now()),
+      fetch('/data/stores.json?v='+Date.now()).catch(()=>null)
+    ]);
+    allProducts = (await pr.json()).products || [];
+    stores = sr && sr.ok ? ((await sr.json()).stores || []) : [];
+  }catch(e){ allProducts = []; stores = []; }
+
+  const params = new URLSearchParams(location.search);
+  currentStore = params.get('store') || '';
+
+  renderStoreTabs();
+  renderStoreBanner();
+  renderAll();
+}
+init();
 </script>
+
 <script src="/js/components.js"></script>
 <script src="/js/shila.js"></script>
 </body>
