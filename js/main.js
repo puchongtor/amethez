@@ -15,22 +15,66 @@
   }catch(e){}
 })();
 
+// ── Relevance scoring ──
+// Recommended products were picked by "does anything match at all", so a
+// product whose only connection is one generic shared tag (e.g. "ม่วง")
+// ranked the same as one whose actual name is the stone in question — the
+// article and its "แนะนำ" section routinely disagreed. Score every keyword
+// match instead: a hit in the product's own name (its real identity) counts
+// far more than a hit in its tag list (often broad/reused across products),
+// then sort so the closest matches surface first.
+//
+// One wrinkle found while testing: generic purpose/benefit words ("สมาธิ",
+// "พลังงาน", "มงคล", ฯลฯ) are marketing boilerplate stamped on almost every
+// listing's title regardless of what stone it actually is (e.g. "...เสริม
+// สมาธิ ไม่ต้องล้างพลังงาน" on a completely unrelated kyanite ring) — a name
+// hit on one of these carries none of the identity signal a real stone name
+// hit does, so it must not get the same weight.
+const GENERIC_PURPOSE_WORDS = new Set(['ความสำเร็จ','การเงิน','ความรัก','สุขภาพ','ป้องกัน','สมาธิ',
+  'ความสงบ','พลังงาน','ดึงดูด','ฮวงจุ้ย','นอนหลับ','เสริมดวง','มงคล']);
+// Second wrinkle: a color/chakra/zodiac word ("เขียว","มงกุฎ") is a real,
+// legitimate match — but many unrelated stones share the same color/chakra,
+// so it's still weaker evidence than the actual stone name itself. Without
+// this tier, e.g. an unrelated green kyanite bracelet tied a genuine
+// moldavite listing on the moldavite page purely by both containing "เขียว".
+const DESCRIPTOR_WORDS = new Set(['ม่วง','ชมพู','เขียว','ดำ','ขาว','น้ำเงิน','แดง','ส้ม','เหลือง','ทอง',
+  'รุ้ง','เทา','น้ำตาล','ใส','มงกุฎ','third eye','คอ','หัวใจ','สุริยะ','ก้นกบ','ราก','solar plexus','sacral',
+  'เมษ','พฤษภ','เมถุน','กรกฎ','สิงห์','กันย์','ตุลย์','พิจิก','ธนู','มังกร','กุมภ์','มีน']);
+function keywordNameWeight(kwRaw){
+  const kw = (kwRaw || '').trim().toLowerCase();
+  if(GENERIC_PURPOSE_WORDS.has(kw)) return 1;
+  if(DESCRIPTOR_WORDS.has(kw)) return 2;
+  return 3; // treated as an actual identity term (stone name, product shape, etc.)
+}
+function scoreProductMatch(product, keywords) {
+  const name = (product.name || '').toLowerCase();
+  const tags = (product.tags || []).map(t => t.toLowerCase());
+  let score = 0;
+  for (const kwRaw of keywords) {
+    const kw = (kwRaw || '').toLowerCase();
+    if (!kw) continue;
+    if (name.includes(kw)) score += keywordNameWeight(kwRaw);
+    if (tags.some(t => t.includes(kw) || kw.includes(t))) score += 1;
+  }
+  return score;
+}
+
+function rankProductsByRelevance(products, keywords, limit = Infinity) {
+  return products
+    .filter(p => p.status === 'available')
+    .map(p => ({ p, score: scoreProductMatch(p, keywords) }))
+    .filter(x => x.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map(x => x.p);
+}
+
 // ── Shopee Product Loader ──
 async function loadShopeeProducts(tags = [], limit = 40) {
   try {
     const res = await fetch('/data/products.json');
     const { products } = await res.json();
-    const nameLower = p => (p.name||'').toLowerCase();
-    const tagsLower = p => (p.tags||[]).map(t => t.toLowerCase());
-    const matched = products.filter(p => {
-      if(p.status !== 'available') return false;
-      const nl = nameLower(p), tl = tagsLower(p);
-      return tags.some(t => {
-        const tl2 = t.toLowerCase();
-        return nl.includes(tl2) || tl.some(pt => pt.includes(tl2) || tl2.includes(pt));
-      });
-    });
-    return matched.slice(0, limit);
+    return rankProductsByRelevance(products, tags, limit);
   } catch { return []; }
 }
 

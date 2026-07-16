@@ -200,6 +200,7 @@
 
 <footer class="site-footer"></footer>
 <script src="/js/components.js"></script>
+<script src="/js/main.js"></script>
 <script>
 (function(){
   const params = new URLSearchParams(location.search);
@@ -383,16 +384,14 @@
   }
 
   function buildAffSection(item, allProducts){
-    const tags = item.stone_tags||[];
-    const matched = allProducts.filter(p=>{
-      if(p.status==='unavailable') return false;
-      const nl = (p.name||'').toLowerCase();
-      const tl = (p.tags||[]).map(t=>t.toLowerCase());
-      return tags.some(t=>{
-        const tl2 = t.toLowerCase();
-        return nl.includes(tl2) || tl.some(pt=>pt.includes(tl2)||tl2.includes(pt));
-      });
-    });
+    // stone_tags เป็นแค่คำทั่วไป/วัตถุประสงค์ (เช่น "จิตวิญญาณ","สมาธิ") —
+    // ไม่เคยรวม stone_names (ชื่อหินจริงที่ผูกกับหมวดนี้ เช่น "อเมทิสต์")
+    // เข้ามาด้วยเลย ทั้งที่มีอยู่แล้วในข้อมูล นี่คือสาเหตุหลักที่สินค้า
+    // แนะนำไม่ตรงกับหมวด — ต้องรวมทั้งคู่เข้าเป็น keyword set เดียว
+    const tags = [...(item.stone_tags||[]), ...(item.stone_names||[])];
+    // ใช้ตัวจับคู่ให้คะแนนความเกี่ยวข้องร่วมกับหน้าบทความหิน (js/main.js) —
+    // ก่อนหน้านี้ทั้งสองที่ต่างคนต่างเขียน filter เอง ผลลัพธ์เลยไม่ตรงกัน
+    const matched = rankProductsByRelevance(allProducts, tags);
 
     const header = `<div class="aff-header">
       <div class="aff-title">✨ สินค้าแนะนำ</div>
