@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Crystal Market — ช้อปหินคริสตัลคุณภาพจากทุกร้านพันธมิตร | Amethez</title>
-  <meta name="description" content="เลือกซื้อหินคริสตัล เครื่องประดับ และของมงคลจากร้านพันธมิตรของ Amethez สินค้าขายดี สินค้าแนะนำ และค้นหาสินค้าทั้งหมดในหน้าเดียว">
+  <title>Crystal Market — ช้อปหินคริสตัลคุณภาพจากทุกร้านแนะนำ | Amethez</title>
+  <meta name="description" content="เลือกซื้อหินคริสตัล เครื่องประดับ และของมงคลจากร้านแนะนำของ Amethez สินค้าขายดี สินค้าแนะนำ และค้นหาสินค้าทั้งหมดในหน้าเดียว">
   <link rel="canonical" href="https://amethez.com/shop/">
   <meta property="og:title" content="Crystal Market — ช้อปหินคริสตัลคุณภาพ">
   <meta property="og:url" content="https://amethez.com/shop/">
@@ -34,7 +34,7 @@
     .section-head-row .section-title { margin:0; }
     .see-all-btn { display:inline-block; color:var(--purple); font-size:.85rem; font-weight:700; text-decoration:none; background:none; border:none; cursor:pointer; font-family:Sarabun,sans-serif; white-space:nowrap; }
 
-    /* ── ร้านพันธมิตร (โลโก้) ── */
+    /* ── ร้านแนะนำ (โลโก้) ── */
     .store-logo-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:.75rem; }
     .store-logo-item { display:flex; flex-direction:column; align-items:center; gap:.4rem; text-decoration:none; padding:.6rem .3rem; border-radius:.75rem; transition:background .15s; }
     .store-logo-item:hover:not(.disabled) { background:#f8f5ff; }
@@ -130,7 +130,7 @@
 
 <section class="shop-hero">
   <h1>💎 Crystal Market</h1>
-  <p>หินคริสตัล เครื่องประดับ และของมงคล คัดสรรจากร้านพันธมิตรของ Amethez</p>
+  <p>หินคริสตัล เครื่องประดับ และของมงคล คัดสรรจากร้านแนะนำของ Amethez</p>
 </section>
 
 <div class="shop-subnav">
@@ -141,9 +141,9 @@
 
 <div class="wrap">
 
-  <!-- ร้านพันธมิตร (โลโก้ — คลิกไปหน้า Shopee ร้านนั้นเลย) -->
+  <!-- ร้านแนะนำ (โลโก้ — คลิกไปหน้า Shopee ร้านนั้นเลย) -->
   <div class="section-head-row">
-    <div class="section-title">🏪 ร้านพันธมิตรของเรา</div>
+    <div class="section-title">🏪 ร้านแนะนำของเรา</div>
     <a href="/shop/stores.html" class="see-all-btn" id="allStoresLink" style="display:none">ร้านทั้งหมด →</a>
   </div>
   <div class="store-logo-grid" id="storeLogoGrid"></div>
@@ -305,7 +305,7 @@ const PAGE_SIZE = 24;
 function x(s){ return s ? String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') : ''; }
 function availableProducts(){ return allProducts.filter(p => p.status === 'available'); }
 
-// ── ร้านพันธมิตร (โลโก้ — คลิกไปหน้า Shopee ร้านนั้นตรงๆ ไม่เข้ามาในเว็บเรา) ──
+// ── ร้านแนะนำ (โลโก้ — คลิกไปหน้า Shopee ร้านนั้นตรงๆ ไม่เข้ามาในเว็บเรา) ──
 function renderStoreShowcase(){
   const counts = {};
   availableProducts().forEach(p => { if(p.store) counts[p.store] = (counts[p.store]||0)+1; });
