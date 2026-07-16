@@ -743,6 +743,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
                 <tbody id="affTableBody"></tbody>
               </table>
             </div>
+            <div id="affPaginationWrap" style="display:flex;justify-content:center;align-items:center;gap:.35rem;margin-top:1.25rem;flex-wrap:wrap"></div>
           </div>
 
           <!-- STORE PROFILES -->
@@ -1680,7 +1681,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-16.3';
+const ADMIN_VERSION='2026-07-16.4';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -3299,21 +3300,52 @@ function previewStoreLogo(i, url){
   if(url){ el.src = url; el.style.display = 'block'; } else { el.style.display = 'none'; }
 }
 
-function renderAffTable(){
-  loadAff();
-  populateAffFilters();
-  const kw = (document.getElementById('affSearch')?.value||'').toLowerCase();
-  const storeFilter = document.getElementById('affFilterStore')?.value||'';
-  const catFilter = document.getElementById('affFilterCat')?.value||'';
-  const tagFilter = document.getElementById('affFilterTag')?.value||'';
-  let list = affProducts;
-  if(kw) list = list.filter(p=>p.name.toLowerCase().includes(kw)||p.tags.some(t=>t.includes(kw)));
-  if(storeFilter) list = list.filter(p=>p.store===storeFilter);
-  if(catFilter) list = list.filter(p=>p.category===catFilter);
-  if(tagFilter==='tagged') list = list.filter(p=>p.tags&&p.tags.length);
-  if(tagFilter==='untagged') list = list.filter(p=>!p.tags||!p.tags.length);
-  document.getElementById('affCount').textContent = affProducts.length;
-  document.getElementById('affTableBody').innerHTML = list.length ? list.map(p=>{
+// รายการสินค้า Aff เพิ่มถึงหลักพันแล้ว — เดิม render ทั้งลิสต์ในตารางเดียว
+// ยาวมาก แบ่งหน้าแทน (แบบเดียวกับ shop/index.html)
+const AFF_PAGE_SIZE = 50;
+let affFilteredList = [];
+let affCurrentPage = 1;
+
+function goToAffPage(n){
+  affCurrentPage = n;
+  renderAffTableBody();
+  document.getElementById('affTableBody').closest('.card').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function renderAffPaginationControls(totalPages){
+  const wrap = document.getElementById('affPaginationWrap');
+  if(!wrap) return;
+  if(totalPages <= 1){ wrap.innerHTML = ''; return; }
+  const p = affCurrentPage;
+  const btn = (label, page, disabled, active) => `<button ${disabled?'disabled':''} onclick="goToAffPage(${page})"
+    style="min-width:2.3rem;padding:.4rem .65rem;border-radius:.5rem;font-family:inherit;font-size:.85rem;cursor:${disabled?'default':'pointer'};
+    border:1.5px solid ${active?'#7c3aed':'#e9e0f8'};
+    background:${active?'#7c3aed':'white'};
+    color:${active?'white':disabled?'#c4c4c4':'#1a1228'};
+    font-weight:${active?'700':'500'}">${label}</button>`;
+  const pages = [1];
+  if(p > 3) pages.push('…');
+  for(let i = Math.max(2,p-1); i <= Math.min(totalPages-1,p+1); i++) pages.push(i);
+  if(p < totalPages-2) pages.push('…');
+  if(totalPages > 1) pages.push(totalPages);
+  wrap.innerHTML =
+    btn('‹ ก่อนหน้า', p-1, p===1, false) +
+    [...new Set(pages)].map(v => v==='…' ? `<span style="padding:.4rem .3rem;color:#9ca3af">…</span>` : btn(v,v,false,v===p)).join('') +
+    btn('ถัดไป ›', p+1, p===totalPages, false);
+}
+
+function renderAffTableBody(){
+  const list = affFilteredList;
+  if(!list.length){
+    document.getElementById('affTableBody').innerHTML = `<tr><td colspan="8" style="text-align:center;padding:2rem;color:#9ca3af">ยังไม่มีสินค้า — เพิ่มด้านบน</td></tr>`;
+    renderAffPaginationControls(0);
+    return;
+  }
+  const totalPages = Math.max(1, Math.ceil(list.length / AFF_PAGE_SIZE));
+  if(affCurrentPage > totalPages) affCurrentPage = totalPages;
+  const start = (affCurrentPage-1) * AFF_PAGE_SIZE;
+  const pageItems = list.slice(start, start + AFF_PAGE_SIZE);
+  document.getElementById('affTableBody').innerHTML = pageItems.map(p=>{
     const img = p.image_url ? `<div class="td-img"><img src="${x(p.image_url)}" onerror="this.parentElement.innerHTML='🛒'"></div>` : `<div class="td-img">🛒</div>`;
     const tags = (p.tags||[]).slice(0,4).map(t=>`<span style="font-size:.65rem;background:#f3effa;color:#7c3aed;padding:.1rem .4rem;border-radius:.3rem">${x(t)}</span>`).join(' ');
     return `<tr>
@@ -3329,7 +3361,27 @@ function renderAffTable(){
         <button class="btn btn-outline btn-sm" onclick="editAff('${p.id}')">✏️</button>
         <button class="btn btn-danger btn-sm" onclick="delAff('${p.id}')">🗑</button>
       </div></td></tr>`;
-  }).join('') : `<tr><td colspan="8" style="text-align:center;padding:2rem;color:#9ca3af">ยังไม่มีสินค้า — เพิ่มด้านบน</td></tr>`;
+  }).join('');
+  renderAffPaginationControls(totalPages);
+}
+
+function renderAffTable(){
+  loadAff();
+  populateAffFilters();
+  const kw = (document.getElementById('affSearch')?.value||'').toLowerCase();
+  const storeFilter = document.getElementById('affFilterStore')?.value||'';
+  const catFilter = document.getElementById('affFilterCat')?.value||'';
+  const tagFilter = document.getElementById('affFilterTag')?.value||'';
+  let list = affProducts;
+  if(kw) list = list.filter(p=>p.name.toLowerCase().includes(kw)||p.tags.some(t=>t.includes(kw)));
+  if(storeFilter) list = list.filter(p=>p.store===storeFilter);
+  if(catFilter) list = list.filter(p=>p.category===catFilter);
+  if(tagFilter==='tagged') list = list.filter(p=>p.tags&&p.tags.length);
+  if(tagFilter==='untagged') list = list.filter(p=>!p.tags||!p.tags.length);
+  document.getElementById('affCount').textContent = affProducts.length;
+  affFilteredList = list;
+  affCurrentPage = 1;
+  renderAffTableBody();
 }
 
 function exportAffJson(){
