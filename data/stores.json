@@ -2,17 +2,89 @@
   "version": "1.0",
   "updated": "2026-07-16",
   "stores": [
-    { "name": "Harmenstone", "logo_url": "", "tagline": "", "aff_link": "", "featured": true },
-    { "name": "ช่างหิน", "logo_url": "", "tagline": "", "aff_link": "", "featured": true },
-    { "name": "Master Puch (Mr.stone)", "logo_url": "", "tagline": "", "aff_link": "", "featured": true },
-    { "name": "MemoireStone", "logo_url": "", "tagline": "", "aff_link": "", "featured": false },
-    { "name": "ทวีทรัพย์ธาดา พระเหล็กน้ำพี้", "logo_url": "", "tagline": "", "aff_link": "", "featured": false },
-    { "name": "elemulet", "logo_url": "", "tagline": "", "aff_link": "", "featured": false },
-    { "name": "NAKAxAMULET", "logo_url": "", "tagline": "", "aff_link": "", "featured": false },
-    { "name": "Rainbow Jewelry Official", "logo_url": "", "tagline": "", "aff_link": "", "featured": false },
-    { "name": "คลังเศรษฐี ของมงคลเรียกทรัพย์", "logo_url": "", "tagline": "", "aff_link": "", "featured": false },
-    { "name": "Dreamis Jewelry กำไลหินมงคล", "logo_url": "", "tagline": "", "aff_link": "", "featured": false },
-    { "name": "NAYA มีทุกอย่าง", "logo_url": "", "tagline": "", "aff_link": "", "featured": false },
-    { "name": "The Moon Cafe", "logo_url": "", "tagline": "", "aff_link": "", "featured": false }
+    {
+      "name": "Harmenstone",
+      "logo_url": "",
+      "tagline": "",
+      "aff_link": "",
+      "featured": true
+    },
+    {
+      "name": "ช่างหิน",
+      "logo_url": "",
+      "tagline": "",
+      "aff_link": "",
+      "featured": true
+    },
+    {
+      "name": "Master Puch (Mr.stone)",
+      "logo_url": "",
+      "tagline": "",
+      "aff_link": "",
+      "featured": true
+    },
+    {
+      "name": "MemoireStone",
+      "logo_url": "https://down-zl-th.img.susercontent.com/2ab4a39ac8509d87aa50490cac4d9376_tn.webp",
+      "tagline": "\"MemoireStone | หินธรรมชาติแท้ 100% คัดเกรดพรีเมียม ร้อยเองด้วยความใส่ใจ ประสบการณ์กว่า 7 ปี พร้อมส่งตรงถึงมือคุณด้วยความจริงใจ\"",
+      "aff_link": "https://s.shopee.co.th/18piDJWfQ",
+      "featured": false
+    },
+    {
+      "name": "ทวีทรัพย์ธาดา พระเหล็กน้ำพี้",
+      "logo_url": "",
+      "tagline": "",
+      "aff_link": "",
+      "featured": false
+    },
+    {
+      "name": "elemulet",
+      "logo_url": "",
+      "tagline": "",
+      "aff_link": "",
+      "featured": false
+    },
+    {
+      "name": "NAKAxAMULET",
+      "logo_url": "",
+      "tagline": "",
+      "aff_link": "",
+      "featured": false
+    },
+    {
+      "name": "Rainbow Jewelry Official",
+      "logo_url": "",
+      "tagline": "",
+      "aff_link": "",
+      "featured": false
+    },
+    {
+      "name": "คลังเศรษฐี ของมงคลเรียกทรัพย์",
+      "logo_url": "",
+      "tagline": "",
+      "aff_link": "",
+      "featured": false
+    },
+    {
+      "name": "Dreamis Jewelry กำไลหินมงคล",
+      "logo_url": "",
+      "tagline": "",
+      "aff_link": "",
+      "featured": false
+    },
+    {
+      "name": "NAYA มีทุกอย่าง",
+      "logo_url": "",
+      "tagline": "",
+      "aff_link": "",
+      "featured": false
+    },
+    {
+      "name": "The Moon Cafe",
+      "logo_url": "",
+      "tagline": "",
+      "aff_link": "",
+      "featured": false
+    }
   ]
 }
