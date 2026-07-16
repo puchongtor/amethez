@@ -488,6 +488,7 @@ function applyFilters() {
   renderActiveFilters({ color, chakra, zodiac, shape, belief, store });
 }
 
+let sortedList = [];
 function sortProducts() {
   const sort = document.getElementById('sortSelect').value;
   const arr = [...filtered];
@@ -495,7 +496,9 @@ function sortProducts() {
   else if (sort === 'price-desc') arr.sort((a, b) => b.price - a.price);
   else if (sort === 'sold-desc') arr.sort((a, b) => (b.sold || 0) - (a.sold || 0));
   else if (sort === 'name') arr.sort((a, b) => a.name.localeCompare(b.name, 'th'));
-  renderProducts(arr);
+  sortedList = arr;
+  currentPage = 1; // ผลลัพธ์ชุดใหม่ทั้งหมด (filter/sort เปลี่ยน) กลับไปหน้า 1 เสมอ
+  renderProducts(sortedList);
 }
 
 // ── Copy affiliate link (คัดลอกไปวางในไลน์คุยกับลูกค้าได้เลย) ──
@@ -520,10 +523,52 @@ function copyProdLink(idx, btn) {
        .catch(() => { btn.textContent = '❌'; setTimeout(() => { btn.textContent = orig; }, 1200); });
 }
 
+// เดิม render ทั้งลิสต์เดียว (จะเป็นหมื่นรายการในไม่ช้า) ตอนนี้แบ่งหน้าแทน
+const PAGE_SIZE = 24;
+let currentPage = 1;
+
+function goToPage(n) {
+  currentPage = n;
+  renderProducts(sortedList);
+  document.querySelector('.results-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function renderPaginationControls(totalPages) {
+  let wrap = document.getElementById('paginationWrap');
+  if (!wrap) {
+    wrap = document.createElement('div');
+    wrap.id = 'paginationWrap';
+    wrap.style.cssText = 'display:flex;justify-content:center;align-items:center;gap:.35rem;margin-top:2rem;flex-wrap:wrap';
+    document.getElementById('productGrid').insertAdjacentElement('afterend', wrap);
+  }
+  if (totalPages <= 1) { wrap.innerHTML = ''; return; }
+
+  const p = currentPage;
+  const btn = (label, page, disabled, active) => `<button ${disabled ? 'disabled' : ''} onclick="goToPage(${page})"
+    style="min-width:2.3rem;padding:.4rem .65rem;border-radius:.5rem;font-family:Sarabun,sans-serif;font-size:.85rem;cursor:${disabled ? 'default' : 'pointer'};
+    border:1.5px solid ${active ? 'var(--purple)' : 'var(--border)'};
+    background:${active ? 'var(--purple)' : 'white'};
+    color:${active ? 'white' : disabled ? '#c4c4c4' : 'var(--text)'};
+    font-weight:${active ? '700' : '500'}">${label}</button>`;
+
+  const pages = [1];
+  if (p > 3) pages.push('…');
+  for (let i = Math.max(2, p - 1); i <= Math.min(totalPages - 1, p + 1); i++) pages.push(i);
+  if (p < totalPages - 2) pages.push('…');
+  if (totalPages > 1) pages.push(totalPages);
+
+  wrap.innerHTML =
+    btn('‹ ก่อนหน้า', p - 1, p === 1, false) +
+    [...new Set(pages)].map(x => x === '…'
+      ? `<span style="padding:.4rem .3rem;color:var(--muted)">…</span>`
+      : btn(x, x, false, x === p)
+    ).join('') +
+    btn('ถัดไป ›', p + 1, p === totalPages, false);
+}
+
 function renderProducts(list) {
   const grid = document.getElementById('productGrid');
   document.getElementById('resultCount').textContent = list.length;
-  _copyRegistry = list.map(p => p.url);
 
   if (!list.length) {
     grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
@@ -531,10 +576,17 @@ function renderProducts(list) {
       <h3>ไม่พบสินค้าที่ตรงเงื่อนไข</h3>
       <p>ลองปรับฟิลเตอร์ใหม่ หรือ<button onclick="clearAll()" style="color:var(--purple);background:none;border:none;cursor:pointer;font-size:.9rem;font-family:Sarabun,sans-serif">ล้างทั้งหมด</button></p>
     </div>`;
+    renderPaginationControls(0);
     return;
   }
 
-  grid.innerHTML = list.map((p, idx) => {
+  const totalPages = Math.max(1, Math.ceil(list.length / PAGE_SIZE));
+  if (currentPage > totalPages) currentPage = totalPages;
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const pageItems = list.slice(start, start + PAGE_SIZE);
+  _copyRegistry = pageItems.map(p => p.url);
+
+  grid.innerHTML = pageItems.map((p, idx) => {
     const tagBadges = (p.tags || []).slice(0, 3).map(t => `<span class="badge badge-chakra">${t}</span>`).join('');
     const soldBadge = p.sold ? `<span class="badge badge-belief">🔥 ขายแล้ว ${p.sold.toLocaleString()}</span>` : '';
     const thumb = p.image_url
@@ -558,6 +610,7 @@ function renderProducts(list) {
       </div>
     </a>`;
   }).join('');
+  renderPaginationControls(totalPages);
 }
 
 function renderActiveFilters({ color, chakra, zodiac, shape, belief, store }) {
