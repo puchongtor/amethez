@@ -1686,7 +1686,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-17.1';
+const ADMIN_VERSION='2026-07-17.2';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -2900,6 +2900,22 @@ const GA4_CLIENT_ID_KEY = 'amethez_ga4_client_id';
 const GA4_PROP_KEY = 'amethez_ga4_property';
 let ga4AccessToken = null;
 
+// Consume an OAuth access_token left in the URL hash immediately on load —
+// if the "popup" ends up navigating the same tab instead of a real popup
+// (blocked popup, some mobile browsers), the redirect reloads this whole
+// page fresh and any in-memory interval from ga4Authorize() is gone, so the
+// token would otherwise just sit unread in the address bar forever.
+(function ga4ConsumeHashToken(){
+  const h = window.location.hash;
+  if(h && h.includes('access_token')){
+    const t = new URLSearchParams(h.slice(1)).get('access_token');
+    if(t){
+      sessionStorage.setItem(GA4_TOKEN_KEY, t);
+      history.replaceState(null,'',window.location.pathname+window.location.search);
+    }
+  }
+})();
+
 function checkGA4Connected(){
   const mid = localStorage.getItem('amethez_ga4_mid')||'';
   const token = sessionStorage.getItem(GA4_TOKEN_KEY);
@@ -2927,18 +2943,36 @@ function ga4Authorize(){
   const clientId = localStorage.getItem(GA4_CLIENT_ID_KEY);
   if(!clientId){ toast('กรุณาใส่ GA4 OAuth Client ID ในหน้าตั้งค่าก่อน','err'); return; }
   const scope = encodeURIComponent('https://www.googleapis.com/auth/analytics.readonly');
-  const redirect = encodeURIComponent(window.location.href.split('?')[0]);
+  const redirect = encodeURIComponent(window.location.href.split('#')[0].split('?')[0]);
   const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirect}&response_type=token&scope=${scope}`;
-  window.open(url,'ga4auth','width=520,height=620');
+  const popup = window.open(url,'ga4auth','width=520,height=620');
   document.getElementById('ga4AuthStatus').textContent='⏳ รอ authorize... (popup อาจถูก block — อนุญาตใน browser)';
 
+  if(window._ga4AuthCheck) clearInterval(window._ga4AuthCheck);
   window._ga4AuthCheck = setInterval(()=>{
-    const h = window.location.hash;
-    if(h.includes('access_token')){
-      const t = new URLSearchParams(h.slice(1)).get('access_token');
-      if(t){ sessionStorage.setItem(GA4_TOKEN_KEY,t); ga4AccessToken=t; clearInterval(window._ga4AuthCheck); checkGA4Connected(); }
+    // Real popup: its location becomes same-origin once Google redirects back,
+    // so we can read its hash directly (cross-origin access throws until then).
+    let h = '';
+    if(popup && !popup.closed){
+      try{ h = popup.location.hash; }catch(e){ /* still on accounts.google.com */ }
     }
-  },1000);
+    // Popup blocked / some mobile browsers navigate the same tab instead —
+    // in that case the token lands in this window's own hash (also caught
+    // on next full page load by the ga4ConsumeHashToken() check above).
+    if(!h) h = window.location.hash;
+    if(h && h.includes('access_token')){
+      const t = new URLSearchParams(h.slice(1)).get('access_token');
+      if(t){
+        sessionStorage.setItem(GA4_TOKEN_KEY,t); ga4AccessToken=t;
+        clearInterval(window._ga4AuthCheck);
+        if(popup && !popup.closed) popup.close();
+        history.replaceState(null,'',window.location.pathname+window.location.search);
+        checkGA4Connected();
+      }
+      return;
+    }
+    if(popup && popup.closed){ clearInterval(window._ga4AuthCheck); }
+  },800);
 }
 function ga4Disconnect(){ sessionStorage.removeItem(GA4_TOKEN_KEY); ga4AccessToken=null; checkGA4Connected(); }
 
