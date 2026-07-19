@@ -25,10 +25,12 @@
     .section-title { font-family:'Playfair Display',serif; font-size:1.15rem; color:#1a1228; margin:2rem 0 1rem; display:flex; align-items:center; gap:.5rem; }
     .section-title:first-child { margin-top:0; }
 
-    /* หิน results */
+    /* หิน / Top 100 results */
     .stone-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:1rem; }
     .sc { text-decoration:none; color:#1a1228; display:block; }
     .sc-img-wrap { position:relative; border-radius:.65rem; overflow:hidden; background:#f3effa; aspect-ratio:1; margin-bottom:.4rem; display:flex; align-items:center; justify-content:center; font-size:2.2rem; }
+    .sc-img-wrap img { width:100%; height:100%; object-fit:cover; display:block; }
+    .sc-placeholder { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
     .sc-th { font-size:.85rem; font-weight:600; line-height:1.3; }
     .sc-en { font-size:.7rem; color:#9b89bb; }
 
@@ -46,7 +48,7 @@
     .bg-multi  { background:linear-gradient(135deg,#ede9fe,#d1fae5,#fce7f3); }
     .bg-clear  { background:linear-gradient(135deg,#f1f5f9,#e2e8f0); }
 
-    /* บทความ results */
+    /* บทความ / จัดอันดับ results (card row) */
     .blog-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1.1rem; }
     .bc { background:white; border:1.5px solid #ede9fe; border-radius:1rem; overflow:hidden; text-decoration:none; color:#1a1228; display:flex; gap:.9rem; padding:.9rem; transition:all .2s; }
     .bc:hover { border-color:#c4b5fd; box-shadow:0 8px 24px rgba(124,58,237,.1); transform:translateY(-2px); }
@@ -55,10 +57,10 @@
     .bc-body { min-width:0; }
     .bc-title { font-size:.88rem; font-weight:700; line-height:1.4; margin-bottom:.3rem; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
     .bc-desc { font-size:.75rem; color:#6b5e8a; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .bc-match { font-size:.7rem; color:var(--purple); font-weight:700; margin-top:.3rem; }
 
     .empty-state { text-align:center; padding:3rem 1rem; color:#9b89bb; }
     .empty-state .empty-icon { font-size:2.5rem; margin-bottom:.75rem; }
-    .section-empty { font-size:.85rem; color:#9b89bb; padding:1rem 0; }
 
     @media(max-width:480px) {
       .stone-grid { grid-template-columns:repeat(3,1fr); gap:.65rem; }
@@ -81,8 +83,18 @@
   <div class="result-meta" id="resultMeta"></div>
 
   <div id="stoneSection">
-    <div class="section-title">💎 หิน (<span id="stoneCount">0</span>)</div>
+    <div class="section-title">💎 หิน A-Z (<span id="stoneCount">0</span>)</div>
     <div class="stone-grid" id="stoneResults"></div>
+  </div>
+
+  <div id="top100Section">
+    <div class="section-title">🏆 Top 100 ยอดนิยม (<span id="top100Count">0</span>)</div>
+    <div class="stone-grid" id="top100Results"></div>
+  </div>
+
+  <div id="rankingSection">
+    <div class="section-title">📊 จัดอันดับ (<span id="rankingCount">0</span>)</div>
+    <div class="blog-grid" id="rankingResults"></div>
   </div>
 
   <div id="blogSection">
@@ -110,19 +122,28 @@ const COLOR_EMOJI = {purple:'💜',green:'💚',blue:'💙',pink:'🩷',yellow:'
   black:'🖤',white:'🤍',orange:'🧡',brown:'🟤',gold:'✨',multi:'🌈',clear:'🔷'};
 
 let STONES = [];
+let TOP100 = [];
+let RANKINGS = [];
 let BLOG = [];
 let STONE_TAGS = {}; // stone id -> Set of purpose/chakra/zodiac/planet/element tags
+let CMS_IMGS = {};
 
 function stoneIdFromUrl(url){ return (url||'').replace('/stones/','').replace('.html',''); }
 
 async function loadData(){
-  const [stonesRes, catRes, blogRes] = await Promise.all([
+  const [stonesRes, catRes, blogRes, top100Res, rankingsRes, contentRes] = await Promise.all([
     fetch('/data/stones-az.json?v=' + Date.now()).then(r => r.ok ? r.json() : {stones:[]}).catch(() => ({stones:[]})),
     fetch('/data/categories.json?v=' + Date.now()).then(r => r.ok ? r.json() : {}).catch(() => ({})),
     fetch('/data/blog.json?v=' + Date.now()).then(r => r.ok ? r.json() : {articles:[]}).catch(() => ({articles:[]})),
+    fetch('/data/top-100-stones.json?v=' + Date.now()).then(r => r.ok ? r.json() : {stones:[]}).catch(() => ({stones:[]})),
+    fetch('/data/rankings.json?v=' + Date.now()).then(r => r.ok ? r.json() : {articles:[]}).catch(() => ({articles:[]})),
+    fetch('/data/content.json?v=' + Date.now()).then(r => r.ok ? r.json() : {}).catch(() => ({})),
   ]);
   STONES = stonesRes.stones || [];
   BLOG = blogRes.articles || [];
+  TOP100 = top100Res.stones || [];
+  RANKINGS = rankingsRes.articles || [];
+  CMS_IMGS = contentRes.images || {};
 
   // สร้างตาราง stone id -> tag (จักระ/ราศี/ดาวเคราะห์/ธาตุ) เพื่อให้ค้นด้วยคำ
   // ประเภท "ความรัก"/"จักระหัวใจ" เจอหินที่เกี่ยวข้องได้ ไม่ใช่แค่ชื่อหินตรงตัว
@@ -143,6 +164,16 @@ function matchStone(s, q){
   const hay = [s.th, s.en, ...tags].join(' ').toLowerCase();
   return hay.includes(q);
 }
+function matchTop100(s, q){
+  const hay = [s.th, s.en, s.desc, s.belief, ...(s.tags||[])].join(' ').toLowerCase();
+  return hay.includes(q);
+}
+function matchRanking(a, q){
+  const items = a.items || [];
+  const matchedItems = items.filter(it => (it.label||'').toLowerCase().includes(q));
+  const selfMatch = [a.title, a.excerpt].join(' ').toLowerCase().includes(q);
+  return { matched: selfMatch || matchedItems.length > 0, matchedItems };
+}
 function matchBlog(a, q){
   const hay = [a.title, a.desc, ...(a.tags||[])].join(' ').toLowerCase();
   return hay.includes(q);
@@ -150,37 +181,66 @@ function matchBlog(a, q){
 
 function renderResults(q){
   const query = (q || '').trim().toLowerCase();
-  const stoneSec = document.getElementById('stoneSection');
-  const blogSec = document.getElementById('blogSection');
+  const sections = ['stoneSection','top100Section','rankingSection','blogSection'];
   const emptyState = document.getElementById('emptyState');
+  const idleState = document.getElementById('idleState');
   const resultMeta = document.getElementById('resultMeta');
 
   if (!query) {
-    stoneSec.style.display = 'none';
-    blogSec.style.display = 'none';
+    sections.forEach(id => document.getElementById(id).style.display = 'none');
     emptyState.style.display = 'none';
-    document.getElementById('idleState').style.display = '';
+    idleState.style.display = '';
     resultMeta.textContent = '';
     return;
   }
-  document.getElementById('idleState').style.display = 'none';
+  idleState.style.display = 'none';
 
   const stoneMatches = STONES.filter(s => matchStone(s, query));
+  const top100Matches = TOP100.filter(s => matchTop100(s, query));
+  const rankingMatches = RANKINGS.map(a => ({ a, ...matchRanking(a, query) })).filter(r => r.matched);
   const blogMatches = BLOG.filter(a => matchBlog(a, query));
 
   document.getElementById('stoneCount').textContent = stoneMatches.length;
+  document.getElementById('top100Count').textContent = top100Matches.length;
+  document.getElementById('rankingCount').textContent = rankingMatches.length;
   document.getElementById('blogCount').textContent = blogMatches.length;
-  resultMeta.textContent = `ผลการค้นหา "${q}" — พบทั้งหมด ${stoneMatches.length + blogMatches.length} รายการ`;
+  const total = stoneMatches.length + top100Matches.length + rankingMatches.length + blogMatches.length;
+  resultMeta.textContent = `ผลการค้นหา "${q}" — พบทั้งหมด ${total} รายการ`;
 
-  stoneSec.style.display = stoneMatches.length ? '' : 'none';
+  document.getElementById('stoneSection').style.display = stoneMatches.length ? '' : 'none';
   document.getElementById('stoneResults').innerHTML = stoneMatches.map(s => `
     <a href="${x(s.url)}" class="sc">
-      <div class="sc-img-wrap bg-${x(s.col)}">${COLOR_EMOJI[s.col] || '💎'}</div>
+      <div class="sc-img-wrap bg-${x(s.col)}">
+        ${CMS_IMGS['stone_'+s.img+'_hero'] ? `<img src="${x(CMS_IMGS['stone_'+s.img+'_hero'])}" alt="" onerror="this.style.display='none'">` : ''}
+        <div class="sc-placeholder">${COLOR_EMOJI[s.col] || '💎'}</div>
+      </div>
       <div class="sc-th">${x(s.th)}</div>
       <div class="sc-en">${x(s.en)}</div>
     </a>`).join('');
 
-  blogSec.style.display = blogMatches.length ? '' : 'none';
+  document.getElementById('top100Section').style.display = top100Matches.length ? '' : 'none';
+  document.getElementById('top100Results').innerHTML = top100Matches.map(s => `
+    <a href="${x(s.articleUrl || ('/stones/encyclopedia.html#'+s.id))}" class="sc">
+      <div class="sc-img-wrap bg-${x(s.col)}">
+        ${CMS_IMGS[s.imgSlot] ? `<img src="${x(CMS_IMGS[s.imgSlot])}" alt="" onerror="this.style.display='none'">` : ''}
+        <div class="sc-placeholder">${COLOR_EMOJI[s.col] || '💎'}</div>
+      </div>
+      <div class="sc-th">#${s.rank} ${x(s.th)}</div>
+      <div class="sc-en">${x(s.en)}</div>
+    </a>`).join('');
+
+  document.getElementById('rankingSection').style.display = rankingMatches.length ? '' : 'none';
+  document.getElementById('rankingResults').innerHTML = rankingMatches.map(({a, matchedItems}) => `
+    <a href="${x('/stones/rankings/'+a.slug+'.html')}" class="bc">
+      <div class="bc-thumb">${CMS_IMGS[a.heroImgSlot] ? `<img src="${x(CMS_IMGS[a.heroImgSlot])}" alt="" onerror="this.parentElement.textContent='🏆'">` : '🏆'}</div>
+      <div class="bc-body">
+        <div class="bc-title">${x(a.title)}</div>
+        <div class="bc-desc">${x(a.excerpt||'')}</div>
+        ${matchedItems.length ? `<div class="bc-match">ตรงกับ: ${matchedItems.map(it=>x(it.label)).join(', ')}</div>` : ''}
+      </div>
+    </a>`).join('');
+
+  document.getElementById('blogSection').style.display = blogMatches.length ? '' : 'none';
   document.getElementById('blogResults').innerHTML = blogMatches.map(a => `
     <a href="${x(a.url)}" class="bc">
       <div class="bc-thumb">${a.thumb ? `<img src="${x(a.thumb)}" alt="" onerror="this.parentElement.textContent='${x(a.emoji||'📖')}'">` : (a.emoji || '📖')}</div>
@@ -190,7 +250,7 @@ function renderResults(q){
       </div>
     </a>`).join('');
 
-  emptyState.style.display = (!stoneMatches.length && !blogMatches.length) ? '' : 'none';
+  emptyState.style.display = total === 0 ? '' : 'none';
 }
 
 function doUrlSearch(q){
