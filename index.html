@@ -689,7 +689,7 @@ document.getElementById('qSearch')?.addEventListener('keydown', function(e) {
   if (e.key === 'Enter') { e.preventDefault(); document.getElementById('findBtn').click(); }
 });
 function doSearch(kw) {
-  window.location.href = '/stones/encyclopedia.html?q=' + encodeURIComponent(kw);
+  window.location.href = '/search.html?q=' + encodeURIComponent(kw);
 }
 document.getElementById('searchInput').addEventListener('keydown', function(e) {
   if (e.key === 'Enter' && this.value.trim()) doSearch(this.value.trim());

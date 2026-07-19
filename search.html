@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ค้นหา — หินคริสตัลและบทความ | Amethez</title>
+  <meta name="description" content="ค้นหาหินคริสตัลและบทความทั้งหมดบน Amethez ในที่เดียว">
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://amethez.com/search.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    :root { --purple:#7c3aed; --gold:#c9a84c; }
+
+    .search-hero { background:linear-gradient(160deg,#1a0a2e,#2d1a4a,#0f0820); padding:2.75rem 1.5rem 2.25rem; text-align:center; }
+    .search-hero h1 { font-family:'Playfair Display',serif; font-size:clamp(1.5rem,4vw,2.2rem); color:#f3effa; margin-bottom:1.1rem; }
+    .search-box-wrap { max-width:560px; margin:0 auto; position:relative; }
+    .search-box { width:100%; padding:.85rem 1.25rem .85rem 3rem; border:none; border-radius:3rem; font-family:Sarabun,sans-serif; font-size:.95rem; outline:none; box-shadow:0 4px 20px rgba(0,0,0,.25); }
+    .search-box-icon { position:absolute; left:1.1rem; top:50%; transform:translateY(-50%); font-size:1.1rem; pointer-events:none; }
+
+    .wrap { max-width:1100px; margin:0 auto; padding:2rem 1.25rem 3rem; }
+    .result-meta { font-size:.85rem; color:#9b89bb; text-align:center; margin-bottom:1.5rem; }
+
+    .section-title { font-family:'Playfair Display',serif; font-size:1.15rem; color:#1a1228; margin:2rem 0 1rem; display:flex; align-items:center; gap:.5rem; }
+    .section-title:first-child { margin-top:0; }
+
+    /* หิน results */
+    .stone-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:1rem; }
+    .sc { text-decoration:none; color:#1a1228; display:block; }
+    .sc-img-wrap { position:relative; border-radius:.65rem; overflow:hidden; background:#f3effa; aspect-ratio:1; margin-bottom:.4rem; display:flex; align-items:center; justify-content:center; font-size:2.2rem; }
+    .sc-th { font-size:.85rem; font-weight:600; line-height:1.3; }
+    .sc-en { font-size:.7rem; color:#9b89bb; }
+
+    .bg-purple { background:linear-gradient(135deg,#ede9fe,#c4b5fd); }
+    .bg-green  { background:linear-gradient(135deg,#d1fae5,#6ee7b7); }
+    .bg-blue   { background:linear-gradient(135deg,#dbeafe,#93c5fd); }
+    .bg-pink   { background:linear-gradient(135deg,#fce7f3,#f9a8d4); }
+    .bg-yellow { background:linear-gradient(135deg,#fef3c7,#fde68a); }
+    .bg-red    { background:linear-gradient(135deg,#fee2e2,#fca5a5); }
+    .bg-black  { background:linear-gradient(135deg,#1f2937,#374151); }
+    .bg-white  { background:linear-gradient(135deg,#f8fafc,#e2e8f0); }
+    .bg-orange { background:linear-gradient(135deg,#ffedd5,#fdba74); }
+    .bg-brown  { background:linear-gradient(135deg,#fef3c7,#b45309); }
+    .bg-gold   { background:linear-gradient(135deg,#fef3c7,#c9a84c); }
+    .bg-multi  { background:linear-gradient(135deg,#ede9fe,#d1fae5,#fce7f3); }
+    .bg-clear  { background:linear-gradient(135deg,#f1f5f9,#e2e8f0); }
+
+    /* บทความ results */
+    .blog-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1.1rem; }
+    .bc { background:white; border:1.5px solid #ede9fe; border-radius:1rem; overflow:hidden; text-decoration:none; color:#1a1228; display:flex; gap:.9rem; padding:.9rem; transition:all .2s; }
+    .bc:hover { border-color:#c4b5fd; box-shadow:0 8px 24px rgba(124,58,237,.1); transform:translateY(-2px); }
+    .bc-thumb { width:64px; height:64px; border-radius:.6rem; background:#f3effa; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:1.6rem; overflow:hidden; }
+    .bc-thumb img { width:100%; height:100%; object-fit:cover; }
+    .bc-body { min-width:0; }
+    .bc-title { font-size:.88rem; font-weight:700; line-height:1.4; margin-bottom:.3rem; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .bc-desc { font-size:.75rem; color:#6b5e8a; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+
+    .empty-state { text-align:center; padding:3rem 1rem; color:#9b89bb; }
+    .empty-state .empty-icon { font-size:2.5rem; margin-bottom:.75rem; }
+    .section-empty { font-size:.85rem; color:#9b89bb; padding:1rem 0; }
+
+    @media(max-width:480px) {
+      .stone-grid { grid-template-columns:repeat(3,1fr); gap:.65rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header"></header>
+
+<section class="search-hero">
+  <h1>🔍 ค้นหา</h1>
+  <div class="search-box-wrap">
+    <span class="search-box-icon">🔍</span>
+    <input id="searchBox" class="search-box" type="search" placeholder="ค้นหาหิน หรือบทความ เช่น อเมทิสต์, ความรัก, จักระหัวใจ...">
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="result-meta" id="resultMeta"></div>
+
+  <div id="stoneSection">
+    <div class="section-title">💎 หิน (<span id="stoneCount">0</span>)</div>
+    <div class="stone-grid" id="stoneResults"></div>
+  </div>
+
+  <div id="blogSection">
+    <div class="section-title">📖 บทความ (<span id="blogCount">0</span>)</div>
+    <div class="blog-grid" id="blogResults"></div>
+  </div>
+
+  <div class="empty-state" id="emptyState" style="display:none">
+    <div class="empty-icon">🔍</div>
+    <p>ไม่พบผลลัพธ์ที่ตรงกับคำค้นหา ลองคำอื่นดูนะครับ</p>
+  </div>
+
+  <div class="empty-state" id="idleState" style="display:none">
+    <div class="empty-icon">💎</div>
+    <p>พิมพ์คำค้นหาด้านบน เช่น ชื่อหิน หรือหัวข้อที่สนใจ เช่น ความรัก, จักระหัวใจ</p>
+  </div>
+</div>
+
+<footer class="site-footer"></footer>
+
+<script>
+function x(s){ return s ? String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') : ''; }
+
+const COLOR_EMOJI = {purple:'💜',green:'💚',blue:'💙',pink:'🩷',yellow:'💛',red:'❤️',
+  black:'🖤',white:'🤍',orange:'🧡',brown:'🟤',gold:'✨',multi:'🌈',clear:'🔷'};
+
+let STONES = [];
+let BLOG = [];
+let STONE_TAGS = {}; // stone id -> Set of purpose/chakra/zodiac/planet/element tags
+
+function stoneIdFromUrl(url){ return (url||'').replace('/stones/','').replace('.html',''); }
+
+async function loadData(){
+  const [stonesRes, catRes, blogRes] = await Promise.all([
+    fetch('/data/stones-az.json?v=' + Date.now()).then(r => r.ok ? r.json() : {stones:[]}).catch(() => ({stones:[]})),
+    fetch('/data/categories.json?v=' + Date.now()).then(r => r.ok ? r.json() : {}).catch(() => ({})),
+    fetch('/data/blog.json?v=' + Date.now()).then(r => r.ok ? r.json() : {articles:[]}).catch(() => ({articles:[]})),
+  ]);
+  STONES = stonesRes.stones || [];
+  BLOG = blogRes.articles || [];
+
+  // สร้างตาราง stone id -> tag (จักระ/ราศี/ดาวเคราะห์/ธาตุ) เพื่อให้ค้นด้วยคำ
+  // ประเภท "ความรัก"/"จักระหัวใจ" เจอหินที่เกี่ยวข้องได้ ไม่ใช่แค่ชื่อหินตรงตัว
+  ['zodiac','chakra','planet','element'].forEach(catType => {
+    (catRes[catType] || []).forEach(cat => {
+      (cat.stones || []).forEach(id => {
+        if (!STONE_TAGS[id]) STONE_TAGS[id] = new Set();
+        STONE_TAGS[id].add(cat.name);
+        (cat.stone_tags || []).forEach(t => STONE_TAGS[id].add(t));
+      });
+    });
+  });
+}
+
+function matchStone(s, q){
+  const id = stoneIdFromUrl(s.url);
+  const tags = STONE_TAGS[id] ? Array.from(STONE_TAGS[id]) : [];
+  const hay = [s.th, s.en, ...tags].join(' ').toLowerCase();
+  return hay.includes(q);
+}
+function matchBlog(a, q){
+  const hay = [a.title, a.desc].join(' ').toLowerCase();
+  return hay.includes(q);
+}
+
+function renderResults(q){
+  const query = (q || '').trim().toLowerCase();
+  const stoneSec = document.getElementById('stoneSection');
+  const blogSec = document.getElementById('blogSection');
+  const emptyState = document.getElementById('emptyState');
+  const resultMeta = document.getElementById('resultMeta');
+
+  if (!query) {
+    stoneSec.style.display = 'none';
+    blogSec.style.display = 'none';
+    emptyState.style.display = 'none';
+    document.getElementById('idleState').style.display = '';
+    resultMeta.textContent = '';
+    return;
+  }
+  document.getElementById('idleState').style.display = 'none';
+
+  const stoneMatches = STONES.filter(s => matchStone(s, query));
+  const blogMatches = BLOG.filter(a => matchBlog(a, query));
+
+  document.getElementById('stoneCount').textContent = stoneMatches.length;
+  document.getElementById('blogCount').textContent = blogMatches.length;
+  resultMeta.textContent = `ผลการค้นหา "${q}" — พบทั้งหมด ${stoneMatches.length + blogMatches.length} รายการ`;
+
+  stoneSec.style.display = stoneMatches.length ? '' : 'none';
+  document.getElementById('stoneResults').innerHTML = stoneMatches.map(s => `
+    <a href="${x(s.url)}" class="sc">
+      <div class="sc-img-wrap bg-${x(s.col)}">${COLOR_EMOJI[s.col] || '💎'}</div>
+      <div class="sc-th">${x(s.th)}</div>
+      <div class="sc-en">${x(s.en)}</div>
+    </a>`).join('');
+
+  blogSec.style.display = blogMatches.length ? '' : 'none';
+  document.getElementById('blogResults').innerHTML = blogMatches.map(a => `
+    <a href="${x(a.url)}" class="bc">
+      <div class="bc-thumb">${a.thumb ? `<img src="${x(a.thumb)}" alt="" onerror="this.parentElement.textContent='${x(a.emoji||'📖')}'">` : (a.emoji || '📖')}</div>
+      <div class="bc-body">
+        <div class="bc-title">${x(a.title)}</div>
+        <div class="bc-desc">${x(a.desc||'')}</div>
+      </div>
+    </a>`).join('');
+
+  emptyState.style.display = (!stoneMatches.length && !blogMatches.length) ? '' : 'none';
+}
+
+function doUrlSearch(q){
+  const url = new URL(window.location.href);
+  if (q) url.searchParams.set('q', q); else url.searchParams.delete('q');
+  history.replaceState(null, '', url.pathname + url.search);
+  renderResults(q);
+}
+
+(async () => {
+  await loadData();
+  const params = new URLSearchParams(window.location.search);
+  const q = params.get('q') || '';
+  document.getElementById('searchBox').value = q;
+  renderResults(q);
+})();
+
+document.getElementById('searchBox').addEventListener('input', e => doUrlSearch(e.target.value));
+</script>
+</body>
+</html>
