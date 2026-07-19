@@ -493,6 +493,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://amethez.com/search.html</loc>
+    <lastmod>2026-07-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://amethez.com/shop/academy.html</loc>
     <lastmod>2026-07-19</lastmod>
     <changefreq>weekly</changefreq>
