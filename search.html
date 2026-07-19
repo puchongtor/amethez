@@ -30,7 +30,6 @@
     .sc { text-decoration:none; color:#1a1228; display:block; }
     .sc-img-wrap { position:relative; border-radius:.65rem; overflow:hidden; background:#f3effa; aspect-ratio:1; margin-bottom:.4rem; display:flex; align-items:center; justify-content:center; font-size:2.2rem; }
     .sc-img-wrap img { width:100%; height:100%; object-fit:cover; display:block; }
-    .sc-placeholder { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
     .sc-th { font-size:.85rem; font-weight:600; line-height:1.3; }
     .sc-en { font-size:.7rem; color:#9b89bb; }
 
@@ -211,8 +210,7 @@ function renderResults(q){
   document.getElementById('stoneResults').innerHTML = stoneMatches.map(s => `
     <a href="${x(s.url)}" class="sc">
       <div class="sc-img-wrap bg-${x(s.col)}">
-        ${CMS_IMGS['stone_'+s.img+'_hero'] ? `<img src="${x(CMS_IMGS['stone_'+s.img+'_hero'])}" alt="" onerror="this.style.display='none'">` : ''}
-        <div class="sc-placeholder">${COLOR_EMOJI[s.col] || '💎'}</div>
+        ${CMS_IMGS['stone_'+s.img+'_hero'] ? `<img src="${x(CMS_IMGS['stone_'+s.img+'_hero'])}" alt="" onerror="this.outerHTML='${x(COLOR_EMOJI[s.col] || '💎')}'">` : (COLOR_EMOJI[s.col] || '💎')}
       </div>
       <div class="sc-th">${x(s.th)}</div>
       <div class="sc-en">${x(s.en)}</div>
@@ -222,8 +220,7 @@ function renderResults(q){
   document.getElementById('top100Results').innerHTML = top100Matches.map(s => `
     <a href="${x(s.articleUrl || ('/stones/encyclopedia.html#'+s.id))}" class="sc">
       <div class="sc-img-wrap bg-${x(s.col)}">
-        ${CMS_IMGS[s.imgSlot] ? `<img src="${x(CMS_IMGS[s.imgSlot])}" alt="" onerror="this.style.display='none'">` : ''}
-        <div class="sc-placeholder">${COLOR_EMOJI[s.col] || '💎'}</div>
+        ${CMS_IMGS[s.imgSlot] ? `<img src="${x(CMS_IMGS[s.imgSlot])}" alt="" onerror="this.outerHTML='${x(COLOR_EMOJI[s.col] || '💎')}'">` : (COLOR_EMOJI[s.col] || '💎')}
       </div>
       <div class="sc-th">#${s.rank} ${x(s.th)}</div>
       <div class="sc-en">${x(s.en)}</div>
