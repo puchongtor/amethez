@@ -144,7 +144,7 @@ function matchStone(s, q){
   return hay.includes(q);
 }
 function matchBlog(a, q){
-  const hay = [a.title, a.desc].join(' ').toLowerCase();
+  const hay = [a.title, a.desc, ...(a.tags||[])].join(' ').toLowerCase();
   return hay.includes(q);
 }
 
