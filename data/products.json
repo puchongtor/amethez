@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated": "2026-07-16",
+  "updated": "2026-07-20",
   "products": [
     {
       "id": "A1535_MRMW3PBR",
@@ -168,7 +168,8 @@
       ],
       "status": "available",
       "created": "16/7/2569",
-      "updated": "16/7/2569"
+      "updated": "16/7/2569",
+      "featured": true
     },
     {
       "id": "A1527_MRMW3PBQ",
@@ -336,7 +337,8 @@
       ],
       "status": "available",
       "created": "16/7/2569",
-      "updated": "16/7/2569"
+      "updated": "16/7/2569",
+      "featured": true
     },
     {
       "id": "A1519_MRMW3PBP",
@@ -3150,7 +3152,8 @@
       ],
       "status": "available",
       "created": "16/7/2569",
-      "updated": "16/7/2569"
+      "updated": "16/7/2569",
+      "featured": true
     },
     {
       "id": "A1385_MRMW2DWI",
@@ -8366,7 +8369,8 @@
       ],
       "status": "available",
       "created": "16/7/2569",
-      "updated": "16/7/2569"
+      "updated": "16/7/2569",
+      "featured": true
     },
     {
       "id": "A1136_MRMW1HT8",
@@ -16703,7 +16707,8 @@
       ],
       "status": "available",
       "created": "16/7/2569",
-      "updated": "16/7/2569"
+      "updated": "16/7/2569",
+      "featured": true
     },
     {
       "id": "A703_MRMVZMD7",
@@ -23822,7 +23827,8 @@
       ],
       "status": "available",
       "created": "16/7/2569",
-      "updated": "16/7/2569"
+      "updated": "16/7/2569",
+      "featured": true
     },
     {
       "id": "A364_MRMVX4VX",
