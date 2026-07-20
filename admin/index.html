@@ -1686,7 +1686,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-19.1';
+const ADMIN_VERSION='2026-07-19.2';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -4613,7 +4613,7 @@ function openEditPost(id){
   // page in the background and self-heal if the cache looks stale/truncated
   // (this is how the FAQ/related-links content-loss bug happened before)
   const localBody=p.body||'';
-  document.getElementById('beBodyTA').value=localBody||'(กำลังโหลด...)';
+  document.getElementById('beBodyTA').value=localBody;
   document.getElementById('beBodyPreview').innerHTML=localBody;
   updateBEBodyLen(localBody);
   switchBETab('html');
