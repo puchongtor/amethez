@@ -65,7 +65,12 @@
         const img = document.createElement('img');
         img.src = logoUrl;
         img.alt = 'AMETHEZ';
-        img.style.cssText = 'height:32px;width:auto;object-fit:contain';
+        img.className = 'logo-img';
+        // Preserve any per-instance inline sizing the SVG had (e.g. the
+        // footer's smaller icon) — otherwise fall back to the shared
+        // .logo-img CSS rule so header/footer can size independently.
+        const inlineStyle = el.getAttribute('style');
+        if (inlineStyle) img.setAttribute('style', inlineStyle);
         el.replaceWith(img);
       });
     }
