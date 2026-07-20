@@ -66,22 +66,26 @@ const SEARCH_MODAL_HTML = `
     </div>
     <div id="gsModeArticle">
       <div class="gs-input-row">
-        <span class="gs-icon">🔍</span>
+        <span class="gs-icon" onclick="const v=document.getElementById('gsSearchInput').value.trim(); if(v) gsDoSearch(v);">🔍</span>
         <input id="gsSearchInput" class="gs-input" type="search" placeholder="ค้นหาบทความหิน เช่น อเมทิสต์, ความรัก, จักระหัวใจ...">
       </div>
       <div class="gs-hints-label">🔥 คำค้นยอดนิยม</div>
       <div class="gs-hints">
-        <span class="gs-hint" onclick="gsDoSearch('ความรัก')">ความรัก</span>
-        <span class="gs-hint" onclick="gsDoSearch('การเงิน')">การเงิน</span>
-        <span class="gs-hint" onclick="gsDoSearch('สมาธิ')">สมาธิ</span>
         <span class="gs-hint" onclick="gsDoSearch('ป้องกัน')">ป้องกัน</span>
         <span class="gs-hint" onclick="gsDoSearch('จักระ')">จักระ</span>
-        <span class="gs-hint" onclick="gsDoSearch('ราศี')">ราศี</span>
+        <span class="gs-hint" onclick="gsDoSearch('ความรัก')">ความรัก</span>
+        <span class="gs-hint" onclick="gsDoSearch('สมาธิ')">สมาธิ</span>
+        <span class="gs-hint" onclick="gsDoSearch('การเงิน')">การเงิน</span>
+        <span class="gs-hint" onclick="gsDoSearch('ความสำเร็จ')">ความสำเร็จ</span>
+        <span class="gs-hint" onclick="gsDoSearch('อเมทิสต์')">อเมทิสต์</span>
+        <span class="gs-hint" onclick="gsDoSearch('เพชร')">เพชร</span>
+        <span class="gs-hint" onclick="gsDoSearch('สุขภาพ')">สุขภาพ</span>
+        <span class="gs-hint" onclick="gsDoSearch('โชคลาภ')">โชคลาภ</span>
       </div>
     </div>
     <div id="gsModeProduct" style="display:none">
       <div class="gs-input-row">
-        <span class="gs-icon">🔍</span>
+        <span class="gs-icon" onclick="document.getElementById('gsFindBtn').click()">🔍</span>
         <input id="gsQSearch" class="gs-input" type="search" placeholder="ค้นหาสินค้า เช่น อเมทิสต์, กำไล, พระพิฆเนศ...">
       </div>
       <a id="gsFindBtn" href="/shop/" class="gs-find-btn">🔍 ค้นหาสินค้า</a>
@@ -101,7 +105,7 @@ const SEARCH_MODAL_STYLE = `
 .gs-tab { flex:1; padding:.55rem 1.25rem; border:none; border-radius:.55rem; font-family:Sarabun,sans-serif; font-size:.88rem; font-weight:700; cursor:pointer; background:transparent; color:#7c3aed; }
 .gs-tab.on { background:#7c3aed; color:white; }
 .gs-input-row { position:relative; }
-.gs-icon { position:absolute; left:1.1rem; top:50%; transform:translateY(-50%); font-size:1.1rem; pointer-events:none; }
+.gs-icon { position:absolute; left:1.1rem; top:50%; transform:translateY(-50%); font-size:1.1rem; cursor:pointer; z-index:1; }
 .gs-input { width:100%; padding:.9rem 1.25rem .9rem 3rem; border:2px solid #e5e7eb; border-radius:3rem; font-family:Sarabun,sans-serif; font-size:.95rem; outline:none; box-sizing:border-box; }
 .gs-input:focus { border-color:#7c3aed; }
 .gs-hints-label { text-align:center; font-size:.75rem; color:#6b7280; margin-top:.85rem; margin-bottom:.4rem; }
