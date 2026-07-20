@@ -87,7 +87,8 @@
     @media(max-width:640px) { .trust-inner { grid-template-columns:1fr; } .trust-item { border-right:none; border-bottom:1px solid var(--border); } }
 
     /* ── SEARCH ── */
-    .search-bar { max-width:640px; margin:0 auto; position:relative; }
+    .search-bar { max-width:640px; margin:0 auto; }
+    .search-input-row { position:relative; }
     .search-input { width:100%; padding:.9rem 1.25rem .9rem 3rem; border:2px solid #e5e7eb; border-radius:3rem; font-family:Sarabun,sans-serif; font-size:.95rem; background:white; outline:none; transition:all .2s; box-shadow:0 2px 12px rgba(0,0,0,.06); }
     .search-input:focus { border-color:var(--purple); box-shadow:0 4px 20px rgba(124,58,237,.15); }
     .search-icon { position:absolute; left:1.1rem; top:50%; transform:translateY(-50%); font-size:1.1rem; cursor:pointer; z-index:1; }
@@ -275,8 +276,10 @@
   </div>
   <div id="searchModeArticle">
     <div class="search-bar">
-      <span class="search-icon" onclick="const v=document.getElementById('searchInput').value.trim(); if(v) doSearch(v);">🔍</span>
-      <input class="search-input" id="searchInput" type="search" placeholder="ค้นหาบทความหิน เช่น อเมทิสต์, ความรัก, จักระหัวใจ...">
+      <div class="search-input-row">
+        <span class="search-icon" onclick="const v=document.getElementById('searchInput').value.trim(); if(v) doSearch(v);">🔍</span>
+        <input class="search-input" id="searchInput" type="search" placeholder="ค้นหาบทความหิน เช่น อเมทิสต์, ความรัก, จักระหัวใจ...">
+      </div>
       <div class="search-hints-label">🔥 คำค้นยอดนิยม</div>
       <div class="search-hints">
         <span class="hint" onclick="doSearch('ป้องกัน')">ป้องกัน</span>
