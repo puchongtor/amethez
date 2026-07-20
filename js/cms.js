@@ -49,6 +49,9 @@
     });
 
     // ── LOGO ──
+    // Only swap the icon graphic — "AMETHEZ" + tagline stay as real text
+    // (data-cms-logo-text), never hidden. A logo image is the icon, not a
+    // full replacement banner.
     const logoUrl = imgs['logo'];
     if (logoUrl) {
       document.querySelectorAll('[data-cms-logo]').forEach(el => {
@@ -57,10 +60,6 @@
         img.alt = 'AMETHEZ';
         img.style.cssText = 'height:32px;width:auto;object-fit:contain';
         el.replaceWith(img);
-      });
-      // ซ่อน text span เมื่อมีรูปโลโก้
-      document.querySelectorAll('[data-cms-logo-text]').forEach(el => {
-        el.style.display = 'none';
       });
     }
 

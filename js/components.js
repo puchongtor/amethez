@@ -53,14 +53,71 @@ const NAV_HTML = `
     </li>
     <li><a href="/talk/" class="nav-ritual">🔮 ห้องคลื่นเสียง Manifest</a></li>
   </ul></nav>
+  <button class="nav-search-btn" aria-label="ค้นหา" onclick="openGlobalSearch()">🔍</button>
 </div>`;
+
+const SEARCH_MODAL_HTML = `
+<div class="gs-overlay" id="gsOverlay" onclick="if(event.target===this) closeGlobalSearch()">
+  <div class="gs-box">
+    <button class="gs-close" aria-label="ปิด" onclick="closeGlobalSearch()">✕</button>
+    <div class="gs-tabs">
+      <button id="gsTabArticle" class="gs-tab on" onclick="switchGSMode('article')">📖 บทความ</button>
+      <button id="gsTabProduct" class="gs-tab" onclick="switchGSMode('product')">💎 หาสินค้า</button>
+    </div>
+    <div id="gsModeArticle">
+      <div class="gs-input-row">
+        <span class="gs-icon">🔍</span>
+        <input id="gsSearchInput" class="gs-input" type="search" placeholder="ค้นหาบทความหิน เช่น อเมทิสต์, ความรัก, จักระหัวใจ...">
+      </div>
+      <div class="gs-hints-label">🔥 คำค้นยอดนิยม</div>
+      <div class="gs-hints">
+        <span class="gs-hint" onclick="gsDoSearch('ความรัก')">ความรัก</span>
+        <span class="gs-hint" onclick="gsDoSearch('การเงิน')">การเงิน</span>
+        <span class="gs-hint" onclick="gsDoSearch('สมาธิ')">สมาธิ</span>
+        <span class="gs-hint" onclick="gsDoSearch('ป้องกัน')">ป้องกัน</span>
+        <span class="gs-hint" onclick="gsDoSearch('จักระ')">จักระ</span>
+        <span class="gs-hint" onclick="gsDoSearch('ราศี')">ราศี</span>
+      </div>
+    </div>
+    <div id="gsModeProduct" style="display:none">
+      <div class="gs-input-row">
+        <span class="gs-icon">🔍</span>
+        <input id="gsQSearch" class="gs-input" type="search" placeholder="ค้นหาสินค้า เช่น อเมทิสต์, กำไล, พระพิฆเนศ...">
+      </div>
+      <a id="gsFindBtn" href="/shop/" class="gs-find-btn">🔍 ค้นหาสินค้า</a>
+    </div>
+  </div>
+</div>`;
+
+const SEARCH_MODAL_STYLE = `
+.nav-search-btn { background:none; border:none; font-size:1.1rem; cursor:pointer; padding:.4rem .6rem; margin-left:.25rem; border-radius:.5rem; transition:background .15s; flex-shrink:0; }
+.nav-search-btn:hover { background:#f3effa; }
+.gs-overlay { display:none; position:fixed; inset:0; background:rgba(26,18,40,.55); z-index:9999; padding:8vh 1.25rem 1.25rem; overflow-y:auto; }
+.gs-overlay.open { display:block; }
+.gs-box { max-width:600px; margin:0 auto; background:white; border-radius:1.25rem; padding:1.75rem; position:relative; box-shadow:0 20px 60px rgba(0,0,0,.3); font-family:Sarabun,sans-serif; }
+.gs-close { position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.1rem; color:#9b89bb; cursor:pointer; padding:.25rem .5rem; }
+.gs-close:hover { color:#1a1228; }
+.gs-tabs { display:flex; background:#f0ebff; border-radius:.75rem; padding:.25rem; gap:.25rem; max-width:280px; margin:0 auto 1.25rem; }
+.gs-tab { flex:1; padding:.55rem 1.25rem; border:none; border-radius:.55rem; font-family:Sarabun,sans-serif; font-size:.88rem; font-weight:700; cursor:pointer; background:transparent; color:#7c3aed; }
+.gs-tab.on { background:#7c3aed; color:white; }
+.gs-input-row { position:relative; }
+.gs-icon { position:absolute; left:1.1rem; top:50%; transform:translateY(-50%); font-size:1.1rem; pointer-events:none; }
+.gs-input { width:100%; padding:.9rem 1.25rem .9rem 3rem; border:2px solid #e5e7eb; border-radius:3rem; font-family:Sarabun,sans-serif; font-size:.95rem; outline:none; box-sizing:border-box; }
+.gs-input:focus { border-color:#7c3aed; }
+.gs-hints-label { text-align:center; font-size:.75rem; color:#6b7280; margin-top:.85rem; margin-bottom:.4rem; }
+.gs-hints { display:flex; gap:.5rem; flex-wrap:wrap; justify-content:center; }
+.gs-hint { background:#f5f0ff; color:#7c3aed; font-size:.78rem; padding:.25rem .75rem; border-radius:2rem; cursor:pointer; border:1px solid #e9e0f5; }
+.gs-hint:hover { background:#7c3aed; color:white; }
+.gs-find-btn { display:flex; align-items:center; justify-content:center; gap:.5rem; width:100%; padding:.85rem; margin-top:1rem; background:linear-gradient(135deg,#7c3aed,#6d28d9); color:white; border-radius:.75rem; font-family:Sarabun,sans-serif; font-size:.95rem; font-weight:700; text-decoration:none; box-sizing:border-box; }
+@media(max-width:480px){ .gs-box { padding:1.25rem; } }
+`;
 
 const FOOTER_HTML = `
 <div class="container">
   <div class="footer-grid">
     <div class="footer-brand">
-      <a href="/" class="logo" style="color:#c9a84c;margin-bottom:.75rem;display:flex">
-        <svg viewBox="0 0 36 36" fill="none" style="width:28px;height:28px;margin-right:.5rem">
+      <a href="/" class="logo" style="color:#c9a84c;margin-bottom:.75rem;display:flex;align-items:center">
+        <svg viewBox="0 0 36 36" fill="none" data-cms-logo style="width:28px;height:28px;margin-right:.5rem">
           <polygon points="18,2 30,12 26,30 10,30 6,12" fill="#7c3aed" opacity="0.9"/>
           <polygon points="18,2 30,12 18,8" fill="#c9a84c" opacity="0.95"/>
           <polygon points="18,8 30,12 18,28" fill="#a78bfa"/>
@@ -123,6 +180,33 @@ const FOOTER_HTML = `
   </div>
 </div>`;
 
+/* ─── Global search popup (nav icon → modal, same as homepage's search but works from any page) ─── */
+function openGlobalSearch(){
+  document.getElementById('gsOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('gsSearchInput').focus();
+}
+function closeGlobalSearch(){
+  document.getElementById('gsOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function switchGSMode(mode){
+  const isProduct = mode === 'product';
+  document.getElementById('gsModeArticle').style.display = isProduct ? 'none' : '';
+  document.getElementById('gsModeProduct').style.display = isProduct ? '' : 'none';
+  document.getElementById('gsTabArticle').classList.toggle('on', !isProduct);
+  document.getElementById('gsTabProduct').classList.toggle('on', isProduct);
+  if (isProduct) { updateGSFinderLink(); document.getElementById('gsQSearch').focus(); }
+  else document.getElementById('gsSearchInput').focus();
+}
+function updateGSFinderLink(){
+  const kw = document.getElementById('gsQSearch')?.value.trim();
+  document.getElementById('gsFindBtn').href = '/shop/' + (kw ? '?q=' + encodeURIComponent(kw) : '');
+}
+function gsDoSearch(kw){
+  window.location.href = '/search.html?q=' + encodeURIComponent(kw);
+}
+
 /* ─── Google Analytics 4 ─── */
 (function(){
   const s = document.createElement('script');
@@ -162,6 +246,25 @@ document.addEventListener('DOMContentLoaded', () => {
   // Footer
   const ftr = document.querySelector('.site-footer');
   if (ftr) ftr.innerHTML = FOOTER_HTML;
+
+  // Global search popup — inject once, wire up events
+  if (hdr && !document.getElementById('gsOverlay')) {
+    const styleTag = document.createElement('style');
+    styleTag.textContent = SEARCH_MODAL_STYLE;
+    document.head.appendChild(styleTag);
+    document.body.insertAdjacentHTML('beforeend', SEARCH_MODAL_HTML);
+
+    document.getElementById('gsSearchInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter' && e.target.value.trim()) gsDoSearch(e.target.value.trim());
+    });
+    document.getElementById('gsQSearch').addEventListener('input', updateGSFinderLink);
+    document.getElementById('gsQSearch').addEventListener('keydown', e => {
+      if (e.key === 'Enter') { e.preventDefault(); document.getElementById('gsFindBtn').click(); }
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && document.getElementById('gsOverlay').classList.contains('open')) closeGlobalSearch();
+    });
+  }
 
   // Blog Article Hero Image — inject thumbnail from blog.json
   const heroDiv = document.querySelector('.hero-img');
