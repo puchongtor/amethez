@@ -279,6 +279,109 @@ glistening, dramatic lighting, cinematic 4K"
 
 ---
 
+## บทความ News/Discovery — ข่าว/การค้นพบใหม่จากต่างประเทศ
+
+> Workflow เฉพาะสำหรับบทความประเภทนี้เท่านั้น — สำหรับบทความ Evergreen (พื้นฐานหิน) ใช้ Content Structure ใน SEO Strategy ด้านบนแทน
+
+### บทความประเภทนี้คืออะไร
+ดึงข้อมูลจากข่าว/การค้นพบใหม่ในวงการแร่/หินมงคลต่างประเทศ แปลและเรียบเรียงใหม่เป็นภาษาไทย พร้อมเพิ่มบริบทสำหรับคนไทย/สายมู — reference: Techsauce "พบอำพันที่เก่าแก่ที่สุดในโลก อายุ 385 ล้านปี" (ต้นฉบับจาก ScienceAlert, Techsauce ใช้ AI เขียน) Amethez ทำแบบเดียวกันแต่ต้อง **ดีกว่า Techsauce ทุกจุด**
+
+### แหล่งข้อมูล
+**ค้นก่อน:** ScienceAlert.com, Mindat.org, GIA.edu, Geology.com, Science Daily (Mineralogy)
+
+**รูปที่ใช้ได้ถูกกฎหมาย:** Wikimedia Commons (เช็ค CC ทีละรูป), USGS (สาธารณสมบัติ), Mindat.org (เช็ครายรูป)
+
+**ห้ามดึงรูปจาก:** บทความข่าว (BBC, National Geographic, ScienceAlert), GIA journals, Instagram/Facebook ร้านหิน — **ถ้าหารูป CC ไม่ได้ → สร้าง SVG illustration แทนทันที**
+
+### Workflow
+```
+1. Claude ค้นหาข่าว/การค้นพบใหม่จากต่างประเทศ
+        ↓
+2. Claude เขียนบทความยาว ภาษาไทย (เขียนใหม่ทั้งหมด ห้าม copy แปลตรงๆ + ใส่ลิงก์อ้างอิงต้นฉบับ)
+        ↓
+3. Claude หารูป Wikimedia Commons ที่เกี่ยวข้อง ถ้าไม่มี → สร้าง SVG illustration
+        ↓
+4. Claude เตรียม Google Flow prompt (รูปและวิดีโอ)
+        ↓
+5. Claude บันทึกลง articles.json สถานะ "รอรูป"
+        ↓
+6. Admin Panel แสดง 🔴 รอรูป
+        ↓
+7. Puchong กด Copy prompt → เปิด Google Flow → Generate
+        ↓
+8. Puchong Upload รูป/วิดีโอกลับ Admin Panel
+        ↓
+9. สถานะเปลี่ยนเป็น 🟡 รอ publish → ขึ้นเว็บตาม schedule อัตโนมัติ
+```
+
+### โฟลเดอร์เก็บบทความ
+```
+amethez.com/news/[ชื่อบทความ-เป็นภาษาอังกฤษ-slug].html
+```
+ตัวอย่าง: `news/amber-385-million-years-china.html`, `news/moldavite-price-surge-2026.html`
+
+### โครงสร้างบทความ (1,500–2,000+ คำ ห้ามสั้นกว่านี้)
+1. **HOOK** (2-3 ย่อหน้าแรก) — ต้องโดนใจคนทั่วไป ไม่ใช่คนรู้เรื่องหินอย่างเดียว ห้ามขึ้นต้นด้วยชื่อวิทยาศาสตร์/สูตรเคมี
+2. **STORY** (400–600 คำ) — เล่าแบบสารคดี: ใครค้นพบ ที่ไหน เกิดอะไรขึ้น ทำไมสำคัญ
+3. **DEEP DIVE** (300–500 คำ) — ข้อมูลวิทยาศาสตร์จริง ตัวเลขจริง อ้างอิงแหล่งที่มาชัดเจน
+4. **THAI CONTEXT** (200–300 คำ) — จุดที่ Techsauce ไม่มี: เชื่อมความเชื่อไทย/สายมู, หาซื้อได้ที่ไหนในไทย ราคาเท่าไหร่, เชื่อมจักระ/ราศีถ้าเกี่ยวข้อง
+5. **Quick Facts table** — ชื่อ / อายุ-ยุค / แหล่งค้นพบ / ผู้ค้นพบ / ความสำคัญ
+6. **FAQ 5-6 ข้อ** — เพื่อติด People Also Ask
+7. **Internal links** — ไปบทความหินที่เกี่ยวข้อง + หน้า Category ที่ตรง
+8. **Schema.org JSON-LD** (`@type: Article`, author = Crystal Atlas — Amethez)
+9. **อ้างอิงท้ายบทความ** — ลิงก์ต้นฉบับเสมอ (`<div class="references">`)
+10. **Shopee Section แยกชัดเจน** — auto-match จาก products.json ตาม tags เหมือนบทความ Evergreen อื่นๆ
+
+### Google Flow Prompt (2 แบบต่อบทความ)
+```
+รูปนิ่ง: "[ชื่อหิน/แร่] [ลักษณะเด่น], [สี], [บริบทการค้นพบ], dramatic lighting,
+macro photography style, [background], product photography, 8K detail --ar 16:9"
+
+วิดีโอ: "[บริบทการค้นพบ] cinematic reveal, [สี/ลักษณะ], dramatic lighting,
+slow motion, documentary style, 4K"
+```
+
+### บันทึกลง articles.json
+```json
+{
+  "id": "news-001",
+  "type": "news",
+  "title": "พบอำพันที่เก่าแก่ที่สุดในโลก อายุ 385 ล้านปี ก่อนยุคไดโนเสาร์",
+  "slug": "amber-385-million-years-china",
+  "author": "Crystal Atlas",
+  "scheduled_date": "2026-07-20",
+  "scheduled_time": "13:00",
+  "status": "รอรูป",
+  "flow_prompt_image": "Ancient amber fossil specimen...",
+  "flow_prompt_video": "Ancient amber fossil slowly revealed...",
+  "source_url": "https://www.sciencealert.com/...",
+  "tags": ["อำพัน", "ฟอสซิล", "การค้นพบใหม่", "จีน", "385 ล้านปี"],
+  "shopee_tags": ["อำพัน", "หินฟอสซิล"]
+}
+```
+
+### ข้อห้ามเด็ดขาด
+```
+✗ ห้าม copy แปลตรงๆ จากต้นฉบับ (ผิดลิขสิทธิ์)
+✗ ห้ามดึงรูปจาก ScienceAlert/BBC/NatGeo/GIA โดยตรง
+✗ ห้ามเขียนสั้นกว่า 1,500 คำ
+✗ ห้ามลงบทความพร้อมกันหลายชิ้น (ทยอยลง 1-2 ชิ้น/วัน)
+✗ ห้ามไม่มีลิงก์อ้างอิงต้นฉบับ
+✗ ห้าม Hook แบบวิชาการ (ชื่อวิทยาศาสตร์ สูตรเคมี ขึ้นก่อน)
+```
+
+### ต้องดีกว่า Techsauce ทุกครั้ง
+| จุด | Techsauce | Amethez ต้องดีกว่า |
+|-----|-----------|-------------------|
+| Hook | ข่าวสรุปทั่วไป | Hook ที่ดึงคนทั่วไปและสายมู |
+| ความยาว | ~800 คำ | 1,500-2,000+ คำ |
+| Thai Context | ไม่มี | มีทุกบทความ (ราคาในไทย, ซื้อที่ไหน, เชื่อมสายมู) |
+| FAQ | ไม่มี | 5-6 ข้อ ติด People Also Ask |
+| Shopee Section | ไม่มี | มีแยกท้ายหน้าทุกครั้ง |
+| SEO Target | Tech/Business คนทั่วไป | สายมู/คริสตัล คนหาหินมงคล |
+
+---
+
 ## อาจารย์เมธา — Schedule System
 
 - เขียนดวงสต็อกล่วงหน้า 30 วัน
