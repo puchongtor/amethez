@@ -100,16 +100,19 @@
     .hint:hover { background:var(--purple); color:white; }
 
     /* ── DIGITAL STRIP ── */
-    .digital-strip { background:#f3eef9; border-bottom:1px solid var(--border); }
-    .digital-inner { max-width:1160px; margin:0 auto; padding:.875rem 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
-    .digital-left { display:flex; align-items:center; gap:.75rem; }
-    .digital-icon { font-size:1.2rem; }
-    .digital-text strong { font-size:.85rem; font-weight:700; color:var(--text); display:block; }
-    .digital-text span { font-size:.75rem; color:var(--muted); }
-    .digital-pills { display:flex; gap:.375rem; flex-wrap:wrap; }
-    .digital-pill { background:white; border:1px solid var(--border); border-radius:2rem; padding:.22rem .7rem; font-size:.72rem; font-weight:700; color:var(--text); }
-    .digital-cta { font-size:.8rem; font-weight:700; color:var(--purple); white-space:nowrap; text-decoration:none; }
-    .digital-cta:hover { text-decoration:underline; }
+    .digital-strip { background:var(--bg); padding:0 1.5rem 2.5rem; }
+    .digital-inner { max-width:1160px; margin:0 auto; padding:1.5rem 2rem; display:flex; align-items:center; justify-content:space-between; gap:1.5rem; flex-wrap:wrap; background:linear-gradient(120deg,#1a0936 0%,#3b1d78 55%,#6d3fa8 100%); border-radius:1.25rem; position:relative; overflow:hidden; box-shadow:0 10px 32px rgba(124,58,237,.22); }
+    .digital-inner::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 55% 80% at 90% 15%,rgba(201,168,76,.28),transparent 65%); pointer-events:none; }
+    .digital-left { display:flex; align-items:center; gap:1rem; position:relative; z-index:1; }
+    .digital-icon { width:48px; height:48px; border-radius:.875rem; background:linear-gradient(135deg,rgba(201,168,76,.28),rgba(255,255,255,.08)); border:1px solid rgba(201,168,76,.4); display:flex; align-items:center; justify-content:center; font-size:1.4rem; flex-shrink:0; }
+    .digital-text strong { font-size:.95rem; font-weight:700; color:white; display:block; margin-bottom:.15rem; }
+    .digital-text span { font-size:.78rem; color:rgba(255,255,255,.6); }
+    .digital-pills { display:flex; gap:.5rem; flex-wrap:wrap; position:relative; z-index:1; }
+    .digital-pill { background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.22); border-radius:2rem; padding:.3rem .85rem; font-size:.75rem; font-weight:700; color:rgba(255,255,255,.9); }
+    .digital-pill.free { background:rgba(201,168,76,.22); border-color:rgba(201,168,76,.55); color:#f2e3ae; }
+    .digital-cta { position:relative; z-index:1; display:inline-flex; align-items:center; gap:.4rem; background:linear-gradient(135deg,#c9a84c,#e0bf6b); color:#1a0936; font-size:.82rem; font-weight:700; white-space:nowrap; text-decoration:none; padding:.6rem 1.25rem; border-radius:.625rem; transition:all .2s; }
+    .digital-cta:hover { transform:translateY(-2px); box-shadow:0 8px 22px rgba(201,168,76,.4); }
+    @media(max-width:640px) { .digital-inner { padding:1.5rem; } }
 
     /* ── INTENT CIRCLES ── */
     .intent-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:1rem; margin-top:1.5rem; }
@@ -334,7 +337,7 @@
       </div>
     </div>
     <div class="digital-pills">
-      <span class="digital-pill">📄 ฟรี</span>
+      <span class="digital-pill free">📄 ฟรี</span>
       <span class="digital-pill">🖼 Wallpaper</span>
       <span class="digital-pill">🎓 คอร์ส</span>
     </div>
