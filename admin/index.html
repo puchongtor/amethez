@@ -1686,7 +1686,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-19.2';
+const ADMIN_VERSION='2026-07-19.3';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -4568,7 +4568,10 @@ async function fetchLivePostBody(url){
   if(!r.ok) return '';
   const html=await r.text();
   const doc=new DOMParser().parseFromString(html,'text/html');
-  const el=doc.querySelector('[data-cms-text="body"]');
+  // Blog pages never got the shared data-cms-text="body" marker added — their
+  // publish step writes into .post-body instead (see publishToGitHub()) — so
+  // fall back to that class when the shared marker isn't there.
+  const el=doc.querySelector('[data-cms-text="body"]') || doc.querySelector('.post-body');
   return el?el.innerHTML.trim():'';
 }
 async function resetBEBodyToOriginal(){
