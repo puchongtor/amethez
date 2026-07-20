@@ -13,6 +13,13 @@
     const imgs  = d.images || {};
     const texts = d.text   || {};
 
+    // The nav/footer (and [data-cms-logo] inside them) only exist once
+    // components.js's DOMContentLoaded handler injects them — wait for that
+    // so this doesn't silently miss the swap on a fast content.json response.
+    if (document.readyState === 'loading') {
+      await new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true }));
+    }
+
     const pageKey = document.body.dataset.cmsPage || detectPage();
 
     // ── TEXT (first — body injection may add new [data-cms-img] nodes) ──
