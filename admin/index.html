@@ -728,6 +728,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 
           <!-- LIST -->
           <div class="card">
+            <div class="section-sub" style="margin-bottom:.75rem">กดปุ่ม ⭐ ในคอลัมน์ "จัดการ" เพื่อเลือกสินค้าที่จะขึ้นโชว์ในแถบ "สินค้าแนะนำ" หน้าแรก — แนะนำ 4-6 รายการ (เลือกเกิน 6 จะโชว์แค่ 6 อันแรกที่ติ๊กไว้)</div>
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem">
               <div class="card-title" style="margin:0">📦 รายการสินค้า Aff (<span id="affCount">0</span>)</div>
               <div style="display:flex;gap:.5rem;flex-wrap:wrap">
@@ -739,6 +740,10 @@ textarea.form-input{resize:vertical;min-height:80px;}
                   <option value="tagged">มี tag</option>
                   <option value="untagged">ยังไม่มี tag</option>
                 </select>
+                <label style="display:flex;align-items:center;gap:.35rem;font-size:.82rem;color:#4b5563;cursor:pointer;white-space:nowrap">
+                  <input type="checkbox" id="affFilterFeatured" onchange="renderAffTable()" style="width:16px;height:16px;cursor:pointer">
+                  ⭐ แนะนำหน้าแรกเท่านั้น
+                </label>
                 <button class="btn btn-outline btn-sm" onclick="exportAffJson()">⬇️ Export JSON</button>
               </div>
             </div>
@@ -1686,7 +1691,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-20.1';
+const ADMIN_VERSION='2026-07-21.1';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -3299,6 +3304,23 @@ function toggleAffStatus(id){
   renderAffTableBody();
   toast(p.status==='available' ? 'เปิดขายสินค้าแล้ว ✓' : 'ปิดการขายสินค้าแล้ว','ok');
 }
+
+const AFF_FEATURED_MAX = 6;
+function toggleAffFeatured(id){
+  const p = affProducts.find(a=>a.id===id);
+  if(!p) return;
+  if(!p.featured){
+    const cur = affProducts.filter(a=>a.featured).length;
+    if(cur >= AFF_FEATURED_MAX){
+      toast(`⭐ เลือกได้สูงสุด ${AFF_FEATURED_MAX} รายการ — เอาอันเก่าออกก่อนค่อยเพิ่มใหม่`,'err');
+      return;
+    }
+  }
+  p.featured = !p.featured;
+  saveAffStore();
+  renderAffTableBody();
+  toast(p.featured ? '⭐ เพิ่มในหน้าแรกแล้ว' : 'เอาออกจากหน้าแรกแล้ว','ok');
+}
 // เก็บค่าที่เลือกไว้ก่อนสร้าง <option> ใหม่ทับ ไม่งั้น dropdown จะรีเซ็ตกลับ
 // "ทั้งหมด" ทุกครั้งที่มีการ import/แก้ไขสินค้าแล้วเรียก renderAffTable() ใหม่
 function populateAffFilters(){
@@ -3471,6 +3493,7 @@ function renderAffTableBody(){
       <td style="font-size:.8rem;color:#6b7280">${p.sold?p.sold.toLocaleString()+' ชิ้น':'—'}</td>
       <td><div style="display:flex;flex-wrap:wrap;gap:.2rem">${tags}${(p.tags||[]).length>4?`<span style="font-size:.65rem;color:#9ca3af">+${p.tags.length-4}</span>`:''}</div></td>
       <td><div style="display:flex;gap:.35rem">
+        <button class="btn btn-outline btn-sm" onclick="toggleAffFeatured('${p.id}')" title="${p.featured?'เอาออกจากหน้าแรก':'แนะนำหน้าแรก'}" style="${p.featured?'background:#fef3c7;border-color:#d97706':''}">${p.featured?'⭐':'☆'}</button>
         <button class="btn btn-outline btn-sm" onclick="toggleAffStatus('${p.id}')" title="${isOn?'ปิดการขาย':'เปิดขายอีกครั้ง'}">${isOn?'🟢':'⚫'}</button>
         <button class="btn btn-outline btn-sm" onclick="copyAffUrl('${x(p.url)}')" title="คัดลอกลิงก์ Affiliate">📋</button>
         <button class="btn btn-outline btn-sm" onclick="editAff('${p.id}')">✏️</button>
@@ -3487,12 +3510,14 @@ function renderAffTable(){
   const storeFilter = document.getElementById('affFilterStore')?.value||'';
   const catFilter = document.getElementById('affFilterCat')?.value||'';
   const tagFilter = document.getElementById('affFilterTag')?.value||'';
+  const featuredOnly = document.getElementById('affFilterFeatured')?.checked||false;
   let list = affProducts;
   if(kw) list = list.filter(p=>p.name.toLowerCase().includes(kw)||p.tags.some(t=>t.includes(kw)));
   if(storeFilter) list = list.filter(p=>p.store===storeFilter);
   if(catFilter) list = list.filter(p=>p.category===catFilter);
   if(tagFilter==='tagged') list = list.filter(p=>p.tags&&p.tags.length);
   if(tagFilter==='untagged') list = list.filter(p=>!p.tags||!p.tags.length);
+  if(featuredOnly) list = list.filter(p=>p.featured);
   document.getElementById('affCount').textContent = affProducts.length;
   affFilteredList = list;
   affCurrentPage = 1;
