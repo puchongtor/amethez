@@ -88,6 +88,21 @@
     /* Nav override for dark bg */
     .site-header { --nav-bg: transparent; }
 
+    /* Footer override — echo the hero's gradient so the page opens and closes
+       with the same atmosphere instead of hitting the site's flat default footer */
+    .site-footer {
+      background: linear-gradient(160deg,#0f0a1e 0%,#1a1228 50%,#0d2010 100%);
+      border-top: 1px solid rgba(201,168,76,.15);
+      position: relative;
+      overflow: hidden;
+    }
+    .site-footer::before {
+      content:''; position:absolute; top:0; left:50%; transform:translateX(-50%);
+      width:600px; height:220px;
+      background:radial-gradient(ellipse,rgba(201,168,76,.1) 0%,transparent 70%);
+      pointer-events:none;
+    }
+
     @keyframes spin { to { transform:rotate(360deg); } }
     @media (max-width:600px) {
       .cards-grid { grid-template-columns:1fr; }
