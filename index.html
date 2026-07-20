@@ -134,9 +134,19 @@
     @media(max-width:440px) { .stone-grid { grid-template-columns:repeat(2,1fr); } }
 
     /* ── COSMIC / ห้องคลื่นเสียง ── */
-    .cosmic { background:linear-gradient(170deg,#080412 0%,#0d0a1f 45%,#050d1a 100%); padding:3.5rem 1.5rem; position:relative; overflow:hidden; }
-    .cosmic::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 90% 55% at 50% 25%,rgba(30,10,60,.7),transparent 70%); pointer-events:none; }
+    .cosmic { background:linear-gradient(155deg,#1e1240 0%,#2c1454 42%,#0f2a4a 100%); padding:4rem 1.5rem; position:relative; overflow:hidden; }
+    .cosmic::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 65% 60% at 15% 10%,rgba(124,58,237,.4),transparent 62%),radial-gradient(ellipse 55% 55% at 90% 85%,rgba(45,212,191,.22),transparent 65%); pointer-events:none; }
     .cosmic-inner { max-width:1160px; margin:0 auto; position:relative; }
+    .cosmic-badge { display:inline-flex; align-items:center; gap:.4rem; background:rgba(45,212,191,.13); border:1px solid rgba(45,212,191,.4); color:#5eead4; font-size:.68rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:.3rem .85rem; border-radius:2rem; margin-bottom:1rem; }
+    .cosmic-waves { position:absolute; right:.5rem; top:1.75rem; display:flex; align-items:flex-end; gap:4px; height:44px; opacity:.5; pointer-events:none; }
+    .cosmic-waves span { width:4px; background:linear-gradient(180deg,#c9a84c,#7c3aed); border-radius:2px; animation:cosmic-wave 1.3s ease-in-out infinite; }
+    .cosmic-waves span:nth-child(1){ animation-delay:0s; }
+    .cosmic-waves span:nth-child(2){ animation-delay:.15s; }
+    .cosmic-waves span:nth-child(3){ animation-delay:.3s; }
+    .cosmic-waves span:nth-child(4){ animation-delay:.45s; }
+    .cosmic-waves span:nth-child(5){ animation-delay:.6s; }
+    @keyframes cosmic-wave { 0%,100%{ height:20%; } 50%{ height:100%; } }
+    @media(max-width:640px){ .cosmic-waves { display:none; } }
     .cosmic-stones { display:flex; flex-wrap:wrap; gap:.5rem; margin:1.5rem 0; }
     .cosmic-tag { background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.14); border-radius:2rem; padding:.5rem 1.125rem; font-size:.85rem; font-weight:600; color:rgba(255,255,255,.85); display:inline-flex; align-items:center; gap:.5rem; cursor:pointer; transition:all .2s; text-decoration:none; }
     .cosmic-tag:hover { background:rgba(255,255,255,.13); border-color:rgba(201,168,76,.4); color:white; }
@@ -144,8 +154,8 @@
     .cosmic-cats { display:flex; gap:.5rem; flex-wrap:wrap; margin-bottom:1.75rem; }
     .cosmic-cat { background:transparent; border:1px solid rgba(201,168,76,.22); color:rgba(201,168,76,.65); border-radius:2rem; padding:.35rem .9rem; font-size:.75rem; font-weight:600; text-decoration:none; transition:all .2s; }
     .cosmic-cat:hover { border-color:rgba(201,168,76,.5); color:var(--gold); }
-    .btn-cosmic { display:inline-flex; align-items:center; gap:.5rem; background:transparent; border:1.5px solid rgba(255,255,255,.2); color:rgba(255,255,255,.8); padding:.75rem 1.75rem; border-radius:.625rem; font-family:Sarabun,sans-serif; font-size:.95rem; font-weight:700; text-decoration:none; transition:all .2s; }
-    .btn-cosmic:hover { background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.4); }
+    .btn-cosmic { display:inline-flex; align-items:center; gap:.5rem; background:linear-gradient(135deg,#7c3aed,#0d9488); border:none; color:white; padding:.8rem 1.85rem; border-radius:.625rem; font-family:Sarabun,sans-serif; font-size:.95rem; font-weight:700; text-decoration:none; transition:all .2s; box-shadow:0 4px 20px rgba(124,58,237,.35); }
+    .btn-cosmic:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(124,58,237,.5); }
 
     /* ── BLOG GRID ── */
     .blog-tabs { display:flex; gap:0; border-bottom:1px solid var(--border); margin-bottom:1.5rem; }
@@ -513,6 +523,8 @@
 <!-- ═══ 6. ห้องคลื่นเสียง COSMIC ═══ -->
 <section class="cosmic">
   <div class="cosmic-inner">
+    <div class="cosmic-waves"><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="cosmic-badge">🎧 ฟีเจอร์เด่น</div>
     <div class="sec-label sec-label-gold">ห้องพลังงานสูง · หินจักรวาล</div>
     <div class="sec-title sec-title-white" style="margin-bottom:.5rem">ห้องคลื่นเสียง Manifest</div>
     <div class="sec-sub sec-sub-white">หินพลังงานจักรวาล · คลื่นบำบัด Solfeggio · บทตั้งจิต AI นำทาง</div>
