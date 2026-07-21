@@ -3,3 +3,4 @@ Thumbs.db
 *.log
 node_modules/
 data/raw/images/
+api/config.php

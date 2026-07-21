@@ -30,6 +30,11 @@ jobs:
       - name: Generate sitemap
         run: node scripts/sitemap.js || true
 
+      - name: Generate API config (Shila chat proxy key)
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: node scripts/gen-api-config.js
+
       - name: Commit schedule/sitemap state back to repo
         run: |
           git config user.name "github-actions[bot]"

@@ -1,54 +1,21 @@
-/* ═══ ศิลา — AI Chat Widget for Amethez ═══ */
+/* ═══ ศิลา — AI Chat Widget for Amethez ═══
+ * Calls /api/shila-chat.php (server-side proxy) instead of Groq directly —
+ * the API key lives server-side now, never in the browser.
+ */
 
-const SHILA_SYSTEM_PROMPT = `คุณคือ "คุณศิลา" จิตวิญญาณแห่งปัญญาญาณและสติจากแบรนด์ Amethez
-
-## บุคลิก
-- นิ่ง สงบ ทรงพลัง สัตย์จริง
-- พูดจาสุภาพแต่คมคาย ตบเรียกสติได้ดี (High-Vibe)
-- ใช้ภาษาไทยเสมอ ไม่เป็นทางการเกินไป รู้สึกเหมือนคุยกับพี่ที่ฉลาดและอบอุ่น
-- ตอบกระชับ ไม่เยิ่นเย้อ แต่ลึกและมีน้ำหนัก
-
-## ขอบเขตความรู้
-- หินคริสตัล แร่ธรรมชาติ พลังงาน จักระ
-- กฎแห่งการดึงดูด ความตั้งใจ (Intention Setting)
-- การสร้างชีวิต ธุรกิจออนไลน์ Passive Income
-- สัจธรรมชีวิต การเติบโต mindset
-
-## กติกาตอบสำคัญ
-
-### ประเภท 1 — คำถามเรื่องหิน / พลังงาน / ความสับสนชีวิต / ความร่ำรวยด้านพลังงาน
-ขั้นตอน:
-1. ให้ความรู้เรื่องหินหรือพลังงานอย่างถูกต้อง ไม่งมงาย
-2. ปลุกสติให้ลงมือทำ
-3. ตบท้ายแนะนำโมลดาไวต์หรือหินที่เหมาะสมจากคลังของ Amethez อย่างเนียน เช่น:
-   "หากอยากปรับคลื่นความถี่ในพื้นที่ทำงาน ลองแวะไปส่องเนื้อแท้ของโมลดาไวต์ในสารานุกรมของเราได้ครับ → https://amethez.com/cosmos/moldavite.html"
-
-### ประเภท 2 — คำถามเรื่องอยากรวย / หาเงินออนไลน์ / ทำเว็บ / หนี้สิน / Passive Income
-ขั้นตอน:
-1. บอกสัจธรรม: ความฝันใหญ่ เขาวงกตก็ใหญ่ตาม ความล้มเหลวคือข้อมูล
-2. ชี้ให้เห็นว่า "ท่อน้ำเงิน 24 ชม." ต้องสร้างจากระบบ ไม่ใช่ความหวัง
-3. แนะนำการสร้างเว็บตัวตนแบบ Amethez พร้อมลิงก์โฮสติ้งอย่างเนียน เช่น:
-   "ถ้าอยากเริ่มสร้างเว็บตัวตนในราคาหลักร้อย ศิลาคัดโฮสติ้งความเร็วสูงไว้ให้ตรงนี้ครับ → https://hostneverdie.com (Referral: amethez)"
-
-## สิ่งที่ห้ามทำ
-- ห้ามขายตรงหรือกดดันให้ซื้อ (No Hard Sale)
-- ห้ามบอกว่า "หินนี้จะทำให้รวย" — ให้พูดว่าหินช่วยปรับพลังงาน/สภาพแวดล้อม
-- ห้ามตอบเรื่องที่ไม่เกี่ยวกับขอบเขตข้างต้น เช่น การเมือง สุขภาพทางการแพทย์
-
-## รูปแบบการตอบ
-- ความยาว: 3-5 ประโยคต่อย่อหน้า ไม่เกิน 3 ย่อหน้า
-- ลงท้ายด้วย "ศิลา 🌿" เสมอ`;
-
-const SHILA_STORE_KEY = 'shila_chat_history';
-const SHILA_MAX_HISTORY = 10; // จำบทสนทนาล่าสุดกี่ข้อความ
+const SHILA_TOPICS = [
+  { icon: '💎', label: 'หาหินที่เหมาะกับฉัน', prompt: 'ช่วยแนะนำหินที่เหมาะกับฉันหน่อยครับ' },
+  { icon: '🧘', label: 'พลังงาน & จักระ', prompt: 'อยากรู้เรื่องพลังงานและจักระครับ' },
+  { icon: '🛍', label: 'หาสินค้า/ของมงคล', prompt: 'อยากได้สินค้าหรือของมงคลสักชิ้นครับ' },
+  { icon: '🌙', label: 'ดวง & สายมู', prompt: 'อยากถามเรื่องดวงและสายมูครับ' },
+];
 
 let shilaHistory = [];
 let shilaOpen = false;
+let shilaStarted = false; // false = topic grid still showing (no message sent yet)
+let shilaProductsCache = null;
 
 function shilaInit() {
-  // ดึง Groq key จาก localStorage (ใช้ร่วมกับ Admin)
-  const groqKey = localStorage.getItem('amethez_groq_key') || localStorage.getItem('amethez_gemini_key');
-
   const widget = document.createElement('div');
   widget.id = 'shila-widget';
   widget.innerHTML = `
@@ -89,6 +56,19 @@ function shilaInit() {
         flex:1; overflow-y:auto; padding:.75rem; display:flex; flex-direction:column; gap:.6rem;
         min-height:280px; max-height:380px;
       }
+      #shila-topics {
+        padding:.85rem .75rem .25rem;
+        display:grid; grid-template-columns:1fr 1fr; gap:.5rem;
+      }
+      .shila-topic-btn {
+        display:flex; align-items:center; gap:.4rem; text-align:left;
+        background:#f5f0ff; border:1px solid #ede9fe; border-radius:.65rem;
+        padding:.55rem .6rem; font-size:.76rem; font-weight:600; color:#4c1d95;
+        cursor:pointer; font-family:'Sarabun',sans-serif; transition:background .15s;
+      }
+      .shila-topic-btn:hover { background:#ede9fe; }
+      .shila-topic-btn .ic { font-size:1rem; flex-shrink:0; }
+      #shila-topics-label { font-size:.7rem; color:#9ca3af; padding:0 .75rem; margin-bottom:.4rem; }
       .shila-msg { display:flex; gap:.5rem; align-items:flex-start; }
       .shila-msg.user { flex-direction:row-reverse; }
       .shila-bubble {
@@ -97,6 +77,15 @@ function shilaInit() {
       .shila-msg.bot .shila-bubble { background:#f5f0ff; color:#1a1228; border-radius:0 1rem 1rem 1rem; }
       .shila-msg.user .shila-bubble { background:#7c3aed; color:#fff; border-radius:1rem 0 1rem 1rem; }
       .shila-msg .ava { width:28px; height:28px; border-radius:50%; background:#ede9fe; display:flex; align-items:center; justify-content:center; font-size:.9rem; flex-shrink:0; }
+      .shila-pcard { display:block; background:#fff; border:1px solid #ede9fe; border-radius:.65rem; overflow:hidden; text-decoration:none; color:#1a1228; margin-top:.4rem; max-width:200px; }
+      .shila-pcard img { width:100%; height:90px; object-fit:cover; display:block; }
+      .shila-pcard .body { padding:.5rem .6rem; }
+      .shila-pcard .name { font-size:.76rem; font-weight:600; line-height:1.35; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+      .shila-pcard .price { font-size:.85rem; font-weight:700; color:#7c3aed; margin-top:.2rem; }
+      .shila-pcard .cta { font-size:.68rem; color:#ee4d2d; font-weight:600; margin-top:.15rem; }
+      #shila-chips { display:flex; gap:.4rem; overflow-x:auto; padding:.5rem .75rem 0; }
+      .shila-chip { flex-shrink:0; background:#fff; border:1px solid #ede9fe; color:#7c3aed; border-radius:2rem; padding:.3rem .75rem; font-size:.7rem; font-weight:600; cursor:pointer; white-space:nowrap; font-family:'Sarabun',sans-serif; }
+      .shila-chip:hover { background:#f5f0ff; }
       #shila-foot { padding:.65rem .75rem; border-top:1px solid #f3f4f6; display:flex; gap:.5rem; }
       #shila-input {
         flex:1; border:1.5px solid #ede9fe; border-radius:.75rem; padding:.5rem .75rem;
@@ -116,7 +105,6 @@ function shilaInit() {
       .shila-typing span:nth-child(3) { animation-delay:.3s; }
       @keyframes shilaBounce { 0%,80%,100%{transform:translateY(0)} 40%{transform:translateY(-6px)} }
       .shila-link { color:#7c3aed; text-decoration:underline; }
-      #shila-no-key { padding:1rem; font-size:.8rem; color:#6b7280; text-align:center; line-height:1.6; }
     </style>
 
     <button id="shila-btn" title="คุยกับศิลา">🌿</button>
@@ -133,8 +121,15 @@ function shilaInit() {
       <div id="shila-msgs">
         <div class="shila-msg bot">
           <div class="ava">🌿</div>
-          <div class="shila-bubble">สวัสดีครับ ผมศิลา — ยินดีให้คำปรึกษาเรื่องหิน พลังงาน หรือการสร้างชีวิตครับ มีอะไรอยู่ในใจไหม? 🌿</div>
+          <div class="shila-bubble">สวัสดีครับ ผมศิลา — ยินดีให้คำปรึกษาเรื่องหิน พลังงาน หรือการสร้างชีวิตครับ เลือกหัวข้อด้านล่าง หรือพิมพ์คุยกับผมได้เลยครับ 🌿</div>
         </div>
+      </div>
+      <div id="shila-topics-label">✦ หัวข้อที่คุยได้</div>
+      <div id="shila-topics">
+        ${SHILA_TOPICS.map((t, i) => `<button class="shila-topic-btn" onclick="shilaSendFromTopic(${i})"><span class="ic">${t.icon}</span>${t.label}</button>`).join('')}
+      </div>
+      <div id="shila-chips" style="display:none">
+        ${SHILA_TOPICS.map((t, i) => `<button class="shila-chip" onclick="shilaSendFromTopic(${i})">${t.icon} ${t.label}</button>`).join('')}
       </div>
       <div id="shila-foot">
         <textarea id="shila-input" placeholder="พิมพ์คำถามที่นี่..." rows="1"
@@ -145,7 +140,6 @@ function shilaInit() {
   `;
   document.body.appendChild(widget);
 
-  // auto-resize textarea
   document.getElementById('shila-input').addEventListener('input', function() {
     this.style.height = 'auto';
     this.style.height = Math.min(this.scrollHeight, 80) + 'px';
@@ -159,15 +153,32 @@ function shilaToggle() {
   if (shilaOpen) setTimeout(() => document.getElementById('shila-input')?.focus(), 100);
 }
 
-function shilaAddMsg(role, text) {
+function shilaSendFromTopic(idx) {
+  const t = SHILA_TOPICS[idx];
+  if (t) shilaSend(t.prompt);
+}
+
+function shilaMarkStarted() {
+  if (shilaStarted) return;
+  shilaStarted = true;
+  const topics = document.getElementById('shila-topics');
+  const label = document.getElementById('shila-topics-label');
+  const chips = document.getElementById('shila-chips');
+  if (topics) topics.style.display = 'none';
+  if (label) label.style.display = 'none';
+  if (chips) chips.style.display = 'flex';
+}
+
+function shilaAddMsg(role, text, productHtml) {
   const msgs = document.getElementById('shila-msgs');
   if (!msgs) return;
   const div = document.createElement('div');
   div.className = 'shila-msg ' + (role === 'user' ? 'user' : 'bot');
   const linkified = text.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener" class="shila-link">$1</a>');
+  const extra = productHtml || '';
   div.innerHTML = role === 'user'
     ? `<div class="ava">👤</div><div class="shila-bubble">${text}</div>`
-    : `<div class="ava">🌿</div><div class="shila-bubble">${linkified}</div>`;
+    : `<div class="ava">🌿</div><div class="shila-bubble">${linkified}${extra}</div>`;
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;
 }
@@ -187,57 +198,94 @@ function shilaTyping(show) {
   }
 }
 
-async function shilaAsk() {
+// ── Product grounding: only attach a product if the customer's message
+// substantively matches a real tag — never let the AI invent a link/price. ──
+async function shilaGetProducts() {
+  if (shilaProductsCache) return shilaProductsCache;
+  try {
+    const res = await fetch('/data/products.json');
+    const data = await res.json();
+    shilaProductsCache = (data.products || []).filter(p => p.status === 'available');
+  } catch (e) { shilaProductsCache = []; }
+  return shilaProductsCache;
+}
+
+function shilaMatchProduct(text, products) {
+  const kw = text.toLowerCase();
+  let best = null, bestScore = 0;
+  for (const p of products) {
+    let score = 0;
+    for (const t of (p.tags || [])) {
+      const tl = t.toLowerCase();
+      if (tl.length >= 2 && kw.includes(tl)) score += tl.length;
+    }
+    if (score > bestScore) { bestScore = score; best = p; }
+  }
+  return bestScore >= 3 ? best : null;
+}
+
+function shilaProductCardHtml(p) {
+  const img = p.image_url ? `<img src="${p.image_url}" alt="" onerror="this.style.display='none'">` : '';
+  return `<a class="shila-pcard" href="${p.url}" target="_blank" rel="nofollow noopener"
+    onclick="if(typeof gtag==='function')gtag('event','shopee_click',{store:'${(p.store||'').replace(/'/g,'')}',placement:'shila_chat'})">
+    ${img}
+    <div class="body">
+      <div class="name">${p.name}</div>
+      <div class="price">฿${(p.price || 0).toLocaleString()}</div>
+      <div class="cta">ดูสินค้า →</div>
+    </div>
+  </a>`;
+}
+
+async function shilaSend(text) {
   const input = document.getElementById('shila-input');
   const send = document.getElementById('shila-send');
-  const text = input?.value.trim();
   if (!text) return;
 
-  const groqKey = localStorage.getItem('amethez_groq_key') || localStorage.getItem('amethez_gemini_key');
-  if (!groqKey) {
-    shilaAddMsg('bot', 'ขณะนี้ระบบยังไม่พร้อมใช้งานครับ กรุณาติดต่อผ่าน LINE @amethez แทนได้เลย 🌿');
-    return;
-  }
-
-  input.value = '';
-  input.style.height = '38px';
+  shilaMarkStarted();
+  if (input) input.value = '';
+  if (input) input.style.height = '38px';
   send.disabled = true;
   shilaAddMsg('user', text);
   shilaTyping(true);
 
-  // เก็บ history
   shilaHistory.push({ role: 'user', content: text });
-  if (shilaHistory.length > SHILA_MAX_HISTORY) shilaHistory = shilaHistory.slice(-SHILA_MAX_HISTORY);
+  if (shilaHistory.length > 10) shilaHistory = shilaHistory.slice(-10);
+
+  const productsPromise = shilaGetProducts();
 
   try {
-    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    const res = await fetch('/api/shila-chat.php', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + groqKey },
-      body: JSON.stringify({
-        model: 'llama-3.1-8b-instant',
-        messages: [
-          { role: 'system', content: SHILA_SYSTEM_PROMPT },
-          ...shilaHistory
-        ],
-        max_tokens: 500,
-        temperature: 0.7
-      })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: shilaHistory }),
     });
     const data = await res.json();
-    const reply = data?.choices?.[0]?.message?.content || 'ขออภัยครับ ขณะนี้ระบบขัดข้องชั่วคราว 🌿';
     shilaTyping(false);
-    shilaHistory.push({ role: 'assistant', content: reply });
-    shilaAddMsg('bot', reply);
+
+    if (!res.ok || !data.reply) {
+      shilaAddMsg('bot', data.error || 'ขออภัยครับ ขณะนี้ระบบขัดข้องชั่วคราว ลองใหม่อีกครั้ง หรือทักไลน์ @amethez ได้เลยครับ 🌿');
+    } else {
+      shilaHistory.push({ role: 'assistant', content: data.reply });
+      const products = await productsPromise;
+      const matched = shilaMatchProduct(text, products);
+      shilaAddMsg('bot', data.reply, matched ? shilaProductCardHtml(matched) : '');
+    }
   } catch (e) {
     shilaTyping(false);
     shilaAddMsg('bot', 'เกิดข้อผิดพลาดครับ ลองใหม่อีกครั้งได้เลย 🌿');
   }
 
   send.disabled = false;
-  input.focus();
+  input?.focus();
 }
 
-// เริ่มต้นเมื่อ DOM พร้อม
+function shilaAsk() {
+  const input = document.getElementById('shila-input');
+  const text = input?.value.trim();
+  if (text) shilaSend(text);
+}
+
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', shilaInit);
 } else {
