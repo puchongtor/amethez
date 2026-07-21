@@ -107,7 +107,7 @@ function shilaInit() {
       .shila-link { color:#7c3aed; text-decoration:underline; }
     </style>
 
-    <button id="shila-btn" title="คุยกับศิลา">🌿</button>
+    <button id="shila-btn" title="คุยกับศิลา" onclick="shilaToggle()">🌿</button>
 
     <div id="shila-box">
       <div id="shila-head">
