@@ -197,7 +197,7 @@
     @media(max-width:900px){ .expert-strip { grid-template-columns:repeat(2,1fr); } }
     .ex-card { background:white; border:1.5px solid var(--border); border-radius:1.125rem; padding:1.375rem; text-decoration:none; display:block; transition:all .2s; }
     .ex-card:hover { border-color:var(--purple); box-shadow:0 6px 24px rgba(124,58,237,.1); transform:translateY(-2px); }
-    .ex-icon { width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.4rem; margin-bottom:.875rem; }
+    .ex-icon { width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.4rem; margin-bottom:.875rem; overflow:hidden; background-size:cover; background-position:center; }
     .ex-icon-atlas  { background:linear-gradient(135deg,#ede9fe,#ddd6fe); }
     .ex-icon-wuchong{ background:linear-gradient(135deg,#fef3c7,#fde68a); }
     .ex-icon-metha  { background:linear-gradient(135deg,#fce7f3,#fbcfe8); }
@@ -685,21 +685,21 @@
     </div>
     <div class="expert-strip">
       <a href="/stones/" class="ex-card">
-        <div class="ex-icon ex-icon-atlas">🔬</div>
+        <div class="ex-icon ex-icon-atlas" data-cms-img="atlas_avatar"><span class="cms-placeholder">🔬</span></div>
         <div class="ex-name">Crystal Atlas</div>
         <div class="ex-role">สารานุกรมหินคริสตัล</div>
         <div class="ex-desc">ข้อมูลวิทยาศาสตร์ แหล่งกำเนิด ของแท้/เทียม ราคาตลาด อ้างอิงได้ระดับสากล</div>
         <div class="ex-tags"><span class="ex-tag">แร่วิทยา</span><span class="ex-tag">แหล่งกำเนิด</span><span class="ex-tag">ราคาตลาด</span></div>
       </a>
       <a href="/wuchong/" class="ex-card">
-        <div class="ex-icon ex-icon-wuchong">🧘</div>
+        <div class="ex-icon ex-icon-wuchong" data-cms-img="wuchong_avatar"><span class="cms-placeholder">🧘</span></div>
         <div class="ex-name">Master Wuchong</div>
         <div class="ex-role">พลังงาน · ความสำเร็จ · การเงิน</div>
         <div class="ex-desc">วิธีใช้หินเพื่อพัฒนาชีวิต ดึงดูดความมั่งคั่ง สุขภาพ และความสำเร็จ</div>
         <div class="ex-tags"><span class="ex-tag">จักระ</span><span class="ex-tag">การเงิน</span><span class="ex-tag">สุขภาพ</span></div>
       </a>
       <a href="/metha/" class="ex-card">
-        <div class="ex-icon ex-icon-metha">🌙</div>
+        <div class="ex-icon ex-icon-metha" data-cms-img="metha_avatar"><span class="cms-placeholder">🌙</span></div>
         <div class="ex-name">อาจารย์เมธา</div>
         <div class="ex-role">ดวง · โหราศาสตร์ · ดูดวงรายวัน</div>
         <div class="ex-desc">เลือกหินตามราศีและวันเกิด ดูดวงประจำวัน ดวงรายเดือน อัปเดตทุกวัน</div>

@@ -1691,7 +1691,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-21.2';
+const ADMIN_VERSION='2026-07-21.3';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -1714,9 +1714,27 @@ const SLOTS=[
   {id:'favicon',label:'Favicon / App Icon',page:'ทุกหน้า',group:'global',size:'512×512',
    en:'Amethyst crystal point icon, deep purple violet, simple minimal flat design, transparent background, app icon 512x512',
    th:'ไอคอนคริสตัลอเมทิสต์ม่วง ทรงแหลม มินิมอล พื้นหลังโปร่งใส'},
-  {id:'shila_avatar',label:'คุณศิลา — Avatar แชท (ทุกหน้า)',page:'ทุกหน้า',group:'global',size:'200×200',
+  {id:'shila_avatar',label:'คุณศิลา — ที่ปรึกษาแชท (ทุกหน้า)',page:'ทุกหน้า',group:'characters',size:'200×200',
    en:'Portrait illustration of a warm, trustworthy Thai man in his 30s, gentle confident smile, soft friendly eyes, wearing a simple modern shirt, calm mindful expression, digital painting style, purple and gold accent lighting, clean plain background, close-up headshot, square crop 200x200',
    th:'ภาพวาดผู้ชายไทยวัย 30 ต้นๆ หน้าตาน่าเชื่อถือ ยิ้มอบอุ่นมั่นใจ ดวงตาเป็นมิตร ใส่เสื้อเรียบทันสมัย สีหน้าสงบมีสติ สไตล์ดิจิทัลเพนต์ แสงโทนม่วง-ทอง พื้นหลังเรียบ ภาพหน้าตรงระยะใกล้ สัดส่วน 1:1'},
+  {id:'atlas_avatar',label:'Crystal Atlas — สารานุกรมหิน',page:'about, หน้าหลัก',group:'characters',size:'200×200',
+   en:'Portrait illustration of a scholarly, precise expert with glasses, calm intelligent expression, holding a small crystal specimen, warm authoritative presence, digital painting style, purple and gold accent lighting, clean plain background, close-up headshot, square crop 200x200',
+   th:'ภาพวาดผู้เชี่ยวชาญหน้าตาฉลาดสุภาพ สวมแว่น ถือหินคริสตัลชิ้นเล็ก สีหน้านิ่งน่าเชื่อถือระดับสากล สไตล์ดิจิทัลเพนต์ แสงโทนม่วง-ทอง พื้นหลังเรียบ ภาพหน้าตรงระยะใกล้ สัดส่วน 1:1'},
+  {id:'wuchong_avatar',label:'Master Wuchong — พลังงาน/ฮวงจุ้ย',page:'wuchong, about, หน้าหลัก',group:'characters',size:'200×200',
+   en:'Portrait illustration of a serene Chinese feng shui master in his 50s, deep thoughtful eyes, calm powerful presence, traditional-modern fusion attire, digital painting style, purple and gold accent lighting, clean plain background, close-up headshot, square crop 200x200',
+   th:'ภาพวาดอาจารย์ฮวงจุ้ยชาวจีนวัย 50 ปี สายตาลึกซึ้งสงบนิ่ง ดูทรงพลังน่าเกรงขามแต่อบอุ่น การแต่งกายผสมสไตล์จีนโบราณกับทันสมัย สไตล์ดิจิทัลเพนต์ แสงโทนม่วง-ทอง พื้นหลังเรียบ ภาพหน้าตรงระยะใกล้ สัดส่วน 1:1'},
+  {id:'metha_avatar',label:'อาจารย์เมธา — ดวง/สายมู',page:'metha, about, หน้าหลัก',group:'characters',size:'200×200',
+   en:'Portrait illustration of a warm elder Thai fortune teller, gentle wise smile, kind approachable eyes like a beloved older brother, traditional Thai mystic touches, digital painting style, purple and gold accent lighting, clean plain background, close-up headshot, square crop 200x200',
+   th:'ภาพวาดอาจารย์ดูดวงไทยวัยกลางคนถึงสูงอายุ ยิ้มอบอุ่นใจดีแบบพี่ใหญ่ ดวงตาเป็นมิตรน่าไว้วางใจ มีองค์ประกอบความเป็นไทยสายมูนิดๆ สไตล์ดิจิทัลเพนต์ แสงโทนม่วง-ทอง พื้นหลังเรียบ ภาพหน้าตรงระยะใกล้ สัดส่วน 1:1'},
+  {id:'gemma_avatar',label:'Gemma — Sale Page (Coming soon)',page:'about, sale',group:'characters',size:'200×200',
+   en:'Portrait illustration of a warm, radiant young woman with a bright welcoming smile, stylish and approachable, presenting jewelry with care, digital painting style, purple and gold accent lighting, clean plain background, close-up headshot, square crop 200x200',
+   th:'ภาพวาดหญิงสาวยิ้มสดใสอบอุ่น น่าไว้วางใจ ดูทันสมัยเป็นมิตร ท่วงท่าเหมือนกำลังแนะนำเครื่องประดับด้วยความใส่ใจ สไตล์ดิจิทัลเพนต์ แสงโทนม่วง-ทอง พื้นหลังเรียบ ภาพหน้าตรงระยะใกล้ สัดส่วน 1:1'},
+  {id:'max_avatar',label:'Max — DIY Workshop (Coming soon)',page:'about',group:'characters',size:'200×200',
+   en:'Portrait illustration of a friendly young craftsman with a playful confident grin, slightly messy hair, hands lightly dusted with crystal residue, casual workshop attire, digital painting style, purple and gold accent lighting, clean plain background, close-up headshot, square crop 200x200',
+   th:'ภาพวาดช่างหนุ่มยิ้มกวนๆ มั่นใจ ผมดูลุยงานนิดๆ มือเปื้อนฝุ่นหินจากงาน DIY ใส่เสื้อลำลองแบบช่างฝีมือ สไตล์ดิจิทัลเพนต์ แสงโทนม่วง-ทอง พื้นหลังเรียบ ภาพหน้าตรงระยะใกล้ สัดส่วน 1:1'},
+  {id:'zin_avatar',label:'Zin — เปิดใจคุยกับหิน (Coming soon)',page:'about',group:'characters',size:'200×200',
+   en:'Portrait illustration of a mysterious, playful young person with striking curious eyes and a mischievous half-smile, alternative modern style, ethereal purple undertones, digital painting style, purple and gold accent lighting, clean plain background, close-up headshot, square crop 200x200',
+   th:'ภาพวาดคนหนุ่มสาวลึกลับสนุกสนาน สายตาน่าค้นหา ยิ้มมีเสน่ห์แบบเปิดใจง่าย สไตล์ทันสมัยแนวทางเลือก มีโทนสีม่วงลึกลับแทรกอยู่ สไตล์ดิจิทัลเพนต์ แสงโทนม่วง-ทอง พื้นหลังเรียบ ภาพหน้าตรงระยะใกล้ สัดส่วน 1:1'},
   {id:'home_hero',label:'Hero Banner — หน้าหลัก',page:'index.html',group:'homepage',size:'1920×800',
    en:'Dramatic large amethyst geode cave, deep violet purple crystals glistening with golden light from above, cinematic wide angle shot, 8K ultra detailed luxury photography, dark background',
    th:'โพรงอเมทิสต์ขนาดใหญ่ แสงทองจากด้านบน บรรยากาศลึกลับ ถ่ายมุมกว้าง 8K'},
@@ -2034,7 +2052,7 @@ const SLOTS=[
    th:'การจับมือธุรกิจ มีหินคริสตัลบนโต๊ะไม้ แสงอบอุ่น บรรยากาศน่าเชื่อถือ'},
 ];
 
-const GROUPS={global:'🌐 Global',homepage:'🏠 หน้าหลัก',chakra:'🔮 จักระ',stones:'💎 บทความหิน',geode:'🪨 โพรง',consign:'🤝 ฝากขาย'};
+const GROUPS={global:'🌐 Global',characters:'🎭 ตัวละคร',homepage:'🏠 หน้าหลัก',chakra:'🔮 จักระ',stones:'💎 บทความหิน',geode:'🪨 โพรง',consign:'🤝 ฝากขาย'};
 const ARTICLES=[
   {e:'💜',n:'อเมทิสต์',p:'/stones/amethyst.html'},
   {e:'🩷',n:'โรสควอตซ์',p:'/stones/rose-quartz.html'},
