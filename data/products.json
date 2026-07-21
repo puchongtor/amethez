@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated": "2026-07-20",
+  "updated": "2026-07-21",
   "products": [
     {
       "id": "A1535_MRMW3PBR",
@@ -169,7 +169,7 @@
       "status": "available",
       "created": "16/7/2569",
       "updated": "16/7/2569",
-      "featured": true
+      "featured": false
     },
     {
       "id": "A1527_MRMW3PBQ",
