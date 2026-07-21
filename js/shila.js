@@ -14,6 +14,31 @@ let shilaHistory = [];
 let shilaOpen = false;
 let shilaStarted = false; // false = topic grid still showing (no message sent yet)
 let shilaProductsCache = null;
+let shilaAvatarUrl = '';
+
+function shilaAvaHtml() {
+  return shilaAvatarUrl
+    ? `<img src="${shilaAvatarUrl}" alt="คุณศิลา" style="width:100%;height:100%;object-fit:cover">`
+    : '🌿';
+}
+
+// โหลด avatar ของคุณศิลาจาก CMS (ถ้ายังไม่ได้อัปโหลด จะใช้ 🌿 ไปก่อน) —
+// แยก fetch เองแทนที่จะพึ่ง cms.js เพราะ widget นี้ถูกสร้างขึ้นแบบไดนามิก
+// หลัง cms.js สแกน [data-cms-img] ไปแล้ว อาจไม่ทันจับ element ที่เพิ่งสร้าง
+async function shilaLoadAvatar() {
+  try {
+    const res = await fetch('/data/content.json');
+    const data = await res.json();
+    shilaAvatarUrl = (data.images || {}).shila_avatar || '';
+  } catch (e) { shilaAvatarUrl = ''; }
+  if (!shilaAvatarUrl) return;
+  const avaHtml = shilaAvaHtml();
+  const btn = document.getElementById('shila-btn');
+  const headAvatar = document.querySelector('#shila-head .avatar');
+  if (btn) btn.innerHTML = avaHtml;
+  if (headAvatar) headAvatar.innerHTML = avaHtml;
+  document.querySelectorAll('#shila-msgs .ava').forEach(el => { el.innerHTML = avaHtml; });
+}
 
 function shilaInit() {
   const widget = document.createElement('div');
@@ -22,7 +47,7 @@ function shilaInit() {
     <style>
       #shila-btn {
         position:fixed; bottom:1.5rem; right:1.5rem; z-index:9999;
-        width:56px; height:56px; border-radius:50%;
+        width:56px; height:56px; border-radius:50%; overflow:hidden;
         background:linear-gradient(135deg,#7c3aed,#4c1d95);
         box-shadow:0 4px 20px rgba(124,58,237,.45);
         border:none; cursor:pointer; display:flex; align-items:center; justify-content:center;
@@ -45,7 +70,7 @@ function shilaInit() {
         display:flex; align-items:center; gap:.65rem;
       }
       #shila-head .avatar {
-        width:38px; height:38px; border-radius:50%;
+        width:38px; height:38px; border-radius:50%; overflow:hidden;
         background:rgba(255,255,255,.2);
         display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0;
       }
@@ -76,7 +101,7 @@ function shilaInit() {
       }
       .shila-msg.bot .shila-bubble { background:#f5f0ff; color:#1a1228; border-radius:0 1rem 1rem 1rem; }
       .shila-msg.user .shila-bubble { background:#7c3aed; color:#fff; border-radius:1rem 0 1rem 1rem; }
-      .shila-msg .ava { width:28px; height:28px; border-radius:50%; background:#ede9fe; display:flex; align-items:center; justify-content:center; font-size:.9rem; flex-shrink:0; }
+      .shila-msg .ava { width:28px; height:28px; border-radius:50%; overflow:hidden; background:#ede9fe; display:flex; align-items:center; justify-content:center; font-size:.9rem; flex-shrink:0; }
       .shila-pcard { display:block; background:#fff; border:1px solid #ede9fe; border-radius:.65rem; overflow:hidden; text-decoration:none; color:#1a1228; margin-top:.4rem; max-width:200px; }
       .shila-pcard img { width:100%; height:90px; object-fit:cover; display:block; }
       .shila-pcard .body { padding:.5rem .6rem; }
@@ -144,6 +169,8 @@ function shilaInit() {
     this.style.height = 'auto';
     this.style.height = Math.min(this.scrollHeight, 80) + 'px';
   });
+
+  shilaLoadAvatar();
 }
 
 function shilaToggle() {
@@ -178,7 +205,7 @@ function shilaAddMsg(role, text, productHtml) {
   const extra = productHtml || '';
   div.innerHTML = role === 'user'
     ? `<div class="ava">👤</div><div class="shila-bubble">${text}</div>`
-    : `<div class="ava">🌿</div><div class="shila-bubble">${linkified}${extra}</div>`;
+    : `<div class="ava">${shilaAvaHtml()}</div><div class="shila-bubble">${linkified}${extra}</div>`;
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;
 }
@@ -190,7 +217,7 @@ function shilaTyping(show) {
   if (show && !existing) {
     const div = document.createElement('div');
     div.className = 'shila-msg bot'; div.id = 'shila-typing-el';
-    div.innerHTML = `<div class="ava">🌿</div><div class="shila-bubble"><div class="shila-typing"><span></span><span></span><span></span></div></div>`;
+    div.innerHTML = `<div class="ava">${shilaAvaHtml()}</div><div class="shila-bubble"><div class="shila-typing"><span></span><span></span><span></span></div></div>`;
     msgs.appendChild(div);
     msgs.scrollTop = msgs.scrollHeight;
   } else if (!show && existing) {

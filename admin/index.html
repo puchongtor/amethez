@@ -1691,7 +1691,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-21.1';
+const ADMIN_VERSION='2026-07-21.2';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -1714,6 +1714,9 @@ const SLOTS=[
   {id:'favicon',label:'Favicon / App Icon',page:'ทุกหน้า',group:'global',size:'512×512',
    en:'Amethyst crystal point icon, deep purple violet, simple minimal flat design, transparent background, app icon 512x512',
    th:'ไอคอนคริสตัลอเมทิสต์ม่วง ทรงแหลม มินิมอล พื้นหลังโปร่งใส'},
+  {id:'shila_avatar',label:'คุณศิลา — Avatar แชท (ทุกหน้า)',page:'ทุกหน้า',group:'global',size:'200×200',
+   en:'Portrait illustration of a warm, trustworthy Thai man in his 30s, gentle confident smile, soft friendly eyes, wearing a simple modern shirt, calm mindful expression, digital painting style, purple and gold accent lighting, clean plain background, close-up headshot, square crop 200x200',
+   th:'ภาพวาดผู้ชายไทยวัย 30 ต้นๆ หน้าตาน่าเชื่อถือ ยิ้มอบอุ่นมั่นใจ ดวงตาเป็นมิตร ใส่เสื้อเรียบทันสมัย สีหน้าสงบมีสติ สไตล์ดิจิทัลเพนต์ แสงโทนม่วง-ทอง พื้นหลังเรียบ ภาพหน้าตรงระยะใกล้ สัดส่วน 1:1'},
   {id:'home_hero',label:'Hero Banner — หน้าหลัก',page:'index.html',group:'homepage',size:'1920×800',
    en:'Dramatic large amethyst geode cave, deep violet purple crystals glistening with golden light from above, cinematic wide angle shot, 8K ultra detailed luxury photography, dark background',
    th:'โพรงอเมทิสต์ขนาดใหญ่ แสงทองจากด้านบน บรรยากาศลึกลับ ถ่ายมุมกว้าง 8K'},
