@@ -182,7 +182,7 @@ function shilaToggle() {
 
 function shilaSendFromTopic(idx) {
   const t = SHILA_TOPICS[idx];
-  if (t) shilaSend(t.prompt);
+  if (t) shilaSend(t.prompt, true);
 }
 
 function shilaMarkStarted() {
@@ -244,11 +244,13 @@ function shilaMatchProduct(text, products) {
     let score = 0;
     for (const t of (p.tags || [])) {
       const tl = t.toLowerCase();
-      if (tl.length >= 2 && kw.includes(tl)) score += tl.length;
+      // ต้องยาวพอสมควรถึงจะนับ กันคำกว้างๆ เช่น "หิน"/"มงคล" ทำให้ทัก
+      // เรื่องทั่วไปแล้วดันมีสินค้าโผล่มาแบบไม่เกี่ยวจริง
+      if (tl.length >= 4 && kw.includes(tl)) score += tl.length;
     }
     if (score > bestScore) { bestScore = score; best = p; }
   }
-  return bestScore >= 3 ? best : null;
+  return bestScore >= 4 ? best : null;
 }
 
 function shilaProductCardHtml(p) {
@@ -264,7 +266,7 @@ function shilaProductCardHtml(p) {
   </a>`;
 }
 
-async function shilaSend(text) {
+async function shilaSend(text, fromTopic) {
   const input = document.getElementById('shila-input');
   const send = document.getElementById('shila-send');
   if (!text) return;
@@ -294,8 +296,9 @@ async function shilaSend(text) {
       shilaAddMsg('bot', data.error || 'ขออภัยครับ ขณะนี้ระบบขัดข้องชั่วคราว ลองใหม่อีกครั้ง หรือทักไลน์ @amethez ได้เลยครับ 🌿');
     } else {
       shilaHistory.push({ role: 'assistant', content: data.reply });
-      const products = await productsPromise;
-      const matched = shilaMatchProduct(text, products);
+      // ข้ามการแนบสินค้าเมื่อมาจากปุ่มหัวข้อ (prompt กลางๆ ทั่วไป ไม่ใช่คำถาม
+      // เจาะจงจริงจากลูกค้า) กันสินค้าโผล่มาแปลกๆ ทันทีที่กดหัวข้อ
+      const matched = fromTopic ? null : shilaMatchProduct(text, await productsPromise);
       shilaAddMsg('bot', data.reply, matched ? shilaProductCardHtml(matched) : '');
     }
   } catch (e) {
