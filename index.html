@@ -120,6 +120,7 @@
     .intent-item:hover .intent-circle { border-color:var(--purple); box-shadow:0 6px 20px rgba(124,58,237,.15); transform:translateY(-3px); }
     .intent-item:hover .intent-label { color:var(--purple); }
     .intent-circle { width:80px; height:80px; border-radius:50%; margin:0 auto .6rem; border:2px solid var(--border); background:white; display:flex; align-items:center; justify-content:center; font-size:1.75rem; transition:all .2s; box-shadow:0 2px 8px rgba(0,0,0,.05); }
+    .intent-svg-icon { width:2.25rem; height:2.25rem; color:var(--purple); }
     .intent-label { font-size:.78rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; transition:color .2s; }
     @media(max-width:640px) { .intent-grid { grid-template-columns:repeat(3,1fr); } }
 
@@ -357,27 +358,27 @@
     </div>
     <div class="intent-grid">
       <a href="/categories/chakra.html" class="intent-item">
-        <div class="intent-circle">☯️</div>
+        <div class="intent-circle"><svg class="site-icon intent-svg-icon" aria-label="จักระ"><use href="/images/icons/sprite.svg#ic-intent-chakra"/></svg></div>
         <div class="intent-label">จักระ</div>
       </a>
       <a href="/categories/zodiac.html" class="intent-item">
-        <div class="intent-circle">♈</div>
+        <div class="intent-circle"><svg class="site-icon intent-svg-icon" aria-label="ราศี"><use href="/images/icons/sprite.svg#ic-intent-zodiac"/></svg></div>
         <div class="intent-label">ราศี</div>
       </a>
       <a href="/categories/planet.html" class="intent-item">
-        <div class="intent-circle">🪐</div>
+        <div class="intent-circle"><svg class="site-icon intent-svg-icon" aria-label="ดาวเคราะห์"><use href="/images/icons/sprite.svg#ic-intent-planet"/></svg></div>
         <div class="intent-label">ดาวเคราะห์</div>
       </a>
       <a href="/categories/element.html" class="intent-item">
-        <div class="intent-circle">🔥</div>
+        <div class="intent-circle"><svg class="site-icon intent-svg-icon" aria-label="ธาตุ"><use href="/images/icons/sprite.svg#ic-intent-element"/></svg></div>
         <div class="intent-label">ธาตุ</div>
       </a>
       <a href="/categories/color.html" class="intent-item">
-        <div class="intent-circle">🎨</div>
+        <div class="intent-circle"><svg class="site-icon intent-svg-icon" aria-label="สีพลังงาน"><use href="/images/icons/sprite.svg#ic-intent-color"/></svg></div>
         <div class="intent-label">สีพลังงาน</div>
       </a>
       <a href="/categories/purpose.html" class="intent-item">
-        <div class="intent-circle">✨</div>
+        <div class="intent-circle"><svg class="site-icon intent-svg-icon" aria-label="วัตถุประสงค์"><use href="/images/icons/sprite.svg#ic-intent-purpose"/></svg></div>
         <div class="intent-label">วัตถุประสงค์</div>
       </a>
     </div>
