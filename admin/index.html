@@ -1811,7 +1811,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-23.1';
+const ADMIN_VERSION='2026-07-23.2';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -6557,20 +6557,22 @@ function setTalkStep(i,val){ if(_talkSteps[i]!==undefined) _talkSteps[i]=val; }
 function addTalkStep(){ _talkSteps.push(''); renderTalkStepRows(_talkSteps); }
 function removeTalkStep(i){ _talkSteps.splice(i,1); renderTalkStepRows(_talkSteps); }
 
-// Verses — each: {emoji, lines:[]} — lines edited as one textarea, split by newline on save
+// Verses — each: {emoji, lines:[]} — edited as ONE textarea per verse (first
+// line = emoji, remaining lines = the verse text), split back apart on save.
+// Was two separate inputs (emoji box + lines textarea); combined into one
+// field per user request since pasting/editing whole verses at once is the
+// common workflow.
 function renderTalkVerseRows(verses){
-  _talkVerses=(verses||[]).map(v=>({emoji:v.emoji||'✨', linesText:(v.lines||[]).join('\n')}));
+  _talkVerses=(verses||[]).map(v=>({combinedText:[v.emoji||'✨', ...(v.lines||[])].join('\n')}));
   document.getElementById('talkVerseRows').innerHTML=_talkVerses.map((v,i)=>`
-    <div style="display:grid;grid-template-columns:60px 1fr;gap:.75rem;padding:1rem;background:#faf8ff;border-radius:.75rem;align-items:start">
-      <input class="form-input" value="${x(v.emoji)}" oninput="setTalkVerseField(${i},'emoji',this.value)" style="text-align:center;font-size:1.2rem;padding:.5rem">
-      <div>
-        <textarea class="form-input" rows="3" placeholder="1 บรรทัด/ประโยค (ขึ้นบรรทัดใหม่แยกแต่ละประโยค)" oninput="setTalkVerseField(${i},'linesText',this.value)">${x(v.linesText)}</textarea>
-        <button class="btn btn-danger btn-sm" onclick="removeTalkVerse(${i})" style="margin-top:.4rem;font-size:.7rem">🗑 ลบบทนี้</button>
-      </div>
+    <div style="padding:1rem;background:#faf8ff;border-radius:.75rem">
+      <textarea class="form-input" rows="4" placeholder="บรรทัดแรก = emoji เช่น 🤑
+บรรทัดที่เหลือ = แต่ละประโยค (แนะนำ 3 บรรทัด)" oninput="setTalkVerseField(${i},this.value)" style="font-size:.9rem;line-height:1.6">${x(v.combinedText)}</textarea>
+      <button class="btn btn-danger btn-sm" onclick="removeTalkVerse(${i})" style="margin-top:.4rem;font-size:.7rem">🗑 ลบบทนี้</button>
     </div>`).join('')||'<div style="text-align:center;padding:1rem;color:#9ca3af;font-size:.85rem">ยังไม่มีบทตั้งจิต — กด ➕ เพิ่มบท</div>';
 }
-function setTalkVerseField(i,field,val){ if(_talkVerses[i]) _talkVerses[i][field]=val; }
-function addTalkVerse(){ _talkVerses.push({emoji:'✨',linesText:''}); renderTalkVerseRows(_talkVerses); }
+function setTalkVerseField(i,val){ if(_talkVerses[i]) _talkVerses[i].combinedText=val; }
+function addTalkVerse(){ _talkVerses.push({combinedText:'✨'}); renderTalkVerseRows(_talkVerses); }
 function removeTalkVerse(i){ _talkVerses.splice(i,1); renderTalkVerseRows(_talkVerses); }
 
 function saveTalkEditor(){
@@ -6594,7 +6596,10 @@ function saveTalkEditor(){
     coverSlot: (eid&&items.find(b=>b.id===eid)?.coverSlot)||('talk_'+id+'_cover'),
     intro: document.getElementById('talkIntro').value.trim(),
     how_to: _talkSteps.map(s=>s.trim()).filter(Boolean),
-    verses: _talkVerses.map(v=>({emoji:v.emoji.trim()||'✨',lines:v.linesText.split('\n').map(l=>l.trim()).filter(Boolean)})).filter(v=>v.lines.length),
+    verses: _talkVerses.map(v=>{
+      const parts=v.combinedText.split('\n').map(l=>l.trim()).filter(Boolean);
+      return {emoji:parts[0]||'✨',lines:parts.slice(1)};
+    }).filter(v=>v.lines.length),
     closing: document.getElementById('talkClosing').value.trim(),
     created: eid?(items.find(b=>b.id===eid)?.created||new Date().toISOString()):new Date().toISOString(),
     updated: new Date().toISOString(),
