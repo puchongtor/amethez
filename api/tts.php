@@ -61,7 +61,7 @@ if (!$apiKey) {
 
 $body = json_decode(file_get_contents('php://input'), true);
 $text = trim((string)($body['text'] ?? ''));
-$voice = (string)($body['voice'] ?? 'th-TH-Neural2-C');
+$voice = (string)($body['voice'] ?? 'th-TH-Chirp3-HD-Charon');
 $rate = (float)($body['rate'] ?? 0.82);
 
 if ($text === '') {
@@ -73,14 +73,19 @@ if ($text === '') {
 $text = mb_substr($text, 0, 500);
 
 // จำกัด voice ให้เป็นแค่ 4 ตัวที่หน้าเว็บใช้จริง กัน parameter injection แปลกๆ
-$allowedVoices = ['th-TH-Neural2-C', 'th-TH-Neural2-D', 'th-TH-Wavenet-B', 'th-TH-Wavenet-A'];
-if (!in_array($voice, $allowedVoices, true)) $voice = 'th-TH-Neural2-C';
+// ยืนยันเพศจริงจาก Google Cloud TTS voices.list ตรงๆ (2026-07-22) — ของเดิม
+// (Neural2-D, Wavenet-A/B) ไม่มีอยู่จริงในรายชื่อเสียงไทยเลย และ Neural2-C ที่
+// เหลือก็จริงๆ แล้วเป็นเสียงผู้หญิง ไม่ใช่ผู้ชายตามที่ label ไว้ผิด
+$allowedVoices = ['th-TH-Chirp3-HD-Charon', 'th-TH-Chirp3-HD-Puck', 'th-TH-Chirp3-HD-Aoede', 'th-TH-Chirp3-HD-Zephyr'];
+if (!in_array($voice, $allowedVoices, true)) $voice = 'th-TH-Chirp3-HD-Charon';
 $rate = max(0.6, min(1.1, $rate));
 
+// Chirp3-HD ไม่รองรับ pitch (Google API ปฏิเสธ 400 ถ้าใส่ไป) — ใส่แค่
+// speakingRate + volumeGainDb ที่ทดสอบแล้วว่าใช้ได้จริงกับเสียงตระกูลนี้
 $payload = [
     'input' => ['text' => $text],
     'voice' => ['languageCode' => 'th-TH', 'name' => $voice],
-    'audioConfig' => ['audioEncoding' => 'MP3', 'speakingRate' => $rate, 'pitch' => -1.0, 'volumeGainDb' => 1.0],
+    'audioConfig' => ['audioEncoding' => 'MP3', 'speakingRate' => $rate, 'volumeGainDb' => 1.0],
 ];
 
 $ch = curl_init('https://texttospeech.googleapis.com/v1/text:synthesize?key=' . urlencode($apiKey));
