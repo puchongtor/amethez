@@ -57,6 +57,21 @@
     .dark .section-sub { color: rgba(255,255,255,.6); }
     .container-narrow { max-width: 960px; margin: 0 auto; }
 
+    /* ── Birth Star Finder ── */
+    .star-finder { background: linear-gradient(135deg, #1a1228, #2d1b69); border-radius: 1.5rem; padding: 2.5rem 1.75rem; text-align: center; color: white; }
+    .star-finder h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: .5rem; }
+    .star-finder p { color: rgba(255,255,255,.65); font-size: .92rem; margin-bottom: 1.5rem; }
+    .star-finder-form { display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap; align-items: center; }
+    .star-finder-form input[type="date"] { padding: .7rem 1rem; border-radius: .65rem; border: 1.5px solid rgba(255,255,255,.2); background: rgba(255,255,255,.08); color: white; font-family: Sarabun, sans-serif; font-size: .92rem; }
+    .star-finder-form input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); }
+    .star-finder-form button { padding: .7rem 1.5rem; border-radius: .65rem; border: none; background: linear-gradient(135deg, #c9a84c, #a3812f); color: #1a1228; font-weight: 700; font-size: .92rem; cursor: pointer; font-family: Sarabun, sans-serif; }
+    .star-finder-form button:hover { opacity: .9; }
+    .star-result { display: none; margin-top: 1.75rem; padding-top: 1.75rem; border-top: 1px solid rgba(255,255,255,.15); }
+    .star-result.show { display: block; }
+    .star-result-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #c9a84c; margin-bottom: .3rem; }
+    .star-result-influence { color: rgba(255,255,255,.65); font-size: .88rem; margin-bottom: 1rem; }
+    .star-result-stones { display: flex; gap: .6rem; justify-content: center; flex-wrap: wrap; }
+
     /* ── 12 Zodiac Grid ── */
     .zodiac-grid {
       display: grid;
@@ -102,6 +117,9 @@
     .day-table td { padding: .85rem 1rem; font-size: .88rem; border-bottom: 1px solid #f0e8ff; vertical-align: top; }
     .day-table tr:nth-child(even) td { background: #faf7ff; }
     .day-table .day-name { font-weight: 700; font-size: .95rem; }
+    .day-buy-btn { display: inline-block; background: #ee4d2d; color: white; font-size: .78rem; font-weight: 700; padding: .4rem .75rem; border-radius: .5rem; text-decoration: none; white-space: nowrap; }
+    .day-buy-btn:hover { background: #d63f22; }
+    .day-buy-empty { color: #c4b5fd; font-size: .78rem; }
     .day-table .stone-name { color: #7c3aed; font-weight: 600; }
     .day-table .meaning { color: #5a4e72; font-size: .85rem; }
     .sun-row { background: #fff7e6 !important; }
@@ -338,6 +356,7 @@
             <th>หินคริสตัลทดแทน</th>
             <th>พลังงานหลัก</th>
             <th>วิธีใช้</th>
+            <th>ซื้อเลย</th>
           </tr>
         </thead>
         <tbody>
@@ -347,6 +366,7 @@
             <td class="stone-name">Red Carnelian</td>
             <td>พลังงาน ความมั่นใจ บารมี</td>
             <td class="meaning">สวมนิ้วนางมือขวา ชาร์จด้วยแสงอาทิตย์ยามเช้า</td>
+            <td id="day-buy-sun" data-stones="ทับทิม,carnelian,คาร์เนเลียน"></td>
           </tr>
           <tr class="mon-row">
             <td class="day-name">🌙 จันทร์</td>
@@ -354,6 +374,7 @@
             <td class="stone-name">Moonstone</td>
             <td>ความอ่อนโยน ครอบครัว อารมณ์</td>
             <td class="meaning">สวมนิ้วนางมือซ้าย ชาร์จด้วยแสงจันทร์</td>
+            <td id="day-buy-mon" data-stones="มูนสโตน,moonstone,ไข่มุก,pearl"></td>
           </tr>
           <tr class="tue-row">
             <td class="day-name">🔴 อังคาร</td>
@@ -361,6 +382,7 @@
             <td class="stone-name">Bloodstone / Garnet</td>
             <td>ความกล้าหาญ ปกป้อง ความมุ่งมั่น</td>
             <td class="meaning">พกในกระเป๋า หรือสวมเป็นกำไล</td>
+            <td id="day-buy-tue" data-stones="bloodstone,บลัดสโตน,garnet,โกเมน"></td>
           </tr>
           <tr class="wed-row">
             <td class="day-name">💚 พุธ</td>
@@ -368,6 +390,7 @@
             <td class="stone-name">Green Aventurine</td>
             <td>ปัญญา การสื่อสาร ความคิดสร้างสรรค์</td>
             <td class="meaning">สวมนิ้วก้อยหรือพกในกระเป๋าใส่เครื่องเขียน</td>
+            <td id="day-buy-wed" data-stones="aventurine,อเวนจูรีน,มรกต,emerald"></td>
           </tr>
           <tr class="thu-row">
             <td class="day-name">🟡 พฤหัสบดี</td>
@@ -375,6 +398,7 @@
             <td class="stone-name">Citrine</td>
             <td>โชคลาภ ความสำเร็จ การศึกษา</td>
             <td class="meaning">วางบนโต๊ะทำงานหรือโต๊ะเรียน ใส่ในกระเป๋าเงิน</td>
+            <td id="day-buy-thu" data-stones="ซิทริน,citrine"></td>
           </tr>
           <tr class="fri-row">
             <td class="day-name">💜 ศุกร์</td>
@@ -382,6 +406,7 @@
             <td class="stone-name">Rose Quartz / Morganite</td>
             <td>ความรัก ความงาม ความสัมพันธ์</td>
             <td class="meaning">สวมนิ้วนาง พกใกล้หัวใจหรือในกระเป๋าเสื้อ</td>
+            <td id="day-buy-fri" data-stones="โรสควอตซ์,rose quartz,morganite,มอร์แกไนต์"></td>
           </tr>
           <tr class="sat-row">
             <td class="day-name">🔵 เสาร์</td>
@@ -389,6 +414,7 @@
             <td class="stone-name">Amethyst / Sodalite</td>
             <td>สมาธิ ปัญญา ความอดทน วินัย</td>
             <td class="meaning">สวมนิ้วกลาง ชาร์จด้วยแสงจันทร์ เหมาะทำสมาธิ</td>
+            <td id="day-buy-sat" data-stones="อเมทิสต์,amethyst,sodalite,โซดาไลต์"></td>
           </tr>
         </tbody>
       </table>
@@ -436,6 +462,25 @@
         <div class="auspi-type">🎓 ฤกษ์การศึกษา</div>
         <div class="auspi-stone">💜 หินแนะนำ: Lapis Lazuli</div>
         <div class="auspi-note">เหมาะสมัครเรียน สอบ นำเสนอวิทยานิพนธ์ หรือเซ็นสัญญาการศึกษา</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BIRTH STAR FINDER ── -->
+<section class="metha-section">
+  <div class="container-narrow">
+    <div class="star-finder">
+      <h3>🔮 ค้นหาดาวเจ้าชะตาของคุณ</h3>
+      <p>กรอกวันเกิดเพื่อดูว่าดาวไหนเป็นเจ้าชะตา และหินไหนเหมาะกับคุณที่สุด</p>
+      <div class="star-finder-form">
+        <input type="date" id="birthdate">
+        <button type="button" onclick="findBirthStar()">ค้นหาดาวของฉัน ✨</button>
+      </div>
+      <div id="starResult" class="star-result">
+        <div class="star-result-name" id="starResultName"></div>
+        <div class="star-result-influence" id="starResultInfluence"></div>
+        <div class="star-result-stones" id="starResultStones"></div>
       </div>
     </div>
   </div>
@@ -554,6 +599,63 @@
 <footer class="site-footer"></footer>
 <script src="/js/cms.js"></script>
 <script src="/js/components.js"></script>
+<script src="/js/main.js"></script>
 <script src="/js/shila.js"></script>
+<script>
+  // ค้นหาดาวเจ้าชะตาจากวันเกิด (โหราศาสตร์ไทย — วันในสัปดาห์ → ดาวประจำวัน)
+  const BIRTH_STARS = {
+    0: { name: 'พระอาทิตย์', emoji: '☀️', influence: 'Sun · บารมี ความเป็นผู้นำ', stones: ['ทับทิม', 'Red Carnelian', 'Sunstone'] },
+    1: { name: 'พระจันทร์', emoji: '🌙', influence: 'Moon · อารมณ์ ครอบครัว สัญชาตญาณ', stones: ['Moonstone', 'ไข่มุก', 'Selenite'] },
+    2: { name: 'พระอังคาร', emoji: '🔴', influence: 'Mars · ความกล้าหาญ พลังงาน การต่อสู้', stones: ['Bloodstone', 'Garnet', 'Red Jasper'] },
+    3: { name: 'พระพุธ', emoji: '💚', influence: 'Mercury · ปัญญา การสื่อสาร ธุรกิจ', stones: ['Emerald', 'Green Aventurine', 'Amazonite'] },
+    4: { name: 'พระพฤหัสบดี', emoji: '🟡', influence: 'Jupiter · โชคลาภ ความเจริญ', stones: ['บุษราคัม', 'Citrine', 'Pyrite'] },
+    5: { name: 'พระศุกร์', emoji: '💜', influence: 'Venus · ความรัก ความงาม ศิลปะ', stones: ['เพชร', 'Rose Quartz', 'Morganite'] },
+    6: { name: 'พระเสาร์', emoji: '🔵', influence: 'Saturn · วินัย ความอดทน ความมั่นคง', stones: ['นิล', 'Amethyst', 'Sodalite'] },
+  };
+  async function findBirthStar(){
+    const input = document.getElementById('birthdate');
+    if (!input.value) { input.focus(); return; }
+    // ใช้ UTC ตัดปัญหา timezone เลื่อนวันของ <input type="date">
+    const d = new Date(input.value + 'T12:00:00');
+    const star = BIRTH_STARS[d.getDay()];
+    document.getElementById('starResultName').textContent = `${star.emoji} เจ้าชะตาของคุณคือ ${star.name}`;
+    document.getElementById('starResultInfluence').textContent = star.influence;
+    const stonesEl = document.getElementById('starResultStones');
+    stonesEl.innerHTML = star.stones.map(s => `<span class="planet-stone">${s}</span>`).join('');
+    document.getElementById('starResult').classList.add('show');
+    // แนบสินค้าจริงถ้ามีตรง tag เท่านั้น (เหมือนตารางด้านล่าง — ไม่มั่วลิงก์)
+    if (typeof loadShopeeProducts === 'function') {
+      try {
+        const matches = await loadShopeeProducts(star.stones, 1);
+        if (matches.length) {
+          const p = matches[0];
+          stonesEl.innerHTML += `<a href="${p.url}" target="_blank" rel="nofollow noopener sponsored" class="day-buy-btn" onclick="if(typeof gtag==='function')gtag('event','shopee_click',{store:'${(p.store||'').replace(/'/g,'')}',placement:'metha_birth_star'})">🛒 ${p.price ? '฿'+p.price.toLocaleString() : 'ซื้อเลย'}</a>`;
+        }
+      } catch (e) {}
+    }
+  }
+
+  // เติมปุ่ม "ซื้อเลย" ในตารางหินมงคลประจำวัน จากสินค้าจริงใน products.json
+  // เท่านั้น — ถ้าวันไหนยังไม่มีสินค้าตรง tag ก็เว้นว่างไว้ ไม่ใส่ลิงก์มั่ว
+  (async function fillDayBuyButtons(){
+    const cells = document.querySelectorAll('[id^="day-buy-"]');
+    if (!cells.length || typeof loadShopeeProducts !== 'function') return;
+    for (const cell of cells) {
+      const keywords = (cell.dataset.stones || '').split(',').map(s => s.trim()).filter(Boolean);
+      if (!keywords.length) continue;
+      try {
+        const matches = await loadShopeeProducts(keywords, 1);
+        if (matches.length) {
+          const p = matches[0];
+          cell.innerHTML = `<a href="${p.url}" target="_blank" rel="nofollow noopener sponsored" class="day-buy-btn" onclick="if(typeof gtag==='function')gtag('event','shopee_click',{store:'${(p.store||'').replace(/'/g,'')}',placement:'metha_day_table'})">🛒 ${p.price ? '฿'+p.price.toLocaleString() : 'ซื้อเลย'}</a>`;
+        } else {
+          cell.innerHTML = `<span class="day-buy-empty">—</span>`;
+        }
+      } catch (e) {
+        cell.innerHTML = `<span class="day-buy-empty">—</span>`;
+      }
+    }
+  })();
+</script>
 </body>
 </html>
