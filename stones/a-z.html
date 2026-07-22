@@ -115,10 +115,13 @@
       <button class="ftab" onclick="setFilter('purple',this)">💜 ม่วง</button>
       <button class="ftab" onclick="setFilter('green',this)">💚 เขียว</button>
       <button class="ftab" onclick="setFilter('pink',this)">🩷 ชมพู</button>
-      <button class="ftab" onclick="setFilter('black',this)">🖤 ดำ</button>
       <button class="ftab" onclick="setFilter('blue',this)">💙 น้ำเงิน</button>
       <button class="ftab" onclick="setFilter('yellow',this)">💛 เหลือง</button>
+      <button class="ftab" onclick="setFilter('orange',this)">🧡 ส้ม</button>
+      <button class="ftab" onclick="setFilter('red',this)">❤️ แดง</button>
+      <button class="ftab" onclick="setFilter('black',this)">🖤 ดำ</button>
       <button class="ftab" onclick="setFilter('white',this)">🤍 ขาว</button>
+      <button class="ftab" onclick="setFilter('gold',this)">✨ ทอง</button>
     </div>
   </div>
 </div>
@@ -243,6 +246,17 @@ function filterStones() { renderStones(); }
       cmsImgs = d2.images || {};
     }
   } catch(e) {}
+
+  // Allow deep-linking a color filter from other pages, e.g. /stones/a-z.html?color=purple
+  const urlColor = new URLSearchParams(location.search).get('color');
+  if (urlColor) {
+    curFilter = urlColor;
+    document.querySelectorAll('.ftab').forEach(b => {
+      const isMatch = b.getAttribute('onclick') === `setFilter('${urlColor}',this)`;
+      b.classList.toggle('on', isMatch);
+    });
+  }
+
   renderStones();
 })();
 </script>

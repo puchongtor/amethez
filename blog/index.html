@@ -437,7 +437,15 @@ function renderTags() {
 }
 
 buildCatNav();
-renderAll();
+
+// Allow deep-linking a category from other pages, e.g. /blog/?cat=guide
+const urlCat = new URLSearchParams(location.search).get('cat');
+if (urlCat && CATS.some(c => c.id === urlCat)) {
+  const btn = Array.from(document.querySelectorAll('.cnav')).find(b => b.getAttribute('onclick') === `setCat('${urlCat}',this)`);
+  setCat(urlCat, btn); // also calls renderAll()
+} else {
+  renderAll();
+}
 renderTags();
 </script>
 
