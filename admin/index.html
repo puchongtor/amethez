@@ -1691,7 +1691,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-21.3';
+const ADMIN_VERSION='2026-07-22.1';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -1708,6 +1708,9 @@ const GEODES_KEY='amethez_geodes';
 
 // ── IMAGE SLOTS ──────────────────────────────
 const SLOTS=[
+  {id:'metha_ganesha_favorite_stones_hero',label:'พระพิฆเนศชอบหินอะไร — Hero',page:'metha/ganesha-favorite-stones.html',group:'metha',size:'1280×720',
+   en:'Majestic Ganesha deity statue in golden amber light, elephant head with multiple arms holding lotus and axe, dramatic temple atmosphere with candles and jasmine flowers, red carnelian and ruby crystals arranged as offerings, deep purple and gold tones, cinematic spiritual atmosphere, Thai Hindu Buddhist temple aesthetic, wide format 16:9, 8K quality',
+   th:'รูปปั้นพระพิฆเนศในแสงทองอำพัน หัวช้างถืออาวุธและดอกบัว บรรยากาศวัดขรึมขลัง มีเทียนและดอกมะลิ หินคาร์เนเลียนและทับทิมจัดวางเป็นเครื่องบูชา โทนม่วง-ทอง บรรยากาศศักดิ์สิทธิ์แบบไทย-ฮินดู สัดส่วน 16:9'},
   {id:'logo',label:'โลโก้ AMETHEZ',page:'ทุกหน้า',group:'global',size:'400×100',
    en:'AMETHEZ crystal brand logo, amethyst purple and gold serif typography, luxury minimalist, transparent background 400x100',
    th:'โลโก้ AMETHEZ ตัวอักษรสีทองอเมทิสต์ม่วง สไตล์หรู พื้นหลังโปร่งใส'},
@@ -2052,7 +2055,7 @@ const SLOTS=[
    th:'การจับมือธุรกิจ มีหินคริสตัลบนโต๊ะไม้ แสงอบอุ่น บรรยากาศน่าเชื่อถือ'},
 ];
 
-const GROUPS={global:'🌐 Global',characters:'🎭 ตัวละคร',homepage:'🏠 หน้าหลัก',chakra:'🔮 จักระ',stones:'💎 บทความหิน',geode:'🪨 โพรง',consign:'🤝 ฝากขาย'};
+const GROUPS={global:'🌐 Global',characters:'🎭 ตัวละคร',homepage:'🏠 หน้าหลัก',chakra:'🔮 จักระ',stones:'💎 บทความหิน',geode:'🪨 โพรง',consign:'🤝 ฝากขาย',metha:'🌙 บทความ อ.เมธา'};
 const ARTICLES=[
   {e:'💜',n:'อเมทิสต์',p:'/stones/amethyst.html'},
   {e:'🩷',n:'โรสควอตซ์',p:'/stones/rose-quartz.html'},
