@@ -347,6 +347,18 @@
       "stone_tags": ["นอนหลับ", "ความสงบ"] },
     { "id": "intuition", "name": "สัญชาตญาณ", "name_en": "Intuition & Psychic", "emoji": "🔮",
       "color": "#7c3aed", "description": "หินเสริมสัญชาตญาณ พลังจิต และการมองเห็นภายใน",
-      "stone_tags": ["สัญชาตญาณ", "Third Eye"] }
+      "stone_tags": ["สัญชาตญาณ", "Third Eye"] },
+    { "id": "wisdom", "name": "ปัญญาและการเรียนรู้", "name_en": "Wisdom & Learning", "emoji": "🧠",
+      "color": "#4f46e5", "description": "หินเสริมความชัดเจนทางความคิด สมาธิในการเรียนรู้ และการตัดสินใจอย่างมีปัญญา",
+      "stone_tags": ["ปัญญา", "การเรียนรู้", "สมาธิ"] },
+    { "id": "transform", "name": "การเปลี่ยนแปลงตัวเอง", "name_en": "Self-Transformation", "emoji": "🦋",
+      "color": "#059669", "description": "หินช่วยผ่านช่วงเปลี่ยนผ่านครั้งใหญ่ในชีวิตอย่างมีสติและเห็นความหมาย",
+      "stone_tags": ["การเปลี่ยนแปลง", "การเติบโต"] },
+    { "id": "confidence", "name": "ความมั่นใจและพลังงาน", "name_en": "Confidence & Vitality", "emoji": "⚡",
+      "color": "#f59e0b", "description": "หินเสริมความกล้าหาญ พลังชีวิต และความมั่นใจในการลงมือทำ",
+      "stone_tags": ["ความมั่นใจ", "พลังงาน", "ความกล้า"] },
+    { "id": "fengshui", "name": "ฮวงจุ้ยและบ้าน", "name_en": "Feng Shui & Home", "emoji": "🏠",
+      "color": "#16a34a", "description": "หินจัดวางตามหลักฮวงจุ้ยเพื่อความมั่งคั่ง การปกป้อง และพลังงานที่สมดุลในบ้าน",
+      "stone_tags": ["ฮวงจุ้ย", "บ้าน", "ความมั่งคั่ง"] }
   ]
 }
