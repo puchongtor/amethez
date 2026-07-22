@@ -180,6 +180,7 @@
 <main>
   <div class="cat-hero" id="hero">
     <div class="container">
+      <img id="hero-photo" alt="" style="width:180px;height:180px;border-radius:50%;object-fit:cover;margin:0 auto 1.25rem;display:none;border:3px solid rgba(255,255,255,.25);box-shadow:0 0 40px rgba(124,58,237,.4);position:relative">
       <span class="cat-hero-emoji" id="hero-emoji">💎</span>
       <h1 id="hero-title">กำลังโหลด...</h1>
       <p class="hero-sub" id="hero-sub"></p>
@@ -210,7 +211,7 @@
 
   const TYPE_CONFIG = {
     zodiac:  { label:'ราศี',          back:'/categories/zodiac.html',   icon:'♈', contentFile:null },
-    chakra:  { label:'จักระ',         back:'/categories/chakra.html',   icon:'🧘', contentFile:null },
+    chakra:  { label:'จักระ',         back:'/categories/chakra.html',   icon:'🧘', contentFile:'/data/content-chakra.json' },
     planet:  { label:'ดาวเคราะห์',    back:'/categories/planet.html',   icon:'🪐', contentFile:null },
     element: { label:'ธาตุ',          back:'/categories/element.html',  icon:'🔥', contentFile:null },
     purpose: { label:'วัตถุประสงค์',  back:'/categories/purpose.html',  icon:'✨', contentFile:'/data/content-purpose.json' }
@@ -229,17 +230,26 @@
 
   async function loadAll(){
     const cfg = TYPE_CONFIG[catType] || {};
-    const fetches = [fetch('/data/categories.json'), fetch('/data/products.json')];
+    const fetches = [fetch('/data/categories.json'), fetch('/data/products.json'), fetch('/data/content.json')];
     if(cfg.contentFile) fetches.push(fetch(cfg.contentFile));
     const results = await Promise.all(fetches.map(f=>f.then(r=>r.json()).catch(()=>null)));
-    return { cats:results[0], products:(results[1]||{}).products||[], richContent:results[2]||null };
+    return { cats:results[0], products:(results[1]||{}).products||[], imgs:(results[2]||{}).images||{}, richContent:results[3]||null };
   }
 
-  function updateHero(item, type){
+  // Chakra detail pages have a dedicated hero photo slot per item (added in
+  // Admin — group "จักระ"), keyed chakra_root / chakra_third_eye / etc.
+  // Other category types don't have these slots yet, so this only applies
+  // to type=chakra and gracefully falls back to the emoji when no image
+  // has been uploaded/published.
+  function heroImgSlotKey(itemId, type){
+    if(type!=='chakra') return null;
+    return 'chakra_' + itemId.replace(/-/g,'_');
+  }
+
+  function updateHero(item, type, imgs){
     const cfg = TYPE_CONFIG[type]||{};
     document.getElementById('page-title').textContent = `${item.name} | ${cfg.label||type} | Amethez`;
     document.getElementById('page-desc').setAttribute('content', item.description||'');
-    document.getElementById('hero-emoji').textContent = item.emoji||cfg.icon||'💎';
     document.getElementById('hero-title').textContent = item.name + (item.name_en ? ' — '+item.name_en : '');
     document.getElementById('hero-sub').textContent = buildSub(item,type);
     const pillsEl = document.getElementById('hero-pills');
@@ -247,6 +257,19 @@
     if(item.color){
       document.getElementById('hero').style.background =
         `linear-gradient(135deg,#1a1228 0%,${item.color}33 50%,#0f0a1e 100%)`;
+    }
+    const slotKey = heroImgSlotKey(item.id, type);
+    const photoUrl = slotKey && imgs ? imgs[slotKey] : null;
+    const photoEl = document.getElementById('hero-photo');
+    const emojiEl = document.getElementById('hero-emoji');
+    if(photoUrl){
+      photoEl.src = photoUrl;
+      photoEl.style.display = 'block';
+      emojiEl.style.display = 'none';
+    } else {
+      photoEl.style.display = 'none';
+      emojiEl.style.display = '';
+      emojiEl.textContent = item.emoji||cfg.icon||'💎';
     }
   }
 
@@ -492,7 +515,7 @@
   };
 
   // ── Main ──
-  loadAll().then(({cats,products,richContent})=>{
+  loadAll().then(({cats,products,imgs,richContent})=>{
     if(!catType||!itemId){
       document.getElementById('main-content').innerHTML='<p style="text-align:center;padding:3rem;color:#9ca3af">ไม่พบข้อมูล — กรุณาระบุ type และ id</p>';
       return;
@@ -507,7 +530,7 @@
     const cfg = TYPE_CONFIG[catType]||{};
     const rich = richContent && richContent[itemId] || null;
 
-    updateHero(item, catType);
+    updateHero(item, catType, imgs);
 
     const infoCards = buildInfoCards(item, catType);
     const mainContent = rich ? buildRichContent(item, rich) : buildSimpleContent(item);
