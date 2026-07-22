@@ -1811,7 +1811,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-23.5';
+const ADMIN_VERSION='2026-07-23.6';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -5082,9 +5082,8 @@ function renderPageGrid(){
     c.textContent=v; c.onclick=()=>{ pgActiveGroup=k; renderPageGrid(); };
     bar.appendChild(c);
   });
-  const list=pgActiveGroup==='all'?NON_STONE_PAGES:NON_STONE_PAGES.filter(p=>p.group===pgActiveGroup);
   const imgs=getImgs(); const texts=getTexts();
-  document.getElementById('pageGrid').innerHTML=list.map(p=>{
+  function cardHtml(p){
     const ic=p.imgs?p.imgs.filter(i=>imgs[i]).length:0;
     const tc=p.text?p.text.filter(f=>texts[`${p.key}.${f.id}`]).length:0;
     const done=ic===0&&tc===0?'':'has-img';
@@ -5093,7 +5092,26 @@ function renderPageGrid(){
       <div class="qt" style="font-size:.82rem">${p.label.replace(/^\S+ /,'')}</div>
       <div class="qs">📝 ${tc}/${p.text?.length||0} · 🖼️ ${ic}/${p.imgs?.length||0}</div>
     </div>`;
-  }).join('');
+  }
+
+  const grid=document.getElementById('pageGrid');
+  if(pgActiveGroup==='all'){
+    // "ทั้งหมด" — group into labeled sections (one per PAGE_GROUPS entry,
+    // skipping empty ones) instead of one long undifferentiated wall of
+    // ~40 cards, so a specific page is quick to scan for.
+    grid.className='';
+    grid.innerHTML=Object.entries(PAGE_GROUPS).filter(([k])=>k!=='s').map(([k,label])=>{
+      const items=NON_STONE_PAGES.filter(p=>p.group===k);
+      if(!items.length) return '';
+      return `<div style="margin-bottom:1.75rem">
+        <div style="font-size:.9rem;font-weight:700;color:#4b5563;margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:1.5px solid #ede9fe">${x(label)} <span style="font-weight:400;color:#9ca3af;font-size:.78rem">(${items.length})</span></div>
+        <div class="quick-grid">${items.map(cardHtml).join('')}</div>
+      </div>`;
+    }).join('');
+  } else {
+    grid.className='quick-grid';
+    grid.innerHTML=NON_STONE_PAGES.filter(p=>p.group===pgActiveGroup).map(cardHtml).join('');
+  }
 }
 
 // ── PAGE EDITOR ────────────────────────────────
