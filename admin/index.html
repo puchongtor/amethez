@@ -1710,7 +1710,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
             <!-- Row 2: Intro -->
             <div class="card" style="margin-bottom:1.5rem">
               <div class="card-title">📖 คำนำ (Intro)</div>
-              <textarea class="form-input" id="talkIntro" rows="3" placeholder="โมลดาไวท์เป็นหินแห่ง..."></textarea>
+              <textarea class="form-input" id="talkIntro" rows="5" placeholder="โมลดาไวท์เป็นหินแห่ง..." style="width:100%;font-size:.9rem;line-height:1.7;font-family:inherit"></textarea>
             </div>
 
             <!-- Row 3: How-to steps -->
@@ -1737,7 +1737,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
             <!-- Row 5: Closing -->
             <div class="card" style="margin-bottom:0">
               <div class="card-title">🙏 ประโยคปิดท้าย (Closing)</div>
-              <input class="form-input" id="talkClosing" placeholder="ขอบคุณ ขอบคุณ ขอบคุณ">
+              <input class="form-input" id="talkClosing" placeholder="ขอบคุณ ขอบคุณ ขอบคุณ" style="width:100%">
             </div>
           </div><!-- /talkEditorView -->
         </div>
@@ -1811,7 +1811,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-23.3';
+const ADMIN_VERSION='2026-07-23.4';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
