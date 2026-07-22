@@ -1811,7 +1811,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-23.6';
+const ADMIN_VERSION='2026-07-23.7';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -5167,9 +5167,14 @@ function openPageEditor(key){
       }).join('')
     :'<div style="color:#9ca3af;font-size:.875rem;padding:1rem 0">ไม่มี slot รูปในหน้านี้</div>';
 
-  // Body editor — show if page has a path
+  // Body editor — only for pages that actually declare a 'body' text field.
+  // Pages like wuchong/metha have a path (so their meta fields + images load
+  // fine) but are hub/landing pages assembled from several sections, not one
+  // article blob — fetchOrigBody's [data-cms-text="body"]/.article-body/
+  // .ep-content/main selectors never match anything on them, so this card
+  // used to always show and always fail with "โหลดไม่ได้" for those two.
   const bodyCard=document.getElementById('edBodyCard');
-  if(p.path){
+  if(p.path && p.text?.some(f=>f.id==='body')){
     bodyCard.style.display='';
     loadBodyEditor(p);
   } else {
