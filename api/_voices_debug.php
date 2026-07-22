@@ -9,7 +9,7 @@ if (($_GET['test'] ?? '') === 'chirp') {
     $payload = [
         'input' => ['text' => 'ทดสอบเสียง'],
         'voice' => ['languageCode' => 'th-TH', 'name' => 'th-TH-Chirp3-HD-Charon'],
-        'audioConfig' => ['audioEncoding' => 'MP3', 'speakingRate' => 0.82, 'pitch' => -1.0, 'volumeGainDb' => 1.0],
+        'audioConfig' => ['audioEncoding' => 'MP3', 'speakingRate' => 0.82, 'volumeGainDb' => 1.0],
     ];
     $ch = curl_init('https://texttospeech.googleapis.com/v1/text:synthesize?key=' . urlencode($apiKey));
     curl_setopt_array($ch, [
