@@ -66,6 +66,9 @@ jobs:
             **/scripts/**
             **/CLAUDE.md
             **/Amethez.md
+            **/WUCHONG_BRIEF.md
+            **/WUCHONG_DAILY_WISDOM.md
+            **/METHA_BRIEF.md
 
       - name: Notify Line OA (new content)
         if: success()
