@@ -169,10 +169,15 @@ function render(){
     const p = purposes.find(x=>x.id===a.purpose)||{emoji:'✨',label:'',color:'#7c3aed'};
     const hz = FREQ_NAMES[a.purpose] || 432;
     const col = p.color||'#7c3aed';
+    const coverHtml = a.cover
+      ? `<div class="card-cover" style="margin:-1.5rem -1.5rem .875rem;height:110px;overflow:hidden"><img src="${a.cover}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.parentElement.style.display='none'"></div>`
+      : '';
+    const emojiHtml = a.cover ? '' : `<span class="card-emoji">${a.stone_emoji||'💎'}</span>`;
     return `<a href="/talk/read.html?id=${a.id}" class="card" style="--card-color:${col}">
       <style>.card[style*="${col}"]::before{background:${col}}</style>
+      ${coverHtml}
       <span class="card-purpose" style="color:${col}">${p.emoji} ${p.label}</span>
-      <span class="card-emoji">${a.stone_emoji||'💎'}</span>
+      ${emojiHtml}
       <div class="card-title">${a.title||''}</div>
       <div class="card-sub">${a.subtitle||''}</div>
       <span class="card-freq">🎵 ${hz}Hz</span>

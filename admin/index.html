@@ -252,6 +252,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
       <div class="nav-item" onclick="showTab('catalog',this)"><span class="ic">✦</span> Crystal Catalog</div>
       <div class="nav-item" onclick="showTab('top100',this)"><span class="ic">🏆</span> Top 100 ยอดนิยม</div>
       <div class="nav-item" onclick="showTab('rankings',this)"><span class="ic">📊</span> จัดอันดับหินคริสตัล</div>
+      <div class="nav-item" onclick="showTab('talk',this)"><span class="ic">🔮</span> ห้องคลื่นเสียง Manifest</div>
     </div>
     <div class="sidebar-footer">
       <button class="btn-logout" onclick="doLogout()">🚪 ออกจากระบบ</button>
@@ -1622,6 +1623,125 @@ textarea.form-input{resize:vertical;min-height:80px;}
           </div><!-- /rankingsEditorView -->
         </div>
 
+        <div id="tab-talk">
+          <div id="talkListView">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem">
+            <div>
+              <div class="section-title">🔮 ห้องคลื่นเสียง Manifest</div>
+              <div class="section-sub">บทตั้งจิตคุยกับหิน — แก้ไข/เพิ่ม/ลบ ใส่รูปปก เปิด-ปิดการแสดงผล แล้วกด "🚀 เผยแพร่"</div>
+            </div>
+            <button class="btn btn-primary" onclick="openAddTalk()">➕ เพิ่มบทตั้งจิต</button>
+          </div>
+          <div id="talkList"></div>
+          </div><!-- /talkListView -->
+
+          <!-- FULL PAGE EDITOR VIEW -->
+          <div id="talkEditorView" style="display:none">
+            <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap">
+              <button class="btn btn-outline btn-sm" onclick="closeTalkEditor()">← กลับ</button>
+              <div style="flex:1">
+                <div id="talkTitle" style="font-size:1.1rem;font-weight:700"></div>
+                <a id="talkPath" href="#" target="_blank" style="font-size:.8rem;color:#9ca3af;text-decoration:none"></a>
+              </div>
+              <button class="btn btn-danger btn-sm" id="talkDelBtn" onclick="deleteTalkFromEditor()">🗑 ลบ</button>
+              <button class="btn btn-primary" onclick="saveTalkEditor()">💾 บันทึก</button>
+            </div>
+
+            <input type="hidden" id="talkEditId">
+
+            <!-- Row 1: Meta (left) + Cover image (right) -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem">
+              <div class="card" style="margin-bottom:0">
+                <div class="card-title">📝 ข้อมูลหลัก</div>
+                <div class="form-grid" style="gap:.75rem">
+                  <div class="form-group"><label class="fl">ชื่อหิน *</label>
+                    <input class="form-input" id="talkStone" placeholder="เช่น โมลดาไวท์"></div>
+                  <div class="form-group"><label class="fl">Emoji หิน (fallback ตอนยังไม่มีรูปปก)</label>
+                    <input class="form-input" id="talkStoneEmoji" placeholder="🌿"></div>
+                  <div class="form-group full"><label class="fl">หัวข้อเต็ม *</label>
+                    <input class="form-input" id="talkTitle2" placeholder="คลื่นเสียง Manifest โมลดาไวท์ — เร่งการเปลี่ยนแปลงที่ยิ่งใหญ่"></div>
+                  <div class="form-group full"><label class="fl">หัวข้อรอง</label>
+                    <input class="form-input" id="talkSubtitle" placeholder="เชื่อมจักรวาลสู่การเปลี่ยนแปลง"></div>
+                  <div class="form-group"><label class="fl">วัตถุประสงค์ *</label>
+                    <select class="form-input" id="talkPurpose">
+                      <option value="wealth">💰 การเงิน · ความมั่งคั่ง</option>
+                      <option value="success">🚀 การงาน · ความสำเร็จ</option>
+                      <option value="health">🌿 สุขภาพ · เยียวยา</option>
+                      <option value="love">💗 ความรัก · ความสัมพันธ์</option>
+                      <option value="protection">🛡️ ปกป้อง · ขจัดพลังลบ</option>
+                      <option value="peace">🌙 สงบ · สมาธิ · นอนหลับ</option>
+                    </select></div>
+                  <div class="form-group"><label class="fl">สถานะ</label>
+                    <select class="form-input" id="talkStatus">
+                      <option value="active">🟢 แสดงผล</option>
+                      <option value="inactive">⚫ ซ่อนไว้</option>
+                    </select></div>
+                  <div class="form-group"><label class="fl">ลำดับ (เลขน้อยขึ้นก่อน)</label>
+                    <input class="form-input" id="talkSortOrder" type="number" placeholder="1"></div>
+                  <div class="form-group"><label class="fl">สีพื้นหลัง (โทนเข้ม)</label>
+                    <input class="form-input" id="talkColorTo" type="color" style="height:42px;padding:.25rem" value="#143a2a"></div>
+                  <div class="form-group full"><label class="fl">ลิงก์บทความหินเต็ม (ถ้ามี)</label>
+                    <input class="form-input" id="talkArticleUrl" placeholder="/stones/moldavite.html"></div>
+                  <div class="form-group full"><label class="fl">Tags (คั่นด้วยจุลภาค)</label>
+                    <input class="form-input" id="talkTags" placeholder="โมลดาไวท์, การเปลี่ยนแปลง, ตั้งจิต"></div>
+                </div>
+              </div>
+              <div class="card" style="margin-bottom:0">
+                <div class="card-title">🖼️ รูปปก</div>
+                <div style="display:flex;gap:.5rem;align-items:flex-start;margin-bottom:.75rem">
+                  <input class="form-input" id="talkCover" placeholder="https://... หรืออัปโหลดรูปด้านขวา" style="flex:1" oninput="updateTalkCoverPreview(this.value)">
+                  <label style="cursor:pointer;flex-shrink:0">
+                    <span class="btn btn-outline btn-sm" style="display:inline-flex;align-items:center;gap:.3rem">📁 เลือกรูป</span>
+                    <input type="file" id="talkCoverFile" accept="image/*" style="display:none" onchange="uploadTalkCover(this)">
+                  </label>
+                </div>
+                <div id="talkCoverPreview" style="display:none">
+                  <img id="talkCoverImg" style="width:100%;max-height:220px;border-radius:.75rem;object-fit:cover;border:1px solid #e5e7eb">
+                </div>
+                <div id="talkCoverEmpty" style="height:150px;background:#f5f3ff;border-radius:.75rem;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:.85rem">
+                  ยังไม่มีรูปปก — ใช้ emoji แทนไปก่อน
+                </div>
+                <div style="margin-top:.75rem;padding:.6rem .85rem;background:#f5f0ff;border-radius:.5rem;font-size:.75rem;color:#5b21b6;line-height:1.6">
+                  💡 รูปนี้ขึ้นทั้งในการ์ดหน้ารวม /talk/ และด้านบนของหน้าเล่นเสียง
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 2: Intro -->
+            <div class="card" style="margin-bottom:1.5rem">
+              <div class="card-title">📖 คำนำ (Intro)</div>
+              <textarea class="form-input" id="talkIntro" rows="3" placeholder="โมลดาไวท์เป็นหินแห่ง..."></textarea>
+            </div>
+
+            <!-- Row 3: How-to steps -->
+            <div class="card" style="margin-bottom:1.5rem">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem">
+                <div class="card-title" style="margin:0">✅ วิธีใช้ (How-to)</div>
+                <button class="btn btn-outline btn-sm" onclick="addTalkStep()">➕ เพิ่มขั้นตอน</button>
+              </div>
+              <div id="talkStepRows" style="display:flex;flex-direction:column;gap:.5rem"></div>
+            </div>
+
+            <!-- Row 4: Verses -->
+            <div class="card" style="margin-bottom:1.5rem">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem">
+                <div>
+                  <div class="card-title" style="margin:0">🙏 บทตั้งจิต (Verses)</div>
+                  <div class="section-sub" style="margin-top:.25rem">แต่ละบท: 1 emoji + บรรทัดคำ (ขึ้นบรรทัดใหม่ต่อ 1 ประโยค แนะนำ 3 บรรทัด/บท)</div>
+                </div>
+                <button class="btn btn-outline btn-sm" onclick="addTalkVerse()">➕ เพิ่มบท</button>
+              </div>
+              <div id="talkVerseRows" style="display:flex;flex-direction:column;gap:1rem"></div>
+            </div>
+
+            <!-- Row 5: Closing -->
+            <div class="card" style="margin-bottom:0">
+              <div class="card-title">🙏 ประโยคปิดท้าย (Closing)</div>
+              <input class="form-input" id="talkClosing" placeholder="ขอบคุณ ขอบคุณ ขอบคุณ">
+            </div>
+          </div><!-- /talkEditorView -->
+        </div>
+
       </div>
     </div>
   </div>
@@ -1691,7 +1811,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-22.1';
+const ADMIN_VERSION='2026-07-22.2';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -2117,6 +2237,7 @@ function showTab(name,el){
   if(name==='catalog'){ seedCatalogFromJson().then(()=>renderCatalog()); }
   if(name==='top100'){ seedTop100FromJson().then(()=>{ renderTop100Table(); loadTop100HeroUI(); }); }
   if(name==='rankings'){ seedRankingsFromJson().then(()=>renderRankings()); }
+  if(name==='talk'){ seedTalkFromJson().then(()=>renderTalkList()); }
 }
 
 // ── SETTINGS / STORE INFO ──────────────────────────────────────
@@ -6272,6 +6393,224 @@ function saveRankingEditor(){
   document.getElementById('rkTitle').textContent='✏️ '+title;
 }
 
+// ── TALK / ห้องคลื่นเสียง MANIFEST ─────────────────────────────
+const TALK_KEY='amethez_talk_affirmations';
+function getTalkItems(){ try{ return JSON.parse(localStorage.getItem(TALK_KEY)||'[]'); }catch{ return []; } }
+function saveTalkItems(arr){ localStorage.setItem(TALK_KEY,JSON.stringify(arr)); }
+const TALK_PURPOSES={wealth:'💰 การเงิน',success:'🚀 การงาน',health:'🌿 สุขภาพ',love:'💗 ความรัก',protection:'🛡️ ปกป้อง',peace:'🌙 สงบ'};
+
+async function seedTalkFromJson(){
+  try{
+    const r=await fetch('/data/affirmations.json?v='+Date.now());
+    if(!r.ok) return;
+    const d=await r.json();
+    const existing=getTalkItems();
+    const existIds=new Set(existing.map(p=>String(p.id)));
+    const seeded=(d.affirmations||[]).filter(a=>!existIds.has(String(a.id))).map(a=>({
+      id: a.id, stone: a.stone||'', stone_emoji: a.stone_emoji||'💎',
+      title: a.title||'', subtitle: a.subtitle||'', purpose: a.purpose||'peace',
+      intro: a.intro||'', how_to: a.how_to||[], verses: a.verses||[], closing: a.closing||'',
+      cover: a.cover||'', coverSlot: a.coverSlot||('talk_'+a.id+'_cover'),
+      color_from: a.color_from||'#0f0a1e', color_to: a.color_to||'#1a1228',
+      article_url: a.article_url||'', tags: a.tags||[],
+      status: a.status||'active', sort_order: a.sort_order||99,
+      created: new Date().toISOString(), updated: new Date().toISOString(),
+    }));
+    saveTalkItems([...existing,...seeded]);
+  }catch(e){ console.warn('seedTalk:',e); }
+}
+
+function renderTalkList(){
+  const list=getTalkItems();
+  if(!list.length){
+    document.getElementById('talkList').innerHTML='<div style="text-align:center;padding:4rem;color:#9ca3af">ยังไม่มีบทตั้งจิต — กด ➕ เพิ่มบทตั้งจิต</div>';
+    return;
+  }
+  document.getElementById('talkList').innerHTML=`<div class="article-list">${[...list].sort((a,b)=>(a.sort_order||99)-(b.sort_order||99)).map(p=>{
+    const isOn=p.status!=='inactive';
+    const coverUrl=p.cover||'';
+    const thumb=coverUrl?`<img src="${x(coverUrl)}" style="width:56px;height:56px;object-fit:cover;border-radius:.5rem;flex-shrink:0">`
+      :`<div style="width:56px;height:56px;background:#f5f0ff;border-radius:.5rem;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0">${x(p.stone_emoji||'💎')}</div>`;
+    return `<div class="article-item" style="border-left:3px solid ${isOn?'#059669':'#9ca3af'}${isOn?'':';opacity:.55'}">
+      ${thumb}
+      <div class="article-info" style="flex:1;min-width:0">
+        <div class="article-name">${x(p.title)}</div>
+        <div style="font-size:.72rem;color:#9ca3af;margin-top:.2rem">${x(p.stone)} · ${TALK_PURPOSES[p.purpose]||p.purpose} · ลำดับ ${p.sort_order||99}</div>
+      </div>
+      <div style="display:flex;gap:.4rem;align-items:center;flex-wrap:wrap">
+        <button class="btn btn-outline btn-sm" onclick="toggleTalkStatus('${x(p.id)}')" title="${isOn?'ซ่อน':'เปิดแสดงผล'}">${isOn?'🟢':'⚫'}</button>
+        <button class="btn btn-outline btn-sm" onclick="openEditTalk('${x(p.id)}')">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="delTalkItem('${x(p.id)}')">🗑</button>
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+}
+function toggleTalkStatus(id){
+  const items=getTalkItems();
+  const p=items.find(a=>a.id===id); if(!p) return;
+  p.status=p.status==='inactive'?'active':'inactive';
+  saveTalkItems(items);
+  renderTalkList();
+  toast(p.status==='active'?'เปิดแสดงผลแล้ว ✓':'ซ่อนไว้แล้ว','ok');
+}
+function delTalkItem(id){
+  if(!confirm('ลบบทตั้งจิตนี้?')) return;
+  saveTalkItems(getTalkItems().filter(p=>p.id!==id));
+  renderTalkList();
+  toast('ลบแล้ว','ok');
+}
+
+let _talkSteps=[], _talkVerses=[];
+
+function openAddTalk(){
+  document.getElementById('talkEditId').value='';
+  document.getElementById('talkStone').value='';
+  document.getElementById('talkStoneEmoji').value='';
+  document.getElementById('talkTitle2').value='';
+  document.getElementById('talkSubtitle').value='';
+  document.getElementById('talkPurpose').value='peace';
+  document.getElementById('talkStatus').value='active';
+  document.getElementById('talkSortOrder').value='';
+  document.getElementById('talkColorTo').value='#1a1228';
+  document.getElementById('talkArticleUrl').value='';
+  document.getElementById('talkTags').value='';
+  document.getElementById('talkCover').value='';
+  updateTalkCoverPreview('');
+  document.getElementById('talkCoverFile').value='';
+  document.getElementById('talkIntro').value='';
+  document.getElementById('talkClosing').value='';
+  renderTalkStepRows([]);
+  renderTalkVerseRows([]);
+  document.getElementById('talkTitle').textContent='✏️ เพิ่มบทตั้งจิตใหม่';
+  document.getElementById('talkPath').textContent='';
+  document.getElementById('talkPath').removeAttribute('href');
+  document.getElementById('talkDelBtn').style.display='none';
+  document.getElementById('talkListView').style.display='none';
+  document.getElementById('talkEditorView').style.display='';
+}
+
+function openEditTalk(id){
+  const p=getTalkItems().find(b=>b.id===id); if(!p) return;
+  document.getElementById('talkEditId').value=p.id;
+  document.getElementById('talkStone').value=p.stone||'';
+  document.getElementById('talkStoneEmoji').value=p.stone_emoji||'';
+  document.getElementById('talkTitle2').value=p.title||'';
+  document.getElementById('talkSubtitle').value=p.subtitle||'';
+  document.getElementById('talkPurpose').value=p.purpose||'peace';
+  document.getElementById('talkStatus').value=p.status||'active';
+  document.getElementById('talkSortOrder').value=p.sort_order||'';
+  document.getElementById('talkColorTo').value=p.color_to||'#1a1228';
+  document.getElementById('talkArticleUrl').value=p.article_url||'';
+  document.getElementById('talkTags').value=(p.tags||[]).join(', ');
+  document.getElementById('talkCover').value=p.cover||'';
+  updateTalkCoverPreview(p.cover||'');
+  document.getElementById('talkCoverFile').value='';
+  document.getElementById('talkIntro').value=p.intro||'';
+  document.getElementById('talkClosing').value=p.closing||'';
+  renderTalkStepRows(p.how_to||[]);
+  renderTalkVerseRows(p.verses||[]);
+  document.getElementById('talkTitle').textContent='✏️ '+p.title;
+  const pagePath='/talk/read.html?id='+p.id;
+  document.getElementById('talkPath').textContent=pagePath;
+  document.getElementById('talkPath').href=pagePath;
+  document.getElementById('talkDelBtn').style.display='';
+  document.getElementById('talkListView').style.display='none';
+  document.getElementById('talkEditorView').style.display='';
+}
+function closeTalkEditor(){
+  document.getElementById('talkEditorView').style.display='none';
+  document.getElementById('talkListView').style.display='';
+  renderTalkList();
+}
+function deleteTalkFromEditor(){
+  const eid=document.getElementById('talkEditId').value;
+  if(!eid||!confirm('ลบบทตั้งจิตนี้?')) return;
+  saveTalkItems(getTalkItems().filter(b=>b.id!==eid));
+  closeTalkEditor();
+  toast('ลบแล้ว','ok');
+}
+
+function updateTalkCoverPreview(url){
+  const hasUrl=url&&url.trim();
+  document.getElementById('talkCoverPreview').style.display=hasUrl?'':'none';
+  document.getElementById('talkCoverEmpty').style.display=hasUrl?'none':'';
+  if(hasUrl) document.getElementById('talkCoverImg').src=url.trim();
+}
+function uploadTalkCover(input){
+  const f=input.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=e=>{ document.getElementById('talkCover').value=e.target.result; updateTalkCoverPreview(e.target.result); };
+  r.readAsDataURL(f);
+}
+
+// How-to steps — simple list of single-line strings
+function renderTalkStepRows(steps){
+  _talkSteps=[...(steps||[])];
+  document.getElementById('talkStepRows').innerHTML=_talkSteps.map((s,i)=>`
+    <div style="display:flex;gap:.5rem;align-items:center">
+      <span style="font-size:.75rem;color:#9ca3af;width:1.5rem;flex-shrink:0">${i+1}.</span>
+      <input class="form-input" value="${x(s)}" oninput="setTalkStep(${i},this.value)" style="flex:1">
+      <button class="btn btn-danger btn-sm" onclick="removeTalkStep(${i})" style="flex-shrink:0">🗑</button>
+    </div>`).join('')||'<div style="text-align:center;padding:1rem;color:#9ca3af;font-size:.85rem">ยังไม่มีขั้นตอน — กด ➕ เพิ่มขั้นตอน</div>';
+}
+function setTalkStep(i,val){ if(_talkSteps[i]!==undefined) _talkSteps[i]=val; }
+function addTalkStep(){ _talkSteps.push(''); renderTalkStepRows(_talkSteps); }
+function removeTalkStep(i){ _talkSteps.splice(i,1); renderTalkStepRows(_talkSteps); }
+
+// Verses — each: {emoji, lines:[]} — lines edited as one textarea, split by newline on save
+function renderTalkVerseRows(verses){
+  _talkVerses=(verses||[]).map(v=>({emoji:v.emoji||'✨', linesText:(v.lines||[]).join('\n')}));
+  document.getElementById('talkVerseRows').innerHTML=_talkVerses.map((v,i)=>`
+    <div style="display:grid;grid-template-columns:60px 1fr;gap:.75rem;padding:1rem;background:#faf8ff;border-radius:.75rem;align-items:start">
+      <input class="form-input" value="${x(v.emoji)}" oninput="setTalkVerseField(${i},'emoji',this.value)" style="text-align:center;font-size:1.2rem;padding:.5rem">
+      <div>
+        <textarea class="form-input" rows="3" placeholder="1 บรรทัด/ประโยค (ขึ้นบรรทัดใหม่แยกแต่ละประโยค)" oninput="setTalkVerseField(${i},'linesText',this.value)">${x(v.linesText)}</textarea>
+        <button class="btn btn-danger btn-sm" onclick="removeTalkVerse(${i})" style="margin-top:.4rem;font-size:.7rem">🗑 ลบบทนี้</button>
+      </div>
+    </div>`).join('')||'<div style="text-align:center;padding:1rem;color:#9ca3af;font-size:.85rem">ยังไม่มีบทตั้งจิต — กด ➕ เพิ่มบท</div>';
+}
+function setTalkVerseField(i,field,val){ if(_talkVerses[i]) _talkVerses[i][field]=val; }
+function addTalkVerse(){ _talkVerses.push({emoji:'✨',linesText:''}); renderTalkVerseRows(_talkVerses); }
+function removeTalkVerse(i){ _talkVerses.splice(i,1); renderTalkVerseRows(_talkVerses); }
+
+function saveTalkEditor(){
+  const stone=document.getElementById('talkStone').value.trim();
+  const title=document.getElementById('talkTitle2').value.trim();
+  if(!stone||!title){ toast('กรุณาใส่ชื่อหินและหัวข้อ','err'); return; }
+  const eid=document.getElementById('talkEditId').value;
+  const items=getTalkItems();
+  const id=eid||(stone.toLowerCase().replace(/[^\w฀-๿]+/g,'-')+'-'+Date.now().toString(36));
+  const p={
+    id,
+    stone, stone_emoji: document.getElementById('talkStoneEmoji').value.trim()||'💎',
+    title, subtitle: document.getElementById('talkSubtitle').value.trim(),
+    purpose: document.getElementById('talkPurpose').value,
+    status: document.getElementById('talkStatus').value,
+    sort_order: parseInt(document.getElementById('talkSortOrder').value,10)||99,
+    color_from: '#0f0a1e', color_to: document.getElementById('talkColorTo').value,
+    article_url: document.getElementById('talkArticleUrl').value.trim(),
+    tags: document.getElementById('talkTags').value.split(',').map(t=>t.trim()).filter(Boolean),
+    cover: document.getElementById('talkCover').value.trim(),
+    coverSlot: (eid&&items.find(b=>b.id===eid)?.coverSlot)||('talk_'+id+'_cover'),
+    intro: document.getElementById('talkIntro').value.trim(),
+    how_to: _talkSteps.map(s=>s.trim()).filter(Boolean),
+    verses: _talkVerses.map(v=>({emoji:v.emoji.trim()||'✨',lines:v.linesText.split('\n').map(l=>l.trim()).filter(Boolean)})).filter(v=>v.lines.length),
+    closing: document.getElementById('talkClosing').value.trim(),
+    created: eid?(items.find(b=>b.id===eid)?.created||new Date().toISOString()):new Date().toISOString(),
+    updated: new Date().toISOString(),
+  };
+  if(eid){ const i=items.findIndex(b=>b.id===eid); if(i>=0) items[i]=p; else items.push(p); }
+  else items.unshift(p);
+  saveTalkItems(items);
+  toast('บันทึก "'+title+'" แล้ว ✓','ok');
+  document.getElementById('talkTitle').textContent='✏️ '+title;
+  document.getElementById('talkEditId').value=id;
+  document.getElementById('talkDelBtn').style.display='';
+  const pagePath='/talk/read.html?id='+id;
+  document.getElementById('talkPath').textContent=pagePath;
+  document.getElementById('talkPath').href=pagePath;
+}
+
 // ── GITHUB PUBLISH ─────────────────────────────
 // เผยแพร่แต่ละครั้งเดิมจะอัปโหลดไฟล์ทั้ง 7 ไฟล์ซ้ำทุกครั้งไม่ว่าจะเปลี่ยน
 // จริงหรือไม่ — products.json อย่างเดียวตอนนี้ก็ 1.39MB แล้ว (1,535 ชิ้น)
@@ -6350,6 +6689,11 @@ async function publishToGitHub(){
         for(const it of (item.items||[])){
           if(it.img && it.imgSlot) preImgs[it.imgSlot]=it.img;
         }
+      }
+      // Talk/Manifest cover images — same trick, reuses the generic
+      // getImgs()/setImgs() store + upload loop below.
+      for(const item of getTalkItems()){
+        if(item.cover && item.cover.startsWith('data:') && item.coverSlot) preImgs[item.coverSlot]=item.cover;
       }
       // Merge in memory only — writing this full base64 blob back to
       // localStorage here would duplicate what getImgs() already holds and
@@ -6797,6 +7141,51 @@ async function publishToGitHub(){
         const rkPutRes=await fetch(`https://api.github.com/repos/${repo}/contents/data/rankings.json`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:'cms: update rankings.json ('+rankingItems.length+' articles)',content:rkB64,...(rkSha?{sha:rkSha}:{})})});
         if(rkPutRes.ok) markPublished('rankings', rkCompare);
         else toast('⚠️ อัปโหลด rankings.json ไม่สำเร็จ','err');
+        }
+      }
+
+      // Talk/Manifest — resolve any just-uploaded base64 covers to their
+      // real /data/images/... path (imgs was mutated by the upload loop
+      // above), then regenerate data/affirmations.json.
+      const talkItems=getTalkItems();
+      for(const item of talkItems){
+        if(item.cover && item.cover.startsWith('data:') && item.coverSlot && imgs[item.coverSlot] && !imgs[item.coverSlot].startsWith('data:')){
+          item.cover=imgs[item.coverSlot];
+        }
+      }
+      saveTalkItems(talkItems);
+      if(talkItems.length){
+        const talkJson={
+          _comment:'Amethez — บทตั้งจิตคุยกับหิน · จัดการผ่าน Admin แท็บ ห้องคลื่นเสียง Manifest',
+          updated:new Date().toISOString().slice(0,10),
+          purposes:[
+            { id:'wealth',label:'การเงิน · ความมั่งคั่ง',emoji:'💰',color:'#c9a84c' },
+            { id:'success',label:'การงาน · ความสำเร็จ',emoji:'🚀',color:'#7c3aed' },
+            { id:'health',label:'สุขภาพ · เยียวยา',emoji:'🌿',color:'#10b981' },
+            { id:'love',label:'ความรัก · ความสัมพันธ์',emoji:'💗',color:'#ec4899' },
+            { id:'protection',label:'ปกป้อง · ขจัดพลังลบ',emoji:'🛡️',color:'#6366f1' },
+            { id:'peace',label:'สงบ · สมาธิ · นอนหลับ',emoji:'🌙',color:'#0ea5e9' },
+          ],
+          affirmations: talkItems.map(it=>({
+            id:it.id, stone:it.stone, stone_emoji:it.stone_emoji,
+            title:it.title, subtitle:it.subtitle, purpose:it.purpose,
+            intro:it.intro, how_to:it.how_to||[], verses:it.verses||[], closing:it.closing,
+            cover:it.cover||'', color_from:it.color_from||'#0f0a1e', color_to:it.color_to,
+            article_url:it.article_url||'', tags:it.tags||[],
+            status:it.status||'active', sort_order:it.sort_order||99,
+          })),
+        };
+        const talkCompare=JSON.stringify(talkJson.affirmations);
+        if(isUnchangedSincePublish('affirmations', talkCompare)){
+          publishSkipped.push('affirmations.json');
+        } else {
+        const talkStr=JSON.stringify(talkJson,null,2);
+        const talkB64=btoa(unescape(encodeURIComponent(talkStr)));
+        let talkSha='';
+        try{ const tgr=await fetch(`https://api.github.com/repos/${repo}/contents/data/affirmations.json`,{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}}); if(tgr.ok){ const tgd=await tgr.json(); talkSha=tgd.sha; } }catch{}
+        const talkPutRes=await fetch(`https://api.github.com/repos/${repo}/contents/data/affirmations.json`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:'cms: update affirmations.json ('+talkItems.length+' บท)',content:talkB64,...(talkSha?{sha:talkSha}:{})})});
+        if(talkPutRes.ok) markPublished('affirmations', talkCompare);
+        else toast('⚠️ อัปโหลด affirmations.json ไม่สำเร็จ','err');
         }
       }
 
