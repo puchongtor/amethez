@@ -65,12 +65,9 @@
     .popt { display:flex; align-items:center; gap:.5rem; font-size:.78rem; color:rgba(255,255,255,.6); }
     .popt input[type=range] { width:84px; accent-color:var(--gold); }
     .player-status { text-align:center; font-size:.78rem; color:rgba(255,255,255,.45); margin-bottom:.75rem; min-height:1rem; }
-    .tts-warn { text-align:center; font-size:.78rem; color:#fbbf24; margin-bottom:.5rem; display:none; }
     .voice-row { display:flex; align-items:center; justify-content:center; gap:.6rem; margin-bottom:.6rem; flex-wrap:wrap; }
     .voice-select { background:rgba(255,255,255,.08); border:1px solid rgba(201,168,76,.3); color:white; border-radius:.5rem; padding:.3rem .6rem; font-size:.78rem; font-family:Sarabun,sans-serif; cursor:pointer; }
     .voice-select option { background:#1a1228; color:white; }
-    .gtts-btn { background:rgba(201,168,76,.15); border:1px solid rgba(201,168,76,.4); color:var(--gold); border-radius:.5rem; padding:.3rem .7rem; font-size:.72rem; cursor:pointer; font-family:Sarabun,sans-serif; }
-    .gtts-btn:hover { background:rgba(201,168,76,.25); }
 
     .loading { position:relative; z-index:10; text-align:center; padding:8rem 1.5rem; color:rgba(255,255,255,.5); }
     .headphone-hint { position:relative; z-index:10; text-align:center; font-size:.78rem; color:rgba(255,255,255,.35); margin:-2.5rem auto 0; }
@@ -92,7 +89,6 @@
 <!-- Player -->
 <div class="player" id="player" style="display:none">
   <div class="player-inner">
-    <div class="tts-warn" id="ttsWarn">⚠️ ใส่ Google TTS API key ที่ปุ่ม "ตั้งค่าเสียง" เพื่อเปิดเสียงพูดธรรมชาติ</div>
     <div class="voice-row">
       <select class="voice-select" id="voiceSelect">
         <option value="th-TH-Neural2-C">🧙 อาจารย์ (ชาย · นุ่มลึก)</option>
@@ -100,8 +96,6 @@
         <option value="th-TH-Wavenet-B">🎙 ผู้ชาย · ชัดเจน</option>
         <option value="th-TH-Wavenet-A">✨ ผู้หญิง · สดใส</option>
       </select>
-      <button class="gtts-btn" onclick="setupApiKey()">⚙️ ตั้งค่าเสียง</button>
-      <span id="gttsStatus" style="font-size:.7rem;color:rgba(255,255,255,.4)"></span>
     </div>
     <div class="player-status" id="status">พร้อมเริ่ม — กดปุ่มเล่น ▶ (แนะนำใส่หูฟัง 🎧)</div>
     <div class="player-controls">
@@ -191,7 +185,6 @@ function render() {
   queue.push({ vi: -1, text: d.closing });
 
   document.getElementById('player').style.display = 'block';
-  updateGttsStatus();
 
   setupColors(d);
   startViz();
@@ -359,62 +352,51 @@ function hexA(hex, a) {
   return `rgba(${r},${g},${b},${Math.max(0,Math.min(1,a))})`;
 }
 
-/* ═══════════════ GOOGLE CLOUD TTS ═══════════════ */
-const GTTS_KEY_STORE = 'amethez_gtts_key';
-let currentSrc = null; // AudioBufferSourceNode กำลังเล่นอยู่
-
-function getGttsKey() { return localStorage.getItem(GTTS_KEY_STORE) || ''; }
-
-function setupApiKey() {
-  const cur = getGttsKey();
-  const k = prompt('ใส่ Google Cloud TTS API Key:\n(ดูได้ที่ console.cloud.google.com → APIs → Text-to-Speech)', cur ? '••••' + cur.slice(-4) : '');
-  if (k === null) return;
-  if (k && k !== '••••' + (cur || '').slice(-4)) {
-    localStorage.setItem(GTTS_KEY_STORE, k.trim());
-    updateGttsStatus();
-  }
-}
-
-function updateGttsStatus() {
-  const el = document.getElementById('gttsStatus');
-  const warn = document.getElementById('ttsWarn');
-  if (getGttsKey()) {
-    el.textContent = '✅ พร้อมใช้งาน';
-    el.style.color = '#4ade80';
-    warn.style.display = 'none';
-  } else {
-    el.textContent = '⚠️ ยังไม่มี key';
-    el.style.color = '#fbbf24';
-    warn.style.display = 'block';
-  }
-}
+/* ═══════════════ TEXT-TO-SPEECH ═══════════════
+ * Google Cloud TTS via /api/tts.php (key lives server-side — see api/tts.php).
+ * If that ever fails (quota, network, not configured yet), fall back to the
+ * browser's own built-in speechSynthesis so the session is never silent.
+ */
+let currentSrc = null; // AudioBufferSourceNode กำลังเล่นอยู่ (Cloud TTS path)
 
 async function callGtts(text) {
-  const key = getGttsKey();
-  if (!key) return null;
   const voice = document.getElementById('voiceSelect').value;
   const rate = parseFloat(document.getElementById('rate').value);
-  const res = await fetch(`https://texttospeech.googleapis.com/v1/text:synthesize?key=${key}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      input: { text },
-      voice: { languageCode: 'th-TH', name: voice },
-      audioConfig: { audioEncoding: 'MP3', speakingRate: rate, pitch: -1.0, volumeGainDb: 1.0 }
-    })
-  });
-  if (!res.ok) {
-    const e = await res.json().catch(() => ({}));
-    console.warn('Google TTS error:', e?.error?.message);
+  try {
+    const res = await fetch('/api/tts.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text, voice, rate }),
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (!data.audioContent) return null;
+    // base64 MP3 → ArrayBuffer → AudioBuffer → เล่นผ่าน analyser (visualizer react ได้)
+    const bin = atob(data.audioContent);
+    const buf = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
+    return buf.buffer;
+  } catch (e) {
+    console.warn('TTS proxy error:', e);
     return null;
   }
-  const data = await res.json();
-  // base64 MP3 → ArrayBuffer → AudioBuffer → เล่นผ่าน analyser (visualizer react ได้)
-  const b64 = data.audioContent;
-  const bin = atob(b64);
-  const buf = new Uint8Array(bin.length);
-  for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
-  return buf.buffer;
+}
+
+// สำรอง — เสียงพูดในตัวเบราว์เซอร์ ใช้ตอน Cloud TTS เรียกไม่สำเร็จเท่านั้น
+// (คุณภาพเสียงจะเป็นธรรมชาติน้อยกว่า แต่ยังดีกว่าเงียบไปเฉยๆ)
+function speakBrowserFallback(text) {
+  return new Promise((resolve) => {
+    if (!('speechSynthesis' in window)) { resolve(); return; }
+    const rate = parseFloat(document.getElementById('rate').value);
+    const vol = parseFloat(document.getElementById('vol').value);
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'th-TH';
+    u.rate = Math.max(0.5, Math.min(1, rate));
+    u.volume = vol;
+    u.onend = resolve;
+    u.onerror = resolve;
+    speechSynthesis.speak(u);
+  });
 }
 
 async function speakNext() {
@@ -428,15 +410,15 @@ async function speakNext() {
   speakPulse = 1;
   document.getElementById('status').textContent = `กำลังอ่าน… (${qIndex+1}/${queue.length})`;
 
-  const key = getGttsKey();
-  if (!key) {
-    // ไม่มี key — เลื่อนอัตโนมัติให้ภาพ+คลื่นยังทำงาน
-    qIndex++; if (playing) setTimeout(speakNext, 3200); return;
-  }
-
   try {
     const arrayBuf = await callGtts(item.text);
-    if (!arrayBuf || !playing) return;
+    if (!playing) return;
+    if (!arrayBuf) {
+      // Cloud TTS ไม่สำเร็จ — ใช้เสียงเบราว์เซอร์แทนกันเงียบไปเฉยๆ
+      await speakBrowserFallback(item.text);
+      qIndex++; if (playing) setTimeout(speakNext, 400);
+      return;
+    }
     const audioBuf = await audioCtx.decodeAudioData(arrayBuf);
     currentSrc = audioCtx.createBufferSource();
     currentSrc.buffer = audioBuf;
@@ -468,6 +450,7 @@ function highlight(vi) {
 /* ═══════════════ CONTROLS ═══════════════ */
 function stopCurrentSrc() {
   if (currentSrc) { try { currentSrc.onended = null; currentSrc.stop(); } catch(e){} currentSrc = null; }
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
 }
 
 function togglePlay() {
