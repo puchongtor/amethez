@@ -1727,11 +1727,11 @@ textarea.form-input{resize:vertical;min-height:80px;}
               <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem">
                 <div>
                   <div class="card-title" style="margin:0">🙏 บทตั้งจิต (Verses)</div>
-                  <div class="section-sub" style="margin-top:.25rem">แต่ละบท: 1 emoji + บรรทัดคำ (ขึ้นบรรทัดใหม่ต่อ 1 ประโยค แนะนำ 3 บรรทัด/บท)</div>
+                  <div class="section-sub" style="margin-top:.25rem">แต่ละบท: บรรทัดแรก = emoji บรรทัดถัดไปคือประโยค (แนะนำ 3 บรรทัด/บท) — เว้น 1 บรรทัดว่างระหว่างบท</div>
                 </div>
                 <button class="btn btn-outline btn-sm" onclick="addTalkVerse()">➕ เพิ่มบท</button>
               </div>
-              <div id="talkVerseRows" style="display:flex;flex-direction:column;gap:1rem"></div>
+              <textarea id="talkVerseRows" class="form-input" rows="18" style="width:100%;font-size:.9rem;line-height:1.7;font-family:inherit"></textarea>
             </div>
 
             <!-- Row 5: Closing -->
@@ -1811,7 +1811,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-23.2';
+const ADMIN_VERSION='2026-07-23.3';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -6460,7 +6460,7 @@ function delTalkItem(id){
   toast('ลบแล้ว','ok');
 }
 
-let _talkSteps=[], _talkVerses=[];
+let _talkSteps=[];
 
 function openAddTalk(){
   document.getElementById('talkEditId').value='';
@@ -6557,23 +6557,28 @@ function setTalkStep(i,val){ if(_talkSteps[i]!==undefined) _talkSteps[i]=val; }
 function addTalkStep(){ _talkSteps.push(''); renderTalkStepRows(_talkSteps); }
 function removeTalkStep(i){ _talkSteps.splice(i,1); renderTalkStepRows(_talkSteps); }
 
-// Verses — each: {emoji, lines:[]} — edited as ONE textarea per verse (first
-// line = emoji, remaining lines = the verse text), split back apart on save.
-// Was two separate inputs (emoji box + lines textarea); combined into one
-// field per user request since pasting/editing whole verses at once is the
-// common workflow.
-function renderTalkVerseRows(verses){
-  _talkVerses=(verses||[]).map(v=>({combinedText:[v.emoji||'✨', ...(v.lines||[])].join('\n')}));
-  document.getElementById('talkVerseRows').innerHTML=_talkVerses.map((v,i)=>`
-    <div style="padding:1rem;background:#faf8ff;border-radius:.75rem">
-      <textarea class="form-input" rows="4" placeholder="บรรทัดแรก = emoji เช่น 🤑
-บรรทัดที่เหลือ = แต่ละประโยค (แนะนำ 3 บรรทัด)" oninput="setTalkVerseField(${i},this.value)" style="font-size:.9rem;line-height:1.6">${x(v.combinedText)}</textarea>
-      <button class="btn btn-danger btn-sm" onclick="removeTalkVerse(${i})" style="margin-top:.4rem;font-size:.7rem">🗑 ลบบทนี้</button>
-    </div>`).join('')||'<div style="text-align:center;padding:1rem;color:#9ca3af;font-size:.85rem">ยังไม่มีบทตั้งจิต — กด ➕ เพิ่มบท</div>';
+// Verses — each: {emoji, lines:[]} — all verses share ONE wide textarea so
+// the whole thing is visible/scannable at once (was split into one small
+// card+textarea per verse, then briefly one textarea per verse — both too
+// narrow to see the overview). Convention: each verse is a paragraph block
+// (first line = emoji, rest = lines), blocks separated by a blank line.
+function versesToText(verses){
+  return (verses||[]).map(v=>[v.emoji||'✨', ...(v.lines||[])].join('\n')).join('\n\n');
 }
-function setTalkVerseField(i,val){ if(_talkVerses[i]) _talkVerses[i].combinedText=val; }
-function addTalkVerse(){ _talkVerses.push({combinedText:'✨'}); renderTalkVerseRows(_talkVerses); }
-function removeTalkVerse(i){ _talkVerses.splice(i,1); renderTalkVerseRows(_talkVerses); }
+function textToVerses(text){
+  return (text||'').split(/\n\s*\n/).map(block=>{
+    const parts=block.split('\n').map(l=>l.trim()).filter(Boolean);
+    return {emoji:parts[0]||'✨', lines:parts.slice(1)};
+  }).filter(v=>v.lines.length);
+}
+function renderTalkVerseRows(verses){
+  document.getElementById('talkVerseRows').value=versesToText(verses);
+}
+function addTalkVerse(){
+  const ta=document.getElementById('talkVerseRows');
+  ta.value=(ta.value.trim()?ta.value.trim()+'\n\n':'')+'✨\n';
+  ta.focus();
+}
 
 function saveTalkEditor(){
   const stone=document.getElementById('talkStone').value.trim();
@@ -6596,10 +6601,7 @@ function saveTalkEditor(){
     coverSlot: (eid&&items.find(b=>b.id===eid)?.coverSlot)||('talk_'+id+'_cover'),
     intro: document.getElementById('talkIntro').value.trim(),
     how_to: _talkSteps.map(s=>s.trim()).filter(Boolean),
-    verses: _talkVerses.map(v=>{
-      const parts=v.combinedText.split('\n').map(l=>l.trim()).filter(Boolean);
-      return {emoji:parts[0]||'✨',lines:parts.slice(1)};
-    }).filter(v=>v.lines.length),
+    verses: textToVerses(document.getElementById('talkVerseRows').value),
     closing: document.getElementById('talkClosing').value.trim(),
     created: eid?(items.find(b=>b.id===eid)?.created||new Date().toISOString()):new Date().toISOString(),
     updated: new Date().toISOString(),
