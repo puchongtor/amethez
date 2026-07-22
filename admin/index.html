@@ -1811,7 +1811,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-23.4';
+const ADMIN_VERSION='2026-07-23.5';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -2210,7 +2210,25 @@ if(sessionStorage.getItem(AUTH_KEY)){
 }
 
 // ── TABS ──────────────────────────────────────
-const TAB_TITLES={dashboard:'📊 ภาพรวม',stats:'📈 สถิติ & เป้าหมาย',pages:'🎨 แก้ไขหน้า',stones:'💎 สารานุกรมหิน',blog:'📝 Blog & Schedule',products:'🪨 สินค้าโพรง',shopee:'🛒 Shopee Aff',roadmap:'🗺️ แผน 6 เดือน',articles:'📋 หน้าทั้งหมด',settings:'⚙️ ตั้งค่า',catalog:'✦ Crystal Catalog',top100:'🏆 Top 100 ยอดนิยม',rankings:'📊 จัดอันดับหินคริสตัล'};
+const TAB_TITLES={dashboard:'📊 ภาพรวม',stats:'📈 สถิติ & เป้าหมาย',pages:'🎨 แก้ไขหน้า',stones:'💎 สารานุกรมหิน',blog:'📝 Blog & Schedule',products:'🪨 สินค้าโพรง',shopee:'🛒 Shopee Aff',roadmap:'🗺️ แผน 6 เดือน',articles:'📋 หน้าทั้งหมด',settings:'⚙️ ตั้งค่า',catalog:'✦ Crystal Catalog',top100:'🏆 Top 100 ยอดนิยม',rankings:'📊 จัดอันดับหินคริสตัล',talk:'🔮 ห้องคลื่นเสียง Manifest'};
+
+// ── URL HASH ROUTING ───────────────────────────────────────────
+// Every tab switch / page-editor open updates location.hash (via
+// replaceState, so it doesn't spam browser history or jump-scroll) so a
+// refresh lands back where the user was instead of always bouncing to
+// ภาพรวม. restoreFromHash() reverses this on load and on hashchange
+// (browser back/forward), so those work too.
+function setHash(str){
+  try{ history.replaceState(null,'','#'+str); }catch(e){}
+}
+function restoreFromHash(){
+  const h=(location.hash||'').replace(/^#/,'');
+  if(!h) return;
+  const [tabName,subKey]=h.split('/');
+  if(!TAB_TITLES[tabName]) return; // unknown/stale hash — ignore, keep default view
+  showTab(tabName,getNavItem(tabName));
+  if(tabName==='pages' && subKey && PAGES.some(p=>p.key===subKey)) openPageEditor(subKey);
+}
 // Look up a sidebar nav-item by the tab name it opens, instead of a hardcoded
 // array index — indices silently went stale every time a nav item was added
 // (found 5 call sites pointing at the wrong tab, one at a tab that no longer
@@ -2238,6 +2256,7 @@ function showTab(name,el){
   if(name==='top100'){ seedTop100FromJson().then(()=>{ renderTop100Table(); loadTop100HeroUI(); }); }
   if(name==='rankings'){ seedRankingsFromJson().then(()=>renderRankings()); }
   if(name==='talk'){ seedTalkFromJson().then(()=>renderTalkList()); }
+  setHash(name);
 }
 
 // ── SETTINGS / STORE INFO ──────────────────────────────────────
@@ -5085,6 +5104,7 @@ function openPageEditor(key){
   document.getElementById('pageEditorView').style.display='block';
   document.getElementById('edPageLabel').textContent=p.label;
   document.getElementById('edPagePath').textContent=p.path||'ใช้กับทุกหน้า';
+  setHash('pages/'+key);
   const lnk=document.getElementById('edPageLink');
   if(p.path){ lnk.href=p.path; lnk.style.display=''; } else lnk.style.display='none';
 
@@ -5142,7 +5162,13 @@ function openPageEditor(key){
 // ── Body editor ──────────────────────────────────────
 let _origBody=''; // cache original HTML from page file
 
+// Token guards against a slow fetch from a page the user already navigated
+// away from landing after a newer page's fetch — title (set synchronously in
+// openPageEditor) would show the new page while the body silently got
+// overwritten by the stale one's async response once it finally resolved.
+let _bodyLoadToken=0;
 async function loadBodyEditor(p){
+  const myToken=++_bodyLoadToken;
   const ta=document.getElementById('edBodyTA');
   const st=document.getElementById('edBodyStatus');
   const texts=getTexts();
@@ -5155,7 +5181,7 @@ async function loadBodyEditor(p){
     st.textContent='(เวอร์ชันที่แก้ไขแล้ว)';
     st.style.color='#7c3aed';
     // Also fetch original for reset button
-    fetchOrigBody(p.path).then(h=>{ _origBody=h; });
+    fetchOrigBody(p.path).then(h=>{ if(myToken===_bodyLoadToken) _origBody=h; });
   } else {
     // First time — fetch from actual page file
     st.textContent='กำลังโหลด...';
@@ -5163,6 +5189,7 @@ async function loadBodyEditor(p){
     ta.value='';
     ta.placeholder='กำลังโหลดเนื้อหา...';
     const html=await fetchOrigBody(p.path);
+    if(myToken!==_bodyLoadToken) return; // a newer page was opened meanwhile — discard
     _origBody=html;
     if(html){
       ta.value=html;
@@ -5380,6 +5407,7 @@ function closePageEditor(){
   document.getElementById('pageEditorView').style.display='none';
   document.getElementById('pageListView').style.display='';
   renderPageGrid();
+  setHash('pages');
 }
 
 // ── GITHUB SETTINGS ───────────────────────────
@@ -7214,6 +7242,8 @@ function init(){
   initImgModal(); loadGhSettings();
   document.getElementById('imgModal').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeImgModal(); });
   document.getElementById('importModal').addEventListener('click',e=>{ if(e.target===e.currentTarget) e.currentTarget.classList.remove('open'); });
+  restoreFromHash();
+  window.addEventListener('hashchange',restoreFromHash);
 }
 if(sessionStorage.getItem(AUTH_KEY)) init();
 
