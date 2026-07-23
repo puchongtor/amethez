@@ -31,6 +31,25 @@
     .card-arrow { position:absolute; bottom:1.25rem; right:1.25rem; color:#c4b5fd; font-size:1rem; }
     @keyframes spin { to { transform:rotate(360deg); } }
     @media (max-width:640px) { .element-grid { grid-template-columns:1fr; } }
+
+    /* ── Premium refresh ── */
+    :root { --shadow-sm:0 1px 2px rgba(26,18,40,.05),0 2px 8px rgba(26,18,40,.04);
+      --shadow-md:0 8px 24px rgba(26,18,40,.08),0 2px 6px rgba(124,58,237,.06);
+      --shadow-lg:0 18px 44px rgba(26,18,40,.14),0 4px 14px rgba(124,58,237,.1); --gold-light:#e8cf85; }
+    body { -webkit-font-smoothing:antialiased; }
+    .kicker { display:inline-flex; align-items:center; justify-content:center; gap:.5rem; font-size:.7rem;
+      font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--gold-light);
+      margin-bottom:.5rem; position:relative; width:100%; }
+    .kicker::before, .kicker::after { content:''; width:1.1rem; height:1px; background:currentColor; opacity:.55; }
+    .cat-hero { background:radial-gradient(ellipse 120% 90% at 50% -10%,#3a2470 0%,#1a1228 55%,#0f0a1e 100%) !important; }
+    .cat-hero::after { content:''; position:absolute; left:0; right:0; bottom:0; height:3px;
+      background:linear-gradient(90deg,transparent,#c9a84c 50%,transparent); }
+    .cat-hero h1 { font-weight:800 !important; letter-spacing:-.01em; }
+    .card, .num-card, .purpose-card, .grid > a { box-shadow:var(--shadow-sm); }
+    .card:hover, .num-card:hover, .purpose-card:hover, .grid > a:hover { box-shadow:var(--shadow-lg) !important; transform:translateY(-4px) !important; }
+    .calc-box, .birth-calc { box-shadow:var(--shadow-md) !important; }
+    .calc-btn { box-shadow:0 4px 14px rgba(124,58,237,.3); transition:all .2s !important; }
+    .calc-btn:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(124,58,237,.4); }
   </style>
 </head>
 <body>
@@ -39,6 +58,7 @@
   <div class="cat-hero">
     <div class="container">
       <p style="font-size:2.5rem;margin-bottom:.5rem;position:relative">🔥💧🌍💨✨</p>
+      <p class="kicker">By Element</p>
       <h1>หินคริสตัลตามธาตุ</h1>
       <p>ธาตุทั้ง 5 มีพลังงานที่แตกต่างกัน เลือกหินให้สอดคล้องกับธาตุของคุณ</p>
     </div>

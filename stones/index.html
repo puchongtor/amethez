@@ -18,60 +18,88 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
   <style>
-    :root { --purple:#7c3aed; --gold:#c9a84c; --bg:#faf8f4; }
+    :root {
+      --purple:#7c3aed; --purple-deep:#5b21b6; --gold:#c9a84c; --gold-light:#e8cf85; --bg:#faf8f4;
+      --ink:#1a1228; --ink-soft:#4b3f63; --line:#e9e0f8;
+      --shadow-sm:0 1px 2px rgba(26,18,40,.05), 0 2px 8px rgba(26,18,40,.04);
+      --shadow-md:0 6px 20px rgba(26,18,40,.07), 0 2px 6px rgba(124,58,237,.06);
+      --shadow-lg:0 20px 48px rgba(26,18,40,.14), 0 4px 14px rgba(124,58,237,.1);
+    }
+    body { -webkit-font-smoothing:antialiased; }
+
+    /* ── Section kicker (editorial label) ── */
+    .kicker { display:inline-flex; align-items:center; gap:.5rem; font-size:.72rem; font-weight:700;
+      letter-spacing:.16em; text-transform:uppercase; color:var(--gold); margin-bottom:.6rem; }
+    .kicker::before, .kicker::after { content:''; width:1.25rem; height:1px; background:currentColor; opacity:.55; }
+    .kicker.on-dark { color:var(--gold-light); }
 
     /* ── Hero ── */
-    .hero { background:linear-gradient(160deg,#1a1228 0%,#2d1b69 60%,#1a1228 100%);
-      padding:5rem 1.5rem 3.5rem; text-align:center; position:relative; overflow:hidden; }
-    .hero::before { content:''; position:absolute; top:-100px; left:50%; transform:translateX(-50%);
-      width:600px; height:600px; background:radial-gradient(ellipse,rgba(124,58,237,.25) 0%,transparent 65%); pointer-events:none; }
+    .hero { background:radial-gradient(ellipse 120% 90% at 50% -10%,#3a2470 0%,#1a1228 55%,#0f0a1e 100%);
+      padding:5.5rem 1.5rem 4rem; text-align:center; position:relative; overflow:hidden; }
+    .hero::before { content:''; position:absolute; top:-140px; left:50%; transform:translateX(-50%);
+      width:680px; height:680px; background:radial-gradient(ellipse,rgba(124,58,237,.3) 0%,transparent 65%); pointer-events:none; }
+    .hero::after { content:''; position:absolute; bottom:-180px; right:-80px;
+      width:420px; height:420px; background:radial-gradient(ellipse,rgba(201,168,76,.16) 0%,transparent 70%); pointer-events:none; }
     .hero-inner { position:relative; z-index:1; max-width:720px; margin:0 auto; }
-    .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2rem,6vw,3.2rem); color:white; margin-bottom:.5rem; }
-    .hero p { color:rgba(255,255,255,.7); font-size:1.05rem; margin-bottom:2rem; }
-    .hero-stats { display:flex; gap:2rem; justify-content:center; flex-wrap:wrap; }
-    .hero-stat strong { display:block; font-family:'Playfair Display',serif; font-size:1.9rem; color:#c9a84c; }
-    .hero-stat span { font-size:.78rem; color:rgba(255,255,255,.5); }
+    .hero h1 { font-family:'Playfair Display',serif; font-weight:800; font-size:clamp(2.1rem,6vw,3.4rem);
+      color:white; margin-bottom:.6rem; letter-spacing:-.01em; }
+    .hero p { color:rgba(237,229,254,.72); font-size:1.05rem; line-height:1.7; margin-bottom:2.25rem; }
+    .hero-stats { display:flex; gap:0; justify-content:center; flex-wrap:wrap; }
+    .hero-stat { padding:0 1.75rem; border-right:1px solid rgba(255,255,255,.14); }
+    .hero-stat:last-child { border-right:none; }
+    .hero-stat strong { display:block; font-family:'Playfair Display',serif; font-weight:700; font-size:2rem;
+      background:linear-gradient(135deg,var(--gold-light),var(--gold)); -webkit-background-clip:text;
+      background-clip:text; color:transparent; }
+    .hero-stat span { font-size:.75rem; color:rgba(255,255,255,.5); letter-spacing:.04em; }
+    @media(max-width:500px){ .hero-stat{ padding:0 1rem; } }
 
     /* ── Browse Hub Tiles ── */
-    .hub { background:white; padding:3.5rem 1.5rem; border-bottom:1px solid #f0e8ff; }
-    .hub-title { text-align:center; font-family:'Playfair Display',serif; font-size:1.75rem; color:#1a1228; margin-bottom:.4rem; }
-    .hub-sub { text-align:center; color:#9b89bb; font-size:.88rem; margin-bottom:2.5rem; }
+    .hub { background:white; padding:4rem 1.5rem; border-bottom:1px solid var(--line); }
+    .hub-title { text-align:center; font-family:'Playfair Display',serif; font-weight:700; font-size:1.85rem; color:var(--ink); margin-bottom:.4rem; }
+    .hub-sub { text-align:center; color:#9b89bb; font-size:.88rem; margin-bottom:2.75rem; }
     .hub-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; }
     @media(max-width:700px){ .hub-grid{ grid-template-columns:repeat(2,1fr); } }
     @media(max-width:420px){ .hub-grid{ grid-template-columns:1fr; } }
-    .hub-tile { background:#faf8f4; border:2px solid #ede9fe; border-radius:1.25rem; padding:2rem 1.25rem 1.5rem;
-      text-align:center; text-decoration:none; color:#1a1228; transition:all .2s; display:block; }
-    .hub-tile:hover { border-color:#7c3aed; background:white; box-shadow:0 12px 36px rgba(124,58,237,.13); transform:translateY(-4px); }
-    .hub-tile-icon { font-size:3rem; display:block; margin-bottom:.875rem; line-height:1; }
-    .hub-tile-th { font-weight:700; font-size:1rem; display:block; color:#1a1228; }
-    .hub-tile-en { font-size:.75rem; color:#9b89bb; display:block; margin-top:.3rem; letter-spacing:.02em; }
-    .hub-tile.gold { border-color:#c9a84c; background:linear-gradient(135deg,#fffdf5,#fef9e7); }
-    .hub-tile.gold:hover { border-color:#b8922e; box-shadow:0 12px 36px rgba(201,168,76,.18); }
+    .hub-tile { background:#fff; border:1px solid var(--line); border-radius:1.25rem; padding:1.75rem 1.25rem 1.5rem;
+      text-align:center; text-decoration:none; color:var(--ink); transition:all .25s cubic-bezier(.4,0,.2,1);
+      display:block; box-shadow:var(--shadow-sm); position:relative; }
+    .hub-tile:hover { border-color:transparent; box-shadow:var(--shadow-lg); transform:translateY(-5px); }
+    .hub-tile-icon { font-size:1.7rem; display:flex; align-items:center; justify-content:center;
+      width:3.4rem; height:3.4rem; margin:0 auto .9rem; line-height:1; border-radius:50%;
+      background:linear-gradient(135deg,#f3effa,#ede9fe); transition:transform .25s; }
+    .hub-tile:hover .hub-tile-icon { transform:scale(1.08) rotate(-4deg); }
+    .hub-tile-th { font-weight:700; font-size:1rem; display:block; color:var(--ink); }
+    .hub-tile-en { font-size:.72rem; color:#a89bc4; display:block; margin-top:.3rem; letter-spacing:.03em; }
+    .hub-tile.gold .hub-tile-icon { background:linear-gradient(135deg,#fef9e7,#fdf0c8); }
+    .hub-tile.gold:hover { box-shadow:0 20px 48px rgba(201,168,76,.22), 0 4px 14px rgba(201,168,76,.12); }
 
     /* ── Featured stone strip (scrollable) ── */
-    .strip-wrap { padding:2.5rem 1.5rem; background:#faf8f4; }
+    .strip-wrap { padding:3rem 1.5rem; background:#faf8f4; }
     .strip-header { max-width:1100px; margin:0 auto 1.25rem; display:flex; align-items:baseline;
       justify-content:space-between; gap:1rem; flex-wrap:wrap; }
-    .strip-title { font-family:'Playfair Display',serif; font-size:1.5rem; color:#1a1228; }
+    .strip-title { font-family:'Playfair Display',serif; font-weight:700; font-size:1.5rem; color:var(--ink); }
     .strip-sub { font-size:.82rem; color:#9b89bb; }
-    .stone-strip-scroll { max-width:1100px; margin:0 auto; overflow-x:auto; padding-bottom:.5rem;
+    .stone-strip-scroll { max-width:1100px; margin:0 auto; overflow-x:auto; padding:.25rem .25rem 1rem;
       -webkit-overflow-scrolling:touch; }
     .stone-strip { display:flex; gap:1rem; width:max-content; }
     .stone-strip .sc { flex:0 0 140px; }
-    .sc { text-decoration:none; color:#1a1228; display:block; }
-    .sc-img-wrap { position:relative; border-radius:.65rem; overflow:hidden;
-      background:#f3effa; aspect-ratio:1; margin-bottom:.4rem; }
+    .sc { text-decoration:none; color:var(--ink); display:block; }
+    .sc-img-wrap { position:relative; border-radius:.85rem; overflow:hidden;
+      background:#f3effa; aspect-ratio:1; margin-bottom:.5rem; box-shadow:var(--shadow-sm);
+      transition:box-shadow .25s; }
+    .sc:hover .sc-img-wrap { box-shadow:var(--shadow-md); }
     .sc-img { width:100%; height:100%; object-fit:cover; display:block;
-      transition:transform .25s; }
-    .sc:hover .sc-img { transform:scale(1.05); }
+      transition:transform .3s; }
+    .sc:hover .sc-img { transform:scale(1.06); }
     .sc-placeholder { width:100%; height:100%; display:flex; align-items:center;
       justify-content:center; font-size:2.5rem; }
     .sc-th { font-size:.88rem; font-weight:600; line-height:1.3; }
     .sc-en { font-size:.72rem; color:#9b89bb; }
-    .sc-more { flex:0 0 140px; border-radius:.65rem; background:linear-gradient(135deg,#7c3aed,#a78bfa);
+    .sc-more { flex:0 0 140px; border-radius:.85rem; background:linear-gradient(135deg,var(--purple),#9d5cf5);
       color:white; display:flex; flex-direction:column; align-items:center; justify-content:center;
       text-align:center; text-decoration:none; aspect-ratio:1; font-weight:700; font-size:.85rem;
-      padding:1rem; gap:.35rem; }
+      padding:1rem; gap:.35rem; box-shadow:var(--shadow-md); transition:transform .25s; }
+    .sc-more:hover { transform:translateY(-4px); }
     .sc-more span:first-child { font-size:1.6rem; }
 
     /* Color dots for placeholders */
@@ -90,53 +118,60 @@
     .bg-clear  { background:linear-gradient(135deg,#f1f5f9,#e2e8f0); }
 
     /* ── Category Sections ── */
-    .cat-section { padding:3.5rem 1.5rem; }
-    .cat-section.alt { background:#f3effa; }
+    .cat-section { padding:4rem 1.5rem; position:relative; }
+    .cat-section.alt { background:#f6f2fc; }
+    .cat-section + .cat-section::before { content:'◆'; position:absolute; top:-.55rem; left:50%;
+      transform:translateX(-50%); color:var(--gold); font-size:.7rem; background:inherit; padding:0 .75rem; }
     .cat-inner { max-width:1100px; margin:0 auto; }
-    .cat-h2 { font-family:'Playfair Display',serif; font-size:clamp(1.4rem,3vw,1.9rem); color:#1a1228; margin-bottom:.3rem; }
-    .cat-lead { color:#6b5e8a; font-size:.9rem; margin-bottom:1.75rem; }
+    .cat-h2 { font-family:'Playfair Display',serif; font-weight:700; font-size:clamp(1.45rem,3vw,2rem); color:var(--ink); margin-bottom:.35rem; }
+    .cat-lead { color:#6b5e8a; font-size:.9rem; margin-bottom:2rem; }
 
     /* Chakra list */
     .chakra-list { display:flex; flex-direction:column; gap:.85rem; }
-    .chakra-row { display:flex; align-items:center; gap:1rem; background:white; border-radius:.85rem;
-      padding:1rem 1.25rem; border:1px solid #e9e0f8; text-decoration:none; color:#1a1228; transition:all .2s; }
-    .chakra-row:hover { border-color:#7c3aed; box-shadow:0 4px 16px rgba(124,58,237,.1); }
-    .chakra-dot { width:38px; height:38px; border-radius:50%; display:flex; align-items:center;
-      justify-content:center; font-size:1.2rem; flex-shrink:0; }
+    .chakra-row { display:flex; align-items:center; gap:1rem; background:white; border-radius:1rem;
+      padding:1.1rem 1.35rem; border:1px solid var(--line); text-decoration:none; color:var(--ink);
+      transition:all .25s cubic-bezier(.4,0,.2,1); box-shadow:var(--shadow-sm); }
+    .chakra-row:hover { border-color:transparent; box-shadow:var(--shadow-md); transform:translateX(4px); }
+    .chakra-dot { width:42px; height:42px; border-radius:50%; display:flex; align-items:center;
+      justify-content:center; font-size:1.25rem; flex-shrink:0; box-shadow:0 4px 12px rgba(0,0,0,.15); }
     .chakra-info { flex:1; }
     .chakra-name { font-weight:700; font-size:.95rem; }
     .chakra-en { font-size:.75rem; color:#9b89bb; }
-    .chakra-stones { font-size:.78rem; color:#6b5e8a; margin-top:.2rem; }
-    .chakra-more { font-size:.78rem; color:#7c3aed; font-weight:600; flex-shrink:0; }
+    .chakra-stones { font-size:.78rem; color:#6b5e8a; margin-top:.25rem; }
+    .chakra-more { font-size:.78rem; color:var(--purple); font-weight:600; flex-shrink:0; }
 
     /* Zodiac grid */
     .zodiac-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:1rem; }
-    .zodiac-card { background:white; border:1px solid #e9e0f8; border-radius:.85rem;
-      padding:1.1rem; text-decoration:none; color:#1a1228; transition:all .2s; }
-    .zodiac-card:hover { border-color:#7c3aed; transform:translateY(-2px); }
-    .zodiac-icon { font-size:1.8rem; margin-bottom:.4rem; display:block; }
+    .zodiac-card { background:white; border:1px solid var(--line); border-radius:1rem;
+      padding:1.2rem; text-decoration:none; color:var(--ink); transition:all .25s cubic-bezier(.4,0,.2,1);
+      box-shadow:var(--shadow-sm); }
+    .zodiac-card:hover { border-color:transparent; box-shadow:var(--shadow-md); transform:translateY(-4px); }
+    .zodiac-icon { font-size:1.8rem; margin-bottom:.5rem; display:block; }
     .zodiac-th { font-weight:700; font-size:.9rem; }
-    .zodiac-date { font-size:.72rem; color:#9b89bb; margin:.15rem 0; }
-    .zodiac-stone { font-size:.75rem; color:#7c3aed; }
+    .zodiac-date { font-size:.72rem; color:#9b89bb; margin:.2rem 0; }
+    .zodiac-stone { font-size:.75rem; color:var(--purple); font-weight:600; }
 
     /* Planet grid */
     .planet-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:1rem; }
-    .planet-card { background:white; border:1px solid #e9e0f8; border-radius:.85rem;
-      padding:1.1rem; text-align:center; text-decoration:none; color:#1a1228; transition:all .2s; }
-    .planet-card:hover { border-color:#7c3aed; transform:translateY(-2px); }
-    .planet-icon { font-size:2rem; display:block; margin-bottom:.4rem; }
+    .planet-card { background:white; border:1px solid var(--line); border-radius:1rem;
+      padding:1.2rem; text-align:center; text-decoration:none; color:var(--ink); transition:all .25s cubic-bezier(.4,0,.2,1);
+      box-shadow:var(--shadow-sm); }
+    .planet-card:hover { border-color:transparent; box-shadow:var(--shadow-md); transform:translateY(-4px); }
+    .planet-icon { font-size:2rem; display:block; margin-bottom:.5rem; }
     .planet-th { font-weight:700; font-size:.88rem; }
     .planet-en { font-size:.7rem; color:#9b89bb; }
-    .planet-stone { font-size:.72rem; color:#7c3aed; margin-top:.2rem; }
+    .planet-stone { font-size:.72rem; color:var(--purple); font-weight:600; margin-top:.25rem; }
 
     /* Element section */
     .element-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:1.25rem; margin-bottom:2rem; }
-    .el-card { border-radius:1rem; padding:1.5rem; text-align:center; text-decoration:none; color:white; transition:all .2s; }
-    .el-card:hover { transform:translateY(-3px); box-shadow:0 12px 32px rgba(0,0,0,.15); }
-    .el-card .el-icon { font-size:2.5rem; display:block; margin-bottom:.5rem; }
-    .el-card .el-th { font-weight:700; font-size:1.05rem; }
-    .el-card .el-en { font-size:.75rem; opacity:.8; }
-    .el-card .el-stones { font-size:.78rem; margin-top:.5rem; opacity:.85; }
+    .el-card { border-radius:1.1rem; padding:1.6rem; text-align:center; text-decoration:none; color:white;
+      transition:all .25s cubic-bezier(.4,0,.2,1); box-shadow:var(--shadow-sm); position:relative; overflow:hidden; }
+    .el-card::after { content:''; position:absolute; inset:0; background:linear-gradient(160deg,rgba(255,255,255,.16),transparent 55%); }
+    .el-card:hover { transform:translateY(-5px); box-shadow:0 16px 36px rgba(0,0,0,.2); }
+    .el-card .el-icon { font-size:2.5rem; display:block; margin-bottom:.5rem; position:relative; }
+    .el-card .el-th { font-weight:700; font-size:1.05rem; position:relative; }
+    .el-card .el-en { font-size:.75rem; opacity:.85; position:relative; }
+    .el-card .el-stones { font-size:.78rem; margin-top:.5rem; opacity:.9; position:relative; }
     .el-fire  { background:linear-gradient(135deg,#dc2626,#f97316); }
     .el-water { background:linear-gradient(135deg,#1d4ed8,#0ea5e9); }
     .el-wood  { background:linear-gradient(135deg,#15803d,#4ade80); }
@@ -144,64 +179,72 @@
     .el-earth { background:linear-gradient(135deg,#92400e,#d97706); }
 
     /* Birth calculator */
-    .birth-calc { background:white; border:1.5px solid #e0d4f7; border-radius:1.25rem; padding:1.75rem; max-width:500px; }
-    .birth-calc h3 { font-family:'Playfair Display',serif; font-size:1.15rem; color:#1a1228; margin-bottom:.5rem; }
+    .birth-calc { background:linear-gradient(#fff,#fff) padding-box,
+      linear-gradient(135deg,var(--purple),var(--gold)) border-box;
+      border:1.5px solid transparent; border-radius:1.25rem; padding:1.85rem; max-width:520px; box-shadow:var(--shadow-md); }
+    .birth-calc h3 { font-family:'Playfair Display',serif; font-weight:700; font-size:1.15rem; color:var(--ink); margin-bottom:.5rem; }
     .calc-note { font-size:.78rem; color:#9ca3af; line-height:1.6; margin-bottom:1rem; }
     .calc-row { display:flex; gap:.75rem; align-items:center; flex-wrap:wrap; margin-bottom:1rem; }
-    .calc-inp { padding:.6rem 1rem; border:2px solid #e9e0f8; border-radius:.6rem;
-      font-family:Sarabun,sans-serif; font-size:.95rem; color:#1a1228; width:110px; }
+    .calc-inp { padding:.6rem 1rem; border:2px solid var(--line); border-radius:.6rem;
+      font-family:Sarabun,sans-serif; font-size:.95rem; color:var(--ink); width:110px; transition:border-color .2s; }
     .calc-inp-sm { width:70px; }
-    .calc-inp:focus { outline:none; border-color:#7c3aed; }
-    .calc-btn { background:#7c3aed; color:white; border:none; border-radius:.6rem;
-      padding:.6rem 1.25rem; font-family:Sarabun,sans-serif; font-size:.9rem; cursor:pointer; transition:opacity .2s; }
-    .calc-btn:hover { opacity:.85; }
-    .calc-result { background:#f3effa; border-radius:.75rem; padding:1rem 1.25rem; display:none; }
-    .calc-result .el-name { font-weight:700; font-size:1.1rem; color:#7c3aed; }
+    .calc-inp:focus { outline:none; border-color:var(--purple); }
+    .calc-btn { background:linear-gradient(135deg,var(--purple),#9d5cf5); color:white; border:none; border-radius:.6rem;
+      padding:.65rem 1.4rem; font-family:Sarabun,sans-serif; font-weight:600; font-size:.9rem; cursor:pointer;
+      transition:all .2s; box-shadow:0 4px 14px rgba(124,58,237,.3); }
+    .calc-btn:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(124,58,237,.4); }
+    .calc-result { background:#f6f2fc; border-radius:.9rem; padding:1.1rem 1.35rem; display:none; }
+    .calc-result .el-name { font-weight:700; font-size:1.1rem; color:var(--purple); }
     .calc-result .el-desc { font-size:.85rem; color:#5a4e72; margin:.3rem 0; }
     .calc-result .el-rec { font-size:.82rem; color:#6b5e8a; }
 
     /* Color grid */
     .color-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:.85rem; }
-    .color-card { border-radius:.85rem; aspect-ratio:1; display:flex; flex-direction:column;
+    .color-card { border-radius:1rem; aspect-ratio:1; display:flex; flex-direction:column;
       align-items:center; justify-content:center; text-decoration:none; color:white;
-      font-weight:700; font-size:.88rem; text-shadow:0 1px 3px rgba(0,0,0,.3); transition:transform .2s; cursor:pointer; }
-    .color-card:hover { transform:scale(1.04); }
-    .color-card small { font-size:.7rem; font-weight:400; opacity:.85; margin-top:.2rem; }
+      font-weight:700; font-size:.88rem; text-shadow:0 1px 3px rgba(0,0,0,.3); box-shadow:var(--shadow-sm);
+      transition:transform .25s,box-shadow .25s; cursor:pointer; }
+    .color-card:hover { transform:scale(1.05) translateY(-2px); box-shadow:var(--shadow-md); }
+    .color-card small { font-size:.7rem; font-weight:400; opacity:.9; margin-top:.2rem; }
 
     /* Purpose grid */
     .purpose-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:1rem; }
-    .purpose-card { background:white; border:1px solid #e9e0f8; border-radius:.85rem; padding:1.25rem;
-      text-decoration:none; color:#1a1228; transition:all .2s; }
-    .purpose-card:hover { border-color:#7c3aed; transform:translateY(-2px); box-shadow:0 6px 20px rgba(124,58,237,.08); }
+    .purpose-card { background:white; border:1px solid var(--line); border-radius:1rem; padding:1.35rem;
+      text-decoration:none; color:var(--ink); transition:all .25s cubic-bezier(.4,0,.2,1); box-shadow:var(--shadow-sm); }
+    .purpose-card:hover { border-color:transparent; transform:translateY(-4px); box-shadow:var(--shadow-md); }
     .purpose-icon { font-size:1.9rem; margin-bottom:.5rem; display:block; }
     .purpose-th { font-weight:700; font-size:.95rem; }
-    .purpose-stones { font-size:.78rem; color:#7c3aed; margin-top:.3rem; }
+    .purpose-stones { font-size:.78rem; color:var(--purple); font-weight:600; margin-top:.35rem; }
 
     /* Number grid */
     .number-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(110px,1fr)); gap:1rem; }
-    .num-card { background:white; border:1px solid #e9e0f8; border-radius:.85rem; padding:1.25rem .75rem;
-      text-align:center; text-decoration:none; color:#1a1228; transition:all .2s; }
-    .num-card:hover { border-color:#c9a84c; transform:translateY(-2px); }
-    .num-digit { font-family:'Playfair Display',serif; font-size:2.5rem; color:#c9a84c; line-height:1; }
-    .num-th { font-size:.78rem; color:#6b5e8a; margin-top:.3rem; }
-    .num-stone { font-size:.72rem; color:#7c3aed; margin-top:.2rem; }
+    .num-card { background:white; border:1px solid var(--line); border-radius:1rem; padding:1.35rem .75rem;
+      text-align:center; text-decoration:none; color:var(--ink); transition:all .25s cubic-bezier(.4,0,.2,1);
+      box-shadow:var(--shadow-sm); }
+    .num-card:hover { border-color:transparent; box-shadow:0 12px 28px rgba(201,168,76,.2); transform:translateY(-4px); }
+    .num-digit { font-family:'Playfair Display',serif; font-weight:700; font-size:2.5rem; color:var(--gold); line-height:1; }
+    .num-th { font-size:.78rem; color:#6b5e8a; margin-top:.35rem; }
+    .num-stone { font-size:.72rem; color:var(--purple); font-weight:600; margin-top:.2rem; }
 
     /* Masters CTA */
-    .masters { background:linear-gradient(135deg,#1a1228,#2d1b69); padding:3.5rem 1.5rem; }
-    .masters-inner { max-width:900px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
-    .master-card { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12);
-      border-radius:1.25rem; padding:1.75rem; text-decoration:none; color:white; transition:all .2s; }
-    .master-card:hover { background:rgba(255,255,255,.1); border-color:rgba(201,168,76,.4); }
+    .masters { background:radial-gradient(ellipse 100% 100% at 30% 0%,#3a2470 0%,#1a1228 55%,#0f0a1e 100%); padding:4rem 1.5rem; position:relative; overflow:hidden; }
+    .masters::before { content:''; position:absolute; bottom:-160px; right:-60px; width:380px; height:380px;
+      background:radial-gradient(ellipse,rgba(201,168,76,.14) 0%,transparent 70%); pointer-events:none; }
+    .masters-inner { max-width:900px; margin:0 auto; position:relative; }
+    .masters-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
+    .master-card { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12);
+      border-radius:1.25rem; padding:1.85rem; text-decoration:none; color:white; transition:all .25s; backdrop-filter:blur(6px); }
+    .master-card:hover { background:rgba(255,255,255,.09); border-color:rgba(201,168,76,.45); transform:translateY(-4px); box-shadow:0 16px 40px rgba(0,0,0,.3); }
     .master-avatar { font-size:2.5rem; margin-bottom:.75rem; display:block; }
-    .master-name { font-family:'Playfair Display',serif; font-size:1.15rem; color:#c9a84c; margin-bottom:.4rem; }
+    .master-name { font-family:'Playfair Display',serif; font-weight:700; font-size:1.15rem; color:var(--gold-light); margin-bottom:.4rem; }
     .master-desc { font-size:.85rem; color:rgba(255,255,255,.65); line-height:1.7; }
 
     @media(max-width:600px) {
       .stone-grid { grid-template-columns:repeat(3,1fr); gap:.65rem; }
-      .masters-inner { grid-template-columns:1fr; }
+      .masters-grid { grid-template-columns:1fr; }
       .hub-grid { grid-template-columns:repeat(3,1fr); }
-      .hub-tile-icon { font-size:1.8rem; }
-      .hub-tile { padding:1rem .75rem; }
+      .hub-tile-icon { font-size:1.5rem; width:2.8rem; height:2.8rem; }
+      .hub-tile { padding:1.1rem .75rem; }
     }
   </style>
 </head>
@@ -212,6 +255,7 @@
 <!-- ── HERO ── -->
 <section class="hero">
   <div class="hero-inner">
+    <p class="kicker on-dark" style="justify-content:center;display:flex">Crystal Atlas · Amethez</p>
     <h1>📖 สารานุกรมหินคริสตัล</h1>
     <p>สารานุกรมหินคริสตัลและพลอยที่ครบที่สุดในไทย<br>ค้นหาได้ทุกมิติ — A-Z · จักระ · ราศี · ดาวเคราะห์ · ธาตุ</p>
     <div class="hero-stats">
@@ -226,6 +270,7 @@
 <!-- ── BROWSE HUB ── -->
 <section class="hub">
   <div style="max-width:1060px;margin:0 auto">
+    <p class="kicker" style="justify-content:center;display:flex">Explore</p>
     <h2 class="hub-title">ต้องการค้นหาหินคริสตัลแบบไหน?</h2>
     <p class="hub-sub">Looking to Explore Crystal Meanings? — เลือกวิธีที่ใช่สำหรับคุณ</p>
     <div class="hub-grid">
@@ -292,6 +337,7 @@
 <!-- ── BY CHAKRA ── -->
 <section class="cat-section alt" id="chakra">
   <div class="cat-inner">
+    <p class="kicker">By Chakra</p>
     <h2 class="cat-h2">🔮 หินตามจักระ</h2>
     <p class="cat-lead">จักระ 7 จุดพลังงานหลักในร่างกาย — เลือกหินตามจักระที่ต้องการปรับสมดุล</p>
     <div class="chakra-list">
@@ -358,6 +404,7 @@
 <!-- ── BY ZODIAC ── -->
 <section class="cat-section" id="zodiac">
   <div class="cat-inner">
+    <p class="kicker">By Zodiac</p>
     <h2 class="cat-h2">♈ หินตามราศี</h2>
     <p class="cat-lead">หินประจำราศีทั้ง 12 เสริมพลังตามดวงดาว</p>
     <div class="zodiac-grid">
@@ -440,6 +487,7 @@
 <!-- ── BY PLANET (Thai system) ── -->
 <section class="cat-section alt" id="planet">
   <div class="cat-inner">
+    <p class="kicker">By Planet</p>
     <h2 class="cat-h2">🪐 หินตามดาวเคราะห์</h2>
     <p class="cat-lead">ระบบดาวเคราะห์ไทย 9 ดวง รวมถึงราหูและเกตุ สายมูไทยแท้</p>
     <div class="planet-grid">
@@ -504,6 +552,7 @@
 <!-- ── BY ELEMENT ── -->
 <section class="cat-section" id="element">
   <div class="cat-inner">
+    <p class="kicker">By Element</p>
     <h2 class="cat-h2">🔥 หินตามธาตุ</h2>
     <p class="cat-lead">5 ธาตุจีน (Wu Xing) — ค้นหาธาตุของคุณจากปีเกิด แล้วเลือกหินที่เสริมสมดุล</p>
     <div class="element-grid">
@@ -561,6 +610,7 @@
 <!-- ── BY COLOR ── -->
 <section class="cat-section alt" id="color">
   <div class="cat-inner">
+    <p class="kicker">By Color</p>
     <h2 class="cat-h2">🎨 หินตามสี</h2>
     <p class="cat-lead">เลือกหินตามสีที่ดึงดูดใจคุณ — สีมักบ่งบอกถึงพลังงานและจักระที่ตรงกัน</p>
     <div class="color-grid">
@@ -601,6 +651,7 @@
 <!-- ── BY PURPOSE ── -->
 <section class="cat-section" id="purpose">
   <div class="cat-inner">
+    <p class="kicker">By Purpose</p>
     <h2 class="cat-h2">✨ หินตามวัตถุประสงค์</h2>
     <p class="cat-lead">เลือกหินตามสิ่งที่คุณต้องการในชีวิตตอนนี้</p>
     <div class="purpose-grid">
@@ -671,6 +722,7 @@
 <!-- ── BY NUMBER ── -->
 <section class="cat-section alt" id="number">
   <div class="cat-inner">
+    <p class="kicker">By Numerology</p>
     <h2 class="cat-h2">🔢 หินตามเลขศาสตร์</h2>
     <p class="cat-lead">เลขชีวิต (Life Path Number) คำนวณจากวันเกิด — แต่ละเลขมีหินที่เสริมพลังงานของคุณ</p>
     <div class="number-grid">
@@ -726,6 +778,7 @@
 <!-- ── BLOG BANNER ── -->
 <section class="cat-section alt" id="blog">
   <div class="cat-inner">
+    <p class="kicker">Learn More</p>
     <h2 class="cat-h2">📖 บทความและความรู้</h2>
     <p class="cat-lead">คลังความรู้หินคริสตัลภาษาไทยที่ครบที่สุด — คู่มือมือใหม่, ฮวงจุ้ย, การเยียวยา, DIY, Sound Healing</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;margin-bottom:1.75rem">
@@ -766,16 +819,19 @@
 <!-- ── MASTERS ── -->
 <section class="masters">
   <div class="masters-inner">
-    <a href="/wuchong/" class="master-card">
-      <span class="master-avatar">🧙‍♂️</span>
-      <div class="master-name">Master Wuchong</div>
-      <div class="master-desc">พลังงาน · ความสำเร็จ · ฮวงจุ้ย · การเงิน บทความเชิงลึกจากอาจารย์ผู้เชี่ยวชาญ</div>
-    </a>
-    <a href="/metha/" class="master-card">
-      <span class="master-avatar">🌟</span>
-      <div class="master-name">อาจารย์เมธา</div>
-      <div class="master-desc">ดวงรายวัน · สายมู · เทพ · พิธีกรรม อ่านดวงประจำวันและบทความสายมูไทย</div>
-    </a>
+    <p class="kicker on-dark" style="justify-content:center;display:flex;margin-bottom:1.25rem">ไปต่อกับ</p>
+    <div class="masters-grid">
+      <a href="/wuchong/" class="master-card">
+        <span class="master-avatar">🧙‍♂️</span>
+        <div class="master-name">Master Wuchong</div>
+        <div class="master-desc">พลังงาน · ความสำเร็จ · ฮวงจุ้ย · การเงิน บทความเชิงลึกจากอาจารย์ผู้เชี่ยวชาญ</div>
+      </a>
+      <a href="/metha/" class="master-card">
+        <span class="master-avatar">🌟</span>
+        <div class="master-name">อาจารย์เมธา</div>
+        <div class="master-desc">ดวงรายวัน · สายมู · เทพ · พิธีกรรม อ่านดวงประจำวันและบทความสายมูไทย</div>
+      </a>
+    </div>
   </div>
 </section>
 
