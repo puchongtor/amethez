@@ -225,9 +225,36 @@ function initStoneSearch() {
   });
 }
 
+// ── Article Hero Image (Wuchong/Metha/Dr. Cosmos persona articles) ──
+// These articles' hero banner isn't wired through content.json like every
+// other image slot on the site — it's stored directly on the blog post
+// record in data/blog.json (matched here by the page's own URL), so a new
+// article never needs a hand-coded admin/index.html SLOTS entry just to get
+// an editable hero image. Falls back to the emoji placeholder already in
+// the markup when no post is found or it has no heroImg set.
+function initArticleHero() {
+  const wrap = document.querySelector('.sc-img-wrap');
+  if (!wrap) return;
+  const img = wrap.querySelector('img');
+  if (!img) return;
+  const placeholder = wrap.querySelector('.cms-placeholder');
+  fetch('/data/blog.json')
+    .then(r => r.ok ? r.json() : null)
+    .then(d => {
+      const post = d && (d.articles || []).find(a => a.url === location.pathname);
+      if (post && post.heroImg) {
+        img.src = post.heroImg;
+        img.style.display = '';
+        if (placeholder) placeholder.style.display = 'none';
+      }
+    })
+    .catch(() => {});
+}
+
 // ── Init ──
 document.addEventListener('DOMContentLoaded', () => {
   initMobileNav();
   initFAQ();
   initStoneSearch();
+  initArticleHero();
 });

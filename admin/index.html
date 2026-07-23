@@ -886,6 +886,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
                       <option value="atlas">🌐 Crystal Atlas</option>
                       <option value="wuchong">🧙 Master Wuchong</option>
                       <option value="metha">🌙 อาจารย์เมธา</option>
+                      <option value="dr_cosmos">☄️ Dr. Cosmos</option>
                       <option value="gemma">💃 Gemma</option>
                     </select></div>
                   <div class="form-group"><label class="fl">หมวดหมู่</label>
@@ -906,6 +907,8 @@ textarea.form-input{resize:vertical;min-height:80px;}
                     <input class="form-input" id="bePublishDate" type="datetime-local"></div>
                   <div class="form-group full"><label class="fl">URL Slug (ชื่อไฟล์)</label>
                     <input class="form-input" id="beSlug" placeholder="5-stones-for-love"></div>
+                  <div class="form-group full"><label class="fl">URL เต็ม (ถ้าไม่ใช่ /blog/)</label>
+                    <input class="form-input" id="beUrl" placeholder="/wuchong/slug.html หรือ /metha/slug.html — เว้นว่างไว้ = /blog/{slug}.html"></div>
                   <div class="form-group full"><label class="fl">สรุปสั้น (Excerpt)</label>
                     <textarea class="form-input" id="beExcerpt" rows="2" placeholder="สรุป 1-2 ประโยค..."></textarea></div>
                   <div class="form-group full"><label class="fl">แท็ก (คั่นด้วยจุลภาค)</label>
@@ -929,6 +932,45 @@ textarea.form-input{resize:vertical;min-height:80px;}
                 </div>
                 <div style="margin-top:.75rem;padding:.6rem .85rem;background:#f5f0ff;border-radius:.5rem;font-size:.75rem;color:#5b21b6;line-height:1.6">
                   💡 ใส่ URL รูปตรงๆ หรือกด "เลือกรูป" เพื่ออัปโหลด — จะแสดง preview ทันที
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 1.5: Hero image (big banner atop the article page — only used
+                 by persona article types like Wuchong/Metha/Dr. Cosmos; the
+                 stone/blog category doesn't use one). Separate from Thumbnail
+                 (small listing-card image) on purpose — different aspect ratio,
+                 different job. Ships with its own Google Flow prompt fields so
+                 Puchong can copy-paste without needing a code change per article
+                 (the old approach — a hand-coded SLOTS entry per article — didn't
+                 scale as the number of pages grew). -->
+            <div class="card" style="margin-bottom:1.5rem">
+              <div class="card-title">🖼️ รูป Hero (แบนเนอร์ใหญ่บนหน้าบทความ)</div>
+              <div class="section-sub" style="margin-top:-.4rem;margin-bottom:1rem">ใช้เฉพาะบทความที่มีรูปใหญ่ด้านบน (Wuchong / อ.เมธา / Dr. Cosmos) — ถ้าไม่ใส่ หน้าจะโชว์ไอคอนอิโมจิแทน</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+                <div>
+                  <div style="display:flex;gap:.5rem;align-items:flex-start;margin-bottom:.75rem">
+                    <input class="form-input" id="beHeroImg" placeholder="https://... หรืออัปโหลดรูปด้านขวา" style="flex:1" oninput="updateBEHeroPreview(this.value)">
+                    <label style="cursor:pointer;flex-shrink:0">
+                      <span class="btn btn-outline btn-sm" style="display:inline-flex;align-items:center;gap:.3rem">📁 เลือกรูป</span>
+                      <input type="file" id="beHeroImgFile" accept="image/*" style="display:none" onchange="uploadBEHero(this)">
+                    </label>
+                  </div>
+                  <div id="beHeroPreview" style="display:none">
+                    <img id="beHeroImgTag" style="width:100%;max-height:220px;border-radius:.75rem;object-fit:cover;border:1px solid #e5e7eb">
+                  </div>
+                  <div id="beHeroEmpty" style="height:140px;background:#f5f3ff;border-radius:.75rem;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:.85rem">
+                    ยังไม่มีรูป — ใส่ URL หรืออัปโหลด
+                  </div>
+                </div>
+                <div>
+                  <label class="fl">Google Flow Prompt (EN) — copy ไปวางเจนรูปได้เลย</label>
+                  <textarea class="form-input" id="beHeroPromptEn" rows="5" style="font-size:.72rem;font-family:'Consolas','Courier New',monospace;margin-top:.3rem" placeholder="Cinematic ... wide format 16:9, 8K quality"></textarea>
+                  <div style="display:flex;gap:.4rem;margin-top:.4rem">
+                    <button class="btn btn-gold btn-sm" onclick="copyBEHeroPrompt()">📋 Copy EN</button>
+                  </div>
+                  <label class="fl" style="margin-top:.6rem;display:block">คำอธิบายภาพ (ไทย, อ้างอิง)</label>
+                  <textarea class="form-input" id="beHeroPromptTh" rows="2" style="font-size:.78rem;margin-top:.3rem" placeholder="คำอธิบายภาพแบบย่อภาษาไทย"></textarea>
                 </div>
               </div>
             </div>
@@ -1019,6 +1061,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
                     <option value="atlas">🌐 Crystal Atlas</option>
                     <option value="wuchong">🧙 Master Wuchong</option>
                     <option value="metha">🌙 อาจารย์เมธา</option>
+                    <option value="dr_cosmos">☄️ Dr. Cosmos</option>
                     <option value="gemma">💃 Gemma</option>
                   </select></div>
                 <div class="form-group"><label class="fl">หมวดหมู่</label>
@@ -1811,7 +1854,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-23.9';
+const ADMIN_VERSION='2026-07-23.10';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -1828,9 +1871,6 @@ const GEODES_KEY='amethez_geodes';
 
 // ── IMAGE SLOTS ──────────────────────────────
 const SLOTS=[
-  {id:'metha_ganesha_favorite_stones_hero',label:'พระพิฆเนศชอบหินอะไร — Hero',page:'metha/ganesha-favorite-stones.html',group:'metha',size:'1280×720',
-   en:'Majestic Ganesha deity statue in golden amber light, elephant head with multiple arms holding lotus and axe, dramatic temple atmosphere with candles and jasmine flowers, red carnelian and ruby crystals arranged as offerings, deep purple and gold tones, cinematic spiritual atmosphere, Thai Hindu Buddhist temple aesthetic, wide format 16:9, 8K quality',
-   th:'รูปปั้นพระพิฆเนศในแสงทองอำพัน หัวช้างถืออาวุธและดอกบัว บรรยากาศวัดขรึมขลัง มีเทียนและดอกมะลิ หินคาร์เนเลียนและทับทิมจัดวางเป็นเครื่องบูชา โทนม่วง-ทอง บรรยากาศศักดิ์สิทธิ์แบบไทย-ฮินดู สัดส่วน 16:9'},
   // Landing-page hero images — these two ids were already referenced by the
   // 'wuchong'/'metha' PAGES entries' imgs:[] arrays but never actually
   // defined here, so clicking "ใส่รูป" on them would throw (openImgModal
@@ -1841,38 +1881,6 @@ const SLOTS=[
   {id:'metha_hero',label:'อาจารย์เมธา หน้าแรก — Hero',page:'metha/index.html',group:'characters',size:'1280×720',
    en:'Thai fortune teller figure with mystical zodiac symbols and crystal elements floating around, warm golden light, temple-like spiritual atmosphere, dark purple and gold tones, cinematic mood, wide format 16:9, 8K quality',
    th:'ภาพอาจารย์ดูดวงไทยท่ามกลางสัญลักษณ์ราศีและคริสตัลลอยอยู่รอบตัว แสงทองอบอุ่น โทนม่วงทอง สัดส่วน 16:9'},
-  // ── Wuchong article sample batch (5) ──
-  {id:'wuchong_diamond_coal_hero',label:'ถ่านหินกับเพชร — Hero',page:'wuchong/diamond-coal-pressure-life.html',group:'wuchong',size:'1280×720',
-   en:'Cinematic diamond and coal contrast scene, raw black coal transforming into a brilliant clear diamond crystal, dramatic moody lighting, dark background with golden accents, large bold Thai text overlay: \'ถ่านหินกับเพชร ต่างกันแค่แรงกดดันและเวลา\', small text bottom right: \'Master Wuchong | Amethez\', professional typography, cinematic mood, wide format 16:9, 8K quality',
-   th:'ฉากถ่านหินเปลี่ยนเป็นเพชร แสงทองดราม่า พาดหัวไทยตัวใหญ่ \'ถ่านหินกับเพชร ต่างกันแค่แรงกดดันและเวลา\' มุมล่างขวา Master Wuchong | Amethez สัดส่วน 16:9'},
-  {id:'wuchong_amethyst_patience_hero',label:'อเมทิสต์ล้านปีกว่าจะสวย — Hero',page:'wuchong/amethyst-million-years-patience.html',group:'wuchong',size:'1280×720',
-   en:'Cinematic amethyst crystal cave background, deep purple violet glow, dramatic moody lighting, dark background with golden accents, large bold Thai text overlay: \'อเมทิสต์ใช้ล้านปีกว่าจะสวยงาม แล้วทำไมต้องรีบกับชีวิต 30 ปี?\', small text bottom right: \'Master Wuchong | Amethez\', professional typography, cinematic mood, wide format 16:9, 8K quality',
-   th:'ถ้ำอเมทิสต์สีม่วงเข้ม แสงดราม่า พาดหัวไทยตัวใหญ่ \'อเมทิสต์ใช้ล้านปีกว่าจะสวยงาม แล้วทำไมต้องรีบกับชีวิต 30 ปี?\' มุมล่างขวา Master Wuchong | Amethez สัดส่วน 16:9'},
-  {id:'wuchong_tektite_journey_hero',label:'สะเก็ดดาวไทยรอ 8 แสนปี — Hero',page:'wuchong/tektite-800000-years-journey.html',group:'wuchong',size:'1280×720',
-   en:'Cinematic dark olive-black tektite stone glowing softly against a starry night sky background with a faint meteor streak, dramatic moody lighting, dark purple and gold tones, large bold Thai text overlay: \'สะเก็ดดาวไทย รอเกือบ 8 แสนปีกว่าจะถูกพบ\', small text bottom right: \'Master Wuchong | Amethez\', professional typography, cinematic mood, wide format 16:9, 8K quality',
-   th:'สะเก็ดดาวไทยสีดำเข้มเรืองแสงกลางท้องฟ้าคืนดาว มีลำแสงดาวตก พาดหัวไทยตัวใหญ่ \'สะเก็ดดาวไทย รอเกือบ 8 แสนปีกว่าจะถูกพบ\' มุมล่างขวา Master Wuchong | Amethez สัดส่วน 16:9'},
-  {id:'wuchong_gold_selfworth_hero',label:'ทองคำใต้ดินล้านปี — Hero',page:'wuchong/gold-buried-self-worth.html',group:'wuchong',size:'1280×720',
-   en:'Cinematic raw gold nugget half-buried in dark earth and rock, glowing warm golden light against the dark soil, dramatic moody lighting, dark background with golden accents, large bold Thai text overlay: \'ทองคำอยู่ใต้ดินล้านปี ไม่เคยสงสัยว่าตัวเองมีค่าหรือเปล่า\', small text bottom right: \'Master Wuchong | Amethez\', professional typography, cinematic mood, wide format 16:9, 8K quality',
-   th:'ก้อนทองคำดิบฝังอยู่ในดินเข้ม แสงทองเรืองรอง พาดหัวไทยตัวใหญ่ \'ทองคำอยู่ใต้ดินล้านปี ไม่เคยสงสัยว่าตัวเองมีค่าหรือเปล่า\' มุมล่างขวา Master Wuchong | Amethez สัดส่วน 16:9'},
-  {id:'wuchong_magnetite_attraction_hero',label:'หินแม่เหล็กดึงดูด — Hero',page:'wuchong/magnetite-lodestone-attraction.html',group:'wuchong',size:'1280×720',
-   en:'Cinematic dark magnetite lodestone with fine iron filings forming visible magnetic field lines curving around it, dramatic moody lighting, dark purple and gold tones, large bold Thai text overlay: \'หินแม่เหล็ก ดึงดูดโดยไม่ต้องไล่ตามใคร\', small text bottom right: \'Master Wuchong | Amethez\', professional typography, cinematic mood, wide format 16:9, 8K quality',
-   th:'ก้อนแมกนีไทต์สีเข้มมีเศษเหล็กเรียงตัวเป็นเส้นสนามแม่เหล็กรอบก้อน พาดหัวไทยตัวใหญ่ \'หินแม่เหล็ก ดึงดูดโดยไม่ต้องไล่ตามใคร\' มุมล่างขวา Master Wuchong | Amethez สัดส่วน 16:9'},
-  // ── Metha (อ.เมธา) article sample batch (5 more Ganesha topics) ──
-  {id:'metha_ganesha_thursday_hero',label:'วันพฤหัสไหว้พระพิฆเนศ — Hero',page:'metha/ganesha-thursday-three-stones.html',group:'metha',size:'1280×720',
-   en:'Majestic Ganesha deity statue in golden light, dramatic temple atmosphere with candlelight and incense smoke, citrine, pyrite, and yellow topaz crystals arranged as offerings, deep purple and gold tones, cinematic spiritual atmosphere, Thai Hindu Buddhist temple aesthetic, wide format 16:9, 8K quality, overlay text: \'วันพฤหัสไหว้พระพิฆเนศ ด้วยหิน 3 ชนิดนี้\', small text: \'อาจารย์เมธา | Amethez\'',
-   th:'รูปปั้นพระพิฆเนศแสงทอง มีหินซิทริน ไพไรต์ โทแพซเหลืองจัดวางเป็นเครื่องบูชา บรรยากาศวัดขรึมขลัง พาดหัว \'วันพฤหัสไหว้พระพิฆเนศ ด้วยหิน 3 ชนิดนี้\' อาจารย์เมธา | Amethez สัดส่วน 16:9'},
-  {id:'metha_ganesha_color_hero',label:'พระพิฆเนศสีอะไร เสริมพลังด้านไหน — Hero',page:'metha/ganesha-color-meaning-stones.html',group:'metha',size:'1280×720',
-   en:'Five small Ganesha deity statues in different colors — red, gold, white, black, and green — arranged together, dramatic temple atmosphere with soft candlelight, matching colored crystals placed beside each statue, deep purple and gold tones, cinematic spiritual atmosphere, Thai Hindu Buddhist aesthetic, wide format 16:9, 8K quality, overlay text: \'พระพิฆเนศสีอะไร เสริมพลังด้านไหน\', small text: \'อาจารย์เมธา | Amethez\'',
-   th:'พระพิฆเนศ 5 สี แดง ทอง ขาว ดำ เขียว วางเรียงกัน มีหินสีเข้าชุดข้างแต่ละองค์ บรรยากาศวัดขรึมขลัง พาดหัว \'พระพิฆเนศสีอะไร เสริมพลังด้านไหน\' อาจารย์เมธา | Amethez สัดส่วน 16:9'},
-  {id:'metha_ganesha_ritual_hero',label:'พิธีบวงสรวงพระพิฆเนศ 7 อย่าง — Hero',page:'metha/ganesha-ritual-seven-items.html',group:'metha',size:'1280×720',
-   en:'Majestic Ganesha deity statue surrounded by a full ritual offering set — incense sticks, candles, marigold flowers, Thai sweets, himalayan pink salt, and red-gold crystals arranged neatly, dramatic temple atmosphere with candlelight and incense smoke, deep purple and gold tones, cinematic spiritual atmosphere, Thai Hindu Buddhist aesthetic, wide format 16:9, 8K quality, overlay text: \'พิธีบวงสรวงพระพิฆเนศ ของที่ต้องมี 7 อย่าง\', small text: \'อาจารย์เมธา | Amethez\'',
-   th:'พระพิฆเนศล้อมรอบด้วยชุดของบูชาครบ 7 อย่าง ธูป เทียน ดอกดาวเรือง ของหวาน เกลือหิมาลัย หินแดง-ทอง บรรยากาศวัดขรึมขลัง พาดหัว \'พิธีบวงสรวงพระพิฆเนศ ของที่ต้องมี 7 อย่าง\' อาจารย์เมธา | Amethez สัดส่วน 16:9'},
-  {id:'metha_ganesha_tusk_hero',label:'พระพิฆเนศงาหัก vs งาครบ — Hero',page:'metha/ganesha-broken-tusk-stones.html',group:'metha',size:'1280×720',
-   en:'Two Ganesha deity statues side by side, one with a single broken tusk (Ekadanta form) and one with both tusks intact, dramatic temple atmosphere with soft candlelight, jade and garnet crystals arranged as offerings, deep purple and gold tones, cinematic spiritual atmosphere, Thai Hindu Buddhist aesthetic, wide format 16:9, 8K quality, overlay text: \'พระพิฆเนศงาหัก vs งาครบ พลังงานต่างกันอย่างไร\', small text: \'อาจารย์เมธา | Amethez\'',
-   th:'พระพิฆเนศสององค์เคียงกัน องค์หนึ่งงาหักข้างเดียว อีกองค์งาครบ มีหินหยกและโกเมนวางเป็นเครื่องบูชา บรรยากาศวัดขรึมขลัง พาดหัว \'พระพิฆเนศงาหัก vs งาครบ พลังงานต่างกันอย่างไร\' อาจารย์เมธา | Amethez สัดส่วน 16:9'},
-  {id:'metha_ganesha_direction_hero',label:'วางพระพิฆเนศทิศไหนดีที่สุด — Hero',page:'metha/ganesha-direction-placement.html',group:'metha',size:'1280×720',
-   en:'Ganesha deity statue placed on an elevated wooden altar facing toward a warmly lit doorway, dramatic temple atmosphere with candlelight and incense smoke, carnelian and citrine crystals arranged beside the statue, deep purple and gold tones, cinematic spiritual atmosphere, Thai Hindu Buddhist aesthetic, wide format 16:9, 8K quality, overlay text: \'วางพระพิฆเนศทิศไหนดีที่สุด\', small text: \'อาจารย์เมธา | Amethez\'',
-   th:'พระพิฆเนศวางบนแท่นบูชาสูง หันหน้าออกทางประตูที่มีแสงอบอุ่น มีหินคาร์เนเลียนและซิทรินวางข้างองค์ บรรยากาศวัดขรึมขลัง พาดหัว \'วางพระพิฆเนศทิศไหนดีที่สุด\' อาจารย์เมธา | Amethez สัดส่วน 16:9'},
   {id:'logo',label:'โลโก้ AMETHEZ',page:'ทุกหน้า',group:'global',size:'400×100',
    en:'AMETHEZ crystal brand logo, amethyst purple and gold serif typography, luxury minimalist, transparent background 400x100',
    th:'โลโก้ AMETHEZ ตัวอักษรสีทองอเมทิสต์ม่วง สไตล์หรู พื้นหลังโปร่งใส'},
@@ -2217,7 +2225,7 @@ const SLOTS=[
    th:'การจับมือธุรกิจ มีหินคริสตัลบนโต๊ะไม้ แสงอบอุ่น บรรยากาศน่าเชื่อถือ'},
 ];
 
-const GROUPS={global:'🌐 Global',characters:'🎭 ตัวละคร',homepage:'🏠 หน้าหลัก',chakra:'🔮 จักระ',stones:'💎 บทความหิน',geode:'🪨 โพรง',consign:'🤝 ฝากขาย',metha:'🌙 บทความ อ.เมธา',wuchong:'🧘 บทความ Wuchong'};
+const GROUPS={global:'🌐 Global',characters:'🎭 ตัวละคร',homepage:'🏠 หน้าหลัก',chakra:'🔮 จักระ',stones:'💎 บทความหิน',geode:'🪨 โพรง',consign:'🤝 ฝากขาย'};
 const ARTICLES=[
   {e:'💜',n:'อเมทิสต์',p:'/stones/amethyst.html'},
   {e:'🩷',n:'โรสควอตซ์',p:'/stones/rose-quartz.html'},
@@ -2286,7 +2294,7 @@ function showTab(name,el){
   document.getElementById('topbarTitle').textContent=TAB_TITLES[name]||name;
   if(name==='pages') renderPageGrid();
   if(name==='stones') renderStones();
-  if(name==='blog'){ seedBlogFromJson().then(()=>renderBlog()); }
+  if(name==='blog'){ seedPersonaArticleDrafts(); seedBlogFromJson().then(()=>renderBlog()); }
   if(name==='products'){ loadGeodes(); renderPTable(); }
   if(name==='stats') initStatsTab();
   if(name==='shopee'){ loadAff(); initAffTags(); renderAffTable(); renderStoreProfiles(); }
@@ -3858,7 +3866,7 @@ function toast(msg,type=''){
 }
 
 // ── PAGES DATA ────────────────────────────────
-const PAGE_GROUPS={g:'🌐 Global',m:'🏠 หน้าหลัก',s:'💎 บทความหิน',c:'🔮 หมวดหมู่',sp:'⭐ พิเศษ',guides:'🌿 คู่มือ',dc:'☄️ Dr. Cosmos',wuchong:'🧘 บทความ Wuchong',metha:'🌙 บทความ อ.เมธา'};
+const PAGE_GROUPS={g:'🌐 Global',m:'🏠 หน้าหลัก',s:'💎 บทความหิน',c:'🔮 หมวดหมู่',sp:'⭐ พิเศษ',guides:'🌿 คู่มือ',dc:'☄️ Dr. Cosmos'};
 const PAGES=[
   {key:'global',label:'🌐 ทั่วไป (ทุกหน้า)',group:'g',path:null,
    text:[
@@ -4351,78 +4359,6 @@ const PAGES=[
      {id:'today_body',label:'เนื้อหาดวงวันนี้ (HTML)',type:'t',ph:''},
    ],imgs:['metha_hero']},
 
-  // Deep articles (Wuchong/Metha) — each has data-cms-text="title"/"subtitle"/"body"
-  // and its own hero image slot, same as any other page, but they had no
-  // PAGES entry at all until now, so they never showed up as a card in the
-  // "แก้ไขหน้า" grid — findable only by knowing the exact slot id and
-  // calling openImgModal() from the console. Adding entries fixes that.
-  {key:'wuchong-diamond-coal',label:'🧘 เพชรคือถ่านหินที่ไม่ยอมแพ้',group:'wuchong',path:'/wuchong/diamond-coal-pressure-life.html',
-   text:[
-     {id:'title',label:'หัวข้อ',type:'i',ph:''},
-     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
-     {id:'body',label:'เนื้อหา (HTML)',type:'t',ph:''},
-   ],imgs:['wuchong_diamond_coal_hero']},
-  {key:'wuchong-amethyst-patience',label:'🧘 อเมทิสต์ล้านปีกว่าจะสวย',group:'wuchong',path:'/wuchong/amethyst-million-years-patience.html',
-   text:[
-     {id:'title',label:'หัวข้อ',type:'i',ph:''},
-     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
-     {id:'body',label:'เนื้อหา (HTML)',type:'t',ph:''},
-   ],imgs:['wuchong_amethyst_patience_hero']},
-  {key:'wuchong-tektite-journey',label:'🧘 สะเก็ดดาวไทยรอ 8 แสนปี',group:'wuchong',path:'/wuchong/tektite-800000-years-journey.html',
-   text:[
-     {id:'title',label:'หัวข้อ',type:'i',ph:''},
-     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
-     {id:'body',label:'เนื้อหา (HTML)',type:'t',ph:''},
-   ],imgs:['wuchong_tektite_journey_hero']},
-  {key:'wuchong-gold-selfworth',label:'🧘 ทองคำใต้ดินล้านปี',group:'wuchong',path:'/wuchong/gold-buried-self-worth.html',
-   text:[
-     {id:'title',label:'หัวข้อ',type:'i',ph:''},
-     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
-     {id:'body',label:'เนื้อหา (HTML)',type:'t',ph:''},
-   ],imgs:['wuchong_gold_selfworth_hero']},
-  {key:'wuchong-magnetite-attraction',label:'🧘 หินแม่เหล็กดึงดูด',group:'wuchong',path:'/wuchong/magnetite-lodestone-attraction.html',
-   text:[
-     {id:'title',label:'หัวข้อ',type:'i',ph:''},
-     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
-     {id:'body',label:'เนื้อหา (HTML)',type:'t',ph:''},
-   ],imgs:['wuchong_magnetite_attraction_hero']},
-  {key:'metha-ganesha-favorite-stones',label:'🌙 พระพิฆเนศชอบหินอะไร',group:'metha',path:'/metha/ganesha-favorite-stones.html',
-   text:[
-     {id:'title',label:'หัวข้อ',type:'i',ph:''},
-     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
-     {id:'body',label:'เนื้อหา (HTML)',type:'t',ph:''},
-   ],imgs:['metha_ganesha_favorite_stones_hero']},
-  {key:'metha-ganesha-thursday',label:'🌙 วันพฤหัสไหว้พระพิฆเนศ',group:'metha',path:'/metha/ganesha-thursday-three-stones.html',
-   text:[
-     {id:'title',label:'หัวข้อ',type:'i',ph:''},
-     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
-     {id:'body',label:'เนื้อหา (HTML)',type:'t',ph:''},
-   ],imgs:['metha_ganesha_thursday_hero']},
-  {key:'metha-ganesha-color',label:'🌙 พระพิฆเนศสีอะไร เสริมพลังด้านไหน',group:'metha',path:'/metha/ganesha-color-meaning-stones.html',
-   text:[
-     {id:'title',label:'หัวข้อ',type:'i',ph:''},
-     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
-     {id:'body',label:'เนื้อหา (HTML)',type:'t',ph:''},
-   ],imgs:['metha_ganesha_color_hero']},
-  {key:'metha-ganesha-ritual',label:'🌙 พิธีบวงสรวงพระพิฆเนศ 7 อย่าง',group:'metha',path:'/metha/ganesha-ritual-seven-items.html',
-   text:[
-     {id:'title',label:'หัวข้อ',type:'i',ph:''},
-     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
-     {id:'body',label:'เนื้อหา (HTML)',type:'t',ph:''},
-   ],imgs:['metha_ganesha_ritual_hero']},
-  {key:'metha-ganesha-tusk',label:'🌙 พระพิฆเนศงาหัก vs งาครบ',group:'metha',path:'/metha/ganesha-broken-tusk-stones.html',
-   text:[
-     {id:'title',label:'หัวข้อ',type:'i',ph:''},
-     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
-     {id:'body',label:'เนื้อหา (HTML)',type:'t',ph:''},
-   ],imgs:['metha_ganesha_tusk_hero']},
-  {key:'metha-ganesha-direction',label:'🌙 วางพระพิฆเนศทิศไหนดีที่สุด',group:'metha',path:'/metha/ganesha-direction-placement.html',
-   text:[
-     {id:'title',label:'หัวข้อ',type:'i',ph:''},
-     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
-     {id:'body',label:'เนื้อหา (HTML)',type:'t',ph:''},
-   ],imgs:['metha_ganesha_direction_hero']},
-
   {key:'guides',label:'🌿 คู่มือ (หน้าหลัก)',group:'guides',path:'/guides/',
    text:[
      {id:'title',label:'หัวข้อ',type:'i',ph:'คู่มือพลังบำบัด'},
@@ -4762,7 +4698,7 @@ async function seedBlogFromJson(){
     const d=await r.json();
     const existing=getBlogPosts();
     const existIds=new Set(existing.map(p=>String(p.id)));
-    const AUTHOR_MAP={'Crystal Atlas':'atlas','Master Wuchong':'wuchong','อาจารย์เมธา':'metha'};
+    const AUTHOR_MAP={'Crystal Atlas':'atlas','Master Wuchong':'wuchong','อาจารย์เมธา':'metha','Dr. Cosmos':'dr_cosmos','Gemma':'gemma'};
     const seeded=d.articles.filter(a=>!existIds.has(String(a.id))).map(a=>({
       id: String(a.id),
       title: a.title||'',
@@ -4783,6 +4719,84 @@ async function seedBlogFromJson(){
     saveBlogPosts([...existing,...seeded]);
     localStorage.setItem('amethez_blog_seeded','1');
   }catch(e){ console.warn('seedBlog:',e); }
+}
+
+// One-time seed for the 11 Wuchong/Metha sample articles written directly to
+// disk (not through this editor) earlier — they were never in data/blog.json
+// (deliberately, images aren't ready) so seedBlogFromJson never picks them
+// up. Insert as localStorage-only drafts so they're editable/schedulable
+// here; the eligibility filter in the publish step keeps drafts out of the
+// public blog.json until their status is changed to published/scheduled.
+function seedPersonaArticleDrafts(){
+  if(localStorage.getItem('amethez_persona_articles_seeded')) return;
+  const SEED=[
+    {id:'wuchong-diamond-coal',title:'ถ่านหินกับเพชรต่างกันแค่แรงกดดันและเวลา',url:'/wuchong/diamond-coal-pressure-life.html',
+     excerpt:'เพชรกับถ่านหินคือคาร์บอนชนิดเดียวกัน สิ่งที่ต่างกันคือแรงกดดันและเวลาที่แต่ละก้อนต้องเผชิญ',
+     tags:['เพชร','ความพยายาม','แรงกดดัน','ปรัชญาหิน'],author:'wuchong',category:'energy',
+     heroPromptEn:'Cinematic diamond and coal contrast scene, raw black coal transforming into a brilliant clear diamond crystal, dramatic moody lighting, dark background with golden accents, large bold Thai text overlay: \'ถ่านหินกับเพชร ต่างกันแค่แรงกดดันและเวลา\', small text bottom right: \'Master Wuchong | Amethez\', professional typography, cinematic mood, wide format 16:9, 8K quality',
+     heroPromptTh:'ฉากถ่านหินเปลี่ยนเป็นเพชร แสงทองดราม่า พาดหัวไทยตัวใหญ่ \'ถ่านหินกับเพชร ต่างกันแค่แรงกดดันและเวลา\' มุมล่างขวา Master Wuchong | Amethez สัดส่วน 16:9'},
+    {id:'wuchong-amethyst-patience',title:'อเมทิสต์ใช้เวลาล้านปีกว่าจะสวยงาม แล้วทำไมต้องรีบกับชีวิต 30 ปี?',url:'/wuchong/amethyst-million-years-patience.html',
+     excerpt:'อเมทิสต์ค่อยๆ ก่อตัวในโพรงหินภูเขาไฟนานนับล้านปีกว่าจะสวยงาม บทเรียนเรื่องความอดทนที่ไม่ควรถูกเร่ง',
+     tags:['อเมทิสต์','ความอดทน','ปรัชญาหิน'],author:'wuchong',category:'energy',
+     heroPromptEn:'Cinematic amethyst crystal cave background, deep purple violet glow, dramatic moody lighting, dark background with golden accents, large bold Thai text overlay: \'อเมทิสต์ใช้ล้านปีกว่าจะสวยงาม แล้วทำไมต้องรีบกับชีวิต 30 ปี?\', small text bottom right: \'Master Wuchong | Amethez\', professional typography, cinematic mood, wide format 16:9, 8K quality',
+     heroPromptTh:'ถ้ำอเมทิสต์สีม่วงเข้ม แสงดราม่า พาดหัวไทยตัวใหญ่ \'อเมทิสต์ใช้ล้านปีกว่าจะสวยงาม แล้วทำไมต้องรีบกับชีวิต 30 ปี?\' มุมล่างขวา Master Wuchong | Amethez สัดส่วน 16:9'},
+    {id:'wuchong-tektite-journey',title:'สะเก็ดดาวไทยรอเกือบ 8 แสนปีกว่าจะถูกพบ',url:'/wuchong/tektite-800000-years-journey.html',
+     excerpt:'สะเก็ดดาวไทยเกิดจากอุกกาบาตพุ่งชนโลกเมื่อเกือบ 8 แสนปีก่อน และรอนานขนาดนั้นกว่าจะมีใครมาพบมัน',
+     tags:['สะเก็ดดาวไทย','การรอคอย','ปรัชญาหิน'],author:'wuchong',category:'energy',
+     heroPromptEn:'Cinematic dark olive-black tektite stone glowing softly against a starry night sky background with a faint meteor streak, dramatic moody lighting, dark purple and gold tones, large bold Thai text overlay: \'สะเก็ดดาวไทย รอเกือบ 8 แสนปีกว่าจะถูกพบ\', small text bottom right: \'Master Wuchong | Amethez\', professional typography, cinematic mood, wide format 16:9, 8K quality',
+     heroPromptTh:'สะเก็ดดาวไทยสีดำเข้มเรืองแสงกลางท้องฟ้าคืนดาว มีลำแสงดาวตก พาดหัวไทยตัวใหญ่ \'สะเก็ดดาวไทย รอเกือบ 8 แสนปีกว่าจะถูกพบ\' มุมล่างขวา Master Wuchong | Amethez สัดส่วน 16:9'},
+    {id:'wuchong-gold-selfworth',title:'ทองคำอยู่ใต้ดินล้านปี ไม่เคยสงสัยว่าตัวเองมีค่าหรือเปล่า',url:'/wuchong/gold-buried-self-worth.html',
+     excerpt:'ทองคำเป็นโลหะที่ไม่ทำปฏิกิริยากับสิ่งแวดล้อมเลย ฝังอยู่ใต้ดินนับล้านปีก็ยังคงสภาพเดิม',
+     tags:['ทองคำ','คุณค่าในตัวเอง','ปรัชญาหิน'],author:'wuchong',category:'energy',
+     heroPromptEn:'Cinematic raw gold nugget half-buried in dark earth and rock, glowing warm golden light against the dark soil, dramatic moody lighting, dark background with golden accents, large bold Thai text overlay: \'ทองคำอยู่ใต้ดินล้านปี ไม่เคยสงสัยว่าตัวเองมีค่าหรือเปล่า\', small text bottom right: \'Master Wuchong | Amethez\', professional typography, cinematic mood, wide format 16:9, 8K quality',
+     heroPromptTh:'ก้อนทองคำดิบฝังอยู่ในดินเข้ม แสงทองเรืองรอง พาดหัวไทยตัวใหญ่ \'ทองคำอยู่ใต้ดินล้านปี ไม่เคยสงสัยว่าตัวเองมีค่าหรือเปล่า\' มุมล่างขวา Master Wuchong | Amethez สัดส่วน 16:9'},
+    {id:'wuchong-magnetite-attraction',title:'หินแม่เหล็กดึงดูดโดยไม่ต้องไล่ตามใคร',url:'/wuchong/magnetite-lodestone-attraction.html',
+     excerpt:'แมกนีไทต์คือแร่แม่เหล็กธรรมชาติที่ไม่เคยขยับเข้าหาสิ่งที่มันดึงดูด บทเรียนเรื่องการดึงดูดที่แท้จริง',
+     tags:['แมกนีไทต์','การดึงดูด','ปรัชญาหิน'],author:'wuchong',category:'energy',
+     heroPromptEn:'Cinematic dark magnetite lodestone with fine iron filings forming visible magnetic field lines curving around it, dramatic moody lighting, dark purple and gold tones, large bold Thai text overlay: \'หินแม่เหล็ก ดึงดูดโดยไม่ต้องไล่ตามใคร\', small text bottom right: \'Master Wuchong | Amethez\', professional typography, cinematic mood, wide format 16:9, 8K quality',
+     heroPromptTh:'ก้อนแมกนีไทต์สีเข้มมีเศษเหล็กเรียงตัวเป็นเส้นสนามแม่เหล็กรอบก้อน พาดหัวไทยตัวใหญ่ \'หินแม่เหล็ก ดึงดูดโดยไม่ต้องไล่ตามใคร\' มุมล่างขวา Master Wuchong | Amethez สัดส่วน 16:9'},
+    {id:'metha-ganesha-favorite-stones',title:'พระพิฆเนศชอบหินอะไร — ไหว้ถูกหินได้พรเร็วกว่า',url:'/metha/ganesha-favorite-stones.html',
+     excerpt:'อาจารย์เมธาไขข้อสงสัยคนสายมู พระพิฆเนศชอบหินสีอะไร ควรใช้หินไหนเสริมตอนไหว้ พร้อมวิธีจัดโต๊ะบูชาง่ายๆ',
+     tags:['พระพิฆเนศ','หินบูชา','สายมู'],author:'metha',category:'guide',
+     heroPromptEn:'Majestic Ganesha deity statue in golden amber light, elephant head with multiple arms holding lotus and axe, dramatic temple atmosphere with candles and jasmine flowers, red carnelian and ruby crystals arranged as offerings, deep purple and gold tones, cinematic spiritual atmosphere, Thai Hindu Buddhist temple aesthetic, wide format 16:9, 8K quality',
+     heroPromptTh:'รูปปั้นพระพิฆเนศในแสงทองอำพัน หัวช้างถืออาวุธและดอกบัว บรรยากาศวัดขรึมขลัง มีเทียนและดอกมะลิ หินคาร์เนเลียนและทับทิมจัดวางเป็นเครื่องบูชา โทนม่วง-ทอง บรรยากาศศักดิ์สิทธิ์แบบไทย-ฮินดู สัดส่วน 16:9'},
+    {id:'metha-ganesha-thursday',title:'วันพฤหัสไหว้พระพิฆเนศด้วยหิน 3 ชนิดนี้ ได้พรด้านการงาน',url:'/metha/ganesha-thursday-three-stones.html',
+     excerpt:'อาจารย์เมธาแนะนำ 3 หินที่ควรใช้ไหว้พระพิฆเนศในวันพฤหัสบดี วันแห่งปัญญาและการงาน',
+     tags:['พระพิฆเนศ','วันพฤหัส','สายมู'],author:'metha',category:'guide',
+     heroPromptEn:'Majestic Ganesha deity statue in golden light, dramatic temple atmosphere with candlelight and incense smoke, citrine, pyrite, and yellow topaz crystals arranged as offerings, deep purple and gold tones, cinematic spiritual atmosphere, Thai Hindu Buddhist temple aesthetic, wide format 16:9, 8K quality, overlay text: \'วันพฤหัสไหว้พระพิฆเนศ ด้วยหิน 3 ชนิดนี้\', small text: \'อาจารย์เมธา | Amethez\'',
+     heroPromptTh:'รูปปั้นพระพิฆเนศแสงทอง มีหินซิทริน ไพไรต์ โทแพซเหลืองจัดวางเป็นเครื่องบูชา บรรยากาศวัดขรึมขลัง พาดหัว \'วันพฤหัสไหว้พระพิฆเนศ ด้วยหิน 3 ชนิดนี้\' อาจารย์เมธา | Amethez สัดส่วน 16:9'},
+    {id:'metha-ganesha-color',title:'พระพิฆเนศสีอะไร เสริมพลังด้านไหน — หินที่เหมาะกับแต่ละสี',url:'/metha/ganesha-color-meaning-stones.html',
+     excerpt:'พระพิฆเนศแต่ละสีเสริมพลังต่างกัน อาจารย์เมธาไขความหมายสีแดง ทอง ขาว ดำ เขียว',
+     tags:['พระพิฆเนศ','สีมงคล','สายมู'],author:'metha',category:'guide',
+     heroPromptEn:'Five small Ganesha deity statues in different colors — red, gold, white, black, and green — arranged together, dramatic temple atmosphere with soft candlelight, matching colored crystals placed beside each statue, deep purple and gold tones, cinematic spiritual atmosphere, Thai Hindu Buddhist aesthetic, wide format 16:9, 8K quality, overlay text: \'พระพิฆเนศสีอะไร เสริมพลังด้านไหน\', small text: \'อาจารย์เมธา | Amethez\'',
+     heroPromptTh:'พระพิฆเนศ 5 สี แดง ทอง ขาว ดำ เขียว วางเรียงกัน มีหินสีเข้าชุดข้างแต่ละองค์ บรรยากาศวัดขรึมขลัง พาดหัว \'พระพิฆเนศสีอะไร เสริมพลังด้านไหน\' อาจารย์เมธา | Amethez สัดส่วน 16:9'},
+    {id:'metha-ganesha-ritual',title:'พิธีบวงสรวงพระพิฆเนศแบบสายหิน ของที่ต้องมี 7 อย่าง',url:'/metha/ganesha-ritual-seven-items.html',
+     excerpt:'อาจารย์เมธารวม 7 อย่างที่ต้องมีสำหรับพิธีบวงสรวงพระพิฆเนศแบบคนสายหิน ทำเองที่บ้านได้',
+     tags:['พระพิฆเนศ','พิธีบวงสรวง','สายมู'],author:'metha',category:'guide',
+     heroPromptEn:'Majestic Ganesha deity statue surrounded by a full ritual offering set — incense sticks, candles, marigold flowers, Thai sweets, himalayan pink salt, and red-gold crystals arranged neatly, dramatic temple atmosphere with candlelight and incense smoke, deep purple and gold tones, cinematic spiritual atmosphere, Thai Hindu Buddhist aesthetic, wide format 16:9, 8K quality, overlay text: \'พิธีบวงสรวงพระพิฆเนศ ของที่ต้องมี 7 อย่าง\', small text: \'อาจารย์เมธา | Amethez\'',
+     heroPromptTh:'พระพิฆเนศล้อมรอบด้วยชุดของบูชาครบ 7 อย่าง ธูป เทียน ดอกดาวเรือง ของหวาน เกลือหิมาลัย หินแดง-ทอง บรรยากาศวัดขรึมขลัง พาดหัว \'พิธีบวงสรวงพระพิฆเนศ ของที่ต้องมี 7 อย่าง\' อาจารย์เมธา | Amethez สัดส่วน 16:9'},
+    {id:'metha-ganesha-tusk',title:'พระพิฆเนศงาหัก vs งาครบ พลังงานต่างกันอย่างไร',url:'/metha/ganesha-broken-tusk-stones.html',
+     excerpt:'พระพิฆเนศงาหักไม่ใช่องค์ที่บกพร่อง แต่คือปางเอกทันตะที่มีความหมายลึกซึ้งเรื่องการเสียสละ',
+     tags:['พระพิฆเนศ','เอกทันตะ','สายมู'],author:'metha',category:'guide',
+     heroPromptEn:'Two Ganesha deity statues side by side, one with a single broken tusk (Ekadanta form) and one with both tusks intact, dramatic temple atmosphere with soft candlelight, jade and garnet crystals arranged as offerings, deep purple and gold tones, cinematic spiritual atmosphere, Thai Hindu Buddhist aesthetic, wide format 16:9, 8K quality, overlay text: \'พระพิฆเนศงาหัก vs งาครบ พลังงานต่างกันอย่างไร\', small text: \'อาจารย์เมธา | Amethez\'',
+     heroPromptTh:'พระพิฆเนศสององค์เคียงกัน องค์หนึ่งงาหักข้างเดียว อีกองค์งาครบ มีหินหยกและโกเมนวางเป็นเครื่องบูชา บรรยากาศวัดขรึมขลัง พาดหัว \'พระพิฆเนศงาหัก vs งาครบ พลังงานต่างกันอย่างไร\' อาจารย์เมธา | Amethez สัดส่วน 16:9'},
+    {id:'metha-ganesha-direction',title:'วางพระพิฆเนศทิศไหนดีที่สุด + หินที่วางคู่กันได้',url:'/metha/ganesha-direction-placement.html',
+     excerpt:'อาจารย์เมธาแนะนำทิศและตำแหน่งที่เหมาะกับการวางองค์พระพิฆเนศในบ้าน พร้อมข้อห้ามที่ควรรู้',
+     tags:['พระพิฆเนศ','ฮวงจุ้ย','สายมู'],author:'metha',category:'guide',
+     heroPromptEn:'Ganesha deity statue placed on an elevated wooden altar facing toward a warmly lit doorway, dramatic temple atmosphere with candlelight and incense smoke, carnelian and citrine crystals arranged beside the statue, deep purple and gold tones, cinematic spiritual atmosphere, Thai Hindu Buddhist aesthetic, wide format 16:9, 8K quality, overlay text: \'วางพระพิฆเนศทิศไหนดีที่สุด\', small text: \'อาจารย์เมธา | Amethez\'',
+     heroPromptTh:'พระพิฆเนศวางบนแท่นบูชาสูง หันหน้าออกทางประตูที่มีแสงอบอุ่น มีหินคาร์เนเลียนและซิทรินวางข้างองค์ บรรยากาศวัดขรึมขลัง พาดหัว \'วางพระพิฆเนศทิศไหนดีที่สุด\' อาจารย์เมธา | Amethez สัดส่วน 16:9'},
+  ];
+  const existing=getBlogPosts();
+  const existIds=new Set(existing.map(p=>String(p.id)));
+  const now=new Date().toISOString();
+  const seeded=SEED.filter(s=>!existIds.has(s.id)).map(s=>({
+    id:s.id, title:s.title, slug:s.url.split('/').pop().replace('.html',''), url:s.url,
+    excerpt:s.excerpt, tags:s.tags, thumb:'', heroImg:'', heroPromptEn:s.heroPromptEn, heroPromptTh:s.heroPromptTh,
+    author:s.author, category:s.category, status:'draft', publishDate:'', body:'',
+    created:now, updated:now,
+  }));
+  if(seeded.length) saveBlogPosts([...existing,...seeded]);
+  localStorage.setItem('amethez_persona_articles_seeded','1');
 }
 
 function previewBlogThumb(input){
@@ -4810,7 +4824,7 @@ function renderBlog(){
     return p.status===blogFilter;
   });
 
-  const AUTHOR={atlas:'🌐 Crystal Atlas',wuchong:'🧙 Master Wuchong',metha:'🌙 อาจารย์เมธา',gemma:'💃 Gemma'};
+  const AUTHOR={atlas:'🌐 Crystal Atlas',wuchong:'🧙 Master Wuchong',metha:'🌙 อาจารย์เมธา',dr_cosmos:'☄️ Dr. Cosmos',gemma:'💃 Gemma'};
   const CAT={stone:'💎',energy:'⚡',horoscope:'🌟',guide:'📖',news:'📢'};
   const STATUS_LABEL={published:'🟢 เผยแพร่',scheduled:'⏰ ตั้งเวลา',draft:'⚫ Draft'};
   const STATUS_COLOR={published:'#059669',scheduled:'#d97706',draft:'#9ca3af'};
@@ -4821,8 +4835,7 @@ function renderBlog(){
     return;
   }
 
-  document.getElementById('blogList').innerHTML=`<div class="article-list">${list.sort((a,b)=>
-    (b.created||'').localeCompare(a.created||'')).map(p=>{
+  function itemHtml(p){
     const col=STATUS_COLOR[p.status]||'#9ca3af';
     const thumb=p.thumb?`<img src="${x(p.thumb)}" style="width:56px;height:56px;object-fit:cover;border-radius:.5rem;flex-shrink:0">`
       :`<div style="width:56px;height:56px;background:#f5f0ff;border-radius:.5rem;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0">${CAT[p.category]||'📝'}</div>`;
@@ -4843,7 +4856,26 @@ function renderBlog(){
         <button class="btn btn-danger btn-sm" onclick="delPost('${x(p.id)}')">🗑</button>
       </div>
     </div>`;
-  }).join('')}</div>`;
+  }
+
+  const sorted=list.sort((a,b)=>(b.created||'').localeCompare(a.created||''));
+
+  if(blogFilter==='all'){
+    // Group into one labeled section per author (same fix already applied to
+    // the "แก้ไขหน้า" page grid) — a flat list mixing Crystal Atlas, Wuchong,
+    // เมธา, Dr. Cosmos, Gemma posts together gets unreadable fast as each
+    // persona's article count grows.
+    document.getElementById('blogList').innerHTML=Object.entries(AUTHOR).map(([key,label])=>{
+      const items=sorted.filter(p=>(p.author||'atlas')===key);
+      if(!items.length) return '';
+      return `<div style="margin-bottom:1.75rem">
+        <div style="font-size:.9rem;font-weight:700;color:#4b5563;margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:1.5px solid #ede9fe">${x(label)} <span style="font-weight:400;color:#9ca3af;font-size:.78rem">(${items.length})</span></div>
+        <div class="article-list">${items.map(itemHtml).join('')}</div>
+      </div>`;
+    }).join('');
+  } else {
+    document.getElementById('blogList').innerHTML=`<div class="article-list">${sorted.map(itemHtml).join('')}</div>`;
+  }
 }
 
 function openAddPost(){
@@ -4905,6 +4937,7 @@ function openEditPost(id){
   document.getElementById('beViewBtn').href=pagePath;
   document.getElementById('beTitle2').value=p.title||'';
   document.getElementById('beSlug').value=p.slug||'';
+  document.getElementById('beUrl').value=p.url||'';
   document.getElementById('beExcerpt').value=p.excerpt||'';
   document.getElementById('beTags').value=(p.tags||[]).join(', ');
   document.getElementById('beThumb').value=p.thumb||'';
@@ -4915,6 +4948,11 @@ function openEditPost(id){
   toggleBESchedule();
   document.getElementById('beThumbFile').value='';
   updateBEThumbPreview(p.thumb||'');
+  document.getElementById('beHeroImg').value=p.heroImg||'';
+  document.getElementById('beHeroImgFile').value='';
+  updateBEHeroPreview(p.heroImg||'');
+  document.getElementById('beHeroPromptEn').value=p.heroPromptEn||'';
+  document.getElementById('beHeroPromptTh').value=p.heroPromptTh||'';
   // body — show cached copy immediately, but always verify it against the live
   // page in the background and self-heal if the cache looks stale/truncated
   // (this is how the FAQ/related-links content-loss bug happened before)
@@ -4968,6 +5006,23 @@ function uploadBEThumb(input){
   const r=new FileReader();
   r.onload=e=>{ document.getElementById('beThumb').value=e.target.result; updateBEThumbPreview(e.target.result); };
   r.readAsDataURL(f);
+}
+function updateBEHeroPreview(url){
+  const hasUrl=url&&url.trim();
+  document.getElementById('beHeroPreview').style.display=hasUrl?'':'none';
+  document.getElementById('beHeroEmpty').style.display=hasUrl?'none':'';
+  if(hasUrl) document.getElementById('beHeroImgTag').src=url.trim();
+}
+function uploadBEHero(input){
+  const f=input.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=e=>{ document.getElementById('beHeroImg').value=e.target.result; updateBEHeroPreview(e.target.result); };
+  r.readAsDataURL(f);
+}
+function copyBEHeroPrompt(){
+  const v=document.getElementById('beHeroPromptEn').value;
+  if(!v){ toast('ยังไม่มี prompt','err'); return; }
+  navigator.clipboard.writeText(v).then(()=>toast('Copied prompt ✓','ok')).catch(()=>toast('คัดลอกไม่สำเร็จ','err'));
 }
 function updateBEBodyLen(v){
   document.getElementById('beBodyLen').textContent=(v||'').length.toLocaleString()+' ตัวอักษร · '+(v||'').replace(/<[^>]*>/g,'').trim().split(/\s+/).filter(Boolean).length+' คำ';
@@ -5111,9 +5166,13 @@ function saveBlogEditor(){
     id: eid||'blog_'+Date.now(),
     title,
     slug: document.getElementById('beSlug').value.trim()||title.toLowerCase().replace(/[^\w฀-๿]+/g,'-'),
+    url: document.getElementById('beUrl').value.trim(),
     excerpt: document.getElementById('beExcerpt').value.trim(),
     tags: document.getElementById('beTags').value.split(',').map(t=>t.trim()).filter(Boolean),
     thumb: document.getElementById('beThumb').value.trim(),
+    heroImg: document.getElementById('beHeroImg').value.trim(),
+    heroPromptEn: document.getElementById('beHeroPromptEn').value.trim(),
+    heroPromptTh: document.getElementById('beHeroPromptTh').value.trim(),
     author: document.getElementById('beAuthor').value,
     category: document.getElementById('beCategory').value,
     status: document.getElementById('beStatus').value,
@@ -6992,7 +7051,7 @@ async function publishToGitHub(){
       // Push blog.json with updated thumbs
       const blogPosts=getBlogPosts();
       if(blogPosts.length){
-        const AUTHOR_REV={atlas:'Crystal Atlas',wuchong:'Master Wuchong',metha:'อาจารย์เมธา',gemma:'Gemma'};
+        const AUTHOR_REV={atlas:'Crystal Atlas',wuchong:'Master Wuchong',metha:'อาจารย์เมธา',dr_cosmos:'Dr. Cosmos',gemma:'Gemma'};
         // upload base64 thumbs in blog posts first
         for(const bp of blogPosts){
           if(bp.thumb&&bp.thumb.startsWith('data:')){
@@ -7004,6 +7063,17 @@ async function publishToGitHub(){
               try{ const br=await fetch(`https://api.github.com/repos/${repo}/contents/${bpath}`,{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}}); if(br.ok){ const bd=await br.json(); bsha=bd.sha; } }catch{}
               const bur=await fetch(`https://api.github.com/repos/${repo}/contents/${bpath}`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:`cms: blog thumb ${bp.id}`,content:m[2],...(bsha?{sha:bsha}:{})})});
               if(bur.ok){ bp.thumb='/'+bpath; }
+            }
+          }
+          if(bp.heroImg&&bp.heroImg.startsWith('data:')){
+            const m=bp.heroImg.match(/^data:image\/([a-zA-Z+]+);base64,(.+)$/);
+            if(m){
+              const ext=m[1]==='jpeg'?'jpg':m[1]==='svg+xml'?'svg':m[1];
+              const bpath=`data/images/blog_${bp.id}_hero.${ext}`;
+              let bsha='';
+              try{ const br=await fetch(`https://api.github.com/repos/${repo}/contents/${bpath}`,{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}}); if(br.ok){ const bd=await br.json(); bsha=bd.sha; } }catch{}
+              const bur=await fetch(`https://api.github.com/repos/${repo}/contents/${bpath}`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:`cms: blog hero image ${bp.id}`,content:m[2],...(bsha?{sha:bsha}:{})})});
+              if(bur.ok){ bp.heroImg='/'+bpath; }
             }
           }
         }
@@ -7024,7 +7094,11 @@ async function publishToGitHub(){
             if(bur.ok){ bp.body=bp.body.replace(mm[1],'/'+bpath); }
             else toast('⚠️ อัปโหลดรูปในเนื้อหา "'+bp.title+'" ไม่สำเร็จ','err');
           }
-          // Splice the updated body into the live page's .post-body element
+          // Splice the updated body into the live page's body element — same
+          // shared marker fetchLivePostBody() already falls back to, so article
+          // types other than /blog/ (article-body, .content-wrap, .cat-body —
+          // all wired with data-cms-text="body") can be edited/published from
+          // here too, not just .post-body pages.
           const pagePath=(bp.url||'/blog/'+bp.slug+'.html').replace(/^\//,'');
           try{
             const pr=await fetch(`https://api.github.com/repos/${repo}/contents/${pagePath}`,{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}});
@@ -7032,7 +7106,7 @@ async function publishToGitHub(){
               const pd=await pr.json();
               const pageHtml=decodeURIComponent(escape(atob(pd.content.replace(/\n/g,''))));
               const doc=new DOMParser().parseFromString(pageHtml,'text/html');
-              const bodyEl=doc.querySelector('.post-body');
+              const bodyEl=doc.querySelector('[data-cms-text="body"]')||doc.querySelector('.post-body');
               if(bodyEl){
                 // Safety net: refuse to overwrite with a suspiciously smaller body —
                 // guards against a stale/truncated cached body wiping out live content.
@@ -7058,7 +7132,15 @@ async function publishToGitHub(){
         _dirtyBodyPostIds.clear();
 
         saveBlogPosts(blogPosts);
-        const blogJson={articles:blogPosts.map(bp=>({
+        // status was never actually enforced here before — every post (draft
+        // included) got mapped into blogJson unconditionally, and the homepage's
+        // loadBlog()/renderBlogGrid() render straight from this array with no
+        // status or date check of its own, so a "Draft" post would go live the
+        // moment anyone hit เผยแพร่. Apply the same published/scheduled-and-due
+        // eligibility check renderBlog()'s own filter chip already uses.
+        const nowIso=new Date().toISOString();
+        const eligibleBlogPosts=blogPosts.filter(bp=>bp.status==='published'||(bp.status==='scheduled'&&bp.publishDate<=nowIso));
+        const blogJson={articles:eligibleBlogPosts.map(bp=>({
           id:isNaN(bp.id)?bp.id:Number(bp.id),
           title:bp.title,url:bp.url||'/blog/'+bp.slug+'.html',
           category:bp.category,emoji:'📖',desc:bp.excerpt,
@@ -7067,6 +7149,7 @@ async function publishToGitHub(){
           ...(bp.featured?{featured:true}:{}),
           ...(bp.badge?{badge:bp.badge}:{}),
           ...(bp.thumb?{thumb:bp.thumb}:{}),
+          ...(bp.heroImg?{heroImg:bp.heroImg}:{}),
           ...(bp.tags&&bp.tags.length?{tags:bp.tags}:{}),
         }))};
         const blogCompare = JSON.stringify(blogJson);
