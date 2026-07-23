@@ -21,7 +21,11 @@
     .color-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:1.125rem; }
     .card { background:#fff; border:1.5px solid #ede9fe; border-radius:1.25rem; padding:1.75rem 1.25rem; text-decoration:none; color:#1a1228; transition:all .2s; text-align:center; display:flex; flex-direction:column; align-items:center; gap:.75rem; }
     .card:hover { transform:translateY(-4px); box-shadow:0 8px 24px rgba(0,0,0,.1); }
-    .color-swatch { width:4rem; height:4rem; border-radius:50%; margin:0 auto; box-shadow:0 4px 12px rgba(0,0,0,.15); }
+    .color-swatch { width:4rem; height:4rem; border-radius:50%; margin:0 auto; box-shadow:0 4px 12px rgba(0,0,0,.15);
+      position:relative; overflow:hidden; }
+    .color-swatch::before { content:''; position:absolute; inset:0;
+      background:linear-gradient(160deg,rgba(255,255,255,.45) 0%,transparent 50%),
+                  radial-gradient(ellipse at 35% 25%,rgba(255,255,255,.35) 0%,transparent 55%); }
     .card-name { font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; }
     .card-sub { font-size:.85rem; color:#6b7280; }
     .card-traits { display:flex; flex-wrap:wrap; gap:.3rem; justify-content:center; }
@@ -86,9 +90,12 @@ const COLORS = [
   { id:'pink', name:'ชมพู', emoji:'🌸', color:'#ec4899', desc:'ความรัก ความอ่อนโยน การให้อภัย', traits:['ความรัก','ความอ่อนโยน'], examples:'โรสควอตซ์, มอร์แกไนต์', tag:'ชมพู' },
   { id:'black', name:'ดำ', emoji:'🖤', color:'#1e293b', desc:'ป้องกัน ดูดซับพลังลบ ความมั่นคง', traits:['ป้องกัน','ความมั่นคง'], examples:'ออบซิเดียน, แบล็กทัวร์มาลีน', tag:'ดำ' },
   { id:'white', name:'ขาว/ใส', emoji:'🤍', color:'#e2e8f0', desc:'บริสุทธิ์ ชำระล้าง พลังงานสูง', traits:['บริสุทธิ์','ชำระล้าง'], examples:'ควอตซ์ใส, เซเลไนต์', tag:'ขาว' },
+  { id:'brown', name:'น้ำตาล', emoji:'🤎', color:'#92400e', desc:'ความมั่นคง กราวด์ดิ้ง เชื่อมโยงพื้นดิน', traits:['ความมั่นคง','Grounding'], examples:'สโมกกี้ควอตซ์, ไทเกอร์อาย', tag:'น้ำตาล' },
+  { id:'multi', name:'หลากสี', emoji:'🌈', color:'#a78bfa', desc:'มุมมองหลากหลาย ความคิดสร้างสรรค์ การเปลี่ยนแปลง', traits:['มุมมองกว้าง','สร้างสรรค์'], examples:'ลาบราดอไรต์, โอปอล', tag:'หลากสี' },
+  { id:'clear', name:'ใส', emoji:'💎', color:'#dbeafe', desc:'ความชัดเจน การขยายพลังงาน จิตวิญญาณ', traits:['ความชัดเจน','ขยายพลังงาน'], examples:'เคลียร์ควอตซ์, เพชร', tag:'ใส' },
 ];
 document.getElementById('grid').innerHTML=COLORS.map(c=>`
-  <a href="/stones/?color=${c.id}" class="card" style="border-color:${c.color}33">
+  <a href="/stones/a-z.html?color=${c.id}" class="card" style="border-color:${c.color}33">
     <div class="color-swatch" style="background:${c.color}"></div>
     <div class="card-name">${c.name}</div>
     <div class="card-sub">${c.examples}</div>
