@@ -1868,7 +1868,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-23.12';
+const ADMIN_VERSION='2026-07-24.1';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -2183,6 +2183,18 @@ const SLOTS=[
   {id:'stone_pyrite_hero',label:'ไพไรต์ — Hero',page:'stones/pyrite.html',group:'stones',size:'1200×600',
    en:'Raw Pyrite crystal cluster macro photography, golden metallic tones, dramatic side lighting, dark background, luxury gemstone photography, 8K ultra detailed',
    th:'ไพไรต์ ธรรมชาติ สีทองแวววาว แสงด้านข้างสวยงาม พื้นหลังมืด ภาพมาโคร 8K'},
+  {id:'stone_pyrite_chakra',label:'ไพไรต์ — พลังงาน/จักระ',page:'stones/pyrite.html',group:'stones',size:'800×600',
+   en:'Photo of a person sitting confidently at a desk, hand resting near a pyrite cube, soft golden glowing light at the solar plexus area, focused determined expression, soft natural light, photography, shallow depth of field, 4K',
+   th:'ภาพถ่ายคนนั่งอย่างมั่นใจที่โต๊ะทำงาน มือวางใกล้ก้อนไพไรต์ แสงทองอ่อนเปล่งที่บริเวณลิ้นปี่ สีหน้ามุ่งมั่น แสงธรรมชาตินุ่มนวล'},
+  {id:'stone_pyrite_placement',label:'ไพไรต์ — การวาง',page:'stones/pyrite.html',group:'stones',size:'900×420',
+   en:'Pyrite cube placed on a wooden office desk next to a wallet and coins, warm golden ambient light, lifestyle photography, cozy productive workspace',
+   th:'ก้อนไพไรต์ทรงลูกบาศก์วางบนโต๊ะไม้ทำงาน ข้างกระเป๋าสตางค์และเหรียญ แสงทองอบอุ่น'},
+  {id:'stone_pyrite_charging',label:'ไพไรต์ — การชาร์จ',page:'stones/pyrite.html',group:'stones',size:'900×420',
+   en:'Pyrite cluster catching soft morning sunlight on a windowsill, dry white sage smoke curling nearby, warm golden light, mystical ritual atmosphere',
+   th:'คลัสเตอร์ไพไรต์รับแสงแดดอ่อนยามเช้าที่ขอบหน้าต่าง ควันใบเสจลอยอยู่ใกล้ๆ แสงทองอบอุ่น'},
+  {id:'stone_pyrite_mine',label:'ไพไรต์ — แหล่งกำเนิด',page:'stones/pyrite.html',group:'stones',size:'900×675',
+   en:'Natural pyrite cubic crystals embedded in dark rock matrix inside a mine, metallic golden luster catching light, geological specimen photography',
+   th:'ผลึกไพไรต์ทรงลูกบาศก์ธรรมชาติฝังอยู่ในหินเนื้อดำภายในเหมือง ประกายทองเหลืองแวววาว'},
   {id:'stone_rhodonite_hero',label:'โรโดไนต์ — Hero',page:'stones/rhodonite.html',group:'stones',size:'1200×600',
    en:'Raw Rhodonite crystal cluster macro photography, soft rose pink tones, dramatic side lighting, dark background, luxury gemstone photography, 8K ultra detailed',
    th:'โรโดไนต์ ธรรมชาติ สีชมพูอ่อน แสงด้านข้างสวยงาม พื้นหลังมืด ภาพมาโคร 8K'},
@@ -4207,7 +4219,7 @@ const PAGES=[
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'ไพไรต์ (Pyrite)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
-   ],imgs:['stone_pyrite_hero']},
+   ],imgs:['stone_pyrite_hero','stone_pyrite_chakra','stone_pyrite_placement','stone_pyrite_charging','stone_pyrite_mine']},
   {key:'rhodonite',label:'💎 โรโดไนต์',group:'s',path:'/stones/rhodonite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'โรโดไนต์ (Rhodonite)'},
