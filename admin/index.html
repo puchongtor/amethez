@@ -1868,7 +1868,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-24.1';
+const ADMIN_VERSION='2026-07-24.2';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -3920,380 +3920,445 @@ const PAGES=[
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'อเมทิสต์ — หินแห่งปัญญาและจิตวิญญาณ'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:'ประวัติ 2,000 ปี...'},
-     {id:'intro',label:'บทนำ (HTML)',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_amethyst_hero','stone_amethyst_healing','amethyst_inline_1','amethyst_inline_2','amethyst_inline_3']},
 
   {key:'moldavite',label:'🌿 โมลดาไวท์',group:'s',path:'/stones/moldavite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'โมลดาไวท์ — หินจากนอกโลก'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
-     {id:'intro',label:'บทนำ (HTML)',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_moldavite_hero']},
 
   {key:'tektite',label:'🌑 สะเก็ดดาวไทย',group:'s',path:'/stones/tektite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'สะเก็ดดาวไทย — อุกกาบาตหายาก'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
-     {id:'intro',label:'บทนำ (HTML)',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_tektite_hero']},
 
   {key:'citrine',label:'🌟 ซิทริน',group:'s',path:'/stones/citrine.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'ซิทริน — หินแห่งโชคลาภ'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
-     {id:'intro',label:'บทนำ (HTML)',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_citrine_hero']},
 
   {key:'clear-quartz',label:'🔮 เคลียร์ควอตซ์',group:'s',path:'/stones/clear-quartz.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'เคลียร์ควอตซ์ — หินแม่'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
-     {id:'intro',label:'บทนำ (HTML)',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_clear_quartz_hero']},
 
   {key:'rose-quartz',label:'🩷 โรสควอตซ์',group:'s',path:'/stones/rose-quartz.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'โรสควอตซ์ — หินแห่งความรัก'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
-     {id:'intro',label:'บทนำ (HTML)',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_rose_quartz_hero']},
 
   {key:'black-tourmaline',label:'🖤 แบล็กทัวร์มาลีน',group:'s',path:'/stones/black-tourmaline.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'แบล็กทัวร์มาลีน — โล่ป้องกัน'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
-     {id:'intro',label:'บทนำ (HTML)',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_black_tourmaline_hero']},
 
   {key:'labradorite',label:'🌊 แลบราดอไรต์',group:'s',path:'/stones/labradorite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'แลบราดอไรต์'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_labradorite_hero']},
 
   {key:'lapis-lazuli',label:'💙 ลาพิสลาซูลี',group:'s',path:'/stones/lapis-lazuli.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'ลาพิสลาซูลี'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_lapis_hero']},
 
   {key:'carnelian',label:'🔴 คาร์เนเลียน',group:'s',path:'/stones/carnelian.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'คาร์เนเลียน'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_carnelian_hero']},
 
   {key:'selenite',label:'🤍 เซเลไนต์',group:'s',path:'/stones/selenite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'เซเลไนต์'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_selenite_hero']},
 
   {key:'rudraksha',label:'📿 รุทรากษะ',group:'s',path:'/stones/rudraksha.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'รุทรากษะ'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_rudraksha_hero']},
 
   {key:'agate',label:'💎 อาเกต',group:'s',path:'/stones/agate.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'อาเกต (Agate)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_agate_hero']},
   {key:'amazonite',label:'💎 อเมโซไนต์',group:'s',path:'/stones/amazonite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'อเมโซไนต์ (Amazonite)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_amazonite_hero']},
   {key:'amber',label:'💎 อำพัน',group:'s',path:'/stones/amber.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'อำพัน (Amber)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_amber_hero']},
   {key:'ametrine',label:'💎 อเมทริน',group:'s',path:'/stones/ametrine.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'อเมทริน (Ametrine)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_ametrine_hero']},
   {key:'angelite',label:'💎 แองเจลไลต์',group:'s',path:'/stones/angelite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'แองเจลไลต์ (Angelite)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_angelite_hero']},
   {key:'apatite',label:'💎 อะพาไทต์',group:'s',path:'/stones/apatite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'อะพาไทต์ (Apatite)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_apatite_hero']},
   {key:'aquamarine',label:'💎 อะความารีน',group:'s',path:'/stones/aquamarine.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'อะความารีน (Aquamarine)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_aquamarine_hero']},
   {key:'aventurine',label:'💎 อะเวนทูรินส้ม',group:'s',path:'/stones/aventurine.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'อะเวนทูรินส้ม (Orange Aventurine)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_aventurine_hero']},
   {key:'azurite',label:'💎 อะซูไรต์',group:'s',path:'/stones/azurite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'อะซูไรต์ (Azurite)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_azurite_hero']},
   {key:'blue-lace-agate',label:'💎 บลูเลซอะเกต',group:'s',path:'/stones/blue-lace-agate.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'บลูเลซอะเกต (Blue Lace Agate)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_blue_lace_agate_hero']},
   {key:'blue-kyanite',label:'💎 บลูไคยาไนต์',group:'s',path:'/stones/blue-kyanite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'บลูไคยาไนต์ (Blue Kyanite)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_blue_kyanite_hero']},
   {key:'celestite',label:'💎 เซเลสไตต์',group:'s',path:'/stones/celestite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'เซเลสไตต์ (Celestite)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_celestite_hero']},
   {key:'chalcedony',label:'💎 คาลซิโดนี',group:'s',path:'/stones/chalcedony.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'คาลซิโดนี (Chalcedony)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_chalcedony_hero']},
   {key:'chrysocolla',label:'💎 คริสโซคอลลา',group:'s',path:'/stones/chrysocolla.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'คริสโซคอลลา (Chrysocolla)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_chrysocolla_hero']},
   {key:'black-coral',label:'💎 ปะการังแดง',group:'s',path:'/stones/black-coral.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'ปะการังแดง (Red Coral)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_black_coral_hero']},
   {key:'danburite',label:'💎 แดนบูไรต์',group:'s',path:'/stones/danburite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'แดนบูไรต์ (Danburite)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_danburite_hero']},
   {key:'diamond',label:'💎 เพชร',group:'s',path:'/stones/diamond.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'เพชร (Diamond)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_diamond_hero']},
   {key:'emerald',label:'💎 มรกต',group:'s',path:'/stones/emerald.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'มรกต (Emerald)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_emerald_hero']},
   {key:'fluorite',label:'💎 ฟลูออไรต์',group:'s',path:'/stones/fluorite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'ฟลูออไรต์ (Fluorite)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_fluorite_hero']},
   {key:'fuchsite',label:'💎 ฟุคไซต์',group:'s',path:'/stones/fuchsite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'ฟุคไซต์ (Fuchsite)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_fuchsite_hero']},
   {key:'garnet',label:'💎 การ์เนต',group:'s',path:'/stones/garnet.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'การ์เนต (Garnet)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_garnet_hero']},
   {key:'green-aventurine',label:'💎 กรีน อะเวนจูรีน',group:'s',path:'/stones/green-aventurine.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'กรีน อะเวนจูรีน (Green Aventurine)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_green_aventurine_hero']},
   {key:'golden-healer',label:'💎 โกลเดนฮีลเลอร์',group:'s',path:'/stones/golden-healer.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'โกลเดนฮีลเลอร์ (Golden Healer)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_golden_healer_hero']},
   {key:'hematite',label:'💎 เฮมาไทต์',group:'s',path:'/stones/hematite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'เฮมาไทต์ (Hematite)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_hematite_hero']},
   {key:'howlite',label:'💎 ฮาวไลต์',group:'s',path:'/stones/howlite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'ฮาวไลต์ (Howlite)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_howlite_hero']},
   {key:'iolite',label:'💎 ไอโอไลต์',group:'s',path:'/stones/iolite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'ไอโอไลต์ (Iolite)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_iolite_hero']},
   {key:'jade',label:'💎 หยก',group:'s',path:'/stones/jade.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'หยก (Jade)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_jade_hero']},
   {key:'red-jasper',label:'💎 เรดแจสเปอร์',group:'s',path:'/stones/red-jasper.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'เรดแจสเปอร์ (Red Jasper)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_red_jasper_hero']},
   {key:'kunzite',label:'💎 คันไซต์',group:'s',path:'/stones/kunzite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'คันไซต์ (Kunzite)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_kunzite_hero']},
   {key:'kyanite',label:'💎 แบล็กไคยาไนต์',group:'s',path:'/stones/kyanite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'แบล็กไคยาไนต์ (Black Kyanite)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_kyanite_hero']},
   {key:'larimar',label:'💎 ลาริมาร์',group:'s',path:'/stones/larimar.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'ลาริมาร์ (Larimar)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_larimar_hero']},
   {key:'lepidolite',label:'💎 เลพิโดไลต์',group:'s',path:'/stones/lepidolite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'เลพิโดไลต์ (Lepidolite)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_lepidolite_hero']},
   {key:'malachite',label:'💎 มาลาไคต์',group:'s',path:'/stones/malachite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'มาลาไคต์ (Malachite)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_malachite_hero']},
   {key:'moonstone',label:'💎 มูนสโตน',group:'s',path:'/stones/moonstone.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'มูนสโตน (Moonstone)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_moonstone_hero']},
   {key:'morganite',label:'💎 มอร์แกไนต์',group:'s',path:'/stones/morganite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'มอร์แกไนต์ (Morganite)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_morganite_hero']},
   {key:'neon-apatite',label:'💎 นีออน อพาไทต์',group:'s',path:'/stones/neon-apatite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'นีออน อพาไทต์ (Neon Apatite)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_neon_apatite_hero']},
   {key:'obsidian',label:'💎 ออบซิเดียน',group:'s',path:'/stones/obsidian.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'ออบซิเดียน (Obsidian)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_obsidian_hero']},
   {key:'onyx',label:'💎 โอนิกซ์',group:'s',path:'/stones/onyx.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'โอนิกซ์ (Onyx)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_onyx_hero']},
   {key:'opal',label:'💎 โอปอล',group:'s',path:'/stones/opal.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'โอปอล (Opal)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_opal_hero']},
   {key:'orange-calcite',label:'💎 ออเรนจ์คาลไซต์',group:'s',path:'/stones/orange-calcite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'ออเรนจ์คาลไซต์ (Orange Calcite)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_orange_calcite_hero']},
   {key:'pearl',label:'💎 ไข่มุก',group:'s',path:'/stones/pearl.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'ไข่มุก (Pearl)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_pearl_hero']},
   {key:'peridot',label:'💎 เพอริโดต์',group:'s',path:'/stones/peridot.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'เพอริโดต์ (Peridot)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_peridot_hero']},
   {key:'pink-opal',label:'💎 พิงค์โอปอล',group:'s',path:'/stones/pink-opal.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'พิงค์โอปอล (Pink Opal)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_pink_opal_hero']},
   {key:'prehnite',label:'💎 พรีไนต์',group:'s',path:'/stones/prehnite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'พรีไนต์ (Prehnite)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_prehnite_hero']},
   {key:'pyrite',label:'💎 ไพไรต์',group:'s',path:'/stones/pyrite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'ไพไรต์ (Pyrite)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_pyrite_hero','stone_pyrite_chakra','stone_pyrite_placement','stone_pyrite_charging','stone_pyrite_mine']},
   {key:'rhodonite',label:'💎 โรโดไนต์',group:'s',path:'/stones/rhodonite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'โรโดไนต์ (Rhodonite)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_rhodonite_hero']},
   {key:'ruby',label:'💎 ทับทิม',group:'s',path:'/stones/ruby.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'ทับทิม (Ruby)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_ruby_hero']},
   {key:'rutilated-quartz',label:'💎 ควอตซ์รูทิเลต',group:'s',path:'/stones/rutilated-quartz.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'ควอตซ์รูทิเลต (Rutilated Quartz)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_rutilated_quartz_hero']},
   {key:'sapphire',label:'💎 ไพลิน',group:'s',path:'/stones/sapphire.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'ไพลิน (Sapphire)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_sapphire_hero']},
   {key:'shungite',label:'💎 ชังไกต์',group:'s',path:'/stones/shungite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'ชังไกต์ (Shungite)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_shungite_hero']},
   {key:'smoky-quartz',label:'💎 สโมกกี้ควอตซ์',group:'s',path:'/stones/smoky-quartz.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'สโมกกี้ควอตซ์ (Smoky Quartz)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_smoky_quartz_hero']},
   {key:'sodalite',label:'💎 โซดาไลต์',group:'s',path:'/stones/sodalite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'โซดาไลต์ (Sodalite)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_sodalite_hero']},
   {key:'sugilite',label:'💎 ซูกิไลต์',group:'s',path:'/stones/sugilite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'ซูกิไลต์ (Sugilite)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_sugilite_hero']},
   {key:'sunstone',label:'💎 ซันสโตน',group:'s',path:'/stones/sunstone.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'ซันสโตน (Sunstone)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_sunstone_hero']},
   {key:'tiger-eye',label:'💎 ไทเกอร์อาย',group:'s',path:'/stones/tiger-eye.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'ไทเกอร์อาย (Tiger Eye)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_tiger_eye_hero']},
   {key:'topaz',label:'💎 โทแพซ',group:'s',path:'/stones/topaz.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'โทแพซ (Topaz)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_topaz_hero']},
   {key:'turquoise',label:'💎 เทอร์ควอยซ์',group:'s',path:'/stones/turquoise.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'เทอร์ควอยซ์ (Turquoise)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_turquoise_hero']},
   {key:'unakite',label:'💎 ยูนาไคต์',group:'s',path:'/stones/unakite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'ยูนาไคต์ (Unakite)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_unakite_hero']},
   {key:'vanadinite',label:'💎 วานาดิไนต์',group:'s',path:'/stones/vanadinite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'วานาดิไนต์ (Vanadinite)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_vanadinite_hero']},
   {key:'zircon',label:'💎 เพทาย',group:'s',path:'/stones/zircon.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'เพทาย (Zircon)'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
+     {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
    ],imgs:['stone_zircon_hero']},
 
   {key:'chakra',label:'☯️ จักระ',group:'c',path:'/categories/chakra.html',
