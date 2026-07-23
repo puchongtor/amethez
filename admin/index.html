@@ -847,12 +847,24 @@ textarea.form-input{resize:vertical;min-height:80px;}
             <button class="btn btn-primary" onclick="openAddPost()">➕ เพิ่มบทความ</button>
           </div>
 
+          <!-- search + author/category filters (scales to hundreds/thousands of posts) -->
+          <div style="display:flex;gap:.6rem;margin-bottom:.75rem;flex-wrap:wrap">
+            <input class="form-input" id="blogSearchInput" placeholder="🔍 ค้นหาชื่อบทความ, tag, คำอธิบาย..." style="flex:1;min-width:200px" oninput="onBlogFilterChange()">
+            <select class="form-input" id="blogAuthorFilterSel" style="width:auto;min-width:150px" onchange="onBlogFilterChange()">
+              <option value="all">👤 ผู้เขียนทั้งหมด</option>
+            </select>
+            <select class="form-input" id="blogCategoryFilterSel" style="width:auto;min-width:140px" onchange="onBlogFilterChange()">
+              <option value="all">🗂 หมวดทั้งหมด</option>
+            </select>
+          </div>
+
           <!-- filter tabs -->
-          <div style="display:flex;gap:.4rem;margin-bottom:1.25rem;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:.4rem;margin-bottom:.75rem;flex-wrap:wrap">
             <button class="filter-chip active" id="blogTab-all" onclick="setBlogFilter('all',this)">✨ ทั้งหมด</button>
             <button class="filter-chip" id="blogTab-published" onclick="setBlogFilter('published',this)">🟢 เผยแพร่</button>
             <button class="filter-chip" id="blogTab-scheduled" onclick="setBlogFilter('scheduled',this)">⏰ ตั้งเวลา</button>
             <button class="filter-chip" id="blogTab-draft" onclick="setBlogFilter('draft',this)">⚫ Draft</button>
+            <span id="blogResultCount" style="font-size:.76rem;color:#9ca3af;margin-left:.5rem"></span>
           </div>
 
           <div id="blogList"></div>
@@ -1854,7 +1866,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-23.10';
+const ADMIN_VERSION='2026-07-23.11';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -2294,7 +2306,7 @@ function showTab(name,el){
   document.getElementById('topbarTitle').textContent=TAB_TITLES[name]||name;
   if(name==='pages') renderPageGrid();
   if(name==='stones') renderStones();
-  if(name==='blog'){ seedPersonaArticleDrafts(); seedBlogFromJson().then(()=>renderBlog()); }
+  if(name==='blog'){ populateBlogFilterSelects(); seedPersonaArticleDrafts(); seedBlogFromJson().then(()=>renderBlog()); }
   if(name==='products'){ loadGeodes(); renderPTable(); }
   if(name==='stats') initStatsTab();
   if(name==='shopee'){ loadAff(); initAffTags(); renderAffTable(); renderStoreProfiles(); }
@@ -4687,8 +4699,38 @@ function delStone(){
 // ── BLOG CRUD ─────────────────────────────────
 const BLOG_KEY='amethez_blog';
 let blogFilter='all';
+let blogSearch='';
+let blogAuthorFilter='all';
+let blogCategoryFilter='all';
+const blogExpandedGroups=new Set();
+let blogFlatVisible=40;
+const BLOG_AUTHOR={atlas:'🌐 Crystal Atlas',wuchong:'🧙 Master Wuchong',metha:'🌙 อาจารย์เมธา',dr_cosmos:'☄️ Dr. Cosmos',gemma:'💃 Gemma'};
+const BLOG_CAT={stone:'💎 บทความหิน',energy:'⚡ พลังงาน',horoscope:'🌟 ดวง/ราศี',guide:'📖 คู่มือ',news:'📢 ข่าวสาร'};
 function getBlogPosts(){ try{ return JSON.parse(localStorage.getItem(BLOG_KEY)||'[]'); }catch{ return []; } }
 function saveBlogPosts(arr){ localStorage.setItem(BLOG_KEY,JSON.stringify(arr)); }
+// Author/category dropdown options are generated from BLOG_AUTHOR/BLOG_CAT so
+// a future persona or category only needs to be added in one place.
+function populateBlogFilterSelects(){
+  const aSel=document.getElementById('blogAuthorFilterSel');
+  const cSel=document.getElementById('blogCategoryFilterSel');
+  if(aSel && aSel.options.length<=1){
+    Object.entries(BLOG_AUTHOR).forEach(([k,label])=>{
+      const o=document.createElement('option'); o.value=k; o.textContent=label; aSel.appendChild(o);
+    });
+  }
+  if(cSel && cSel.options.length<=1){
+    Object.entries(BLOG_CAT).forEach(([k,label])=>{
+      const o=document.createElement('option'); o.value=k; o.textContent=label; cSel.appendChild(o);
+    });
+  }
+}
+function onBlogFilterChange(){
+  blogSearch=document.getElementById('blogSearchInput').value.trim().toLowerCase();
+  blogAuthorFilter=document.getElementById('blogAuthorFilterSel').value;
+  blogCategoryFilter=document.getElementById('blogCategoryFilterSel').value;
+  blogFlatVisible=40;
+  renderBlog();
+}
 
 async function seedBlogFromJson(){
   if(localStorage.getItem('amethez_blog_seeded')) return;
@@ -4812,33 +4854,47 @@ function previewBlogThumb(input){
 }
 function setBlogFilter(f,el){
   blogFilter=f;
+  blogFlatVisible=40;
   document.querySelectorAll('[id^=blogTab-]').forEach(b=>b.classList.remove('active'));
   el.classList.add('active');
   renderBlog();
 }
+function expandBlogGroup(key){ blogExpandedGroups.add(key); renderBlog(); }
+function loadMoreBlogFlat(){ blogFlatVisible+=40; renderBlog(); }
 function renderBlog(){
   const all=getBlogPosts();
   const now=new Date().toISOString();
-  const list=blogFilter==='all'?all:all.filter(p=>{
+  let list=blogFilter==='all'?all:all.filter(p=>{
     if(blogFilter==='published') return p.status==='published'||(p.status==='scheduled'&&p.publishDate<=now);
     return p.status===blogFilter;
   });
+  if(blogAuthorFilter!=='all') list=list.filter(p=>(p.author||'atlas')===blogAuthorFilter);
+  if(blogCategoryFilter!=='all') list=list.filter(p=>p.category===blogCategoryFilter);
+  if(blogSearch){
+    list=list.filter(p=>(
+      (p.title||'').toLowerCase().includes(blogSearch) ||
+      (p.excerpt||'').toLowerCase().includes(blogSearch) ||
+      (p.tags||[]).join(' ').toLowerCase().includes(blogSearch)
+    ));
+  }
 
-  const AUTHOR={atlas:'🌐 Crystal Atlas',wuchong:'🧙 Master Wuchong',metha:'🌙 อาจารย์เมธา',dr_cosmos:'☄️ Dr. Cosmos',gemma:'💃 Gemma'};
-  const CAT={stone:'💎',energy:'⚡',horoscope:'🌟',guide:'📖',news:'📢'};
+  const AUTHOR=BLOG_AUTHOR;
+  const CAT_ICON={stone:'💎',energy:'⚡',horoscope:'🌟',guide:'📖',news:'📢'};
   const STATUS_LABEL={published:'🟢 เผยแพร่',scheduled:'⏰ ตั้งเวลา',draft:'⚫ Draft'};
   const STATUS_COLOR={published:'#059669',scheduled:'#d97706',draft:'#9ca3af'};
 
+  document.getElementById('blogResultCount').textContent=`พบ ${list.length} บทความ`;
+
   if(!list.length){
     document.getElementById('blogList').innerHTML=`<div style="text-align:center;padding:4rem;color:#9ca3af">
-      ${blogFilter==='all'?'ยังไม่มีบทความ — กด ➕ เพิ่มบทความ':'ไม่มีบทความในหมวดนี้'}</div>`;
+      ${all.length?'ไม่พบบทความที่ตรงกับตัวกรอง':'ยังไม่มีบทความ — กด ➕ เพิ่มบทความ'}</div>`;
     return;
   }
 
   function itemHtml(p){
     const col=STATUS_COLOR[p.status]||'#9ca3af';
     const thumb=p.thumb?`<img src="${x(p.thumb)}" style="width:56px;height:56px;object-fit:cover;border-radius:.5rem;flex-shrink:0">`
-      :`<div style="width:56px;height:56px;background:#f5f0ff;border-radius:.5rem;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0">${CAT[p.category]||'📝'}</div>`;
+      :`<div style="width:56px;height:56px;background:#f5f0ff;border-radius:.5rem;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0">${CAT_ICON[p.category]||'📝'}</div>`;
     const dateStr=p.publishDate?new Date(p.publishDate).toLocaleDateString('th-TH',{day:'numeric',month:'short',year:'2-digit',hour:'2-digit',minute:'2-digit'}):'—';
     return `<div class="article-item" style="border-left:3px solid ${col}">
       ${thumb}
@@ -4860,21 +4916,32 @@ function renderBlog(){
 
   const sorted=list.sort((a,b)=>(b.created||'').localeCompare(a.created||''));
 
-  if(blogFilter==='all'){
-    // Group into one labeled section per author (same fix already applied to
-    // the "แก้ไขหน้า" page grid) — a flat list mixing Crystal Atlas, Wuchong,
-    // เมธา, Dr. Cosmos, Gemma posts together gets unreadable fast as each
-    // persona's article count grows.
+  // Group by author only in the true "everything" view (no author/category/search
+  // narrowing) — once a filter narrows the set, a flat paginated list is clearer.
+  const canGroup=blogFilter==='all'&&blogAuthorFilter==='all'&&blogCategoryFilter==='all'&&!blogSearch;
+
+  if(canGroup){
+    // Each author section caps at GROUP_CAP items with a "ดูเพิ่ม" expander —
+    // otherwise a persona with hundreds of posts buries every other section
+    // below an endless scroll.
+    const GROUP_CAP=12;
     document.getElementById('blogList').innerHTML=Object.entries(AUTHOR).map(([key,label])=>{
       const items=sorted.filter(p=>(p.author||'atlas')===key);
       if(!items.length) return '';
+      const expanded=blogExpandedGroups.has(key)||items.length<=GROUP_CAP;
+      const shown=expanded?items:items.slice(0,GROUP_CAP);
+      const more=expanded?'':`<button class="btn btn-outline btn-sm" style="margin-top:.6rem" onclick="expandBlogGroup('${key}')">ดูเพิ่มอีก ${items.length-GROUP_CAP} รายการ</button>`;
       return `<div style="margin-bottom:1.75rem">
         <div style="font-size:.9rem;font-weight:700;color:#4b5563;margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:1.5px solid #ede9fe">${x(label)} <span style="font-weight:400;color:#9ca3af;font-size:.78rem">(${items.length})</span></div>
-        <div class="article-list">${items.map(itemHtml).join('')}</div>
+        <div class="article-list">${shown.map(itemHtml).join('')}</div>
+        ${more}
       </div>`;
     }).join('');
   } else {
-    document.getElementById('blogList').innerHTML=`<div class="article-list">${sorted.map(itemHtml).join('')}</div>`;
+    const shown=sorted.slice(0,blogFlatVisible);
+    const more=sorted.length>shown.length
+      ?`<button class="btn btn-outline" style="margin-top:1rem;width:100%" onclick="loadMoreBlogFlat()">โหลดเพิ่ม (เหลืออีก ${sorted.length-shown.length} รายการ)</button>`:'';
+    document.getElementById('blogList').innerHTML=`<div class="article-list">${shown.map(itemHtml).join('')}</div>${more}`;
   }
 }
 
