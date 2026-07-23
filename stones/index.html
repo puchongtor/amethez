@@ -145,10 +145,12 @@
 
     /* Birth calculator */
     .birth-calc { background:white; border:1.5px solid #e0d4f7; border-radius:1.25rem; padding:1.75rem; max-width:500px; }
-    .birth-calc h3 { font-family:'Playfair Display',serif; font-size:1.15rem; color:#1a1228; margin-bottom:1rem; }
+    .birth-calc h3 { font-family:'Playfair Display',serif; font-size:1.15rem; color:#1a1228; margin-bottom:.5rem; }
+    .calc-note { font-size:.78rem; color:#9ca3af; line-height:1.6; margin-bottom:1rem; }
     .calc-row { display:flex; gap:.75rem; align-items:center; flex-wrap:wrap; margin-bottom:1rem; }
     .calc-inp { padding:.6rem 1rem; border:2px solid #e9e0f8; border-radius:.6rem;
       font-family:Sarabun,sans-serif; font-size:.95rem; color:#1a1228; width:110px; }
+    .calc-inp-sm { width:70px; }
     .calc-inp:focus { outline:none; border-color:#7c3aed; }
     .calc-btn { background:#7c3aed; color:white; border:none; border-radius:.6rem;
       padding:.6rem 1.25rem; font-family:Sarabun,sans-serif; font-size:.9rem; cursor:pointer; transition:opacity .2s; }
@@ -539,10 +541,13 @@
 
     <!-- Birth Calculator -->
     <div class="birth-calc">
-      <h3>🔮 เช็คธาตุของคุณ</h3>
+      <h3>🔮 เช็คธาตุปีเกิดของคุณ</h3>
+      <p class="calc-note">กรอกวัน เดือน ปีเกิด (ไม่ต้องใช้เวลาเกิด) — ระบบคำนวณตามหลัก BaZi จีน ซึ่งเปลี่ยนปีที่วันเริ่มต้นฤดูใบไม้ผลิ (立春 ประมาณ 4 ก.พ.) ไม่ใช่วันที่ 1 มกราคม เพื่อความแม่นยำสำหรับคนที่เกิดช่วงต้นปี</p>
       <div class="calc-row">
+        <input class="calc-inp calc-inp-sm" id="birthDay" type="number" placeholder="วัน" min="1" max="31">
+        <input class="calc-inp calc-inp-sm" id="birthMonth" type="number" placeholder="เดือน" min="1" max="12">
         <input class="calc-inp" id="birthYear" type="number" placeholder="ปีเกิด เช่น 1990" min="1900" max="2099">
-        <button class="calc-btn" onclick="calcElement()">คำนวณ</button>
+        <button type="button" class="calc-btn" onclick="calcElement()">คำนวณ</button>
       </div>
       <div class="calc-result" id="calcResult">
         <div class="el-name" id="calcElName"></div>
@@ -845,9 +850,19 @@ function filterEl(el) {
 }
 
 function calcElement() {
+  const day = parseInt(document.getElementById('birthDay').value);
+  const month = parseInt(document.getElementById('birthMonth').value);
   const yr = parseInt(document.getElementById('birthYear').value);
-  if (!yr || yr < 1900 || yr > 2099) { alert('กรุณาใส่ปีเกิดที่ถูกต้อง'); return; }
-  const d = yr % 10;
+  if (!day || day < 1 || day > 31 || !month || month < 1 || month > 12 || !yr || yr < 1900 || yr > 2099) {
+    alert('กรุณาใส่วัน เดือน ปีเกิดให้ถูกต้อง');
+    return;
+  }
+  // BaZi year boundary is 立春 (Start of Spring), which falls on Feb 3-5 each year —
+  // not Jan 1 or Chinese Lunar New Year. Using Feb 4 as the cutoff is accurate for
+  // the vast majority of years (off by at most 1 day in rare edge-case years).
+  let baziYear = yr;
+  if (month < 2 || (month === 2 && day < 4)) baziYear = yr - 1;
+  const d = ((baziYear % 10) + 10) % 10;
   const map = {0:'metal',1:'metal',2:'water',3:'water',4:'wood',5:'wood',6:'fire',7:'fire',8:'earth',9:'earth'};
   const key = map[d];
   const data = ELEM_DATA[key];
@@ -855,6 +870,8 @@ function calcElement() {
   document.getElementById('calcElDesc').textContent = data.desc;
   document.getElementById('calcElRec').textContent = data.rec;
   document.getElementById('calcResult').style.display = 'block';
+  document.activeElement.blur();
+  document.getElementById('calcResult').scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 </script>
 
