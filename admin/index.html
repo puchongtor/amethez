@@ -170,6 +170,8 @@ textarea.form-input{resize:vertical;min-height:80px;}
 
 /* ── ARTICLES ── */
 .article-list{display:flex;flex-direction:column;gap:.75rem;}
+.article-list.blog-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;}
+@media (max-width:900px){ .article-list.blog-grid{grid-template-columns:1fr;} }
 .article-item{background:white;border:1px solid var(--border);border-radius:.75rem;padding:1rem 1.25rem;display:flex;align-items:center;gap:1rem;}
 .article-emoji{font-size:1.8rem;flex-shrink:0;}
 .article-info{flex:1;}
@@ -1866,7 +1868,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-23.11';
+const ADMIN_VERSION='2026-07-23.12';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -4933,7 +4935,7 @@ function renderBlog(){
       const more=expanded?'':`<button class="btn btn-outline btn-sm" style="margin-top:.6rem" onclick="expandBlogGroup('${key}')">ดูเพิ่มอีก ${items.length-GROUP_CAP} รายการ</button>`;
       return `<div style="margin-bottom:1.75rem">
         <div style="font-size:.9rem;font-weight:700;color:#4b5563;margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:1.5px solid #ede9fe">${x(label)} <span style="font-weight:400;color:#9ca3af;font-size:.78rem">(${items.length})</span></div>
-        <div class="article-list">${shown.map(itemHtml).join('')}</div>
+        <div class="article-list blog-grid">${shown.map(itemHtml).join('')}</div>
         ${more}
       </div>`;
     }).join('');
@@ -4941,7 +4943,7 @@ function renderBlog(){
     const shown=sorted.slice(0,blogFlatVisible);
     const more=sorted.length>shown.length
       ?`<button class="btn btn-outline" style="margin-top:1rem;width:100%" onclick="loadMoreBlogFlat()">โหลดเพิ่ม (เหลืออีก ${sorted.length-shown.length} รายการ)</button>`:'';
-    document.getElementById('blogList').innerHTML=`<div class="article-list">${shown.map(itemHtml).join('')}</div>${more}`;
+    document.getElementById('blogList').innerHTML=`<div class="article-list blog-grid">${shown.map(itemHtml).join('')}</div>${more}`;
   }
 }
 
