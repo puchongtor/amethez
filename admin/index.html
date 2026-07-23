@@ -1811,7 +1811,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-23.8';
+const ADMIN_VERSION='2026-07-23.9';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -3858,7 +3858,7 @@ function toast(msg,type=''){
 }
 
 // ── PAGES DATA ────────────────────────────────
-const PAGE_GROUPS={g:'🌐 Global',m:'🏠 หน้าหลัก',s:'💎 บทความหิน',c:'🔮 หมวดหมู่',sp:'⭐ พิเศษ',guides:'🌿 คู่มือ',dc:'☄️ Dr. Cosmos'};
+const PAGE_GROUPS={g:'🌐 Global',m:'🏠 หน้าหลัก',s:'💎 บทความหิน',c:'🔮 หมวดหมู่',sp:'⭐ พิเศษ',guides:'🌿 คู่มือ',dc:'☄️ Dr. Cosmos',wuchong:'🧘 บทความ Wuchong',metha:'🌙 บทความ อ.เมธา'};
 const PAGES=[
   {key:'global',label:'🌐 ทั่วไป (ทุกหน้า)',group:'g',path:null,
    text:[
@@ -4350,6 +4350,78 @@ const PAGES=[
      {id:'today_title',label:'ชื่อดวงวันนี้',type:'i',ph:''},
      {id:'today_body',label:'เนื้อหาดวงวันนี้ (HTML)',type:'t',ph:''},
    ],imgs:['metha_hero']},
+
+  // Deep articles (Wuchong/Metha) — each has data-cms-text="title"/"subtitle"/"body"
+  // and its own hero image slot, same as any other page, but they had no
+  // PAGES entry at all until now, so they never showed up as a card in the
+  // "แก้ไขหน้า" grid — findable only by knowing the exact slot id and
+  // calling openImgModal() from the console. Adding entries fixes that.
+  {key:'wuchong-diamond-coal',label:'🧘 เพชรคือถ่านหินที่ไม่ยอมแพ้',group:'wuchong',path:'/wuchong/diamond-coal-pressure-life.html',
+   text:[
+     {id:'title',label:'หัวข้อ',type:'i',ph:''},
+     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
+     {id:'body',label:'เนื้อหา (HTML)',type:'t',ph:''},
+   ],imgs:['wuchong_diamond_coal_hero']},
+  {key:'wuchong-amethyst-patience',label:'🧘 อเมทิสต์ล้านปีกว่าจะสวย',group:'wuchong',path:'/wuchong/amethyst-million-years-patience.html',
+   text:[
+     {id:'title',label:'หัวข้อ',type:'i',ph:''},
+     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
+     {id:'body',label:'เนื้อหา (HTML)',type:'t',ph:''},
+   ],imgs:['wuchong_amethyst_patience_hero']},
+  {key:'wuchong-tektite-journey',label:'🧘 สะเก็ดดาวไทยรอ 8 แสนปี',group:'wuchong',path:'/wuchong/tektite-800000-years-journey.html',
+   text:[
+     {id:'title',label:'หัวข้อ',type:'i',ph:''},
+     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
+     {id:'body',label:'เนื้อหา (HTML)',type:'t',ph:''},
+   ],imgs:['wuchong_tektite_journey_hero']},
+  {key:'wuchong-gold-selfworth',label:'🧘 ทองคำใต้ดินล้านปี',group:'wuchong',path:'/wuchong/gold-buried-self-worth.html',
+   text:[
+     {id:'title',label:'หัวข้อ',type:'i',ph:''},
+     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
+     {id:'body',label:'เนื้อหา (HTML)',type:'t',ph:''},
+   ],imgs:['wuchong_gold_selfworth_hero']},
+  {key:'wuchong-magnetite-attraction',label:'🧘 หินแม่เหล็กดึงดูด',group:'wuchong',path:'/wuchong/magnetite-lodestone-attraction.html',
+   text:[
+     {id:'title',label:'หัวข้อ',type:'i',ph:''},
+     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
+     {id:'body',label:'เนื้อหา (HTML)',type:'t',ph:''},
+   ],imgs:['wuchong_magnetite_attraction_hero']},
+  {key:'metha-ganesha-favorite-stones',label:'🌙 พระพิฆเนศชอบหินอะไร',group:'metha',path:'/metha/ganesha-favorite-stones.html',
+   text:[
+     {id:'title',label:'หัวข้อ',type:'i',ph:''},
+     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
+     {id:'body',label:'เนื้อหา (HTML)',type:'t',ph:''},
+   ],imgs:['metha_ganesha_favorite_stones_hero']},
+  {key:'metha-ganesha-thursday',label:'🌙 วันพฤหัสไหว้พระพิฆเนศ',group:'metha',path:'/metha/ganesha-thursday-three-stones.html',
+   text:[
+     {id:'title',label:'หัวข้อ',type:'i',ph:''},
+     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
+     {id:'body',label:'เนื้อหา (HTML)',type:'t',ph:''},
+   ],imgs:['metha_ganesha_thursday_hero']},
+  {key:'metha-ganesha-color',label:'🌙 พระพิฆเนศสีอะไร เสริมพลังด้านไหน',group:'metha',path:'/metha/ganesha-color-meaning-stones.html',
+   text:[
+     {id:'title',label:'หัวข้อ',type:'i',ph:''},
+     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
+     {id:'body',label:'เนื้อหา (HTML)',type:'t',ph:''},
+   ],imgs:['metha_ganesha_color_hero']},
+  {key:'metha-ganesha-ritual',label:'🌙 พิธีบวงสรวงพระพิฆเนศ 7 อย่าง',group:'metha',path:'/metha/ganesha-ritual-seven-items.html',
+   text:[
+     {id:'title',label:'หัวข้อ',type:'i',ph:''},
+     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
+     {id:'body',label:'เนื้อหา (HTML)',type:'t',ph:''},
+   ],imgs:['metha_ganesha_ritual_hero']},
+  {key:'metha-ganesha-tusk',label:'🌙 พระพิฆเนศงาหัก vs งาครบ',group:'metha',path:'/metha/ganesha-broken-tusk-stones.html',
+   text:[
+     {id:'title',label:'หัวข้อ',type:'i',ph:''},
+     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
+     {id:'body',label:'เนื้อหา (HTML)',type:'t',ph:''},
+   ],imgs:['metha_ganesha_tusk_hero']},
+  {key:'metha-ganesha-direction',label:'🌙 วางพระพิฆเนศทิศไหนดีที่สุด',group:'metha',path:'/metha/ganesha-direction-placement.html',
+   text:[
+     {id:'title',label:'หัวข้อ',type:'i',ph:''},
+     {id:'subtitle',label:'คำบรรยาย',type:'t',ph:''},
+     {id:'body',label:'เนื้อหา (HTML)',type:'t',ph:''},
+   ],imgs:['metha_ganesha_direction_hero']},
 
   {key:'guides',label:'🌿 คู่มือ (หน้าหลัก)',group:'guides',path:'/guides/',
    text:[
