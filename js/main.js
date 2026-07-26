@@ -183,6 +183,15 @@ async function initShopeeSection(containerId, tags) {
     row.style.flexWrap = 'wrap';
   };
 
+  // container carries the shared .grid-4 CSS Grid class (repeat(auto-fit,
+  // minmax(220px,1fr))) meant for plain card grids elsewhere on the site —
+  // here it's the wrong layout entirely: grid auto-placement was putting
+  // the scroll strip in column 1 and "ดูเพิ่มเติม" in column 2, squeezing
+  // the strip down to one grid-cell's width (~3 cards visible) and
+  // stranding the button in empty space far to the right. Override to a
+  // plain block container so the strip gets the container's full width
+  // (fitting ~5 cards on desktop) and the button sits directly beneath it.
+  container.style.display = 'block';
   container.innerHTML = '';
   container.appendChild(row);
   if (all.length > INIT) container.appendChild(moreBtn);
