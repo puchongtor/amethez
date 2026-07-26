@@ -1489,7 +1489,10 @@ textarea.form-input{resize:vertical;min-height:80px;}
               <div class="section-title">🏆 100 อันดับหินยอดนิยม</div>
               <div class="section-sub">แก้ชื่อ/คำอธิบาย/รูปได้ตรงนี้ — บันทึกอัตโนมัติทุกครั้งที่พิมพ์ กด "🚀 เผยแพร่" ด้านบนเพื่อขึ้นเว็บจริง (รวมกับการเผยแพร่อื่นๆ ทั้งหมด)</div>
             </div>
-            <input class="form-input" id="top100Search" placeholder="ค้นหาชื่อหิน..." style="max-width:220px" oninput="renderTop100Table()">
+            <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">
+              <input class="form-input" id="top100Search" placeholder="ค้นหาชื่อหิน..." style="max-width:220px" oninput="renderTop100Table()">
+              <button class="btn btn-outline btn-sm" onclick="resyncTop100FromLive()" title="โหลดอันดับล่าสุดจากเว็บจริงทับข้อมูลในตารางนี้">🔄 ซิงก์จากเว็บจริง</button>
+            </div>
           </div>
 
           <div class="card" style="margin-bottom:1.5rem">
@@ -1868,7 +1871,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-25.3';
+const ADMIN_VERSION='2026-07-26.1';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -7099,6 +7102,24 @@ async function seedTop100FromJson(){
       toast(`🔄 ซิงก์ข้อมูล Top 100 ที่ขาดไป ${missing.length} อันดับจากเว็บจริงแล้ว`,'ok');
     }
   }catch{}
+}
+// Manual full resync — unlike seedTop100FromJson's self-heal (which only adds
+// missing ranks so it never clobbers in-progress local edits), this is an
+// explicit user action to throw away local data entirely and reload straight
+// from the live JSON. Needed after the ranking itself was edited directly in
+// the repo (not through this table), since self-heal alone would never pick
+// up changed content on ranks that already exist locally.
+async function resyncTop100FromLive(){
+  if(!confirm('โหลดอันดับ Top 100 ล่าสุดจากเว็บจริงทับข้อมูลในตารางนี้ทั้งหมด?\n\nการแก้ไข/เรียงลำดับที่ยังไม่ได้กด "เผยแพร่" ในตารางนี้จะหายไป — รูปที่เคยอัปโหลดแล้วจะยังอยู่ แต่บางรูปอาจไม่ตรงกับหินที่อันดับนั้นอีกต่อไปถ้าลำดับเปลี่ยน'))return;
+  try{
+    const r=await fetch('/data/top-100-stones.json?v='+Date.now());
+    if(!r.ok){ toast('โหลดข้อมูลจากเว็บจริงไม่สำเร็จ','err'); return; }
+    const d=await r.json();
+    saveTop100Items((d.stones||[]).slice().sort((a,b)=>a.rank-b.rank));
+    if(d.heroPrompt) saveTop100Hero({heroPrompt:d.heroPrompt});
+    renderTop100Table();
+    toast('🔄 ซิงก์ Top 100 จากเว็บจริงเรียบร้อยแล้ว','ok');
+  }catch(e){ toast('ซิงก์ไม่สำเร็จ: '+e.message,'err'); }
 }
 function renderTop100Table(){
   const items=getTop100Items();
