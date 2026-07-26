@@ -3413,14 +3413,54 @@ function initImgModal(){
   removeBtn.addEventListener('click',()=>{ setImgPreview(''); document.getElementById('imgModalUrl').value=''; });
 }
 
-function readFile(file){
-  // warn if too large (>3MB raw → base64 ~4MB)
-  if(file.size > 3*1024*1024){
-    if(!confirm(`รูปขนาด ${(file.size/1024/1024).toFixed(1)}MB อาจใช้พื้นที่ browser เยอะ ดำเนินการต่อไหม?`)) return;
+// Every image upload in this admin panel was storing the raw file straight
+// as base64 in localStorage — a handful of un-shrunk phone photos (often
+// 3-8MB each) blows past the ~5-10MB browser quota fast, which is why
+// "พื้นที่ browser เต็ม" kept showing up after just a few uploads. Resize to
+// a sane max dimension and re-encode as JPEG before it ever reaches
+// localStorage; typically shrinks a multi-MB photo down to a few hundred KB
+// (10-20x smaller) so far more images fit before hitting the wall. SVG/GIF
+// pass through untouched — canvas re-encoding would flatten GIF animation
+// and can't rasterize SVG meaningfully.
+function compressImageFile(file, maxDim, quality){
+  maxDim = maxDim || 1600;
+  quality = quality || 0.82;
+  return new Promise((resolve, reject) => {
+    if(!file.type || file.type==='image/svg+xml' || file.type==='image/gif'){
+      const r=new FileReader();
+      r.onload=e=>resolve(e.target.result);
+      r.onerror=()=>reject(new Error('read failed'));
+      r.readAsDataURL(file);
+      return;
+    }
+    const reader=new FileReader();
+    reader.onload=e=>{
+      const img=new Image();
+      img.onload=()=>{
+        let w=img.width, h=img.height;
+        if(w>maxDim || h>maxDim){
+          if(w>h){ h=Math.round(h*maxDim/w); w=maxDim; }
+          else{ w=Math.round(w*maxDim/h); h=maxDim; }
+        }
+        const canvas=document.createElement('canvas');
+        canvas.width=w; canvas.height=h;
+        canvas.getContext('2d').drawImage(img,0,0,w,h);
+        resolve(canvas.toDataURL('image/jpeg',quality));
+      };
+      img.onerror=()=>reject(new Error('image decode failed'));
+      img.src=e.target.result;
+    };
+    reader.onerror=()=>reject(new Error('read failed'));
+    reader.readAsDataURL(file);
+  });
+}
+
+async function readFile(file){
+  try{
+    setImgPreview(await compressImageFile(file));
+  }catch(e){
+    toast('❌ ประมวลผลรูปไม่สำเร็จ: '+e.message,'err');
   }
-  const reader=new FileReader();
-  reader.onload=e=>setImgPreview(e.target.result);
-  reader.readAsDataURL(file);
 }
 
 function openImgModal(id){
@@ -5763,16 +5803,14 @@ function seedPersonaArticleDrafts(){
   localStorage.setItem('amethez_persona_articles_seeded','1');
 }
 
-function previewBlogThumb(input){
+async function previewBlogThumb(input){
   const file=input.files[0]; if(!file) return;
-  const reader=new FileReader();
-  reader.onload=e=>{
-    const data=e.target.result;
+  try{
+    const data=await compressImageFile(file);
     document.getElementById('blogThumb').value=data;
     document.getElementById('blogThumbImg').src=data;
     document.getElementById('blogThumbPreview').style.display='';
-  };
-  reader.readAsDataURL(file);
+  }catch(e){ toast('❌ ประมวลผลรูปไม่สำเร็จ: '+e.message,'err'); }
 }
 function setBlogFilter(f,el){
   blogFilter=f;
@@ -5990,11 +6028,12 @@ function updateBEThumbPreview(url){
   document.getElementById('beThumbEmpty').style.display=hasUrl?'none':'';
   if(hasUrl) document.getElementById('beThumbImg').src=url.trim();
 }
-function uploadBEThumb(input){
+async function uploadBEThumb(input){
   const f=input.files[0]; if(!f) return;
-  const r=new FileReader();
-  r.onload=e=>{ document.getElementById('beThumb').value=e.target.result; updateBEThumbPreview(e.target.result); };
-  r.readAsDataURL(f);
+  try{
+    const data=await compressImageFile(f);
+    document.getElementById('beThumb').value=data; updateBEThumbPreview(data);
+  }catch(e){ toast('❌ ประมวลผลรูปไม่สำเร็จ: '+e.message,'err'); }
 }
 function updateBEHeroPreview(url){
   const hasUrl=url&&url.trim();
@@ -6002,11 +6041,12 @@ function updateBEHeroPreview(url){
   document.getElementById('beHeroEmpty').style.display=hasUrl?'none':'';
   if(hasUrl) document.getElementById('beHeroImgTag').src=url.trim();
 }
-function uploadBEHero(input){
+async function uploadBEHero(input){
   const f=input.files[0]; if(!f) return;
-  const r=new FileReader();
-  r.onload=e=>{ document.getElementById('beHeroImg').value=e.target.result; updateBEHeroPreview(e.target.result); };
-  r.readAsDataURL(f);
+  try{
+    const data=await compressImageFile(f);
+    document.getElementById('beHeroImg').value=data; updateBEHeroPreview(data);
+  }catch(e){ toast('❌ ประมวลผลรูปไม่สำเร็จ: '+e.message,'err'); }
 }
 function copyBEHeroPrompt(){
   const v=document.getElementById('beHeroPromptEn').value;
@@ -6065,12 +6105,11 @@ function insertBEBodyImage(input){
 // opts.range (contenteditable) / opts.taStart+opts.taEnd (textarea) override the
 // saved cursor position — used by the paste handlers below, which have the live
 // selection at paste time and don't need saveBEInsertRange's snapshot trick.
-function insertImageFileIntoBEBody(file, opts){
+async function insertImageFileIntoBEBody(file, opts){
   opts=opts||{};
   if(!file || !file.type || !file.type.startsWith('image/')) return;
-  const r=new FileReader();
-  r.onload=e=>{
-    const dataUrl=e.target.result;
+  try{
+    const dataUrl=await compressImageFile(file);
     const imgHTML=`<img src="${dataUrl}" alt="" style="max-width:100%;border-radius:.75rem;margin:1.25rem 0">`;
     const isHtmlTab=document.getElementById('beTabHtml').style.display!=='none';
     if(isHtmlTab){
@@ -6107,8 +6146,7 @@ function insertImageFileIntoBEBody(file, opts){
       onBEPreviewEdit();
     }
     toast('แทรกรูปแล้ว — บันทึกอัตโนมัติแล้ว กด 🚀 เผยแพร่ ได้เลย','ok');
-  };
-  r.readAsDataURL(file);
+  }catch(e){ toast('❌ ประมวลผลรูปไม่สำเร็จ: '+e.message,'err'); }
 }
 // Paste an image directly (Ctrl+V) at the cursor — no need to open the file picker
 document.getElementById('beBodyTA').addEventListener('paste', e=>{
@@ -6795,11 +6833,12 @@ function updateCatHeroPreview(url){
   document.getElementById('catHeroEmpty').style.display=hasUrl?'none':'';
   if(hasUrl) document.getElementById('catHeroImg').src=url.trim();
 }
-function uploadCatHero(input){
+async function uploadCatHero(input){
   const f=input.files[0]; if(!f) return;
-  const r=new FileReader();
-  r.onload=e=>{ document.getElementById('catHero').value=e.target.result; updateCatHeroPreview(e.target.result); };
-  r.readAsDataURL(f);
+  try{
+    const data=await compressImageFile(f);
+    document.getElementById('catHero').value=data; updateCatHeroPreview(data);
+  }catch(e){ toast('❌ ประมวลผลรูปไม่สำเร็จ: '+e.message,'err'); }
 }
 
 // Product rows (แหวน / จี้ / สร้อยข้อมือ)
@@ -6825,15 +6864,14 @@ function setCatProductField(key,field,val){
   if(!_catProducts[key]) _catProducts[key]={name:'',img:'',url:''};
   _catProducts[key][field]=val;
 }
-function uploadCatProductImg(key,input){
+async function uploadCatProductImg(key,input){
   const f=input.files[0]; if(!f) return;
-  const r=new FileReader();
-  r.onload=e=>{
+  try{
+    const data=await compressImageFile(f);
     if(!_catProducts[key]) _catProducts[key]={name:'',img:'',url:''};
-    _catProducts[key].img=e.target.result;
-    document.getElementById('catProdImgPreview_'+key).innerHTML=`<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover">`;
-  };
-  r.readAsDataURL(f);
+    _catProducts[key].img=data;
+    document.getElementById('catProdImgPreview_'+key).innerHTML=`<img src="${data}" style="width:100%;height:100%;object-fit:cover">`;
+  }catch(e){ toast('❌ ประมวลผลรูปไม่สำเร็จ: '+e.message,'err'); }
 }
 
 // Body editor — mirrors the Blog editor's safe patterns (auto-persist,
@@ -6893,12 +6931,11 @@ function insertCatBodyImage(input){
   insertImageFileIntoCatBody(f);
   input.value='';
 }
-function insertImageFileIntoCatBody(file,opts){
+async function insertImageFileIntoCatBody(file,opts){
   opts=opts||{};
   if(!file || !file.type || !file.type.startsWith('image/')) return;
-  const r=new FileReader();
-  r.onload=e=>{
-    const dataUrl=e.target.result;
+  try{
+    const dataUrl=await compressImageFile(file);
     const imgHTML=`<img src="${dataUrl}" alt="" style="max-width:100%;border-radius:.75rem;margin:1.25rem 0">`;
     const isHtmlTab=document.getElementById('catTabHtml').style.display!=='none';
     if(isHtmlTab){
@@ -6935,8 +6972,7 @@ function insertImageFileIntoCatBody(file,opts){
       onCatPreviewEdit();
     }
     toast('แทรกรูปแล้ว — บันทึกอัตโนมัติแล้ว กด 🚀 เผยแพร่ ได้เลย','ok');
-  };
-  r.readAsDataURL(file);
+  }catch(e){ toast('❌ ประมวลผลรูปไม่สำเร็จ: '+e.message,'err'); }
 }
 document.getElementById('catBodyTA').addEventListener('paste', e=>{
   const items=e.clipboardData&&e.clipboardData.items; if(!items) return;
@@ -7054,15 +7090,14 @@ function updateTop100HeroPreview(url){
   document.getElementById('top100HeroEmpty').style.display=hasUrl?'none':'';
   if(hasUrl) document.getElementById('top100HeroImg').src=url.trim();
 }
-function uploadTop100Hero(input){
+async function uploadTop100Hero(input){
   const f=input.files[0]; if(!f) return;
-  const r=new FileReader();
-  r.onload=e=>{
-    document.getElementById('top100Hero').value=e.target.result;
-    updateTop100HeroPreview(e.target.result);
+  try{
+    const data=await compressImageFile(f);
+    document.getElementById('top100Hero').value=data;
+    updateTop100HeroPreview(data);
     persistTop100Hero();
-  };
-  r.readAsDataURL(f);
+  }catch(e){ toast('❌ ประมวลผลรูปไม่สำเร็จ: '+e.message,'err'); }
 }
 function persistTop100Hero(){
   const imgs=getImgs();
@@ -7154,22 +7189,21 @@ function setTop100Field(rank,field,value){
   it[field]=value;
   saveTop100Items(items);
 }
-function uploadTop100Img(rank,input){
+async function uploadTop100Img(rank,input){
   const f=input.files[0]; if(!f) return;
   const items=getTop100Items();
   const it=items.find(i=>i.rank===rank);
   if(!it) return;
-  const r=new FileReader();
-  r.onload=e=>{
+  try{
+    const data=await compressImageFile(f);
     const slug=(it.id||'rank-'+rank).replace(/^rank-\d+-/,'');
     const key=it.imgSlot||`top100_${rank}_${slug}_hero`;
     it.imgSlot=key;
-    const imgs=getImgs(); imgs[key]=e.target.result; setImgs(imgs);
+    const imgs=getImgs(); imgs[key]=data; setImgs(imgs);
     saveTop100Items(items);
     renderTop100Table();
     toast('เพิ่มรูปแล้ว — กด "🚀 เผยแพร่" เพื่อขึ้นเว็บจริง','ok');
-  };
-  r.readAsDataURL(f);
+  }catch(e){ toast('❌ ประมวลผลรูปไม่สำเร็จ: '+e.message,'err'); }
 }
 
 // ── RANKINGS (จัดอันดับหินคริสตัล) ──────────────
@@ -7391,11 +7425,12 @@ function persistRkMeta(){
   p.items=JSON.parse(JSON.stringify(_rkItems));
   saveRankingItems(items);
 }
-function uploadRkHero(input){
+async function uploadRkHero(input){
   const f=input.files[0]; if(!f) return;
-  const r=new FileReader();
-  r.onload=e=>{ document.getElementById('rkHero').value=e.target.result; updateRkHeroPreview(e.target.result); persistRkMeta(); };
-  r.readAsDataURL(f);
+  try{
+    const data=await compressImageFile(f);
+    document.getElementById('rkHero').value=data; updateRkHeroPreview(data); persistRkMeta();
+  }catch(e){ toast('❌ ประมวลผลรูปไม่สำเร็จ: '+e.message,'err'); }
 }
 async function copyRkHeroPrompt(){
   const v=document.getElementById('rkHeroPrompt').value;
@@ -7443,16 +7478,15 @@ function setRkItemField(i,field,val){
   _rkItems[i][field]=val;
   persistRkMeta();
 }
-function uploadRkItemImg(i,input){
+async function uploadRkItemImg(i,input){
   const f=input.files[0]; if(!f) return;
-  const r=new FileReader();
-  r.onload=e=>{
+  try{
+    const data=await compressImageFile(f);
     if(!_rkItems[i]) return;
-    _rkItems[i].img=e.target.result;
-    document.getElementById('rkItemImgPreview_'+i).innerHTML=`<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover">`;
+    _rkItems[i].img=data;
+    document.getElementById('rkItemImgPreview_'+i).innerHTML=`<img src="${data}" style="width:100%;height:100%;object-fit:cover">`;
     persistRkMeta();
-  };
-  r.readAsDataURL(f);
+  }catch(e){ toast('❌ ประมวลผลรูปไม่สำเร็จ: '+e.message,'err'); }
 }
 function addRkItem(){
   const base=currentRkSlugBase();
@@ -7526,12 +7560,11 @@ function insertRkBodyImage(input){
   insertImageFileIntoRkBody(f);
   input.value='';
 }
-function insertImageFileIntoRkBody(file,opts){
+async function insertImageFileIntoRkBody(file,opts){
   opts=opts||{};
   if(!file || !file.type || !file.type.startsWith('image/')) return;
-  const r=new FileReader();
-  r.onload=e=>{
-    const dataUrl=e.target.result;
+  try{
+    const dataUrl=await compressImageFile(file);
     const imgHTML=`<img src="${dataUrl}" alt="" style="max-width:100%;border-radius:.75rem;margin:1.25rem 0">`;
     const isHtmlTab=document.getElementById('rkTabHtml').style.display!=='none';
     if(isHtmlTab){
@@ -7568,8 +7601,7 @@ function insertImageFileIntoRkBody(file,opts){
       onRkPreviewEdit();
     }
     toast('แทรกรูปแล้ว — บันทึกอัตโนมัติแล้ว กด 🚀 เผยแพร่ ได้เลย','ok');
-  };
-  r.readAsDataURL(file);
+  }catch(e){ toast('❌ ประมวลผลรูปไม่สำเร็จ: '+e.message,'err'); }
 }
 document.getElementById('rkBodyTA').addEventListener('paste', e=>{
   const items=e.clipboardData&&e.clipboardData.items; if(!items) return;
@@ -7767,11 +7799,12 @@ function updateTalkCoverPreview(url){
   document.getElementById('talkCoverEmpty').style.display=hasUrl?'none':'';
   if(hasUrl) document.getElementById('talkCoverImg').src=url.trim();
 }
-function uploadTalkCover(input){
+async function uploadTalkCover(input){
   const f=input.files[0]; if(!f) return;
-  const r=new FileReader();
-  r.onload=e=>{ document.getElementById('talkCover').value=e.target.result; updateTalkCoverPreview(e.target.result); };
-  r.readAsDataURL(f);
+  try{
+    const data=await compressImageFile(f);
+    document.getElementById('talkCover').value=data; updateTalkCoverPreview(data);
+  }catch(e){ toast('❌ ประมวลผลรูปไม่สำเร็จ: '+e.message,'err'); }
 }
 
 // How-to steps — simple list of single-line strings
