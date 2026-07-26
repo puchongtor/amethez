@@ -1868,7 +1868,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-25.1';
+const ADMIN_VERSION='2026-07-25.3';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -2957,6 +2957,138 @@ const SLOTS=[
   {id:'stone_zircon_mine',label:'เพทาย — แหล่งกำเนิด',page:'stones/zircon.html',group:'stones',size:'900x675',
    en:'Natural Zircon crystal specimen embedded in rock matrix inside a mine, geological specimen photography, natural texture',
    th:'ผลึกเพทาย ธรรมชาติฝังอยู่ในหินภายในเหมือง ภาพถ่ายตัวอย่างแร่ธรณีวิทยา'},
+  {id:'stone_black_tourmaline_chakra',label:'แบล็กทัวร์มาลีน — พลังงาน/จักระ',page:'stones/black-tourmaline.html',group:'stones',size:'800x600',
+   en:'Photo of hands holding a Black Tourmaline crystal during meditation, soft warm glowing light, calm spiritual atmosphere, soft natural light, photography, shallow depth of field, 4K',
+   th:'ภาพมือถือหินแบล็กทัวร์มาลีน ขณะทำสมาธิ แสงอ่อนอบอุ่น บรรยากาศสงบเปี่ยมพลัง แสงธรรมชาตินุ่มนวล'},
+  {id:'stone_black_tourmaline_placement',label:'แบล็กทัวร์มาลีน — การวาง',page:'stones/black-tourmaline.html',group:'stones',size:'900x420',
+   en:'Black Tourmaline crystal placed on a wooden desk or home altar corner, cozy interior lifestyle photography, warm ambient light',
+   th:'หินแบล็กทัวร์มาลีน วางบนโต๊ะไม้หรือมุมบูชาในบ้าน บรรยากาศอบอุ่น ภาพไลฟ์สไตล์'},
+  {id:'stone_black_tourmaline_charging',label:'แบล็กทัวร์มาลีน — การชาร์จ',page:'stones/black-tourmaline.html',group:'stones',size:'900x420',
+   en:'Black Tourmaline crystal charging outdoors under moonlight or soft dawn sunlight, mystical ritual atmosphere, soft glow',
+   th:'หินแบล็กทัวร์มาลีน วางชาร์จพลังกลางแจ้งใต้แสงจันทร์หรือแสงแดดอ่อน บรรยากาศพิธีกรรมลึกลับ'},
+  {id:'stone_black_tourmaline_mine',label:'แบล็กทัวร์มาลีน — แหล่งกำเนิด',page:'stones/black-tourmaline.html',group:'stones',size:'900x675',
+   en:'Natural Black Tourmaline crystal specimen embedded in rock matrix inside a mine, geological specimen photography, natural texture',
+   th:'ผลึกแบล็กทัวร์มาลีน ธรรมชาติฝังอยู่ในหินภายในเหมือง ภาพถ่ายตัวอย่างแร่ธรณีวิทยา'},
+  {id:'stone_carnelian_chakra',label:'คาร์เนเลียน — พลังงาน/จักระ',page:'stones/carnelian.html',group:'stones',size:'800x600',
+   en:'Photo of hands holding a Carnelian crystal during meditation, soft warm glowing light, calm spiritual atmosphere, soft natural light, photography, shallow depth of field, 4K',
+   th:'ภาพมือถือหินคาร์เนเลียน ขณะทำสมาธิ แสงอ่อนอบอุ่น บรรยากาศสงบเปี่ยมพลัง แสงธรรมชาตินุ่มนวล'},
+  {id:'stone_carnelian_placement',label:'คาร์เนเลียน — การวาง',page:'stones/carnelian.html',group:'stones',size:'900x420',
+   en:'Carnelian crystal placed on a wooden desk or home altar corner, cozy interior lifestyle photography, warm ambient light',
+   th:'หินคาร์เนเลียน วางบนโต๊ะไม้หรือมุมบูชาในบ้าน บรรยากาศอบอุ่น ภาพไลฟ์สไตล์'},
+  {id:'stone_carnelian_charging',label:'คาร์เนเลียน — การชาร์จ',page:'stones/carnelian.html',group:'stones',size:'900x420',
+   en:'Carnelian crystal charging outdoors under moonlight or soft dawn sunlight, mystical ritual atmosphere, soft glow',
+   th:'หินคาร์เนเลียน วางชาร์จพลังกลางแจ้งใต้แสงจันทร์หรือแสงแดดอ่อน บรรยากาศพิธีกรรมลึกลับ'},
+  {id:'stone_carnelian_mine',label:'คาร์เนเลียน — แหล่งกำเนิด',page:'stones/carnelian.html',group:'stones',size:'900x675',
+   en:'Natural Carnelian crystal specimen embedded in rock matrix inside a mine, geological specimen photography, natural texture',
+   th:'ผลึกคาร์เนเลียน ธรรมชาติฝังอยู่ในหินภายในเหมือง ภาพถ่ายตัวอย่างแร่ธรณีวิทยา'},
+  {id:'stone_citrine_chakra',label:'ซิทริน — พลังงาน/จักระ',page:'stones/citrine.html',group:'stones',size:'800x600',
+   en:'Photo of hands holding a Citrine crystal during meditation, soft warm glowing light, calm spiritual atmosphere, soft natural light, photography, shallow depth of field, 4K',
+   th:'ภาพมือถือหินซิทริน ขณะทำสมาธิ แสงอ่อนอบอุ่น บรรยากาศสงบเปี่ยมพลัง แสงธรรมชาตินุ่มนวล'},
+  {id:'stone_citrine_placement',label:'ซิทริน — การวาง',page:'stones/citrine.html',group:'stones',size:'900x420',
+   en:'Citrine crystal placed on a wooden desk or home altar corner, cozy interior lifestyle photography, warm ambient light',
+   th:'หินซิทริน วางบนโต๊ะไม้หรือมุมบูชาในบ้าน บรรยากาศอบอุ่น ภาพไลฟ์สไตล์'},
+  {id:'stone_citrine_charging',label:'ซิทริน — การชาร์จ',page:'stones/citrine.html',group:'stones',size:'900x420',
+   en:'Citrine crystal charging outdoors under moonlight or soft dawn sunlight, mystical ritual atmosphere, soft glow',
+   th:'หินซิทริน วางชาร์จพลังกลางแจ้งใต้แสงจันทร์หรือแสงแดดอ่อน บรรยากาศพิธีกรรมลึกลับ'},
+  {id:'stone_citrine_mine',label:'ซิทริน — แหล่งกำเนิด',page:'stones/citrine.html',group:'stones',size:'900x675',
+   en:'Natural Citrine crystal specimen embedded in rock matrix inside a mine, geological specimen photography, natural texture',
+   th:'ผลึกซิทริน ธรรมชาติฝังอยู่ในหินภายในเหมือง ภาพถ่ายตัวอย่างแร่ธรณีวิทยา'},
+  {id:'stone_clear_quartz_chakra',label:'เคลียร์ควอตซ์ — พลังงาน/จักระ',page:'stones/clear-quartz.html',group:'stones',size:'800x600',
+   en:'Photo of hands holding a Clear Quartz crystal during meditation, soft warm glowing light, calm spiritual atmosphere, soft natural light, photography, shallow depth of field, 4K',
+   th:'ภาพมือถือหินเคลียร์ควอตซ์ ขณะทำสมาธิ แสงอ่อนอบอุ่น บรรยากาศสงบเปี่ยมพลัง แสงธรรมชาตินุ่มนวล'},
+  {id:'stone_clear_quartz_placement',label:'เคลียร์ควอตซ์ — การวาง',page:'stones/clear-quartz.html',group:'stones',size:'900x420',
+   en:'Clear Quartz crystal placed on a wooden desk or home altar corner, cozy interior lifestyle photography, warm ambient light',
+   th:'หินเคลียร์ควอตซ์ วางบนโต๊ะไม้หรือมุมบูชาในบ้าน บรรยากาศอบอุ่น ภาพไลฟ์สไตล์'},
+  {id:'stone_clear_quartz_charging',label:'เคลียร์ควอตซ์ — การชาร์จ',page:'stones/clear-quartz.html',group:'stones',size:'900x420',
+   en:'Clear Quartz crystal charging outdoors under moonlight or soft dawn sunlight, mystical ritual atmosphere, soft glow',
+   th:'หินเคลียร์ควอตซ์ วางชาร์จพลังกลางแจ้งใต้แสงจันทร์หรือแสงแดดอ่อน บรรยากาศพิธีกรรมลึกลับ'},
+  {id:'stone_clear_quartz_mine',label:'เคลียร์ควอตซ์ — แหล่งกำเนิด',page:'stones/clear-quartz.html',group:'stones',size:'900x675',
+   en:'Natural Clear Quartz crystal specimen embedded in rock matrix inside a mine, geological specimen photography, natural texture',
+   th:'ผลึกเคลียร์ควอตซ์ ธรรมชาติฝังอยู่ในหินภายในเหมือง ภาพถ่ายตัวอย่างแร่ธรณีวิทยา'},
+  {id:'stone_labradorite_chakra',label:'ลาบราดอไรต์ — พลังงาน/จักระ',page:'stones/labradorite.html',group:'stones',size:'800x600',
+   en:'Photo of hands holding a Labradorite crystal during meditation, soft warm glowing light, calm spiritual atmosphere, soft natural light, photography, shallow depth of field, 4K',
+   th:'ภาพมือถือหินลาบราดอไรต์ ขณะทำสมาธิ แสงอ่อนอบอุ่น บรรยากาศสงบเปี่ยมพลัง แสงธรรมชาตินุ่มนวล'},
+  {id:'stone_labradorite_placement',label:'ลาบราดอไรต์ — การวาง',page:'stones/labradorite.html',group:'stones',size:'900x420',
+   en:'Labradorite crystal placed on a wooden desk or home altar corner, cozy interior lifestyle photography, warm ambient light',
+   th:'หินลาบราดอไรต์ วางบนโต๊ะไม้หรือมุมบูชาในบ้าน บรรยากาศอบอุ่น ภาพไลฟ์สไตล์'},
+  {id:'stone_labradorite_charging',label:'ลาบราดอไรต์ — การชาร์จ',page:'stones/labradorite.html',group:'stones',size:'900x420',
+   en:'Labradorite crystal charging outdoors under moonlight or soft dawn sunlight, mystical ritual atmosphere, soft glow',
+   th:'หินลาบราดอไรต์ วางชาร์จพลังกลางแจ้งใต้แสงจันทร์หรือแสงแดดอ่อน บรรยากาศพิธีกรรมลึกลับ'},
+  {id:'stone_labradorite_mine',label:'ลาบราดอไรต์ — แหล่งกำเนิด',page:'stones/labradorite.html',group:'stones',size:'900x675',
+   en:'Natural Labradorite crystal specimen embedded in rock matrix inside a mine, geological specimen photography, natural texture',
+   th:'ผลึกลาบราดอไรต์ ธรรมชาติฝังอยู่ในหินภายในเหมือง ภาพถ่ายตัวอย่างแร่ธรณีวิทยา'},
+  {id:'stone_lapis_chakra',label:'ลาพิสลาซูลี — พลังงาน/จักระ',page:'stones/lapis-lazuli.html',group:'stones',size:'800x600',
+   en:'Photo of hands holding a Lapis Lazuli crystal during meditation, soft warm glowing light, calm spiritual atmosphere, soft natural light, photography, shallow depth of field, 4K',
+   th:'ภาพมือถือหินลาพิสลาซูลี ขณะทำสมาธิ แสงอ่อนอบอุ่น บรรยากาศสงบเปี่ยมพลัง แสงธรรมชาตินุ่มนวล'},
+  {id:'stone_lapis_placement',label:'ลาพิสลาซูลี — การวาง',page:'stones/lapis-lazuli.html',group:'stones',size:'900x420',
+   en:'Lapis Lazuli crystal placed on a wooden desk or home altar corner, cozy interior lifestyle photography, warm ambient light',
+   th:'หินลาพิสลาซูลี วางบนโต๊ะไม้หรือมุมบูชาในบ้าน บรรยากาศอบอุ่น ภาพไลฟ์สไตล์'},
+  {id:'stone_lapis_charging',label:'ลาพิสลาซูลี — การชาร์จ',page:'stones/lapis-lazuli.html',group:'stones',size:'900x420',
+   en:'Lapis Lazuli crystal charging outdoors under moonlight or soft dawn sunlight, mystical ritual atmosphere, soft glow',
+   th:'หินลาพิสลาซูลี วางชาร์จพลังกลางแจ้งใต้แสงจันทร์หรือแสงแดดอ่อน บรรยากาศพิธีกรรมลึกลับ'},
+  {id:'stone_lapis_mine',label:'ลาพิสลาซูลี — แหล่งกำเนิด',page:'stones/lapis-lazuli.html',group:'stones',size:'900x675',
+   en:'Natural Lapis Lazuli crystal specimen embedded in rock matrix inside a mine, geological specimen photography, natural texture',
+   th:'ผลึกลาพิสลาซูลี ธรรมชาติฝังอยู่ในหินภายในเหมือง ภาพถ่ายตัวอย่างแร่ธรณีวิทยา'},
+  {id:'stone_moldavite_chakra',label:'โมลดาไวท์ — พลังงาน/จักระ',page:'stones/moldavite.html',group:'stones',size:'800x600',
+   en:'Photo of hands holding a Moldavite crystal during meditation, soft warm glowing light, calm spiritual atmosphere, soft natural light, photography, shallow depth of field, 4K',
+   th:'ภาพมือถือหินโมลดาไวท์ ขณะทำสมาธิ แสงอ่อนอบอุ่น บรรยากาศสงบเปี่ยมพลัง แสงธรรมชาตินุ่มนวล'},
+  {id:'stone_moldavite_placement',label:'โมลดาไวท์ — การวาง',page:'stones/moldavite.html',group:'stones',size:'900x420',
+   en:'Moldavite crystal placed on a wooden desk or home altar corner, cozy interior lifestyle photography, warm ambient light',
+   th:'หินโมลดาไวท์ วางบนโต๊ะไม้หรือมุมบูชาในบ้าน บรรยากาศอบอุ่น ภาพไลฟ์สไตล์'},
+  {id:'stone_moldavite_charging',label:'โมลดาไวท์ — การชาร์จ',page:'stones/moldavite.html',group:'stones',size:'900x420',
+   en:'Moldavite crystal charging outdoors under moonlight or soft dawn sunlight, mystical ritual atmosphere, soft glow',
+   th:'หินโมลดาไวท์ วางชาร์จพลังกลางแจ้งใต้แสงจันทร์หรือแสงแดดอ่อน บรรยากาศพิธีกรรมลึกลับ'},
+  {id:'stone_moldavite_mine',label:'โมลดาไวท์ — แหล่งกำเนิด',page:'stones/moldavite.html',group:'stones',size:'900x675',
+   en:'Natural Moldavite crystal specimen embedded in rock matrix inside a mine, geological specimen photography, natural texture',
+   th:'ผลึกโมลดาไวท์ ธรรมชาติฝังอยู่ในหินภายในเหมือง ภาพถ่ายตัวอย่างแร่ธรณีวิทยา'},
+  {id:'stone_rose_quartz_chakra',label:'โรสควอตซ์ — พลังงาน/จักระ',page:'stones/rose-quartz.html',group:'stones',size:'800x600',
+   en:'Photo of hands holding a Rose Quartz crystal during meditation, soft warm glowing light, calm spiritual atmosphere, soft natural light, photography, shallow depth of field, 4K',
+   th:'ภาพมือถือหินโรสควอตซ์ ขณะทำสมาธิ แสงอ่อนอบอุ่น บรรยากาศสงบเปี่ยมพลัง แสงธรรมชาตินุ่มนวล'},
+  {id:'stone_rose_quartz_placement',label:'โรสควอตซ์ — การวาง',page:'stones/rose-quartz.html',group:'stones',size:'900x420',
+   en:'Rose Quartz crystal placed on a wooden desk or home altar corner, cozy interior lifestyle photography, warm ambient light',
+   th:'หินโรสควอตซ์ วางบนโต๊ะไม้หรือมุมบูชาในบ้าน บรรยากาศอบอุ่น ภาพไลฟ์สไตล์'},
+  {id:'stone_rose_quartz_charging',label:'โรสควอตซ์ — การชาร์จ',page:'stones/rose-quartz.html',group:'stones',size:'900x420',
+   en:'Rose Quartz crystal charging outdoors under moonlight or soft dawn sunlight, mystical ritual atmosphere, soft glow',
+   th:'หินโรสควอตซ์ วางชาร์จพลังกลางแจ้งใต้แสงจันทร์หรือแสงแดดอ่อน บรรยากาศพิธีกรรมลึกลับ'},
+  {id:'stone_rose_quartz_mine',label:'โรสควอตซ์ — แหล่งกำเนิด',page:'stones/rose-quartz.html',group:'stones',size:'900x675',
+   en:'Natural Rose Quartz crystal specimen embedded in rock matrix inside a mine, geological specimen photography, natural texture',
+   th:'ผลึกโรสควอตซ์ ธรรมชาติฝังอยู่ในหินภายในเหมือง ภาพถ่ายตัวอย่างแร่ธรณีวิทยา'},
+  {id:'stone_rudraksha_chakra',label:'รุทรากษะ — พลังงาน/จักระ',page:'stones/rudraksha.html',group:'stones',size:'800x600',
+   en:'Photo of hands holding a Rudraksha crystal during meditation, soft warm glowing light, calm spiritual atmosphere, soft natural light, photography, shallow depth of field, 4K',
+   th:'ภาพมือถือหินรุทรากษะ ขณะทำสมาธิ แสงอ่อนอบอุ่น บรรยากาศสงบเปี่ยมพลัง แสงธรรมชาตินุ่มนวล'},
+  {id:'stone_rudraksha_placement',label:'รุทรากษะ — การวาง',page:'stones/rudraksha.html',group:'stones',size:'900x420',
+   en:'Rudraksha crystal placed on a wooden desk or home altar corner, cozy interior lifestyle photography, warm ambient light',
+   th:'หินรุทรากษะ วางบนโต๊ะไม้หรือมุมบูชาในบ้าน บรรยากาศอบอุ่น ภาพไลฟ์สไตล์'},
+  {id:'stone_rudraksha_charging',label:'รุทรากษะ — การชาร์จ',page:'stones/rudraksha.html',group:'stones',size:'900x420',
+   en:'Rudraksha crystal charging outdoors under moonlight or soft dawn sunlight, mystical ritual atmosphere, soft glow',
+   th:'หินรุทรากษะ วางชาร์จพลังกลางแจ้งใต้แสงจันทร์หรือแสงแดดอ่อน บรรยากาศพิธีกรรมลึกลับ'},
+  {id:'stone_rudraksha_mine',label:'รุทรากษะ — แหล่งกำเนิด',page:'stones/rudraksha.html',group:'stones',size:'900x675',
+   en:'Natural Rudraksha crystal specimen embedded in rock matrix inside a mine, geological specimen photography, natural texture',
+   th:'ผลึกรุทรากษะ ธรรมชาติฝังอยู่ในหินภายในเหมือง ภาพถ่ายตัวอย่างแร่ธรณีวิทยา'},
+  {id:'stone_selenite_chakra',label:'เซเลไนต์ — พลังงาน/จักระ',page:'stones/selenite.html',group:'stones',size:'800x600',
+   en:'Photo of hands holding a Selenite crystal during meditation, soft warm glowing light, calm spiritual atmosphere, soft natural light, photography, shallow depth of field, 4K',
+   th:'ภาพมือถือหินเซเลไนต์ ขณะทำสมาธิ แสงอ่อนอบอุ่น บรรยากาศสงบเปี่ยมพลัง แสงธรรมชาตินุ่มนวล'},
+  {id:'stone_selenite_placement',label:'เซเลไนต์ — การวาง',page:'stones/selenite.html',group:'stones',size:'900x420',
+   en:'Selenite crystal placed on a wooden desk or home altar corner, cozy interior lifestyle photography, warm ambient light',
+   th:'หินเซเลไนต์ วางบนโต๊ะไม้หรือมุมบูชาในบ้าน บรรยากาศอบอุ่น ภาพไลฟ์สไตล์'},
+  {id:'stone_selenite_charging',label:'เซเลไนต์ — การชาร์จ',page:'stones/selenite.html',group:'stones',size:'900x420',
+   en:'Selenite crystal charging outdoors under moonlight or soft dawn sunlight, mystical ritual atmosphere, soft glow',
+   th:'หินเซเลไนต์ วางชาร์จพลังกลางแจ้งใต้แสงจันทร์หรือแสงแดดอ่อน บรรยากาศพิธีกรรมลึกลับ'},
+  {id:'stone_selenite_mine',label:'เซเลไนต์ — แหล่งกำเนิด',page:'stones/selenite.html',group:'stones',size:'900x675',
+   en:'Natural Selenite crystal specimen embedded in rock matrix inside a mine, geological specimen photography, natural texture',
+   th:'ผลึกเซเลไนต์ ธรรมชาติฝังอยู่ในหินภายในเหมือง ภาพถ่ายตัวอย่างแร่ธรณีวิทยา'},
+  {id:'stone_tektite_chakra',label:'สะเก็ดดาวไทย — พลังงาน/จักระ',page:'stones/tektite.html',group:'stones',size:'800x600',
+   en:'Photo of hands holding a Tektite crystal during meditation, soft warm glowing light, calm spiritual atmosphere, soft natural light, photography, shallow depth of field, 4K',
+   th:'ภาพมือถือหินสะเก็ดดาวไทย ขณะทำสมาธิ แสงอ่อนอบอุ่น บรรยากาศสงบเปี่ยมพลัง แสงธรรมชาตินุ่มนวล'},
+  {id:'stone_tektite_placement',label:'สะเก็ดดาวไทย — การวาง',page:'stones/tektite.html',group:'stones',size:'900x420',
+   en:'Tektite crystal placed on a wooden desk or home altar corner, cozy interior lifestyle photography, warm ambient light',
+   th:'หินสะเก็ดดาวไทย วางบนโต๊ะไม้หรือมุมบูชาในบ้าน บรรยากาศอบอุ่น ภาพไลฟ์สไตล์'},
+  {id:'stone_tektite_charging',label:'สะเก็ดดาวไทย — การชาร์จ',page:'stones/tektite.html',group:'stones',size:'900x420',
+   en:'Tektite crystal charging outdoors under moonlight or soft dawn sunlight, mystical ritual atmosphere, soft glow',
+   th:'หินสะเก็ดดาวไทย วางชาร์จพลังกลางแจ้งใต้แสงจันทร์หรือแสงแดดอ่อน บรรยากาศพิธีกรรมลึกลับ'},
+  {id:'stone_tektite_mine',label:'สะเก็ดดาวไทย — แหล่งกำเนิด',page:'stones/tektite.html',group:'stones',size:'900x675',
+   en:'Natural Tektite crystal specimen embedded in rock matrix inside a mine, geological specimen photography, natural texture',
+   th:'ผลึกสะเก็ดดาวไทย ธรรมชาติฝังอยู่ในหินภายในเหมือง ภาพถ่ายตัวอย่างแร่ธรณีวิทยา'},
 ];
 
 const GROUPS={global:'🌐 Global',characters:'🎭 ตัวละคร',homepage:'🏠 หน้าหลัก',chakra:'🔮 จักระ',stones:'💎 บทความหิน',geode:'🪨 โพรง',consign:'🤝 ฝากขาย'};
@@ -4636,77 +4768,77 @@ const PAGES=[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'โมลดาไวท์ — หินจากนอกโลก'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
      {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
-   ],imgs:['stone_moldavite_hero']},
+   ],imgs:['stone_moldavite_hero','stone_moldavite_chakra','stone_moldavite_placement','stone_moldavite_charging','stone_moldavite_mine']},
 
   {key:'tektite',label:'🌑 สะเก็ดดาวไทย',group:'s',path:'/stones/tektite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'สะเก็ดดาวไทย — อุกกาบาตหายาก'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
      {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
-   ],imgs:['stone_tektite_hero']},
+   ],imgs:['stone_tektite_hero','stone_tektite_chakra','stone_tektite_placement','stone_tektite_charging','stone_tektite_mine']},
 
   {key:'citrine',label:'🌟 ซิทริน',group:'s',path:'/stones/citrine.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'ซิทริน — หินแห่งโชคลาภ'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
      {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
-   ],imgs:['stone_citrine_hero']},
+   ],imgs:['stone_citrine_hero','stone_citrine_chakra','stone_citrine_placement','stone_citrine_charging','stone_citrine_mine']},
 
   {key:'clear-quartz',label:'🔮 เคลียร์ควอตซ์',group:'s',path:'/stones/clear-quartz.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'เคลียร์ควอตซ์ — หินแม่'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
      {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
-   ],imgs:['stone_clear_quartz_hero']},
+   ],imgs:['stone_clear_quartz_hero','stone_clear_quartz_chakra','stone_clear_quartz_placement','stone_clear_quartz_charging','stone_clear_quartz_mine']},
 
   {key:'rose-quartz',label:'🩷 โรสควอตซ์',group:'s',path:'/stones/rose-quartz.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'โรสควอตซ์ — หินแห่งความรัก'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
      {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
-   ],imgs:['stone_rose_quartz_hero']},
+   ],imgs:['stone_rose_quartz_hero','stone_rose_quartz_chakra','stone_rose_quartz_placement','stone_rose_quartz_charging','stone_rose_quartz_mine']},
 
   {key:'black-tourmaline',label:'🖤 แบล็กทัวร์มาลีน',group:'s',path:'/stones/black-tourmaline.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'แบล็กทัวร์มาลีน — โล่ป้องกัน'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
      {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
-   ],imgs:['stone_black_tourmaline_hero']},
+   ],imgs:['stone_black_tourmaline_hero','stone_black_tourmaline_chakra','stone_black_tourmaline_placement','stone_black_tourmaline_charging','stone_black_tourmaline_mine']},
 
   {key:'labradorite',label:'🌊 แลบราดอไรต์',group:'s',path:'/stones/labradorite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'แลบราดอไรต์'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
      {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
-   ],imgs:['stone_labradorite_hero']},
+   ],imgs:['stone_labradorite_hero','stone_labradorite_chakra','stone_labradorite_placement','stone_labradorite_charging','stone_labradorite_mine']},
 
   {key:'lapis-lazuli',label:'💙 ลาพิสลาซูลี',group:'s',path:'/stones/lapis-lazuli.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'ลาพิสลาซูลี'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
      {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
-   ],imgs:['stone_lapis_hero']},
+   ],imgs:['stone_lapis_hero','stone_lapis_chakra','stone_lapis_placement','stone_lapis_charging','stone_lapis_mine']},
 
   {key:'carnelian',label:'🔴 คาร์เนเลียน',group:'s',path:'/stones/carnelian.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'คาร์เนเลียน'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
      {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
-   ],imgs:['stone_carnelian_hero']},
+   ],imgs:['stone_carnelian_hero','stone_carnelian_chakra','stone_carnelian_placement','stone_carnelian_charging','stone_carnelian_mine']},
 
   {key:'selenite',label:'🤍 เซเลไนต์',group:'s',path:'/stones/selenite.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'เซเลไนต์'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
      {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
-   ],imgs:['stone_selenite_hero']},
+   ],imgs:['stone_selenite_hero','stone_selenite_chakra','stone_selenite_placement','stone_selenite_charging','stone_selenite_mine']},
 
   {key:'rudraksha',label:'📿 รุทรากษะ',group:'s',path:'/stones/rudraksha.html',
    text:[
      {id:'title',label:'ชื่อบทความ',type:'i',ph:'รุทรากษะ'},
      {id:'subtitle',label:'คำบรรยายสั้น',type:'t',ph:''},
      {id:'body',label:'เนื้อหาบทความ (HTML)',type:'t',ph:''},
-   ],imgs:['stone_rudraksha_hero']},
+   ],imgs:['stone_rudraksha_hero','stone_rudraksha_chakra','stone_rudraksha_placement','stone_rudraksha_charging','stone_rudraksha_mine']},
 
   {key:'agate',label:'💎 อาเกต',group:'s',path:'/stones/agate.html',
    text:[
@@ -7793,12 +7925,16 @@ async function publishToGitHub(){
 
     const published={};
 
-    // Upload base64 images as files to GitHub
-    for(const [key,val] of Object.entries(imgs)){
-      if(!val) continue;
+    // Upload base64 images as files to GitHub — in parallel, not one-at-a-time.
+    // Each slot is an independent GitHub file, so there's no reason to wait
+    // for slot N's GET-sha+PUT round trip before starting slot N+1's; doing
+    // them sequentially was the single biggest reason "เผยแพร่" took nearly
+    // a minute whenever several images were added in one editing session.
+    await Promise.all(Object.entries(imgs).map(async ([key,val])=>{
+      if(!val) return;
       if(val.startsWith('data:')){
         const match=val.match(/^data:image\/([a-zA-Z+]+);base64,(.+)$/);
-        if(!match){ published[key]=val; continue; }
+        if(!match){ published[key]=val; return; }
         const ext=match[1]==='jpeg'?'jpg':match[1]==='svg+xml'?'svg':match[1];
         const b64=match[2];
         const filename=`${key}.${ext}`;
@@ -7826,7 +7962,7 @@ async function publishToGitHub(){
       } else {
         published[key]=val;
       }
-    }
+    }));
 
     // Build content.json
     const content={images:published,text:getTexts()};
@@ -7906,8 +8042,9 @@ async function publishToGitHub(){
       const blogPosts=getBlogPosts();
       if(blogPosts.length){
         const AUTHOR_REV={atlas:'Crystal Atlas',wuchong:'Master Wuchong',metha:'อาจารย์เมธา',dr_cosmos:'Dr. Cosmos',gemma:'Gemma'};
-        // upload base64 thumbs in blog posts first
-        for(const bp of blogPosts){
+        // upload base64 thumbs in blog posts first — in parallel across posts,
+        // since each post's thumb/hero live at independent GitHub paths
+        await Promise.all(blogPosts.map(async bp=>{
           if(bp.thumb&&bp.thumb.startsWith('data:')){
             const m=bp.thumb.match(/^data:image\/([a-zA-Z+]+);base64,(.+)$/);
             if(m){
@@ -7930,11 +8067,11 @@ async function publishToGitHub(){
               if(bur.ok){ bp.heroImg='/'+bpath; }
             }
           }
-        }
+        }));
 
         // Push edited body content (incl. any inserted images) back into the live page HTML
-        for(const bp of blogPosts){
-          if(!_dirtyBodyPostIds.has(String(bp.id))||!bp.body) continue;
+        // — in parallel across posts, since each is an independent page/file.
+        await Promise.all(blogPosts.filter(bp=>_dirtyBodyPostIds.has(String(bp.id))&&bp.body).map(async bp=>{
           // Upload any base64 images embedded in the body as real files first
           const bodyImgs=[...bp.body.matchAll(/src="(data:image\/([a-zA-Z0-9.+-]+);base64,([^"]+))"/g)];
           let n=0;
@@ -7982,7 +8119,7 @@ async function publishToGitHub(){
               toast('⚠️ ยังไม่มีไฟล์หน้าเว็บของ "'+bp.title+'" — ต้องสร้างหน้าก่อนถึงจะแทรกเนื้อหาได้','err');
             }
           }catch(e){ toast('⚠️ อัปเดตเนื้อหาหน้า "'+bp.title+'" ผิดพลาด: '+e.message,'err'); }
-        }
+        }));
         _dirtyBodyPostIds.clear();
 
         saveBlogPosts(blogPosts);
@@ -8023,8 +8160,7 @@ async function publishToGitHub(){
       // Push edited catalog body content back into the live page HTML
       // (same DOMParser splice + safety-net pattern as blog/stone bodies)
       const catalogItems=getCatalogItems();
-      for(const item of catalogItems){
-        if(!_dirtyCatBodyIds.has(String(item.id))||!item.body) continue;
+      await Promise.all(catalogItems.filter(item=>_dirtyCatBodyIds.has(String(item.id))&&item.body).map(async item=>{
         const bodyImgs=[...item.body.matchAll(/src="(data:image\/([a-zA-Z0-9.+-]+);base64,([^"]+))"/g)];
         let n=0;
         for(const mm of bodyImgs){
@@ -8064,7 +8200,7 @@ async function publishToGitHub(){
             toast('⚠️ ยังไม่มีไฟล์หน้าเว็บของ "'+item.titleTh+'" — ต้องสร้างหน้าก่อน','err');
           }
         }catch(e){ toast('⚠️ อัปเดตเนื้อหาหน้า "'+item.titleTh+'" ผิดพลาด: '+e.message,'err'); }
-      }
+      }));
       _dirtyCatBodyIds.clear();
       saveCatalogItems(catalogItems);
 
@@ -8182,8 +8318,7 @@ async function publishToGitHub(){
       // page HTML (same DOMParser splice + safety-net pattern as blog/catalog),
       // then regenerate data/rankings.json for the hub page + homepage strip.
       const rankingItems=getRankingItems();
-      for(const item of rankingItems){
-        if(!_dirtyRkBodyIds.has(String(item.id))||!item.body) continue;
+      await Promise.all(rankingItems.filter(item=>_dirtyRkBodyIds.has(String(item.id))&&item.body).map(async item=>{
         const bodyImgs=[...item.body.matchAll(/src="(data:image\/([a-zA-Z0-9.+-]+);base64,([^"]+))"/g)];
         let n=0;
         for(const mm of bodyImgs){
@@ -8227,7 +8362,7 @@ async function publishToGitHub(){
             toast('⚠️ ยังไม่มีไฟล์หน้าเว็บของ "'+item.title+'" — ต้องให้ Claude สร้างหน้าก่อน จึงจะแก้เนื้อหาได้','err');
           }
         }catch(e){ toast('⚠️ อัปเดตเนื้อหาหน้า "'+item.title+'" ผิดพลาด: '+e.message,'err'); }
-      }
+      }));
       _dirtyRkBodyIds.clear();
       saveRankingItems(rankingItems);
 
