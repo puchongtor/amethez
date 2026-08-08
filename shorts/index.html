@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ทริปหิน (Shorts) โดยเมษา | Amethez</title>
+  <meta name="description" content="ทริปหิน Shorts โดยเมษา — คลิปสนุก + บทความสั้น อ่านจบไว ตำนาน จุดเด่น ของแท้-ปลอม และเรื่องที่น่าสนใจของหินแต่ละชนิด">
+  <link rel="canonical" href="https://amethez.com/shorts/">
+  <meta property="og:title" content="ทริปหิน (Shorts) โดยเมษา">
+  <meta property="og:description" content="คลิปหินสนุก + บทความสั้น อ่านจบไว โดยเมษา">
+  <meta property="og:url" content="https://amethez.com/shorts/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://amethez.com/images/avatars/mesa-hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400;500;600;700&family=Kanit:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    .sh-intro {
+      background: linear-gradient(160deg, #1a0936 0%, #2d1b69 42%, #5b21b6 100%);
+      padding: 3rem 1.5rem 2.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .sh-intro::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 55% 70% at 90% 20%, rgba(201,168,76,.22), transparent 62%);
+      pointer-events: none;
+    }
+    .sh-intro-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 1.75rem;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .sh-intro-photo {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 18%;
+      border: 3px solid #c9a84c;
+      box-shadow: 0 12px 36px rgba(0,0,0,.28);
+      background: #ede9fe;
+      display: block;
+    }
+    .sh-kicker {
+      font-size: .72rem;
+      font-weight: 700;
+      color: rgba(201,168,76,.95);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: .45rem;
+    }
+    .sh-intro h1 {
+      font-family: 'Kanit', sans-serif;
+      font-size: clamp(1.55rem, 4vw, 2.35rem);
+      color: white;
+      line-height: 1.25;
+      margin-bottom: .65rem;
+    }
+    .sh-intro h1 em {
+      font-style: normal;
+      color: #e9d5ff;
+    }
+    .sh-intro-desc {
+      color: rgba(255,255,255,.78);
+      font-size: .95rem;
+      line-height: 1.75;
+      max-width: 560px;
+      margin-bottom: 1rem;
+    }
+    .sh-intro-desc strong { color: #f5e6b8; font-weight: 600; }
+    .sh-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .45rem;
+    }
+    .sh-chip {
+      font-size: .75rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.9);
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 2rem;
+      padding: .28rem .75rem;
+    }
+    @media (max-width: 640px) {
+      .sh-intro-inner {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        text-align: center;
+      }
+      .sh-intro-photo { width: 140px; height: 140px; }
+      .sh-intro-desc { margin-left: auto; margin-right: auto; }
+      .sh-chips { justify-content: center; }
+    }
+
+    .sh-section {
+      padding: 2.5rem 1.5rem 3.5rem;
+      background: #faf8f4;
+    }
+    .sh-wrap { max-width: 980px; margin: 0 auto; }
+    .sh-row-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.35rem;
+      flex-wrap: wrap;
+    }
+    .sh-sec-label {
+      font-size: .72rem;
+      font-weight: 700;
+      color: #7c3aed;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: .25rem;
+    }
+    .sh-sec-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      color: #1a1228;
+    }
+    .sh-count {
+      font-size: .82rem;
+      color: #6b7280;
+      font-weight: 600;
+    }
+
+    .sh-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.15rem;
+    }
+    .sh-card {
+      background: white;
+      border: 1.5px solid #e9e0f8;
+      border-radius: 1rem;
+      overflow: hidden;
+      text-decoration: none;
+      color: #1a1228;
+      display: flex;
+      flex-direction: column;
+      transition: transform .2s, border-color .2s, box-shadow .2s;
+    }
+    .sh-card:hover {
+      transform: translateY(-3px);
+      border-color: #7c3aed;
+      box-shadow: 0 8px 24px rgba(124,58,237,.12);
+    }
+    .sh-thumb {
+      aspect-ratio: 9 / 14;
+      max-height: 260px;
+      background: #f3effa;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.25rem;
+    }
+    .sh-thumb img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .sh-play {
+      position: absolute;
+      z-index: 1;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(26,18,40,.55);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .95rem;
+      backdrop-filter: blur(4px);
+    }
+    .sh-card-body {
+      padding: .95rem 1rem 1.1rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: .35rem;
+    }
+    .sh-card-title {
+      font-weight: 700;
+      font-size: .88rem;
+      line-height: 1.45;
+    }
+    .sh-card-hook {
+      font-size: .76rem;
+      color: #6b7280;
+      line-height: 1.5;
+    }
+    .sh-empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3rem 1.5rem;
+      background: white;
+      border: 1.5px dashed #e9e0f8;
+      border-radius: 1rem;
+      color: #6b7280;
+    }
+  </style>
+</head>
+<body>
+<header class="site-header"></header>
+
+<!-- บน: เมษา + คำอธิบายหน้า -->
+<section class="sh-intro">
+  <div class="sh-intro-inner">
+    <img class="sh-intro-photo"
+         src="/images/avatars/mesa.png"
+         alt="เมษา — บรรณาธิการทริปหิน Shorts"
+         width="200" height="200"
+         onerror="this.onerror=null;this.src='/images/avatars/mesa-hero.png'">
+    <div>
+      <div class="sh-kicker">เรียนรู้ · ทริปหิน (Shorts)</div>
+      <h1>สวัสดีค่ะ หนู<strong style="font-weight:inherit">เมษา</strong><br><em>พาทัวร์หินแบบสั้น อ่านจบไว</em></h1>
+      <p class="sh-intro-desc">
+        หน้ารวบรวม<strong>คลิปทริปหิน</strong> + บทความสั้นของหนู
+        แต่ละเรื่องหยิบจุดเด่นจากคลิปมาเล่าต่อ — ตำนาน ของแท้/ปลอม มูลค่า หรือทริกใช้หิน
+        ถ้าอยากรู้ลึกแบบสารานุกรม หนูจะส่งต่อไป <strong>Crystal Atlas</strong> ให้เอง
+      </p>
+      <div class="sh-chips">
+        <span class="sh-chip">คลิป 1 นาที</span>
+        <span class="sh-chip">บทความสั้น</span>
+        <span class="sh-chip">มีสตอรี่</span>
+        <span class="sh-chip">ลิงก์รู้ลึกต่อได้</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ล่าง: กริดคลิปทั้งหมด -->
+<section class="sh-section">
+  <div class="sh-wrap">
+    <div class="sh-row-head">
+      <div>
+        <div class="sh-sec-label">เลือกดูได้เลย</div>
+        <div class="sh-sec-title">ทริปหินทั้งหมด</div>
+      </div>
+      <div class="sh-count" id="shortsCount"></div>
+    </div>
+    <div class="sh-grid" id="shortsGrid">
+      <div class="sh-empty">กำลังโหลด…</div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer"></footer>
+<script src="/js/components.js"></script>
+<script>
+(async () => {
+  const el = document.getElementById('shortsGrid');
+  const countEl = document.getElementById('shortsCount');
+  try {
+    const r = await fetch('/data/shorts.json?v=' + Date.now());
+    const d = await r.json();
+    const list = (d.shorts || [])
+      .filter(s => s.status === 'published')
+      .sort((a, b) => (b.publishDate || '').localeCompare(a.publishDate || ''));
+    countEl.textContent = list.length ? `${list.length} คลิป` : '';
+    if (!list.length) {
+      el.innerHTML = '<div class="sh-empty">ยังไม่มีคลิป — กำลังทยอยอัปเดตกับเมษา</div>';
+      return;
+    }
+    el.innerHTML = list.map(s => `
+      <a class="sh-card" href="/shorts/${s.slug}.html">
+        <div class="sh-thumb">
+          ${s.thumb ? `<img src="${s.thumb}" alt="" loading="lazy" onerror="this.remove()">` : '🎬'}
+          <span class="sh-play">▶</span>
+        </div>
+        <div class="sh-card-body">
+          <div class="sh-card-title">${s.title || ''}</div>
+          ${s.hook ? `<div class="sh-card-hook">${s.hook}</div>` : ''}
+        </div>
+      </a>`).join('');
+  } catch (e) {
+    el.innerHTML = '<div class="sh-empty">โหลดรายการไม่สำเร็จ</div>';
+  }
+})();
+</script>
+</body>
+</html>

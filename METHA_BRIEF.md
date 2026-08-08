@@ -4,12 +4,48 @@
 
 ---
 
-## อ.เมธา คือใคร
+## อ.เมธา คือใคร (ล็อกใหม่ 2026-08-08)
 
-"ที่ปรึกษาด้านโหราศาสตร์และหินมงคล ที่รู้ใจคนสายมูและคนรักหิน"
-- Tone: อบอุ่น พี่ใหญ่ที่เชื่อใจได้ รู้จริง ไม่ขายของจนเกินไป
-- Niche: ดวง + หิน + พิธีกรรม — ไม่มีใครทำในไทย
-- ไม่ใช่แค่ดวงทั่วไป แต่บอกว่า "วันนี้ควรใช้หินอะไร วางไว้ที่ไหน ทำอะไร"
+**หมอดูที่ปรึกษาดวงชะตา** — ผู้ชายวัย ~40 นิดๆ มีญาณ สุขุม พูดมั่นใจ ชอบให้กำลังใจผ่านการดูดวง
+
+- ชื่อบนเว็บ: **อาจารย์เมธา**
+- บทบาทสั้น: **หมอดูที่ปรึกษา · ดวงชะตา**
+- Tone: มั่นใจ อบอุ่น ไม่กดดัน · พูดแบบพี่ชายที่ผ่านโลกมา · ให้กำลังใจชัด
+- ความเชื่อหลัก: **ดวงเป็นส่วนหนึ่งของชีวิต** แต่ชีวิตที่ดีต้องใช้ **พลังกาย + พลังใจ** ไม่ใช่รอแต่ดวงอย่างเดียว
+- Niche: ดวง + หินมงคล + พิธีกรรม — บอกชัดว่าวันนี้ควรทำอะไร / ใช้หินอะไร / วางไว้ที่ไหน
+- ไม่ใช่หมอดูทำนายอย่างเดียว และไม่ใช่แค่ขายหิน
+
+### ประโยคลายเซ็น
+> "ดวงบอกทิศทางได้ — แต่ก้าวเดิน ต้องใช้ทั้งกายและใจของคุณเอง"
+
+---
+
+## Google Flow — Prompt หน้าอาจารย์เมธา (สมจริงที่สุด)
+
+> เป้าหมาย: หน้าเหมือนคนจริงมาก · photoreal · ไม่การ์ตูน  
+> ล็อก: ชายไทย ~40–42 · ออร่าญาณแต่สุขุม · ผมสั้นมีผมขาวประปราย · สายตาอบอุ่นมั่นใจ
+
+### 1) โปรไฟล์หลัก / Avatar (`metha_avatar`) — 1:1
+```
+Photorealistic portrait of a Thai man around 40-42 years old, fortune teller and spiritual counselor named Master Metha, calm composed confident expression with warm encouraging eyes, short neat black hair with subtle early gray at temples, light natural stubble or clean-shaven mature look, gentle smile that feels trustworthy not flashy, wearing a simple dark charcoal or deep indigo shirt, soft natural window light, shallow depth of field, cream to soft purple muted indoor background, shot on 85mm lens f/1.8, ultra realistic skin texture pores natural imperfections, documentary lifestyle photography, no beauty filter, looks like a real person, 8K --ar 1:1
+```
+
+### 2) ครึ่งตัว / Hero — 4:5
+```
+Photorealistic half-body photo of the same Thai man Master Metha age about 40, sitting calmly at a wooden table with a few Thai amulets crystals and a small notebook for horoscope notes, composed confident posture, warm encouraging presence of an experienced fortune counselor, soft natural daylight, realistic skin detail, authentic Thai middle-aged man not model-looking, deep indigo shirt, subtle gold ring optional, shallow depth of field, lifestyle documentary photo, ultra realistic, 8K --ar 4:5
+```
+
+### 3) Close-up ใบหน้าสำหรับ UI — 1:1
+```
+Extreme close-up photorealistic face of Thai man around 40, Master Metha, calm wise eyes looking at camera, soft smile, short hair with light gray temples, natural skin texture with fine lines of maturity, warm soft lighting, neutral blurred background, shot like real DSLR portrait, no retouching plastic skin, authentic human face, 8K --ar 1:1
+```
+
+### Negative (ถ้าเครื่องมือรองรับ)
+```
+cartoon, anime, illustration, CGI, plastic skin, beauty filter, too young, teenager, glamorous model, heavy makeup, glowing mystical aura overload, third eye on forehead, exaggerated fantasy, text watermark
+```
+
+หลังเจน: อัป `/images/avatars/metha.png` · CMS slot `metha_avatar`
 
 ---
 

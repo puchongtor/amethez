@@ -194,8 +194,9 @@
     @media(max-width:400px){ .blog-mini-row { grid-template-columns:1fr; } }
 
     /* ── EXPERTS ── */
-    .expert-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
-    @media(max-width:900px){ .expert-strip { grid-template-columns:repeat(2,1fr); } }
+    .expert-strip { display:grid; grid-template-columns:repeat(5,1fr); gap:1rem; }
+    @media(max-width:1100px){ .expert-strip { grid-template-columns:repeat(3,1fr); } }
+    @media(max-width:700px) { .expert-strip { grid-template-columns:1fr; } }
     .ex-card { background:white; border:1.5px solid var(--border); border-radius:1.125rem; padding:1.375rem; text-decoration:none; display:block; transition:all .2s; }
     .ex-card:hover { border-color:var(--purple); box-shadow:0 6px 24px rgba(124,58,237,.1); transform:translateY(-2px); }
     .ex-icon { width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.4rem; margin-bottom:.875rem; overflow:hidden; background-size:cover; background-position:center; }
@@ -207,7 +208,6 @@
     .ex-desc { font-size:.82rem; color:var(--muted); line-height:1.6; }
     .ex-tags { display:flex; gap:.35rem; flex-wrap:wrap; margin-top:.75rem; }
     .ex-tag { background:#f5f0ff; color:var(--purple); font-size:.68rem; padding:.18rem .55rem; border-radius:2rem; }
-    @media(max-width:700px) { .expert-strip { grid-template-columns:1fr; } }
 
     /* ── LINE CTA ── */
     .line-cta-section { background:linear-gradient(135deg,#f0fdf4,#dcfce7); padding:3.5rem 1.5rem; }
@@ -440,6 +440,65 @@
     </div>
   </div>
 </section>
+<hr class="divider">
+
+<!-- ═══ 5.4 ทริปหิน (Shorts) · เมษา ═══ -->
+<section class="section" id="homeShortsSection" style="padding-top:2.5rem;padding-bottom:2.5rem;background:linear-gradient(180deg,#fff7ed 0%,#faf8f4 100%)">
+  <div class="wrap">
+    <div class="row-head">
+      <div style="display:flex;align-items:center;gap:.85rem">
+        <img src="/images/avatars/mesa.png" alt="เมษา" width="48" height="48"
+             style="width:48px;height:48px;border-radius:50%;object-fit:cover;object-position:center 20%;border:2px solid #c9a84c;background:#ede9fe"
+             onerror="this.style.display='none'">
+        <div>
+          <div class="sec-label">ทริปหิน (Shorts) · เมษา</div>
+          <div class="sec-title">คลิปสั้น อ่านจบไว</div>
+        </div>
+      </div>
+      <a href="/shorts/" class="see-all">ดูทั้งหมด →</a>
+    </div>
+    <div id="homeShorts" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem">
+      <!-- fallback ถ้า JSON ยังโหลดไม่ได้ -->
+      <a href="/shorts/amethyst-greek-legend-tears.html" style="background:white;border:1.5px solid #e9e0f8;border-radius:1rem;overflow:hidden;text-decoration:none;color:#1a1228;display:flex;flex-direction:column">
+        <div style="aspect-ratio:9/14;max-height:220px;background:#f3effa;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">
+          <img src="/images/shorts/amethyst-greek-legend-tears.jpg" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" onerror="this.remove()">
+          <span style="position:relative;z-index:1;width:36px;height:36px;border-radius:50%;background:rgba(26,18,40,.5);color:white;display:flex;align-items:center;justify-content:center;font-size:.75rem">▶</span>
+        </div>
+        <div style="padding:.85rem;font-weight:700;font-size:.8rem;line-height:1.4">ความลับสีม่วงจากตำนานกรีก… อเมทิสต์</div>
+      </a>
+      <a href="/shorts/rose-quartz-legend-venus.html" style="background:white;border:1.5px solid #e9e0f8;border-radius:1rem;overflow:hidden;text-decoration:none;color:#1a1228;display:flex;flex-direction:column">
+        <div style="aspect-ratio:9/14;max-height:220px;background:#f3effa;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">
+          <img src="/images/shorts/rose-quartz-legend-venus.jpg" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" onerror="this.remove()">
+          <span style="position:relative;z-index:1;width:36px;height:36px;border-radius:50%;background:rgba(26,18,40,.5);color:white;display:flex;align-items:center;justify-content:center;font-size:.75rem">▶</span>
+        </div>
+        <div style="padding:.85rem;font-weight:700;font-size:.8rem;line-height:1.4">รู้ไหม… โรสควอตซ์ไม่ได้มีดีแค่สีชมพู</div>
+      </a>
+    </div>
+  </div>
+</section>
+<script>
+(async () => {
+  try {
+    const r = await fetch('/data/shorts.json?v=' + Date.now());
+    if (!r.ok) return;
+    const d = await r.json();
+    const list = (d.shorts || [])
+      .filter(s => s.status === 'published' && s.featured !== false)
+      .sort((a,b) => (b.publishDate||'').localeCompare(a.publishDate||''))
+      .slice(0, 8);
+    const el = document.getElementById('homeShorts');
+    if (!list.length || !el) return;
+    el.innerHTML = list.map(s => `
+      <a href="/shorts/${s.slug}.html" style="background:white;border:1.5px solid #e9e0f8;border-radius:1rem;overflow:hidden;text-decoration:none;color:#1a1228;display:flex;flex-direction:column;transition:all .2s" onmouseover="this.style.borderColor='#7c3aed';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='#e9e0f8';this.style.transform='none'">
+        <div style="aspect-ratio:9/14;max-height:220px;background:#f3effa;position:relative;display:flex;align-items:center;justify-content:center;font-size:1.75rem;overflow:hidden">
+          ${s.thumb ? `<img src="${s.thumb}" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" onerror="this.remove()">` : '🎬'}
+          <span style="position:relative;z-index:1;width:36px;height:36px;border-radius:50%;background:rgba(26,18,40,.5);color:white;display:flex;align-items:center;justify-content:center;font-size:.75rem">▶</span>
+        </div>
+        <div style="padding:.85rem;font-weight:700;font-size:.8rem;line-height:1.4">${s.title||''}</div>
+      </a>`).join('');
+  } catch (e) { /* คง fallback HTML ไว้ */ }
+})();
+</script>
 <hr class="divider">
 
 <!-- ═══ 5.5 จัดอันดับหินคริสตัล ═══ -->
@@ -676,13 +735,13 @@
 </section>
 <hr class="divider">
 
-<!-- ═══ 8. EXPERTS ═══ -->
-<section class="section" style="background:#f8f5ff">
+<!-- ═══ 8. ทีมไกด์ ═══ -->
+<section class="section" id="guides" style="background:#f8f5ff">
   <div class="wrap">
     <div style="margin-bottom:1.75rem">
-      <div class="sec-label">ผู้เชี่ยวชาญ</div>
-      <div class="sec-title">4 มุมมอง · ครบทุกมิติ</div>
-      <div class="sec-sub">วิทยาศาสตร์ · พลังงาน · สายมู · จักรวาล — รู้จริงทุกด้านในที่เดียว</div>
+      <div class="sec-label">ทีมไกด์</div>
+      <div class="sec-title">5 มุมมอง · ครบทุกมิติ</div>
+      <div class="sec-sub">สารานุกรม · ที่ปรึกษา · ดวง · ทริปหิน · จักรวาล — คนละบทบาท รู้จริงในหมวดตัวเอง</div>
     </div>
     <div class="expert-strip">
       <a href="/stones/" class="ex-card">
@@ -702,9 +761,18 @@
       <a href="/metha/" class="ex-card">
         <div class="ex-icon ex-icon-metha" data-cms-img="metha_avatar"><span class="cms-placeholder">🌙</span></div>
         <div class="ex-name">อาจารย์เมธา</div>
-        <div class="ex-role">ดวง · หินมงคล · พิธีกรรม</div>
-        <div class="ex-desc">บอกชัดว่าวันนี้ควรใช้หินอะไร วางไว้ที่ไหน ทำอะไร ไม่ใช่แค่ดูดวงทั่วไป อัปเดตทุกวัน</div>
-        <div class="ex-tags"><span class="ex-tag">ราศี</span><span class="ex-tag">ดวงรายวัน</span><span class="ex-tag">เทพ</span></div>
+        <div class="ex-role">หมอดูที่ปรึกษา · ดวงชะตา</div>
+        <div class="ex-desc">ดูดวงแบบให้กำลังใจ มีญาณ สุขุม มั่นใจ — ดวงเป็นส่วนหนึ่ง แต่ชีวิตดีต้องใช้ทั้งพลังกายและพลังใจ พร้อมหินมงคลที่ใช้ได้วันนี้</div>
+        <div class="ex-tags"><span class="ex-tag">หมอดู</span><span class="ex-tag">ดวงรายวัน</span><span class="ex-tag">หินมงคล</span></div>
+      </a>
+      <a href="/shorts/" class="ex-card" style="border-color:#f9a8d4;background:linear-gradient(135deg,#fff7ed,#faf5ff)">
+        <div class="ex-icon ex-icon-mesa" data-cms-img="mesa_avatar" style="background:linear-gradient(135deg,#fce7f3,#ede9fe);overflow:hidden;padding:0">
+          <img src="/images/avatars/mesa.png" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;border-radius:inherit" onerror="this.parentElement.innerHTML='💬'">
+        </div>
+        <div class="ex-name">เมษา</div>
+        <div class="ex-role" style="color:#a855f7">บรรณาธิการ · ทริปหิน (Shorts)</div>
+        <div class="ex-desc">คลิปสนุก + บทความสั้น อ่านจบไว ของแท้/ปลอม มูลค่า จุดเด่น — เล่าแบบเพื่อน</div>
+        <div class="ex-tags"><span class="ex-tag">Shorts</span><span class="ex-tag">ทริป</span><span class="ex-tag">คลิป</span></div>
       </a>
       <a href="/cosmos/" class="ex-card" style="border-color:#2d1b5e;background:linear-gradient(135deg,#faf8f4,#f5f0ff)">
         <div class="ex-icon" style="background:linear-gradient(135deg,#0f0a1e,#1a0936)">☄️</div>

@@ -1,0 +1,38 @@
+{
+  "shorts": [
+    {
+      "id": "short-002",
+      "slug": "amethyst-greek-legend-tears",
+      "title": "ความลับสีม่วงจากตำนานกรีก… อเมทิสต์",
+      "hook": "หยดน้ำตาเทพเจ้า · สติ · ความสงบ",
+      "stone": "amethyst",
+      "stone_url": "/stones/amethyst.html",
+      "video": "/videos/shorts/amethyst-greek-legend-tears.mp4",
+      "thumb": "/images/shorts/amethyst-greek-legend-tears.jpg",
+      "tags": ["อเมทิสต์", "ตำนานกรีก", "ม่วง", "สติ"],
+      "shopee_tags": ["อเมทิสต์", "ม่วง", "สมาธิ", "ความสงบ"],
+      "featured": true,
+      "status": "published",
+      "publishDate": "2026-08-08",
+      "author": "เมษา",
+      "source_note": "คลิป 0420.mp4 + แคปชัน TikTok ตำนานอเมทิสต์ — เรียบเรียงใหม่โทนเมษา"
+    },
+    {
+      "id": "short-001",
+      "slug": "rose-quartz-legend-venus",
+      "title": "รู้ไหม… โรสควอตซ์ไม่ได้มีดีแค่สีชมพู",
+      "hook": "ตำนานวีนัส · จักระหัวใจ · เคล็ดลับห้องนอน",
+      "stone": "rose-quartz",
+      "stone_url": "/stones/rose-quartz.html",
+      "video": "/videos/shorts/rose-quartz-legend-venus.mp4",
+      "thumb": "/images/shorts/rose-quartz-legend-venus.jpg",
+      "tags": ["โรสควอตซ์", "ความรัก", "ตำนาน", "จักระหัวใจ"],
+      "shopee_tags": ["โรสควอตซ์", "ความรัก", "จักระหัวใจ", "ชมพู"],
+      "featured": true,
+      "status": "published",
+      "publishDate": "2026-08-08",
+      "author": "เมษา",
+      "source_note": "คลิป 0423.mp4 + แคปชัน TikTok ตำนานโรสควอตซ์ — เรียบเรียงใหม่โทนเมษา"
+    }
+  ]
+}

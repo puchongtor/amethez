@@ -31,14 +31,17 @@ const NAV_HTML = `
     <li class="has-drop"><a href="/blog/">📖 เรียนรู้</a>
       <ul class="dropdown">
         <li><a href="/blog/">บทความ</a></li>
+        <li><a href="/shorts/">ทริปหิน (Shorts)</a></li>
         <li><a href="/video/">🎬 Crystal Talks</a></li>
       </ul>
     </li>
-    <li class="has-drop"><a href="/wuchong/">🧙 อาจารย์</a>
+    <li class="has-drop"><a href="/#guides">✨ ทีมไกด์</a>
       <ul class="dropdown">
-        <li><a href="/wuchong/">Master Wuchong</a></li>
-        <li><a href="/metha/">อาจารย์เมธา</a></li>
-        <li><a href="/cosmos/">☄️ Dr. Cosmos</a></li>
+        <li><a href="/stones/">🔬 Crystal Atlas · สารานุกรม</a></li>
+        <li><a href="/wuchong/">🧘 Master Wuchong · ที่ปรึกษาชีวิต</a></li>
+        <li><a href="/metha/">🌙 อาจารย์เมธา · หมอดูที่ปรึกษา</a></li>
+        <li><a href="/shorts/">💬 เมษา · ทริปหิน (Shorts)</a></li>
+        <li><a href="/cosmos/">☄️ Dr. Cosmos · หินจักรวาล</a></li>
       </ul>
     </li>
     <li class="has-drop"><a href="/shop/" class="nav-shop">🛒 ร้านค้า</a>
@@ -141,15 +144,18 @@ const FOOTER_HTML = `
         <li><a href="/stones/">📖 สารานุกรมหิน A–Z</a></li>
         <li><a href="/stones/rankings/">🏆 จัดอันดับหินคริสตัล</a></li>
         <li><a href="/blog/">📖 บทความ</a></li>
+        <li><a href="/shorts/">ทริปหิน (Shorts)</a></li>
         <li><a href="/video/">🎬 Crystal Talks</a></li>
         <li><a href="/stories/">📚 เรื่องเล่าหินทั่วโลก</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>อาจารย์</h4>
+      <h4>ทีมไกด์</h4>
       <ul>
-        <li><a href="/wuchong/">🧙 Master Wuchong</a></li>
-        <li><a href="/metha/">🌟 อาจารย์เมธา</a></li>
+        <li><a href="/stones/">🔬 Crystal Atlas</a></li>
+        <li><a href="/wuchong/">🧘 Master Wuchong</a></li>
+        <li><a href="/metha/">🌙 อาจารย์เมธา · หมอดูที่ปรึกษา</a></li>
+        <li><a href="/shorts/">💬 เมษา · ทริปหิน</a></li>
         <li><a href="/cosmos/">☄️ Dr. Cosmos</a></li>
         <li><a href="/talk/">🔮 ห้องคลื่นเสียง Manifest</a></li>
       </ul>
