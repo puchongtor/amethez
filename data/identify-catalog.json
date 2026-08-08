@@ -1,0 +1,2640 @@
+{
+  "generated": "2026-08-08T23:08:16.136Z",
+  "version": 1,
+  "stones": [
+    {
+      "id": "golden-rutilated-quartz",
+      "name_th": "ไหมทอง",
+      "name_en": "Golden Rutilated Quartz",
+      "aliases": [
+        "ไหมทอง",
+        "Golden Rutilated Quartz"
+      ],
+      "visual_cues": "ควอตซ์ใสที่มีผลึกแร่รูไทล์เส้นเข็มสีทองฝังอยู่ภายใน ยอดนิยมสูงสุดในตลาดไทย",
+      "meaning_short": "ราชาแห่งโชคลาภ ดึงดูดทรัพย์สินเงินทอง อำนาจบารมี เสริมธุรกิจค้าขาย",
+      "chakra": [],
+      "tags": [
+        "ราชาแห่งโชคลาภ",
+        "ดึงดูดทรัพย์สินเงินทอง",
+        "อำนาจบารมี"
+      ],
+      "article_url": null,
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "multi",
+      "rank": 1,
+      "emoji": "✨"
+    },
+    {
+      "id": "amethyst",
+      "name_th": "อเมทิสต์",
+      "name_en": "Amethyst",
+      "aliases": [
+        "อเมทิสต์",
+        "Amethyst",
+        "อเมทิส",
+        "อเมทิสท์",
+        "หินม่วง"
+      ],
+      "visual_cues": "ควอตซ์สีม่วงธรรมชาติ ตั้งแต่ม่วงอ่อนไปจนถึงม่วงเข้มจักรพรรดิ นิยมทั้งแบบโพรงถ้ำและหินขัดมัน",
+      "meaning_short": "สร้างความสงบ สยบความเครียด เสริมสมาธิ ปัญญาญาณ และป้องกันพลังงานลบ",
+      "chakra": [],
+      "tags": [
+        "สมาธิ",
+        "ปัญญา",
+        "สงบจิตใจ"
+      ],
+      "article_url": "/stones/amethyst.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "purple",
+      "rank": 2,
+      "emoji": "💜"
+    },
+    {
+      "id": "rose-quartz",
+      "name_th": "โรสควอตซ์",
+      "name_en": "Rose Quartz",
+      "aliases": [
+        "โรสควอตซ์",
+        "Rose Quartz",
+        "ควอตซ์ชมพู"
+      ],
+      "visual_cues": "ควอตซ์สีชมพูพาสเทลขุ่น นิยมนำมาทำสร้อยข้อมือและแกะสลักรูปหัวใจ หนึ่งในหินขายดีที่สุดของไทย",
+      "meaning_short": "ดึงดูดความรัก เมตตามหานิยม บำบัดจิตใจให้อ่อนโยน รักตัวเอง",
+      "chakra": [
+        "หัวใจ"
+      ],
+      "tags": [
+        "ความรัก",
+        "เมตตามหานิยม",
+        "รักตัวเอง"
+      ],
+      "article_url": "/stones/rose-quartz.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "pink",
+      "rank": 3,
+      "emoji": "💗"
+    },
+    {
+      "id": "citrine",
+      "name_th": "ซิทริน",
+      "name_en": "Citrine",
+      "aliases": [
+        "ซิทริน",
+        "Citrine",
+        "หินเหลือง"
+      ],
+      "visual_cues": "ควอตซ์สีเหลืองทองจนถึงสีส้มน้ำผึ้ง หินแห่งความสำเร็จและการค้าขายที่คนไทยนิยมพกติดร้าน",
+      "meaning_short": "หินแห่งความสำเร็จและการค้าขาย กระตุ้นไอเดียสร้างสรรค์ ดึงดูดเงินหมุนเวียน",
+      "chakra": [],
+      "tags": [
+        "เรียกเงิน",
+        "การค้าขาย",
+        "ความสำเร็จ"
+      ],
+      "article_url": "/stones/citrine.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "yellow",
+      "rank": 4,
+      "emoji": "💛"
+    },
+    {
+      "id": "tektite",
+      "name_th": "สะเก็ดดาวไทย",
+      "name_en": "Tektite",
+      "aliases": [
+        "สะเก็ดดาวไทย",
+        "Tektite",
+        "สะเก็ดดาว",
+        "เท็กไทต์"
+      ],
+      "visual_cues": "แก้วธรรมชาติที่เกิดจากผลกระทบของอุกกาบาตชนโลก ผิวริ้วคลื่นหลุมพรางขรุขระสีดำสนิท",
+      "meaning_short": "ป้องกันคุณไสย มนต์ดำ สิ่งชั่วร้าย แคล้วคลาดปลอดภัยสูงสุด",
+      "chakra": [],
+      "tags": [
+        "ป้องกันคุณไสย",
+        "แคล้วคลาด",
+        "จักรวาล"
+      ],
+      "article_url": "/stones/tektite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "black",
+      "rank": 5,
+      "emoji": "🖤"
+    },
+    {
+      "id": "ruby",
+      "name_th": "ทับทิม",
+      "name_en": "Ruby",
+      "aliases": [
+        "ทับทิม",
+        "Ruby"
+      ],
+      "visual_cues": "พลอยสีแดงตระกูลคอรันดัม อัญมณีที่ทำให้จันทบุรีและไทยมีชื่อเสียงระดับโลกในวงการค้าพลอย",
+      "meaning_short": "เสริมพลังชีวิต ความกล้าหาญ อำนาจบารมี ความรักที่ลึกซึ้งและแรงกล้า",
+      "chakra": [],
+      "tags": [
+        "พลังชีวิต",
+        "อำนาจบารมี",
+        "อัญมณีไทย"
+      ],
+      "article_url": "/stones/ruby.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "red",
+      "rank": 6,
+      "emoji": "❤️"
+    },
+    {
+      "id": "sapphire",
+      "name_th": "ไพลิน",
+      "name_en": "Sapphire",
+      "aliases": [
+        "ไพลิน",
+        "Sapphire"
+      ],
+      "visual_cues": "พลอยตระกูลคอรันดัมสีน้ำเงินเข้ม อีกหนึ่งอัญมณีเอกลักษณ์ของแหล่งพลอยไทย เป็นที่นิยมทั้งวงการเครื่องประดับและสายมู",
+      "meaning_short": "เสริมสติปัญญา ความสงบทางใจ ความซื่อสัตย์ และวาสนาบารมี",
+      "chakra": [],
+      "tags": [
+        "สติปัญญา",
+        "วาสนา",
+        "อัญมณีไทย"
+      ],
+      "article_url": "/stones/sapphire.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "blue",
+      "rank": 7,
+      "emoji": "💙"
+    },
+    {
+      "id": "jadeite",
+      "name_th": "หยกเจไดต์",
+      "name_en": "Jadeite",
+      "aliases": [
+        "หยกเจไดต์",
+        "Jadeite"
+      ],
+      "visual_cues": "หยกเนื้อแข็งคุณภาพสูงสุด มีความเย็นในเนื้อ มีสีเขียว ขาว ม่วง ดึงดูดกลุ่มกำลังซื้อสูง",
+      "meaning_short": "ความอุดมสมบูรณ์ สุขภาพแข็งแรง อายุยืนยาว ความร่มเย็นเป็นสุขในชีวิต",
+      "chakra": [],
+      "tags": [
+        "ความอุดมสมบูรณ์",
+        "สุขภาพ",
+        "อายุยืน"
+      ],
+      "article_url": null,
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "green",
+      "rank": 8,
+      "emoji": "💚"
+    },
+    {
+      "id": "moldavite",
+      "name_th": "โมลดาไวท์",
+      "name_en": "Moldavite",
+      "aliases": [
+        "โมลดาไวท์",
+        "Moldavite",
+        "โมลดาไวต"
+      ],
+      "visual_cues": "แก้วอุกกาบาตสีเขียวขุ่นโปร่งแสง หายากและราคาสูงมาก พบเฉพาะแถบแม่น้ำมอลโด ประเทศเช็กเกีย",
+      "meaning_short": "เร่งการเปลี่ยนแปลงชีวิตในทางที่ดีขึ้น ยกระดับจิตวิญญาณขั้นสูง เชื่อมต่อพลังจักรวาล",
+      "chakra": [],
+      "tags": [
+        "การเปลี่ยนแปลง",
+        "จิตวิญญาณ",
+        "หายาก"
+      ],
+      "article_url": "/stones/moldavite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "green",
+      "rank": 9,
+      "emoji": "💚"
+    },
+    {
+      "id": "pyrite",
+      "name_th": "ไพไรต์",
+      "name_en": "Pyrite",
+      "aliases": [
+        "ไพไรต์",
+        "Pyrite",
+        "ทองคนโง่"
+      ],
+      "visual_cues": "แร่เหล็กซัลไฟด์สีเหลืองทองประกายโลหะแวววาว ชื่อไทยโบราณคือ เพชรหน้าทั่ง",
+      "meaning_short": "ดึงดูดความมั่งคั่งเงินทอง ป้องกันทรัพย์รั่วไหล ดั่งมีเกราะป้องกันทองคำ",
+      "chakra": [],
+      "tags": [
+        "ความมั่งคั่ง",
+        "ป้องกันทรัพย์รั่วไหล",
+        "ความมั่นใจ"
+      ],
+      "article_url": "/stones/pyrite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "yellow",
+      "rank": 10,
+      "emoji": "💛"
+    },
+    {
+      "id": "blue-kyanite",
+      "name_th": "บลูไคยาไนต์",
+      "name_en": "Blue Kyanite",
+      "aliases": [
+        "บลูไคยาไนต์",
+        "Blue Kyanite"
+      ],
+      "visual_cues": "แร่ซิลิเกตสีน้ำเงินเข้มวาวกึ่งมุก โครงสร้างเป็นแผ่นซ้อน ตลาดไทยพ่วงชื่อการค้าว่าหินปลดหนี้",
+      "meaning_short": "จัดระเบียบความคิด เคลียร์พลังงานลบ เสริมความมั่นใจในการเจรจาต่อรองเงินทอง",
+      "chakra": [],
+      "tags": [
+        "หินปลดหนี้",
+        "เจรจาต่อรอง",
+        "เคลียร์พลังงาน"
+      ],
+      "article_url": "/stones/blue-kyanite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "blue",
+      "rank": 11,
+      "emoji": "💙"
+    },
+    {
+      "id": "lapis-lazuli",
+      "name_th": "ลาพิสลาซูลี",
+      "name_en": "Lapis Lazuli",
+      "aliases": [
+        "ลาพิสลาซูลี",
+        "Lapis Lazuli",
+        "ลาพิส"
+      ],
+      "visual_cues": "หินสีน้ำเงินเข้มขุ่น มีละอองแร่ไพไรต์สีทองฝังกระจายคล้ายดวงดาวบนท้องฟ้า",
+      "meaning_short": "เปิดจักระตาที่สาม เสริมสร้างสติปัญญา ความคิดสร้างสรรค์ และความจริงใจ",
+      "chakra": [
+        "ตาที่สาม"
+      ],
+      "tags": [
+        "ปัญญา",
+        "Third Eye",
+        "ความจริงใจ"
+      ],
+      "article_url": "/stones/lapis-lazuli.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "blue",
+      "rank": 12,
+      "emoji": "💙"
+    },
+    {
+      "id": "labradorite",
+      "name_th": "ลาบราดอไรต์",
+      "name_en": "Labradorite",
+      "aliases": [
+        "ลาบราดอไรต์",
+        "Labradorite",
+        "ลาบรา"
+      ],
+      "visual_cues": "แร่กลุ่มเฟลด์สปาร์ที่มีปรากฏการณ์แสงเหลือบสีรุ้งฟ้า เขียว ทอง งดงามลึกลับ",
+      "meaning_short": "หินแห่งการหยั่งรู้ ป้องกันพลังงานลบรอบข้าง ปลุกสัญชาตญาณภายในตัว",
+      "chakra": [],
+      "tags": [
+        "สัญชาตญาณ",
+        "ป้องกันออร่า",
+        "ลึกลับ"
+      ],
+      "article_url": "/stones/labradorite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "multi",
+      "rank": 13,
+      "emoji": "✨"
+    },
+    {
+      "id": "black-tourmaline",
+      "name_th": "แบล็กทัวร์มาลีน",
+      "name_en": "Black Tourmaline",
+      "aliases": [
+        "แบล็กทัวร์มาลีน",
+        "Black Tourmaline"
+      ],
+      "visual_cues": "แร่โบรอนซิลิเกตสีดำสนิท มีร่องผลึกขนานขัดมันตามแกนยาวเด่นชัด หินป้องกันยอดนิยมอันดับต้นๆ",
+      "meaning_short": "ดูดซับพลังงานลบสะสม สะท้อนสิ่งไม่ดีและคน Toxic ป้องกันรังสี EMF",
+      "chakra": [],
+      "tags": [
+        "ป้องกันพลังงานลบ",
+        "กราวดิ้ง",
+        "EMF"
+      ],
+      "article_url": "/stones/black-tourmaline.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "black",
+      "rank": 14,
+      "emoji": "🖤"
+    },
+    {
+      "id": "moonstone",
+      "name_th": "มูนสโตน",
+      "name_en": "Moonstone",
+      "aliases": [
+        "มูนสโตน",
+        "Moonstone",
+        "หินจันทร์"
+      ],
+      "visual_cues": "แร่กลุ่มเฟลด์สปาร์ที่มีประกายแสงเหลือบฟ้านวล คล้ายแสงจันทร์วันเพ็ญ",
+      "meaning_short": "หินแห่งความรัก เสน่หา เมตตามหานิยม นำพาโชคดีเรื่องคู่ครอง",
+      "chakra": [],
+      "tags": [
+        "เสน่หา",
+        "เมตตามหานิยม",
+        "คู่ครอง"
+      ],
+      "article_url": "/stones/moonstone.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "white",
+      "rank": 15,
+      "emoji": "🤍"
+    },
+    {
+      "id": "tigers-eye",
+      "name_th": "หินตาเสือ",
+      "name_en": "Tiger's Eye",
+      "aliases": [
+        "หินตาเสือ",
+        "Tiger's Eye",
+        "ไทเกอร์อาย",
+        "ตาเสือ"
+      ],
+      "visual_cues": "ควอตซ์ฝังแร่เส้นใยแอสเบสตอส แปรสภาพเกิดลายเหลือบสีเหลืองทองน้ำตาล",
+      "meaning_short": "เสริมความเด็ดเดี่ยว กล้าหาญ เพิ่มวิสัยทัศน์เฉียบคมในการตัดสินใจธุรกิจ",
+      "chakra": [],
+      "tags": [
+        "ความกล้าหาญ",
+        "วิสัยทัศน์",
+        "ธุรกิจ"
+      ],
+      "article_url": "/stones/tiger-eye.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "brown",
+      "rank": 16,
+      "emoji": "🤎"
+    },
+    {
+      "id": "clear-quartz",
+      "name_th": "เคลียร์ควอตซ์",
+      "name_en": "Clear Quartz",
+      "aliases": [
+        "เคลียร์ควอตซ์",
+        "Clear Quartz",
+        "ควอตซ์ใส",
+        "คริสตัลใส"
+      ],
+      "visual_cues": "ควอตซ์ใสบริสุทธิ์ หินแม่ของตระกูลควอตซ์ทั้งหมด ใช้ขยายพลังงานหินชนิดอื่นได้ทุกชนิด",
+      "meaning_short": "Master Healer ขยายพลังงานบวก ชำระล้างพลังงานลบ เพิ่มโฟกัสและความชัดเจน",
+      "chakra": [],
+      "tags": [
+        "Master Healer",
+        "ขยายพลังงาน",
+        "ชำระล้าง"
+      ],
+      "article_url": "/stones/clear-quartz.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "clear",
+      "rank": 17,
+      "emoji": "💎"
+    },
+    {
+      "id": "hematite",
+      "name_th": "เฮมาไทต์",
+      "name_en": "Hematite",
+      "aliases": [
+        "เฮมาไทต์",
+        "Hematite"
+      ],
+      "visual_cues": "แร่เหล็กออกไซด์สีเทาเงินถึงดำ มีความหนักในมือเป็นเอกลักษณ์ นิยมทำกำไลกราวดิ้ง",
+      "meaning_short": "กราวดิ้งพลังงาน ดึงสติกลับสู่ปัจจุบัน เสริมสมาธิและความมั่นคงทางจิตใจ",
+      "chakra": [],
+      "tags": [
+        "กราวดิ้ง",
+        "สมาธิ",
+        "ความมั่นคง"
+      ],
+      "article_url": "/stones/hematite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "black",
+      "rank": 18,
+      "emoji": "🖤"
+    },
+    {
+      "id": "obsidian",
+      "name_th": "ออบซิเดียน",
+      "name_en": "Obsidian",
+      "aliases": [
+        "ออบซิเดียน",
+        "Obsidian"
+      ],
+      "visual_cues": "แก้วภูเขาไฟธรรมชาติสีดำสนิท ผิวเรียบคมเมื่อแตกหัก เกิดจากการเย็นตัวอย่างรวดเร็ว",
+      "meaning_short": "หินแห่งความจริง หักล้างพลังงานลบ สะท้อนสิ่งไม่ดี ป้องกันการหลอกลวง",
+      "chakra": [],
+      "tags": [
+        "ความจริง",
+        "ป้องกัน",
+        "สะท้อนพลังลบ"
+      ],
+      "article_url": "/stones/obsidian.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "black",
+      "rank": 19,
+      "emoji": "🖤"
+    },
+    {
+      "id": "emerald",
+      "name_th": "มรกต",
+      "name_en": "Emerald",
+      "aliases": [
+        "มรกต",
+        "Emerald"
+      ],
+      "visual_cues": "พลอยสีเขียวตระกูลเบริล หนึ่งในอัญมณีล้ำค่าที่สุดในโลก เป็นที่นิยมทั้งวงการเครื่องประดับและสายมู",
+      "meaning_short": "เสริมความรัก ความอุดมสมบูรณ์ ความเจริญงอกงามในชีวิตและความสัมพันธ์",
+      "chakra": [
+        "หัวใจ"
+      ],
+      "tags": [
+        "ความรัก",
+        "ความอุดมสมบูรณ์",
+        "อัญมณี"
+      ],
+      "article_url": "/stones/emerald.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "green",
+      "rank": 20,
+      "emoji": "💚"
+    },
+    {
+      "id": "libyan-desert-glass",
+      "name_th": "แก้วทะเลทรายลิเบีย",
+      "name_en": "Libyan Desert Glass",
+      "aliases": [
+        "แก้วทะเลทรายลิเบีย",
+        "Libyan Desert Glass"
+      ],
+      "visual_cues": "แก้วอุกกาบาตซิลิกาบริสุทธิ์สีเหลืองทองขุ่นอ่อน พบในทะเลทรายซาฮารา",
+      "meaning_short": "เสริมพลังอำนาจ ความมั่งคั่ง ปกป้องออร่าจิตวิญญาณ กระตุ้นธาตุไฟ",
+      "chakra": [],
+      "tags": [
+        "ความมั่งคั่ง",
+        "ปกป้องออร่า",
+        "จักรวาล"
+      ],
+      "article_url": null,
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "yellow",
+      "rank": 21,
+      "emoji": "💛"
+    },
+    {
+      "id": "turquoise",
+      "name_th": "เทอร์ควอยซ์",
+      "name_en": "Turquoise",
+      "aliases": [
+        "เทอร์ควอยซ์",
+        "Turquoise",
+        "หินฟ้าเขียว"
+      ],
+      "visual_cues": "แร่ฟอสเฟตสีฟ้าอมเขียวขุ่น พาดผ่านด้วยริ้วลายใยแมงมุมสีดำน้ำตาลธรรมชาติ",
+      "meaning_short": "หินแห่งอำนาจ ความโชคดี มิตรภาพที่ยั่งยืน และความจริงใจ",
+      "chakra": [],
+      "tags": [
+        "อำนาจ",
+        "โชคดี",
+        "มิตรภาพ"
+      ],
+      "article_url": "/stones/turquoise.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "blue",
+      "rank": 22,
+      "emoji": "💙"
+    },
+    {
+      "id": "carnelian",
+      "name_th": "คาร์เนเลียน",
+      "name_en": "Carnelian",
+      "aliases": [
+        "คาร์เนเลียน",
+        "Carnelian"
+      ],
+      "visual_cues": "คาลซิโดนีสีส้มแดงสดใส เนื้อกึ่งโปร่งแสงขัดมัน เงางามมีพลังงานสูง",
+      "meaning_short": "เติมเต็มความกล้าหาญ พลังชีวิต ความกระตือรือร้น และเสริมสร้างความเชื่อมั่น",
+      "chakra": [],
+      "tags": [
+        "ความกล้าหาญ",
+        "พลังชีวิต",
+        "ความเชื่อมั่น"
+      ],
+      "article_url": "/stones/carnelian.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "orange",
+      "rank": 23,
+      "emoji": "🧡"
+    },
+    {
+      "id": "malachite",
+      "name_th": "มาลาไคต์",
+      "name_en": "Malachite",
+      "aliases": [
+        "มาลาไคต์",
+        "Malachite"
+      ],
+      "visual_cues": "แร่คอปเปอร์คาร์บอเนตเขียวสด ลายริ้ววงกลมสลับโทนเข้มอ่อนคล้ายขนหลากสีนกยูง",
+      "meaning_short": "เตือนภัยล่วงหน้า ดูดมลพิษและพลังลบ ปกป้องการเดินทางไกล",
+      "chakra": [],
+      "tags": [
+        "เตือนภัย",
+        "ปกป้อง",
+        "ดูดพลังลบ"
+      ],
+      "article_url": "/stones/malachite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "green",
+      "rank": 24,
+      "emoji": "💚"
+    },
+    {
+      "id": "selenite",
+      "name_th": "เซเลไนต์",
+      "name_en": "Selenite",
+      "aliases": [
+        "เซเลไนต์",
+        "Selenite"
+      ],
+      "visual_cues": "ยิปซัมโปร่งแสงสีขาวเนื้อนุ่ม แท่งเรียวยาว นิยมใช้ชาร์จล้างพลังงานหินชนิดอื่น",
+      "meaning_short": "ชำระล้างพลังงานลบ เปิดจักระมงกุฎ เสริมความสงบและการเชื่อมต่อจิตวิญญาณ",
+      "chakra": [
+        "มงกุฎ"
+      ],
+      "tags": [
+        "ชำระล้างพลังงาน",
+        "จักระมงกุฎ",
+        "ความสงบ"
+      ],
+      "article_url": "/stones/selenite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "white",
+      "rank": 25,
+      "emoji": "🤍"
+    },
+    {
+      "id": "rudraksha",
+      "name_th": "รุทรักษะ",
+      "name_en": "Rudraksha",
+      "aliases": [
+        "รุทรักษะ",
+        "Rudraksha",
+        "รุทรากษ์",
+        "ลูกประคำ"
+      ],
+      "visual_cues": "เมล็ดพืชศักดิ์สิทธิ์จากต้น Elaeocarpus ganitrus นิยมร้อยเป็นสร้อยหรือลูกประคำในสายมูไทย",
+      "meaning_short": "ป้องกันสิ่งชั่วร้าย เสริมสมาธิและจิตวิญญาณ เชื่อมโยงกับพระศิวะ",
+      "chakra": [
+        "หัวใจ"
+      ],
+      "tags": [
+        "สายมู",
+        "สมาธิ",
+        "จิตวิญญาณ"
+      ],
+      "article_url": "/stones/rudraksha.html",
+      "tier": "core",
+      "rock_class": "belief",
+      "color": "brown",
+      "rank": 26,
+      "emoji": "🤎"
+    },
+    {
+      "id": "larimar",
+      "name_th": "ลาริมาร์",
+      "name_en": "Larimar",
+      "aliases": [
+        "ลาริมาร์",
+        "Larimar"
+      ],
+      "visual_cues": "แร่เพกโทไลต์สีฟ้าลายริ้วผิวน้ำทะเล พบได้แห่งเดียวในโลกที่สาธารณรัฐโดมินิกัน",
+      "meaning_short": "หินแห่งความสงบเย็นและปลดปล่อยความเครียด บำบัดอารมณ์ฉุนเฉียว",
+      "chakra": [],
+      "tags": [
+        "ความสงบ",
+        "คลายเครียด",
+        "หายาก"
+      ],
+      "article_url": "/stones/larimar.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "blue",
+      "rank": 27,
+      "emoji": "💙"
+    },
+    {
+      "id": "sunstone",
+      "name_th": "ซันสโตน",
+      "name_en": "Sunstone",
+      "aliases": [
+        "ซันสโตน",
+        "Sunstone"
+      ],
+      "visual_cues": "แร่เฟลด์สปาร์ที่มีเกล็ดแร่ฮีมาไทต์หรือคอปเปอร์สะท้อนแสงวิบวับดั่งแสงอาทิตย์",
+      "meaning_short": "ปลุกพลังผู้นำ ความโชติช่วงชัชวาลในชีวิต เพิ่มความกระตือรือร้นและโชคดี",
+      "chakra": [],
+      "tags": [
+        "พลังผู้นำ",
+        "ความโชคดี",
+        "พลังงานบวก"
+      ],
+      "article_url": "/stones/sunstone.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "orange",
+      "rank": 28,
+      "emoji": "🧡"
+    },
+    {
+      "id": "iron-meteorite",
+      "name_th": "อุกกาบาตเหล็ก",
+      "name_en": "Iron Meteorite",
+      "aliases": [
+        "อุกกาบาตเหล็ก",
+        "Iron Meteorite"
+      ],
+      "visual_cues": "วัตถุจากนอกโลกส่วนแกน มีส่วนผสมเหล็ก-นิกเกิล กัดกรดเห็นลายวิดมันชเต็ทเทินเด่นชัด",
+      "meaning_short": "นำพาความเจริญก้าวกระโดด เสริมบารมี ความเด็ดขาดในการคุมบริวาร",
+      "chakra": [],
+      "tags": [
+        "บารมี",
+        "จักรวาล",
+        "ความเด็ดขาด"
+      ],
+      "article_url": null,
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "black",
+      "rank": 29,
+      "emoji": "🖤"
+    },
+    {
+      "id": "imperial-jade",
+      "name_th": "หยกจักรพรรดิ",
+      "name_en": "Imperial Jade",
+      "aliases": [
+        "หยกจักรพรรดิ",
+        "Imperial Jade"
+      ],
+      "visual_cues": "หยกเจไดต์สีเขียวเข้มมรกต มีความโปร่งแสงกึ่งใส มูลค่าซื้อขายสูงสุดในตลาดหยก",
+      "meaning_short": "ที่สุดแห่งความมั่งคั่ง อำนาจวาสนา ความเจริญรุ่งเรืองชั้นสูงของชีวิต",
+      "chakra": [],
+      "tags": [
+        "ความมั่งคั่ง",
+        "วาสนา",
+        "หยกเกรดสูง"
+      ],
+      "article_url": null,
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "green",
+      "rank": 30,
+      "emoji": "💚"
+    },
+    {
+      "id": "garnet",
+      "name_th": "การ์เนต",
+      "name_en": "Garnet",
+      "aliases": [
+        "การ์เนต",
+        "Garnet"
+      ],
+      "visual_cues": "หมู่แร่ซิลิเกตสีแดงเข้มเป็นหลัก (มีหลายสีย่อย) เป็นตัวเร่งพลังงานที่นิยมมากในเครื่องประดับ",
+      "meaning_short": "เร่งพลังงาน กระตุ้นให้หินข้างเคียงทำงานแรงขึ้น เสริมความกล้าและพลังชีวิต",
+      "chakra": [],
+      "tags": [
+        "เร่งพลังงาน",
+        "พลังชีวิต",
+        "ความกล้า"
+      ],
+      "article_url": "/stones/garnet.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "red",
+      "rank": 31,
+      "emoji": "❤️"
+    },
+    {
+      "id": "topaz",
+      "name_th": "โทแพซ",
+      "name_en": "Topaz",
+      "aliases": [
+        "โทแพซ",
+        "Topaz"
+      ],
+      "visual_cues": "แร่ผลึกใสมีหลายสี ตั้งแต่ใส ฟ้า จนถึงทอง โครงสร้างเป็นแท่งยาวมีริ้วขนาน",
+      "meaning_short": "หินแห่งความสำเร็จ ช่วยกำหนดทิศทางพลังงานให้ชัดเจนตรงเป้าหมาย",
+      "chakra": [],
+      "tags": [
+        "ความสำเร็จ",
+        "ทิศทางชีวิต",
+        "ความชัดเจน"
+      ],
+      "article_url": "/stones/topaz.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "yellow",
+      "rank": 32,
+      "emoji": "💛"
+    },
+    {
+      "id": "aquamarine",
+      "name_th": "อะความารีน",
+      "name_en": "Aquamarine",
+      "aliases": [
+        "อะความารีน",
+        "Aquamarine",
+        "อความารีน",
+        "อความาริน"
+      ],
+      "visual_cues": "อัญมณีตระกูลเบริลสีฟ้าใสจนถึงฟ้าอมเขียวดั่งน้ำทะเลเคลียร์ สะอาดตาและแพงค่า",
+      "meaning_short": "หินแห่งความปลอดภัยในการเดินทางทางน้ำ เสริมการสื่อสารที่ราบรื่น จิตใจสงบ",
+      "chakra": [
+        "คอ"
+      ],
+      "tags": [
+        "การเดินทาง",
+        "การสื่อสาร",
+        "ความสงบ"
+      ],
+      "article_url": "/stones/aquamarine.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "blue",
+      "rank": 33,
+      "emoji": "💙"
+    },
+    {
+      "id": "peridot",
+      "name_th": "เพอริดอต",
+      "name_en": "Peridot",
+      "aliases": [
+        "เพอริดอต",
+        "Peridot",
+        "เพอริดอท"
+      ],
+      "visual_cues": "แร่โอลิวีนสีเขียวสดใส เกิดจากกิจกรรมภูเขาไฟ บางเม็ดพบในอุกกาบาตพัลลาไซต์",
+      "meaning_short": "หนึ่งในหินฟอกพลังงานที่ดีที่สุด กระตุ้นการเติบโตและการเปลี่ยนแปลงที่จำเป็น",
+      "chakra": [],
+      "tags": [
+        "ฟอกพลังงาน",
+        "การเติบโต",
+        "การเปลี่ยนแปลง"
+      ],
+      "article_url": "/stones/peridot.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "green",
+      "rank": 34,
+      "emoji": "💚"
+    },
+    {
+      "id": "onyx",
+      "name_th": "โอนิกซ์",
+      "name_en": "Onyx",
+      "aliases": [
+        "โอนิกซ์",
+        "Onyx"
+      ],
+      "visual_cues": "คาลซิโดนีสีดำสนิทขัดมัน มีทั้งแบบเงาฉ่ำและดำด้าน ดักตลาดเครื่องประดับชาย",
+      "meaning_short": "ปัดเป่าความวุ่นวาย ป้องกันสิ่งชั่วร้าย สร้างความมั่นคงทางอารมณ์และสมาธิ",
+      "chakra": [],
+      "tags": [
+        "ป้องกัน",
+        "ความมั่นคง",
+        "สมาธิ"
+      ],
+      "article_url": "/stones/onyx.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "black",
+      "rank": 35,
+      "emoji": "🖤"
+    },
+    {
+      "id": "fluorite",
+      "name_th": "ฟลูออไรต์",
+      "name_en": "Fluorite",
+      "aliases": [
+        "ฟลูออไรต์",
+        "Fluorite"
+      ],
+      "visual_cues": "แร่เฮไลด์หลากสีในก้อนเดียว (ม่วง เขียว ใส) มีความวาวและโปร่งแสงสวยงาม",
+      "meaning_short": "ช่วยจัดระเบียบสมอง พัฒนาการเรียนรู้ เคลียร์ความคิดที่สับสนให้ปลอดโปร่ง",
+      "chakra": [],
+      "tags": [
+        "สมาธิเรียนรู้",
+        "จัดระเบียบความคิด",
+        "เคลียร์สมอง"
+      ],
+      "article_url": "/stones/fluorite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "multi",
+      "rank": 36,
+      "emoji": "✨"
+    },
+    {
+      "id": "kunzite",
+      "name_th": "คันไซต์",
+      "name_en": "Kunzite",
+      "aliases": [
+        "คันไซต์",
+        "Kunzite"
+      ],
+      "visual_cues": "แร่สปอดูมีนสีชมพูอ่อนอมม่วงลาเวนเดอร์ มีความโปร่งแสงและวาวกึ่งมุกสวยหวาน",
+      "meaning_short": "หินแห่งความรักที่บริสุทธิ์และไม่มีเงื่อนไข ลดความเครียด คลายความกังวลใจ",
+      "chakra": [
+        "หัวใจ"
+      ],
+      "tags": [
+        "ความรักบริสุทธิ์",
+        "คลายเครียด",
+        "อ่อนโยน"
+      ],
+      "article_url": "/stones/kunzite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "pink",
+      "rank": 37,
+      "emoji": "💗"
+    },
+    {
+      "id": "sodalite",
+      "name_th": "โซดาไลต์",
+      "name_en": "Sodalite",
+      "aliases": [
+        "โซดาไลต์",
+        "Sodalite"
+      ],
+      "visual_cues": "แร่สีน้ำเงินเข้มคล้ายลาพิสลาซูลีแต่มีคลื่นสีขาวคลุมเนื้อ ราคาย่อมเยากว่า",
+      "meaning_short": "สงบจิตใจ เปิดรับข้อมูลใหม่ เสริมสติปัญญาและการสื่อสารอย่างมีเหตุผล",
+      "chakra": [
+        "คอ"
+      ],
+      "tags": [
+        "สงบจิตใจ",
+        "สติปัญญา",
+        "การสื่อสาร"
+      ],
+      "article_url": "/stones/sodalite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "blue",
+      "rank": 38,
+      "emoji": "💙"
+    },
+    {
+      "id": "amazonite",
+      "name_th": "อเมโซไนต์",
+      "name_en": "Amazonite",
+      "aliases": [
+        "อเมโซไนต์",
+        "Amazonite",
+        "อเมซอนไนต์"
+      ],
+      "visual_cues": "แร่กลุ่มเฟลด์สปาร์สีเขียวฟ้าอมเทอร์ควอยซ์ ผิวมันวาวคล้ายคลื่นทะเล",
+      "meaning_short": "สงบและปรับสมดุลอารมณ์ ช่วยเรื่องคอและปอด กล้าพูดความในใจ",
+      "chakra": [],
+      "tags": [
+        "สมดุลอารมณ์",
+        "กล้าแสดงออก",
+        "ความสงบ"
+      ],
+      "article_url": "/stones/amazonite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "green",
+      "rank": 39,
+      "emoji": "💚"
+    },
+    {
+      "id": "silver-rutilated-quartz",
+      "name_th": "ไหมเงิน",
+      "name_en": "Silver Rutilated Quartz",
+      "aliases": [
+        "ไหมเงิน",
+        "Silver Rutilated Quartz",
+        "ไหมทอง"
+      ],
+      "visual_cues": "ควอตซ์ใสฝังแร่เข็มเส้นไหมสีเงินแวววาวประกายสะท้อนแสงเด่น",
+      "meaning_short": "เรียกเงินเรียกทอง โชคลาภทางการค้า เจรจาธุรกิจ และป้องกันทรัพย์สินรั่วไหล",
+      "chakra": [],
+      "tags": [
+        "เรียกเงิน",
+        "การเจรจา",
+        "ป้องกันทรัพย์"
+      ],
+      "article_url": null,
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "gold",
+      "rank": 40,
+      "emoji": "💛"
+    },
+    {
+      "id": "copper-rutilated-quartz",
+      "name_th": "ไหมนาค",
+      "name_en": "Copper Rutilated Quartz",
+      "aliases": [
+        "ไหมนาค",
+        "Copper Rutilated Quartz",
+        "ไหมทอง"
+      ],
+      "visual_cues": "ควอตซ์ใสฝังแร่เส้นเข็มสีน้ำตาลอมแดง หรือสีทองแดงชมพู หรูหราแพงตา",
+      "meaning_short": "เมตตามหานิยม เสริมเสน่ห์ ได้รับการอุปถัมภ์ค้ำชูจากผู้ใหญ่และบริวาร",
+      "chakra": [],
+      "tags": [
+        "เมตตามหานิยม",
+        "เสน่ห์",
+        "ผู้อุปถัมภ์"
+      ],
+      "article_url": null,
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "gold",
+      "rank": 41,
+      "emoji": "💛"
+    },
+    {
+      "id": "pietersite",
+      "name_th": "ปีเตอร์ไซต์",
+      "name_en": "Pietersite",
+      "aliases": [
+        "ปีเตอร์ไซต์",
+        "Pietersite"
+      ],
+      "visual_cues": "หินแปรสภาพที่มีริ้วลายแปรปรวนเหลือบน้ำเงิน ทอง แดง ผสมผสานคล้ายพายุคลั่ง",
+      "meaning_short": "หินแห่งพายุ ทลายกำแพงความกลัว ปลุกความกล้าหาญ นำความก้าวหน้าดั่งพายุ",
+      "chakra": [],
+      "tags": [
+        "ความกล้าหาญ",
+        "ทลายความกลัว",
+        "ก้าวหน้า"
+      ],
+      "article_url": null,
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "multi",
+      "rank": 42,
+      "emoji": "✨"
+    },
+    {
+      "id": "charoite",
+      "name_th": "ชารอยต์",
+      "name_en": "Charoite",
+      "aliases": [
+        "ชารอยต์",
+        "Charoite"
+      ],
+      "visual_cues": "แร่ซิลิเกตสีม่วงสดริ้วลายขัดมัน คล้ายเส้นไหม มักพบแหล่งเดียวในรัสเซีย",
+      "meaning_short": "หินแห่งการก้าวข้ามขีดจำกัด บำบัดปมฝังใจ และเปิดรับพลังงานบวกใหม่",
+      "chakra": [],
+      "tags": [
+        "ก้าวข้ามขีดจำกัด",
+        "บำบัดใจ",
+        "หายาก"
+      ],
+      "article_url": null,
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "purple",
+      "rank": 43,
+      "emoji": "💜"
+    },
+    {
+      "id": "sugilite",
+      "name_th": "ซูกิไลต์",
+      "name_en": "Sugilite",
+      "aliases": [
+        "ซูกิไลต์",
+        "Sugilite"
+      ],
+      "visual_cues": "แร่ซิลิเกตสีม่วงทึบแสงเนื้อแพง หายากระดับแถวหน้าของวงการหินสีสะสม",
+      "meaning_short": "เกราะป้องกันจิตวิญญาณขั้นสูงสุด บำบัดโรคใจ สร้างรักไม่มีเงื่อนไข",
+      "chakra": [
+        "หัวใจ"
+      ],
+      "tags": [
+        "ป้องกันจิตวิญญาณ",
+        "บำบัดใจ",
+        "รักไม่มีเงื่อนไข"
+      ],
+      "article_url": "/stones/sugilite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "purple",
+      "rank": 44,
+      "emoji": "💜"
+    },
+    {
+      "id": "lepidolite",
+      "name_th": "เลพิโดไลต์",
+      "name_en": "Lepidolite",
+      "aliases": [
+        "เลพิโดไลต์",
+        "Lepidolite"
+      ],
+      "visual_cues": "แร่ไมกาสีม่วงอ่อนที่มีส่วนผสมของลิเทียม ผิวสัมผัสมีความวาวประกายเกล็ดระยิบ",
+      "meaning_short": "บำบัดอาการนอนไม่หลับ ปรับสมดุลอารมณ์แปรปรวน บรรเทาภาวะเครียดสะสม",
+      "chakra": [],
+      "tags": [
+        "นอนหลับ",
+        "สมดุลอารมณ์",
+        "คลายเครียด"
+      ],
+      "article_url": "/stones/lepidolite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "purple",
+      "rank": 45,
+      "emoji": "💜"
+    },
+    {
+      "id": "prehnite",
+      "name_th": "พรีไนต์",
+      "name_en": "Prehnite",
+      "aliases": [
+        "พรีไนต์",
+        "Prehnite",
+        "เพรห์ไนต์"
+      ],
+      "visual_cues": "แร่ซิลิเกตสีเขียวตองอ่อนอมเหลือง เนื้อกึ่งโปร่งแสง คล้ายผลองุ่นปอกเปลือก",
+      "meaning_short": "หินแห่งการเตรียมพร้อมล่วงหน้า เสริมสร้างสัญชาตญาณ การคาดการณ์อนาคต",
+      "chakra": [
+        "หัวใจ"
+      ],
+      "tags": [
+        "สัญชาตญาณ",
+        "เตรียมพร้อม",
+        "จักระหัวใจ"
+      ],
+      "article_url": "/stones/prehnite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "green",
+      "rank": 46,
+      "emoji": "💚"
+    },
+    {
+      "id": "unakite",
+      "name_th": "ยูนาไคต์",
+      "name_en": "Unakite",
+      "aliases": [
+        "ยูนาไคต์",
+        "Unakite"
+      ],
+      "visual_cues": "หินแกรนิตแปรสภาพ ประกอบด้วยแร่เอพิโดตเขียวและเฟลด์สปาร์ชมพู ลายแปลกตา",
+      "meaning_short": "หินถูกหวย (ชื่อการค้าไทย) เด่นเรื่องโชคลาภฟลุ๊ค ๆ การเสี่ยงดวง และการลาภลอย",
+      "chakra": [],
+      "tags": [
+        "หินถูกหวย",
+        "โชคลาภ",
+        "ลาภลอย"
+      ],
+      "article_url": "/stones/unakite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "green",
+      "rank": 47,
+      "emoji": "💚"
+    },
+    {
+      "id": "rhodonite",
+      "name_th": "โรโดไนต์",
+      "name_en": "Rhodonite",
+      "aliases": [
+        "โรโดไนต์",
+        "Rhodonite"
+      ],
+      "visual_cues": "แร่สีชมพูอมแดงแซมลายดำแมงกานีส เนื้อแน่นขัดมันสวยงาม",
+      "meaning_short": "เยียวยาบาดแผลทางใจ ให้อภัยตัวเองและผู้อื่น เสริมความเห็นอกเห็นใจ",
+      "chakra": [
+        "หัวใจ"
+      ],
+      "tags": [
+        "เยียวยาใจ",
+        "ให้อภัย",
+        "จักระหัวใจ"
+      ],
+      "article_url": "/stones/rhodonite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "pink",
+      "rank": 48,
+      "emoji": "💗"
+    },
+    {
+      "id": "black-kyanite",
+      "name_th": "แบล็กไคยาไนต์",
+      "name_en": "Black Kyanite",
+      "aliases": [
+        "แบล็กไคยาไนต์",
+        "Black Kyanite"
+      ],
+      "visual_cues": "ไคยาไนต์สีดำสนิท โครงสร้างผลึกแตกตัวเป็นแผ่นแหลมคล้ายไม้กวาดพ่อมด",
+      "meaning_short": "ปัดเป่าพลังงานลบออกจากออร่า ชำระล้างจักระ ตัดพันธนาการพลังงานที่ไม่ดี",
+      "chakra": [],
+      "tags": [
+        "ปัดเป่าพลังลบ",
+        "ชำระล้างจักระ",
+        "ตัดกรรม"
+      ],
+      "article_url": "/stones/kyanite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "black",
+      "rank": 49,
+      "emoji": "🖤"
+    },
+    {
+      "id": "pearl",
+      "name_th": "ไข่มุก",
+      "name_en": "Pearl",
+      "aliases": [
+        "ไข่มุก",
+        "Pearl"
+      ],
+      "visual_cues": "อัญมณีอินทรีย์จากหอยมุก เนื้อมุกวาวนุ่มนวล ไม่ใช่แร่ธาตุแต่เป็นที่นิยมสูงในเครื่องประดับไทย",
+      "meaning_short": "เสริมความสงบทางอารมณ์ ความบริสุทธิ์ และความสมดุลของฮอร์โมนและวัฏจักรชีวิต",
+      "chakra": [],
+      "tags": [
+        "ความสงบ",
+        "ความบริสุทธิ์",
+        "สมดุล"
+      ],
+      "article_url": "/stones/pearl.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "white",
+      "rank": 50,
+      "emoji": "🤍"
+    },
+    {
+      "id": "nephrite-jade",
+      "name_th": "หยกเนไฟรต์",
+      "name_en": "Nephrite Jade",
+      "aliases": [
+        "หยกเนไฟรต์",
+        "Nephrite Jade"
+      ],
+      "visual_cues": "หยกเนื้ออ่อนที่มีความเหนียวทนทานสูง สีเขียวเข้มขุ่นมันวาว คล้ายหยกมันแพะ",
+      "meaning_short": "ปกป้องคุ้มครองจากภัยอันตราย เสริมความมั่นคงทางเงินทองและสุขภาพ",
+      "chakra": [],
+      "tags": [
+        "ปกป้องคุ้มครอง",
+        "ความมั่นคง",
+        "สุขภาพ"
+      ],
+      "article_url": null,
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "green",
+      "rank": 51,
+      "emoji": "💚"
+    },
+    {
+      "id": "pyrite-crystal-thai-trade",
+      "name_th": "เพชรหน้าทั่ง",
+      "name_en": "Pyrite Crystal (Thai Trade)",
+      "aliases": [
+        "เพชรหน้าทั่ง",
+        "Pyrite Crystal (Thai Trade)"
+      ],
+      "visual_cues": "แร่ไพไรต์รูปทรงลูกบาศก์ธรรมชาติที่ค้นพบในไทย สายเครื่องรางนับถือมาก",
+      "meaning_short": "มหาอุด คงกระพันชาตรี ดึงดูดทรัพย์สินเงินทอง ป้องกันสิ่งอัปมงคล",
+      "chakra": [],
+      "tags": [
+        "มหาอุด",
+        "คงกระพัน",
+        "เครื่องรางไทย"
+      ],
+      "article_url": null,
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "gold",
+      "rank": 52,
+      "emoji": "💛"
+    },
+    {
+      "id": "black-coral-red-coral",
+      "name_th": "กัลปังหาแดง",
+      "name_en": "Red Coral",
+      "aliases": [
+        "กัลปังหาแดง",
+        "Red Coral"
+      ],
+      "visual_cues": "ซากสิ่งมีชีวิตใต้ทะเลลึกเนื้อแข็งสีแดงขัดมัน นิยมนำมาทำกำไลเครื่องราง",
+      "meaning_short": "กันภูตผีปีศาจ กันคุณไสยทางน้ำ เมตตามหานิยม แคล้วคลาดปลอดภัย",
+      "chakra": [],
+      "tags": [
+        "กันคุณไสย",
+        "เมตตามหานิยม",
+        "แคล้วคลาด"
+      ],
+      "article_url": "/stones/black-coral.html",
+      "tier": "core",
+      "rock_class": "fossil",
+      "color": "red",
+      "rank": 53,
+      "emoji": "❤️"
+    },
+    {
+      "id": "amber",
+      "name_th": "อำพัน",
+      "name_en": "Amber",
+      "aliases": [
+        "อำพัน",
+        "Amber"
+      ],
+      "visual_cues": "ฟอสซิลยางไม้โบราณอายุนับล้านปี สีเหลืองทองโปร่งใส มักมีเศษพืชหรือแมลงฝังอยู่",
+      "meaning_short": "หินแห่งพลังชีวิตและการบำบัด ดึงดูดโชคลาภ ปลอบประโลมระบบประสาท",
+      "chakra": [],
+      "tags": [
+        "พลังชีวิต",
+        "การบำบัด",
+        "โชคลาภ"
+      ],
+      "article_url": "/stones/amber.html",
+      "tier": "core",
+      "rock_class": "fossil",
+      "color": "yellow",
+      "rank": 54,
+      "emoji": "💛"
+    },
+    {
+      "id": "herkimer-diamond",
+      "name_th": "เฮอร์คิเมอร์ไดมอนด์",
+      "name_en": "Herkimer Diamond",
+      "aliases": [
+        "เฮอร์คิเมอร์ไดมอนด์",
+        "Herkimer Diamond"
+      ],
+      "visual_cues": "ผลึกควอตซ์ใสพิเศษ ปลายแหลมสองด้าน (Double Terminated) ค้นพบที่นิวยอร์ก",
+      "meaning_short": "หินเพิ่มพลัง (Amplifier) ขยายพลังงานหินชนิดอื่น ช่วยให้จิตใจปลอดโปร่งฝันแม่นยำ",
+      "chakra": [],
+      "tags": [
+        "ขยายพลังงาน",
+        "ความฝัน",
+        "จิตใจปลอดโปร่ง"
+      ],
+      "article_url": null,
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "clear",
+      "rank": 55,
+      "emoji": "💎"
+    },
+    {
+      "id": "opal",
+      "name_th": "โอปอล",
+      "name_en": "Opal",
+      "aliases": [
+        "โอปอล",
+        "Opal"
+      ],
+      "visual_cues": "อัญมณีที่มีน้ำในโครงสร้าง หักเหแสงเป็นประกายรุ้งหลากสี เอกลักษณ์เฉพาะตัวไม่มีก้อนไหนซ้ำกัน",
+      "meaning_short": "เสริมสมดุลอารมณ์ ปลุกพลังสร้างสรรค์ นำพาความหวังและการเปลี่ยนแปลงที่ดี",
+      "chakra": [
+        "กระดูกสันหลังส่วนล่าง"
+      ],
+      "tags": [
+        "สมดุลอารมณ์",
+        "ความคิดสร้างสรรค์",
+        "เอกลักษณ์"
+      ],
+      "article_url": "/stones/opal.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "multi",
+      "rank": 56,
+      "emoji": "✨"
+    },
+    {
+      "id": "howlite",
+      "name_th": "ฮาวไลต์",
+      "name_en": "Howlite",
+      "aliases": [
+        "ฮาวไลต์",
+        "Howlite"
+      ],
+      "visual_cues": "แร่สีขาวลายเส้นเทาคล้ายหินอ่อน เนื้อนุ่มดูดซับสีย้อมได้ดี นิยมทำเครื่องประดับราคาย่อมเยา",
+      "meaning_short": "ลดความโกรธ ความหงุดหงิด สงบจิตใจก่อนนอน ลดความคิดฟุ้งซ่าน",
+      "chakra": [],
+      "tags": [
+        "สงบจิตใจ",
+        "ลดความโกรธ",
+        "นอนหลับ"
+      ],
+      "article_url": "/stones/howlite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "white",
+      "rank": 57,
+      "emoji": "🤍"
+    },
+    {
+      "id": "chrysocolla",
+      "name_th": "คริสโซคอลลา",
+      "name_en": "Chrysocolla",
+      "aliases": [
+        "คริสโซคอลลา",
+        "Chrysocolla"
+      ],
+      "visual_cues": "แร่คอปเปอร์ซิลิเกตสีฟ้าอมเขียวลายคล้ายลูกโลก มักพบร่วมกับมาลาไคต์",
+      "meaning_short": "สื่อสารด้วยความจริงใจและอ่อนโยน ปลดปล่อยความรู้สึกที่กดทับ",
+      "chakra": [
+        "คอ"
+      ],
+      "tags": [
+        "การสื่อสาร",
+        "อ่อนโยน",
+        "ปลดปล่อยอารมณ์"
+      ],
+      "article_url": "/stones/chrysocolla.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "green",
+      "rank": 58,
+      "emoji": "💚"
+    },
+    {
+      "id": "ammonite-fossil",
+      "name_th": "แอมโมไนต์",
+      "name_en": "Ammonite Fossil",
+      "aliases": [
+        "แอมโมไนต์",
+        "Ammonite Fossil"
+      ],
+      "visual_cues": "ฟอสซิลสัตว์ทะเลโบราณวงก้นหอยเวียนขวาตามสัดส่วนคณิตศาสตร์ธรรมชาติ",
+      "meaning_short": "ฮวงจุ้ยมหาเศรษฐี การหมุนเวียนพลังงานบวกไม่สิ้นสุด ปรับสมดุลบ้านและธุรกิจ",
+      "chakra": [],
+      "tags": [
+        "ฮวงจุ้ย",
+        "หมุนเวียนพลังงาน",
+        "ฟอสซิล"
+      ],
+      "article_url": null,
+      "tier": "core",
+      "rock_class": "fossil",
+      "color": "brown",
+      "rank": 59,
+      "emoji": "🤎"
+    },
+    {
+      "id": "smoky-quartz",
+      "name_th": "สโมกกี้ควอตซ์",
+      "name_en": "Smoky Quartz",
+      "aliases": [
+        "สโมกกี้ควอตซ์",
+        "Smoky Quartz",
+        "ควอตซ์ควัน"
+      ],
+      "visual_cues": "ควอตซ์สีน้ำตาลอมดำโปร่งแสง เกิดจากการได้รับรังสีธรรมชาติใต้โลก",
+      "meaning_short": "หินแห่งการดึงพลังงานลงดิน (Grounding) ระบายความเครียด ทำให้จิตใจมั่นคง",
+      "chakra": [],
+      "tags": [
+        "กราวดิ้ง",
+        "ระบายความเครียด",
+        "มั่นคง"
+      ],
+      "article_url": "/stones/smoky-quartz.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "brown",
+      "rank": 60,
+      "emoji": "🤎"
+    },
+    {
+      "id": "ocean-jasper",
+      "name_th": "โอเชียนแจสเปอร์",
+      "name_en": "Ocean Jasper",
+      "aliases": [
+        "โอเชียนแจสเปอร์",
+        "Ocean Jasper"
+      ],
+      "visual_cues": "แจสเปอร์หายากชายฝั่งมาดากัสการ์ ลายวงกลมคล้ายตาปลาหลากสีหลากมิติ",
+      "meaning_short": "สร้างความสุขความเพลิดเพลิน ปล่อยวางความทุกข์ บำบัดจิตใจแปรปรวน",
+      "chakra": [],
+      "tags": [
+        "ความสุข",
+        "ปล่อยวาง",
+        "บำบัดใจ"
+      ],
+      "article_url": null,
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "multi",
+      "rank": 61,
+      "emoji": "✨"
+    },
+    {
+      "id": "red-jasper",
+      "name_th": "เรดแจสเปอร์",
+      "name_en": "Red Jasper",
+      "aliases": [
+        "เรดแจสเปอร์",
+        "Red Jasper"
+      ],
+      "visual_cues": "แจสเปอร์สีแดงอิฐทึบแสง เนื้อแน่นหนักมือ พบได้ทั่วไปตามชายหาดและแม่น้ำ",
+      "meaning_short": "กราวดิ้งพลังงาน เสริมความอดทน พลังชีวิต และความมั่นคงทางร่างกาย",
+      "chakra": [],
+      "tags": [
+        "กราวดิ้ง",
+        "ความอดทน",
+        "พลังชีวิต"
+      ],
+      "article_url": "/stones/red-jasper.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "red",
+      "rank": 62,
+      "emoji": "❤️"
+    },
+    {
+      "id": "golden-healer",
+      "name_th": "โกลเดนฮีลเลอร์",
+      "name_en": "Golden Healer",
+      "aliases": [
+        "โกลเดนฮีลเลอร์",
+        "Golden Healer"
+      ],
+      "visual_cues": "ควอตซ์ใสที่มีสารเหล็กออกไซด์เคลือบผิวหรือแทรกในเนื้อจนออกสีทอง ไม่ใช่แร่ชนิดใหม่แต่เป็นควอตซ์ที่มีลักษณะพิเศษ",
+      "meaning_short": "เชื่อว่ามีพลังบำบัดสูงกว่าเคลียร์ควอตซ์ทั่วไป เสริมพลังชีวิตและการรักษาตัวเอง",
+      "chakra": [],
+      "tags": [
+        "พลังบำบัด",
+        "พลังชีวิต",
+        "ทองคำ"
+      ],
+      "article_url": "/stones/golden-healer.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "yellow",
+      "rank": 63,
+      "emoji": "💛"
+    },
+    {
+      "id": "iolite",
+      "name_th": "ไอโอไลต์",
+      "name_en": "Iolite",
+      "aliases": [
+        "ไอโอไลต์",
+        "Iolite"
+      ],
+      "visual_cues": "แร่สีม่วงอมฟ้าโปร่งแสง หรือเรียก Water Sapphire เพราะดูคล้ายไพลินแต่ราคาย่อมเยากว่ามาก",
+      "meaning_short": "เสริมจินตนาการและสัญชาตญาณ นำทางในการเดินทางและตัดสินใจครั้งสำคัญ",
+      "chakra": [],
+      "tags": [
+        "จินตนาการ",
+        "สัญชาตญาณ",
+        "นำทาง"
+      ],
+      "article_url": "/stones/iolite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "blue",
+      "rank": 64,
+      "emoji": "💙"
+    },
+    {
+      "id": "angelite",
+      "name_th": "แองเจลไลต์",
+      "name_en": "Angelite",
+      "aliases": [
+        "แองเจลไลต์",
+        "Angelite"
+      ],
+      "visual_cues": "แร่แอนไฮไดรต์สีฟ้าอ่อนนวลทึบแสง เกิดจากการแปรสภาพของยิปซัมภายใต้แรงกดดันสูง",
+      "meaning_short": "เชื่อมต่อกับเทวดาผู้พิทักษ์ เสริมความสงบและการสื่อสารทางจิตวิญญาณ",
+      "chakra": [],
+      "tags": [
+        "เทวดาผู้พิทักษ์",
+        "ความสงบ",
+        "จิตวิญญาณ"
+      ],
+      "article_url": "/stones/angelite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "blue",
+      "rank": 65,
+      "emoji": "💙"
+    },
+    {
+      "id": "celestite",
+      "name_th": "เซเลสไตต์",
+      "name_en": "Celestite",
+      "aliases": [
+        "เซเลสไตต์",
+        "Celestite"
+      ],
+      "visual_cues": "ผลึกสีฟ้าอ่อนใสละเอียดอ่อน มักพบเป็นโพรงผลึกขนาดใหญ่จากมาดากัสการ์",
+      "meaning_short": "หินแห่งความสงบจากสวรรค์ ช่วยให้จิตใจผ่อนคลายและนอนหลับสนิท",
+      "chakra": [],
+      "tags": [
+        "ความสงบ",
+        "นอนหลับ",
+        "จิตวิญญาณ"
+      ],
+      "article_url": "/stones/celestite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "blue",
+      "rank": 66,
+      "emoji": "💙"
+    },
+    {
+      "id": "danburite",
+      "name_th": "แดนบูไรต์",
+      "name_en": "Danburite",
+      "aliases": [
+        "แดนบูไรต์",
+        "Danburite"
+      ],
+      "visual_cues": "แร่ผลึกใสวาวคล้ายเพชร มักไม่มีสีหรือมีสีชมพูอ่อนเล็กน้อย",
+      "meaning_short": "เสริมพลังจักระมงกุฎ ปลดปล่อยความกังวลใจ นำมาซึ่งความรักไม่มีเงื่อนไข",
+      "chakra": [
+        "มงกุฎ",
+        "หัวใจ"
+      ],
+      "tags": [
+        "จักระมงกุฎ",
+        "ปลดปล่อยความกังวล",
+        "ความรัก"
+      ],
+      "article_url": "/stones/danburite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "white",
+      "rank": 67,
+      "emoji": "🤍"
+    },
+    {
+      "id": "green-aventurine",
+      "name_th": "กรีน อะเวนจูรีน",
+      "name_en": "Green Aventurine",
+      "aliases": [
+        "กรีน อะเวนจูรีน",
+        "Green Aventurine"
+      ],
+      "visual_cues": "ควอตซ์สีเขียวมีประกายวิบวับจากแร่เฟลด์สปาร์ในเนื้อ หินโชคลาภที่หาซื้อง่ายราคาถูก",
+      "meaning_short": "หินแห่งโชคลาภ ดึงดูดโอกาสใหม่ ๆ เสริมสร้างความมั่นใจในการลงมือทำ",
+      "chakra": [],
+      "tags": [
+        "โชคลาภ",
+        "โอกาสใหม่",
+        "ความมั่นใจ"
+      ],
+      "article_url": "/stones/green-aventurine.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "green",
+      "rank": 68,
+      "emoji": "💚"
+    },
+    {
+      "id": "orange-aventurine",
+      "name_th": "อะเวนทูรินส้ม",
+      "name_en": "Orange Aventurine",
+      "aliases": [
+        "อะเวนทูรินส้ม",
+        "Orange Aventurine"
+      ],
+      "visual_cues": "ควอตซ์สีส้มมีประกายวิบวับ เป็นตัวแปรสีของอะเวนจูรีนที่หายากกว่าสีเขียว",
+      "meaning_short": "เสริมความคิดสร้างสรรค์ พลังงานทางเพศ และความมั่นใจในตัวเอง",
+      "chakra": [
+        "กระดูกสันหลังส่วนล่าง"
+      ],
+      "tags": [
+        "ความคิดสร้างสรรค์",
+        "พลังงาน",
+        "ความมั่นใจ"
+      ],
+      "article_url": "/stones/aventurine.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "orange",
+      "rank": 69,
+      "emoji": "🧡"
+    },
+    {
+      "id": "morganite",
+      "name_th": "มอร์แกไนต์",
+      "name_en": "Morganite",
+      "aliases": [
+        "มอร์แกไนต์",
+        "Morganite"
+      ],
+      "visual_cues": "อัญมณีตระกูลเบริลสีชมพูพาสเทล สีพีชใสสว่าง หรูหราและมีความวาวสูง",
+      "meaning_short": "ดึงดูดความรักที่ลึกซึ้งและยั่งยืน บำบัดความเครียด เสริมความเมตตาปราณี",
+      "chakra": [
+        "หัวใจ"
+      ],
+      "tags": [
+        "ความรัก",
+        "ความเมตตา",
+        "อัญมณี"
+      ],
+      "article_url": "/stones/morganite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "pink",
+      "rank": 70,
+      "emoji": "💗"
+    },
+    {
+      "id": "raw-diamond",
+      "name_th": "เพชรดิบ",
+      "name_en": "Raw Diamond",
+      "aliases": [
+        "เพชรดิบ",
+        "Raw Diamond"
+      ],
+      "visual_cues": "ผลึกเพชรธรรมชาติทรงแปดหน้า (Octahedron) วาวประกายเพชรดิบแท้ดิบเดิม",
+      "meaning_short": "ที่สุดแห่งความแข็งแกร่ง ชนะศัตรูคู่แข่ง ดึงดูดความมั่งคั่งขั้นสูงสุดไม่มีประมาณ",
+      "chakra": [],
+      "tags": [
+        "ความแข็งแกร่ง",
+        "ชนะอุปสรรค",
+        "ความมั่งคั่ง"
+      ],
+      "article_url": "/stones/diamond.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "clear",
+      "rank": 71,
+      "emoji": "💎"
+    },
+    {
+      "id": "lavender-jadeite",
+      "name_th": "หยกสีม่วงลาเวนเดอร์",
+      "name_en": "Lavender Jadeite",
+      "aliases": [
+        "หยกสีม่วงลาเวนเดอร์",
+        "Lavender Jadeite"
+      ],
+      "visual_cues": "หยกเจไดต์สีม่วงอ่อนหวานธรรมชาติ เนื้อแก้วกึ่งโปร่งแสง หายากราคาสูง",
+      "meaning_short": "บำบัดแผลใจ เสริมสร้างความสงบสุข ความเมตตา และความโชคดีในความสัมพันธ์",
+      "chakra": [],
+      "tags": [
+        "บำบัดใจ",
+        "ความสงบสุข",
+        "หยกเกรดสูง"
+      ],
+      "article_url": null,
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "purple",
+      "rank": 72,
+      "emoji": "💜"
+    },
+    {
+      "id": "jade",
+      "name_th": "หยก",
+      "name_en": "Jade",
+      "aliases": [
+        "หยก",
+        "Jade",
+        "เจด"
+      ],
+      "visual_cues": "หินตระกูลหยกที่คนไทยรู้จักและนิยมมากที่สุด สื่อถึงความมั่งคั่งและสุขภาพในวัฒนธรรมจีน-ไทย",
+      "meaning_short": "ความอุดมสมบูรณ์ สุขภาพแข็งแรง ความสงบร่มเย็น และโชคลาภที่ยั่งยืน",
+      "chakra": [],
+      "tags": [
+        "ความมั่งคั่ง",
+        "สุขภาพ",
+        "โชคลาภยั่งยืน"
+      ],
+      "article_url": "/stones/jade.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "green",
+      "rank": 73,
+      "emoji": "💚"
+    },
+    {
+      "id": "apatite",
+      "name_th": "อะพาไทต์",
+      "name_en": "Apatite",
+      "aliases": [
+        "อะพาไทต์",
+        "Apatite"
+      ],
+      "visual_cues": "แร่ฟอสเฟตที่มีสีฟ้าบลูโอเชียนสว่างสดใส คล้ายสีน้ำทะเลใสขัดมัน",
+      "meaning_short": "กระตุ้นความเชื่อมั่นในตนเอง ทลายความเฉื่อยชา ช่วยเรื่องการสื่อสารในกลุ่ม",
+      "chakra": [
+        "คอ"
+      ],
+      "tags": [
+        "ความเชื่อมั่น",
+        "ทลายความเฉื่อยชา",
+        "การสื่อสาร"
+      ],
+      "article_url": "/stones/apatite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "blue",
+      "rank": 74,
+      "emoji": "💙"
+    },
+    {
+      "id": "neon-apatite",
+      "name_th": "นีออน อพาไทต์",
+      "name_en": "Neon Apatite",
+      "aliases": [
+        "นีออน อพาไทต์",
+        "Neon Apatite"
+      ],
+      "visual_cues": "อะพาไทต์สีฟ้านีออนจัดจ้าน คล้ายพลอยพาราอิบา ความสดของสีเป็นเอกลักษณ์เฉพาะตัว",
+      "meaning_short": "เพิ่มพลังงานและความกระตือรือร้น จุดประกายไอเดียใหม่ ๆ อย่างรวดเร็ว",
+      "chakra": [],
+      "tags": [
+        "พลังงานสด",
+        "ไอเดียใหม่",
+        "สีสดจัด"
+      ],
+      "article_url": "/stones/neon-apatite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "blue",
+      "rank": 75,
+      "emoji": "💙"
+    },
+    {
+      "id": "fuchsite",
+      "name_th": "ฟุคไซต์",
+      "name_en": "Fuchsite",
+      "aliases": [
+        "ฟุคไซต์",
+        "Fuchsite"
+      ],
+      "visual_cues": "แร่ไมกาสีเขียวมรกตวาวแวว มักพบเป็นแผ่นบางระยิบระยับในเนื้อหิน",
+      "meaning_short": "ช่วยฟื้นฟูพลังกายหลังเหนื่อยล้า เสริมความยืดหยุ่นทางความคิดและการปรับตัว",
+      "chakra": [
+        "หัวใจ"
+      ],
+      "tags": [
+        "ฟื้นฟูพลังกาย",
+        "ความยืดหยุ่น",
+        "จักระหัวใจ"
+      ],
+      "article_url": "/stones/fuchsite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "green",
+      "rank": 76,
+      "emoji": "💚"
+    },
+    {
+      "id": "blue-lace-agate",
+      "name_th": "บลูเลซอะเกต",
+      "name_en": "Blue Lace Agate",
+      "aliases": [
+        "บลูเลซอะเกต",
+        "Blue Lace Agate"
+      ],
+      "visual_cues": "อะเกตสีฟ้าพาสเทล ลายริ้วเส้นสีขาวโค้งมนคล้ายลูกไม้ อ่อนโยนสบายตา",
+      "meaning_short": "หินแห่งการเจรจาอย่างนุ่มนวล บรรเทาอาการประหม่าเวลาพูดต่อหน้าคนจำนวนมาก",
+      "chakra": [
+        "คอ"
+      ],
+      "tags": [
+        "การเจรจา",
+        "ลดความประหม่า",
+        "การสื่อสาร"
+      ],
+      "article_url": "/stones/blue-lace-agate.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "blue",
+      "rank": 77,
+      "emoji": "💙"
+    },
+    {
+      "id": "moss-agate",
+      "name_th": "มอสอาเกต",
+      "name_en": "Moss Agate",
+      "aliases": [
+        "มอสอาเกต",
+        "Moss Agate"
+      ],
+      "visual_cues": "คาลซิโดนีโปร่งแสงฝังแร่ริ้วสีเขียวคล้ายหญ้ามอสหรือป่าไม้ธรรมชาติภายใน",
+      "meaning_short": "หินแห่งคนทำเกษตรและธุรกิจสีเขียว นำพาความงอกเงย เงินทองสะสมมั่นคง",
+      "chakra": [],
+      "tags": [
+        "ธุรกิจสีเขียว",
+        "ความงอกเงย",
+        "ธรรมชาติ"
+      ],
+      "article_url": null,
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "green",
+      "rank": 78,
+      "emoji": "💚"
+    },
+    {
+      "id": "agate",
+      "name_th": "อาเกต",
+      "name_en": "Agate",
+      "aliases": [
+        "อาเกต",
+        "Agate",
+        "อะเกต"
+      ],
+      "visual_cues": "หินคาลซิโดนีลายริ้วหลากสี หนึ่งในหินตกแต่งและเครื่องประดับที่พบได้ทั่วไปที่สุดในตลาดไทย",
+      "meaning_short": "สร้างความสมดุลระหว่างร่างกายและจิตใจ ป้องกันพลังงานลบ เสริมความมั่นคง",
+      "chakra": [],
+      "tags": [
+        "ความสมดุล",
+        "ป้องกัน",
+        "ความมั่นคง"
+      ],
+      "article_url": "/stones/agate.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "multi",
+      "rank": 79,
+      "emoji": "✨"
+    },
+    {
+      "id": "chalcedony",
+      "name_th": "คาลซิโดนี",
+      "name_en": "Chalcedony",
+      "aliases": [
+        "คาลซิโดนี",
+        "Chalcedony"
+      ],
+      "visual_cues": "แร่ควอตซ์เนื้อละเอียดกึ่งโปร่งแสง เป็นหินแม่ของอาเกต โอนิกซ์ และคาร์เนเลียน",
+      "meaning_short": "เสริมความสามัคคี ลดความขัดแย้ง ทำให้จิตใจสงบและมีเมตตาต่อผู้อื่น",
+      "chakra": [],
+      "tags": [
+        "ความสามัคคี",
+        "ลดความขัดแย้ง",
+        "เมตตา"
+      ],
+      "article_url": "/stones/chalcedony.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "blue",
+      "rank": 80,
+      "emoji": "💙"
+    },
+    {
+      "id": "bloodstone",
+      "name_th": "บลัดสโตน",
+      "name_en": "Bloodstone (Heliotrope)",
+      "aliases": [
+        "บลัดสโตน",
+        "Bloodstone (Heliotrope)",
+        "หินเลือด"
+      ],
+      "visual_cues": "แจสเปอร์สีเขียวเข้มทึบแสง มีจุดสีแดงสดของแร่เหล็กออกไซด์กระจายคล้ายหยดเลือด",
+      "meaning_short": "เพิ่มความอึด ความทนทานของร่างกาย เสริมพลังใจในการต่อสู้กับอุปสรรค",
+      "chakra": [],
+      "tags": [
+        "ความอดทน",
+        "พลังใจ",
+        "สู้อุปสรรค"
+      ],
+      "article_url": null,
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "green",
+      "rank": 81,
+      "emoji": "💚"
+    },
+    {
+      "id": "pink-opal",
+      "name_th": "พิงค์โอปอล",
+      "name_en": "Pink Opal",
+      "aliases": [
+        "พิงค์โอปอล",
+        "Pink Opal"
+      ],
+      "visual_cues": "โอปอลสีชมพูอ่อนหวานทึบแสง ไม่เล่นไฟเหมือนโอปอลทั่วไปแต่ได้รับความนิยมสูงในสร้อยข้อมือ",
+      "meaning_short": "เยียวยาบาดแผลทางใจ เสริมความรักตัวเองและความอ่อนโยนต่อผู้อื่น",
+      "chakra": [
+        "หัวใจ"
+      ],
+      "tags": [
+        "เยียวยาใจ",
+        "รักตัวเอง",
+        "อ่อนโยน"
+      ],
+      "article_url": "/stones/pink-opal.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "pink",
+      "rank": 82,
+      "emoji": "💗"
+    },
+    {
+      "id": "orange-calcite",
+      "name_th": "ออเรนจ์คาลไซต์",
+      "name_en": "Orange Calcite",
+      "aliases": [
+        "ออเรนจ์คาลไซต์",
+        "Orange Calcite"
+      ],
+      "visual_cues": "แคลไซต์สีส้มโปร่งแสง ผิวมันวาว มักถูกเจียระไนเป็นทรงหยดน้ำหรือลูกกลม",
+      "meaning_short": "กระตุ้นพลังงานสร้างสรรค์ เสริมความมั่นใจและความสนุกสนานร่าเริง",
+      "chakra": [
+        "กระดูกสันหลังส่วนล่าง"
+      ],
+      "tags": [
+        "ความคิดสร้างสรรค์",
+        "ความมั่นใจ",
+        "ร่าเริง"
+      ],
+      "article_url": "/stones/orange-calcite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "orange",
+      "rank": 83,
+      "emoji": "🧡"
+    },
+    {
+      "id": "ametrine",
+      "name_th": "อเมทริน",
+      "name_en": "Ametrine",
+      "aliases": [
+        "อเมทริน",
+        "Ametrine"
+      ],
+      "visual_cues": "ควอตซ์ที่มีสีอเมทิสต์และซิทรินอยู่ในก้อนเดียวกัน แบ่งครึ่งม่วง-เหลืองอย่างชัดเจน",
+      "meaning_short": "สมดุลระหว่างสมาธิและความสำเร็จ เชื่อมพลังจิตวิญญาณกับพลังทางโลก",
+      "chakra": [],
+      "tags": [
+        "สมดุลพลังงาน",
+        "สมาธิ",
+        "ความสำเร็จ"
+      ],
+      "article_url": "/stones/ametrine.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "purple",
+      "rank": 84,
+      "emoji": "💜"
+    },
+    {
+      "id": "vanadinite",
+      "name_th": "วานาดิไนต์",
+      "name_en": "Vanadinite",
+      "aliases": [
+        "วานาดิไนต์",
+        "Vanadinite"
+      ],
+      "visual_cues": "แร่ตะกั่ววานาเดตสีแดงส้มสดใส ผลึกทรงหกเหลี่ยมเล็กจิ๋วเรียงตัวสวยงาม",
+      "meaning_short": "กระตุ้นพลังงานและแรงจูงใจ ช่วยให้ลงมือทำสิ่งที่ผัดวันประกันพรุ่งไว้",
+      "chakra": [],
+      "tags": [
+        "พลังงาน",
+        "แรงจูงใจ",
+        "ลงมือทำ"
+      ],
+      "article_url": "/stones/vanadinite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "red",
+      "rank": 85,
+      "emoji": "❤️"
+    },
+    {
+      "id": "zircon",
+      "name_th": "เพทาย",
+      "name_en": "Zircon",
+      "aliases": [
+        "เพทาย",
+        "Zircon"
+      ],
+      "visual_cues": "แร่ผลึกธรรมชาติที่เก่าแก่ที่สุดชนิดหนึ่งบนโลก มีหลายสี มักถูกเข้าใจผิดว่าเป็นเพชรเทียม",
+      "meaning_short": "เสริมสติปัญญา ความมั่นคงทางจิตใจ และการนอนหลับที่มีคุณภาพ",
+      "chakra": [],
+      "tags": [
+        "สติปัญญา",
+        "ความมั่นคง",
+        "นอนหลับ"
+      ],
+      "article_url": "/stones/zircon.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "multi",
+      "rank": 86,
+      "emoji": "✨"
+    },
+    {
+      "id": "shungite",
+      "name_th": "ชุงไกต์",
+      "name_en": "Shungite",
+      "aliases": [
+        "ชุงไกต์",
+        "Shungite"
+      ],
+      "visual_cues": "แร่คาร์บอนโบราณอายุ 2 พันล้านปีจากรัสเซีย มีชื่อเสียงเรื่องการป้องกันคลื่นแม่เหล็กไฟฟ้า",
+      "meaning_short": "ป้องกันรังสี EMF จากอุปกรณ์อิเล็กทรอนิกส์ ชำระล้างพลังงานลบในบ้าน",
+      "chakra": [],
+      "tags": [
+        "ป้องกัน EMF",
+        "ชำระล้าง",
+        "ปกป้องบ้าน"
+      ],
+      "article_url": "/stones/shungite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "black",
+      "rank": 87,
+      "emoji": "🖤"
+    },
+    {
+      "id": "rutilated-quartz",
+      "name_th": "ควอตซ์รูทิเลต",
+      "name_en": "Rutilated Quartz",
+      "aliases": [
+        "ควอตซ์รูทิเลต",
+        "Rutilated Quartz",
+        "ไหมทอง",
+        "รูทิเลต"
+      ],
+      "visual_cues": "ควอตซ์ใสที่มีแร่รูไทล์เส้นเข็มฝังอยู่ภายใน มีหลายสีตามชนิดของรูไทล์ ต้นตระกูลของ \"ไหมทอง\" และ \"ไหมเงิน\"",
+      "meaning_short": "เร่งการไหลเวียนของพลังงาน ขยายเจตนาให้ชัดเจนและเป็นจริงเร็วขึ้น",
+      "chakra": [],
+      "tags": [
+        "เร่งพลังงาน",
+        "ขยายเจตนา",
+        "ตระกูลไหม"
+      ],
+      "article_url": "/stones/rutilated-quartz.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "gold",
+      "rank": 88,
+      "emoji": "💛"
+    },
+    {
+      "id": "shiva-lingam",
+      "name_th": "หินศิวลึงค์",
+      "name_en": "Shiva Lingam",
+      "aliases": [
+        "หินศิวลึงค์",
+        "Shiva Lingam"
+      ],
+      "visual_cues": "หินควอตซ์ผสมเหล็กทรงไข่ธรรมชาติจากแม่น้ำนรรมทา ประเทศอินเดีย เป็นที่นิยมในสายมูไทย",
+      "meaning_short": "ตัวแทนพลังงานสร้างสรรค์ของพระศิวะ ปรับหยินหยาง เพิ่มพลังกายและจิต",
+      "chakra": [],
+      "tags": [
+        "พลังพระศิวะ",
+        "หยินหยาง",
+        "สายมู"
+      ],
+      "article_url": null,
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "brown",
+      "rank": 89,
+      "emoji": "🤎"
+    },
+    {
+      "id": "shaligram",
+      "name_th": "หินศาลีคราม",
+      "name_en": "Shaligram",
+      "aliases": [
+        "หินศาลีคราม",
+        "Shaligram"
+      ],
+      "visual_cues": "ฟอสซิลแอมโมไนต์สีดำสนิทจากแม่น้ำกาลีคัณฑกี ประเทศเนปาล สายความเชื่อนับถือสูง",
+      "meaning_short": "ตัวแทนองค์พระวิษณุ นำความสงบร่มเย็น ชำระล้างบาป และความอุดมสมบูรณ์",
+      "chakra": [],
+      "tags": [
+        "พระวิษณุ",
+        "ชำระล้างบาป",
+        "สายมู"
+      ],
+      "article_url": null,
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "black",
+      "rank": 90,
+      "emoji": "🖤"
+    },
+    {
+      "id": "pallasite-meteorite",
+      "name_th": "อุกกาบาตพัลลาไซต์",
+      "name_en": "Pallasite Meteorite",
+      "aliases": [
+        "อุกกาบาตพัลลาไซต์",
+        "Pallasite Meteorite"
+      ],
+      "visual_cues": "อุกกาบาตชนิดหินปนเหล็กที่แทรกด้วยผลึกแร่โอลิวีนสีเหลืองเขียวโปร่งแสง หายากมาก",
+      "meaning_short": "ที่สุดแห่งแร่แปรพลังงานจักรวาล ดึงดูดความมั่งคั่งชั้นสูงและสติปัญญาหลุดพ้น",
+      "chakra": [],
+      "tags": [
+        "พลังจักรวาล",
+        "ความมั่งคั่งชั้นสูง",
+        "หายากที่สุด"
+      ],
+      "article_url": null,
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "multi",
+      "rank": 91,
+      "emoji": "✨"
+    },
+    {
+      "id": "trilobite-fossil",
+      "name_th": "ไตรโลไบต์",
+      "name_en": "Trilobite Fossil",
+      "aliases": [
+        "ไตรโลไบต์",
+        "Trilobite Fossil"
+      ],
+      "visual_cues": "ฟอสซิลสัตว์ทะเลโบราณยุคแรกเริ่มของโลก ร่างกายแบ่งเป็นสามพูเด่นชัดในเนื้อหิน",
+      "meaning_short": "ความอยู่รอด ปลอดภัยจากวิกฤตเศรษฐกิจ เสริมความอดทนและอายุยืนยาว",
+      "chakra": [],
+      "tags": [
+        "ความอยู่รอด",
+        "อายุยืน",
+        "ฟอสซิลโบราณ"
+      ],
+      "article_url": null,
+      "tier": "core",
+      "rock_class": "fossil",
+      "color": "brown",
+      "rank": 92,
+      "emoji": "🤎"
+    },
+    {
+      "id": "megalodon-tooth-fossil",
+      "name_th": "ฟอสซิลฟันฉลามเมกาโลดอน",
+      "name_en": "Megalodon Tooth Fossil",
+      "aliases": [
+        "ฟอสซิลฟันฉลามเมกาโลดอน",
+        "Megalodon Tooth Fossil"
+      ],
+      "visual_cues": "ฟอสซิลฟันรูปสามเหลี่ยมขนาดใหญ่หนาของฉลามยักษ์ดึกดำบรรพ์ แข็งแกร่งทรงพลัง",
+      "meaning_short": "ขจัดคู่แข่งทางธุรกิจ ทลายอุปสรรคตรงหน้า เพิ่มพลังอำนาจคุมบริวารเด็ดขาด",
+      "chakra": [],
+      "tags": [
+        "ขจัดคู่แข่ง",
+        "พลังอำนาจ",
+        "ทลายอุปสรรค"
+      ],
+      "article_url": null,
+      "tier": "core",
+      "rock_class": "fossil",
+      "color": "black",
+      "rank": 93,
+      "emoji": "🖤"
+    },
+    {
+      "id": "jet-stone",
+      "name_th": "นิลกาล",
+      "name_en": "Jet Stone",
+      "aliases": [
+        "นิลกาล",
+        "Jet Stone"
+      ],
+      "visual_cues": "อินทรียสารแปรสภาพจากซากไม้ใต้แรงกดดันสูง สีดำสนิท น้ำหนักเบา วาวฉ่ำเมื่อขัดมัน",
+      "meaning_short": "ดูดซับความโศกเศร้า ป้องกันสิ่งอัปมงคลและการเดินทางไกล แคล้วคลาด",
+      "chakra": [],
+      "tags": [
+        "ดูดซับความโศกเศร้า",
+        "ป้องกัน",
+        "แคล้วคลาด"
+      ],
+      "article_url": null,
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "black",
+      "rank": 94,
+      "emoji": "🖤"
+    },
+    {
+      "id": "super-seven",
+      "name_th": "ซูเปอร์เซเว่น",
+      "name_en": "Super Seven (Melody Stone)",
+      "aliases": [
+        "ซูเปอร์เซเว่น",
+        "Super Seven (Melody Stone)"
+      ],
+      "visual_cues": "หินรวมแร่ 7 ชนิดในก้อนเดียว (ควอตซ์, อเมทิสต์, สโมกกี้, คาโคเซไนต์ ฯลฯ)",
+      "meaning_short": "ที่สุดแห่งการรวมพลังจักระทั้ง 7 ไม่ต้องล้างพลังงาน เสริมมงคลรอบด้าน",
+      "chakra": [],
+      "tags": [
+        "รวมพลัง 7 จักระ",
+        "ไม่ต้องล้างพลังงาน",
+        "หายาก"
+      ],
+      "article_url": null,
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "multi",
+      "rank": 95,
+      "emoji": "✨"
+    },
+    {
+      "id": "botswana-agate",
+      "name_th": "บอตสวานาอาเกต",
+      "name_en": "Botswana Agate",
+      "aliases": [
+        "บอตสวานาอาเกต",
+        "Botswana Agate"
+      ],
+      "visual_cues": "อะเกตที่มีริ้วลายเส้นสีเทา น้ำตาล ชมพู ละเอียดเนียนแน่น วงการสะสมชื่นชอบ",
+      "meaning_short": "ช่วยให้เลิกสิ่งเสพติดหรือนิสัยแย่ ๆ ปกป้องจิตใจเด็ก คลายความซึมเศร้า",
+      "chakra": [],
+      "tags": [
+        "เลิกนิสัยแย่",
+        "ปกป้องจิตใจ",
+        "คลายซึมเศร้า"
+      ],
+      "article_url": null,
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "multi",
+      "rank": 96,
+      "emoji": "✨"
+    },
+    {
+      "id": "picture-jasper",
+      "name_th": "พิกเจอร์แจสเปอร์",
+      "name_en": "Picture Jasper",
+      "aliases": [
+        "พิกเจอร์แจสเปอร์",
+        "Picture Jasper"
+      ],
+      "visual_cues": "แจสเปอร์ที่มีริ้วลายและโทนสีน้ำตาลทราย คล้ายภาพวาดทะเลทรายหรือขุนเขาโบราณ",
+      "meaning_short": "เชื่อมต่อพลังงานพระแม่ธรณี สร้างความมั่นคงในธุรกิจอสังหาริมทรัพย์",
+      "chakra": [],
+      "tags": [
+        "พระแม่ธรณี",
+        "อสังหาริมทรัพย์",
+        "ความมั่นคง"
+      ],
+      "article_url": null,
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "brown",
+      "rank": 97,
+      "emoji": "🤎"
+    },
+    {
+      "id": "azurite",
+      "name_th": "อะซูไรต์",
+      "name_en": "Azurite",
+      "aliases": [
+        "อะซูไรต์",
+        "Azurite"
+      ],
+      "visual_cues": "แร่คอปเปอร์คาร์บอเนตสีน้ำเงินเข้มสด มักพบร่วมกับมาลาไคต์สีเขียว มีความสวยงามคมชัด",
+      "meaning_short": "เปิดรับข้อมูลใหม่ กระตุ้นความจำ ปลดล็อกความคิดที่ติดขัด",
+      "chakra": [
+        "ตาที่สาม"
+      ],
+      "tags": [
+        "ความจำ",
+        "ปลดล็อกความคิด",
+        "Third Eye"
+      ],
+      "article_url": "/stones/azurite.html",
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "blue",
+      "rank": 98,
+      "emoji": "💙"
+    },
+    {
+      "id": "ammolite",
+      "name_th": "แอมโมไลต์",
+      "name_en": "Ammolite",
+      "aliases": [
+        "แอมโมไลต์",
+        "Ammolite"
+      ],
+      "visual_cues": "ฟอสซิลแอมโมไนต์แปรสภาพชั้นเปลือกสะท้อนแสงเกิดเหลือบสีรุ้งสดใสราวโอปอล หายากมาก",
+      "meaning_short": "ฮวงจุ้ยมงคล 7 สี เรียกทรัพย์สินเงินทองขั้นสูงสุด ความโชคดีมหาศาล",
+      "chakra": [],
+      "tags": [
+        "ฮวงจุ้ย 7 สี",
+        "เรียกทรัพย์",
+        "หายากที่สุด"
+      ],
+      "article_url": null,
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "multi",
+      "rank": 99,
+      "emoji": "✨"
+    },
+    {
+      "id": "chrysoprase",
+      "name_th": "คริสโซเพรส",
+      "name_en": "Chrysoprase",
+      "aliases": [
+        "คริสโซเพรส",
+        "Chrysoprase"
+      ],
+      "visual_cues": "คาลซิโดนีสีเขียวแอปเปิ้ลธรรมชาติ วาวฉ่ำน้ำ สวยงามจนได้ฉายาหินหยกออสเตรเลีย",
+      "meaning_short": "ดึงดูดความรักครั้งใหม่ ความสุข ความอุดมสมบูรณ์ และชำระล้างความเศร้า",
+      "chakra": [
+        "หัวใจ"
+      ],
+      "tags": [
+        "ความรักใหม่",
+        "ความสุข",
+        "ชำระล้างความเศร้า"
+      ],
+      "article_url": null,
+      "tier": "core",
+      "rock_class": "mineral",
+      "color": "green",
+      "rank": 100,
+      "emoji": "💚"
+    },
+    {
+      "id": "river-pebble",
+      "name_th": "หินแม่น้ำ/หินกรวด",
+      "name_en": "River Pebble",
+      "aliases": [
+        "หินแม่น้ำ/หินกรวด",
+        "River Pebble",
+        "หินแม่น้ำ",
+        "หินกรวด",
+        "ก้อนกรวด"
+      ],
+      "visual_cues": "ก้อนกลมมนจากการถูกน้ำฝน/แม่น้ำขัด ผิวเรียบ สีผสมตามแหล่งที่มา มักไม่เป็นแร่มีค่าเฉพาะชนิด",
+      "meaning_short": "เป็นหินธรรมชาติทั่วไป ใช้ชื่นชมความงามจากธรรมชาติ หรือเป็นของตั้ง/ของสะสมที่ให้ความรู้สึกสงบ มั่นคง ไม่ใช่หินมงคลพิเศษที่มีเคลมปาฏิหาริย์",
+      "chakra": [],
+      "tags": [
+        "หินแม่น้ำ",
+        "หินกรวด",
+        "ธรรมชาติ",
+        "ทั่วไป"
+      ],
+      "article_url": null,
+      "tier": "bucket",
+      "rock_class": "river_common",
+      "color": "multi",
+      "emoji": "🪨",
+      "rank": null
+    },
+    {
+      "id": "common-quartz",
+      "name_th": "ควอตซ์ทั่วไป",
+      "name_en": "Common Quartz",
+      "aliases": [
+        "ควอตซ์ทั่วไป",
+        "Common Quartz",
+        "ควอตซ์",
+        "หินควอตซ์",
+        "คริสตัลทั่วไป"
+      ],
+      "visual_cues": "แร่ซิลิกาที่พบบ่อย ใสถึงขาวขุ่น มีความแข็ง ผิวเป็นแก้ว อาจเป็นผลึกหกเหลี่ยมหรือก้อนดิบ",
+      "meaning_short": "ควอตซ์เป็นแร่พื้นฐานที่พบได้ทั่วไป ใช้เรียนรู้ลักษณะผลึกและเป็นจุดเริ่มต้นของคนสนใจหิน ไม่จำเป็นต้องตีความเป็นปาฏิหาริย์",
+      "chakra": [],
+      "tags": [
+        "ควอตซ์",
+        "แร่พื้นฐาน",
+        "ทั่วไป"
+      ],
+      "article_url": null,
+      "tier": "bucket",
+      "rock_class": "mineral",
+      "color": "clear",
+      "emoji": "💎",
+      "rank": null
+    },
+    {
+      "id": "igneous-rock",
+      "name_th": "หินอัคนี (ภาพรวม)",
+      "name_en": "Igneous Rock",
+      "aliases": [
+        "หินอัคนี (ภาพรวม)",
+        "Igneous Rock",
+        "หินอัคนี",
+        "หินภูเขาไฟ"
+      ],
+      "visual_cues": "เกิดจากลาวา/หินหนืดเย็นตัว อาจมีผลึกแทรก รูพรุนจากฟองแก๊ส หรือเนื้อแน่นละเอียด เช่น หินแกรนิต บะซอลต์",
+      "meaning_short": "หมวดหินจากไฟใต้พิภพ เป็นกรอบจำแนกทางธรณีวิทยา ช่วยเข้าใจที่มา ไม่ใช่ชื่อหินชนิดเดียวที่มีพลังพิเศษ",
+      "chakra": [],
+      "tags": [
+        "หินอัคนี",
+        "ธรณีวิทยา",
+        "ภาพรวม"
+      ],
+      "article_url": null,
+      "tier": "bucket",
+      "rock_class": "igneous",
+      "color": null,
+      "emoji": "🌋",
+      "rank": null
+    },
+    {
+      "id": "sedimentary-rock",
+      "name_th": "หินชั้น (ภาพรวม)",
+      "name_en": "Sedimentary Rock",
+      "aliases": [
+        "หินชั้น (ภาพรวม)",
+        "Sedimentary Rock",
+        "หินตะกอน",
+        "หินชั้น"
+      ],
+      "visual_cues": "เกิดจากการทับถมของตะกอน มักเห็นชั้นชัด อาจมีซากดึกดำบรรพ์ฝัง เนื้อหยาบถึงละเอียด เช่น หินทราย หินปูน",
+      "meaning_short": "หมวดหินจากการสะสมตัวของตะกอนตามกาลเวลา ใช้จำแนกที่มาทางธรณี ไม่ใช่หินมงคลชนิดเดียว",
+      "chakra": [],
+      "tags": [
+        "หินชั้น",
+        "หินตะกอน",
+        "ธรณีวิทยา",
+        "ภาพรวม"
+      ],
+      "article_url": null,
+      "tier": "bucket",
+      "rock_class": "sedimentary",
+      "color": null,
+      "emoji": "📚",
+      "rank": null
+    },
+    {
+      "id": "metamorphic-rock",
+      "name_th": "หินแปร (ภาพรวม)",
+      "name_en": "Metamorphic Rock",
+      "aliases": [
+        "หินแปร (ภาพรวม)",
+        "Metamorphic Rock",
+        "หินแปร"
+      ],
+      "visual_cues": "หินเดิมถูกความร้อนและความดันเปลี่ยนเนื้อและแร่ใหม่ มักมีริ้วชั้นหรือแร่เรียงตัว เช่น หินอ่อน หินชีสต์",
+      "meaning_short": "หมวดหินที่ “แปรรูป” จากหินเดิมใต้พิภพ ใช้เข้าใจกระบวนการทางธรณี ไม่ได้แปลว่ามีพลังวิเศษโดยอัตโนมัติ",
+      "chakra": [],
+      "tags": [
+        "หินแปร",
+        "ธรณีวิทยา",
+        "ภาพรวม"
+      ],
+      "article_url": null,
+      "tier": "bucket",
+      "rock_class": "metamorphic",
+      "color": null,
+      "emoji": "🔁",
+      "rank": null
+    },
+    {
+      "id": "fossil-general",
+      "name_th": "ฟอสซิลทั่วไป",
+      "name_en": "Fossil (General)",
+      "aliases": [
+        "ฟอสซิลทั่วไป",
+        "Fossil (General)",
+        "ฟอสซิล",
+        "ซากดึกดำบรรพ์"
+      ],
+      "visual_cues": "ร่องรอยหรือซากสิ่งมีชีวิตโบราณในหิน มองเห็นรูปเปลือก กระดูก ลายใบ หรือโครงสร้างเดิมที่กลายเป็นแร่",
+      "meaning_short": "เป็นหลักฐานทางธรณีกาลและชีววิทยาในอดีต คุณค่าอยู่ที่ประวัติศาสตร์ธรรมชาติและการเรียนรู้ ไม่ใช่เคลมปาฏิหาริย์",
+      "chakra": [],
+      "tags": [
+        "ฟอสซิล",
+        "ซากดึกดำบรรพ์",
+        "ทั่วไป"
+      ],
+      "article_url": null,
+      "tier": "bucket",
+      "rock_class": "fossil",
+      "color": null,
+      "emoji": "🦴",
+      "rank": null
+    },
+    {
+      "id": "volcanic-glass",
+      "name_th": "แก้วภูเขาไฟ/ออบซิเดียนกลุ่ม",
+      "name_en": "Volcanic Glass",
+      "aliases": [
+        "แก้วภูเขาไฟ/ออบซิเดียนกลุ่ม",
+        "Volcanic Glass",
+        "แก้วภูเขาไฟ",
+        "ออบซิเดียน",
+        "obsidian"
+      ],
+      "visual_cues": "ลาวาเย็นเร็วจนเป็นแก้ว ผิวมันวาวแตกแบบหอยโข่ง สีดำถึงเข้ม อาจมีลายรุ้งหรือจุดฝัง",
+      "meaning_short": "เป็นหินภูเขาไฟชนิดแก้ว คุณสมบัติเด่นคือเนื้อแก้วและขอบคมเมื่อแตก ในสายสะสมมักพูดถึงการตั้งใจ/ตัดความวุ่นวายแบบเชิงสัญลักษณ์ ไม่ใช่ผลทางการแพทย์",
+      "chakra": [],
+      "tags": [
+        "ออบซิเดียน",
+        "แก้วภูเขาไฟ",
+        "หินอัคนี"
+      ],
+      "article_url": null,
+      "tier": "bucket",
+      "rock_class": "igneous",
+      "color": "black",
+      "emoji": "🖤",
+      "rank": null
+    },
+    {
+      "id": "unknown-stone",
+      "name_th": "ยังระบุไม่ชัด",
+      "name_en": "Unidentified Stone",
+      "aliases": [
+        "ยังระบุไม่ชัด",
+        "Unidentified Stone",
+        "ไม่ทราบชนิด",
+        "unknown"
+      ],
+      "visual_cues": "ลักษณะไม่ตรงกับชนิดที่คุ้นชัด ควรดูความแข็ง ความวาว สี ลาย และแหล่งที่พบเพิ่มก่อนฟันธงชื่อ",
+      "meaning_short": "เมื่อยังระบุไม่ได้ ให้เก็บเป็น “ยังไม่ทราบชนิด” ก่อน ดีกว่าเดาชื่อหินมงคลผิด — สังเกตเพิ่มหรือถามผู้เชี่ยวชาญได้",
+      "chakra": [],
+      "tags": [
+        "ไม่ทราบชนิด",
+        "ระบุไม่ได้",
+        "ทั่วไป"
+      ],
+      "article_url": null,
+      "tier": "bucket",
+      "rock_class": "mineral",
+      "color": null,
+      "emoji": "❓",
+      "rank": null
+    },
+    {
+      "id": "limestone-calcite",
+      "name_th": "หินปูน/แคลไซต์ทั่วไป",
+      "name_en": "Limestone / Calcite",
+      "aliases": [
+        "หินปูน/แคลไซต์ทั่วไป",
+        "Limestone / Calcite",
+        "หินปูน",
+        "แคลไซต์",
+        "calcite",
+        "limestone"
+      ],
+      "visual_cues": "หินตะกอนหรือแร่คาร์บอเนต สีขาวครีมถึงเทา เนื้ออาจเป็นผลึกหรือทึบ ทำปฏิกิริยากับกรดอ่อนได้บ่อย",
+      "meaning_short": "หินปูนและแคลไซต์พบได้ทั่วไปในธรรมชาติและของตกแต่ง คุณค่าหลักอยู่ที่ธรณีวิทยาและการใช้งาน ไม่จำเป็นต้องเคลมปาฏิหาริย์",
+      "chakra": [],
+      "tags": [
+        "หินปูน",
+        "แคลไซต์",
+        "หินชั้น"
+      ],
+      "article_url": null,
+      "tier": "bucket",
+      "rock_class": "sedimentary",
+      "color": "white",
+      "emoji": "🤍",
+      "rank": null
+    },
+    {
+      "id": "sandstone",
+      "name_th": "หินทราย",
+      "name_en": "Sandstone",
+      "aliases": [
+        "หินทราย",
+        "Sandstone",
+        "หินทรายธรรมชาติ"
+      ],
+      "visual_cues": "หินตะกอนจากเม็ดทรายอัดแน่น มักเห็นเนื้อเม็ด ชั้นสีน้ำตาล แดง เทา หรือครีม ผิวหยาบกว่าหินปูนบางชนิด",
+      "meaning_short": "หินทรายเป็นหินชั้นทั่วไป ใช้ในงานก่อสร้างและภูมิทัศน์ ความหมายเชิงสัญลักษณ์ถ้ามีก็เป็นเรื่องความรู้สึกส่วนบุคคล ไม่ใช่หลักวิทยาศาสตร์",
+      "chakra": [],
+      "tags": [
+        "หินทราย",
+        "หินชั้น",
+        "ธรณีวิทยา"
+      ],
+      "article_url": null,
+      "tier": "bucket",
+      "rock_class": "sedimentary",
+      "color": "brown",
+      "emoji": "🤎",
+      "rank": null
+    }
+  ]
+}

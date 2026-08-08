@@ -1,0 +1,113 @@
+{
+  "guides": {
+    "atlas": {
+      "id": "atlas",
+      "name": "Crystal Atlas",
+      "roles": {
+        "card": "/images/avatars/atlas/atlas-smiling-camera.jpg",
+        "hero": "/images/avatars/atlas/atlas-desk-encyclopedia.jpg",
+        "portrait": "/images/avatars/atlas/atlas-arms-crossed.jpg",
+        "story": "/images/avatars/atlas/atlas-desk-reading.jpg"
+      },
+      "photos": [
+        { "src": "/images/avatars/atlas/atlas-smiling-camera.jpg", "role": "card", "theme": "smiling-camera" },
+        { "src": "/images/avatars/atlas/atlas-smiling-camera-b.jpg", "role": "portrait", "theme": "smiling-camera-b" },
+        { "src": "/images/avatars/atlas/atlas-desk-encyclopedia.jpg", "role": "hero", "theme": "desk-encyclopedia" },
+        { "src": "/images/avatars/atlas/atlas-desk-reading.jpg", "role": "story", "theme": "desk-reading" },
+        { "src": "/images/avatars/atlas/atlas-library-desk.jpg", "role": "story", "theme": "library-desk" },
+        { "src": "/images/avatars/atlas/atlas-library-desk-b.jpg", "role": "story", "theme": "library-desk-b" },
+        { "src": "/images/avatars/atlas/atlas-arms-crossed.jpg", "role": "portrait", "theme": "arms-crossed" },
+        { "src": "/images/avatars/atlas/atlas-prompt-a.jpg", "role": "story", "theme": "prompt-a" },
+        { "src": "/images/avatars/atlas/atlas-prompt-b.jpg", "role": "story", "theme": "prompt-b" }
+      ]
+    },
+    "wuchong": {
+      "id": "wuchong",
+      "name": "ปรัชญาหิน Wuchong",
+      "roles": {
+        "card": "/images/avatars/wuchong/wuchong-blazer-smile.jpg",
+        "hero": "/images/avatars/wuchong/wuchong-window-gaze.jpg",
+        "portrait": "/images/avatars/wuchong/wuchong-teacup.jpg",
+        "story": "/images/avatars/wuchong/wuchong-notebook.jpg"
+      },
+      "photos": [
+        { "src": "/images/avatars/wuchong/wuchong-blazer-smile.jpg", "role": "card", "theme": "blazer-smile" },
+        { "src": "/images/avatars/wuchong/wuchong-window-gaze.jpg", "role": "hero", "theme": "window-gaze" },
+        { "src": "/images/avatars/wuchong/wuchong-teacup.jpg", "role": "portrait", "theme": "teacup" },
+        { "src": "/images/avatars/wuchong/wuchong-notebook.jpg", "role": "story", "theme": "notebook" },
+        { "src": "/images/avatars/wuchong/wuchong-gesture.jpg", "role": "story", "theme": "gesture" },
+        { "src": "/images/avatars/wuchong/wuchong-amethyst-hold.jpg", "role": "story", "theme": "amethyst-hold" },
+        { "src": "/images/avatars/wuchong/wuchong-desk-smile.jpg", "role": "portrait", "theme": "desk-smile" },
+        { "src": "/images/avatars/wuchong/wuchong-arms-folded.jpg", "role": "portrait", "theme": "arms-folded" },
+        { "src": "/images/avatars/wuchong/wuchong-library-laugh.jpg", "role": "story", "theme": "library-laugh" },
+        { "src": "/images/avatars/wuchong/wuchong-chin-rest.jpg", "role": "story", "theme": "chin-rest" },
+        { "src": "/images/avatars/wuchong/wuchong-home-interior.jpg", "role": "story", "theme": "home-interior" },
+        { "src": "/images/avatars/wuchong/wuchong-home-interior-b.jpg", "role": "story", "theme": "home-interior-b" },
+        { "src": "/images/avatars/wuchong/wuchong-sit-indoors.jpg", "role": "story", "theme": "sit-indoors" },
+        { "src": "/images/avatars/wuchong/wuchong-extra-a.jpg", "role": "story", "theme": "extra-a" }
+      ]
+    },
+    "ajarn-one": {
+      "id": "ajarn-one",
+      "name": "อาจารย์วัน",
+      "roles": {
+        "card": "/images/avatars/ajarn-one/ajarn-one-desk-sit.jpg",
+        "hero": "/images/avatars/ajarn-one/ajarn-one-standing.jpg",
+        "portrait": "/images/avatars/ajarn-one/ajarn-one-standing-angle.jpg",
+        "story": "/images/avatars/ajarn-one/ajarn-one-pose-a.jpg"
+      },
+      "photos": [
+        { "src": "/images/avatars/ajarn-one/ajarn-one-desk-sit.jpg", "role": "card", "theme": "desk-sit" },
+        { "src": "/images/avatars/ajarn-one/ajarn-one-standing.jpg", "role": "hero", "theme": "standing" },
+        { "src": "/images/avatars/ajarn-one/ajarn-one-standing-angle.jpg", "role": "portrait", "theme": "standing-angle" },
+        { "src": "/images/avatars/ajarn-one/ajarn-one-standing-angle-b.jpg", "role": "portrait", "theme": "standing-angle-b" },
+        { "src": "/images/avatars/ajarn-one/ajarn-one-angle-a.jpg", "role": "story", "theme": "angle-a" },
+        { "src": "/images/avatars/ajarn-one/ajarn-one-pose-a.jpg", "role": "story", "theme": "pose-a" },
+        { "src": "/images/avatars/ajarn-one/ajarn-one-pose-b.jpg", "role": "story", "theme": "pose-b" },
+        { "src": "/images/avatars/ajarn-one/ajarn-one-pose-c.jpg", "role": "story", "theme": "pose-c" },
+        { "src": "/images/avatars/ajarn-one/ajarn-one-pose-d.jpg", "role": "story", "theme": "pose-d" }
+      ]
+    },
+    "mesa": {
+      "id": "mesa",
+      "name": "น้องเมษา",
+      "roles": {
+        "card": "/images/avatars/mesa-soft.png",
+        "hero": "/images/avatars/mesa-hero.png",
+        "portrait": "/images/avatars/mesa.png",
+        "story": "/images/avatars/mesa-cute.png"
+      },
+      "photos": [
+        { "src": "/images/avatars/mesa.png", "role": "portrait", "theme": "mesa" },
+        { "src": "/images/avatars/mesa-soft.png", "role": "card", "theme": "mesa-soft" },
+        { "src": "/images/avatars/mesa-hero.png", "role": "hero", "theme": "mesa-hero" },
+        { "src": "/images/avatars/mesa-cute.png", "role": "story", "theme": "mesa-cute" },
+        { "src": "/images/avatars/mesa-bubble.png", "role": "story", "theme": "mesa-bubble" },
+        { "src": "/images/avatars/mesa-present.png", "role": "story", "theme": "mesa-present" }
+      ]
+    },
+    "cosmos": {
+      "id": "cosmos",
+      "name": "Dr. Cosmos",
+      "roles": {
+        "card": "/images/avatars/cosmos/cosmos-confident-stand.jpg",
+        "hero": "/images/avatars/cosmos/cosmos-meteorite-hold.jpg",
+        "portrait": "/images/avatars/cosmos/cosmos-turn-smile.jpg",
+        "story": "/images/avatars/cosmos/cosmos-meteorite-glow.jpg"
+      },
+      "photos": [
+        { "src": "/images/avatars/cosmos/cosmos-confident-stand.jpg", "role": "card", "theme": "confident-stand" },
+        { "src": "/images/avatars/cosmos/cosmos-meteorite-hold.jpg", "role": "hero", "theme": "meteorite-hold" },
+        { "src": "/images/avatars/cosmos/cosmos-meteorite-glow.jpg", "role": "story", "theme": "meteorite-glow" },
+        { "src": "/images/avatars/cosmos/cosmos-meteorite-examine.jpg", "role": "story", "theme": "meteorite-examine" },
+        { "src": "/images/avatars/cosmos/cosmos-green-crystal.jpg", "role": "story", "theme": "green-crystal" },
+        { "src": "/images/avatars/cosmos/cosmos-tablet-table.jpg", "role": "story", "theme": "tablet-table" },
+        { "src": "/images/avatars/cosmos/cosmos-laugh.jpg", "role": "portrait", "theme": "laugh" },
+        { "src": "/images/avatars/cosmos/cosmos-point.jpg", "role": "story", "theme": "point" },
+        { "src": "/images/avatars/cosmos/cosmos-chin-hand.jpg", "role": "portrait", "theme": "chin-hand" },
+        { "src": "/images/avatars/cosmos/cosmos-desk-fold.jpg", "role": "story", "theme": "desk-fold" },
+        { "src": "/images/avatars/cosmos/cosmos-turn-smile.jpg", "role": "portrait", "theme": "turn-smile" }
+      ]
+    }
+  }
+}

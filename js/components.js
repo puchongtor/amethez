@@ -1,4 +1,4 @@
-/* ═══ Amethez Shared Nav + Footer ═══ */
+﻿/* ═══ Amethez Shared Nav + Footer ═══ */
 
 const NAV_HTML = `
 <div class="container nav-inner">
@@ -15,8 +15,10 @@ const NAV_HTML = `
     <span></span><span></span><span></span>
   </button>
   <nav><ul class="nav-links">
+    <li><a href="/identify/">🔬 Identify</a></li>
     <li class="has-drop"><a href="/stones/">📖 สารานุกรมหิน</a>
       <ul class="dropdown">
+        <li><a href="/identify/">🔬 Atlas Identify · ส่งรูปดูหิน</a></li>
         <li><a href="/stones/a-z.html">🔤 หิน A–Z ทั้งหมด</a></li>
         <li><a href="/stones/rankings/">🏆 จัดอันดับหินคริสตัล</a></li>
         <li><div class="drop-sep"></div></li>
@@ -31,17 +33,18 @@ const NAV_HTML = `
     <li class="has-drop"><a href="/blog/">📖 เรียนรู้</a>
       <ul class="dropdown">
         <li><a href="/blog/">บทความ</a></li>
-        <li><a href="/shorts/">ทริปหิน (Shorts)</a></li>
+        <li><a href="/shorts/">น้องเมษา · คลิปสั้น เล่าเรื่องหิน</a></li>
         <li><a href="/video/">🎬 Crystal Talks</a></li>
       </ul>
     </li>
-    <li class="has-drop"><a href="/#guides">✨ ทีมไกด์</a>
+    <li class="has-drop"><a href="/#guides">✨ คอลัมน์พิเศษ</a>
       <ul class="dropdown">
-        <li><a href="/stones/">🔬 Crystal Atlas · สารานุกรม</a></li>
-        <li><a href="/wuchong/">🧘 Master Wuchong · ที่ปรึกษาชีวิต</a></li>
-        <li><a href="/metha/">🌙 อาจารย์เมธา · หมอดูที่ปรึกษา</a></li>
-        <li><a href="/shorts/">💬 เมษา · ทริปหิน (Shorts)</a></li>
-        <li><a href="/cosmos/">☄️ Dr. Cosmos · หินจักรวาล</a></li>
+        <li><a href="/identify/">🔬 Atlas Identify · ส่งรูปดูหิน</a></li>
+        <li><a href="/stones/">📖 Crystal Atlas · สารานุกรมหินโลก</a></li>
+        <li><a href="/wuchong/">🧘 ปรัชญาหิน Wuchong · บทเรียนชีวิตจากธรรมชาติ</a></li>
+        <li><a href="/metha/">🔮 อาจารย์วัน · หมอดูพลังงานบวก & สายมู</a></li>
+        <li><a href="/shorts/">💬 เมษา · น้องเมษา · คลิปสั้น เล่าเรื่องหิน</a></li>
+        <li><a href="/cosmos/">☄️ Dr. Cosmos · หินนอกโลก & แร่อวกาศ</a></li>
       </ul>
     </li>
     <li class="has-drop"><a href="/shop/" class="nav-shop">🛒 ร้านค้า</a>
@@ -141,22 +144,24 @@ const FOOTER_HTML = `
     <div class="footer-col">
       <h4>สำรวจ</h4>
       <ul>
+        <li><a href="/identify/">🔬 Atlas Identify</a></li>
         <li><a href="/stones/">📖 สารานุกรมหิน A–Z</a></li>
         <li><a href="/stones/rankings/">🏆 จัดอันดับหินคริสตัล</a></li>
         <li><a href="/blog/">📖 บทความ</a></li>
-        <li><a href="/shorts/">ทริปหิน (Shorts)</a></li>
+        <li><a href="/shorts/">น้องเมษา · คลิปสั้น เล่าเรื่องหิน</a></li>
         <li><a href="/video/">🎬 Crystal Talks</a></li>
         <li><a href="/stories/">📚 เรื่องเล่าหินทั่วโลก</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>ทีมไกด์</h4>
+      <h4>คอลัมน์พิเศษ</h4>
       <ul>
-        <li><a href="/stones/">🔬 Crystal Atlas</a></li>
-        <li><a href="/wuchong/">🧘 Master Wuchong</a></li>
-        <li><a href="/metha/">🌙 อาจารย์เมธา · หมอดูที่ปรึกษา</a></li>
-        <li><a href="/shorts/">💬 เมษา · ทริปหิน</a></li>
-        <li><a href="/cosmos/">☄️ Dr. Cosmos</a></li>
+        <li><a href="/identify/">🔬 Atlas Identify · ส่งรูปดูหิน</a></li>
+        <li><a href="/stones/">📖 Crystal Atlas · สารานุกรมหินโลก</a></li>
+        <li><a href="/wuchong/">🧘 ปรัชญาหิน Wuchong</a></li>
+        <li><a href="/metha/">🔮 อาจารย์วัน · หมอดูพลังงานบวก & สายมู</a></li>
+        <li><a href="/shorts/">📱 น้องเมษา · คลิปสั้น เล่าเรื่องหิน</a></li>
+        <li><a href="/cosmos/">☄️ Dr. Cosmos · หินนอกโลก</a></li>
         <li><a href="/talk/">🔮 ห้องคลื่นเสียง Manifest</a></li>
       </ul>
     </div>

@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Amethez — อาณาจักรความรู้คริสตัล รวบรวมจากทั่วโลก เรียบเรียงใหม่เพื่อคนไทย</title>
-  <meta name="description" content="Amethez แหล่งรวมความรู้คริสตัล พลอย และหินพลังงาน รวบรวมจากทั่วโลก เรียบเรียงใหม่เพื่อคนไทย พร้อมคำแนะนำจาก Crystal Atlas, Master Wuchong และอาจารย์เมธา">
-  <meta property="og:title" content="Amethez — Stones · Stories · Soul">
-  <meta property="og:description" content="อาณาจักรความรู้คริสตัล รวบรวมจากทั่วโลก เรียบเรียงใหม่เพื่อคนไทย">
+  <meta name="description" content="ส่งรูปหินให้ Crystal Atlas ดูเบื้องต้น พร้อมความหมายและสารานุกรมคริสตัล พลอย หินพลังงาน สำหรับคนไทย — Amethez">
+  <meta property="og:title" content="Amethez — ส่งรูปหินให้ Atlas ดูเบื้องต้น">
+  <meta property="og:description" content="Atlas Identify · สารานุกรมหิน · Stones · Stories · Soul">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://amethez.com">
   <link rel="canonical" href="https://amethez.com">
@@ -55,27 +55,52 @@
     .cmc-more .cmc-icon { color:var(--purple); font-size:1.5rem; font-weight:700; }
     .row-head { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:1.75rem; gap:1rem; flex-wrap:wrap; }
 
-    /* ── HERO ── */
-    .hero { background:linear-gradient(155deg,#0f0a1e 0%,#1a0936 50%,#0c1a3a 100%); padding:4rem 1.5rem; position:relative; overflow:hidden; }
-    .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 70% at 55% 40%,rgba(124,58,237,.25),transparent 65%); pointer-events:none; }
-    .hero-inner { max-width:1160px; margin:0 auto; display:grid; grid-template-columns:1fr 420px; gap:3rem; align-items:center; position:relative; text-align:left; }
-    .hero-eyebrow { display:inline-block; font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; font-weight:700; color:rgba(201,168,76,.75); margin-bottom:1rem; }
-    .hero h1 { font-family:'Kanit',sans-serif; font-weight:700; font-size:clamp(1.85rem,4.2vw,2.85rem); color:white; line-height:1.28; margin-bottom:1.125rem; }
+    /* ── HERO · Atlas Identify ── */
+    .hero { background:linear-gradient(155deg,#0f0a1e 0%,#1a0936 50%,#0c1a3a 100%); padding:3.25rem 1.5rem 2.75rem; position:relative; overflow:hidden; }
+    .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 55% 65% at 72% 35%,rgba(124,58,237,.28),transparent 65%); pointer-events:none; }
+    .hero-inner { max-width:72rem; margin:0 auto; padding:0 1rem; display:grid; grid-template-columns:1.15fr .85fr; gap:2.5rem; align-items:center; position:relative; text-align:left; }
+    .hero-eyebrow { display:inline-block; font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; font-weight:700; color:rgba(201,168,76,.75); margin-bottom:.85rem; }
+    .hero h1 { font-family:'Kanit',sans-serif; font-weight:700; font-size:clamp(1.75rem,4vw,2.65rem); color:white; line-height:1.25; margin-bottom:.85rem; }
     .hero h1 em { font-style:normal; color:#c4b5fd; }
-    .hero-tags { list-style:none; display:flex; flex-direction:column; gap:.45rem; margin-bottom:1.75rem; }
-    .hero-tags li { font-size:.88rem; color:rgba(255,255,255,.55); display:flex; align-items:center; gap:.55rem; }
-    .hero-tags li::before { content:'✦'; color:var(--gold); font-size:.6rem; flex-shrink:0; }
-    .hero-tags li strong { color:rgba(255,255,255,.8); font-weight:600; }
-    .hero-actions { display:flex; gap:.75rem; flex-wrap:wrap; }
-    .btn-primary { background:linear-gradient(135deg,#7c3aed,#6d28d9); color:white; padding:.85rem 1.75rem; border-radius:.625rem; font-family:Sarabun,sans-serif; font-size:.95rem; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:.4rem; transition:all .2s; box-shadow:0 4px 20px rgba(124,58,237,.4); }
+    .hero-lead { font-size:.95rem; color:rgba(255,255,255,.62); line-height:1.7; margin-bottom:1.25rem; max-width:34rem; }
+    .btn-primary { background:linear-gradient(135deg,#7c3aed,#6d28d9); color:white; padding:.85rem 1.75rem; border-radius:.75rem; font-family:Sarabun,sans-serif; font-size:.95rem; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:.4rem; transition:all .2s; box-shadow:0 4px 20px rgba(124,58,237,.4); border:none; cursor:pointer; }
     .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(124,58,237,.5); }
-    .btn-ghost { background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.18); color:rgba(255,255,255,.88); padding:.85rem 1.75rem; border-radius:.625rem; font-family:Sarabun,sans-serif; font-size:.95rem; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:.4rem; transition:all .2s; }
+    .btn-ghost { background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.18); color:rgba(255,255,255,.88); padding:.85rem 1.75rem; border-radius:.75rem; font-family:Sarabun,sans-serif; font-size:.95rem; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:.4rem; transition:all .2s; }
     .btn-ghost:hover { background:rgba(255,255,255,.13); }
-    .hero-img { border-radius:1rem; overflow:hidden; aspect-ratio:4/5; background:rgba(255,255,255,.05); border:1.5px solid rgba(201,168,76,.2); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:.75rem; color:rgba(201,168,76,.5); font-size:.8rem; text-align:center; position:relative; }
-    .hero-img-placeholder { font-size:5rem; }
+    .hero-upload {
+      background:rgba(255,255,255,.07); border:1.5px dashed rgba(196,181,253,.55); border-radius:1.25rem;
+      padding:1.25rem 1.35rem; cursor:pointer; transition:background .2s, border-color .2s; margin-bottom:1rem;
+    }
+    .hero-upload:hover, .hero-upload.drag { background:rgba(124,58,237,.18); border-color:rgba(201,168,76,.55); }
+    .hero-upload input { display:none; }
+    .hero-upload-title { font-weight:700; color:white; font-size:1rem; margin-bottom:.25rem; }
+    .hero-upload-sub { font-size:.82rem; color:rgba(255,255,255,.5); line-height:1.55; }
+    .hero-actions { display:flex; gap:.75rem; flex-wrap:wrap; margin-top:.25rem; }
+    .hero-atlas {
+      position:relative; border-radius:1.25rem; overflow:hidden; aspect-ratio:4/5; max-height:460px;
+      border:1.5px solid rgba(201,168,76,.28); background:#1a0936;
+      box-shadow:0 16px 48px rgba(0,0,0,.35);
+    }
+    .hero-atlas img { width:100%; height:100%; object-fit:cover; object-position:center top; display:block; }
+    .hero-bubble {
+      position:absolute; left:1rem; right:1rem; bottom:1rem;
+      background:rgba(15,10,30,.78); backdrop-filter:blur(12px);
+      border:1px solid rgba(201,168,76,.3); border-radius:1rem;
+      padding:.9rem 1rem; color:rgba(255,255,255,.92); font-size:.88rem; line-height:1.65;
+      animation:heroBubbleIn .6s ease both;
+    }
+    .hero-bubble strong { color:#f2e3ae; }
+    @keyframes heroBubbleIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+    .hero-mini-status {
+      display:none; margin-top:.85rem; color:rgba(255,255,255,.7); font-size:.82rem;
+      align-items:center; gap:.5rem;
+    }
+    .hero-mini-status.show { display:flex; }
+    .hero-spin { width:12px; height:12px; border:2px solid rgba(255,255,255,.2); border-top-color:#c4b5fd; border-radius:50%; animation:hspin .7s linear infinite; }
+    @keyframes hspin { to { transform:rotate(360deg); } }
     @media(max-width:860px) {
-      .hero-inner { grid-template-columns:1fr; gap:2rem; }
-      .hero-img { aspect-ratio:16/10; width:100%; max-width:420px; margin:0 auto; }
+      .hero-inner { grid-template-columns:1fr; gap:1.75rem; }
+      .hero-atlas { aspect-ratio:16/11; max-height:none; width:100%; max-width:480px; margin:0 auto; }
     }
 
     /* ── TRUST STRIP ── */
@@ -227,35 +252,36 @@
 
 <!-- Top Announcement -->
 <div class="topbar">
+  <span>🔬 <strong>Atlas Identify</strong> ส่งรูปหินมาดูเบื้องต้น</span>
   <span>💎 <strong>300+</strong> บทความหิน</span>
   <span>📥 <strong>คู่มือฟรี</strong> ดาวน์โหลดได้เลย</span>
   <span>🌙 <strong>ดูดวงประจำวัน</strong> จากอาจารย์เมธา</span>
-  <span>🔍 ข้อมูล <strong>วิทยาศาสตร์ + สายมู</strong></span>
 </div>
 
 <header class="site-header"></header>
 
-<!-- ═══ 1. HERO ═══ -->
-<section class="hero">
+<!-- ═══ 1. HERO · Atlas Identify ═══ -->
+<section class="hero" id="identify">
   <div class="hero-inner">
     <div>
-      <span class="hero-eyebrow">AMETHEZ — Stones · Stories · Soul</span>
-      <h1>ศูนย์กลางข้อมูลหินและแร่ ที่รวบรวม<em>ความรู้ ร้านค้า และผู้เชี่ยวชาญ</em>ไว้ในที่เดียว</h1>
-      <p style="font-size:.95rem;color:rgba(255,255,255,.65);line-height:1.7;margin-bottom:1.5rem">ครอบคลุมทั้งความรู้ทางวิทยาศาสตร์ ร้านค้า และผู้เชี่ยวชาญที่ใช้หินในงาน เช่น นักบำบัดและหมอดู<br>เราตั้งใจเป็นพื้นที่กลางให้ทุกคนที่เกี่ยวข้องกับหินและแร่ในไทย</p>
-      <ul class="hero-tags">
-        <li><strong>300+ บทความหิน</strong> ครบทุกมิติ — วิทยาศาสตร์ พลังงาน และความเชื่อ</li>
-        <li>พื้นที่โปรโมท<strong>ฟรี</strong> สำหรับร้านค้า นักบำบัด และผู้เชี่ยวชาญด้านหิน</li>
-        <li>✨ <strong>อัปเดตความรู้ใหม่ทุกวัน</strong> คัดสรรโดยทีม Amethez</li>
-      </ul>
+      <span class="hero-eyebrow">AMETHEZ · Crystal Atlas Identify</span>
+      <h1>ส่งรูปหินมา <em>Atlas</em> ช่วยดูเบื้องต้น</h1>
+      <p class="hero-lead">อัปโหลดรูป แล้วได้หินที่เป็นไปได้เรียงตามความน่าจะเป็น พร้อมเหตุผล ความหมายสั้นๆ และคุยต่อกับ Crystal Atlas แบบเพื่อน — ดึงคนเข้าความรู้ ไม่จบแค่ชื่อหิน</p>
+      <label class="hero-upload" id="homeDrop">
+        <input type="file" id="homeFile" accept="image/jpeg,image/png,image/webp,image/*" capture="environment">
+        <div class="hero-upload-title">📷 ถ่ายรูปหรืออัปโหลดหินของคุณ</div>
+        <div class="hero-upload-sub">แสงธรรมชาติ · พื้นหลังเรียบ · เห็นเนื้อหินชัด — ตรวจเบื้องต้น ไม่ใช่ใบรับรองแล็บ</div>
+      </label>
+      <div class="hero-mini-status" id="homeStatus"><span class="hero-spin"></span><span id="homeStatusText">กำลังส่งต่อให้ Atlas…</span></div>
       <div class="hero-actions">
-        <a href="/stones/" class="btn-primary">💎 สำรวจสารานุกรมหิน</a>
-        <a href="/about/" class="btn-ghost">🤝 ร่วมเป็นพาร์ทเนอร์กับเรา</a>
+        <a href="/identify/" class="btn-primary">🔬 เปิด Atlas Identify</a>
+        <a href="/stones/" class="btn-ghost">สารานุกรมหิน</a>
       </div>
     </div>
-    <div class="hero-img" data-cms-img="home_hero">
-      <div class="cms-placeholder" style="display:flex;flex-direction:column;align-items:center;gap:.75rem">
-        <div class="hero-img-placeholder">🪨</div>
-        <span style="font-size:.78rem;opacity:.55">รูปหินดิบ editorial</span>
+    <div class="hero-atlas">
+      <img id="homeAtlasImg" src="/images/avatars/atlas/atlas-desk-encyclopedia.jpg" alt="Crystal Atlas — Amethez" width="420" height="525">
+      <div class="hero-bubble" id="homeAtlasBubble">
+        สวัสดีค่ะ ฉัน <strong>Crystal Atlas</strong> — ส่งรูปหินมาได้เลย ฉันช่วยดูเบื้องต้นให้ แล้วเล่าสั้นๆ แบบคุยกันจริงๆ นะคะ
       </div>
     </div>
   </div>
@@ -744,12 +770,14 @@
       <div class="sec-sub">สารานุกรม · ที่ปรึกษา · ดวง · ทริปหิน · จักรวาล — คนละบทบาท รู้จริงในหมวดตัวเอง</div>
     </div>
     <div class="expert-strip">
-      <a href="/stones/" class="ex-card">
-        <div class="ex-icon ex-icon-atlas" data-cms-img="atlas_avatar"><span class="cms-placeholder">🔬</span></div>
+      <a href="/identify/" class="ex-card">
+        <div class="ex-icon ex-icon-atlas" style="padding:0;overflow:hidden">
+          <img src="/images/avatars/atlas/atlas-smiling-camera.jpg" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center top" onerror="this.parentElement.innerHTML='🔬'">
+        </div>
         <div class="ex-name">Crystal Atlas</div>
-        <div class="ex-role">สารานุกรมหินคริสตัล</div>
-        <div class="ex-desc">ข้อมูลวิทยาศาสตร์ แหล่งกำเนิด ของแท้/เทียม ราคาตลาด อ้างอิงได้ระดับสากล</div>
-        <div class="ex-tags"><span class="ex-tag">แร่วิทยา</span><span class="ex-tag">แหล่งกำเนิด</span><span class="ex-tag">ราคาตลาด</span></div>
+        <div class="ex-role">Identify + สารานุกรมหิน</div>
+        <div class="ex-desc">ส่งรูปให้ดูเบื้องต้น พร้อมความหมายสั้นๆ และบทความวิทยาศาสตร์ อ้างอิงได้</div>
+        <div class="ex-tags"><span class="ex-tag">Identify</span><span class="ex-tag">แร่วิทยา</span><span class="ex-tag">ความหมายหิน</span></div>
       </a>
       <a href="/wuchong/" class="ex-card">
         <div class="ex-icon ex-icon-wuchong" data-cms-img="wuchong_avatar"><span class="cms-placeholder">🧘</span></div>
@@ -927,5 +955,73 @@ loadBlog();
 <footer class="site-footer"></footer>
 <script src="/js/components.js"></script>
 <script src="/js/shila.js"></script>
+<script src="/js/identify.js"></script>
+<script>
+(function () {
+  const drop = document.getElementById('homeDrop');
+  const input = document.getElementById('homeFile');
+  const status = document.getElementById('homeStatus');
+  const statusText = document.getElementById('homeStatusText');
+  const bubble = document.getElementById('homeAtlasBubble');
+  const atlasImg = document.getElementById('homeAtlasImg');
+  if (!drop || !input || !window.AtlasIdentify) return;
+
+  const poses = [
+    AtlasIdentify.AVATARS.hero,
+    AtlasIdentify.AVATARS.library,
+    AtlasIdentify.AVATARS.read,
+  ];
+  atlasImg.src = poses[Math.floor(Math.random() * poses.length)];
+
+  async function go(file) {
+    if (!file || !file.type.startsWith('image/')) return;
+    status.classList.add('show');
+    statusText.textContent = 'กำลังเตรียมรูปให้ Atlas…';
+    atlasImg.src = AtlasIdentify.AVATARS.think;
+    bubble.innerHTML = 'รับรูปแล้วค่ะ กำลังพาไปหน้า Identify เพื่อดูรายละเอียดให้…';
+    try {
+      // Compress before sessionStorage to avoid quota errors
+      const dataUrl = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onerror = reject;
+        reader.onload = () => {
+          const img = new Image();
+          img.onload = () => {
+            const max = 1280;
+            let w = img.width, h = img.height;
+            const s = Math.min(1, max / Math.max(w, h));
+            w = Math.round(w * s); h = Math.round(h * s);
+            const c = document.createElement('canvas');
+            c.width = w; c.height = h;
+            c.getContext('2d').drawImage(img, 0, 0, w, h);
+            resolve(c.toDataURL('image/jpeg', 0.8));
+          };
+          img.onerror = reject;
+          img.src = reader.result;
+        };
+        reader.readAsDataURL(file);
+      });
+      sessionStorage.setItem('amethez_identify_pending', dataUrl);
+      statusText.textContent = 'พาไปคุยกับ Atlas…';
+      window.location.href = '/identify/';
+    } catch (e) {
+      statusText.textContent = 'ส่งรูปไม่สำเร็จ ลองที่หน้า Identify โดยตรงนะคะ';
+      bubble.textContent = 'ลองกดปุ่มเปิด Atlas Identify แล้วอัปโหลดใหม่ได้ค่ะ';
+    }
+  }
+
+  drop.addEventListener('dragover', (e) => { e.preventDefault(); drop.classList.add('drag'); });
+  drop.addEventListener('dragleave', () => drop.classList.remove('drag'));
+  drop.addEventListener('drop', (e) => {
+    e.preventDefault(); drop.classList.remove('drag');
+    const f = e.dataTransfer.files?.[0];
+    if (f) go(f);
+  });
+  input.addEventListener('change', () => {
+    const f = input.files?.[0];
+    if (f) go(f);
+  });
+})();
+</script>
 </body>
 </html>

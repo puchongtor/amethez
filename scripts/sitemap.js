@@ -33,6 +33,8 @@ function findHtmlFiles(dir, baseDir = dir) {
 
 const PRIORITY = {
   '/index.html': '1.0',
+  '/identify/': '0.95',
+  '/identify/index.html': '0.95',
   '/stones/': '0.9',
   '/categories/': '0.8',
   '/wuchong/': '0.8',
