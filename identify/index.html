@@ -113,7 +113,17 @@
     .conf-กลาง { background:#fef3c7; color:#92400e; }
     .conf-ต่ำ { background:#f3f4f6; color:#4b5563; }
     .id-card h3 { font-family:'Playfair Display',serif; font-size:1.15rem; margin-bottom:.15rem; }
-    .id-en { font-size:.78rem; color:var(--muted); margin-bottom:.55rem; }
+    .id-en { font-size:.78rem; color:var(--muted); margin-bottom:.35rem; }
+    .id-badges { margin-bottom:.4rem; }
+    .id-badge-out, .id-badge-in {
+      display:inline-block; font-size:.68rem; font-weight:700; padding:.15rem .55rem;
+      border-radius:999px; letter-spacing:.02em;
+    }
+    .id-badge-out { background:#f3f4f6; color:#4b5563; border:1px solid #e5e7eb; }
+    .id-badge-in { background:#ede9fe; color:#5b21b6; border:1px solid #ddd6fe; }
+    .id-meta { font-size:.75rem; color:#6b7280; margin-bottom:.45rem; }
+    .id-lookalikes { font-size:.78rem; color:#6b7280; margin-bottom:.55rem; line-height:1.5; }
+    .id-card.out { border-style:dashed; }
     .id-reason { font-size:.86rem; line-height:1.65; color:#374151; margin-bottom:.55rem; }
     .id-meaning { font-size:.84rem; line-height:1.6; color:#4c1d95; background:#f5f0ff; border-radius:.75rem; padding:.65rem .8rem; margin-bottom:.65rem; }
     .id-meaning.muted { color:var(--muted); background:#f9fafb; }
@@ -208,12 +218,12 @@
           <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,image/*" capture="environment">
           <div class="id-upload-ico">📷</div>
           <h2>ส่งภาพมา เดี๋ยวฉันบอกให้</h2>
-          <p>ลากวาง หรือแตะเพื่อเลือกไฟล์<br>แสงธรรมชาติ · พื้นหลังเรียบ · เห็นเนื้อหินชัด</p>
+          <p>ลากวาง หรือแตะเพื่อเลือกไฟล์<br>ถ่ายใกล้ๆ · แสงธรรมชาติ · พื้นหลังเรียบ · เห็นเนื้อ/ประกายชัด</p>
           <div class="id-tips">
-            <span class="id-tip">คริสตัล</span>
-            <span class="id-tip">หินแม่น้ำ</span>
-            <span class="id-tip">ฟอสซิล</span>
-            <span class="id-tip">หินอัคนี/ชั้น/แปร</span>
+            <span class="id-tip">ถ่ายใกล้เนื้อหิน</span>
+            <span class="id-tip">แสงธรรมชาติ</span>
+            <span class="id-tip">พื้นหลังเรียบ</span>
+            <span class="id-tip">คริสตัล · หิน · ฟอสซิล</span>
           </div>
         </label>
         <div class="id-preview-box" id="previewBox">

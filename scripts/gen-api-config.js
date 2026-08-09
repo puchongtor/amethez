@@ -12,13 +12,14 @@ function esc(key) {
 const groqKey = process.env.GROQ_API_KEY || '';
 const geminiKey = process.env.GEMINI_API_KEY || '';
 const ttsKey = process.env.GCLOUD_TTS_KEY || '';
+const identifyModel = process.env.GEMINI_IDENTIFY_MODEL || 'gemini-2.5-flash';
 
 if (!groqKey && !geminiKey && !ttsKey) {
   console.warn('No API keys set — skipping api/config.php generation (chat + TTS will show setup errors).');
   process.exit(0);
 }
 
-const content = `<?php\nreturn [\n    'groq_api_key' => '${esc(groqKey)}',\n    'gemini_api_key' => '${esc(geminiKey)}',\n    'gcloud_tts_key' => '${esc(ttsKey)}',\n];\n`;
+const content = `<?php\nreturn [\n    'groq_api_key' => '${esc(groqKey)}',\n    'gemini_api_key' => '${esc(geminiKey)}',\n    'gemini_identify_model' => '${esc(identifyModel)}',\n    'gcloud_tts_key' => '${esc(ttsKey)}',\n];\n`;
 
 const apiDir = path.join(process.cwd(), 'api');
 fs.mkdirSync(apiDir, { recursive: true });

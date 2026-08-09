@@ -4,6 +4,9 @@
  * Actions:
  *   POST { action: "analyze", image: "data:image/...;base64,..." }
  *   POST { action: "chat", messages: [...], context: { candidates: [...] } }
+ *
+ * Analyze uses free-form geological ID (Rock Identifier style) via Gemini,
+ * then optionally enriches matches from data/identify-catalog.json.
  */
 
 header('Content-Type: application/json; charset=utf-8');
@@ -33,90 +36,121 @@ function identify_rate_limit_ok($ip, $bucket, $max, $window) {
     return $data['count'] <= $max;
 }
 
-$ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
-$raw = file_get_contents('php://input');
-$body = json_decode($raw, true);
-if (!is_array($body)) {
-    http_response_code(400);
-    echo json_encode(['error' => 'คำขอไม่ถูกต้อง']);
-    exit;
-}
-
-$action = $body['action'] ?? 'analyze';
-
-$configPath = __DIR__ . '/config.php';
-if (!is_file($configPath)) {
-    http_response_code(500);
-    echo json_encode(['error' => 'ระบบยังไม่ได้ตั้งค่า', 'fallback' => true]);
-    exit;
-}
-$config = require $configPath;
-$geminiKey = $config['gemini_api_key'] ?? '';
-$groqKey = $config['groq_api_key'] ?? '';
-if (!$geminiKey && !$groqKey) {
-    http_response_code(500);
-    echo json_encode(['error' => 'ระบบยังไม่ได้ตั้งค่า', 'fallback' => true]);
-    exit;
-}
-
-$catalogPath = dirname(__DIR__) . '/data/identify-catalog.json';
-$catalog = [];
-if (is_file($catalogPath)) {
-    $catRaw = json_decode(file_get_contents($catalogPath), true);
-    $catalog = is_array($catRaw['stones'] ?? null) ? $catRaw['stones'] : [];
+function identify_norm($s) {
+    $s = mb_strtolower(trim((string)$s));
+    $s = preg_replace('/[\s_\-–—\/\\\\]+/u', ' ', $s);
+    $s = preg_replace('/[^\p{L}\p{N}\s]/u', '', $s);
+    return trim(preg_replace('/\s+/u', ' ', $s));
 }
 
 function identify_catalog_index($catalog) {
     $byId = [];
-    $byName = [];
+    $exact = []; // normalized name/alias -> id
     foreach ($catalog as $s) {
+        if (empty($s['id'])) continue;
         $byId[$s['id']] = $s;
-        $byName[mb_strtolower($s['name_en'] ?? '')] = $s['id'];
-        $byName[mb_strtolower($s['name_th'] ?? '')] = $s['id'];
-        foreach ($s['aliases'] ?? [] as $a) {
-            $byName[mb_strtolower($a)] = $s['id'];
+        $names = array_filter([
+            $s['name_en'] ?? '',
+            $s['name_th'] ?? '',
+            ...($s['aliases'] ?? []),
+        ]);
+        foreach ($names as $n) {
+            $k = identify_norm($n);
+            if ($k === '') continue;
+            // First exact spelling wins (aliases listed after official names)
+            if (!isset($exact[$k])) $exact[$k] = $s['id'];
+            $compact = str_replace(' ', '', $k);
+            if ($compact !== '' && $compact !== $k && !isset($exact[$compact])) {
+                $exact[$compact] = $s['id'];
+            }
         }
     }
-    return [$byId, $byName];
+    return [$byId, $exact];
 }
 
-function identify_match_stone($name, $byId, $byName) {
-    $key = mb_strtolower(trim((string)$name));
+/**
+ * Strict catalog match: exact id / exact name / exact alias only.
+ * Longest alias wins when several aliases equal the query after normalize.
+ * No loose substring matching (avoids "quartz" hijacking every quartz variety).
+ */
+function identify_match_stone($name, $idHint, $byId, $exact) {
+    if (!empty($idHint) && isset($byId[$idHint])) {
+        return $byId[$idHint];
+    }
+    $key = identify_norm($name);
     if ($key === '') return null;
-    if (isset($byId[$key])) return $byId[$key];
-    if (isset($byName[$key])) return $byId[$byName[$key]] ?? null;
-    foreach ($byName as $n => $id) {
-        if ($n !== '' && (mb_strpos($key, $n) !== false || mb_strpos($n, $key) !== false)) {
-            return $byId[$id] ?? null;
+    if (isset($exact[$key]) && isset($byId[$exact[$key]])) {
+        return $byId[$exact[$key]];
+    }
+    $compact = str_replace(' ', '', $key);
+    if (isset($exact[$compact]) && isset($byId[$exact[$compact]])) {
+        return $byId[$exact[$compact]];
+    }
+
+    // Longest exact alias that equals a trailing/leading variety phrase
+    // e.g. "Dark Amethyst" → match "amethyst" only if full alias length >= 5
+    // and the alias is a complete token sequence inside the query
+    $bestId = null;
+    $bestLen = 0;
+    foreach ($exact as $alias => $id) {
+        $len = mb_strlen($alias);
+        if ($len < 5) continue;
+        if ($alias === $key) {
+            if ($len > $bestLen) { $bestLen = $len; $bestId = $id; }
+            continue;
+        }
+        // Token-boundary containment both ways (multi-word safe)
+        $pattern = '/(?:^| )' . preg_quote($alias, '/') . '(?:$| )/u';
+        if (preg_match($pattern, $key) && $len > $bestLen) {
+            $bestLen = $len;
+            $bestId = $id;
         }
     }
+    if ($bestId && isset($byId[$bestId])) return $byId[$bestId];
     return null;
 }
 
-function identify_call_gemini_json($apiKey, $systemPrompt, $userParts, $maxTokens = 900) {
+function identify_slug($nameEn) {
+    $s = strtolower(trim((string)$nameEn));
+    $s = preg_replace('/[^a-z0-9]+/', '-', $s);
+    $s = trim($s, '-');
+    return $s !== '' ? $s : 'unknown-stone';
+}
+
+function identify_gemini_model($config) {
+    $fromConfig = trim((string)($config['gemini_identify_model'] ?? ''));
+    if ($fromConfig !== '') return $fromConfig;
+    $fromEnv = trim((string)(getenv('GEMINI_IDENTIFY_MODEL') ?: ''));
+    if ($fromEnv !== '') return $fromEnv;
+    return 'gemini-2.5-flash';
+}
+
+function identify_call_gemini_json($apiKey, $model, $systemPrompt, $userParts, $maxTokens = 1200) {
     $payload = [
         'system_instruction' => ['parts' => [['text' => $systemPrompt]]],
         'contents' => [['role' => 'user', 'parts' => $userParts]],
         'generationConfig' => [
             'maxOutputTokens' => $maxTokens,
-            'temperature' => 0.4,
+            'temperature' => 0.2,
             'responseMimeType' => 'application/json',
         ],
     ];
-    $url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' . urlencode($apiKey);
+    $url = 'https://generativelanguage.googleapis.com/v1beta/models/'
+        . rawurlencode($model)
+        . ':generateContent?key=' . urlencode($apiKey);
     $ch = curl_init($url);
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_POST => true,
         CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
         CURLOPT_POSTFIELDS => json_encode($payload),
-        CURLOPT_TIMEOUT => 45,
+        CURLOPT_TIMEOUT => 55,
     ]);
     $response = curl_exec($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     $curlErr = curl_error($ch);
     curl_close($ch);
-    if ($response === false) return ['ok' => false, 'error' => 'เชื่อมต่อ AI ไม่สำเร็จ: ' . $curlErr];
+    if ($response === false) return ['ok' => false, 'error' => 'เชื่อมต่อ AI ไม่สำเร็จ: ' . $curlErr, 'http' => 0];
     $data = json_decode($response, true);
     $text = $data['candidates'][0]['content']['parts'][0]['text'] ?? null;
     if ($httpCode >= 200 && $httpCode < 300 && $text) {
@@ -124,10 +158,10 @@ function identify_call_gemini_json($apiKey, $systemPrompt, $userParts, $maxToken
         if (is_array($json)) return ['ok' => true, 'json' => $json, 'raw' => $text];
         return ['ok' => true, 'json' => null, 'raw' => $text];
     }
-    return ['ok' => false, 'error' => 'Gemini ตอบกลับไม่สำเร็จ', 'raw' => $data];
+    return ['ok' => false, 'error' => 'Gemini ตอบกลับไม่สำเร็จ', 'raw' => $data, 'http' => $httpCode];
 }
 
-function identify_call_gemini_text($apiKey, $systemPrompt, $messages, $maxTokens = 220) {
+function identify_call_gemini_text($apiKey, $model, $systemPrompt, $messages, $maxTokens = 220) {
     $contents = [];
     foreach ($messages as $m) {
         $contents[] = [
@@ -140,7 +174,9 @@ function identify_call_gemini_text($apiKey, $systemPrompt, $messages, $maxTokens
         'contents' => $contents,
         'generationConfig' => ['maxOutputTokens' => $maxTokens, 'temperature' => 0.85],
     ];
-    $url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' . urlencode($apiKey);
+    $url = 'https://generativelanguage.googleapis.com/v1beta/models/'
+        . rawurlencode($model)
+        . ':generateContent?key=' . urlencode($apiKey);
     $ch = curl_init($url);
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,
@@ -189,6 +225,128 @@ function identify_call_groq_text($apiKey, $systemPrompt, $messages) {
     return ['ok' => false, 'error' => 'AI ตอบกลับไม่สำเร็จ'];
 }
 
+function identify_enrich_candidates($rawCandidates, $catalog) {
+    [$byId, $exact] = identify_catalog_index($catalog);
+    $candidates = [];
+
+    foreach ($rawCandidates as $c) {
+        if (!is_array($c)) continue;
+
+        $nameEn = trim((string)($c['species_en'] ?? $c['name_en'] ?? ''));
+        $nameTh = trim((string)($c['species_th'] ?? $c['name_th'] ?? ''));
+        $variety = trim((string)($c['variety'] ?? ''));
+        if ($variety !== '' && $nameEn !== '' && stripos($nameEn, $variety) === false) {
+            $displayEn = $nameEn . ' (' . $variety . ')';
+        } else {
+            $displayEn = $nameEn !== '' ? $nameEn : 'Unknown';
+        }
+        if ($nameTh === '') $nameTh = 'ยังไม่ทราบชื่อ';
+
+        $matched = identify_match_stone($nameEn, $c['id'] ?? null, $byId, $exact);
+        if (!$matched && $nameTh !== 'ยังไม่ทราบชื่อ') {
+            $matched = identify_match_stone($nameTh, null, $byId, $exact);
+        }
+
+        $lookalikes = [];
+        if (is_array($c['lookalikes'] ?? null)) {
+            foreach (array_slice($c['lookalikes'], 0, 4) as $lk) {
+                $lookalikes[] = is_string($lk) ? trim($lk) : '';
+            }
+            $lookalikes = array_values(array_filter($lookalikes));
+        }
+
+        $rockClass = trim((string)($c['rock_class'] ?? ($matched['rock_class'] ?? 'mineral')));
+        $mohs = trim((string)($c['mohs_guess'] ?? ''));
+
+        $entry = [
+            'id' => $matched['id'] ?? identify_slug($nameEn),
+            'name_en' => $matched['name_en'] ?? $displayEn,
+            'name_th' => $matched['name_th'] ?? $nameTh,
+            'species_en' => $nameEn !== '' ? $nameEn : ($matched['name_en'] ?? $displayEn),
+            'species_th' => $nameTh,
+            'variety' => $variety,
+            'confidence' => max(0, min(100, (int)($c['confidence'] ?? 50))),
+            'reason' => trim((string)($c['reason'] ?? '')),
+            'price_range_th' => trim((string)($c['price_range_th'] ?? '')),
+            'in_catalog' => (bool)$matched,
+            'tier' => $matched['tier'] ?? 'lite',
+            'meaning_short' => $matched['meaning_short'] ?? '',
+            'tags' => $matched['tags'] ?? [],
+            'visual_cues' => $matched['visual_cues'] ?? '',
+            'article_url' => $matched['article_url'] ?? null,
+            'rock_class' => $rockClass !== '' ? $rockClass : null,
+            'mohs_guess' => $mohs,
+            'lookalikes' => $lookalikes,
+            'color' => $matched['color'] ?? null,
+            'emoji' => $matched['emoji'] ?? '🪨',
+        ];
+        $candidates[] = $entry;
+        if (count($candidates) >= 5) break;
+    }
+
+    if (!$candidates) {
+        $unk = $byId['unknown-stone'] ?? null;
+        $candidates[] = [
+            'id' => 'unknown-stone',
+            'name_en' => 'Unidentified Stone',
+            'name_th' => 'ยังระบุไม่ชัด',
+            'species_en' => 'Unidentified Stone',
+            'species_th' => 'ยังระบุไม่ชัด',
+            'variety' => '',
+            'confidence' => 35,
+            'reason' => 'จากรูปยังจับลักษณะเด่นไม่พอ อยากได้มุมใกล้ๆ แสงธรรมชาติ หรือพื้นหลังเรียบกว่านี้อีกหน่อยค่ะ',
+            'price_range_th' => '',
+            'in_catalog' => (bool)$unk,
+            'tier' => 'bucket',
+            'meaning_short' => $unk['meaning_short'] ?? '',
+            'tags' => $unk['tags'] ?? [],
+            'visual_cues' => $unk['visual_cues'] ?? '',
+            'article_url' => null,
+            'rock_class' => 'mineral',
+            'mohs_guess' => '',
+            'lookalikes' => [],
+            'color' => null,
+            'emoji' => '🪨',
+        ];
+    }
+
+    return $candidates;
+}
+
+$ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+$raw = file_get_contents('php://input');
+$body = json_decode($raw, true);
+if (!is_array($body)) {
+    http_response_code(400);
+    echo json_encode(['error' => 'คำขอไม่ถูกต้อง']);
+    exit;
+}
+
+$action = $body['action'] ?? 'analyze';
+
+$configPath = __DIR__ . '/config.php';
+if (!is_file($configPath)) {
+    http_response_code(500);
+    echo json_encode(['error' => 'ระบบยังไม่ได้ตั้งค่า']);
+    exit;
+}
+$config = require $configPath;
+$geminiKey = $config['gemini_api_key'] ?? '';
+$groqKey = $config['groq_api_key'] ?? '';
+$geminiModel = identify_gemini_model($config);
+if (!$geminiKey && !$groqKey) {
+    http_response_code(500);
+    echo json_encode(['error' => 'ระบบยังไม่ได้ตั้งค่า']);
+    exit;
+}
+
+$catalogPath = dirname(__DIR__) . '/data/identify-catalog.json';
+$catalog = [];
+if (is_file($catalogPath)) {
+    $catRaw = json_decode(file_get_contents($catalogPath), true);
+    $catalog = is_array($catRaw['stones'] ?? null) ? $catRaw['stones'] : [];
+}
+
 /* ── ANALYZE ── */
 if ($action === 'analyze') {
     if (!identify_rate_limit_ok($ip, 'analyze', 12, 86400)) {
@@ -213,107 +371,73 @@ if ($action === 'analyze') {
 
     if (!$geminiKey) {
         http_response_code(503);
-        echo json_encode(['error' => 'โหมดวิเคราะห์รูปยังไม่พร้อม', 'fallback' => true]);
+        echo json_encode(['error' => 'โหมดวิเคราะห์รูปยังไม่พร้อม กรุณาลองใหม่ภายหลังค่ะ']);
         exit;
     }
 
-    $nameList = array_slice(array_map(function ($s) {
-        return ($s['name_en'] ?? '') . ' / ' . ($s['name_th'] ?? '') . ' [' . ($s['id'] ?? '') . ']';
-    }, $catalog), 0, 120);
-    $catalogHint = implode("\n", $nameList);
+    $system = <<<'EOT'
+You are Crystal Atlas, a careful field mineralogist + friendly Thai guide for Amethez (knowledge hub — NOT a shop).
 
-    $system = <<<EOT
-You are Crystal Atlas for Amethez (Thai crystal knowledge hub — NOT a shop). Analyze a user photo of a stone/mineral/rock/fossil.
-Return ONLY JSON with this shape:
+Identify the specimen in the photo using geological visual diagnostics — like a Rock Identifier app.
+You may name ANY real rock, mineral, crystal, gemstone, fossil, or meteorite/tektite.
+Do NOT limit yourself to a short shop catalog. Prefer the most precise species/variety that the photo supports.
+
+Analyze (when visible): color & zoning, luster (vitreous/waxy/metallic/earthy), transparency, crystal habit / cleavage / fracture, grain size, banding/foliation/vesicles, matrix vs crystal, polish vs rough, weathering.
+
+Return ONLY JSON:
 {
-  "atlas_line": "1-2 short Thai sentences, conversational, female speaker using ค่ะ/นะคะ — like chatting with a friend. Hooky tone OK e.g. mentioning what it might be and rough price vibe",
+  "atlas_line": "1-2 short Thai sentences, female voice (ค่ะ/นะคะ), warm, hooky — what it might be + rough price vibe",
   "candidates": [
     {
-      "id": "catalog id if known else null",
-      "name_en": "English name",
-      "name_th": "Thai name",
+      "id": null,
+      "species_en": "English species or rock name",
+      "species_th": "Thai common name (transliterate if needed)",
+      "variety": "optional variety e.g. Rose / Smoky / or empty",
+      "rock_class": "mineral|gemstone|igneous|sedimentary|metamorphic|fossil|tektite|organic|rock",
+      "mohs_guess": "e.g. 7 or 3-4 or empty if unknown",
       "confidence": 0-100,
-      "reason": "2 short Thai sentences: visual cues why this match",
-      "price_range_th": "optional rough Thai market range text e.g. หลักร้อยถึงหลักพัน ขึ้นกับคุณภาพ/ขนาด — or empty if unknown",
-      "in_catalog": true/false
+      "reason": "2 short Thai sentences citing visual cues (luster/habit/grain/etc.)",
+      "lookalikes": ["English names of confusing lookalikes"],
+      "price_range_th": "rough Thai market vibe text, or empty",
+      "in_catalog": false
     }
   ],
   "need_more": false,
-  "follow_up": "optional short Thai question to narrow result"
+  "follow_up": "optional short Thai question to narrow (hardness feel, streak, wet vs dry, another angle)"
 }
+
 Rules:
-- Give 3 to 5 candidates sorted by confidence descending.
-- Prefer matching catalog ids from the list when possible.
-- If unsure, include river-pebble / common-quartz / igneous-rock / sedimentary-rock / metamorphic-rock / fossil-general / unknown-stone buckets.
+- Give 3–5 candidates sorted by confidence descending.
+- Use full mineralogy knowledge; common pebbles may be granite / basalt / limestone / quartzite / chalcedony — name them honestly.
+- If unsure, lower confidence and add lookalikes; do not invent rare gem certainty from a blurry phone photo.
 - Never claim lab certification. Preliminary visual ID only.
 - Price is rough Thai market vibe only (not an appraisal / not for buying).
-- atlas_line must be Thai, short, warm, human — not an encyclopedia dump.
-Catalog (id hints):
-$catalogHint
+- atlas_line must be Thai, short, human — not an encyclopedia dump.
+- Leave "id" null unless you are highly sure it is a classic healing-stone name (amethyst, rose quartz, etc.); matching to Amethez encyclopedia happens server-side.
 EOT;
 
     $parts = [
-        ['text' => 'ช่วยดูหินในรูปนี้แบบเบื้องต้น และตอบเป็น JSON ตามสคีมา'],
+        ['text' => 'Identify this specimen with free-form geological vision. Respond as JSON only.'],
         ['inline_data' => ['mime_type' => $mime, 'data' => $b64]],
     ];
 
-    $result = identify_call_gemini_json($geminiKey, $system, $parts, 1000);
+    $result = identify_call_gemini_json($geminiKey, $geminiModel, $system, $parts, 1400);
+
+    // Fallback if 2.5 model unavailable on this key
+    if (!$result['ok'] && $geminiModel !== 'gemini-2.0-flash') {
+        $result = identify_call_gemini_json($geminiKey, 'gemini-2.0-flash', $system, $parts, 1400);
+        if ($result['ok']) $geminiModel = 'gemini-2.0-flash';
+    }
+
     if (!$result['ok'] || !is_array($result['json'] ?? null)) {
         http_response_code(502);
-        echo json_encode(['error' => $result['error'] ?? 'วิเคราะห์ไม่สำเร็จ', 'fallback' => true]);
+        echo json_encode(['error' => $result['error'] ?? 'วิเคราะห์ไม่สำเร็จ ลองถ่ายใหม่ในแสงธรรมชาติค่ะ']);
         exit;
     }
 
     $json = $result['json'];
-    [$byId, $byName] = identify_catalog_index($catalog);
-    $candidates = [];
-    foreach (($json['candidates'] ?? []) as $c) {
-        if (!is_array($c)) continue;
-        $matched = null;
-        if (!empty($c['id']) && isset($byId[$c['id']])) $matched = $byId[$c['id']];
-        if (!$matched) $matched = identify_match_stone($c['name_en'] ?? '', $byId, $byName);
-        if (!$matched) $matched = identify_match_stone($c['name_th'] ?? '', $byId, $byName);
-
-        $entry = [
-            'id' => $matched['id'] ?? ($c['id'] ?? null),
-            'name_en' => $matched['name_en'] ?? ($c['name_en'] ?? 'Unknown'),
-            'name_th' => $matched['name_th'] ?? ($c['name_th'] ?? 'ยังไม่ทราบชื่อ'),
-            'confidence' => max(0, min(100, (int)($c['confidence'] ?? 50))),
-            'reason' => trim((string)($c['reason'] ?? '')),
-            'price_range_th' => trim((string)($c['price_range_th'] ?? '')),
-            'in_catalog' => (bool)$matched,
-            'tier' => $matched['tier'] ?? 'lite',
-            'meaning_short' => $matched['meaning_short'] ?? '',
-            'tags' => $matched['tags'] ?? [],
-            'visual_cues' => $matched['visual_cues'] ?? '',
-            'article_url' => $matched['article_url'] ?? null,
-            'rock_class' => $matched['rock_class'] ?? null,
-            'color' => $matched['color'] ?? null,
-            'emoji' => $matched['emoji'] ?? '🪨',
-        ];
-        $candidates[] = $entry;
-        if (count($candidates) >= 5) break;
-    }
-
-    if (!$candidates) {
-        $unk = $byId['unknown-stone'] ?? null;
-        $candidates[] = [
-            'id' => 'unknown-stone',
-            'name_en' => 'Unidentified Stone',
-            'name_th' => 'ยังระบุไม่ชัด',
-            'confidence' => 35,
-            'reason' => 'จากรูปยังจับลักษณะเด่นไม่พอ อยากได้มุมใกล้ๆ หรือพื้นหลังเรียบกว่านี้อีกหน่อยค่ะ',
-            'in_catalog' => (bool)$unk,
-            'tier' => 'bucket',
-            'meaning_short' => $unk['meaning_short'] ?? '',
-            'tags' => $unk['tags'] ?? [],
-            'visual_cues' => $unk['visual_cues'] ?? '',
-            'article_url' => null,
-            'rock_class' => 'mineral',
-            'color' => null,
-            'emoji' => '🪨',
-        ];
-    }
+    $rawCandidates = is_array($json['candidates'] ?? null) ? $json['candidates'] : [];
+    $candidates = identify_enrich_candidates($rawCandidates, $catalog);
 
     echo json_encode([
         'atlas_line' => trim((string)($json['atlas_line'] ?? 'ส่งรูปมาให้ดูแล้วค่ะ ลองดูตัวเลือกด้านล่างนะคะ')),
@@ -321,6 +445,7 @@ EOT;
         'need_more' => (bool)($json['need_more'] ?? false),
         'follow_up' => trim((string)($json['follow_up'] ?? '')),
         'disclaimer' => 'ผลนี้เป็นการตรวจเบื้องต้นจากรูป ไม่ใช่ใบรับรองแล็บ',
+        'model' => $geminiModel,
     ], JSON_UNESCAPED_UNICODE);
     exit;
 }
@@ -353,7 +478,11 @@ if ($action === 'chat') {
     if (!empty($ctx['selected'])) {
         $sel = $ctx['selected'];
         $ctxBits[] = 'หินที่ผู้ใช้เลือกคุย: ' . ($sel['name_th'] ?? '') . ' / ' . ($sel['name_en'] ?? '') . ' (id=' . ($sel['id'] ?? '') . ')';
+        if (!empty($sel['rock_class'])) $ctxBits[] = 'ประเภท: ' . $sel['rock_class'];
+        if (!empty($sel['mohs_guess'])) $ctxBits[] = 'Mohs คร่าวๆ: ' . $sel['mohs_guess'];
         if (!empty($sel['meaning_short'])) $ctxBits[] = 'ความหมายสั้น: ' . $sel['meaning_short'];
+        if (!empty($sel['in_catalog'])) $ctxBits[] = 'มีในสารานุกรม Amethez';
+        else $ctxBits[] = 'นอกสารานุกรม — ระบุจากลักษณะธรณีวิทยา';
     }
     if (!empty($ctx['candidates']) && is_array($ctx['candidates'])) {
         $names = [];
@@ -370,6 +499,7 @@ if ($action === 'chat') {
 ## ตัวตน
 - Amethez เป็นศูนย์ข้อมูล / ฮับความรู้หิน ไม่ใช่ร้านค้า และไม่ได้รับซื้อหิน
 - คุณช่วยดูเบื้องต้นจากรูป บอกชื่อที่เป็นไปได้ ความหมายสั้นๆ และราคาตลาดคร่าวๆ ได้
+- ระบุได้ทั้งหิน/แร่ทั่วไป ไม่จำกัดแค่หินมงคลในคลัง
 
 ## คำลงท้าย
 - ใช้ "ค่ะ"/"นะคะ" เท่านั้น ห้ามใช้ครับ
@@ -397,7 +527,10 @@ EOT;
 
     $result = null;
     if ($geminiKey) {
-        $result = identify_call_gemini_text($geminiKey, $systemPrompt, $clean, 220);
+        $result = identify_call_gemini_text($geminiKey, $geminiModel, $systemPrompt, $clean, 220);
+        if ((!$result || !$result['ok']) && $geminiModel !== 'gemini-2.0-flash') {
+            $result = identify_call_gemini_text($geminiKey, 'gemini-2.0-flash', $systemPrompt, $clean, 220);
+        }
     }
     if ((!$result || !$result['ok']) && $groqKey) {
         $result = identify_call_groq_text($groqKey, $systemPrompt, $clean);
