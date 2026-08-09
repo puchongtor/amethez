@@ -3,6 +3,14 @@
 
 ---
 
+## ⛔ ระบบที่ใช้อยู่จริง (อัปเดตถาวร)
+
+- **Deploy / แก้โค้ด / push:** ทำที่ **`amethez-web`** (Next.js → Vercel → amethez.com) เท่านั้น
+- **Repo นี้ (`puchongtor/amethez` · HostNeverDie):** เก็บไว้**อ้างอิงดูข้อมูลเท่านั้น** — ห้ามแก้ไข ห้าม commit/push/deploy
+- รายละเอียดกฎ: `.cursor/rules/active-deploy-target.mdc`
+
+---
+
 ## วิสัยทัศน์
 
 **Amethez** คือศูนย์กลางข้อมูลคริสตัลและพลอยที่ใหญ่ที่สุดในไทย

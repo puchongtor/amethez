@@ -1,3 +1,9 @@
+# ⛔ ACTIVE DEPLOY TARGET — READ FIRST
+- Production = **amethez-web** (Next.js → Vercel → amethez.com) ONLY.
+- This repo `puchongtor/amethez` (HostNeverDie) is **reference/archive only**.
+- Do NOT edit, commit, push, PR, or deploy here. Look up old files, then continue in `amethez-web`.
+- See `.cursor/rules/active-deploy-target.mdc`.
+
 # UI & Design System Rules
 - Always wrap main layouts in a centered container: `max-w-6xl mx-auto px-4 sm:px-6 lg:px-8`.
 - Build UI using clean Grid/Flexbox with explicit gaps (e.g., `grid grid-cols-1 md:grid-cols-2 gap-8`).
