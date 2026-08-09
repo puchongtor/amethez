@@ -1,5 +1,21 @@
 ﻿/* ═══ Amethez Shared Nav + Footer ═══ */
 
+/* Early Identify hide (fail-closed) until /js/site-features.js applies */
+(function () {
+  if (document.getElementById('amethez-feature-boot-css')) return;
+  const style = document.createElement('style');
+  style.id = 'amethez-feature-boot-css';
+  style.textContent = 'html:not(.feature-identify-on) [data-feature="identify"]{display:none!important}html.feature-identify-on [data-feature="identify-fallback"]{display:none!important}';
+  (document.head || document.documentElement).appendChild(style);
+  if (!document.querySelector('script[data-amethez-features]')) {
+    const s = document.createElement('script');
+    s.src = '/js/site-features.js';
+    s.async = false;
+    s.dataset.amethezFeatures = '1';
+    (document.head || document.documentElement).appendChild(s);
+  }
+})();
+
 const NAV_HTML = `
 <div class="container nav-inner">
   <a href="/" class="logo">
@@ -17,7 +33,7 @@ const NAV_HTML = `
   <nav><ul class="nav-links">
     <li class="has-drop"><a href="/blog/">📖 ความรู้</a>
       <ul class="dropdown">
-        <li><a href="/identify/">🔬 Atlas Identify · ส่งรูปดูหิน / ราคาคร่าวๆ</a></li>
+        <li data-feature="identify"><a href="/identify/">🔬 Atlas Identify · ส่งรูปดูหิน / ราคาคร่าวๆ</a></li>
         <li><a href="/stones/">📖 สารานุกรมหิน</a></li>
         <li><a href="/blog/">📚 บทความ</a></li>
         <li><a href="/shorts/">น้องเมษา · คลิปสั้น เล่าเรื่องหิน</a></li>
@@ -26,7 +42,7 @@ const NAV_HTML = `
     </li>
     <li class="has-drop"><a href="/stones/">📖 สารานุกรมหิน</a>
       <ul class="dropdown">
-        <li><a href="/identify/">🔬 Atlas Identify · ส่งรูปดูหิน</a></li>
+        <li data-feature="identify"><a href="/identify/">🔬 Atlas Identify · ส่งรูปดูหิน</a></li>
         <li><a href="/stones/a-z.html">🔤 หิน A–Z ทั้งหมด</a></li>
         <li><a href="/stones/rankings/">🏆 จัดอันดับหินคริสตัล</a></li>
         <li><div class="drop-sep"></div></li>
@@ -40,7 +56,7 @@ const NAV_HTML = `
     </li>
     <li class="has-drop"><a href="/#guides">✨ คอลัมน์พิเศษ</a>
       <ul class="dropdown">
-        <li><a href="/identify/">🔬 Atlas Identify · ส่งรูปดูหิน</a></li>
+        <li data-feature="identify"><a href="/identify/">🔬 Atlas Identify · ส่งรูปดูหิน</a></li>
         <li><a href="/stones/">📖 Crystal Atlas · สารานุกรมหินโลก</a></li>
         <li><a href="/wuchong/">🧘 ปรัชญาหิน Wuchong · บทเรียนชีวิตจากธรรมชาติ</a></li>
         <li><a href="/metha/">🔮 อาจารย์วัน · หมอดูพลังงานบวก & สายมู</a></li>
@@ -145,7 +161,7 @@ const FOOTER_HTML = `
     <div class="footer-col">
       <h4>ความรู้</h4>
       <ul>
-        <li><a href="/identify/">🔬 Atlas Identify · ส่งรูปดูหิน</a></li>
+        <li data-feature="identify"><a href="/identify/">🔬 Atlas Identify · ส่งรูปดูหิน</a></li>
         <li><a href="/stones/">📖 สารานุกรมหิน A–Z</a></li>
         <li><a href="/stones/rankings/">🏆 จัดอันดับหินคริสตัล</a></li>
         <li><a href="/blog/">📚 บทความ</a></li>
@@ -157,7 +173,7 @@ const FOOTER_HTML = `
     <div class="footer-col">
       <h4>คอลัมน์พิเศษ</h4>
       <ul>
-        <li><a href="/identify/">🔬 Atlas Identify · ส่งรูปดูหิน</a></li>
+        <li data-feature="identify"><a href="/identify/">🔬 Atlas Identify · ส่งรูปดูหิน</a></li>
         <li><a href="/stones/">📖 Crystal Atlas · สารานุกรมหินโลก</a></li>
         <li><a href="/wuchong/">🧘 ปรัชญาหิน Wuchong</a></li>
         <li><a href="/metha/">🔮 อาจารย์วัน · หมอดูพลังงานบวก & สายมู</a></li>
@@ -297,5 +313,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       } catch(e) {}
     })();
+  }
+
+  // Re-apply Identify kill-switch after nav/footer inject
+  if (window.AmethezFeatures && typeof window.AmethezFeatures.refresh === 'function') {
+    window.AmethezFeatures.refresh();
+  } else {
+    document.querySelectorAll('[data-feature="identify"]').forEach((el) => {
+      el.hidden = true;
+      el.style.display = 'none';
+    });
   }
 });

@@ -210,6 +210,16 @@ const AtlasIdentify = (() => {
     };
   }
 
+  function identifyHeaders() {
+    const headers = { 'Content-Type': 'application/json' };
+    try {
+      if (localStorage.getItem('amethez_identify_force_on') === '1') {
+        headers['X-Amethez-Identify-Force'] = '1';
+      }
+    } catch { /* ignore */ }
+    return headers;
+  }
+
   async function analyze(file, { onProgress } = {}) {
     if (remainingQuota() <= 0) {
       throw new Error('วันนี้สแกนครบโควต้าแล้วค่ะ ลองใหม่พรุ่งนี้ หรือคุยต่อที่ Line @amethez ได้เลย');
@@ -222,7 +232,7 @@ const AtlasIdentify = (() => {
     try {
       const res = await fetch('/api/identify.php', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: identifyHeaders(),
         body: JSON.stringify({ action: 'analyze', image: dataUrl }),
       });
       const data = await res.json().catch(() => ({}));
@@ -267,7 +277,7 @@ const AtlasIdentify = (() => {
     try {
       const res = await fetch('/api/identify.php', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: identifyHeaders(),
         body: JSON.stringify({ action: 'chat', messages: chatHistory, context }),
       });
       const data = await res.json();

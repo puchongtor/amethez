@@ -324,6 +324,24 @@ if (!is_array($body)) {
 
 $action = $body['action'] ?? 'analyze';
 
+/* Feature flag — Identify paused until accuracy is ready */
+$featuresPath = dirname(__DIR__) . '/data/site-features.json';
+$identifyEnabled = false;
+if (is_file($featuresPath)) {
+    $feat = json_decode(@file_get_contents($featuresPath), true);
+    $identifyEnabled = is_array($feat) && !empty($feat['identify_enabled']);
+}
+// Optional header for admin machine tests after enabling local force-on + publish still off
+$forceHeader = strtolower((string)($_SERVER['HTTP_X_AMETHEZ_IDENTIFY_FORCE'] ?? '')) === '1';
+if (!$identifyEnabled && !$forceHeader) {
+    http_response_code(503);
+    echo json_encode([
+        'error' => 'Atlas Identify ปิดปรับปรุงชั่วคราว เพื่อทดสอบความแม่นยำภายในก่อนเปิดสาธารณะค่ะ',
+        'disabled' => true,
+    ], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
 $configPath = __DIR__ . '/config.php';
 if (!is_file($configPath)) {
     http_response_code(500);

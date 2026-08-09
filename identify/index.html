@@ -193,6 +193,15 @@
 <body data-cms-page="identify">
 <header class="site-header"></header>
 
+<div id="identifyPaused" style="display:none;max-width:40rem;margin:4rem auto;padding:0 1.25rem;text-align:center;font-family:Sarabun,sans-serif">
+  <p style="font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:#c9a84c;margin-bottom:.75rem">Atlas Identify</p>
+  <h1 style="font-family:'Playfair Display',serif;font-size:1.75rem;color:#1a1228;margin-bottom:.75rem">ปิดปรับปรุงชั่วคราว</h1>
+  <p style="color:#6b7280;line-height:1.7;margin-bottom:1.5rem">ระบบส่งรูปดูหินยังอยู่ในช่วงพัฒนาและทดสอบภายใน เพื่อไม่ให้ผลคลาดเคลื่อนสร้างความเข้าใจผิด เราปิดหน้านี้จากสาธารณะไว้ก่อนค่ะ</p>
+  <a href="/stones/" style="display:inline-block;background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;text-decoration:none;font-weight:700;padding:.85rem 1.4rem;border-radius:.75rem">📖 ไปสารานุกรมหิน</a>
+  <p id="identifyPausedTestHint" style="display:none;margin-top:1.25rem;font-size:.8rem;color:#9ca3af">แอดมิน: เปิดทดสอบเฉพาะเครื่องนี้ได้ที่ Admin → ตั้งค่า → Atlas Identify</p>
+</div>
+
+<div id="identifyApp">
 <section class="id-hero">
   <div class="id-hero-inner">
     <div>
@@ -279,12 +288,44 @@
     </p>
   </div>
 </section>
+</div>
 
 <footer class="site-footer"></footer>
+<script src="/js/site-features.js"></script>
 <script src="/js/components.js"></script>
 <script src="/js/identify.js"></script>
 <script>
 (function () {
+  function gateIdentifyPage() {
+    const on = window.AmethezFeatures
+      ? window.AmethezFeatures.identifyEnabled()
+      : false;
+    const paused = document.getElementById('identifyPaused');
+    const app = document.getElementById('identifyApp');
+    if (!on) {
+      if (app) app.style.display = 'none';
+      if (paused) paused.style.display = 'block';
+      const hint = document.getElementById('identifyPausedTestHint');
+      if (hint) hint.style.display = 'block';
+      return false;
+    }
+    if (app) app.style.display = '';
+    if (paused) paused.style.display = 'none';
+    return true;
+  }
+
+  // Wait briefly for site-features.js
+  const start = Date.now();
+  (function waitFeatures() {
+    if (window.AmethezFeatures || Date.now() - start > 2000) {
+      if (!gateIdentifyPage()) return;
+      bootIdentifyApp();
+      return;
+    }
+    setTimeout(waitFeatures, 40);
+  })();
+
+  function bootIdentifyApp() {
   const drop = document.getElementById('dropZone');
   const input = document.getElementById('fileInput');
   const previewBox = document.getElementById('previewBox');
@@ -440,6 +481,7 @@
       }).catch(() => {});
     }
   } catch { /* ignore */ }
+  } // end bootIdentifyApp
 })();
 </script>
 </body>
