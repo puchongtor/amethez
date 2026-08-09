@@ -1,15 +1,17 @@
-# คำสั่งสำหรับ Claude Code — อาจารย์เมธา
+﻿# คำสั่งสำหรับ Claude Code — อาจารย์วัน (Ajarn One)
 > โหราศาสตร์ · หินตามดวง · ฤกษ์มงคล · สายมู
-> อ่านไฟล์นี้ก่อนทำงานทุกอย่างที่เกี่ยวกับ อ.เมธา
+> อ่านไฟล์นี้ก่อนทำงานทุกอย่างที่เกี่ยวกับ อาจารย์วัน
 
 ---
 
-## อ.เมธา คือใคร (ล็อกใหม่ 2026-08-08)
+## อาจารย์วัน คือใคร (ล็อกใหม่ 2026-08-08)
 
-**หมอดูที่ปรึกษาดวงชะตา** — ผู้ชายวัย ~40 นิดๆ มีญาณ สุขุม พูดมั่นใจ ชอบให้กำลังใจผ่านการดูดวง
+> เดิมชื่อ **อาจารย์วัน** — เปลี่ยนเพื่อไม่ให้สับสนกับ **น้องเมษา**
 
-- ชื่อบนเว็บ: **อาจารย์เมธา**
-- บทบาทสั้น: **หมอดูที่ปรึกษา · ดวงชะตา**
+**หมอดูพลังงานบวก & สายมู** — ผู้ชายวัย ~40 นิดๆ มีญาณ สุขุม พูดมั่นใจ ชอบให้กำลังใจผ่านการดูดวง
+
+- ชื่อบนเว็บ: **อาจารย์วัน (Ajarn One)**
+- บทบาทสั้น: **หมอดูพลังงานบวก & สายมู**
 - Tone: มั่นใจ อบอุ่น ไม่กดดัน · พูดแบบพี่ชายที่ผ่านโลกมา · ให้กำลังใจชัด
 - ความเชื่อหลัก: **ดวงเป็นส่วนหนึ่งของชีวิต** แต่ชีวิตที่ดีต้องใช้ **พลังกาย + พลังใจ** ไม่ใช่รอแต่ดวงอย่างเดียว
 - Niche: ดวง + หินมงคล + พิธีกรรม — บอกชัดว่าวันนี้ควรทำอะไร / ใช้หินอะไร / วางไว้ที่ไหน
@@ -20,7 +22,7 @@
 
 ---
 
-## Google Flow — Prompt หน้าอาจารย์เมธา (สมจริงที่สุด)
+## Google Flow — Prompt หน้าอาจารย์วัน (สมจริงที่สุด)
 
 > เป้าหมาย: หน้าเหมือนคนจริงมาก · photoreal · ไม่การ์ตูน  
 > ล็อก: ชายไทย ~40–42 · ออร่าญาณแต่สุขุม · ผมสั้นมีผมขาวประปราย · สายตาอบอุ่นมั่นใจ
@@ -296,7 +298,7 @@ deep purple and gold tones matching Amethez brand,
 cinematic spiritual atmosphere, Thai Buddhist aesthetic,
 wide format 16:9, 8K quality,
 overlay text: '[พาดหัว Hook สั้นๆ]'
-small text: 'อาจารย์เมธา | Amethez'"
+small text: 'อาจารย์วัน | Amethez'"
 ```
 
 **ตัวอย่างจริง (บทความพระพิฆเนศ):**
@@ -309,7 +311,7 @@ deep purple and gold tones, cinematic spiritual atmosphere,
 Thai Hindu Buddhist temple aesthetic,
 wide format 16:9, 8K quality,
 overlay text: 'พระพิฆเนศชอบหินอะไร',
-small text bottom: 'อาจารย์เมธา | Amethez'"
+small text bottom: 'อาจารย์วัน | Amethez'"
 ```
 
 **Template รูปบทความกลุ่มพิธีกรรม:**
@@ -321,7 +323,7 @@ dark atmospheric background, golden particles floating,
 spiritual ceremony aesthetic,
 wide format 16:9, 8K quality,
 overlay text: '[พาดหัว]',
-small text: 'อาจารย์เมธา | Amethez'"
+small text: 'อาจารย์วัน | Amethez'"
 ```
 
 **Template รูปดวงรายวัน (สำหรับโพสต์ Social Media):**
@@ -333,7 +335,7 @@ elegant Thai spiritual aesthetic,
 square format 1:1, Instagram-ready,
 Thai text overlay: '[ชื่อราศี] วันนี้',
 second line: '[Hook สั้น 1 ประโยค]',
-small text: 'อาจารย์เมธา | Amethez'"
+small text: 'อาจารย์วัน | Amethez'"
 ```
 
 ---
@@ -424,3 +426,4 @@ small text: 'อาจารย์เมธา | Amethez'"
 
 *ใช้คู่กับ WUCHONG_BRIEF.md และ ARTICLE_NEWS_BRIEF.md*
 *บทความ อ.เมธา สั้นกว่า Wuchong เน้น "อ่านเร็ว ทำได้เลย"*
+

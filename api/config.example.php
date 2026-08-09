@@ -6,5 +6,7 @@
 return [
     'groq_api_key' => 'YOUR_GROQ_API_KEY_HERE',
     'gemini_api_key' => 'YOUR_GEMINI_API_KEY_HERE', // required for Atlas Identify vision
+    // Free-form Rock Identifier-style analyze (override with env GEMINI_IDENTIFY_MODEL)
+    'gemini_identify_model' => 'gemini-2.5-flash',
     'gcloud_tts_key' => '',
 ];

@@ -1,0 +1,157 @@
+/* Shared Atlas Identify promo (homepage + /stones) */
+.id-promo {
+  --id-purple:#7c3aed;
+  --id-gold:#c9a84c;
+  --id-ink:#1a1228;
+  padding:0 1.5rem 2.25rem;
+  background:#faf8f4;
+}
+.id-promo-inner {
+  max-width:72rem;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+  gap:0;
+  border-radius:1.5rem;
+  overflow:hidden;
+  border:1px solid rgba(124,58,237,.14);
+  background:linear-gradient(135deg,#1a0936 0%,#2d1b5e 48%,#0f1a3a 100%);
+  box-shadow:0 18px 48px rgba(26,18,40,.16);
+}
+.id-promo-copy {
+  padding:2rem 2rem 2.1rem;
+  color:#fff;
+  position:relative;
+}
+.id-promo-copy::after {
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(ellipse 70% 80% at 10% 0%,rgba(201,168,76,.18),transparent 55%);
+  pointer-events:none;
+}
+.id-promo-copy > * { position:relative; z-index:1; }
+.id-promo-kicker {
+  display:inline-block;
+  font-size:.7rem;
+  font-weight:700;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:rgba(242,227,174,.9);
+  margin-bottom:.7rem;
+}
+.id-promo h2 {
+  font-family:'Kanit', 'Playfair Display', serif;
+  font-size:clamp(1.45rem,3.2vw,2rem);
+  line-height:1.3;
+  margin-bottom:.75rem;
+  font-weight:700;
+}
+.id-promo h2 em {
+  font-style:normal;
+  color:#c4b5fd;
+}
+.id-promo-lead {
+  font-size:.92rem;
+  line-height:1.75;
+  color:rgba(255,255,255,.68);
+  margin-bottom:1.15rem;
+  max-width:34rem;
+}
+.id-promo-chat {
+  display:flex;
+  flex-direction:column;
+  gap:.55rem;
+  margin-bottom:1.25rem;
+}
+.id-promo-line {
+  display:flex;
+  gap:.65rem;
+  align-items:flex-start;
+}
+.id-promo-line img {
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  object-fit:cover;
+  object-position:center top;
+  border:1.5px solid rgba(201,168,76,.4);
+  flex-shrink:0;
+}
+.id-promo-line .bubble {
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:.25rem 1rem 1rem 1rem;
+  padding:.65rem .85rem;
+  font-size:.86rem;
+  line-height:1.6;
+  color:rgba(255,255,255,.92);
+  max-width:28rem;
+}
+.id-promo-line .bubble strong { color:#f2e3ae; font-weight:600; }
+.id-promo-actions {
+  display:flex;
+  flex-wrap:wrap;
+  gap:.65rem;
+  align-items:center;
+}
+.id-promo-btn {
+  display:inline-flex;
+  align-items:center;
+  gap:.4rem;
+  background:linear-gradient(135deg,#c9a84c,#e0bf6b);
+  color:#1a0936;
+  font-weight:700;
+  font-size:.9rem;
+  text-decoration:none;
+  padding:.7rem 1.25rem;
+  border-radius:.75rem;
+  transition:transform .2s, box-shadow .2s;
+  box-shadow:0 6px 20px rgba(201,168,76,.3);
+}
+.id-promo-btn:hover { transform:translateY(-2px); box-shadow:0 10px 26px rgba(201,168,76,.4); }
+.id-promo-ghost {
+  color:rgba(255,255,255,.78);
+  font-size:.84rem;
+  font-weight:600;
+  text-decoration:none;
+}
+.id-promo-ghost:hover { color:#fff; }
+.id-promo-note {
+  margin-top:.85rem;
+  font-size:.74rem;
+  color:rgba(255,255,255,.42);
+  line-height:1.5;
+}
+.id-promo-media {
+  position:relative;
+  min-height:280px;
+  background:#120826;
+}
+.id-promo-media img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center top;
+  display:block;
+  min-height:280px;
+}
+.id-promo-media-cap {
+  position:absolute;
+  left:1rem;
+  right:1rem;
+  bottom:1rem;
+  background:rgba(15,10,30,.78);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(201,168,76,.28);
+  border-radius:.875rem;
+  padding:.7rem .9rem;
+  font-size:.8rem;
+  line-height:1.55;
+  color:rgba(255,255,255,.88);
+}
+@media (max-width:860px) {
+  .id-promo-inner { grid-template-columns:1fr; }
+  .id-promo-media { min-height:220px; }
+  .id-promo-media img { min-height:220px; max-height:280px; }
+}

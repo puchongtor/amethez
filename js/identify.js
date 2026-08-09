@@ -1,12 +1,20 @@
 /* ═══ Crystal Atlas Stone Identify ═══
  * Shared client for homepage hero + /identify/
- * Uses /api/identify.php with local mock fallback + daily quota.
+ * Uses /api/identify.php — free-form Gemini vision (no silent color mock).
  */
 
 const AtlasIdentify = (() => {
   const QUOTA_KEY = 'amethez_identify_quota_v1';
   const DAILY_LIMIT = 8;
   const REQUEST_QUEUE_KEY = 'amethez_identify_requests';
+  const ALLOW_MOCK = (() => {
+    try {
+      return new URLSearchParams(location.search).get('mock') === '1'
+        || localStorage.getItem('amethez_identify_allow_mock') === '1';
+    } catch {
+      return false;
+    }
+  })();
 
   const AVATARS = {
     hero: '/images/avatars/atlas/atlas-desk-encyclopedia.jpg',
@@ -15,6 +23,19 @@ const AtlasIdentify = (() => {
     read: '/images/avatars/atlas/atlas-desk-reading.jpg',
     library: '/images/avatars/atlas/atlas-library-desk.jpg',
     smileB: '/images/avatars/atlas/atlas-smiling-camera-b.jpg',
+  };
+
+  const ROCK_CLASS_TH = {
+    mineral: 'แร่ธาตุ',
+    gemstone: 'อัญมณี',
+    rock: 'หิน',
+    igneous: 'หินอัคนี',
+    sedimentary: 'หินตะกอน',
+    metamorphic: 'หินแปร',
+    organic: 'ออร์แกนิก',
+    fossil: 'ฟอสซิล',
+    tektite: 'เทคไทต์',
+    bucket: 'หินทั่วไป',
   };
 
   let catalog = null;
@@ -69,7 +90,7 @@ const AtlasIdentify = (() => {
     return `<img class="atlas-ava" src="${src}" alt="Crystal Atlas" width="40" height="40" loading="lazy">`;
   }
 
-  function compressImage(file, maxSide = 1280, quality = 0.82) {
+  function compressImage(file, maxSide = 1600, quality = 0.88) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onerror = () => reject(new Error('อ่านรูปไม่สำเร็จ'));
@@ -127,6 +148,7 @@ const AtlasIdentify = (() => {
     });
   }
 
+  /** Dev-only color mock — never used on production path unless ?mock=1 */
   async function mockAnalyze(dataUrl) {
     const stones = await loadCatalog();
     const { color } = await colorGuess(dataUrl);
@@ -161,6 +183,7 @@ const AtlasIdentify = (() => {
       name_th: s.name_th,
       confidence: Math.max(35, 78 - i * 11),
       reason: `จากโทนสีและผิวสัมผัสในรูป ใกล้เคียง${s.name_th} — ${((s.visual_cues || '').slice(0, 80))}…`,
+      price_range_th: i === 0 ? 'คร่าวๆ หลักร้อยถึงหลักพัน ขึ้นกับขนาดและคุณภาพ (ตลาดไทย)' : '',
       in_catalog: true,
       tier: s.tier,
       meaning_short: s.meaning_short,
@@ -168,6 +191,8 @@ const AtlasIdentify = (() => {
       visual_cues: s.visual_cues,
       article_url: s.article_url,
       rock_class: s.rock_class,
+      mohs_guess: '',
+      lookalikes: [],
       color: s.color,
       emoji: s.emoji || '🪨',
     }));
@@ -175,7 +200,7 @@ const AtlasIdentify = (() => {
     const top = candidates[0];
     return {
       atlas_line: top
-        ? `จากรูปนี้โทน${color === 'multi' ? 'ผสม' : color} ชัดอยู่ค่ะ ตอนนี้เอนไปทาง${top.name_th}เป็นอันดับแรก — แต่มีตัวใกล้เคียงอีกหน่อย ลองดูการ์ดด้านล่างนะคะ`
+        ? `ส่งมาให้ดูแล้วค่ะ ตอนนี้เอนไปทาง${top.name_th}เป็นอันดับแรก — ราคาคร่าวๆ มักอยู่ช่วงหลักร้อยถึงหลักพันขึ้นกับขนาดคุณภาพนะคะ`
         : 'ส่งรูปมาให้ดูแล้วค่ะ ลองดูตัวเลือกด้านล่างนะคะ',
       candidates,
       need_more: true,
@@ -191,7 +216,7 @@ const AtlasIdentify = (() => {
     }
     onProgress?.('กำลังเตรียมรูป…');
     const dataUrl = await compressImage(file);
-    onProgress?.('Atlas กำลังดูรูปให้…');
+    onProgress?.('Atlas กำลังวิเคราะห์ลักษณะธรณีวิทยา…');
 
     let result = null;
     try {
@@ -200,26 +225,24 @@ const AtlasIdentify = (() => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'analyze', image: dataUrl }),
       });
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
       if (res.ok && data.candidates) {
         result = data;
-      } else if (data.fallback || res.status >= 500) {
-        onProgress?.('ใช้โหมดดูเบื้องต้นในเครื่องชั่วคราว…');
-        result = await mockAnalyze(dataUrl);
       } else {
-        throw new Error(data.error || 'วิเคราะห์ไม่สำเร็จ');
+        const msg = data.error || 'วิเคราะห์ไม่สำเร็จ ลองถ่ายใหม่ในแสงธรรมชาติค่ะ';
+        if (ALLOW_MOCK && (data.fallback || res.status >= 500)) {
+          onProgress?.('โหมดทดสอบ (mock)…');
+          result = await mockAnalyze(dataUrl);
+        } else {
+          throw new Error(msg);
+        }
       }
     } catch (e) {
-      if (e.message && !e.message.includes('Failed') && !e.message.includes('fetch') && !e.message.includes('Network')) {
-        // keep specific errors
-        if (!result) {
-          onProgress?.('ใช้โหมดดูเบื้องต้นในเครื่องชั่วคราว…');
-          try { result = await mockAnalyze(dataUrl); }
-          catch { throw e; }
-        }
-      } else {
-        onProgress?.('ใช้โหมดดูเบื้องต้นในเครื่องชั่วคราว…');
+      if (ALLOW_MOCK) {
+        onProgress?.('โหมดทดสอบ (mock)…');
         result = await mockAnalyze(dataUrl);
+      } else {
+        throw e instanceof Error ? e : new Error('เชื่อมต่อไม่สำเร็จ ลองใหม่อีกครั้งนะคะ');
       }
     }
 
@@ -253,7 +276,15 @@ const AtlasIdentify = (() => {
       return data.reply;
     } catch {
       const name = selectedStone?.name_th || lastResult?.candidates?.[0]?.name_th || 'ก้อนนี้';
-      const reply = `จากที่ดูอยู่ ตอนนี้เอนไปทาง${name}ค่ะ อยากรู้มุมไหนเป็นพิเศษ ความหมาย การดูแล หรือของแท้/ปลอม?`;
+      const lower = msg.toLowerCase();
+      let reply;
+      if (/รับซื้อ|รับของ|ซื้อหิน|ขายให้|ฝากขาย|ประเมิ|ประเมินราคาเพื่อขาย/.test(msg) || /รับซื้อ/.test(lower)) {
+        reply = 'เราเป็นเว็บให้ข้อมูลนะคะ ไม่ใช่ร้านค้า และไม่ได้รับซื้อค่ะ ถ้าจะขาย ลองโพสกลุ่มขายหินในเฟซ หรือลง Shopee ดูได้นะคะ อยากให้ช่วยดูก่อนไหมว่าก้อนนี้น่าจะเป็นอะไร';
+      } else if (/ราคา|เท่าไหร|เท่าไร|กี่บาท/.test(msg)) {
+        reply = `ราคา${name}ในตลาดไทยมักขึ้นกับขนาด คุณภาพ และแหล่งที่มาค่ะ ช่วงคร่าวๆ อาจตั้งแต่หลักร้อยถึงหลักพันหรือสูงกว่านั้น — ส่งรูปชัดๆ มา เดี๋ยวฉันช่วยไล่ช่วงให้ละเอียดขึ้นนะคะ`;
+      } else {
+        reply = `จากที่ดูอยู่ ตอนนี้เอนไปทาง${name}ค่ะ อยากรู้มุมไหนเป็นพิเศษ ความหมาย ราคาคร่าวๆ หรือของแท้/ปลอม?`;
+      }
       chatHistory.push({ role: 'assistant', content: reply });
       return reply;
     }
@@ -283,30 +314,63 @@ const AtlasIdentify = (() => {
     return 'ต่ำ';
   }
 
+  function escapeHtml(s) {
+    return String(s || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
   function renderCards(container, candidates, { onSelect, onRequest } = {}) {
     if (!container) return;
     container.innerHTML = (candidates || []).map((c, i) => {
-      const lite = !c.in_catalog || c.tier === 'lite';
-      const tags = (c.tags || []).slice(0, 3).map(t => `<span class="id-tag">${t}</span>`).join('');
+      const outOfCatalog = !c.in_catalog;
+      const lite = outOfCatalog || c.tier === 'lite';
+      const tags = (c.tags || []).slice(0, 3).map(t => `<span class="id-tag">${escapeHtml(t)}</span>`).join('');
       const meaning = c.meaning_short
-        ? `<p class="id-meaning">${c.meaning_short}</p>`
-        : `<p class="id-meaning muted">ความรู้ฉบับย่อ — ยังไม่มีการ์ดละเอียดในคลัง</p>`;
+        ? `<p class="id-meaning">${escapeHtml(c.meaning_short)}</p>`
+        : outOfCatalog
+          ? `<p class="id-meaning muted">นอกสารานุกรม Amethez — ระบุจากลักษณะธรณีวิทยา</p>`
+          : `<p class="id-meaning muted">ความรู้ฉบับย่อ — ยังไม่มีการ์ดละเอียดในคลัง</p>`;
+      const price = c.price_range_th
+        ? `<p class="id-price">💰 ราคาคร่าวๆ: ${escapeHtml(c.price_range_th)}</p>`
+        : '';
+      const rockLabel = ROCK_CLASS_TH[c.rock_class] || c.rock_class || '';
+      const metaBits = [];
+      if (rockLabel) metaBits.push(escapeHtml(rockLabel));
+      if (c.mohs_guess) metaBits.push('Mohs ~' + escapeHtml(c.mohs_guess));
+      if (c.variety) metaBits.push(escapeHtml(c.variety));
+      const meta = metaBits.length
+        ? `<p class="id-meta">${metaBits.join(' · ')}</p>`
+        : '';
+      const looks = (c.lookalikes || []).filter(Boolean).slice(0, 3);
+      const lookHtml = looks.length
+        ? `<p class="id-lookalikes">คล้ายกับ: ${looks.map(escapeHtml).join(', ')}</p>`
+        : '';
+      const badge = outOfCatalog
+        ? `<span class="id-badge-out">นอกสารานุกรม</span>`
+        : `<span class="id-badge-in">ในสารานุกรม</span>`;
       const article = c.article_url
-        ? `<a class="id-link" href="${c.article_url}">อ่านสารานุกรม →</a>`
+        ? `<a class="id-link" href="${escapeHtml(c.article_url)}">อ่านสารานุกรม →</a>`
         : '';
       const reqBtn = lite
         ? `<button type="button" class="id-req" data-req="${i}">อยากให้ Atlas เก็บหินนี้เข้าคลัง</button>`
         : '';
       return `
-        <article class="id-card ${i === 0 ? 'top' : ''}" data-i="${i}">
+        <article class="id-card ${i === 0 ? 'top' : ''} ${outOfCatalog ? 'out' : ''}" data-i="${i}">
           <div class="id-card-top">
             <span class="id-rank">#${i + 1}</span>
             <span class="id-conf conf-${confLabel(c.confidence)}">${confLabel(c.confidence)} · ${c.confidence}%</span>
           </div>
-          <h3>${c.emoji || '🪨'} ${c.name_th}</h3>
-          <div class="id-en">${c.name_en}</div>
-          <p class="id-reason">${c.reason || c.visual_cues || ''}</p>
+          <div class="id-badges">${badge}</div>
+          <h3>${escapeHtml(c.emoji || '🪨')} ${escapeHtml(c.name_th)}</h3>
+          <div class="id-en">${escapeHtml(c.name_en)}</div>
+          ${meta}
+          <p class="id-reason">${escapeHtml(c.reason || c.visual_cues || '')}</p>
+          ${lookHtml}
           ${meaning}
+          ${price}
           <div class="id-tags">${tags}</div>
           <div class="id-actions">
             <button type="button" class="id-talk" data-select="${i}">คุยกับ Atlas</button>
