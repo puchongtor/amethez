@@ -155,12 +155,18 @@ const AtlasIdentify = (() => {
       .map(id => byId[id]).filter(Boolean);
     while (picked.length < 5 && buckets.length) picked.push(buckets.shift());
 
+    const priceByTier = (s, i) => {
+      if (s.tier === 'bucket') return 'ขึ้นกับชนิดจริงในก้อน — ยังประเมินช่วงยากจากรูปเดียว';
+      if (i === 0) return 'คร่าวๆ หลักร้อยถึงหลักพัน ขึ้นกับขนาดและคุณภาพ (ตลาดไทย)';
+      return 'ช่วงราคาตลาดผันผวนตามขนาด/คุณภาพ — คุยต่อได้ค่ะ';
+    };
     const candidates = picked.slice(0, 5).map((s, i) => ({
       id: s.id,
       name_en: s.name_en,
       name_th: s.name_th,
       confidence: Math.max(35, 78 - i * 11),
       reason: `จากโทนสีและผิวสัมผัสในรูป ใกล้เคียง${s.name_th} — ${((s.visual_cues || '').slice(0, 80))}…`,
+      price_range_th: priceByTier(s, i),
       in_catalog: true,
       tier: s.tier,
       meaning_short: s.meaning_short,
@@ -175,7 +181,7 @@ const AtlasIdentify = (() => {
     const top = candidates[0];
     return {
       atlas_line: top
-        ? `จากรูปนี้โทน${color === 'multi' ? 'ผสม' : color} ชัดอยู่ค่ะ ตอนนี้เอนไปทาง${top.name_th}เป็นอันดับแรก — แต่มีตัวใกล้เคียงอีกหน่อย ลองดูการ์ดด้านล่างนะคะ`
+        ? `ส่งมาให้ดูแล้วค่ะ ตอนนี้เอนไปทาง${top.name_th}เป็นอันดับแรก — ราคาคร่าวๆ มักอยู่ช่วงหลักร้อยถึงหลักพันขึ้นกับขนาดคุณภาพนะคะ ลองดูการ์ดด้านล่างก่อน`
         : 'ส่งรูปมาให้ดูแล้วค่ะ ลองดูตัวเลือกด้านล่างนะคะ',
       candidates,
       need_more: true,
@@ -253,7 +259,15 @@ const AtlasIdentify = (() => {
       return data.reply;
     } catch {
       const name = selectedStone?.name_th || lastResult?.candidates?.[0]?.name_th || 'ก้อนนี้';
-      const reply = `จากที่ดูอยู่ ตอนนี้เอนไปทาง${name}ค่ะ อยากรู้มุมไหนเป็นพิเศษ ความหมาย การดูแล หรือของแท้/ปลอม?`;
+      const lower = msg.toLowerCase();
+      let reply;
+      if (/รับซื้อ|รับของ|ซื้อหิน|ขายให้|ฝากขาย|ประเมิ|ประเมินราคาเพื่อขาย/.test(msg) || /รับซื้อ/.test(lower)) {
+        reply = 'เราเป็นเว็บให้ข้อมูลนะคะ ไม่ใช่ร้านค้า และไม่ได้รับซื้อค่ะ ถ้าจะขาย ลองโพสกลุ่มขายหินในเฟซ หรือลง Shopee ดูได้นะคะ อยากให้ช่วยดูก่อนไหมว่าก้อนนี้น่าจะเป็นอะไร';
+      } else if (/ราคา|เท่าไหร|เท่าไร|กี่บาท/.test(msg)) {
+        reply = `ราคา${name}ในตลาดไทยมักขึ้นกับขนาด คุณภาพ และแหล่งที่มาค่ะ ช่วงคร่าวๆ อาจตั้งแต่หลักร้อยถึงหลักพันหรือสูงกว่านั้น — ส่งรูปชัดๆ มา เดี๋ยวฉันช่วยไล่ช่วงให้ละเอียดขึ้นนะคะ`;
+      } else {
+        reply = `จากที่ดูอยู่ ตอนนี้เอนไปทาง${name}ค่ะ อยากรู้มุมไหนเป็นพิเศษ ความหมาย ราคาคร่าวๆ หรือของแท้/ปลอม?`;
+      }
       chatHistory.push({ role: 'assistant', content: reply });
       return reply;
     }
@@ -291,6 +305,9 @@ const AtlasIdentify = (() => {
       const meaning = c.meaning_short
         ? `<p class="id-meaning">${c.meaning_short}</p>`
         : `<p class="id-meaning muted">ความรู้ฉบับย่อ — ยังไม่มีการ์ดละเอียดในคลัง</p>`;
+      const price = c.price_range_th
+        ? `<p class="id-price">💰 ราคาคร่าวๆ: ${c.price_range_th}</p>`
+        : '';
       const article = c.article_url
         ? `<a class="id-link" href="${c.article_url}">อ่านสารานุกรม →</a>`
         : '';
@@ -307,6 +324,7 @@ const AtlasIdentify = (() => {
           <div class="id-en">${c.name_en}</div>
           <p class="id-reason">${c.reason || c.visual_cues || ''}</p>
           ${meaning}
+          ${price}
           <div class="id-tags">${tags}</div>
           <div class="id-actions">
             <button type="button" class="id-talk" data-select="${i}">คุยกับ Atlas</button>

@@ -1,14 +1,20 @@
 # Mesa image kit
 
-| File | Role |
-|------|------|
-| `/images/avatars/mesa.png` | Primary profile |
-| `/images/avatars/mesa-bubble.png` | Speech bubble avatar |
-| `/images/avatars/mesa-hero.png` | `/shorts/` hero |
-| `/images/avatars/mesa-present.png` | Presenting stones |
-| `/images/avatars/mesa-soft.png` | Soft / looking at stones |
-| `/images/avatars/mesa-cute.png` | Cute pose |
-| `/images/mesa/mesa-desk-*.png` | Desk lifestyle |
-| `/images/mesa/mesa-outdoor-set-*.png` | Outdoor collage sets (crop later if needed) |
+รูปตัดจาก collage แล้วใช้ในบทความ Shorts อัตโนมัติผ่าน `data/mesa-photos.json`
 
-See `MESA_BRIEF.md` for usage.
+## การเลือกภาพในบทความ
+1. **จับคู่สีหิน** — อเมทิสต์→ม่วง, โรสควอตซ์→ชมพู, เทอร์ควอยซ์→ฟ้า, หยก→เขียว, อำพัน→amber ฯลฯ
+2. **สุ่มในกลุ่มสี** — แต่ละบทความสุ่มรูปคนละชุด ไม่ซ้ำในหน้าเดียวกัน
+3. **fallback** — ถ้าไม่มีสีตรง ใช้รูป neutral / ทั้งพูล
+
+## ชุดตัดแล้ว
+| Prefix | จำนวน | โน้ต |
+|--------|-------|------|
+| `mesa-set01` … `mesa-set10` | ~38 | ตัดจาก 2×2 / 3-panel |
+| `mesa-amethyst-hold` ฯลฯ | 4 | ชุดแรก |
+| `mesa-desk-*` + avatars | สำรอง | โทนกลาง |
+
+## ส่งรูปเพิ่ม
+ส่ง collage **2×2** หรือ **ซ้ายสูง + ขวา 2 ช่อง** มาได้ — ตัดแล้วใส่ catalog สีให้เอง
+
+อย่าใช้ไฟล์ `mesa-outdoor-set-*` ทั้งแผ่นในบทความ (ยังเป็น collage)

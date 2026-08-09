@@ -1,0 +1,74 @@
+# Red Coral
+
+
+ 
+ 
+$7.99
+size varies from 1"-2" long
+Top of Form
+
+Bottom of Form
+Large Branch Coral holed for beading
+
+$4.991 piece - 1"
+Top of Form
+
+Bottom of Form
+Blue Sponge Coralfrom China - 1"
+ships within 48 hours
+Shipping fees
+Color:
+Red or Blue
+Zodiac:
+Aries, Taurus, Libra (ancient)
+ในอดีต เป็นของราศีเมษ พฤษภ และตุลย์
+Planet:
+Mars
+ดาวอังคาร
+Birthstone:
+Jan, Apr, Oct, Nov (Ancient)
+มกราคม เมษายน ตุลาคมและพฤศจิกายนในอดีต
+Chakra:
+Root, Heart
+ในส่วนของรากและหัวใจ
+Energies:
+Healing, Power
+การบำบัดและอำนาจ
+Anniversary Stone:
+35
+
+More Coral:
+Click photo to enlarge
+Red Coral Spheresee sizes
+Blue Coral Spheresee sizes
+Black Coral
+Coral Jewelry
+
+$14.99/1 piece
+Top of Form
+
+Bottom of Form
+Red CoralUndyed from South China Sea approx 1 1/2" - 2"
+
+Coral Barrel beads15-20mm
+Top of Form
+    
+Bottom of Form
+Coral Barrel beads 1 bead ... $8.50
+Red Coral meaning
+Coral has been called the 'garden of the sea'. It was once believed to be a plant, but is now known to actually contain living animals called polyps. Coral is the result of accumulated skeletal masses from these polyps. Red is considered the most sought after color but coral also can be found in pink, white, yellow and black.
+Coral ถูกเรียกว่าเป็นสวนแห่งทะเล เคยมีความเชื่อในอดีตว่าเป็นพืช แต่ในปัจจุบันถูกรู้จักกันว่ามีสัตว์อาศัยอยู่ที่เป็นพวก polyps และปะการังเป็นผลมาจากโครงกระดูกของพวก polyps โดยสีแดงถูกยอมรับว่าถูกพบมากที่สุด แต่ก็ยังสามารถพบในสีอื่นๆได้ เช่น สีชมพู สีขาว สีเหลือง และสีดำ
+Records dating back thousands of years confirm that coral was used in decorative art objects. It was believed to prevent ill fortune and offer protection from skin disease when worn as a necklace. Dreams about coral are believed to foretell recovery from a long illness. Ancients believed that Mars was composed of red coral.
+Coral is a good aid for meditation or visualization.
+
+จากประวัติศาสตร์ย้อนหลังไปเป็นพันๆไป สามารถยืนยันว่าปะการังถูกนำมาใช้ในการตกแต่งวัสดุทางศิลปะ มันเป้นความเชื่อว่าเพื่อป้องกันไม่ให้เกิดความขัดสนทางโชคลาภและป้องกันจากโรคผิวหนังเมื่อสวมใส่เป็นสร้อยคอ หากฝันเกี่ยวกับปะการังมีความเชื่อว่าจะหายจากการเจ็บป่วยที่ยาวนาน ในอดีตมีความเชื่อว่าที่ดาวอังคารเป้นสีแดงเพราะประกอบด้วยปะการัง
+ปะการังจะมีประโยชน์หากนำมาใช้ในการทำสมาธิและการสร้างภาพรูปลักษณ์
+
+Healing properties of coral
+Coral symbolizes life and blood force energy. Dark red coral is used for heating and stimulating the bloodstream. Pink shades restore harmony to the heart. It is used as an aid to depression, lethargy or deficient nutrition.
+ปะการังเป็นสัญลักษณ์ของชีวิตและพลังงานของเลือด โดยปะการังสีแดงเข้มจะช่วยเพิ่มความอบอุ่นและกระตุ้นกระแสเลือด ถ้าสีเฉดไปยังสีชมพูจะช่วยฟิ้นฟูความสามัคคีไปยังหัวใจ มันยังช่วยในเรื่องของภาวะโรคซึมเศร้า หรือภาวะการขาดสารอาหาร
+Sources of coral
+Locations where coral can be found include the Mediterranean Sea, off the coast of Australia, the South Pacific, the waters of Japan, and Africa.
+แหล่งที่พบปะการังคือทีทะเลเมติเตอร์ริเนียน ออสเตรเลีย แปซิฟิกใต้ น่านน้ำของญี่ปุ่นและแอฟริกา
+
+

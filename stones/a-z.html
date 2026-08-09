@@ -191,7 +191,7 @@ function renderStones() {
 
   STONES.forEach(s => {
     const matchLetter = !curLetter || s.l === curLetter;
-    const matchSearch = !q || s.th.includes(q) || s.en.toLowerCase().includes(q);
+    const matchSearch = !q || s.th.toLowerCase().includes(q) || s.en.toLowerCase().includes(q);
     const matchFilter = curFilter === 'all' || s.col === curFilter;
     if (!matchLetter || !matchSearch || !matchFilter) return;
     visible++;

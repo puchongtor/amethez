@@ -1,0 +1,298 @@
+{
+  "photos": [
+    {
+      "src": "/images/mesa/mesa-set01-amethyst-cluster.png",
+      "color": "purple",
+      "theme": "amethyst-cluster",
+      "set": "set01"
+    },
+    {
+      "src": "/images/mesa/mesa-set01-rose-heart.png",
+      "color": "pink",
+      "theme": "rose-heart",
+      "set": "set01"
+    },
+    {
+      "src": "/images/mesa/mesa-set01-turquoise-curious.png",
+      "color": "blue",
+      "theme": "turquoise-curious",
+      "set": "set01"
+    },
+    {
+      "src": "/images/mesa/mesa-set01-moonstone-chin.png",
+      "color": "white",
+      "theme": "moonstone-chin",
+      "set": "set01"
+    },
+    {
+      "src": "/images/mesa/mesa-set02-amethyst-pendant-desk.png",
+      "color": "purple",
+      "theme": "amethyst-pendant-desk",
+      "set": "set02"
+    },
+    {
+      "src": "/images/mesa/mesa-set02-rose-cheeks.png",
+      "color": "pink",
+      "theme": "rose-cheeks",
+      "set": "set02"
+    },
+    {
+      "src": "/images/mesa/mesa-set02-turquoise-denim.png",
+      "color": "blue",
+      "theme": "turquoise-denim",
+      "set": "set02"
+    },
+    {
+      "src": "/images/mesa/mesa-set02-tigereye-hands.png",
+      "color": "brown",
+      "theme": "tigereye-hands",
+      "set": "set02"
+    },
+    {
+      "src": "/images/mesa/mesa-set03-rose-tower-smile.png",
+      "color": "pink",
+      "theme": "rose-tower-smile",
+      "set": "set03"
+    },
+    {
+      "src": "/images/mesa/mesa-set03-amethyst-chin-desk.png",
+      "color": "purple",
+      "theme": "amethyst-chin-desk",
+      "set": "set03"
+    },
+    {
+      "src": "/images/mesa/mesa-set03-turquoise-floor-pose.png",
+      "color": "blue",
+      "theme": "turquoise-floor-pose",
+      "set": "set03"
+    },
+    {
+      "src": "/images/mesa/mesa-set04-rose-cheek-hand.png",
+      "color": "pink",
+      "theme": "rose-cheek-hand",
+      "set": "set04"
+    },
+    {
+      "src": "/images/mesa/mesa-set04-amethyst-peek.png",
+      "color": "purple",
+      "theme": "amethyst-peek",
+      "set": "set04"
+    },
+    {
+      "src": "/images/mesa/mesa-set04-turquoise-open-hands.png",
+      "color": "blue",
+      "theme": "turquoise-open-hands",
+      "set": "set04"
+    },
+    {
+      "src": "/images/mesa/mesa-set04-jade-cheongsam.png",
+      "color": "green",
+      "theme": "jade-cheongsam",
+      "set": "set04"
+    },
+    {
+      "src": "/images/mesa/mesa-set05-jade-desk-chin.png",
+      "color": "green",
+      "theme": "jade-desk-chin",
+      "set": "set05"
+    },
+    {
+      "src": "/images/mesa/mesa-set05-amethyst-rose-lotus.png",
+      "color": "pink",
+      "theme": "amethyst-rose-lotus",
+      "set": "set05"
+    },
+    {
+      "src": "/images/mesa/mesa-set05-turquoise-laugh-shelf.png",
+      "color": "blue",
+      "theme": "turquoise-laugh-shelf",
+      "set": "set05"
+    },
+    {
+      "src": "/images/mesa/mesa-set06-turquoise-float.png",
+      "color": "blue",
+      "theme": "turquoise-float",
+      "set": "set06"
+    },
+    {
+      "src": "/images/mesa/mesa-set06-amber-think.png",
+      "color": "amber",
+      "theme": "amber-think",
+      "set": "set06"
+    },
+    {
+      "src": "/images/mesa/mesa-set06-amethyst-peace.png",
+      "color": "purple",
+      "theme": "amethyst-peace",
+      "set": "set06"
+    },
+    {
+      "src": "/images/mesa/mesa-set06-jade-arms-crossed.png",
+      "color": "green",
+      "theme": "jade-arms-crossed",
+      "set": "set06"
+    },
+    {
+      "src": "/images/mesa/mesa-set07-rose-armchair.png",
+      "color": "pink",
+      "theme": "rose-armchair",
+      "set": "set07"
+    },
+    {
+      "src": "/images/mesa/mesa-set07-turquoise-meditate.png",
+      "color": "blue",
+      "theme": "turquoise-meditate",
+      "set": "set07"
+    },
+    {
+      "src": "/images/mesa/mesa-set07-amethyst-geode-think.png",
+      "color": "purple",
+      "theme": "amethyst-geode-think",
+      "set": "set07"
+    },
+    {
+      "src": "/images/mesa/mesa-set07-jade-side-smile.png",
+      "color": "green",
+      "theme": "jade-side-smile",
+      "set": "set07"
+    },
+    {
+      "src": "/images/mesa/mesa-set08-rose-pink-hair.png",
+      "color": "pink",
+      "theme": "rose-pink-hair",
+      "set": "set08"
+    },
+    {
+      "src": "/images/mesa/mesa-set08-amethyst-candle.png",
+      "color": "purple",
+      "theme": "amethyst-candle",
+      "set": "set08"
+    },
+    {
+      "src": "/images/mesa/mesa-set08-turquoise-desert-laugh.png",
+      "color": "blue",
+      "theme": "turquoise-desert-laugh",
+      "set": "set08"
+    },
+    {
+      "src": "/images/mesa/mesa-set08-jade-carved.png",
+      "color": "green",
+      "theme": "jade-carved",
+      "set": "set08"
+    },
+    {
+      "src": "/images/mesa/mesa-set09-rose-wink.png",
+      "color": "pink",
+      "theme": "rose-wink",
+      "set": "set09"
+    },
+    {
+      "src": "/images/mesa/mesa-set09-amethyst-dreamy.png",
+      "color": "purple",
+      "theme": "amethyst-dreamy",
+      "set": "set09"
+    },
+    {
+      "src": "/images/mesa/mesa-set09-jade-heart-hands.png",
+      "color": "green",
+      "theme": "jade-heart-hands",
+      "set": "set09"
+    },
+    {
+      "src": "/images/mesa/mesa-set09-blue-peace-stones.png",
+      "color": "blue",
+      "theme": "blue-peace-stones",
+      "set": "set09"
+    },
+    {
+      "src": "/images/mesa/mesa-set10-amethyst-table-lean.png",
+      "color": "purple",
+      "theme": "amethyst-table-lean",
+      "set": "set10"
+    },
+    {
+      "src": "/images/mesa/mesa-set10-rose-heart-lookdown.png",
+      "color": "pink",
+      "theme": "rose-heart-lookdown",
+      "set": "set10"
+    },
+    {
+      "src": "/images/mesa/mesa-set10-turquoise-hip.png",
+      "color": "blue",
+      "theme": "turquoise-hip",
+      "set": "set10"
+    },
+    {
+      "src": "/images/mesa/mesa-set10-jade-meditate.png",
+      "color": "green",
+      "theme": "jade-meditate",
+      "set": "set10"
+    },
+    {
+      "src": "/images/mesa/mesa-amethyst-hold.png",
+      "color": "purple",
+      "theme": "amethyst-hold",
+      "set": "legacy"
+    },
+    {
+      "src": "/images/mesa/mesa-rose-heart.png",
+      "color": "pink",
+      "theme": "rose-heart",
+      "set": "legacy"
+    },
+    {
+      "src": "/images/mesa/mesa-turquoise-look.png",
+      "color": "blue",
+      "theme": "turquoise-look",
+      "set": "legacy"
+    },
+    {
+      "src": "/images/mesa/mesa-moonstone-soft.png",
+      "color": "white",
+      "theme": "moonstone-soft",
+      "set": "legacy"
+    },
+    {
+      "src": "/images/mesa/mesa-desk-smile.png",
+      "color": "neutral",
+      "theme": "desk-smile",
+      "set": "legacy"
+    },
+    {
+      "src": "/images/mesa/mesa-desk-stones.png",
+      "color": "neutral",
+      "theme": "desk-stones",
+      "set": "legacy"
+    },
+    {
+      "src": "/images/avatars/mesa.png",
+      "color": "neutral",
+      "theme": "avatar",
+      "set": "avatar"
+    },
+    {
+      "src": "/images/avatars/mesa-hero.png",
+      "color": "neutral",
+      "theme": "hero",
+      "set": "avatar"
+    },
+    {
+      "src": "/images/avatars/mesa-present.png",
+      "color": "neutral",
+      "theme": "present",
+      "set": "avatar"
+    },
+    {
+      "src": "/images/avatars/mesa-cute.png",
+      "color": "neutral",
+      "theme": "cute",
+      "set": "avatar"
+    },
+    {
+      "src": "/images/avatars/mesa-soft.png",
+      "color": "neutral",
+      "theme": "soft",
+      "set": "avatar"
+    }
+  ]
+}
