@@ -20,7 +20,6 @@ const NAV_HTML = `
       <ul class="dropdown">
         <li><a href="/identify/">🔬 Atlas Identify · ส่งรูปดูหิน</a></li>
         <li><a href="/stones/a-z.html">🔤 หิน A–Z ทั้งหมด</a></li>
-        <li><a href="/stones/rankings/">🏆 จัดอันดับหินคริสตัล</a></li>
         <li><div class="drop-sep"></div></li>
         <li><a href="/categories/chakra.html">🧘 ค้นหาตามจักระ</a></li>
         <li><a href="/categories/zodiac.html">♈ ค้นหาตามราศี</a></li>
@@ -30,9 +29,11 @@ const NAV_HTML = `
         <li><a href="/categories/purpose.html">✨ ค้นหาตามวัตถุประสงค์</a></li>
       </ul>
     </li>
-    <li class="has-drop"><a href="/blog/">📖 เรียนรู้</a>
+    <li class="has-drop"><a href="/stones/rankings/">✦ คอลัมน์และเรื่องเล่า</a>
       <ul class="dropdown">
+        <li><a href="/stones/rankings/">✦ ซีรีส์เรื่องราวจากโลกของหินและคริสตัล</a></li>
         <li><a href="/blog/">บทความ</a></li>
+        <li><a href="/stories/">📚 เรื่องเล่าหินทั่วโลก</a></li>
         <li><a href="/shorts/">น้องเมษา · คลิปสั้น เล่าเรื่องหิน</a></li>
         <li><a href="/video/">🎬 Crystal Talks</a></li>
       </ul>
@@ -146,7 +147,7 @@ const FOOTER_HTML = `
       <ul>
         <li><a href="/identify/">🔬 Atlas Identify</a></li>
         <li><a href="/stones/">📖 สารานุกรมหิน A–Z</a></li>
-        <li><a href="/stones/rankings/">🏆 จัดอันดับหินคริสตัล</a></li>
+        <li><a href="/stones/rankings/">✦ คอลัมน์และเรื่องเล่า</a></li>
         <li><a href="/blog/">📖 บทความ</a></li>
         <li><a href="/shorts/">น้องเมษา · คลิปสั้น เล่าเรื่องหิน</a></li>
         <li><a href="/video/">🎬 Crystal Talks</a></li>
@@ -156,6 +157,7 @@ const FOOTER_HTML = `
     <div class="footer-col">
       <h4>คอลัมน์พิเศษ</h4>
       <ul>
+        <li><a href="/stones/rankings/">✦ ซีรีส์เรื่องราวจากโลกของหินและคริสตัล</a></li>
         <li><a href="/identify/">🔬 Atlas Identify · ส่งรูปดูหิน</a></li>
         <li><a href="/stones/">📖 Crystal Atlas · สารานุกรมหินโลก</a></li>
         <li><a href="/wuchong/">🧘 ปรัชญาหิน Wuchong</a></li>

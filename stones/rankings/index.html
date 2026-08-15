@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>จัดอันดับหินคริสตัล — Top 5 หินยอดนิยมทุกหมวดหมู่ | Amethez</title>
-  <meta name="description" content="รวมบทความจัดอันดับหินคริสตัลและอัญมณี Top 5 ทุกหมวด ตั้งแต่หินที่แพงที่สุด หินเสริมฮวงจุ้ย ไปจนถึงหินอันตรายที่ควรรู้จัก อัปเดตใหม่ทุกสัปดาห์ โดย Crystal Atlas">
+  <title>ซีรีส์เรื่องราวจากโลกของหินและคริสตัล | Amethez</title>
+  <meta name="description" content="สำรวจเรื่องราวของหิน แร่ คริสตัล อัญมณี อุกกาบาต และฟอสซิล ผ่านบทความที่คัดเลือก 5 เรื่องเด่นในแต่ละหัวข้อ พร้อมข้อมูลอ้างอิงที่ตรวจสอบได้">
   <link rel="canonical" href="https://amethez.com/stones/rankings/">
   <meta property="og:site_name" content="Amethez">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="จัดอันดับหินคริสตัล — Top 5 หินยอดนิยมทุกหมวดหมู่ | Amethez">
-  <meta property="og:description" content="รวมบทความจัดอันดับหินคริสตัลและอัญมณี Top 5 ทุกหมวด อัปเดตใหม่ทุกสัปดาห์">
+  <meta property="og:title" content="ซีรีส์เรื่องราวจากโลกของหินและคริสตัล | Amethez">
+  <meta property="og:description" content="สำรวจเรื่องราวของหิน แร่ คริสตัล อัญมณี อุกกาบาต และฟอสซิล ผ่านบทความที่คัดเลือก 5 เรื่องเด่นในแต่ละหัวข้อ">
   <meta property="og:url" content="https://amethez.com/stones/rankings/">
   <meta property="og:locale" content="th_TH">
 
@@ -21,8 +21,8 @@
   {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    "name": "จัดอันดับหินคริสตัล",
-    "description": "รวมบทความจัดอันดับหินคริสตัลและอัญมณี Top 5 ทุกหมวด",
+    "name": "ซีรีส์เรื่องราวจากโลกของหินและคริสตัล",
+    "description": "สำรวจเรื่องราวของหิน แร่ คริสตัล อัญมณี อุกกาบาต และฟอสซิล ผ่านบทความที่คัดเลือก 5 เรื่องเด่นในแต่ละหัวข้อ",
     "url": "https://amethez.com/stones/rankings/"
   }
   </script>
@@ -32,7 +32,7 @@
     "@type": "BreadcrumbList",
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "หน้าหลัก", "item": "https://amethez.com/" },
-      { "@type": "ListItem", "position": 2, "name": "จัดอันดับหินคริสตัล", "item": "https://amethez.com/stones/rankings/" }
+      { "@type": "ListItem", "position": 2, "name": "คอลัมน์และเรื่องเล่า", "item": "https://amethez.com/stones/rankings/" }
     ]
   }
   </script>
@@ -41,25 +41,17 @@
     :root { --purple:#7c3aed; --gold:#c9a84c; }
 
     .rk-hero { background:linear-gradient(160deg,#1a1228 0%,#2d1b69 60%,#1a1228 100%);
-      padding:4rem 1.5rem 3rem; text-align:center; }
-    .rk-hero h1 { font-family:'Kanit',sans-serif; font-size:clamp(1.8rem,5vw,2.8rem);
-      color:white; margin-bottom:.5rem; }
-    .rk-hero p { color:rgba(255,255,255,.65); font-size:1rem; max-width:640px; margin:0 auto; }
+      padding:4.5rem 1.5rem 3.25rem; text-align:center; position:relative; overflow:hidden; }
+    .rk-hero::before { content:''; position:absolute; inset:0; pointer-events:none;
+      background:radial-gradient(ellipse 50% 60% at 50% 0%, rgba(201,168,76,.12), transparent 70%); }
+    .rk-kicker { display:inline-block; font-size:.72rem; font-weight:700; letter-spacing:.16em;
+      text-transform:uppercase; color:#c9a84c; border:1px solid rgba(201,168,76,.35);
+      padding:.35rem .9rem; border-radius:2rem; margin-bottom:1.1rem; }
+    .rk-hero h1 { font-family:'Playfair Display',serif; font-size:clamp(1.7rem,4.6vw,2.7rem);
+      color:white; margin-bottom:.75rem; line-height:1.3; }
+    .rk-hero p { color:rgba(255,255,255,.68); font-size:1.02rem; max-width:680px; margin:0 auto; line-height:1.8; }
 
     .rk-wrap { max-width:1100px; margin:0 auto; padding:2.5rem 1.5rem; }
-
-    .rk-pinned { display:grid; grid-template-columns:1.1fr 1fr; border-radius:1.25rem;
-      overflow:hidden; border:2px solid var(--gold); text-decoration:none; color:#1a1228;
-      transition:all .25s; background:linear-gradient(135deg,#fdf9ef,#fff); margin-bottom:2.5rem; }
-    .rk-pinned:hover { box-shadow:0 16px 48px rgba(201,168,76,.2); transform:translateY(-3px); }
-    .rk-pinned-img { background:#f3effa; display:flex; align-items:center; justify-content:center;
-      font-size:5rem; min-height:220px; position:relative; overflow:hidden; }
-    .rk-pinned-body { padding:2rem; display:flex; flex-direction:column; justify-content:center; }
-    .rk-pinned-badge { font-size:.72rem; font-weight:700; color:var(--gold); text-transform:uppercase;
-      letter-spacing:.06em; margin-bottom:.6rem; }
-    .rk-pinned-title { font-family:'Playfair Display',serif; font-size:1.4rem; line-height:1.4; margin-bottom:.6rem; }
-    .rk-pinned-desc { font-size:.88rem; color:#6b5e8a; line-height:1.7; margin-bottom:1rem; }
-    .rk-pinned-cta { font-weight:700; color:var(--gold); font-size:.85rem; }
 
     .rk-toolbar { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;
       gap:1rem; margin-bottom:1.75rem; padding-bottom:1.25rem; border-bottom:1px solid #e9e0f8; }
@@ -95,10 +87,27 @@
     .rk-empty { text-align:center; padding:4rem 1rem; color:#9b89bb; }
     .rk-empty-icon { font-size:3rem; margin-bottom:1rem; }
 
+    .rk-top100 { margin-top:1rem; padding-top:2.5rem; border-top:1px solid #e9e0f8; }
+    .rk-top100-head { margin-bottom:1.25rem; }
+    .rk-top100-kicker { font-size:.72rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+      color:var(--gold); margin-bottom:.4rem; }
+    .rk-top100-title { font-family:'Playfair Display',serif; font-size:1.45rem; color:#1a1228; margin:0 0 .45rem; }
+    .rk-top100-desc { font-size:.88rem; color:#6b5e8a; line-height:1.7; margin:0; max-width:640px; }
+    .rk-top100-list { list-style:none; margin:1.5rem 0 0; padding:0;
+      display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.55rem 1rem; }
+    .rk-top100-list a { display:flex; align-items:baseline; gap:.65rem; text-decoration:none;
+      color:#1a1228; padding:.55rem .75rem; border-radius:.75rem; border:1px solid transparent;
+      transition:all .15s; font-size:.9rem; line-height:1.45; }
+    .rk-top100-list a:hover { border-color:#e9e0f8; background:#faf8f4; color:var(--purple); }
+    .rk-top100-num { flex-shrink:0; min-width:1.6rem; font-weight:700; color:var(--gold); font-size:.82rem; }
+    .rk-top100-name { flex:1; }
+    .rk-top100-en { display:block; font-size:.72rem; color:#9b89bb; font-weight:400; margin-top:.1rem; }
+    .rk-top100-more { display:inline-flex; margin-top:1.5rem; font-weight:700; color:var(--purple);
+      text-decoration:none; font-size:.9rem; }
+    .rk-top100-more:hover { text-decoration:underline; }
+
     @media(max-width:700px) {
-      .rk-pinned { grid-template-columns:1fr; }
-      .rk-pinned-img { min-height:160px; font-size:4rem; }
-      .rk-pinned-body { padding:1.5rem; }
+      .rk-top100-list { grid-template-columns:1fr; }
     }
     @media(max-width:480px) {
       .rk-grid { grid-template-columns:1fr; }
@@ -110,21 +119,12 @@
 <header class="site-header"></header>
 
 <section class="rk-hero">
-  <h1>🏆 จัดอันดับหินคริสตัล</h1>
-  <p>รวมบทความ Top 5 หินคริสตัลและอัญมณีทุกหมวด — จากหินที่แพงที่สุดในโลก ไปจนถึงหินเสริมฮวงจุ้ยที่คนตามหามากที่สุด ข้อมูลอ้างอิงจริง อัปเดตใหม่เรื่อยๆ</p>
+  <div class="rk-kicker">คอลัมน์และเรื่องเล่า · Stones · Stories · Soul</div>
+  <h1>ซีรีส์เรื่องราวจากโลกของหินและคริสตัล</h1>
+  <p>สำรวจเรื่องราวของหิน แร่ คริสตัล อัญมณี อุกกาบาต และฟอสซิล ผ่านบทความที่คัดเลือก 5 เรื่องเด่นในแต่ละหัวข้อ พร้อมข้อมูลอ้างอิงที่ตรวจสอบได้ และภาพประกอบจาก AI หรือภาพจริงจากแหล่งที่ได้รับอนุญาต</p>
 </section>
 
 <div class="rk-wrap">
-
-  <a href="/stones/encyclopedia.html" class="rk-pinned">
-    <div class="rk-pinned-img" data-cms-img="top100_page_hero"><span class="cms-placeholder">🏆</span></div>
-    <div class="rk-pinned-body">
-      <div class="rk-pinned-badge">📌 แนะนำ</div>
-      <div class="rk-pinned-title">100 อันดับหินคริสตัลและแร่ยอดนิยมในไทย</div>
-      <div class="rk-pinned-desc">ลิสต์ครบที่สุด 100 ชนิด จัดอันดับตามความนิยมในตลาดไทย พร้อมความเชื่อและพลังงานของแต่ละชนิด</div>
-      <div class="rk-pinned-cta">ดูอันดับทั้งหมด →</div>
-    </div>
-  </a>
 
   <div class="rk-toolbar">
     <div class="rk-count" id="rkCount"></div>
@@ -136,6 +136,16 @@
 
   <div id="rkGrid"></div>
   <div class="rk-pager" id="rkPager"></div>
+
+  <section class="rk-top100" aria-labelledby="rkTop100Title">
+    <div class="rk-top100-head">
+      <div class="rk-top100-kicker">สารานุกรม</div>
+      <h2 class="rk-top100-title" id="rkTop100Title">100 อันดับหินคริสตัลและแร่ยอดนิยมในไทย</h2>
+      <p class="rk-top100-desc">ลิสต์ความนิยมในตลาดไทย — แยกจากซีรีส์เรื่องเล่าด้านบน ใช้ค้นหาหินตามอันดับแล้วลิงก์เข้าสู่สารานุกรม</p>
+    </div>
+    <ol class="rk-top100-list" id="rkTop100List"></ol>
+    <a class="rk-top100-more" href="/stones/encyclopedia.html">ดูรายละเอียดครบทั้ง 100 อันดับ →</a>
+  </section>
 
 </div>
 
@@ -164,7 +174,6 @@ let curPage = 1;
 let popularOrder = [];
 
 function shuffleSeeded(arr) {
-  // simple deterministic-per-load shuffle (Fisher-Yates)
   const a = arr.slice();
   for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -205,7 +214,7 @@ function render() {
 
   if (!list.length) {
     document.getElementById('rkGrid').innerHTML =
-      '<div class="rk-empty"><div class="rk-empty-icon">🏆</div><div>เร็วๆ นี้ — บทความจัดอันดับกำลังจะมา</div></div>';
+      '<div class="rk-empty"><div class="rk-empty-icon">✦</div><div>ตอนแรกของซีรีส์กำลังเตรียมเผยแพร่ — รอติดตามเรื่องราว 5 เรื่องเด่นในแต่ละหัวข้อ</div></div>';
     document.getElementById('rkPager').innerHTML = '';
     return;
   }
@@ -234,18 +243,51 @@ function goPage(p) {
   document.querySelector('.rk-toolbar')?.scrollIntoView({behavior:'smooth', block:'start'});
 }
 
+function isRankingLive(a) {
+  if (!a || a.status === 'draft') return false;
+  if (a.status === 'published' || !a.status) return true;
+  if (a.status !== 'scheduled') return false;
+  const raw = String(a.publishDate || '');
+  if (!raw) return false;
+  const iso = raw.length <= 10
+    ? raw + 'T08:00:00+07:00'
+    : (/[Z+\-]\d{2}:?\d{2}$/.test(raw) || raw.endsWith('Z') ? raw : raw + ':00+07:00');
+  const t = new Date(iso).getTime();
+  return !isNaN(t) && t <= Date.now();
+}
+
+function escAttr(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+}
+
+function renderTop100(stones) {
+  const el = document.getElementById('rkTop100List');
+  if (!el) return;
+  el.innerHTML = (stones || []).map(s => {
+    const href = s.articleUrl || ('/stones/encyclopedia.html#' + (s.id || ''));
+    const en = s.en ? `<span class="rk-top100-en">${escAttr(s.en)}</span>` : '';
+    return `<li><a href="${escAttr(href)}"><span class="rk-top100-num">${s.rank}</span><span class="rk-top100-name">${escAttr(s.th || s.en || '')}${en}</span></a></li>`;
+  }).join('');
+}
+
 (async () => {
   try {
-    const [r, cr] = await Promise.all([
+    const [r, cr, t100] = await Promise.all([
       fetch('/data/rankings.json?v=' + Date.now()),
-      fetch('/data/content.json?v=' + Date.now())
+      fetch('/data/content.json?v=' + Date.now()),
+      fetch('/data/top-100-stones.json?v=' + Date.now())
     ]);
     const d = await r.json();
     const imgs = (await cr.json()).images || {};
-    const now = new Date().toISOString();
     RANKINGS = (d.articles || [])
-      .filter(a => a.status !== 'draft' && (a.status !== 'scheduled' || (a.publishDate || '') <= now))
+      .filter(isRankingLive)
       .map(a => ({ ...a, thumb: a.thumb || (a.heroImgSlot && imgs[a.heroImgSlot]) || '' }));
+    try {
+      const top = await t100.json();
+      renderTop100(top.stones || []);
+    } catch (_) {
+      renderTop100([]);
+    }
   } catch (e) {
     RANKINGS = [];
   }

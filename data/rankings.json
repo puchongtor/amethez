@@ -1,6 +1,90 @@
 {
-  "generated": "2026-07-16",
+  "generated": "2026-08-14",
+  "series": {
+    "id": "stone-stories",
+    "name": "ซีรีส์เรื่องราวจากโลกของหินและคริสตัล",
+    "tagline": "สำรวจเรื่องราวของหิน แร่ คริสตัล อัญมณี อุกกาบาต และฟอสซิล ผ่านบทความที่คัดเลือก 5 เรื่องเด่นในแต่ละหัวข้อ พร้อมข้อมูลอ้างอิงที่ตรวจสอบได้ ภาพประกอบจาก AI หรือภาพจริงจากแหล่งที่ได้รับอนุญาต",
+    "draftsPerDay": 5,
+    "publishPerDay": 2,
+    "publishTimes": [
+      "08:00",
+      "20:00"
+    ],
+    "inbox": "inbox/rankings"
+  },
   "articles": [
+    {
+      "id": "meteorites-from-other-worlds",
+      "slug": "meteorites-from-other-worlds",
+      "title": "5 อุกกาบาตจากดาวเคราะห์อื่นที่เดินทางมาถึงโลกจริง",
+      "excerpt": "อุกกาบาตบางก้อนที่ตกลงบนโลกมีต้นกำเนิดจากดาวอังคาร ดวงจันทร์ และดาวเคราะห์น้อยเวสตา มาดู 5 ตัวอย่างที่มีหลักฐานทางเคมี แร่ และก๊าซช่วยยืนยันว่าพวกมันเดินทางมาจากโลกอื่นจริง",
+      "seoTitle": "5 อุกกาบาตจากดาวเคราะห์อื่นที่เดินทางมาถึงโลกจริง",
+      "metaDescription": "รู้จัก 5 อุกกาบาตจากดาวอังคาร ดวงจันทร์ และดาวเคราะห์น้อยเวสตา พร้อมหลักฐานทางเคมีและแร่ที่ช่วยยืนยันต้นกำเนิดจากโลกอื่น",
+      "focusKeyword": "อุกกาบาตจากดาวอังคาร",
+      "relatedKeywords": [
+        "อุกกาบาตจากดวงจันทร์",
+        "อุกกาบาตจากเวสตา",
+        "ALH 84001",
+        "NWA 7034 Black Beauty",
+        "EETA79001",
+        "หินจากดาวอังคาร",
+        "อุกกาบาตจากอวกาศ"
+      ],
+      "heroImgSlot": "ranking_meteorites_from_other_worlds_hero",
+      "heroCaption": "ภาพปกเป็นภาพประกอบสร้างด้วย AI ไม่ใช่ภาพถ่ายจริงของชิ้นงาน",
+      "heroAlt": "ภาพจำลองอุกกาบาตจากดาวอังคาร ดวงจันทร์ และดาวเคราะห์น้อยเวสตาที่เดินทางมาถึงโลก",
+      "heroPrompt": "Create a premium 16:9 horizontal editorial illustration for the website amethez.com.\n\nShow a coherent scientific visual journey connecting five meteorite stories:\n\n- An ancient Martian meteorite inspired by ALH 84001.\n- A dark, water-rich Martian breccia inspired by NWA 7034 Black Beauty.\n- A gray lunar meteorite inspired by NWA 5000.\n- Three geological meteorite slices inspired by howardite, eucrite, and diogenite from asteroid Vesta.\n- A laboratory analysis of trapped gases inside a Martian meteorite inspired by EETA79001.\n\nPlace Mars and the Moon in the distant background, with a subtle asteroid Vesta visual element. Place the meteorite specimens and scientific instruments in the foreground. Create a dramatic but credible natural-history editorial style. Use realistic mineral textures, deep-space atmosphere, warm laboratory highlights, and strong visual depth.\n\nKeep the main meteorite composition on the right side. Leave clean, uncluttered negative space on the left side for the Thai headline.\n\nAdd only these exact text elements:\n\nMain Thai headline:\n\n“5 อุกกาบาตจากดาวเคราะห์อื่นที่เดินทางมาถึงโลกจริง”\n\nSmall website name:\n\n“amethez.com”\n\nPlace “amethez.com” subtly in the bottom-left corner, much smaller than the headline.\n\nDo not add any other words, logo, watermark, URL variation, museum label, fake scientific text, or decorative lettering.\n\nThis is an editorial illustration, not a real photograph and not an exact depiction of any single meteorite specimen.",
+      "items": [
+        {
+          "label": "ALH 84001",
+          "prompt": "Square 1:1 premium editorial illustration inspired by ALH 84001, an ancient Martian meteorite studied for clues about the geological history of Mars. Show a dark gray Martian rock fragment on a clean scientific laboratory surface, with a subtle transition to an ancient red Mars landscape and microscopic mineral textures. Emphasize scientific investigation and geochemistry, not alien life. Realistic mineral textures, cinematic lighting, no text, no logo, no watermark, not a photograph of the actual specimen.",
+          "caption": "ภาพประกอบสร้างด้วย AI ไม่ใช่ภาพถ่ายจริงของชิ้นงาน",
+          "alt": "ภาพจำลองอุกกาบาต ALH 84001 จากดาวอังคารบนโต๊ะวิเคราะห์ทางวิทยาศาสตร์",
+          "imgSlot": "ranking_meteorites_from_other_worlds_item1_hero"
+        },
+        {
+          "label": "NWA 7034 Black Beauty",
+          "prompt": "Square 1:1 premium editorial illustration inspired by NWA 7034, nicknamed Black Beauty, a water-rich Martian breccia meteorite. Show an irregular black meteorite with a cut surface revealing many fragments of ancient Martian crust, placed between a scientific laboratory and a dark red Mars landscape. Emphasize ancient geology and evidence of water, no alien figures, no text, no logo, no watermark, not a photograph of the actual specimen.",
+          "caption": "ภาพประกอบสร้างด้วย AI ไม่ใช่ภาพถ่ายจริงของชิ้นงาน",
+          "alt": "ภาพจำลองอุกกาบาต Black Beauty จากดาวอังคารที่มีโครงสร้างหินหลายชนิดเชื่อมติดกัน",
+          "imgSlot": "ranking_meteorites_from_other_worlds_item2_hero"
+        },
+        {
+          "label": "NWA 5000",
+          "prompt": "Square 1:1 premium editorial illustration inspired by NWA 5000, a lunar meteorite found in North Africa. Show a fractured gray lunar rock resting on pale Sahara sand, with the Moon visible in the dark sky and a subtle visual path suggesting the rock was ejected into space before reaching Earth. Realistic lunar surface texture, natural-history editorial style, no text, no logo, no watermark, not a photograph of the actual specimen.",
+          "caption": "ภาพประกอบสร้างด้วย AI ไม่ใช่ภาพถ่ายจริงของชิ้นงาน",
+          "alt": "ภาพจำลองอุกกาบาตจากดวงจันทร์ที่ตกลงบนพื้นทรายในทะเลทราย",
+          "imgSlot": "ranking_meteorites_from_other_worlds_item3_hero"
+        },
+        {
+          "label": "อุกกาบาตกลุ่ม HED",
+          "prompt": "Square 1:1 premium editorial illustration inspired by HED meteorites linked to asteroid Vesta. Show three distinct geological meteorite slices representing howardite, eucrite, and diogenite, arranged on a scientific display surface with asteroid Vesta softly visible in the background. Emphasize mineral diversity and planetary geology. Premium museum editorial style, realistic textures, no text, no logo, no watermark, not a photograph of actual specimens.",
+          "caption": "ภาพประกอบสร้างด้วย AI ไม่ใช่ภาพถ่ายจริงของชิ้นงาน",
+          "alt": "ภาพจำลองอุกกาบาตกลุ่ม HED ที่เชื่อมโยงกับดาวเคราะห์น้อยเวสตา",
+          "imgSlot": "ranking_meteorites_from_other_worlds_item4_hero"
+        },
+        {
+          "label": "EETA79001",
+          "prompt": "Square 1:1 premium editorial illustration inspired by EETA79001, a Martian meteorite containing glass inclusions with trapped gases. Show a polished meteorite slice inside a laboratory analysis chamber, with tiny glowing gas inclusions and a subtle visualization of Mars and its atmosphere in the background. Emphasize chemical evidence and scientific measurement, no text, no logo, no watermark, not a photograph of the actual specimen.",
+          "caption": "ภาพประกอบสร้างด้วย AI ไม่ใช่ภาพถ่ายจริงของชิ้นงาน",
+          "alt": "ภาพจำลองการวิเคราะห์ก๊าซที่ถูกกักอยู่ภายในอุกกาบาตจากดาวอังคาร",
+          "imgSlot": "ranking_meteorites_from_other_worlds_item5_hero"
+        }
+      ],
+      "url": "/stones/rankings/meteorites-from-other-worlds.html",
+      "publishDate": "",
+      "status": "draft",
+      "series": "stone-stories",
+      "episode": 1,
+      "imageStatus": "pending",
+      "shopeeTags": [
+        "อุกกาบาต",
+        "สะเก็ดดาว",
+        "โมลดาไวท์",
+        "หินจากอวกาศ",
+        "ดาวอังคาร"
+      ]
+    },
     {
       "id": "5-andap-hin-mongkol-premium",
       "slug": "5-andap-hin-mongkol-premium",
@@ -37,7 +121,11 @@
       ],
       "url": "/stones/rankings/5-andap-hin-mongkol-premium.html",
       "publishDate": "2026-07-13",
-      "status": "published"
+      "status": "draft",
+      "series": "stone-stories",
+      "episode": 0,
+      "imageStatus": "pending",
+      "note": "ดราฟต์เดิม — จะเรียบเรียงใหม่ให้เข้ากับซีรีส์เรื่องราวจากโลกของหินและคริสตัล"
     }
   ]
 }

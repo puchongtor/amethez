@@ -42,7 +42,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/schedule.json sitemap.xml 2>/dev/null || true
+          git add data/schedule.json data/rankings.json sitemap.xml stones/rankings/*.html 2>/dev/null || true
           if ! git diff --cached --quiet; then
             git commit -m "chore: sync published schedule + sitemap [skip ci]"
             git push
@@ -66,6 +66,7 @@ jobs:
             **/node_modules/**
             **/.github/**
             **/scripts/**
+            **/inbox/**
             **/CLAUDE.md
             **/Amethez.md
             **/WUCHONG_BRIEF.md

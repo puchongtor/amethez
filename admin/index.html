@@ -253,7 +253,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
       <div class="nav-item" onclick="showTab('settings',this)"><span class="ic">⚙️</span> ตั้งค่า</div>
       <div class="nav-item" onclick="showTab('catalog',this)"><span class="ic">✦</span> Crystal Catalog</div>
       <div class="nav-item" onclick="showTab('top100',this)"><span class="ic">🏆</span> Top 100 ยอดนิยม</div>
-      <div class="nav-item" onclick="showTab('rankings',this)"><span class="ic">📊</span> จัดอันดับหินคริสตัล</div>
+      <div class="nav-item" onclick="showTab('rankings',this)"><span class="ic">✦</span> ซีรีส์เรื่องราวหิน</div>
       <div class="nav-item" onclick="showTab('talk',this)"><span class="ic">🔮</span> ห้องคลื่นเสียง Manifest</div>
     </div>
     <div class="sidebar-footer">
@@ -1546,10 +1546,22 @@ textarea.form-input{resize:vertical;min-height:80px;}
           <div id="rankingsListView">
           <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem">
             <div>
-              <div class="section-title">📊 จัดอันดับหินคริสตัล</div>
-              <div class="section-sub">บทความ Top 5 ทุกหมวด — แก้ไข/ใส่รูป แล้วกด "🚀 เผยแพร่" (หน้าเว็บต้องถูกสร้างไว้แล้วก่อน จึงจะแก้เนื้อหาได้)</div>
+              <div class="section-title">✦ ซีรีส์เรื่องราวจากโลกของหินและคริสตัล</div>
+              <div class="section-sub">สุ่มดึงไฟล์ → ทำดราฟต์วันละ 5 ตอน → เจนรูป Google API → พรีวิว ถ้าไม่โดนเจนใหม่หรือใส่แทน → กดยืนยัน ระบบจัดคิวโพสต์วันละ 2 ตอน</div>
             </div>
             <button class="btn btn-primary" onclick="openAddRanking()">➕ เพิ่มบทความ</button>
+          </div>
+          <div class="card" style="margin-bottom:1.25rem">
+            <div class="card-title">📥 สุ่มดึงไฟล์บทความเป็น Draft</div>
+            <div class="section-sub" style="margin-bottom:.85rem">วาง PDF / ข้อความตามฟอร์มซีรีส์ ระบบสุ่มสูงสุด 5 ไฟล์ต่อรอบ แล้วสร้างดราฟต์ให้เช็ครูปก่อนยืนยัน</div>
+            <div style="display:flex;gap:.6rem;flex-wrap:wrap;align-items:center">
+              <label style="cursor:pointer">
+                <span class="btn btn-outline btn-sm">📁 เลือกไฟล์ PDF / TXT / MD</span>
+                <input type="file" id="rkInboxFiles" accept=".pdf,.txt,.md,text/plain,application/pdf" multiple style="display:none" onchange="ingestRankingFiles(this.files)">
+              </label>
+              <button class="btn btn-outline btn-sm" onclick="pasteRankingArticle()">📋 วางข้อความบทความ</button>
+            </div>
+            <div id="rkInboxStatus" style="margin-top:.7rem;font-size:.8rem;color:#6b7280"></div>
           </div>
           <div id="rankingsList"></div>
           </div><!-- /rankingsListView -->
@@ -1564,6 +1576,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
               </div>
               <a class="btn btn-outline btn-sm" id="rkViewBtn" href="#" target="_blank" style="text-decoration:none">👁 ดูหน้า</a>
               <button class="btn btn-outline btn-sm" onclick="resetRkBodyToOriginal()">↺ โหลดต้นฉบับ</button>
+              <button class="btn btn-gold btn-sm" onclick="confirmRankingFromEditor()">✓ ยืนยันเข้าคิวโพสต์</button>
               <button class="btn btn-danger btn-sm" id="rkDelBtn" onclick="deleteRankingFromEditor()">🗑 ลบ</button>
               <button class="btn btn-primary" onclick="saveRankingEditor()">💾 บันทึก</button>
             </div>
@@ -1612,7 +1625,10 @@ textarea.form-input{resize:vertical;min-height:80px;}
                 <div style="margin-top:.75rem">
                   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.35rem">
                     <label class="fl" style="margin:0">🎨 AI Image Prompt (ปก)</label>
-                    <button class="btn btn-outline btn-sm" onclick="copyRkHeroPrompt()" style="font-size:.7rem">📋 คัดลอก</button>
+                    <div style="display:flex;gap:.35rem">
+                      <button class="btn btn-outline btn-sm" onclick="copyRkHeroPrompt()" style="font-size:.7rem">📋 คัดลอก</button>
+                      <button class="btn btn-primary btn-sm" onclick="genRkHeroImage()" style="font-size:.7rem">✦ เจนรูป Google</button>
+                    </div>
                   </div>
                   <textarea class="form-input" id="rkHeroPrompt" rows="3" placeholder="วาง/แก้ prompt สำหรับ Google Flow..." style="font-size:.72rem;font-family:'Consolas','Courier New',monospace" oninput="persistRkMeta()"></textarea>
                 </div>
@@ -1624,9 +1640,12 @@ textarea.form-input{resize:vertical;min-height:80px;}
               <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem">
                 <div>
                   <div class="card-title" style="margin:0">🖼️ รูปประกอบแต่ละอันดับ + Prompt</div>
-                  <div class="section-sub" style="margin-top:.25rem">คัดลอก prompt ไปเจนใน Google Flow แล้วอัปโหลดรูปกลับช่องเดียวกัน — รูปจะไปโผล่เหนือหัวข้ออันดับนั้นในบทความ</div>
+                  <div class="section-sub" style="margin-top:.25rem">เจนรูปเป็นซีรีส์ด้วย Google API แล้วพรีวิว — ถ้าไม่โดน กดเจนใหม่หรืออัปโหลดแทน เรื่องซ้าย รูปขวาบนหน้าเว็บ</div>
                 </div>
-                <button class="btn btn-outline btn-sm" onclick="addRkItem()">➕ เพิ่มอันดับ</button>
+                <div style="display:flex;gap:.4rem;flex-wrap:wrap">
+                  <button class="btn btn-primary btn-sm" onclick="genRkAllImages()">✦ เจนรูปทั้งซีรีส์</button>
+                  <button class="btn btn-outline btn-sm" onclick="addRkItem()">➕ เพิ่มอันดับ</button>
+                </div>
               </div>
               <div id="rkItemRows" style="display:flex;flex-direction:column;gap:1rem"></div>
             </div>
@@ -1864,6 +1883,9 @@ textarea.form-input{resize:vertical;min-height:80px;}
   <div id="imgSizeLabel" style="position:absolute;top:-24px;left:0;background:#7c3aed;color:#fff;font-size:.65rem;padding:2px 6px;border-radius:3px;white-space:nowrap"></div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>if(window.pdfjsLib) pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';</script>
+<script src="/js/ranking-series.js"></script>
 <script>
 // Bumped whenever admin/index.html changes. checkAdminIsCurrent() compares this
 // against the deployed file right before a publish, so an admin tab left open
@@ -1871,7 +1893,7 @@ textarea.form-input{resize:vertical;min-height:80px;}
 // exactly how the FAQ/related-links content got wiped from a live page 3 times
 // in one session (self-heal/safety-net fixes existed in the file, but not yet
 // in the browser tab that was still running the pre-fix version).
-const ADMIN_VERSION='2026-07-26.1';
+const ADMIN_VERSION='2026-08-14.1';
 async function checkAdminIsCurrent(){
   try{
     const r=await fetch('/admin/index.html?v='+Date.now(),{cache:'no-store'});
@@ -3129,7 +3151,7 @@ if(sessionStorage.getItem(AUTH_KEY)){
 }
 
 // ── TABS ──────────────────────────────────────
-const TAB_TITLES={dashboard:'📊 ภาพรวม',stats:'📈 สถิติ & เป้าหมาย',pages:'🎨 แก้ไขหน้า',stones:'💎 สารานุกรมหิน',blog:'📝 Blog & Schedule',products:'🪨 สินค้าโพรง',shopee:'🛒 Shopee Aff',roadmap:'🗺️ แผน 6 เดือน',articles:'📋 หน้าทั้งหมด',settings:'⚙️ ตั้งค่า',catalog:'✦ Crystal Catalog',top100:'🏆 Top 100 ยอดนิยม',rankings:'📊 จัดอันดับหินคริสตัล',talk:'🔮 ห้องคลื่นเสียง Manifest'};
+const TAB_TITLES={dashboard:'📊 ภาพรวม',stats:'📈 สถิติ & เป้าหมาย',pages:'🎨 แก้ไขหน้า',stones:'💎 สารานุกรมหิน',blog:'📝 Blog & Schedule',products:'🪨 สินค้าโพรง',shopee:'🛒 Shopee Aff',roadmap:'🗺️ แผน 6 เดือน',articles:'📋 หน้าทั้งหมด',settings:'⚙️ ตั้งค่า',catalog:'✦ Crystal Catalog',top100:'🏆 Top 100 ยอดนิยม',rankings:'✦ ซีรีส์เรื่องราวจากโลกของหิน',talk:'🔮 ห้องคลื่นเสียง Manifest'};
 
 // ── URL HASH ROUTING ───────────────────────────────────────────
 // Every tab switch / page-editor open updates location.hash (via
@@ -7224,13 +7246,21 @@ async function seedRankingsFromJson(){
       slug: a.slug||'',
       url: a.url||'',
       excerpt: a.excerpt||'',
+      seoTitle: a.seoTitle||'',
+      metaDescription: a.metaDescription||'',
       hero: '',
       heroImgSlot: a.heroImgSlot||'',
       heroPrompt: a.heroPrompt||'',
-      items: (a.items||[]).map(it=>({label:it.label||'',prompt:it.prompt||'',img:'',imgSlot:it.imgSlot||''})),
+      heroCaption: a.heroCaption||'',
+      heroAlt: a.heroAlt||'',
+      items: (a.items||[]).map(it=>({label:it.label||'',prompt:it.prompt||'',img:'',imgSlot:it.imgSlot||'',caption:it.caption||'',alt:it.alt||''})),
       status: a.status||'published',
-      publishDate: a.publishDate?a.publishDate+'T08:00':new Date().toISOString(),
+      publishDate: a.publishDate? (a.publishDate.length>10?a.publishDate:a.publishDate+'T08:00'): '',
       body: '',
+      series: a.series||'stone-stories',
+      episode: a.episode||0,
+      imageStatus: a.imageStatus||'pending',
+      shopeeTags: a.shopeeTags||a.relatedKeywords||[],
       created: a.publishDate||new Date().toISOString(),
       updated: a.publishDate||new Date().toISOString(),
     }));
@@ -7247,7 +7277,11 @@ async function seedRankingsFromJson(){
       const liveHas=a.heroPrompt || (a.items&&a.items.length);
       if(localEmpty && liveHas){
         local.heroPrompt=a.heroPrompt||'';
-        local.items=(a.items||[]).map(it=>({label:it.label||'',prompt:it.prompt||'',img:'',imgSlot:it.imgSlot||''}));
+        local.items=(a.items||[]).map(it=>({label:it.label||'',prompt:it.prompt||'',img:'',imgSlot:it.imgSlot||'',caption:it.caption||'',alt:it.alt||''}));
+        healed++;
+      }
+      if(a.status==='draft' && local.status==='published' && !local.body){
+        local.status='draft';
         healed++;
       }
     }
@@ -7265,20 +7299,28 @@ function renderRankings(){
   const STATUS_LABEL={published:'🟢 เผยแพร่',scheduled:'⏰ ตั้งเวลา',draft:'⚫ Draft'};
   const STATUS_COLOR={published:'#059669',scheduled:'#d97706',draft:'#9ca3af'};
   document.getElementById('rankingsList').innerHTML=`<div class="article-list">${[...list].sort((a,b)=>
-    (b.created||'').localeCompare(a.created||'')).map(p=>{
+    String(b.episode||0)-String(a.episode||0) || (b.created||'').localeCompare(a.created||'')).map(p=>{
     const col=STATUS_COLOR[p.status]||'#9ca3af';
     const heroUrl=(getImgs()[p.heroImgSlot])||p.hero;
-    const thumb=heroUrl?`<img src="${x(heroUrl)}" style="width:56px;height:56px;object-fit:cover;border-radius:.5rem;flex-shrink:0">`
-      :`<div style="width:56px;height:56px;background:#f5f0ff;border-radius:.5rem;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0">🏆</div>`;
+    const itemThumbs=(p.items||[]).map((it,i)=>{
+      const u=it.img||getImgs()[it.imgSlot]||'';
+      return u?`<img src="${x(u)}" alt="" style="width:36px;height:36px;object-fit:cover;border-radius:.4rem;border:1px solid #e9e0f5">`
+        :`<div style="width:36px;height:36px;border-radius:.4rem;background:#f5f0ff;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#9ca3af">${i+1}</div>`;
+    }).join('');
+    const thumb=heroUrl?`<img src="${x(heroUrl)}" style="width:72px;height:72px;object-fit:cover;border-radius:.6rem;flex-shrink:0">`
+      :`<div style="width:72px;height:72px;background:#f5f0ff;border-radius:.6rem;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0">✦</div>`;
     const dateStr=p.publishDate?new Date(p.publishDate).toLocaleDateString('th-TH',{day:'numeric',month:'short',year:'2-digit',hour:'2-digit',minute:'2-digit'}):'—';
-    return `<div class="article-item" style="border-left:3px solid ${col}">
+    const ep=p.episode?`ตอนที่ ${p.episode} · `:'';
+    return `<div class="article-item" style="border-left:3px solid ${col};align-items:flex-start">
       ${thumb}
       <div class="article-info" style="flex:1;min-width:0">
         <div class="article-name">${x(p.title)}</div>
-        <div style="font-size:.72rem;color:#9ca3af;margin-top:.2rem">${p.status==='scheduled'?'⏰ '+dateStr:dateStr} · ${x(p.url||'/stones/rankings/'+p.slug+'.html')}</div>
+        <div style="font-size:.72rem;color:#9ca3af;margin-top:.2rem">${ep}${p.status==='scheduled'?'⏰ '+dateStr:dateStr} · ${x(p.url||'/stones/rankings/'+p.slug+'.html')}</div>
+        <div style="display:flex;gap:.35rem;margin-top:.45rem;flex-wrap:wrap">${itemThumbs}</div>
       </div>
       <div style="display:flex;gap:.4rem;align-items:center;flex-wrap:wrap">
         <span style="font-size:.72rem;color:${col};background:${col}22;padding:.15rem .55rem;border-radius:2rem">${STATUS_LABEL[p.status]||p.status}</span>
+        ${p.status==='draft'?`<button class="btn btn-gold btn-sm" onclick="confirmRankingArticle('${x(p.id)}')">✓ ยืนยัน</button>`:''}
         <button class="btn btn-outline btn-sm" onclick="openEditRanking('${x(p.id)}')">✏️</button>
         <button class="btn btn-danger btn-sm" onclick="delRankingItem('${x(p.id)}')">🗑</button>
       </div>
@@ -7452,20 +7494,23 @@ function renderRkItemRows(items){
   _rkItems.forEach((it,i)=>{ if(!it.imgSlot) it.imgSlot=base+'_item'+(i+1)+'_hero'; });
   document.getElementById('rkItemRows').innerHTML=_rkItems.map((it,i)=>{
     const imgUrl=it.img||getImgs()[it.imgSlot]||'';
-    return `<div style="display:grid;grid-template-columns:90px 1fr;gap:1rem;padding:1rem;background:#faf8ff;border-radius:.75rem;align-items:start">
+    return `<div style="display:grid;grid-template-columns:140px 1fr;gap:1rem;padding:1rem;background:#faf8ff;border-radius:.75rem;align-items:start">
       <div style="display:flex;flex-direction:column;align-items:center;gap:.4rem">
-        <div style="width:90px;height:90px;border-radius:.6rem;overflow:hidden;background:#f5f0ff;display:flex;align-items:center;justify-content:center;font-size:1.6rem" id="rkItemImgPreview_${i}">
-          ${imgUrl?`<img src="${x(imgUrl)}" style="width:100%;height:100%;object-fit:cover">`:'🏆'}
+        <div style="width:140px;height:140px;border-radius:.75rem;overflow:hidden;background:#f5f0ff;display:flex;align-items:center;justify-content:center;font-size:1.6rem" id="rkItemImgPreview_${i}">
+          ${imgUrl?`<img src="${x(imgUrl)}" style="width:100%;height:100%;object-fit:cover">`:'✦'}
         </div>
-        <label style="cursor:pointer">
-          <span class="btn btn-outline btn-sm" style="font-size:.65rem;padding:.3rem .5rem">📁 อัปโหลด</span>
-          <input type="file" accept="image/*" style="display:none" onchange="uploadRkItemImg(${i},this)">
-        </label>
+        <div style="display:flex;gap:.3rem;flex-wrap:wrap;justify-content:center">
+          <label style="cursor:pointer">
+            <span class="btn btn-outline btn-sm" style="font-size:.65rem;padding:.3rem .5rem">📁 ใส่แทน</span>
+            <input type="file" accept="image/*" style="display:none" onchange="uploadRkItemImg(${i},this)">
+          </label>
+          <button class="btn btn-primary btn-sm" style="font-size:.65rem;padding:.3rem .5rem" onclick="genRkItemImage(${i})">✦ เจนใหม่</button>
+        </div>
       </div>
       <div>
         <input class="form-input" placeholder="อันดับ ${i+1}: ชื่อหิน (เช่น หยกจักรพรรดิ - Imperial Jade)" value="${x(it.label||'')}" oninput="setRkItemField(${i},'label',this.value)" style="margin-bottom:.5rem">
         <div style="display:flex;gap:.4rem;align-items:flex-start">
-          <textarea class="form-input" rows="3" placeholder="AI Image Prompt สำหรับ Google Flow..." oninput="setRkItemField(${i},'prompt',this.value)" style="font-size:.72rem;font-family:'Consolas','Courier New',monospace;flex:1">${x(it.prompt||'')}</textarea>
+          <textarea class="form-input" rows="4" placeholder="AI Image Prompt สำหรับ Google API..." oninput="setRkItemField(${i},'prompt',this.value)" style="font-size:.72rem;font-family:'Consolas','Courier New',monospace;flex:1">${x(it.prompt||'')}</textarea>
           <button class="btn btn-outline btn-sm" onclick="copyRkPrompt(${i})" title="คัดลอก Prompt" style="flex-shrink:0">📋</button>
         </div>
         <button class="btn btn-danger btn-sm" onclick="removeRkItem(${i})" style="margin-top:.4rem;font-size:.7rem">🗑 ลบอันดับนี้</button>
@@ -7633,6 +7678,7 @@ function saveRankingEditor(){
   const items=getRankingItems();
   const body=document.getElementById('rkBodyTA').value;
   const slug=document.getElementById('rkSlug').value.trim()||title.toLowerCase().replace(/[^\w฀-๿]+/g,'-');
+  const prev=eid?items.find(b=>b.id===eid):null;
   const p={
     id: eid||'rk_'+Date.now(),
     title,
@@ -7640,13 +7686,19 @@ function saveRankingEditor(){
     url: '/stones/rankings/'+slug+'.html',
     excerpt: document.getElementById('rkExcerpt').value.trim(),
     hero: document.getElementById('rkHero').value.trim(),
-    heroImgSlot: (eid&&items.find(b=>b.id===eid)?.heroImgSlot)||('ranking_'+slug.replace(/-/g,'_')+'_hero'),
+    heroImgSlot: (prev&&prev.heroImgSlot)||('ranking_'+slug.replace(/-/g,'_')+'_hero'),
     heroPrompt: document.getElementById('rkHeroPrompt').value.trim(),
+    heroCaption: prev&&prev.heroCaption||'',
+    heroAlt: prev&&prev.heroAlt||'',
     status: document.getElementById('rkStatus').value,
     publishDate: document.getElementById('rkPublishDate').value||new Date().toISOString(),
     items: JSON.parse(JSON.stringify(_rkItems)),
     body,
-    created: eid?(items.find(b=>b.id===eid)?.created||new Date().toISOString()):new Date().toISOString(),
+    series: (prev&&prev.series)||'stone-stories',
+    episode: prev&&prev.episode||0,
+    imageStatus: prev&&prev.imageStatus||'pending',
+    shopeeTags: prev&&prev.shopeeTags||[],
+    created: prev&&prev.created||new Date().toISOString(),
     updated: new Date().toISOString(),
   };
   if(eid){ const i=items.findIndex(b=>b.id===eid); if(i>=0) items[i]=p; else items.push(p); }
@@ -8412,6 +8464,13 @@ async function publishToGitHub(){
             } else {
               toast('⚠️ ไม่พบ body ในหน้า "'+item.title+'" — ข้ามการอัปเดตเนื้อหา','err');
             }
+          } else if(typeof RankingSeries!=='undefined'){
+            const html=RankingSeries.buildFullRankingPage(Object.assign({},item,{
+              body:item.body||RankingSeries.buildSeriesBodyHtml(item)
+            }));
+            const newB64=btoa(unescape(encodeURIComponent(html)));
+            const pur=await fetch(`https://api.github.com/repos/${repo}/contents/${pagePath}`,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify({message:`cms: create ranking page — ${item.title}`,content:newB64})});
+            if(!pur.ok) toast('⚠️ สร้างหน้าเว็บ "'+item.title+'" ไม่สำเร็จ','err');
           } else {
             toast('⚠️ ยังไม่มีไฟล์หน้าเว็บของ "'+item.title+'" — ต้องให้ Claude สร้างหน้าก่อน จึงจะแก้เนื้อหาได้','err');
           }
@@ -8421,12 +8480,20 @@ async function publishToGitHub(){
       saveRankingItems(rankingItems);
 
       if(rankingItems.length){
-        const rankingsJson={generated:new Date().toISOString().slice(0,10),articles:rankingItems.filter(it=>it.status!=='draft').map(it=>({
+        const rankingsJson={
+          generated:new Date().toISOString().slice(0,10),
+          series:(typeof RankingSeries!=='undefined'&&RankingSeries.SERIES)?RankingSeries.SERIES:{id:'stone-stories',name:'ซีรีส์เรื่องราวจากโลกของหินและคริสตัล',draftsPerDay:5,publishPerDay:2,publishTimes:['08:00','20:00']},
+          articles:rankingItems.map(it=>({
           id:it.id, slug:it.slug, title:it.title, excerpt:it.excerpt,
+          seoTitle:it.seoTitle||'', metaDescription:it.metaDescription||'',
           heroImgSlot:it.heroImgSlot, heroPrompt:it.heroPrompt||'',
-          items:(it.items||[]).map(x2=>({label:x2.label||'',prompt:x2.prompt||'',imgSlot:x2.imgSlot||''})),
+          heroCaption:it.heroCaption||'', heroAlt:it.heroAlt||'',
+          items:(it.items||[]).map(x2=>({label:x2.label||'',prompt:x2.prompt||'',imgSlot:x2.imgSlot||'',caption:x2.caption||'',alt:x2.alt||''})),
           url:it.url||'/stones/rankings/'+it.slug+'.html',
           publishDate:(it.publishDate||'').slice(0,10), status:it.status,
+          series:it.series||'stone-stories', episode:it.episode||0,
+          imageStatus:it.imageStatus||'pending',
+          shopeeTags:it.shopeeTags||[]
         }))};
         const rkCompare=JSON.stringify(rankingsJson.articles);
         if(isUnchangedSincePublish('rankings', rkCompare)){
@@ -8780,6 +8847,142 @@ function renderRoadmap(){
   }).join('');
 
   renderRMGrandTotal();
+}
+
+async function extractPdfText(file){
+  if(!window.pdfjsLib) throw new Error('ยังโหลด PDF.js ไม่สำเร็จ');
+  const buf=await file.arrayBuffer();
+  const pdf=await pdfjsLib.getDocument({data:buf}).promise;
+  let text='';
+  for(let i=1;i<=pdf.numPages;i++){
+    const page=await pdf.getPage(i);
+    const content=await page.getTextContent();
+    let lastY=null; let line='';
+    content.items.forEach(it=>{
+      const y=it.transform?it.transform[5]:0;
+      if(lastY!==null && Math.abs(y-lastY)>6){ text+=line.trim()+'\n'; line=''; }
+      line+=it.str+' ';
+      lastY=y;
+    });
+    text+=line.trim()+'\n\n';
+  }
+  return text.trim();
+}
+async function ingestRankingFiles(fileList){
+  const files=[...fileList].filter(f=>/\.(pdf|txt|md)$/i.test(f.name)||f.type==='application/pdf'||f.type==='text/plain');
+  const status=document.getElementById('rkInboxStatus');
+  if(!files.length){ toast('เลือกไฟล์ .pdf .md หรือ .txt','err'); return; }
+  const picked=(typeof RankingSeries!=='undefined'?RankingSeries.shufflePick(files,5):files.slice(0,5));
+  status.textContent='กำลังอ่าน '+picked.length+' ไฟล์...';
+  let ok=0;
+  for(const f of picked){
+    try{
+      let raw='';
+      if(/\.pdf$/i.test(f.name)||f.type==='application/pdf') raw=await extractPdfText(f);
+      else raw=await f.text();
+      ingestRankingText(raw, f.name);
+      ok++;
+    }catch(e){ toast('อ่าน '+f.name+' ไม่สำเร็จ: '+e.message,'err'); }
+  }
+  status.textContent='สร้างดราฟต์แล้ว '+ok+' ตอน — เปิดแก้ไขเพื่อเจนรูป แล้วกดยืนยัน';
+  renderRankings();
+  if(ok) toast('สร้างดราฟต์ '+ok+' ตอนแล้ว ✓','ok');
+}
+function pasteRankingArticle(){
+  const raw=prompt('วางข้อความบทความตามฟอร์มซีรีส์ (หัวข้อ, 5 เรื่อง, SEO, prompt รูป)');
+  if(!raw||!raw.trim()) return;
+  try{
+    ingestRankingText(raw, 'pasted');
+    renderRankings();
+    toast('สร้างดราฟต์จากข้อความแล้ว ✓','ok');
+  }catch(e){ toast('แปลงบทความไม่สำเร็จ: '+e.message,'err'); }
+}
+function ingestRankingText(raw, sourceFile){
+  if(typeof RankingSeries==='undefined') throw new Error('ยังโหลด ranking-series.js ไม่สำเร็จ');
+  const article=RankingSeries.parseSeriesArticle(raw,{sourceFile});
+  const items=getRankingItems();
+  if(items.some(a=>a.slug===article.slug||a.id===article.id)){
+    article.id=article.slug+'-'+Date.now().toString(36);
+    article.slug=article.id;
+    article.url='/stones/rankings/'+article.slug+'.html';
+  }
+  const nums=items.map(a=>Number(a.episode)||0);
+  article.episode=(nums.length?Math.max(...nums):0)+1;
+  article.body=RankingSeries.buildSeriesBodyHtml(article);
+  article.created=new Date().toISOString();
+  article.updated=article.created;
+  items.unshift(article);
+  saveRankingItems(items);
+  _dirtyRkBodyIds.add(String(article.id));
+}
+function confirmRankingFromEditor(){
+  saveRankingEditor();
+  const eid=document.getElementById('rkEditId').value;
+  if(eid) confirmRankingArticle(eid);
+}
+function confirmRankingArticle(id){
+  const items=getRankingItems();
+  const p=items.find(a=>a.id===id); if(!p) return;
+  const hasHero=p.hero||getImgs()[p.heroImgSlot];
+  const missing=(p.items||[]).filter(it=>!(it.img||getImgs()[it.imgSlot])).length;
+  if(!hasHero||missing){
+    if(!confirm('ยังมีรูปไม่ครบ (ปกหรือรูปประกอบขาด) — ยืนยันเข้าคิวโพสต์เลยหรือจะไปเจนรูปก่อน?')) return;
+  }
+  const slots=(typeof RankingSeries!=='undefined')?RankingSeries.nextPublishSlots(items,1):[{datetime:new Date().toISOString().slice(0,16)}];
+  const slot=slots[0];
+  p.status='scheduled';
+  p.publishDate=slot.datetime;
+  p.imageStatus='approved';
+  p.updated=new Date().toISOString();
+  saveRankingItems(items);
+  renderRankings();
+  toast('จัดคิวโพสต์แล้ว: '+slot.date+' เวลา '+slot.time+' (วันละ 2 ตอน) — กด 🚀 เผยแพร่ เพื่อบันทึกคิว','ok');
+}
+async function genRkImage(prompt, aspect){
+  if(!prompt||!prompt.trim()) throw new Error('ยังไม่มี prompt');
+  const r=await fetch('/api/generate-image.php',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({prompt,aspect})
+  });
+  const d=await r.json().catch(()=>({}));
+  if(!r.ok||!d.ok||!d.image) throw new Error(d.error||'เจนรูปไม่สำเร็จ');
+  return d.image;
+}
+async function genRkHeroImage(){
+  const prompt=document.getElementById('rkHeroPrompt').value.trim();
+  const btn=[...document.querySelectorAll('button')].find(b=>b.getAttribute('onclick')==='genRkHeroImage()');
+  try{
+    if(btn){ btn.disabled=true; btn.textContent='⏳ กำลังเจน...'; }
+    toast('กำลังเจนรูปปกด้วย Google API...','ok');
+    const img=await genRkImage(prompt,'16:9');
+    document.getElementById('rkHero').value=img;
+    updateRkHeroPreview(img);
+    persistRkMeta();
+    toast('ได้รูปปกแล้ว — ถ้าไม่โดน กดเจนใหม่หรืออัปโหลดแทน','ok');
+  }catch(e){ toast('เจนรูปปกไม่สำเร็จ: '+e.message,'err'); }
+  finally{ if(btn){ btn.disabled=false; btn.textContent='✦ เจนรูป Google'; } }
+}
+async function genRkItemImage(i){
+  const it=_rkItems[i]; if(!it) return;
+  try{
+    toast('กำลังเจนรูปอันดับ '+(i+1)+'...','ok');
+    const img=await genRkImage(it.prompt,'1:1');
+    _rkItems[i].img=img;
+    const box=document.getElementById('rkItemImgPreview_'+i);
+    if(box) box.innerHTML=`<img src="${img}" style="width:100%;height:100%;object-fit:cover">`;
+    persistRkMeta();
+    toast('ได้รูปอันดับ '+(i+1)+' แล้ว','ok');
+  }catch(e){ toast('เจนรูปอันดับ '+(i+1)+' ไม่สำเร็จ: '+e.message,'err'); }
+}
+async function genRkAllImages(){
+  const prompt=document.getElementById('rkHeroPrompt').value.trim();
+  toast('เจนรูปทั้งซีรีส์ — รอทีละรูป','ok');
+  if(prompt){ try{ await genRkHeroImage(); }catch(e){} }
+  for(let i=0;i<_rkItems.length;i++){
+    if(_rkItems[i]&&_rkItems[i].prompt) await genRkItemImage(i);
+  }
+  toast('เจนครบแล้ว — ไล่เช็คพรีวิว ถ้าไม่โดนเจนใหม่หรือใส่แทน','ok');
 }
 </script>
 </body>

@@ -4,3 +4,10 @@ Thumbs.db
 node_modules/
 data/raw/images/
 api/config.php
+inbox/rankings/*.pdf
+inbox/rankings/*.PDF
+inbox/rankings/*.txt
+inbox/rankings/*.md
+!inbox/rankings/README.md
+inbox/rankings/processed/*
+!inbox/rankings/processed/.gitkeep

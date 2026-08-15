@@ -527,13 +527,13 @@
 </script>
 <hr class="divider">
 
-<!-- ═══ 5.5 จัดอันดับหินคริสตัล ═══ -->
+<!-- ═══ 5.5 คอลัมน์และเรื่องเล่า ═══ -->
 <section class="section" style="padding-top:2.5rem;padding-bottom:2.5rem;background:#faf8f4">
   <div class="wrap">
     <div class="row-head">
       <div>
-        <div class="sec-label">🏆 จัดอันดับหินคริสตัล</div>
-        <div class="sec-title">บทความจัดอันดับล่าสุด</div>
+        <div class="sec-label">✦ คอลัมน์และเรื่องเล่า</div>
+        <div class="sec-title">ซีรีส์เรื่องราวจากโลกของหินและคริสตัล</div>
       </div>
       <a href="/stones/rankings/" class="see-all">ดูทั้งหมด →</a>
     </div>
@@ -543,6 +543,18 @@
   </div>
 </section>
 <script>
+function isRankingLive(a) {
+  if (!a || a.status === 'draft') return false;
+  if (a.status === 'published' || !a.status) return true;
+  if (a.status !== 'scheduled') return false;
+  const raw = String(a.publishDate || '');
+  if (!raw) return false;
+  const iso = raw.length <= 10
+    ? raw + 'T08:00:00+07:00'
+    : (/[Z+\-]\d{2}:?\d{2}$/.test(raw) || raw.endsWith('Z') ? raw : raw + ':00+07:00');
+  const t = new Date(iso).getTime();
+  return !isNaN(t) && t <= Date.now();
+}
 (async () => {
   try {
     const [r, cr] = await Promise.all([
@@ -551,8 +563,7 @@
     ]);
     const d = await r.json();
     const imgs = (await cr.json()).images || {};
-    const now = new Date().toISOString();
-    const list = (d.articles || []).filter(a => a.status !== 'draft' && (a.status !== 'scheduled' || (a.publishDate || '') <= now))
+    const list = (d.articles || []).filter(isRankingLive)
       .map(a => ({ ...a, thumb: a.thumb || (a.heroImgSlot && imgs[a.heroImgSlot]) || '' }))
       .sort((a,b) => (b.publishDate||'').localeCompare(a.publishDate||'')).slice(0,5);
     const el = document.getElementById('homeRankings');

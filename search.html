@@ -92,7 +92,7 @@
   </div>
 
   <div id="rankingSection">
-    <div class="section-title">📊 จัดอันดับ (<span id="rankingCount">0</span>)</div>
+    <div class="section-title">✦ คอลัมน์และเรื่องเล่า (<span id="rankingCount">0</span>)</div>
     <div class="blog-grid" id="rankingResults"></div>
   </div>
 
@@ -143,7 +143,17 @@ async function loadData(){
   STONES = stonesRes.stones || [];
   BLOG = blogRes.articles || [];
   TOP100 = top100Res.stones || [];
-  RANKINGS = rankingsRes.articles || [];
+  RANKINGS = (rankingsRes.articles || []).filter(a => {
+    if (a.status === 'draft') return false;
+    if (a.status === 'scheduled') {
+      const raw = String(a.publishDate || '');
+      if (!raw) return false;
+      const iso = raw.length <= 10 ? raw + 'T08:00:00+07:00' : (/[Z+\-]\d{2}:?\d{2}$/.test(raw) || raw.endsWith('Z') ? raw : raw + ':00+07:00');
+      const t = new Date(iso).getTime();
+      return !isNaN(t) && t <= Date.now();
+    }
+    return true;
+  });
   CMS_IMGS = contentRes.images || {};
 
   // สร้างตาราง stone id -> tag (จักระ/ราศี/ดาวเคราะห์/ธาตุ) เพื่อให้ค้นด้วยคำ
