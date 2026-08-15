@@ -17,6 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Sarabun:wght@300;400;500;600;700&family=Kanit:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/identify-promo.css">
   <style>
     :root {
       --purple:#7c3aed; --purple-deep:#5b21b6; --gold:#c9a84c; --gold-light:#e8cf85; --bg:#faf8f4;
@@ -272,6 +273,36 @@
   </div>
 </section>
 
+<!-- ── Atlas Identify ── -->
+<section class="id-promo" style="padding-top:2.25rem" aria-label="Atlas Identify" data-feature="identify">
+  <div class="id-promo-inner">
+    <div class="id-promo-copy">
+      <span class="id-promo-kicker">ก่อนอ่านสารานุกรม · ลองถาม Atlas ก่อน</span>
+      <h2>หินที่คุณมี<em>คืออะไร</em> คาดว่าราคาประมาณเท่าไร?</h2>
+      <p class="id-promo-lead">มีก้อนอยู่ในมือ แต่ยังไม่ชัวร์ชื่อ? ส่งรูปมาได้เลยคะ — Atlas จะดูเบื้องต้นให้ แล้วคุยต่อแบบเพื่อน ไม่ยาวเป็นตำรา</p>
+      <div class="id-promo-chat">
+        <div class="id-promo-line">
+          <img src="/images/avatars/atlas/atlas-smiling-camera.jpg" alt="Crystal Atlas" width="36" height="36">
+          <div class="bubble">ส่งภาพมาสิคะ เดี๋ยว<strong>ฉันบอกให้</strong> น่าจะเป็นอะไร ความหมายอะไร แล้วราคาตลาดคร่าวๆ อยู่ช่วงไหนค่ะ</div>
+        </div>
+        <div class="id-promo-line">
+          <img src="/images/avatars/atlas/atlas-arms-crossed.jpg" alt="" width="36" height="36">
+          <div class="bubble">อยากให้รับซื้อไหมคะ? เราเป็น<strong>เว็บให้ข้อมูล</strong> ไม่ใช่ร้านค้าค่ะ ถ้าจะขาย ลองโพสกลุ่มขายหินในเฟซ หรือลง Shopee นะคะ</div>
+        </div>
+      </div>
+      <div class="id-promo-actions">
+        <a class="id-promo-btn" href="/identify/">📷 ส่งรูปให้ Atlas ดูฟรี</a>
+        <a class="id-promo-ghost" href="/stones/a-z.html">ดูหิน A–Z →</a>
+      </div>
+      <p class="id-promo-note">ประมาณการจากรูป · ไม่ใช่ใบรับรองแล็บ · Amethez ไม่ได้รับซื้อหิน</p>
+    </div>
+    <div class="id-promo-media">
+      <img src="/images/avatars/atlas/atlas-desk-encyclopedia.jpg" alt="Crystal Atlas Identify" width="640" height="480" loading="lazy">
+      <div class="id-promo-media-cap">รู้ชื่อคร่าวๆ แล้วค่อยเปิดอ่านสารานุกรมลึกขึ้น — ดึงคนเข้าความรู้ได้จริง</div>
+    </div>
+  </div>
+</section>
+
 <!-- ── BROWSE HUB ── -->
 <section class="hub">
   <div style="max-width:1060px;margin:0 auto">
@@ -279,7 +310,12 @@
     <h2 class="hub-title">ต้องการค้นหาหินคริสตัลแบบไหน?</h2>
     <p class="hub-sub">Looking to Explore Crystal Meanings? — เลือกวิธีที่ใช่สำหรับคุณ</p>
     <div class="hub-grid">
-      <a href="/stones/a-z.html" class="hub-tile gold">
+      <a href="/identify/" class="hub-tile gold" data-feature="identify">
+        <span class="hub-tile-icon">📷</span>
+        <span class="hub-tile-th">ส่งรูปดูหิน</span>
+        <span class="hub-tile-en">Atlas Identify</span>
+      </a>
+      <a href="/stones/a-z.html" class="hub-tile">
         <span class="hub-tile-icon">🔤</span>
         <span class="hub-tile-th">หิน A ถึง Z</span>
         <span class="hub-tile-en">Crystals A to Z</span>
@@ -947,6 +983,7 @@ function calcElement() {
 
 <script src="/js/cms.js"></script>
 <footer class="site-footer"></footer>
+<script src="/js/site-features.js"></script>
 <script src="/js/components.js"></script>
 <script src="/js/shila.js"></script>
 </body>

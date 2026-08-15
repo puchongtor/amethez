@@ -1,0 +1,25 @@
+---
+description: Active deploy target — amethez-web only; never edit HostNeverDie amethez
+alwaysApply: true
+---
+
+# Active deploy target (permanent)
+
+## Canonical product repo
+- **Active system:** `amethez-web` (Next.js → Vercel → `amethez.com`)
+- All implementation, commits, push, and deploy happen **only** there.
+
+## This repo (`puchongtor/amethez` — HostNeverDie)
+- **Reference / archive only.** Use it to look up old HTML, data, copy, or history.
+- **Do NOT** edit, create, delete, commit, push, open PRs, or trigger deploy on this repo.
+- **Do NOT** “fix” production issues here — production is the Next.js app.
+
+## If the current workspace is `puchongtor/amethez`
+1. Stop product work immediately.
+2. Tell the user this workspace is reference-only.
+3. Ask them to continue in the `amethez-web` workspace/agent.
+4. Do not apply further code changes in this repo (except maintaining this rule if the user explicitly asks).
+
+## Identify / Admin / site features
+- Live `/admin` and `/identify` are on **amethez-web**.
+- Feature flags, kill-switches, and UI must be implemented there — not in HostNeverDie PHP/HTML admin.

@@ -1,0 +1,16 @@
+# ⛔ ACTIVE DEPLOY TARGET — READ FIRST
+- Production = **amethez-web** (Next.js → Vercel → amethez.com) ONLY.
+- This repo `puchongtor/amethez` (HostNeverDie) is **reference/archive only**.
+- Do NOT edit, commit, push, PR, or deploy here. Look up old files, then continue in `amethez-web`.
+- See `.cursor/rules/active-deploy-target.mdc`.
+
+# UI & Design System Rules
+- Always wrap main layouts in a centered container: `max-w-6xl mx-auto px-4 sm:px-6 lg:px-8`.
+- Build UI using clean Grid/Flexbox with explicit gaps (e.g., `grid grid-cols-1 md:grid-cols-2 gap-8`).
+- Never leave absolute-positioned elements uncentered or overlapping.
+- Follow Modern Minimalist Aesthetic:
+  - Generous whitespace/padding (`p-6`, `py-12`).
+  - Subtle borders (`border border-slate-200/60 dark:border-slate-800`).
+  - Glassmorphism & Soft shadows (`bg-white/80 backdrop-blur-md shadow-sm`).
+  - Rounded corners (`rounded-2xl` for cards, `rounded-xl` for buttons).
+- Typography: Strict hierarchy using Tailwind text sizes (`text-3xl font-bold`, `text-sm text-slate-500`).
